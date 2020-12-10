@@ -1,3 +1,5 @@
 {
+	"block.nuclearscience.gascentrifuge": "Gas Centrifuge",
+	"container.gascentrifuge": "Gas Centrifuge",
 	"itemGroup.itemgroupnuclearscience": "Nuclear Science"
 }

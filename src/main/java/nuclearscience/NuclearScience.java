@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import nuclearscience.client.ClientRegister;
 
 @Mod(References.ID)
 @EventBusSubscriber(modid = References.ID, bus = Bus.MOD)
@@ -25,6 +26,7 @@ public class NuclearScience {
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
 	public static void onClientSetup(FMLClientSetupEvent event) {
+		ClientRegister.setup();
 	}
 
 	@SubscribeEvent
