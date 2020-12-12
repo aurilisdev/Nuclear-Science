@@ -1,5 +1,8 @@
 package nuclearscience.client;
 
+import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -8,6 +11,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.References;
 import nuclearscience.client.render.tile.GasCentrifugeRenderer;
+import nuclearscience.client.screen.ScreenGasCentrifuge;
 
 @OnlyIn(Dist.CLIENT)
 public class ClientRegister {
@@ -19,6 +23,11 @@ public class ClientRegister {
 		ModelLoader.addSpecialModel(MODEL_GASCENTRIFUGEFULL);
 		ModelLoader.addSpecialModel(MODEL_GASCENTRIFUGEOUTLINE);
 		ModelLoader.addSpecialModel(MODEL_GASCENTRIFUGECENTER);
+
 		ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_GASCENTRIFUGE.get(), GasCentrifugeRenderer::new);
+
+		ScreenManager.registerFactory(DeferredRegisters.CONTAINER_GASCENTRIFUGE.get(), ScreenGasCentrifuge::new);
+
+		RenderTypeLookup.setRenderLayer(DeferredRegisters.blockGasCentrifuge, RenderType.getCutoutMipped());
 	}
 }

@@ -1,5 +1,12 @@
 {
+	"item.nuclearscience.uranium235": "Uranium-235",
+	"item.nuclearscience.uranium238": "Uranium-238",
+	"item.nuclearscience.yellowcake": "Yellowcake",
 	"block.nuclearscience.gascentrifuge": "Gas Centrifuge",
 	"container.gascentrifuge": "Gas Centrifuge",
+	"gui.gascentrifuge.usage": "Usage: %s",
+	"gui.gascentrifuge.voltage": "Voltage: %s",
+	"gui.gascentrifuge.235chance": "Isotope 235: 17.2%",
+	"gui.gascentrifuge.238chance": "Isotope 238: 82.8%",
 	"itemGroup.itemgroupnuclearscience": "Nuclear Science"
 }

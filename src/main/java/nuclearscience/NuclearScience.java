@@ -21,6 +21,7 @@ public class NuclearScience {
 		DeferredRegisters.BLOCKS.register(bus);
 		DeferredRegisters.ITEMS.register(bus);
 		DeferredRegisters.TILES.register(bus);
+		DeferredRegisters.CONTAINERS.register(bus);
 	}
 
 	@SubscribeEvent
