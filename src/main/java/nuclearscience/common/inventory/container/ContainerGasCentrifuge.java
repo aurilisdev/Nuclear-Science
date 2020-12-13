@@ -13,6 +13,7 @@ import net.minecraft.util.IntArray;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import nuclearscience.DeferredRegisters;
+import nuclearscience.common.tile.TileGasCentrifuge;
 
 public class ContainerGasCentrifuge extends GenericContainerInventory {
 
@@ -21,7 +22,7 @@ public class ContainerGasCentrifuge extends GenericContainerInventory {
 	}
 
 	public ContainerGasCentrifuge(int id, PlayerInventory playerinv, IInventory inventory) {
-		this(id, playerinv, inventory, new IntArray(5));
+		this(id, playerinv, inventory, new IntArray(7));
 	}
 
 	public ContainerGasCentrifuge(int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {
@@ -34,8 +35,8 @@ public class ContainerGasCentrifuge extends GenericContainerInventory {
 
 	@Override
 	public void addInventorySlots(IInventory inv, PlayerInventory playerinv) {
-		addSlot(new FurnaceResultSlot(playerinv.player, inv, nextIndex(), 66, 19));
-		addSlot(new FurnaceResultSlot(playerinv.player, inv, nextIndex(), 66, 49));
+		addSlot(new FurnaceResultSlot(playerinv.player, inv, nextIndex(), 126, 21));
+		addSlot(new FurnaceResultSlot(playerinv.player, inv, nextIndex(), 126, 48));
 		addSlot(new SlotRestricted(inv, nextIndex(), 186, 14, electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.basicspeed),
 				electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.advancedspeed)));
 		addSlot(new SlotRestricted(inv, nextIndex(), 186, 34, electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.basicspeed),
@@ -65,8 +66,18 @@ public class ContainerGasCentrifuge extends GenericContainerInventory {
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public int getLiquidLevelScaled() {
+	public int getU6FLevelScaled() {
 		return (int) ((inventorydata.get(4) / 100.0) * 50);
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public int getU235LevelScaled() {
+		return (int) ((inventorydata.get(5) * 100.0 / (TileGasCentrifuge.REQUIRED)) * 22);
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public int getU238LevelScaled() {
+		return (int) ((inventorydata.get(6) * 100.0 / (TileGasCentrifuge.REQUIRED)) * 22);
 	}
 
 }

@@ -13,13 +13,16 @@ import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerGasCentrifuge;
 
 public class TileGasCentrifuge extends GenericTileProcessor implements IO2OProcessor {
-	public static final double REQUIRED_JOULES_PER_TICK = 2250;
-	public static final int REQUIRED_TICKS = 2400;
-
+	public static final double REQUIRED_JOULES_PER_TICK = 1500;
+	public static final int REQUIRED_TICKS = 20;
+	public static final float MAX_STORAGE = 5000;
+	public static final float REQUIRED = 2500;
 	public static final int[] SLOTS_UP = new int[] { 0 };
 	public static final int[] SLOTS_DOWN = new int[] { 1 };
 
-	private int liquidLevelPercentage = 0;
+	public float storedU6F = 5000;
+	public float stored235 = 2500;
+	public float stored238 = 2500;
 
 	public TileGasCentrifuge() {
 		super(DeferredRegisters.TILE_GASCENTRIFUGE.get());
@@ -38,20 +41,33 @@ public class TileGasCentrifuge extends GenericTileProcessor implements IO2OProce
 
 	@Override
 	public boolean canProcess() {
-		liquidLevelPercentage = 100;
-		return getJoulesStored() >= getJoulesPerTick() && liquidLevelPercentage >= 50 && getStackInSlot(0).getCount() < getStackInSlot(0).getMaxStackSize()
+		return getJoulesStored() >= getJoulesPerTick() && storedU6F >= REQUIRED / 60.0 && getStackInSlot(0).getCount() < getStackInSlot(0).getMaxStackSize()
 				&& getStackInSlot(1).getCount() < getStackInSlot(1).getMaxStackSize();
 	}
 
 	@Override
 	public void process() {
-		liquidLevelPercentage -= 50;
-		int index = world.rand.nextFloat() <= 0.172 ? 0 : 1;
-		ItemStack stack = getStackInSlot(index);
-		if (stack.isEmpty()) {
-			setInventorySlotContents(index, new ItemStack(index == 0 ? DeferredRegisters.ITEM_URANIUM235.get() : DeferredRegisters.ITEM_URANIUM238.get()));
-		} else {
-			stack.setCount(stack.getCount() + 1);
+		float processed = (float) (REQUIRED / 60.0);
+		storedU6F -= processed;
+		stored235 += processed * 0.172;
+		stored238 += processed * (1 - 0.172);
+		if (stored235 > REQUIRED) {
+			ItemStack stack = getStackInSlot(0);
+			if (!stack.isEmpty()) {
+				stack.setCount(stack.getCount() + 1);
+			} else {
+				setInventorySlotContents(0, new ItemStack(DeferredRegisters.ITEM_URANIUM235.get()));
+			}
+			stored235 -= 2500;
+		}
+		if (stored238 > REQUIRED) {
+			ItemStack stack = getStackInSlot(1);
+			if (!stack.isEmpty()) {
+				stack.setCount(stack.getCount() + 1);
+			} else {
+				setInventorySlotContents(1, new ItemStack(DeferredRegisters.ITEM_URANIUM238.get()));
+			}
+			stored238 -= 2500;
 		}
 	}
 
@@ -103,7 +119,11 @@ public class TileGasCentrifuge extends GenericTileProcessor implements IO2OProce
 			case 3:
 				return getRequiredTicks() == 0 ? 1 : getRequiredTicks();
 			case 4:
-				return liquidLevelPercentage;
+				return (int) (storedU6F / MAX_STORAGE * 100);
+			case 5:
+				return (int) (stored235 / MAX_STORAGE * 50);
+			case 6:
+				return (int) (stored238 / MAX_STORAGE * 50);
 			default:
 				return 0;
 			}
@@ -123,7 +143,7 @@ public class TileGasCentrifuge extends GenericTileProcessor implements IO2OProce
 
 		@Override
 		public int size() {
-			return 5;
+			return 7;
 		}
 	};
 

@@ -9,7 +9,6 @@ import net.minecraft.client.gui.IHasContainer;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -31,21 +30,21 @@ public class ScreenGasCentrifuge extends GenericContainerScreenUpgradeable<Conta
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
-		super.drawGuiContainerForegroundLayer(matrixStack, mouseX, mouseY);
-		font.func_243248_b(matrixStack, new TranslationTextComponent("gui.gascentrifuge.235chance").mergeStyle(TextFormatting.DARK_GRAY), (float) playerInventoryTitleX + 83, playerInventoryTitleY - 54, 4210752);
+		this.font.func_243248_b(matrixStack, this.title, (float) this.titleX, (float) this.titleY, 4210752);
 		font.func_243248_b(matrixStack, new TranslationTextComponent("gui.gascentrifuge.usage", ElectricityChatFormatter.getDisplayShort(container.getJoulesPerTick() * 20, ElectricUnit.WATT)),
-				(float) playerInventoryTitleX + 83, (float) playerInventoryTitleY - 39, 4210752);
+				(float) playerInventoryTitleX, (float) playerInventoryTitleY, 4210752);
 		font.func_243248_b(matrixStack, new TranslationTextComponent("gui.gascentrifuge.voltage", ElectricityChatFormatter.getDisplayShort(container.getVoltage(), ElectricUnit.VOLTAGE)),
-				(float) playerInventoryTitleX + 83, playerInventoryTitleY - 28, 4210752);
-		font.func_243248_b(matrixStack, new TranslationTextComponent("gui.gascentrifuge.238chance").mergeStyle(TextFormatting.DARK_GRAY), (float) playerInventoryTitleX + 83, playerInventoryTitleY - 13, 4210752);
-
+				(float) playerInventoryTitleX + 85, playerInventoryTitleY, 4210752);
+		font.func_243248_b(matrixStack, new TranslationTextComponent("U-238"), (float) playerInventoryTitleX + 30, playerInventoryTitleY - 33 + 17, 4210752);
+		font.func_243248_b(matrixStack, new TranslationTextComponent("U-235"), (float) playerInventoryTitleX + 30, playerInventoryTitleY - 33 - 17, 4210752);
 	}
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(MatrixStack stack, float partialTicks, int mouseX, int mouseY) {
 		super.drawGuiContainerBackgroundLayer(stack, partialTicks, mouseX, mouseY);
-		blit(stack, guiLeft + 27, guiTop + 34, 212, 14, container.getBurnLeftScaled() + 1, 16);
-		blit(stack, guiLeft + 8, guiTop + 67 - container.getLiquidLevelScaled(), 213, 31, 18, container.getLiquidLevelScaled());
+		blit(stack, guiLeft + 9, guiTop + 67 - container.getU6FLevelScaled(), 214, 31, 16, container.getU6FLevelScaled());
+		blit(stack, guiLeft + 72, guiTop + 38 - container.getU235LevelScaled(), 214, 31, 16, container.getU235LevelScaled());
+		blit(stack, guiLeft + 72, guiTop + 69 - container.getU238LevelScaled(), 214, 31, 16, container.getU238LevelScaled());
 	}
 
 }

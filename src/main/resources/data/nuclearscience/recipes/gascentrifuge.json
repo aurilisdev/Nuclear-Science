@@ -1,0 +1,29 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"sas",
+		"cmc",
+		"cpc"
+	],
+	"key": {
+		"p": {
+			"tag": "forge:plates/steel"
+		},
+		"s": {
+			"tag": "forge:ingots/steel"
+		},
+		"a": {
+			"tag": "forge:circuits/advanced"
+		},
+		"m": {
+			"item": "electrodynamics:motor"
+		},
+		"c": {
+			"item": "nuclearscience:cellempty"
+		}
+	},
+	"result": {
+		"item": "nuclearscience:gascentrifuge",
+		"count": 1
+	}
+}
