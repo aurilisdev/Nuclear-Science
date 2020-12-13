@@ -20,9 +20,9 @@ public class TileGasCentrifuge extends GenericTileProcessor implements IO2OProce
 	public static final int[] SLOTS_UP = new int[] { 0 };
 	public static final int[] SLOTS_DOWN = new int[] { 1 };
 
-	public float storedU6F = 5000;
-	public float stored235 = 2500;
-	public float stored238 = 2500;
+	public float storedU6F = 0;
+	public float stored235 = 0;
+	public float stored238 = 0;
 
 	public TileGasCentrifuge() {
 		super(DeferredRegisters.TILE_GASCENTRIFUGE.get());
