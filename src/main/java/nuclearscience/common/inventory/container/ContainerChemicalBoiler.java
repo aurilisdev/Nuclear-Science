@@ -1,13 +1,14 @@
 package nuclearscience.common.inventory.container;
 
 import electrodynamics.common.inventory.container.GenericContainerInventory;
+import electrodynamics.common.inventory.container.slot.GenericSlot;
 import electrodynamics.common.inventory.container.slot.SlotRestricted;
 import electrodynamics.common.item.subtype.SubtypeProcessorUpgrade;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.FurnaceResultSlot;
+import net.minecraft.item.Items;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.IntArray;
 import net.minecraftforge.api.distmarker.Dist;
@@ -34,8 +35,8 @@ public class ContainerChemicalBoiler extends GenericContainerInventory {
 
 	@Override
 	public void addInventorySlots(IInventory inv, PlayerInventory playerinv) {
-		addSlot(new FurnaceResultSlot(playerinv.player, inv, nextIndex(), 83, 31));
-		addSlot(new FurnaceResultSlot(playerinv.player, inv, nextIndex(), 83, 51));
+		addSlot(new GenericSlot(inv, nextIndex(), 83, 31));
+		addSlot(new SlotRestricted(inv, nextIndex(), 83, 51, Items.WATER_BUCKET));
 		addSlot(new SlotRestricted(inv, nextIndex(), 186, 14, electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.basicspeed),
 				electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.advancedspeed)));
 		addSlot(new SlotRestricted(inv, nextIndex(), 186, 34, electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.basicspeed),
@@ -46,7 +47,7 @@ public class ContainerChemicalBoiler extends GenericContainerInventory {
 
 	@OnlyIn(Dist.CLIENT)
 	public int getBurnLeftScaled() {
-		return inventorydata.get(0) * 34 / (inventorydata.get(3) == 0 ? 1 : inventorydata.get(3));
+		return (int) (inventorydata.get(0) * 34 / (float) (inventorydata.get(3) == 0 ? 1 : inventorydata.get(3)));
 	}
 
 	@OnlyIn(Dist.CLIENT)

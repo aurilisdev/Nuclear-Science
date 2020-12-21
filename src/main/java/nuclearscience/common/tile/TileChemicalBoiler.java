@@ -1,13 +1,18 @@
 package nuclearscience.common.tile;
 
 import electrodynamics.api.tile.processing.IO2OProcessor;
+import electrodynamics.common.block.subtype.SubtypeOre;
 import electrodynamics.common.tile.generic.GenericTileProcessor;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fluids.FluidStack;
@@ -19,11 +24,12 @@ public class TileChemicalBoiler extends GenericTileProcessor implements IO2OProc
 	public static final double REQUIRED_JOULES_PER_TICK = 750;
 	public static final int REQUIRED_TICKS = 800;
 	public static final int TANKCAPACITY = 5000;
+	public static final int REQUIRED_WATER_CAP = 2400;
 	public static final int[] SLOTS_UP = new int[] { 0 };
-	public static final int[] SLOTS_DOWN = new int[] { 1 };
+	public static final int[] SLOTS_SIDE = new int[] { 1 };
 
-	public FluidStack tankWater = new FluidStack(Fluids.WATER, 3500);
-	public FluidStack tankU6F = new FluidStack(DeferredRegisters.fluidUraniumHexafluoride, 1500);
+	public FluidStack tankWater = new FluidStack(Fluids.WATER, 0);
+	public FluidStack tankU6F = new FluidStack(DeferredRegisters.fluidUraniumHexafluoride, 0);
 
 	public TileChemicalBoiler() {
 		super(DeferredRegisters.TILE_CHEMICALBOILER.get());
@@ -42,11 +48,46 @@ public class TileChemicalBoiler extends GenericTileProcessor implements IO2OProc
 
 	@Override
 	public boolean canProcess() {
-		return getJoulesStored() >= getJoulesPerTick() && getStackInSlot(0).getCount() > 0;
+		BlockPos face = getPos().offset(getFacing().getOpposite());
+		TileEntity faceTile = world.getTileEntity(face);
+		if (faceTile instanceof IFluidHandler) {
+			IFluidHandler handler = (IFluidHandler) faceTile;
+			if (handler.isFluidValid(0, tankU6F)) {
+				tankU6F.shrink(handler.fill(tankU6F, FluidAction.EXECUTE));
+			}
+		}
+		ItemStack bucketStack = getStackInSlot(1);
+		if (!bucketStack.isEmpty() && bucketStack.getCount() > 0 && bucketStack.getItem() == Items.WATER_BUCKET && tankWater.getAmount() <= TANKCAPACITY - 1000) {
+			setInventorySlotContents(1, new ItemStack(Items.BUCKET));
+			tankWater.setAmount(Math.min(tankWater.getAmount() + 1000, TANKCAPACITY));
+		}
+		int requiredWater = getRequiredWater();
+		int u6f = (int) (1500 + ((2400 - requiredWater) / 2400.0f) * 1500);
+		return getJoulesStored() >= getJoulesPerTick() && !getStackInSlot(0).isEmpty() && getStackInSlot(0).getCount() > 0 && tankWater.getAmount() >= requiredWater && TANKCAPACITY >= tankU6F.getAmount() + u6f;
+	}
+
+	private int getRequiredWater() {
+		ItemStack stack = getStackInSlot(0);
+		Item item = stack.getItem();
+		int requiredWater = 0;
+		if (item == DeferredRegisters.ITEM_YELLOWCAKE.get()) {
+			requiredWater = REQUIRED_WATER_CAP / 3;
+		} else if (item == DeferredRegisters.ITEM_URANIUM238.get()) {
+			requiredWater = REQUIRED_WATER_CAP / 3 * 2;
+		} else if (item == electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeOre.uraninite)) {
+			requiredWater = REQUIRED_WATER_CAP;
+		}
+		return requiredWater;
 	}
 
 	@Override
 	public void process() {
+		ItemStack stack = getStackInSlot(0);
+		int requiredWater = getRequiredWater();
+		int createdU6F = (int) (1500 + ((2400 - requiredWater) / 2400.0f) * 1500);
+		stack.setCount(stack.getCount() - 1);
+		tankWater.shrink(requiredWater);
+		tankU6F.grow(createdU6F);
 	}
 
 	@Override
@@ -61,7 +102,7 @@ public class TileChemicalBoiler extends GenericTileProcessor implements IO2OProc
 
 	@Override
 	public int[] getSlotsForFace(Direction side) {
-		return side == Direction.UP ? SLOTS_UP : side == Direction.DOWN ? SLOTS_DOWN : SLOTS_EMPTY;
+		return side == Direction.UP ? SLOTS_UP : side == Direction.DOWN ? SLOTS_EMPTY : SLOTS_SIDE;
 	}
 
 	@Override

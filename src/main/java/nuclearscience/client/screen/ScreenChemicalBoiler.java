@@ -40,6 +40,11 @@ public class ScreenChemicalBoiler extends GenericContainerScreenUpgradeable<Cont
 	@Override
 	protected void drawGuiContainerBackgroundLayer(MatrixStack stack, float partialTicks, int mouseX, int mouseY) {
 		super.drawGuiContainerBackgroundLayer(stack, partialTicks, mouseX, mouseY);
+		int burnLeftScaled = container.getBurnLeftScaled();
+		blit(stack, guiLeft + 44, guiTop + 30, 212, 14, Math.min(burnLeftScaled * 2 + 1, 34), 16);
+		if (burnLeftScaled > 17) {
+			blit(stack, guiLeft + 44 + 60, guiTop + 30, 212, 14, Math.min(burnLeftScaled * 2 - 34 + 1, 34), 16);
+		}
 		blit(stack, guiLeft + 21, guiTop + 68 - container.getWaterLevelScaled(), 214 + 18, 31, 16, container.getWaterLevelScaled());
 		blit(stack, guiLeft + 139, guiTop + 68 - container.getU6FLevelScaled(), 214, 31, 16, container.getU6FLevelScaled());
 	}

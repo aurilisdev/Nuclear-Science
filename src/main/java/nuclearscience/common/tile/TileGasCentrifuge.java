@@ -21,8 +21,8 @@ public class TileGasCentrifuge extends GenericTileProcessor implements IO2OProce
 	public static final int REQUIRED_TICKS = 20;
 	public static final int TANKCAPACITY = 5000;
 	public static final float REQUIRED = 2500;
-	public static final int[] SLOTS_UP = new int[] { 0 };
-	public static final int[] SLOTS_DOWN = new int[] { 1 };
+	public static final int[] SLOTS_UP = new int[] {};
+	public static final int[] SLOTS_DOWN = new int[] { 0, 1 };
 
 	public FluidStack tankU6F = new FluidStack(DeferredRegisters.fluidUraniumHexafluoride, 0);
 	public int stored235 = 0;
