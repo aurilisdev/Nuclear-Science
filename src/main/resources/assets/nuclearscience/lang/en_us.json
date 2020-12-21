@@ -7,8 +7,12 @@
 	"item.nuclearscience.cellheavywater": "Heavy Water cell",
 	"item.nuclearscience.celltritium": "Empty cell",
 	"block.nuclearscience.gascentrifuge": "Gas Centrifuge",
+	"block.nuclearscience.chemicalboiler": "Chemical Boiler",
 	"container.gascentrifuge": "Gas Centrifuge",
+	"container.chemicalboiler": "Chemical Boiler",
 	"gui.gascentrifuge.usage": "Usage: %s",
 	"gui.gascentrifuge.voltage": "Voltage: %s",
+	"gui.chemicalboiler.usage": "Usage: %s",
+	"gui.chemicalboiler.voltage": "Voltage: %s",
 	"itemGroup.itemgroupnuclearscience": "Nuclear Science"
 }

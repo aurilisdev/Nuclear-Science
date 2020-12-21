@@ -9,6 +9,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.References;
 import nuclearscience.client.render.tile.GasCentrifugeRenderer;
+import nuclearscience.client.screen.ScreenChemicalBoiler;
 import nuclearscience.client.screen.ScreenGasCentrifuge;
 
 @OnlyIn(Dist.CLIENT)
@@ -25,5 +26,6 @@ public class ClientRegister {
 		ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_GASCENTRIFUGE.get(), GasCentrifugeRenderer::new);
 
 		ScreenManager.registerFactory(DeferredRegisters.CONTAINER_GASCENTRIFUGE.get(), ScreenGasCentrifuge::new);
+		ScreenManager.registerFactory(DeferredRegisters.CONTAINER_CHEMICALBOILER.get(), ScreenChemicalBoiler::new);
 	}
 }

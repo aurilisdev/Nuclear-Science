@@ -2,11 +2,10 @@ package nuclearscience.common.tile;
 
 import electrodynamics.api.tile.processing.IO2OProcessor;
 import electrodynamics.common.tile.generic.GenericTileProcessor;
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.text.ITextComponent;
@@ -14,22 +13,20 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import nuclearscience.DeferredRegisters;
-import nuclearscience.common.inventory.container.ContainerGasCentrifuge;
+import nuclearscience.common.inventory.container.ContainerChemicalBoiler;
 
-public class TileGasCentrifuge extends GenericTileProcessor implements IO2OProcessor, IFluidHandler {
-	public static final double REQUIRED_JOULES_PER_TICK = 1500;
-	public static final int REQUIRED_TICKS = 20;
+public class TileChemicalBoiler extends GenericTileProcessor implements IO2OProcessor, IFluidHandler {
+	public static final double REQUIRED_JOULES_PER_TICK = 750;
+	public static final int REQUIRED_TICKS = 800;
 	public static final int TANKCAPACITY = 5000;
-	public static final float REQUIRED = 2500;
 	public static final int[] SLOTS_UP = new int[] { 0 };
 	public static final int[] SLOTS_DOWN = new int[] { 1 };
 
-	public FluidStack tankU6F = new FluidStack(DeferredRegisters.fluidUraniumHexafluoride, 0);
-	public int stored235 = 0;
-	public int stored238 = 0;
+	public FluidStack tankWater = new FluidStack(Fluids.WATER, 3500);
+	public FluidStack tankU6F = new FluidStack(DeferredRegisters.fluidUraniumHexafluoride, 1500);
 
-	public TileGasCentrifuge() {
-		super(DeferredRegisters.TILE_GASCENTRIFUGE.get());
+	public TileChemicalBoiler() {
+		super(DeferredRegisters.TILE_CHEMICALBOILER.get());
 		addUpgradeSlots(2, 3, 4);
 	}
 
@@ -45,52 +42,11 @@ public class TileGasCentrifuge extends GenericTileProcessor implements IO2OProce
 
 	@Override
 	public boolean canProcess() {
-		return getJoulesStored() >= getJoulesPerTick() && tankU6F.getAmount() >= REQUIRED / 60.0 && getStackInSlot(0).getCount() < getStackInSlot(0).getMaxStackSize()
-				&& getStackInSlot(1).getCount() < getStackInSlot(1).getMaxStackSize();
+		return getJoulesStored() >= getJoulesPerTick() && getStackInSlot(0).getCount() > 0;
 	}
 
 	@Override
 	public void process() {
-		int processed = (int) (REQUIRED / 60.0);
-		tankU6F.shrink(processed);
-		stored235 += processed * 0.172;
-		stored238 += processed * (1 - 0.172);
-		if (stored235 > REQUIRED) {
-			ItemStack stack = getStackInSlot(0);
-			if (!stack.isEmpty()) {
-				stack.setCount(stack.getCount() + 1);
-			} else {
-				setInventorySlotContents(0, new ItemStack(DeferredRegisters.ITEM_URANIUM235.get()));
-			}
-			stored235 -= 2500;
-		}
-		if (stored238 > REQUIRED) {
-			ItemStack stack = getStackInSlot(1);
-			if (!stack.isEmpty()) {
-				stack.setCount(stack.getCount() + 1);
-			} else {
-				setInventorySlotContents(1, new ItemStack(DeferredRegisters.ITEM_URANIUM238.get()));
-			}
-			stored238 -= 2500;
-		}
-	}
-
-	@Override
-	public CompoundNBT write(CompoundNBT compound) {
-		CompoundNBT fluid = new CompoundNBT();
-		tankU6F.writeToNBT(fluid);
-		compound.put("tankU6F", fluid);
-		compound.putFloat("stored235", stored235);
-		compound.putFloat("stored238", stored238);
-		return super.write(compound);
-	}
-
-	@Override
-	public void read(BlockState state, CompoundNBT compound) {
-		super.read(state, compound);
-		tankU6F = FluidStack.loadFluidStackFromNBT(compound.getCompound("tankU6F"));
-		stored235 = compound.getInt("stored235");
-		stored238 = compound.getInt("stored238");
 	}
 
 	@Override
@@ -110,7 +66,7 @@ public class TileGasCentrifuge extends GenericTileProcessor implements IO2OProce
 
 	@Override
 	protected Container createMenu(int id, PlayerInventory player) {
-		return new ContainerGasCentrifuge(id, player, this, inventorydata);
+		return new ContainerChemicalBoiler(id, player, this, inventorydata);
 	}
 
 	@Override
@@ -120,7 +76,7 @@ public class TileGasCentrifuge extends GenericTileProcessor implements IO2OProce
 
 	@Override
 	public ITextComponent getDisplayName() {
-		return new TranslationTextComponent("container.gascentrifuge");
+		return new TranslationTextComponent("container.chemicalboiler");
 	}
 
 	@Override
@@ -143,9 +99,7 @@ public class TileGasCentrifuge extends GenericTileProcessor implements IO2OProce
 			case 4:
 				return (int) (tankU6F.getAmount() / (float) TANKCAPACITY * 100);
 			case 5:
-				return (int) (stored235 / (float) TANKCAPACITY * 50);
-			case 6:
-				return (int) (stored238 / (float) TANKCAPACITY * 50);
+				return (int) (tankWater.getAmount() / (float) TANKCAPACITY * 100);
 			default:
 				return 0;
 			}
@@ -165,9 +119,13 @@ public class TileGasCentrifuge extends GenericTileProcessor implements IO2OProce
 
 		@Override
 		public int size() {
-			return 7;
+			return 6;
 		}
 	};
+
+	@Override
+	public void setOutput(ItemStack stack) {
+	}
 
 	@Override
 	public ItemStack getOutput() {
@@ -175,17 +133,13 @@ public class TileGasCentrifuge extends GenericTileProcessor implements IO2OProce
 	}
 
 	@Override
-	public void setOutput(ItemStack stack) {
+	public FluidStack getFluidInTank(int tank) {
+		return tank == 0 ? tankWater : tank == 1 ? tankU6F : FluidStack.EMPTY;
 	}
 
 	@Override
 	public int getTanks() {
-		return 1;
-	}
-
-	@Override
-	public FluidStack getFluidInTank(int tank) {
-		return tankU6F;
+		return 2;
 	}
 
 	@Override
@@ -195,15 +149,18 @@ public class TileGasCentrifuge extends GenericTileProcessor implements IO2OProce
 
 	@Override
 	public boolean isFluidValid(int tank, FluidStack stack) {
-		return stack.getFluid() == DeferredRegisters.fluidUraniumHexafluoride;
+		return tank == 0 ? stack.getFluid() == Fluids.WATER : tank == 1 ? stack.getFluid() == DeferredRegisters.fluidUraniumHexafluoride : false;
 	}
 
 	@Override
 	public int fill(FluidStack resource, FluidAction action) {
-
-		int amount = Math.min(TANKCAPACITY - tankU6F.getAmount(), resource.getAmount());
+		FluidStack tank = resource.getFluid() == DeferredRegisters.fluidUraniumHexafluoride ? tankU6F : resource.getFluid() == Fluids.WATER ? tankWater : FluidStack.EMPTY;
+		if (tank == FluidStack.EMPTY) {
+			return 0;
+		}
+		int amount = Math.min(TANKCAPACITY - tank.getAmount(), resource.getAmount());
 		if (action == FluidAction.EXECUTE) {
-			tankU6F.grow(amount);
+			tank.grow(amount);
 		}
 		return amount;
 	}
@@ -215,6 +172,10 @@ public class TileGasCentrifuge extends GenericTileProcessor implements IO2OProce
 
 	@Override
 	public FluidStack drain(int maxDrain, FluidAction action) {
-		return new FluidStack(tankU6F.getFluid(), Math.min(tankU6F.getAmount(), maxDrain));
+		int amount = Math.min(tankU6F.getAmount(), maxDrain);
+		if (action == FluidAction.EXECUTE) {
+			tankU6F.shrink(amount);
+		}
+		return amount == 0 ? FluidStack.EMPTY : new FluidStack(tankU6F.getFluid(), amount);
 	}
 }
