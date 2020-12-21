@@ -67,17 +67,17 @@ public class ContainerGasCentrifuge extends GenericContainerInventory {
 
 	@OnlyIn(Dist.CLIENT)
 	public int getU6FLevelScaled() {
-		return (int) ((inventorydata.get(4) / 100.0) * 50);
+		return (int) (inventorydata.get(4) / 100.0 * 50);
 	}
 
 	@OnlyIn(Dist.CLIENT)
 	public int getU235LevelScaled() {
-		return (int) ((inventorydata.get(5) * 100.0 / (TileGasCentrifuge.REQUIRED)) * 22);
+		return (int) (inventorydata.get(5) * 100.0 / TileGasCentrifuge.REQUIRED * 22);
 	}
 
 	@OnlyIn(Dist.CLIENT)
 	public int getU238LevelScaled() {
-		return (int) ((inventorydata.get(6) * 100.0 / (TileGasCentrifuge.REQUIRED)) * 22);
+		return (int) (inventorydata.get(6) * 100.0 / TileGasCentrifuge.REQUIRED * 22);
 	}
 
 }

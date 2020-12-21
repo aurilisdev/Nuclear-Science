@@ -30,9 +30,9 @@ public class ScreenChemicalBoiler extends GenericContainerScreenUpgradeable<Cont
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
-		this.font.func_243248_b(matrixStack, this.title, (float) this.titleX, (float) this.titleY, 4210752);
-		font.func_243248_b(matrixStack, new TranslationTextComponent("gui.chemicalboiler.usage", ElectricityChatFormatter.getDisplayShort(container.getJoulesPerTick() * 20, ElectricUnit.WATT)),
-				(float) playerInventoryTitleX, (float) playerInventoryTitleY, 4210752);
+		font.func_243248_b(matrixStack, title, titleX, titleY, 4210752);
+		font.func_243248_b(matrixStack, new TranslationTextComponent("gui.chemicalboiler.usage", ElectricityChatFormatter.getDisplayShort(container.getJoulesPerTick() * 20, ElectricUnit.WATT)), playerInventoryTitleX,
+				playerInventoryTitleY, 4210752);
 		font.func_243248_b(matrixStack, new TranslationTextComponent("gui.chemicalboiler.voltage", ElectricityChatFormatter.getDisplayShort(container.getVoltage(), ElectricUnit.VOLTAGE)),
 				(float) playerInventoryTitleX + 85, playerInventoryTitleY, 4210752);
 	}

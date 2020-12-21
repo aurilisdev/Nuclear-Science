@@ -62,11 +62,10 @@ public class TileChemicalBoiler extends GenericTileProcessor implements IO2OProc
 			tankWater.setAmount(Math.min(tankWater.getAmount() + 1000, TANKCAPACITY));
 		}
 		int requiredWater = getRequiredWater();
-		if(requiredWater <= 0)
-		{
+		if (requiredWater <= 0) {
 			return false;
 		}
-		int u6f = (int) (1500 + ((2400 - requiredWater) / 2400.0f) * 1500);
+		int u6f = (int) (1500 + (2400 - requiredWater) / 2400.0f * 1500);
 		return getJoulesStored() >= getJoulesPerTick() && !getStackInSlot(0).isEmpty() && getStackInSlot(0).getCount() > 0 && tankWater.getAmount() >= requiredWater && TANKCAPACITY >= tankU6F.getAmount() + u6f;
 	}
 
@@ -88,7 +87,7 @@ public class TileChemicalBoiler extends GenericTileProcessor implements IO2OProc
 	public void process() {
 		ItemStack stack = getStackInSlot(0);
 		int requiredWater = getRequiredWater();
-		int createdU6F = (int) (1500 + ((2400 - requiredWater) / 2400.0f) * 1500);
+		int createdU6F = (int) (1500 + (2400 - requiredWater) / 2400.0f * 1500);
 		stack.setCount(stack.getCount() - 1);
 		tankWater.shrink(requiredWater);
 		tankU6F.grow(createdU6F);
