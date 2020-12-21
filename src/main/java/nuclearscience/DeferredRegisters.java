@@ -20,6 +20,7 @@ import nuclearscience.common.block.BlockGasCentrifuge;
 import nuclearscience.common.fluid.FluidUraniumHexafluoride;
 import nuclearscience.common.inventory.container.ContainerChemicalBoiler;
 import nuclearscience.common.inventory.container.ContainerGasCentrifuge;
+import nuclearscience.common.tile.TileChemicalBoiler;
 import nuclearscience.common.tile.TileGasCentrifuge;
 
 public class DeferredRegisters {
@@ -49,8 +50,8 @@ public class DeferredRegisters {
 
 	public static final RegistryObject<TileEntityType<TileGasCentrifuge>> TILE_GASCENTRIFUGE = TILES.register("gascentrifuge",
 			() -> new TileEntityType<>(TileGasCentrifuge::new, Sets.newHashSet(blockGasCentrifuge), null));
-	public static final RegistryObject<TileEntityType<TileGasCentrifuge>> TILE_CHEMICALBOILER = TILES.register("chemicalboiler",
-			() -> new TileEntityType<>(TileGasCentrifuge::new, Sets.newHashSet(blockChemicalBoiler), null));
+	public static final RegistryObject<TileEntityType<TileChemicalBoiler>> TILE_CHEMICALBOILER = TILES.register("chemicalboiler",
+			() -> new TileEntityType<>(TileChemicalBoiler::new, Sets.newHashSet(blockChemicalBoiler), null));
 	public static final RegistryObject<ContainerType<ContainerGasCentrifuge>> CONTAINER_GASCENTRIFUGE = CONTAINERS.register("gascentrifuge", () -> new ContainerType<>(ContainerGasCentrifuge::new));
 	public static final RegistryObject<ContainerType<ContainerChemicalBoiler>> CONTAINER_CHEMICALBOILER = CONTAINERS.register("chemicalboiler", () -> new ContainerType<>(ContainerChemicalBoiler::new));
 
