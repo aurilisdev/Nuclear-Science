@@ -8,11 +8,15 @@
 	"item.nuclearscience.celltritium": "Empty cell",
 	"block.nuclearscience.gascentrifuge": "Gas Centrifuge",
 	"block.nuclearscience.chemicalboiler": "Chemical Boiler",
+	"block.nuclearscience.chemicalextractor": "Chemical Extractor",
 	"container.gascentrifuge": "Gas Centrifuge",
 	"container.chemicalboiler": "Chemical Boiler",
+	"container.chemicalextractor": "Chemical Extractor",
 	"gui.gascentrifuge.usage": "Usage: %s",
 	"gui.gascentrifuge.voltage": "Voltage: %s",
 	"gui.chemicalboiler.usage": "Usage: %s",
 	"gui.chemicalboiler.voltage": "Voltage: %s",
+	"gui.chemicalextractor.usage": "Usage: %s",
+	"gui.chemicalextractor.voltage": "Voltage: %s",
 	"itemGroup.itemgroupnuclearscience": "Nuclear Science"
 }

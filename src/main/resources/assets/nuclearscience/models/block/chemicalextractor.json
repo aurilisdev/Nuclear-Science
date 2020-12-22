@@ -2,7 +2,8 @@
 	"credit": "aurilisdev",
 	"parent": "block/cube_all",
 	"textures": {
-		"1": "nuclearscience:model/chemicalextractor"
+		"1": "nuclearscience:model/chemicalextractor",
+		"particle": "nuclearscience:model/chemicalextractor"
 	},
 	"elements": [
 		{

@@ -1,6 +1,8 @@
 package nuclearscience.client;
 
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -10,6 +12,7 @@ import nuclearscience.DeferredRegisters;
 import nuclearscience.References;
 import nuclearscience.client.render.tile.GasCentrifugeRenderer;
 import nuclearscience.client.screen.ScreenChemicalBoiler;
+import nuclearscience.client.screen.ScreenChemicalExtractor;
 import nuclearscience.client.screen.ScreenGasCentrifuge;
 
 @OnlyIn(Dist.CLIENT)
@@ -27,5 +30,9 @@ public class ClientRegister {
 
 		ScreenManager.registerFactory(DeferredRegisters.CONTAINER_GASCENTRIFUGE.get(), ScreenGasCentrifuge::new);
 		ScreenManager.registerFactory(DeferredRegisters.CONTAINER_CHEMICALBOILER.get(), ScreenChemicalBoiler::new);
+		ScreenManager.registerFactory(DeferredRegisters.CONTAINER_CHEMICALEXTRACTOR.get(), ScreenChemicalExtractor::new);
+
+		RenderTypeLookup.setRenderLayer(DeferredRegisters.blockChemicalExtractor, RenderType.getCutout());
+
 	}
 }

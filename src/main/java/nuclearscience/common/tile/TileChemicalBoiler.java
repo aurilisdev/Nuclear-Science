@@ -220,6 +220,7 @@ public class TileChemicalBoiler extends GenericTileProcessor implements IO2OProc
 		if (action == FluidAction.EXECUTE) {
 			tankU6F.shrink(amount);
 		}
+		// This might be dangerous? Doesnt check if its trying to pull from correct direction
 		return amount == 0 ? FluidStack.EMPTY : new FluidStack(tankU6F.getFluid(), amount);
 	}
 }
