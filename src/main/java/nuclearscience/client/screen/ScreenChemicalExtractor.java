@@ -45,7 +45,7 @@ public class ScreenChemicalExtractor extends GenericContainerScreenUpgradeable<C
 		if (burnLeftScaled > 17) {
 			blit(stack, guiLeft + 44 + 60, guiTop + 30, 212, 14, Math.min(burnLeftScaled * 2 - 34 + 1, 34), 16);
 		}
-		blit(stack, guiLeft + 51, guiTop + 68 - container.getWaterLevelScaled(), 214 + 18, 31, 16, container.getWaterLevelScaled());
+		blit(stack, guiLeft + 51, guiTop + 68 - container.getWaterLevelScaled(), 214, 31, 16, container.getWaterLevelScaled());
 	}
 
 }

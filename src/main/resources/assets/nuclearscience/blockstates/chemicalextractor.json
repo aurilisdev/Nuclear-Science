@@ -1,4 +1,5 @@
 {
+	"forge_marker": 1,
 	"variants": {
 		"facing=west": {
 			"model": "nuclearscience:block/chemicalextractor",

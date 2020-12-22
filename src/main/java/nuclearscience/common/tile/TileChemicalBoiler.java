@@ -125,7 +125,7 @@ public class TileChemicalBoiler extends GenericTileProcessor implements IO2OProc
 
 	@Override
 	public ItemStack getInput() {
-		return ItemStack.EMPTY;
+		return getStackInSlot(0);
 	}
 
 	protected final IIntArray inventorydata = new IIntArray() {

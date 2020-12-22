@@ -6,6 +6,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.text.ITextComponent;
@@ -43,6 +44,11 @@ public class TileChemicalExtractor extends GenericTileProcessor implements IO2OP
 
 	@Override
 	public boolean canProcess() {
+		ItemStack bucketStack = getStackInSlot(2);
+		if (!bucketStack.isEmpty() && bucketStack.getCount() > 0 && bucketStack.getItem() == Items.WATER_BUCKET && tankWater.getAmount() <= TANKCAPACITY - 1000) {
+			setInventorySlotContents(2, new ItemStack(Items.BUCKET));
+			tankWater.setAmount(Math.min(tankWater.getAmount() + 1000, TANKCAPACITY));
+		}
 		return false;
 	}
 

@@ -33,9 +33,9 @@ public class DeferredRegisters {
 	public static final DeferredRegister<ContainerType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, References.ID);
 	public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, References.ID);
 	public static FluidUraniumHexafluoride fluidUraniumHexafluoride;
-	public static Block blockGasCentrifuge;
-	public static Block blockChemicalBoiler;
-	public static Block blockChemicalExtractor;
+	public static BlockGasCentrifuge blockGasCentrifuge;
+	public static BlockChemicalBoiler blockChemicalBoiler;
+	public static BlockChemicalExtractor blockChemicalExtractor;
 
 	static {
 		BLOCKS.register("gascentrifuge", supplier(blockGasCentrifuge = new BlockGasCentrifuge()));
