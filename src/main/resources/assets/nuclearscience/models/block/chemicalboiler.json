@@ -1,6 +1,7 @@
 {
 	"credit": "aurilisdev",
 	"parent": "block/cube_all",
+	"texture_size": [128, 128],
 	"textures": {
 		"0": "nuclearscience:model/chemicalboiler",
 		"particle": "nuclearscience:model/chemicalboiler"
@@ -23,11 +24,11 @@
 			"to": [14, 3, 14],
 			"rotation": {"angle": 0, "axis": "y", "origin": [8, 9, 8]},
 			"faces": {
-				"north": {"uv": [1.5, 3.625, 3, 3.75], "texture": "#0"},
-				"east": {"uv": [0, 3.625, 1.5, 3.75], "texture": "#0"},
-				"south": {"uv": [4.5, 3.625, 6, 3.75], "texture": "#0"},
-				"west": {"uv": [3, 3.625, 4.5, 3.75], "texture": "#0"},
-				"up": {"uv": [3, 3.625, 1.5, 2.125], "texture": "#0"}
+				"north": {"uv": [8.875, 9, 10.375, 9.125], "texture": "#0"},
+				"east": {"uv": [7.375, 9, 8.875, 9.125], "texture": "#0"},
+				"south": {"uv": [11.875, 9, 13.375, 9.125], "texture": "#0"},
+				"west": {"uv": [10.375, 9, 11.875, 9.125], "texture": "#0"},
+				"up": {"uv": [10.375, 9, 8.875, 7.5], "texture": "#0"}
 			}
 		},
 		{
