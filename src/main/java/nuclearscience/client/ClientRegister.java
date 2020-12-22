@@ -32,7 +32,6 @@ public class ClientRegister {
 		ScreenManager.registerFactory(DeferredRegisters.CONTAINER_CHEMICALBOILER.get(), ScreenChemicalBoiler::new);
 		ScreenManager.registerFactory(DeferredRegisters.CONTAINER_CHEMICALEXTRACTOR.get(), ScreenChemicalExtractor::new);
 
-		RenderTypeLookup.setRenderLayer(DeferredRegisters.blockChemicalExtractor, RenderType.getCutout());
-
+		RenderTypeLookup.setRenderLayer(DeferredRegisters.blockChemicalExtractor, RenderType.getTranslucent());
 	}
 }

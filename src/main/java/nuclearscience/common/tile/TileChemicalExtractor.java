@@ -64,7 +64,7 @@ public class TileChemicalExtractor extends GenericTileProcessor implements IO2OP
 
 	@Override
 	public int getSizeInventory() {
-		return 5;
+		return 6;
 	}
 
 	@Override

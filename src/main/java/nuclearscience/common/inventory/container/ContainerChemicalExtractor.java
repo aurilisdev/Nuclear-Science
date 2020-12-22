@@ -19,7 +19,7 @@ import nuclearscience.DeferredRegisters;
 public class ContainerChemicalExtractor extends GenericContainerInventory {
 
 	public ContainerChemicalExtractor(int id, PlayerInventory playerinv) {
-		this(id, playerinv, new Inventory(5));
+		this(id, playerinv, new Inventory(6));
 	}
 
 	public ContainerChemicalExtractor(int id, PlayerInventory playerinv, IInventory inventory) {
