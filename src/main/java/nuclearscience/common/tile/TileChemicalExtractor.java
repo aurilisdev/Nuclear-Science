@@ -60,17 +60,17 @@ public class TileChemicalExtractor extends GenericTileProcessor implements IO2OP
 		Item item = input.getItem();
 		ItemStack output = getOutput();
 		int requiredWater = -1;
-		if (output.getCount() < output.getMaxStackSize()) {
+		if (output.getCount() < output.getMaxStackSize() || output.isEmpty()) {
 			if (item == DeferredRegisters.ITEM_CELLEMPTY.get()) {
-				if (output.getItem() == DeferredRegisters.ITEM_CELLHEAVYWATER.get()) {
+				if (output.getItem() == DeferredRegisters.ITEM_CELLHEAVYWATER.get() || output.isEmpty()) {
 					requiredWater = REQUIRED_WATER_CAP;
 				}
 			} else if (item == DeferredRegisters.ITEM_CELLHEAVYWATER.get()) {
-				if (output.getItem() == DeferredRegisters.ITEM_CELLDEUTERIUM.get()) {
+				if (output.getItem() == DeferredRegisters.ITEM_CELLDEUTERIUM.get() || output.isEmpty()) {
 					requiredWater = REQUIRED_WATER_CAP;
 				}
 			} else if (item == electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeOre.uraninite)) {
-				if (output.getItem() == DeferredRegisters.ITEM_CELLHEAVYWATER.get()) {
+				if (output.getItem() == DeferredRegisters.ITEM_YELLOWCAKE.get() || output.isEmpty()) {
 					requiredWater = REQUIRED_WATER_CAP / 3;
 				}
 			}
