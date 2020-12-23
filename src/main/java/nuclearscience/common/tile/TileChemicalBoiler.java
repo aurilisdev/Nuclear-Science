@@ -66,7 +66,7 @@ public class TileChemicalBoiler extends GenericTileProcessor implements IO2OProc
 			return false;
 		}
 		int u6f = (int) (1500 + (2400 - requiredWater) / 2400.0f * 1500);
-		return getJoulesStored() >= getJoulesPerTick() && !getStackInSlot(0).isEmpty() && getStackInSlot(0).getCount() > 0 && tankWater.getAmount() >= requiredWater && TANKCAPACITY >= tankU6F.getAmount() + u6f;
+		return getJoulesStored() >= getJoulesPerTick() && !getInput().isEmpty() && getInput().getCount() > 0 && tankWater.getAmount() >= requiredWater && TANKCAPACITY >= tankU6F.getAmount() + u6f;
 	}
 
 	private int getRequiredWater() {
@@ -85,7 +85,7 @@ public class TileChemicalBoiler extends GenericTileProcessor implements IO2OProc
 
 	@Override
 	public void process() {
-		ItemStack stack = getStackInSlot(0);
+		ItemStack stack = getInput();
 		int requiredWater = getRequiredWater();
 		int createdU6F = (int) (1500 + (2400 - requiredWater) / 2400.0f * 1500);
 		stack.setCount(stack.getCount() - 1);
@@ -220,7 +220,8 @@ public class TileChemicalBoiler extends GenericTileProcessor implements IO2OProc
 		if (action == FluidAction.EXECUTE) {
 			tankU6F.shrink(amount);
 		}
-		// This might be dangerous? Doesnt check if its trying to pull from correct direction
+		// This might be dangerous? Doesnt check if its trying to pull from correct
+		// direction
 		return amount == 0 ? FluidStack.EMPTY : new FluidStack(tankU6F.getFluid(), amount);
 	}
 }

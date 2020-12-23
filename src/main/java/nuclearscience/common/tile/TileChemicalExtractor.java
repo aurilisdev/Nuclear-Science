@@ -1,10 +1,12 @@
 package nuclearscience.common.tile;
 
 import electrodynamics.api.tile.processing.IO2OProcessor;
+import electrodynamics.common.block.subtype.SubtypeOre;
 import electrodynamics.common.tile.generic.GenericTileProcessor;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.Direction;
@@ -49,17 +51,59 @@ public class TileChemicalExtractor extends GenericTileProcessor implements IO2OP
 			setInventorySlotContents(2, new ItemStack(Items.BUCKET));
 			tankWater.setAmount(Math.min(tankWater.getAmount() + 1000, TANKCAPACITY));
 		}
-		return false;
+		int requiredWater = getRequiredWater();
+		return getJoulesStored() >= getJoulesPerTick() && !getStackInSlot(0).isEmpty() && getStackInSlot(0).getCount() > 0 && tankWater.getAmount() >= requiredWater && requiredWater > 0;
 	}
 
 	private int getRequiredWater() {
+		ItemStack input = getInput();
+		Item item = input.getItem();
+		ItemStack output = getOutput();
 		int requiredWater = -1;
+		if (output.getCount() < output.getMaxStackSize()) {
+			if (item == DeferredRegisters.ITEM_CELLEMPTY.get()) {
+				if (output.getItem() == DeferredRegisters.ITEM_CELLHEAVYWATER.get()) {
+					requiredWater = REQUIRED_WATER_CAP;
+				}
+			} else if (item == DeferredRegisters.ITEM_CELLHEAVYWATER.get()) {
+				if (output.getItem() == DeferredRegisters.ITEM_CELLDEUTERIUM.get()) {
+					requiredWater = REQUIRED_WATER_CAP;
+				}
+			} else if (item == electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeOre.uraninite)) {
+				if (output.getItem() == DeferredRegisters.ITEM_CELLHEAVYWATER.get()) {
+					requiredWater = REQUIRED_WATER_CAP / 3;
+				}
+			}
+		}
 		return requiredWater;
 	}
 
 	@Override
 	public void process() {
 		int requiredWater = getRequiredWater();
+		ItemStack stack = getInput();
+		Item item = stack.getItem();
+		ItemStack output = getOutput();
+		if (item == DeferredRegisters.ITEM_CELLEMPTY.get()) {
+			if (output.isEmpty()) {
+				setInventorySlotContents(1, new ItemStack(DeferredRegisters.ITEM_CELLHEAVYWATER.get()));
+			} else {
+				output.setCount(output.getCount() + 1);
+			}
+		} else if (item == DeferredRegisters.ITEM_CELLHEAVYWATER.get()) {
+			if (output.isEmpty()) {
+				setInventorySlotContents(1, new ItemStack(DeferredRegisters.ITEM_CELLDEUTERIUM.get()));
+			} else {
+				output.setCount(output.getCount() + 1);
+			}
+		} else if (item == electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeOre.uraninite)) {
+			if (output.isEmpty()) {
+				setInventorySlotContents(1, new ItemStack(DeferredRegisters.ITEM_YELLOWCAKE.get()));
+			} else {
+				output.setCount(output.getCount() + 1);
+			}
+		}
+		stack.setCount(stack.getCount() - 1);
 		tankWater.shrink(requiredWater);
 	}
 
@@ -95,7 +139,7 @@ public class TileChemicalExtractor extends GenericTileProcessor implements IO2OP
 
 	@Override
 	public ItemStack getInput() {
-		return ItemStack.EMPTY;
+		return getStackInSlot(0);
 	}
 
 	protected final IIntArray inventorydata = new IIntArray() {
@@ -137,11 +181,12 @@ public class TileChemicalExtractor extends GenericTileProcessor implements IO2OP
 
 	@Override
 	public void setOutput(ItemStack stack) {
+		setInventorySlotContents(1, stack);
 	}
 
 	@Override
 	public ItemStack getOutput() {
-		return ItemStack.EMPTY;
+		return getStackInSlot(1);
 	}
 
 	@Override
