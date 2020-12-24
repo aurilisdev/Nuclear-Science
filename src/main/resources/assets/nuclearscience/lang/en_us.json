@@ -6,6 +6,8 @@
 	"item.nuclearscience.celldeuterium": "Deuterium cell",
 	"item.nuclearscience.cellheavywater": "Heavy Water cell",
 	"item.nuclearscience.celltritium": "Empty cell",
+	"item.nuclearscience.fuelheu2": "Highly Enriched UO2 Fuel",
+	"item.nuclearscience.fuelleu2": "Low Enriched UO2 Fuel",
 	"block.nuclearscience.gascentrifuge": "Gas Centrifuge",
 	"block.nuclearscience.chemicalboiler": "Chemical Boiler",
 	"block.nuclearscience.chemicalextractor": "Chemical Extractor",
