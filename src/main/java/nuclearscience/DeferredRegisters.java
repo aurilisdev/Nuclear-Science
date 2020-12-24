@@ -53,8 +53,8 @@ public class DeferredRegisters {
 	public static final RegistryObject<Item> ITEM_CELLDEUTERIUM = ITEMS.register("celldeuterium", supplier(new Item(new Item.Properties().group(References.CORETAB))));
 	public static final RegistryObject<Item> ITEM_CELLTRITIUM = ITEMS.register("celltritium", supplier(new Item(new Item.Properties().group(References.CORETAB))));
 	public static final RegistryObject<Item> ITEM_CELLHEAVYWATER = ITEMS.register("cellheavywater", supplier(new Item(new Item.Properties().group(References.CORETAB))));
-	public static final RegistryObject<Item> ITEM_FUELHEU2 = ITEMS.register("fuelheu2", supplier(new Item(new Item.Properties().group(References.CORETAB).maxStackSize(1).defaultMaxDamage(24000))));
-	public static final RegistryObject<Item> ITEM_FUELLEU2 = ITEMS.register("fuelleu2", supplier(new Item(new Item.Properties().group(References.CORETAB).maxStackSize(1).defaultMaxDamage(26000))));
+	public static final RegistryObject<Item> ITEM_FUELHEUO2 = ITEMS.register("fuelheuo2", supplier(new Item(new Item.Properties().group(References.CORETAB).maxStackSize(1).defaultMaxDamage(24000))));
+	public static final RegistryObject<Item> ITEM_FUELLEUO2 = ITEMS.register("fuelleuo2", supplier(new Item(new Item.Properties().group(References.CORETAB).maxStackSize(1).defaultMaxDamage(26000))));
 
 	public static final RegistryObject<TileEntityType<TileGasCentrifuge>> TILE_GASCENTRIFUGE = TILES.register("gascentrifuge",
 			() -> new TileEntityType<>(TileGasCentrifuge::new, Sets.newHashSet(blockGasCentrifuge), null));

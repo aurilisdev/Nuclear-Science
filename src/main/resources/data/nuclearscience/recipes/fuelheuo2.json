@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"gyg",
+		"gug",
+		"gyg"
+	],
+	"key": {
+		"g": {
+			"item": "minecraft:glass"
+		},
+		"u": {
+			"item": "nuclearscience:uranium235"
+		},
+		"y": {
+			"item": "nuclearscience:uranium238"
+		}
+	},
+	"result": {
+		"item": "nuclearscience:fuelheuo2",
+		"count": 1
+	}
+}

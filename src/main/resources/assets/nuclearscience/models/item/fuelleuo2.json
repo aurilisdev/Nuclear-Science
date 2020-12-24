@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "nuclearscience:item/fuelleu2"
+		"layer0": "nuclearscience:item/fuelleuo2"
 	}
 }
