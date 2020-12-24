@@ -1,0 +1,26 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"sps",
+		"mam",
+		"sps"
+	],
+	"key": {
+		"p": {
+			"tag": "forge:plates/steel"
+		},
+		"s": {
+			"tag": "forge:ingots/steel"
+		},
+		"a": {
+			"tag": "forge:circuits/advanced"
+		},
+		"m": {
+			"item": "electrodynamics:motor"
+		}
+	},
+	"result": {
+		"item": "nuclearscience:chemicalextractor",
+		"count": 1
+	}
+}

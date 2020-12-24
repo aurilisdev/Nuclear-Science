@@ -1,0 +1,32 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"pap",
+		"efe",
+		"pmp"
+	],
+	"key": {
+		"p": {
+			"tag": "forge:plates/steel"
+		},
+		"s": {
+			"tag": "forge:ingots/steel"
+		},
+		"a": {
+			"tag": "forge:circuits/advanced"
+		},
+		"m": {
+			"item": "electrodynamics:motor"
+		},
+		"e": {
+			"item": "nuclearscience:cellempty"
+		},
+		"f": {
+			"item": "electrodynamics:electricfurnace"
+		}
+	},
+	"result": {
+		"item": "nuclearscience:chemicalboiler",
+		"count": 1
+	}
+}
