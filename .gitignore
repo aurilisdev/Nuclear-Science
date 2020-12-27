@@ -46,5 +46,3 @@ releaseJarsOnly/
 Physica_Client.launch
 
 Physica_Server.launch
-
-*.launch
