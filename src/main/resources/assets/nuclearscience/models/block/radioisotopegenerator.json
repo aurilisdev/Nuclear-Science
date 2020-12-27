@@ -1,6 +1,6 @@
 {
 	"credit": "aurilisdev",
-	"texture_size": [128, 128],
+	"parent": "block/cube_all",
 	"textures": {
 		"0": "nuclearscience:model/radioisotopegenerator",
 		"particle": "nuclearscience:model/radioisotopegenerator"

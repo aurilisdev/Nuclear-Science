@@ -10,6 +10,8 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import nuclearscience.api.radiation.FieldRadioactiveObject;
+import nuclearscience.api.radiation.RadiationRegister;
 import nuclearscience.client.ClientRegister;
 
 @Mod(References.ID)
@@ -33,5 +35,11 @@ public class NuclearScience {
 
 	@SubscribeEvent
 	public static void onLoadEvent(FMLLoadCompleteEvent event) {
+		RadiationRegister.register(DeferredRegisters.ITEM_URANIUM235.get(), new FieldRadioactiveObject(1000));
+		RadiationRegister.register(DeferredRegisters.ITEM_URANIUM238.get(), new FieldRadioactiveObject(500));
+		RadiationRegister.register(DeferredRegisters.ITEM_YELLOWCAKE.get(), new FieldRadioactiveObject(300));
+		RadiationRegister.register(DeferredRegisters.ITEM_FUELHEUO2.get(), new FieldRadioactiveObject(3000));
+		RadiationRegister.register(DeferredRegisters.ITEM_FUELLEUO2.get(), new FieldRadioactiveObject(2000));
+
 	}
 }

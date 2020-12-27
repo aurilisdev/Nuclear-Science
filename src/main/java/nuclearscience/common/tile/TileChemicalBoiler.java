@@ -65,7 +65,7 @@ public class TileChemicalBoiler extends GenericTileProcessor implements IO2OProc
 		if (requiredWater <= 0) {
 			return false;
 		}
-		int u6f = (int) (1500 + (2400 - requiredWater) / 2400.0f * 1500);
+		int u6f = (int) (500 + (2400 - requiredWater) / 2400.0f * 1500);
 		return getJoulesStored() >= getJoulesPerTick() && !getInput().isEmpty() && getInput().getCount() > 0 && tankWater.getAmount() >= requiredWater && TANKCAPACITY >= tankU6F.getAmount() + u6f;
 	}
 
