@@ -22,6 +22,8 @@
 	"gui.chemicalboiler.voltage": "Voltage: %s",
 	"gui.chemicalextractor.usage": "Usage: %s",
 	"gui.chemicalextractor.voltage": "Voltage: %s",
-	"gui.radioisotopegenerator.generating": "Generating: %s",
+	"gui.radioisotopegenerator.output": "Output: %s",
+	"gui.radioisotopegenerator.current": "Current: %s",
+	"gui.radioisotopegenerator.voltage": "Voltage: %s",
 	"itemGroup.itemgroupnuclearscience": "Nuclear Science"
 }

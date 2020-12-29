@@ -14,6 +14,7 @@ import nuclearscience.client.render.tile.GasCentrifugeRenderer;
 import nuclearscience.client.screen.ScreenChemicalBoiler;
 import nuclearscience.client.screen.ScreenChemicalExtractor;
 import nuclearscience.client.screen.ScreenGasCentrifuge;
+import nuclearscience.client.screen.ScreenRadioisotopeGenerator;
 
 @OnlyIn(Dist.CLIENT)
 public class ClientRegister {
@@ -31,6 +32,7 @@ public class ClientRegister {
 		ScreenManager.registerFactory(DeferredRegisters.CONTAINER_GASCENTRIFUGE.get(), ScreenGasCentrifuge::new);
 		ScreenManager.registerFactory(DeferredRegisters.CONTAINER_CHEMICALBOILER.get(), ScreenChemicalBoiler::new);
 		ScreenManager.registerFactory(DeferredRegisters.CONTAINER_CHEMICALEXTRACTOR.get(), ScreenChemicalExtractor::new);
+		ScreenManager.registerFactory(DeferredRegisters.CONTAINER_RADIOISOTOPEGENERATOR.get(), ScreenRadioisotopeGenerator::new);
 
 		RenderTypeLookup.setRenderLayer(DeferredRegisters.blockChemicalExtractor, ClientRegister::shouldExtractorRenderInLayer);
 	}

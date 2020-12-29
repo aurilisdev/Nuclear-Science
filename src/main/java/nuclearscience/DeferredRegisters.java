@@ -23,6 +23,7 @@ import nuclearscience.common.fluid.FluidUraniumHexafluoride;
 import nuclearscience.common.inventory.container.ContainerChemicalBoiler;
 import nuclearscience.common.inventory.container.ContainerChemicalExtractor;
 import nuclearscience.common.inventory.container.ContainerGasCentrifuge;
+import nuclearscience.common.inventory.container.ContainerRadioisotopeGenerator;
 import nuclearscience.common.item.ItemRadioactive;
 import nuclearscience.common.tile.TileChemicalBoiler;
 import nuclearscience.common.tile.TileChemicalExtractor;
@@ -73,6 +74,8 @@ public class DeferredRegisters {
 	public static final RegistryObject<ContainerType<ContainerGasCentrifuge>> CONTAINER_GASCENTRIFUGE = CONTAINERS.register("gascentrifuge", () -> new ContainerType<>(ContainerGasCentrifuge::new));
 	public static final RegistryObject<ContainerType<ContainerChemicalBoiler>> CONTAINER_CHEMICALBOILER = CONTAINERS.register("chemicalboiler", () -> new ContainerType<>(ContainerChemicalBoiler::new));
 	public static final RegistryObject<ContainerType<ContainerChemicalExtractor>> CONTAINER_CHEMICALEXTRACTOR = CONTAINERS.register("chemicalextractor", () -> new ContainerType<>(ContainerChemicalExtractor::new));
+	public static final RegistryObject<ContainerType<ContainerRadioisotopeGenerator>> CONTAINER_RADIOISOTOPEGENERATOR = CONTAINERS.register("radioisotopegenerator",
+			() -> new ContainerType<>(ContainerRadioisotopeGenerator::new));
 
 	@SubscribeEvent
 	public static void onLoadEvent(FMLLoadCompleteEvent event) {

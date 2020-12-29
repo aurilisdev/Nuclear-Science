@@ -6,7 +6,6 @@ import electrodynamics.api.tile.electric.IPowerProvider;
 import electrodynamics.api.tile.electric.IPowerReceiver;
 import electrodynamics.api.utilities.CachedTileOutput;
 import electrodynamics.api.utilities.TransferPack;
-import electrodynamics.common.inventory.container.ContainerCoalGenerator;
 import electrodynamics.common.tile.generic.GenericTileInventory;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -19,6 +18,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.api.radiation.IRadioactiveObject;
 import nuclearscience.api.radiation.RadiationRegister;
+import nuclearscience.common.inventory.container.ContainerRadioisotopeGenerator;
 import nuclearscience.common.settings.Constants;
 
 public class TileRadioisotopeGenerator extends GenericTileInventory implements ITickableTileBase, IPowerProvider, IElectricTile {
@@ -33,7 +33,7 @@ public class TileRadioisotopeGenerator extends GenericTileInventory implements I
 
 	@Override
 	public double getVoltage(Direction arg0) {
-		return 120;
+		return Constants.RADIOISOTOPEGENERATOR_VOLTAGE;
 	}
 
 	@Override
@@ -49,6 +49,9 @@ public class TileRadioisotopeGenerator extends GenericTileInventory implements I
 		double currentOutput = in.getCount() * Constants.RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER * rad.getRadiationStrength();
 		if (currentOutput > 0) {
 			TransferPack transfer = TransferPack.ampsVoltage(currentOutput / getVoltage(Direction.UP), getVoltage(Direction.UP));
+			if (output1.get() instanceof IPowerReceiver && output2.get() instanceof IPowerReceiver) {
+				transfer = TransferPack.ampsVoltage(transfer.getAmps() / 2.0, transfer.getVoltage());
+			}
 			if (output1.get() instanceof IPowerReceiver) {
 				output1.<IPowerReceiver>get().receivePower(transfer, getFacing(), false);
 			}
@@ -70,7 +73,7 @@ public class TileRadioisotopeGenerator extends GenericTileInventory implements I
 
 	@Override
 	protected Container createMenu(int id, PlayerInventory player) {
-		return new ContainerCoalGenerator(id, player, this, inventorydata);
+		return new ContainerRadioisotopeGenerator(id, player, this, inventorydata);
 	}
 
 	protected final IIntArray inventorydata = new IIntArray() {
