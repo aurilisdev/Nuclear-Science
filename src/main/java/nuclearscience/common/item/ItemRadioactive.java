@@ -1,7 +1,6 @@
 package nuclearscience.common.item;
 
 import java.util.List;
-import java.util.UUID;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
@@ -11,7 +10,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import nuclearscience.api.radiation.RadiationRegister;
 import nuclearscience.api.radiation.RadiationSystem;
@@ -33,7 +31,6 @@ public class ItemRadioactive extends Item {
 		List<LivingEntity> list = world.getEntitiesWithinAABB(LivingEntity.class, bb);
 		for (LivingEntity living : list) {
 			double rad = RadiationSystem.getRadiation(world, source, new Vector3f(living.getPositionVec()), totstrength);
-			living.sendMessage(new StringTextComponent("you are affected by: " + rad + " rads"), UUID.randomUUID());
 			living.attackEntityFrom(DamageSource.MAGIC, (float) (rad / 800.0f));
 		}
 		return super.onEntityItemUpdate(stack, entity);
