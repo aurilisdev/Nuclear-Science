@@ -48,7 +48,7 @@ public class TileChemicalBoiler extends GenericTileProcessor implements IO2OProc
 
 	@Override
 	public boolean canProcess() {
-		BlockPos face = getPos().offset(getFacing().getOpposite());
+		BlockPos face = getPos().offset(getFacing().getOpposite().rotateY());
 		TileEntity faceTile = world.getTileEntity(face);
 		if (faceTile instanceof IFluidHandler) {
 			IFluidHandler handler = (IFluidHandler) faceTile;
