@@ -9,9 +9,6 @@
 		"p": {
 			"tag": "forge:plates/steel"
 		},
-		"s": {
-			"tag": "forge:ingots/steel"
-		},
 		"a": {
 			"tag": "forge:circuits/advanced"
 		},
