@@ -8,8 +8,7 @@ import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.world.World;
 
 public class RadiationSystem {
-	public static double getRadiation(World world, Vector3f source, Vector3f end, double strength) {
-		double radiation = 0;
+	public static double getRadiationModifier(World world, Vector3f source, Vector3f end, double strength) {
 		double distance = 1 + Math.sqrt(Math.pow(source.getX() - end.getX(), 2) + Math.pow(source.getY() - end.getY(), 2) + Math.pow(source.getZ() - end.getZ(), 2));
 		Vector3f clone = end.copy();
 		double modifier = 1;
@@ -17,7 +16,7 @@ public class RadiationSystem {
 		clone.sub(source);
 		clone.normalize();
 		clone.mul(0.33f);
-		int checks = (int) Math.floor(distance * 3);
+		int checks = (int) distance * 3;
 		BlockPos curr = new BlockPos(newSource.getX(), newSource.getY(), newSource.getZ());
 		double lastHard = 0;
 		while (checks > 0) {
@@ -31,8 +30,12 @@ public class RadiationSystem {
 			modifier += hard / 4.5f;
 			checks--;
 		}
-		radiation = strength / (modifier * distance * distance);
-		return radiation;
+		return modifier;
+	}
+
+	public static double getRadiation(World world, Vector3f source, Vector3f end, double strength) {
+		double distance = 1 + Math.sqrt(Math.pow(source.getX() - end.getX(), 2) + Math.pow(source.getY() - end.getY(), 2) + Math.pow(source.getZ() - end.getZ(), 2));
+		return strength / (getRadiationModifier(world, source, end, strength) * distance * distance);
 	}
 
 	public static void applyRadiation(LivingEntity entity, Vector3f source, double strength) {
