@@ -8,7 +8,6 @@ import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.world.World;
 
 public class RadiationSystem {
-
 	public static double getRadiation(World world, Vector3f source, Vector3f end, double strength) {
 		double radiation = 0;
 		double distance = 1 + Math.sqrt(Math.pow(source.getX() - end.getX(), 2) + Math.pow(source.getY() - end.getY(), 2) + Math.pow(source.getZ() - end.getZ(), 2));
@@ -40,7 +39,10 @@ public class RadiationSystem {
 		int protection = 1;
 		Vector3f end = new Vector3f(entity.getPositionVec());
 		if (!(entity instanceof PlayerEntity && ((PlayerEntity) entity).isCreative()) && protection < 6) {
+			double radiation = getRadiation(entity.world, source, end, strength);
 			double distance = 1 + Math.sqrt(Math.pow(source.getX() - end.getX(), 2) + Math.pow(source.getY() - end.getY(), 2) + Math.pow(source.getZ() - end.getZ(), 2));
+			double modifier = strength / (radiation * distance * distance);
+			strength /= modifier;
 			int amplitude = (int) Math.max(0, Math.min(strength / (distance * 4000.0), 9));
 			entity.addPotionEffect(new EffectInstance(EffectRadiation.INSTANCE, (int) (strength / ((amplitude + 1) * distance)), amplitude, false, true));
 		}
