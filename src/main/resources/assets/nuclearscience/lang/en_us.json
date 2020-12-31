@@ -25,5 +25,7 @@
 	"gui.radioisotopegenerator.output": "Output: %s",
 	"gui.radioisotopegenerator.current": "Current: %s",
 	"gui.radioisotopegenerator.voltage": "Voltage: %s",
-	"itemGroup.itemgroupnuclearscience": "Nuclear Science"
+	"itemGroup.itemgroupnuclearscience": "Nuclear Science",
+	"death.attack.radiation": "%s just did a speedrun of evolution!",
+	"effect.nuclearscience.radiation": "Radiation"
 }
