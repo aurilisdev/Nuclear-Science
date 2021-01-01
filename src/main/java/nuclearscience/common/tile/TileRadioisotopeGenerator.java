@@ -97,7 +97,7 @@ public class TileRadioisotopeGenerator extends GenericTileInventory implements I
 
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
-		return true;
+		return RadiationRegister.get(stack.getItem()) != RadiationRegister.NULL;
 	}
 
 	@Override
