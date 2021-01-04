@@ -17,6 +17,7 @@ public class TileTurbine extends GenericTileBase implements ITickableTileBase, I
 
 	public static final int MAX_STEAM = 3000000;
 	protected CachedTileOutput output;
+	protected int currentVoltage = 120;
 	protected int steam;
 	public int spinSpeed = 0;
 
@@ -26,14 +27,24 @@ public class TileTurbine extends GenericTileBase implements ITickableTileBase, I
 
 	@Override
 	public double getVoltage(Direction arg0) {
-		return 120; // TODO: MAKE THIS DEPEND ON THE TURBINE ROTATION AND SCALE ACCORDINGLY. 120 IN
-					// LOW FISSION, 240 IN HIGH FISSION AND 480 IN FUSION OR MAYBE 960.
+		return currentVoltage;
+	}
+
+	public void addSteam(int steam) {
+		this.steam = Math.min(MAX_STEAM, this.steam + steam);
+		double temp = 0.03846 * steam + 100;
+		if (temp < 1500) {
+			currentVoltage = 120;
+		} else if (temp < 6000) {
+			currentVoltage = 240;
+		} else {
+			currentVoltage = 480;
+		}
 	}
 
 	@Override
 	public void tickServer() {
-
-		if (world.getWorldInfo().getDayTime() % 60 == 0) {
+		if (world.getWorldInfo().getDayTime() % 30 == 0) {
 			sendUpdatePacket();
 			spinSpeed = (int) (getVoltage(Direction.UP) / 120);
 		}
@@ -69,7 +80,7 @@ public class TileTurbine extends GenericTileBase implements ITickableTileBase, I
 
 	@Override
 	public boolean canConnectElectrically(Direction direction) {
-		return direction == Direction.UP || direction == Direction.DOWN;
+		return direction == Direction.UP;
 	}
 
 }
