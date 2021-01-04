@@ -30,21 +30,22 @@ public class TurbineRenderer extends TileEntityRenderer<TileTurbine> {
 		matrixStackIn.push();
 		GL11.glDisable(GL11.GL_LIGHTING);
 		matrixStackIn.translate(8 / 16.0, 4.75 / 16.0, 8 / 16.0);
-		matrixStackIn.rotate(new Quaternion(0, tileEntityIn.getWorld().getDayTime() * 20 % 360, 0, true));
+		double daytime = System.currentTimeMillis() / 5 * (tileEntityIn.spinSpeed / 20.0);
+		matrixStackIn.rotate(new Quaternion(0, (float) (daytime * 20 % 360), 0, true));
 		Minecraft.getInstance().getBlockRendererDispatcher().getBlockModelRenderer().renderModel(tileEntityIn.getWorld(), ibakedmodel, tileEntityIn.getBlockState(), tileEntityIn.getPos(), matrixStackIn,
 				bufferIn.getBuffer(RenderType.getCutoutMipped()), false, tileEntityIn.getWorld().rand, new Random().nextLong(), 1);
 		matrixStackIn.pop();
 		matrixStackIn.push();
 		GL11.glDisable(GL11.GL_LIGHTING);
 		matrixStackIn.translate(8 / 16.0, 7.75 / 16.0, 8 / 16.0);
-		matrixStackIn.rotate(new Quaternion(0, tileEntityIn.getWorld().getDayTime() * 20 % 360 + 45, 0, true));
+		matrixStackIn.rotate(new Quaternion(0, (float) (daytime * 20 % 360 + 22.5f), 0, true));
 		Minecraft.getInstance().getBlockRendererDispatcher().getBlockModelRenderer().renderModel(tileEntityIn.getWorld(), ibakedmodel, tileEntityIn.getBlockState(), tileEntityIn.getPos(), matrixStackIn,
 				bufferIn.getBuffer(RenderType.getCutoutMipped()), false, tileEntityIn.getWorld().rand, new Random().nextLong(), 1);
 		matrixStackIn.pop();
 		matrixStackIn.push();
 		GL11.glDisable(GL11.GL_LIGHTING);
 		matrixStackIn.translate(8 / 16.0, 10.75 / 16.0, 8 / 16.0);
-		matrixStackIn.rotate(new Quaternion(0, tileEntityIn.getWorld().getDayTime() * 20 % 360, 0, true));
+		matrixStackIn.rotate(new Quaternion(0, (float) (daytime * 20 % 360 + 45.0f), 0, true));
 		Minecraft.getInstance().getBlockRendererDispatcher().getBlockModelRenderer().renderModel(tileEntityIn.getWorld(), ibakedmodel, tileEntityIn.getBlockState(), tileEntityIn.getPos(), matrixStackIn,
 				bufferIn.getBuffer(RenderType.getCutoutMipped()), false, tileEntityIn.getWorld().rand, new Random().nextLong(), 1);
 		matrixStackIn.pop();

@@ -45,12 +45,19 @@ public class TileGasCentrifuge extends GenericTileProcessor implements IO2OProce
 
 	@Override
 	public boolean canProcess() {
-		return getJoulesStored() >= getJoulesPerTick() && tankU6F.getAmount() >= REQUIRED / 60.0 && getStackInSlot(0).getCount() < getStackInSlot(0).getMaxStackSize()
+		boolean val = getJoulesStored() >= getJoulesPerTick() && tankU6F.getAmount() >= REQUIRED / 60.0 && getStackInSlot(0).getCount() < getStackInSlot(0).getMaxStackSize()
 				&& getStackInSlot(1).getCount() < getStackInSlot(1).getMaxStackSize();
+		if (!val && spinSpeed > 0) {
+			spinSpeed = 0;
+			sendUpdatePacket();
+		}
+		return val;
 	}
 
 	@Override
 	public void process() {
+		spinSpeed = (int) currentSpeedMultiplier;
+		sendUpdatePacket();
 		int processed = (int) (REQUIRED / 60.0);
 		tankU6F.shrink(processed);
 		stored235 += processed * 0.172;
@@ -168,6 +175,19 @@ public class TileGasCentrifuge extends GenericTileProcessor implements IO2OProce
 			return 7;
 		}
 	};
+	public int spinSpeed;
+
+	@Override
+	public CompoundNBT createUpdateTag() {
+		CompoundNBT tag = super.createUpdateTag();
+		tag.putInt("spinSpeed", spinSpeed);
+		return tag;
+	}
+
+	@Override
+	public void handleUpdatePacket(CompoundNBT nbt) {
+		spinSpeed = nbt.getInt("spinSpeed");
+	}
 
 	@Override
 	public ItemStack getOutput() {
