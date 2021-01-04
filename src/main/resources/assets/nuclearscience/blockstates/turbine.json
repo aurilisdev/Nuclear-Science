@@ -1,0 +1,20 @@
+{
+	"variants": {
+		"facing=west": {
+			"model": "nuclearscience:block/turbinecasing",
+			"y": 0
+		},
+		"facing=south": {
+			"model": "nuclearscience:block/turbinecasing",
+			"y": 270
+		},
+		"facing=north": {
+			"model": "nuclearscience:block/turbinecasing",
+			"y": 90
+		},
+		"facing=east": {
+			"model": "nuclearscience:block/turbinecasing",
+			"y": 180
+		}
+	}
+}

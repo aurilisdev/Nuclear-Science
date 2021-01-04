@@ -17,6 +17,7 @@ import nuclearscience.common.block.BlockChemicalBoiler;
 import nuclearscience.common.block.BlockChemicalExtractor;
 import nuclearscience.common.block.BlockGasCentrifuge;
 import nuclearscience.common.block.BlockRadioisotopeGenerator;
+import nuclearscience.common.block.BlockTurbine;
 import nuclearscience.common.fluid.FluidUraniumHexafluoride;
 import nuclearscience.common.inventory.container.ContainerChemicalBoiler;
 import nuclearscience.common.inventory.container.ContainerChemicalExtractor;
@@ -27,6 +28,7 @@ import nuclearscience.common.tile.TileChemicalBoiler;
 import nuclearscience.common.tile.TileChemicalExtractor;
 import nuclearscience.common.tile.TileGasCentrifuge;
 import nuclearscience.common.tile.TileRadioisotopeGenerator;
+import nuclearscience.common.tile.TileTurbine;
 
 public class DeferredRegisters {
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, References.ID);
@@ -39,16 +41,19 @@ public class DeferredRegisters {
 	public static BlockChemicalBoiler blockChemicalBoiler;
 	public static BlockChemicalExtractor blockChemicalExtractor;
 	public static BlockRadioisotopeGenerator blockRadioisotopeGenerator;
+	public static BlockTurbine blockTurbine;
 
 	static {
 		BLOCKS.register("gascentrifuge", supplier(blockGasCentrifuge = new BlockGasCentrifuge()));
 		BLOCKS.register("chemicalboiler", supplier(blockChemicalBoiler = new BlockChemicalBoiler()));
 		BLOCKS.register("chemicalextractor", supplier(blockChemicalExtractor = new BlockChemicalExtractor()));
 		BLOCKS.register("radioisotopegenerator", supplier(blockRadioisotopeGenerator = new BlockRadioisotopeGenerator()));
+		BLOCKS.register("turbine", supplier(blockTurbine = new BlockTurbine()));
 		ITEMS.register("gascentrifuge", supplier(new BlockItemDescriptable(blockGasCentrifuge, new Item.Properties().group(References.CORETAB))));
 		ITEMS.register("chemicalboiler", supplier(new BlockItemDescriptable(blockChemicalBoiler, new Item.Properties().group(References.CORETAB))));
 		ITEMS.register("chemicalextractor", supplier(new BlockItemDescriptable(blockChemicalExtractor, new Item.Properties().group(References.CORETAB))));
 		ITEMS.register("radioisotopegenerator", supplier(new BlockItemDescriptable(blockRadioisotopeGenerator, new Item.Properties().group(References.CORETAB))));
+		ITEMS.register("turbine", supplier(new BlockItemDescriptable(blockTurbine, new Item.Properties().group(References.CORETAB))));
 		FLUIDS.register("fluiduraniumhexafluoride", supplier(fluidUraniumHexafluoride = new FluidUraniumHexafluoride()));
 	}
 	public static final RegistryObject<Item> ITEM_URANIUM235 = ITEMS.register("uranium235", supplier(new ItemRadioactive(new Item.Properties().group(References.CORETAB))));
@@ -69,6 +74,7 @@ public class DeferredRegisters {
 			() -> new TileEntityType<>(TileChemicalExtractor::new, Sets.newHashSet(blockChemicalExtractor), null));
 	public static final RegistryObject<TileEntityType<TileRadioisotopeGenerator>> TILE_RADIOISOTOPEGENERATOR = TILES.register("radioisotopegenerator",
 			() -> new TileEntityType<>(TileRadioisotopeGenerator::new, Sets.newHashSet(blockRadioisotopeGenerator), null));
+	public static final RegistryObject<TileEntityType<TileTurbine>> TILE_TURBINE = TILES.register("turbine", () -> new TileEntityType<>(TileTurbine::new, Sets.newHashSet(blockTurbine), null));
 	public static final RegistryObject<ContainerType<ContainerGasCentrifuge>> CONTAINER_GASCENTRIFUGE = CONTAINERS.register("gascentrifuge", () -> new ContainerType<>(ContainerGasCentrifuge::new));
 	public static final RegistryObject<ContainerType<ContainerChemicalBoiler>> CONTAINER_CHEMICALBOILER = CONTAINERS.register("chemicalboiler", () -> new ContainerType<>(ContainerChemicalBoiler::new));
 	public static final RegistryObject<ContainerType<ContainerChemicalExtractor>> CONTAINER_CHEMICALEXTRACTOR = CONTAINERS.register("chemicalextractor", () -> new ContainerType<>(ContainerChemicalExtractor::new));

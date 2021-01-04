@@ -1,19 +1,19 @@
 {
 	"variants": {
 		"facing=west": {
-			"model": "nuclearscience:block/gascentrifuge1",
+			"model": "nuclearscience:block/gascentrifugeoutline",
 			"y": 0
 		},
 		"facing=south": {
-			"model": "nuclearscience:block/gascentrifuge1",
+			"model": "nuclearscience:block/gascentrifugeoutline",
 			"y": 270
 		},
 		"facing=north": {
-			"model": "nuclearscience:block/gascentrifuge1",
+			"model": "nuclearscience:block/gascentrifugeoutline",
 			"y": 90
 		},
 		"facing=east": {
-			"model": "nuclearscience:block/gascentrifuge1",
+			"model": "nuclearscience:block/gascentrifugeoutline",
 			"y": 180
 		}
 	}
