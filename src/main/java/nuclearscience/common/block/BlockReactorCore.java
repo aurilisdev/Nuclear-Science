@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import electrodynamics.common.block.BlockGenericMachine;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IWaterLoggable;
 import net.minecraft.fluid.FluidState;
@@ -16,16 +17,16 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
-import nuclearscience.common.tile.TileChemicalBoiler;
+import nuclearscience.common.tile.TileReactorCore;
 
-public class BlockUraniumReactorCore extends BlockGenericMachine implements IWaterLoggable {
-	public BlockUraniumReactorCore() {
+public class BlockReactorCore extends BlockGenericMachine implements IWaterLoggable {
+	public BlockReactorCore() {
 		setDefaultState(stateContainer.getBaseState().with(FACING, Direction.NORTH).with(BlockStateProperties.WATERLOGGED, false));
 	}
 
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return new TileChemicalBoiler();
+		return new TileReactorCore();
 	}
 
 	@Override
@@ -39,6 +40,11 @@ public class BlockUraniumReactorCore extends BlockGenericMachine implements IWat
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
 		FluidState fluidstate = context.getWorld().getFluidState(context.getPos());
 		return super.getStateForPlacement(context).with(BlockStateProperties.WATERLOGGED, Boolean.valueOf(fluidstate.getFluid() == Fluids.WATER));
+	}
+
+	@Override
+	public BlockRenderType getRenderType(BlockState state) {
+		return BlockRenderType.MODEL;
 	}
 
 	@Override
@@ -57,4 +63,8 @@ public class BlockUraniumReactorCore extends BlockGenericMachine implements IWat
 		return super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
 	}
 
+	@Override
+	public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
+		return 16;
+	}
 }

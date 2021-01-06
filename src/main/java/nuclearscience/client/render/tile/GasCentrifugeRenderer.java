@@ -7,7 +7,6 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
@@ -30,7 +29,6 @@ public class GasCentrifugeRenderer extends TileEntityRenderer<TileGasCentrifuge>
 		matrixStackIn.rotate(new Quaternion(0, (float) (daytime * 20 % 360), 0, true));
 		Minecraft.getInstance().getBlockRendererDispatcher().getBlockModelRenderer().renderModel(tileEntityIn.getWorld(), ibakedmodel, tileEntityIn.getBlockState(), tileEntityIn.getPos(), matrixStackIn,
 				bufferIn.getBuffer(RenderType.getCutoutMipped()), false, tileEntityIn.getWorld().rand, new Random().nextLong(), 1);
-		RenderTypeLookup.setRenderLayer(tileEntityIn.getBlockState().getBlock(), RenderType.getCutout());
 	}
 
 }

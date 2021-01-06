@@ -13,6 +13,7 @@
 	"block.nuclearscience.chemicalextractor": "Chemical Extractor",
 	"block.nuclearscience.radioisotopegenerator": "Radioisotope Generator",
 	"block.nuclearscience.turbine": "Reactor Turbine",
+	"block.nuclearscience.reactorcore": "Reactor Core",
 	"container.gascentrifuge": "Gas Centrifuge",
 	"container.chemicalboiler": "Chemical Boiler",
 	"container.chemicalextractor": "Chemical Extractor",
