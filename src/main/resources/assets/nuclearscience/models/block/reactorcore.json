@@ -1,7 +1,6 @@
 {
 	"credit": "aurilisdev",
 	"parent": "block/cube_all",
-	"texture_size": [64, 64],
 	"textures": {
 		"0": "nuclearscience:model/reactorcore",
 		"particle": "nuclearscience:model/reactorcore"

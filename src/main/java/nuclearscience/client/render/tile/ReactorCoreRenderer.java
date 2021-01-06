@@ -44,10 +44,12 @@ public class ReactorCoreRenderer extends TileEntityRenderer<TileReactorCore> {
 			matrixStackIn.pop();
 		}
 		if (tileEntityIn.hasDeuterium) {
+			matrixStackIn.push();
 			IBakedModel deuterium = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_REACTORDEUTERIUM);
 			matrixStackIn.translate(0.5, 0, 0.5);
 			Minecraft.getInstance().getBlockRendererDispatcher().getBlockModelRenderer().renderModel(tileEntityIn.getWorld(), deuterium, tileEntityIn.getBlockState(), tileEntityIn.getPos(), matrixStackIn,
 					bufferIn.getBuffer(RenderType.getSolid()), false, tileEntityIn.getWorld().rand, new Random().nextLong(), 0);
+			matrixStackIn.pop();
 		}
 	}
 

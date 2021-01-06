@@ -12,4 +12,8 @@ public class BlockChemicalExtractor extends BlockGenericMachine {
 		return new TileChemicalExtractor();
 	}
 
+	@Override
+	public boolean isTransparent(BlockState state) {
+		return true;
+	}
 }
