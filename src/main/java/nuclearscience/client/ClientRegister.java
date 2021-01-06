@@ -17,6 +17,7 @@ import nuclearscience.client.screen.ScreenChemicalBoiler;
 import nuclearscience.client.screen.ScreenChemicalExtractor;
 import nuclearscience.client.screen.ScreenGasCentrifuge;
 import nuclearscience.client.screen.ScreenRadioisotopeGenerator;
+import nuclearscience.client.screen.ScreenReactorCore;
 
 @OnlyIn(Dist.CLIENT)
 public class ClientRegister {
@@ -28,9 +29,8 @@ public class ClientRegister {
 	public static final ResourceLocation MODEL_TURBINEROTORLAYER = new ResourceLocation(References.ID + ":block/turbinerotorlayer");
 	public static final ResourceLocation MODEL_REACTORCORE = new ResourceLocation(References.ID + ":block/reactorcore");
 	public static final ResourceLocation MODEL_REACTORFUELROD = new ResourceLocation(References.ID + ":block/reactorfuelrod");
-
+	public static final ResourceLocation MODEL_REACTORDEUTERIUM = new ResourceLocation(References.ID + ":block/reactordeuterium");
 	public static final ResourceLocation TEXTURE_REACTORCOREEMPTY = new ResourceLocation(References.ID + ":textures/model/reactorcore.png");
-	public static final ResourceLocation TEXTURE_REACTORCOREDEUTERIUM = new ResourceLocation(References.ID + ":textures/model/reactorcoredeuterium.png");
 
 	public static void setup() {
 		ModelLoader.addSpecialModel(MODEL_GASCENTRIFUGEFULL);
@@ -41,6 +41,7 @@ public class ClientRegister {
 		ModelLoader.addSpecialModel(MODEL_TURBINEROTORLAYER);
 		ModelLoader.addSpecialModel(MODEL_REACTORCORE);
 		ModelLoader.addSpecialModel(MODEL_REACTORFUELROD);
+		ModelLoader.addSpecialModel(MODEL_REACTORDEUTERIUM);
 
 		ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_GASCENTRIFUGE.get(), GasCentrifugeRenderer::new);
 		ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_TURBINE.get(), TurbineRenderer::new);
@@ -50,6 +51,7 @@ public class ClientRegister {
 		ScreenManager.registerFactory(DeferredRegisters.CONTAINER_CHEMICALBOILER.get(), ScreenChemicalBoiler::new);
 		ScreenManager.registerFactory(DeferredRegisters.CONTAINER_CHEMICALEXTRACTOR.get(), ScreenChemicalExtractor::new);
 		ScreenManager.registerFactory(DeferredRegisters.CONTAINER_RADIOISOTOPEGENERATOR.get(), ScreenRadioisotopeGenerator::new);
+		ScreenManager.registerFactory(DeferredRegisters.CONTAINER_REACTORCORE.get(), ScreenReactorCore::new);
 
 		RenderTypeLookup.setRenderLayer(DeferredRegisters.blockChemicalExtractor, ClientRegister::shouldMultilayerRender);
 		RenderTypeLookup.setRenderLayer(DeferredRegisters.blockReactorCore, ClientRegister::shouldMultilayerRender);

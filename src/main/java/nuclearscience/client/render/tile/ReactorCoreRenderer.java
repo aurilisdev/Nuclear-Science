@@ -23,8 +23,7 @@ public class ReactorCoreRenderer extends TileEntityRenderer<TileReactorCore> {
 	@Override
 	public void render(TileReactorCore tileEntityIn, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
 		IBakedModel fuelrod = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_REACTORFUELROD);
-		int cores = 4;
-		for (int i = 1; i <= cores; i++) {
+		for (int i = 1; i <= tileEntityIn.fuelCount; i++) {
 			matrixStackIn.push();
 			switch (i) {
 			case 1:
@@ -43,6 +42,12 @@ public class ReactorCoreRenderer extends TileEntityRenderer<TileReactorCore> {
 			Minecraft.getInstance().getBlockRendererDispatcher().getBlockModelRenderer().renderModel(tileEntityIn.getWorld(), fuelrod, tileEntityIn.getBlockState(), tileEntityIn.getPos(), matrixStackIn,
 					bufferIn.getBuffer(RenderType.getSolid()), false, tileEntityIn.getWorld().rand, new Random().nextLong(), 0);
 			matrixStackIn.pop();
+		}
+		if (tileEntityIn.hasDeuterium) {
+			IBakedModel deuterium = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_REACTORDEUTERIUM);
+			matrixStackIn.translate(0.5, 0, 0.5);
+			Minecraft.getInstance().getBlockRendererDispatcher().getBlockModelRenderer().renderModel(tileEntityIn.getWorld(), deuterium, tileEntityIn.getBlockState(), tileEntityIn.getPos(), matrixStackIn,
+					bufferIn.getBuffer(RenderType.getSolid()), false, tileEntityIn.getWorld().rand, new Random().nextLong(), 0);
 		}
 	}
 

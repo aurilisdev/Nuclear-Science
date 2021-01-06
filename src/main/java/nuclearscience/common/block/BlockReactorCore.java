@@ -17,6 +17,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.World;
 import nuclearscience.common.tile.TileReactorCore;
 
 public class BlockReactorCore extends BlockGenericMachine implements IWaterLoggable {
@@ -59,8 +60,13 @@ public class BlockReactorCore extends BlockGenericMachine implements IWaterLogga
 		if (stateIn.get(BlockStateProperties.WATERLOGGED)) {
 			worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
 		}
-
 		return super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+	}
+
+	@Deprecated
+	@Override
+	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+		worldIn.markBlockRangeForRenderUpdate(pos, state, newState);
 	}
 
 	@Override

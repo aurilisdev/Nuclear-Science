@@ -24,6 +24,7 @@ import nuclearscience.common.inventory.container.ContainerChemicalBoiler;
 import nuclearscience.common.inventory.container.ContainerChemicalExtractor;
 import nuclearscience.common.inventory.container.ContainerGasCentrifuge;
 import nuclearscience.common.inventory.container.ContainerRadioisotopeGenerator;
+import nuclearscience.common.inventory.container.ContainerReactorCore;
 import nuclearscience.common.item.ItemRadioactive;
 import nuclearscience.common.tile.TileChemicalBoiler;
 import nuclearscience.common.tile.TileChemicalExtractor;
@@ -86,6 +87,7 @@ public class DeferredRegisters {
 	public static final RegistryObject<ContainerType<ContainerChemicalExtractor>> CONTAINER_CHEMICALEXTRACTOR = CONTAINERS.register("chemicalextractor", () -> new ContainerType<>(ContainerChemicalExtractor::new));
 	public static final RegistryObject<ContainerType<ContainerRadioisotopeGenerator>> CONTAINER_RADIOISOTOPEGENERATOR = CONTAINERS.register("radioisotopegenerator",
 			() -> new ContainerType<>(ContainerRadioisotopeGenerator::new));
+	public static final RegistryObject<ContainerType<ContainerReactorCore>> CONTAINER_REACTORCORE = CONTAINERS.register("reactorcore", () -> new ContainerType<>(ContainerReactorCore::new));
 
 	private static <T extends IForgeRegistryEntry<T>> Supplier<? extends T> supplier(T entry) {
 		return () -> entry;
