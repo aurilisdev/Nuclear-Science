@@ -84,7 +84,7 @@ public class BlockReactorCore extends BlockGenericMachine implements IWaterLogga
 
 	@Override
 	public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
-		return 16;
+		return 15;
 	}
 
 }
