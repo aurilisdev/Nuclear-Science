@@ -22,7 +22,8 @@ import nuclearscience.common.tile.TileReactorCore;
 
 public class BlockReactorCore extends BlockGenericMachine implements IWaterLoggable {
 	public BlockReactorCore() {
-		super(); // Redo main blockgenericmachine to allow for custom args here for the material and such
+		super(); // Redo main blockgenericmachine to allow for custom args here for the material
+					// and such
 		setDefaultState(stateContainer.getBaseState().with(FACING, Direction.NORTH).with(BlockStateProperties.WATERLOGGED, false));
 	}
 
@@ -69,8 +70,4 @@ public class BlockReactorCore extends BlockGenericMachine implements IWaterLogga
 		return 16;
 	}
 
-	@Override
-	public boolean isTransparent(BlockState state) {
-		return true;
-	}
 }
