@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" s ",
+		"pmp",
+		" p "
+	],
+	"key": {
+		"p": {
+			"tag": "forge:plates/steel"
+		},
+		"m": {
+			"item": "electrodynamics:motor"
+		},
+		"s": {
+			"item": "electrodynamics:wiresuperconductive"
+		}
+	},
+	"result": {
+		"item": "nuclearscience:reactorcore",
+		"count": 1
+	}
+}

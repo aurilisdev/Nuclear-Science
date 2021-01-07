@@ -1,32 +1,29 @@
 {
 	"type": "minecraft:crafting_shaped",
 	"pattern": [
-		"ses",
-		"cgc",
-		"pmp"
+		"sus",
+		"ece",
+		"srs"
 	],
 	"key": {
 		"s": {
 			"tag": "forge:plates/steel"
 		},
-		"p": {
-			"tag": "forge:plates/bronze"
-		},
 		"e": {
 			"tag": "forge:circuits/elite"
 		},
-		"m": {
-			"item": "electrodynamics:motor"
+		"u": {
+			"tag": "forge:circuits/ultimate"
 		},
 		"c": {
 			"item": "nuclearscience:cellempty"
 		},
-		"g": {
-			"tag": "forge:gears/steel"
+		"r": {
+			"item": "nuclearscience:radioisotopegenerator"
 		}
 	},
 	"result": {
-		"item": "nuclearscience:gascentrifuge",
+		"item": "nuclearscience:reactorcore",
 		"count": 1
 	}
 }

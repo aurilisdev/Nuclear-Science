@@ -1,0 +1,26 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"iai",
+		"lcl",
+		"iai"
+	],
+	"key": {
+		"i": {
+			"tag": "forge:plates/iron"
+		},
+		"l": {
+			"tag": "forge:plates/lead"
+		},
+		"a": {
+			"tag": "forge:circuits/advanced"
+		},
+		"c": {
+			"item": "nuclearscience:cellempty"
+		}
+	},
+	"result": {
+		"item": "nuclearscience:radioisotopegenerator",
+		"count": 1
+	}
+}
