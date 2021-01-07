@@ -29,7 +29,7 @@ public class ScreenReactorCore extends GenericContainerScreen<ContainerReactorCo
 	@Override
 	protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
 		super.drawGuiContainerForegroundLayer(matrixStack, mouseX, mouseY);
-		font.func_243248_b(matrixStack, new StringTextComponent("Deuterium"), (float) titleX, (float) titleY + 14, 4210752);
+		font.func_243248_b(matrixStack, new StringTextComponent("Deuterium"), titleX, (float) titleY + 14, 4210752);
 	}
 
 	@Override

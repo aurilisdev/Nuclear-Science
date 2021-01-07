@@ -43,8 +43,8 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 	@Override
 	public void handleUpdatePacket(CompoundNBT nbt) {
 		super.handleUpdatePacket(nbt);
-		this.hasDeuterium = nbt.getBoolean("hasDeuterium");
-		this.fuelCount = nbt.getInt("fuelCount");
+		hasDeuterium = nbt.getBoolean("hasDeuterium");
+		fuelCount = nbt.getInt("fuelCount");
 	}
 
 	@Override

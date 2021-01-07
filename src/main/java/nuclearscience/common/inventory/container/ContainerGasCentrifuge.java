@@ -1,4 +1,4 @@
- package nuclearscience.common.inventory.container;
+package nuclearscience.common.inventory.container;
 
 import electrodynamics.common.inventory.container.GenericContainerInventory;
 import electrodynamics.common.inventory.container.slot.GenericSlot;
