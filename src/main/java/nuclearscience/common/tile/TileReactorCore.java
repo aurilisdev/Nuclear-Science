@@ -1,20 +1,26 @@
 package nuclearscience.common.tile;
 
+import java.util.ArrayList;
+
 import electrodynamics.api.tile.ITickableTileBase;
 import electrodynamics.common.tile.generic.GenericTileInventory;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.Explosion;
+import net.minecraft.world.Explosion.Mode;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerReactorCore;
 
@@ -37,12 +43,12 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 		super(DeferredRegisters.TILE_REACTORCORE.get());
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void tickServer() {
 		if (world.getWorldInfo().getDayTime() % 10 == 0) {
 			sendUpdatePacket();
 		}
-		ticks = ticks > Integer.MAX_VALUE - 2 ? 0 : ticks + 1;
 		fuelCount = 0;
 		for (int i = 0; i < 4; i++) {
 			ItemStack stack = getStackInSlot(i);
@@ -69,7 +75,7 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 					if (fuelRod.getDamage() >= fuelRod.getMaxDamage()) {
 						setInventorySlotContents(slot, ItemStack.EMPTY);
 					}
-					fuelRod.setDamage((int) (fuelRod.getDamage() + 1 + Math.round(temperature) / (MELTDOWN_TEMPERATURE_CALC / 2.0)));
+					fuelRod.setDamage((int) (fuelRod.getDamage() + 1 + Math.round(temperature) / (MELTDOWN_TEMPERATURE_CALC)));
 				}
 			}
 			temperature += (MELTDOWN_TEMPERATURE_CALC * insertDecimal * (0.25 * (fuelCount / 2.0) + world.rand.nextDouble() / 5.0) - temperature) / (200 + 20 * (hasWater ? 4 : 1));
@@ -77,18 +83,53 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 				ticksOverheating++;
 				// Implement some alarm sounds at this time
 				// Implement a warning in the gui at this time
-				if (ticksOverheating > 15 * 20) {
-					// Explode here!!!
+				if (ticksOverheating > 10 * 20) {
+					int radius = STEAM_GEN_DIAMETER / 2;
+					world.setBlockState(pos, getBlockState().with(BlockStateProperties.WATERLOGGED, false));
+					for (int i = -radius; i <= radius; i++) {
+						for (int j = -radius; j <= radius; j++) {
+							for (int k = -radius; k <= radius; k++) {
+								BlockPos ppos = new BlockPos(pos.getX() + i, pos.getY() + j, pos.getZ() + k);
+								BlockState state = world.getBlockState(ppos);
+								if (state.getBlock() == Blocks.WATER) {
+									world.setBlockState(ppos, Blocks.AIR.getDefaultState());
+								}
+							}
+						}
+					}
+					world.setBlockState(pos, Blocks.AIR.getDefaultState());
+					radius = 20;
+					for (int i = -radius; i <= radius; i++) {
+						for (int j = -radius; j <= radius; j++) {
+							for (int k = -radius; k <= radius; k++) {
+								BlockPos ppos = new BlockPos(pos.getX() + i, pos.getY() + j, pos.getZ() + k);
+								BlockState state = world.getBlockState(ppos);
+								if (state.getBlock().getExplosionResistance() < radius) {
+									float distance = (float) Math.sqrt(i * i + j * j + k * k);
+									if (distance < radius && world.rand.nextFloat() < 1 - 0.0001 * distance * distance * distance) {
+										if (world.rand.nextFloat() < 0.9) {
+											world.getBlockState(ppos).onBlockExploded(world, ppos, new Explosion(world, null, pos.getX(), pos.getY(), pos.getZ(), 20, new ArrayList<>()));
+										}
+									}
+								}
+							}
+						}
+					}
+					world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), 20, Mode.DESTROY);
 				}
-			} else {
-				ticksOverheating--;
 			}
+		} else {
+			ticksOverheating = 0;
 		}
 		temperature = Math.max(AIR_TEMPERATURE, temperature);
 	}
 
 	@Override
 	public void tickCommon() {
+		ticks = ticks > Integer.MAX_VALUE - 2 ? 0 : ticks + 1;
+		if (ticks % 20 == 0) {
+			world.getLightManager().checkBlock(pos);
+		}
 		produceSteam();
 	}
 
@@ -100,7 +141,6 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 		if (temperature <= 100) {
 			return;
 		}
-		int totalSteam = 0;
 		for (int i = 0; i < STEAM_GEN_DIAMETER; i++) {
 			for (int j = 0; j < STEAM_GEN_HEIGHT; j++) {
 				for (int k = 0; k < STEAM_GEN_DIAMETER; k++) {
@@ -129,7 +169,6 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 									}
 								}
 								if (turbine != null) {
-									totalSteam += ((temperature - 100) / 10 * 0.65f) * 20 * 20;
 									turbine.addSteam((int) ((temperature - 100) / 10 * 0.075f) * 20 * 20);
 								}
 							} else if (world.isRemote) {
@@ -158,7 +197,6 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 				}
 			}
 		}
-		System.out.println(totalSteam);
 	}
 
 	@Override

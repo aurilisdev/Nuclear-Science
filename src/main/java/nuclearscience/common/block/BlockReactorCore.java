@@ -84,7 +84,11 @@ public class BlockReactorCore extends BlockGenericMachine implements IWaterLogga
 
 	@Override
 	public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
-		return 15;
+		TileReactorCore core = (TileReactorCore) world.getTileEntity(pos);
+		if (core != null) {
+			return (int) Math.max(0, Math.min(core.temperature / TileReactorCore.MELTDOWN_TEMPERATURE_ACTUAL * 15, 15));
+		}
+		return 0;
 	}
 
 }

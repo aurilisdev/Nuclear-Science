@@ -2,7 +2,6 @@ package nuclearscience.api.radiation;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.world.World;
@@ -47,7 +46,9 @@ public class RadiationSystem {
 			double modifier = strength / (radiation * distance * distance);
 			strength /= modifier;
 			int amplitude = (int) Math.max(0, Math.min(strength / (distance * 4000.0), 9));
-			entity.addPotionEffect(new EffectInstance(EffectRadiation.INSTANCE, (int) (strength / ((amplitude + 1) * distance)), amplitude, false, true));
+			// entity.addPotionEffect(new EffectInstance(EffectRadiation.INSTANCE, (int)
+			// (strength / ((amplitude + 1) * distance)), amplitude, false, true));
+			// disabled til i have hazmat
 		}
 	}
 }
