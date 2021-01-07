@@ -58,6 +58,6 @@ public class ClientRegister {
 	}
 
 	public static boolean shouldMultilayerRender(RenderType type) {
-		return type == RenderType.getTranslucent() || type == RenderType.getSolid() || type == RenderType.getCutout() || type == RenderType.getCutoutMipped();
+		return type == RenderType.getTranslucent() || type == RenderType.getSolid();
 	}
 }

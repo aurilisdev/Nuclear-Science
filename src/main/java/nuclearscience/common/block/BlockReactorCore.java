@@ -15,6 +15,9 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -22,8 +25,7 @@ import nuclearscience.common.tile.TileReactorCore;
 
 public class BlockReactorCore extends BlockGenericMachine implements IWaterLoggable {
 	public BlockReactorCore() {
-		super(); // Redo main blockgenericmachine to allow for custom args here for the material
-					// and such
+		super();
 		setDefaultState(stateContainer.getBaseState().with(FACING, Direction.NORTH).with(BlockStateProperties.WATERLOGGED, false));
 	}
 
@@ -51,6 +53,11 @@ public class BlockReactorCore extends BlockGenericMachine implements IWaterLogga
 	}
 
 	@Override
+	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+		return VoxelShapes.create(0.5 / 16, 0, 0.5 / 16, 15.5 / 16.0, 15.0 / 16.0, 15.5 / 16.0);
+	}
+
+	@Override
 	@Deprecated
 	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
 		if (stateIn.get(BlockStateProperties.WATERLOGGED)) {
@@ -59,10 +66,20 @@ public class BlockReactorCore extends BlockGenericMachine implements IWaterLogga
 		return super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
 	}
 
+	@Override
+	@Deprecated
+	public FluidState getFluidState(BlockState state) {
+		return state.get(BlockStateProperties.WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
+	}
+
 	@Deprecated
 	@Override
 	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-		worldIn.markBlockRangeForRenderUpdate(pos, state, newState);
+		if (state.getBlock() == newState.getBlock()) {
+			worldIn.markBlockRangeForRenderUpdate(pos, state, newState);
+		} else {
+			super.onReplaced(state, worldIn, pos, newState, isMoving);
+		}
 	}
 
 	@Override
