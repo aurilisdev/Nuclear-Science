@@ -1,6 +1,7 @@
 {
 	"credit": "aurilisdev",
 	"parent": "block/cube_all",
+	"ambientocclusion": "false",
 	"textures": {
 		"0": "nuclearscience:model/turbine",
 		"particle": "nuclearscience:model/turbine"

@@ -1,6 +1,7 @@
 {
 	"credit": "aurilisdev",
 	"parent": "block/cube_all",
+	"ambientocclusion": "false",
 	"textures": {
 		"1": "nuclearscience:model/chemicalextractor",
 		"particle": "nuclearscience:model/chemicalextractor"

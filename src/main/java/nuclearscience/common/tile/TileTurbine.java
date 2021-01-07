@@ -17,8 +17,9 @@ public class TileTurbine extends GenericTileBase implements ITickableTileBase, I
 
 	public static final int MAX_STEAM = 3000000;
 	protected CachedTileOutput output;
-	protected int currentVoltage = 120;
+	protected int currentVoltage = 0;
 	protected int steam;
+	protected int wait = 30;
 	public int spinSpeed = 0;
 
 	public TileTurbine() {
@@ -33,9 +34,9 @@ public class TileTurbine extends GenericTileBase implements ITickableTileBase, I
 	public void addSteam(int steam) {
 		this.steam = Math.min(MAX_STEAM, this.steam + steam);
 		double temp = 0.03846 * steam + 100;
-		if (temp < 1500) {
+		if (temp < 4300) {
 			currentVoltage = 120;
-		} else if (temp < 6000) {
+		} else if (temp < 7000) {
 			currentVoltage = 240;
 		} else {
 			currentVoltage = 480;
@@ -52,11 +53,18 @@ public class TileTurbine extends GenericTileBase implements ITickableTileBase, I
 			output = new CachedTileOutput(world, new BlockPos(pos).offset(Direction.UP));
 		}
 		if (steam > 0) {
+			wait = 30;
 			TransferPack transfer = TransferPack.joulesVoltage(Constants.STEAMTOJOULESPERTICKRATIO * steam, getVoltage(Direction.UP));
 			if (output.get() instanceof IPowerReceiver) {
 				output.<IPowerReceiver>get().receivePower(transfer, getFacing(), false);
 			}
 			steam = Math.max(steam - Math.max(75, steam), 0);
+		} else {
+			if (wait <= 0) {
+				currentVoltage = 0;
+				wait = 30;
+			}
+			wait--;
 		}
 
 	}
