@@ -73,13 +73,13 @@ public class DeferredRegisters {
 	public static final RegistryObject<Item> ITEM_CELLHEAVYWATER = ITEMS.register("cellheavywater", supplier(new Item(new Item.Properties().group(References.CORETAB))));
 	public static final RegistryObject<Item> ITEM_FUELHEUO2 = ITEMS.register("fuelheuo2", supplier(new ItemRadioactive(new Item.Properties().group(References.CORETAB).maxStackSize(1).defaultMaxDamage(24000))));
 	public static final RegistryObject<Item> ITEM_FUELLEUO2 = ITEMS.register("fuelleuo2", supplier(new ItemRadioactive(new Item.Properties().group(References.CORETAB).maxStackSize(1).defaultMaxDamage(26000))));
-	public static final RegistryObject<ItemHazmatArmor> ITEM_HAZMATBOOTS = ITEMS.register("hazmatboots",
+	public static final RegistryObject<Item> ITEM_HAZMATBOOTS = ITEMS.register("hazmatboots",
 			supplier(new ItemHazmatArmor(EquipmentSlotType.FEET, new Item.Properties().group(References.CORETAB).maxStackSize(1).defaultMaxDamage(26000))));
-	public static final RegistryObject<ItemHazmatArmor> ITEM_HAZMATHELMET = ITEMS.register("hazmathelmet",
+	public static final RegistryObject<Item> ITEM_HAZMATHELMET = ITEMS.register("hazmathelmet",
 			supplier(new ItemHazmatArmor(EquipmentSlotType.HEAD, new Item.Properties().group(References.CORETAB).maxStackSize(1).defaultMaxDamage(26000))));
-	public static final RegistryObject<ItemHazmatArmor> ITEM_HAZMATLEGS = ITEMS.register("hazmatlegs",
+	public static final RegistryObject<Item> ITEM_HAZMATLEGS = ITEMS.register("hazmatlegs",
 			supplier(new ItemHazmatArmor(EquipmentSlotType.LEGS, new Item.Properties().group(References.CORETAB).maxStackSize(1).defaultMaxDamage(26000))));
-	public static final RegistryObject<ItemHazmatArmor> ITEM_HAZMATPLATE = ITEMS.register("hazmatplate",
+	public static final RegistryObject<Item> ITEM_HAZMATPLATE = ITEMS.register("hazmatplate",
 			supplier(new ItemHazmatArmor(EquipmentSlotType.CHEST, new Item.Properties().group(References.CORETAB).maxStackSize(1).defaultMaxDamage(26000))));
 
 	public static final RegistryObject<TileEntityType<TileGasCentrifuge>> TILE_GASCENTRIFUGE = TILES.register("gascentrifuge",
