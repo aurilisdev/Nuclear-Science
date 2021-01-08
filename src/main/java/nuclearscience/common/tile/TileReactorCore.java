@@ -1,12 +1,14 @@
 package nuclearscience.common.tile;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import electrodynamics.api.tile.ITickableTileBase;
 import electrodynamics.common.tile.generic.GenericTileInventory;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
@@ -16,12 +18,16 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.Explosion.Mode;
 import nuclearscience.DeferredRegisters;
+import nuclearscience.api.radiation.RadiationSystem;
 import nuclearscience.common.inventory.container.ContainerReactorCore;
 
 public class TileReactorCore extends GenericTileInventory implements ITickableTileBase {
@@ -116,6 +122,17 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 						}
 					}
 					world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), 20, Mode.DESTROY);
+				}
+			}
+			if (world.getWorldInfo().getGameTime() % 10 == 0) {
+				Vector3f source = new Vector3f(pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f);
+				double totstrength = temperature * 5;
+				double range = Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 1.25;
+				AxisAlignedBB bb = AxisAlignedBB.withSizeAtOrigin(range, range, range);
+				bb = bb.offset(new Vector3d(source));
+				List<LivingEntity> list = world.getEntitiesWithinAABB(LivingEntity.class, bb);
+				for (LivingEntity living : list) {
+					RadiationSystem.applyRadiation(living, source, totstrength);
 				}
 			}
 		} else {
