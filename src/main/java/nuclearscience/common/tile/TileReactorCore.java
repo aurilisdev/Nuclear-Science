@@ -81,7 +81,7 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 					if (fuelRod.getDamage() >= fuelRod.getMaxDamage()) {
 						setInventorySlotContents(slot, ItemStack.EMPTY);
 					}
-					fuelRod.setDamage((int) (fuelRod.getDamage() + 1 + Math.round(temperature) / (MELTDOWN_TEMPERATURE_CALC)));
+					fuelRod.setDamage((int) (fuelRod.getDamage() + 1 + Math.round(temperature) / MELTDOWN_TEMPERATURE_CALC));
 				}
 			}
 			temperature += (MELTDOWN_TEMPERATURE_CALC * insertDecimal * (0.25 * (fuelCount / 2.0) + world.rand.nextDouble() / 5.0) - temperature) / (200 + 20 * (hasWater ? 4 : 1));

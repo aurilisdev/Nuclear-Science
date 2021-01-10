@@ -1,20 +1,10 @@
 {
 	"variants": {
-		"facing=west": {
-			"model": "nuclearscience:block/turbinecasing",
-			"y": 0
+		"render=false": {
+			"model": "nuclearscience:block/turbinecasing"
 		},
-		"facing=south": {
-			"model": "nuclearscience:block/turbinecasing",
-			"y": 270
-		},
-		"facing=north": {
-			"model": "nuclearscience:block/turbinecasing",
-			"y": 90
-		},
-		"facing=east": {
-			"model": "nuclearscience:block/turbinecasing",
-			"y": 180
+		"render=true": {
+			"model": "nuclearscience:block/turbinecasing"
 		}
 	}
 }
