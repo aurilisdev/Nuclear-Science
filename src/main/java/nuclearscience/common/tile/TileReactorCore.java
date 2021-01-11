@@ -175,6 +175,12 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 						if (isFaceWater) {
 							if (!world.isRemote) {
 								TileTurbine turbine = cachedTurbines[i][j][k];
+								if (turbine != null) {
+									if (turbine.isRemoved()) {
+										cachedTurbines[i][j][k] = null;
+									}
+									turbine.addSteam((int) ((temperature - 100) / 10 * 0.075f) * 20 * 20);
+								}
 								if (turbine == null || world.loadedTileEntityList.contains(turbine)) {
 									TileEntity above = world.getTileEntity(new BlockPos(offsetX, offsetY + 1, offsetZ));
 									if (above instanceof TileTurbine) {
@@ -184,9 +190,6 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 										cachedTurbines[i][j][k] = null;
 										turbine = null;
 									}
-								}
-								if (turbine != null) {
-									turbine.addSteam((int) ((temperature - 100) / 10 * 0.075f) * 20 * 20);
 								}
 							} else if (world.isRemote) {
 								if (world.rand.nextFloat() < temperature / (MELTDOWN_TEMPERATURE_ACTUAL * 3)) {
