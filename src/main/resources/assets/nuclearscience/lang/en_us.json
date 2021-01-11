@@ -8,6 +8,7 @@
 	"item.nuclearscience.celltritium": "Empty cell",
 	"item.nuclearscience.fuelheuo2": "Highly Enriched UO2 Fuel",
 	"item.nuclearscience.fuelleuo2": "Low Enriched UO2 Fuel",
+	"item.nuclearscience.geigercounter": "Geiger Counter",
 	"item.nuclearscience.hazmatboots": "Hazmat Boots",
 	"item.nuclearscience.hazmathelmet": "Hazmat Helmet",
 	"item.nuclearscience.hazmatlegs": "Hazmat Leggings",
@@ -37,5 +38,6 @@
 	"gui.radioisotopegenerator.voltage": "Voltage: %s",
 	"itemGroup.itemgroupnuclearscience": "Nuclear Science",
 	"death.attack.radiation": "%s just did a speedrun of evolution!",
-	"effect.nuclearscience.radiation": "Radiation"
+	"effect.nuclearscience.radiation": "Radiation",
+	"message.geigercounter.text": "%s Rads per hour"
 }

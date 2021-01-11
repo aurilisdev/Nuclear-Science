@@ -26,6 +26,7 @@ import nuclearscience.common.inventory.container.ContainerChemicalExtractor;
 import nuclearscience.common.inventory.container.ContainerGasCentrifuge;
 import nuclearscience.common.inventory.container.ContainerRadioisotopeGenerator;
 import nuclearscience.common.inventory.container.ContainerReactorCore;
+import nuclearscience.common.item.ItemGeigerCounter;
 import nuclearscience.common.item.ItemHazmatArmor;
 import nuclearscience.common.item.ItemRadioactive;
 import nuclearscience.common.tile.TileChemicalBoiler;
@@ -73,6 +74,7 @@ public class DeferredRegisters {
 	public static final RegistryObject<Item> ITEM_CELLHEAVYWATER = ITEMS.register("cellheavywater", supplier(new Item(new Item.Properties().group(References.CORETAB))));
 	public static final RegistryObject<Item> ITEM_FUELHEUO2 = ITEMS.register("fuelheuo2", supplier(new ItemRadioactive(new Item.Properties().group(References.CORETAB).maxStackSize(1).defaultMaxDamage(24000))));
 	public static final RegistryObject<Item> ITEM_FUELLEUO2 = ITEMS.register("fuelleuo2", supplier(new ItemRadioactive(new Item.Properties().group(References.CORETAB).maxStackSize(1).defaultMaxDamage(26000))));
+	public static final RegistryObject<Item> ITEM_GEIGERCOUNTER = ITEMS.register("geigercounter", supplier(new ItemGeigerCounter(new Item.Properties().group(References.CORETAB).maxStackSize(1).defaultMaxDamage(26000))));
 	public static final RegistryObject<Item> ITEM_HAZMATBOOTS = ITEMS.register("hazmatboots",
 			supplier(new ItemHazmatArmor(EquipmentSlotType.FEET, new Item.Properties().group(References.CORETAB).maxStackSize(1).defaultMaxDamage(26000))));
 	public static final RegistryObject<Item> ITEM_HAZMATHELMET = ITEMS.register("hazmathelmet",
