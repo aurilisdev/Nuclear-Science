@@ -40,6 +40,7 @@ public class ReactorCoreRenderer extends TileEntityRenderer<TileReactorCore> {
 					matrixStackIn.translate(4.0 / 16.0, 0, 12.0 / 16.0);
 					break;
 				}
+				matrixStackIn.scale(1, 0.8f, 1);
 				Minecraft.getInstance().getBlockRendererDispatcher().getBlockModelRenderer().renderModel(tileEntityIn.getWorld(), fuelrod, tileEntityIn.getBlockState(), tileEntityIn.getPos(), matrixStackIn,
 						bufferIn.getBuffer(RenderType.getSolid()), false, tileEntityIn.getWorld().rand, new Random().nextLong(), 0);
 				matrixStackIn.pop();
