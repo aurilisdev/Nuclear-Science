@@ -144,7 +144,7 @@ public class TileTurbine extends GenericTileBase implements ITickableTileBase, I
 			TileEntity core = world.getTileEntity(coreLocation);
 			if (core instanceof TileTurbine && ((TileTurbine) core).isCore()) {
 				TileTurbine turbine = (TileTurbine) core;
-				turbine.steam = Math.min(MAX_STEAM * (isCore ? 9 : 1), turbine.steam + this.steam);
+				turbine.addSteam(this.steam);
 				this.steam = 0;
 			}
 		}
@@ -200,6 +200,9 @@ public class TileTurbine extends GenericTileBase implements ITickableTileBase, I
 	public CompoundNBT write(CompoundNBT compound) {
 		compound.putBoolean("hasCore", hasCore);
 		compound.putBoolean("isCore", isCore);
+		compound.putInt("coreX", coreLocation.getX());
+		compound.putInt("coreY", coreLocation.getY());
+		compound.putInt("coreZ", coreLocation.getZ());
 		return super.write(compound);
 	}
 
@@ -208,6 +211,7 @@ public class TileTurbine extends GenericTileBase implements ITickableTileBase, I
 		super.read(state, compound);
 		hasCore = compound.getBoolean("hasCore");
 		isCore = compound.getBoolean("isCore");
+		coreLocation = new BlockPos(compound.getInt("coreX"), compound.getInt("coreY"), compound.getInt("coreZ"));
 	}
 
 	@Override

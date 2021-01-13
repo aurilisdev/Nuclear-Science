@@ -1,0 +1,15 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+		{
+			"item": "minecraft:glass"
+		},
+		{
+			"item": "nuclearscience:electromagnet"
+		}
+	],
+	"result": {
+		"item": "nuclearscience:electromagneticglass",
+		"count": 1
+	}
+}

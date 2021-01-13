@@ -18,6 +18,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -84,11 +85,19 @@ public class BlockReactorCore extends BlockGenericMachine implements IWaterLogga
 
 	@Override
 	public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
-		TileReactorCore core = (TileReactorCore) world.getTileEntity(pos);
-		if (core != null) {
-			return (int) Math.max(0, Math.min(core.temperature / TileReactorCore.MELTDOWN_TEMPERATURE_ACTUAL * 15, 15));
+		TileEntity core = world.getTileEntity(pos);
+		if (core instanceof TileReactorCore) {
+			return (int) Math.max(0, Math.min(((TileReactorCore) core).temperature / TileReactorCore.MELTDOWN_TEMPERATURE_ACTUAL * 15, 15));
 		}
 		return 0;
+	}
+
+	@Override
+	public void onBlockExploded(BlockState state, World world, BlockPos pos, Explosion explosion) {
+		TileEntity core = world.getTileEntity(pos);
+		if (core instanceof TileReactorCore) {
+		}
+		super.onBlockExploded(state, world, pos, explosion);
 	}
 
 }

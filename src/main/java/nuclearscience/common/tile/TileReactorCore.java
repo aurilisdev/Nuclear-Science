@@ -49,7 +49,6 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 		super(DeferredRegisters.TILE_REACTORCORE.get());
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void tickServer() {
 		if (world.getWorldInfo().getDayTime() % 10 == 0) {
@@ -90,43 +89,12 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 				// Implement some alarm sounds at this time
 				// Implement a warning in the gui at this time
 				if (ticksOverheating > 10 * 20) {
-					int radius = STEAM_GEN_DIAMETER / 2;
-					world.setBlockState(pos, getBlockState().with(BlockStateProperties.WATERLOGGED, false));
-					for (int i = -radius; i <= radius; i++) {
-						for (int j = -radius; j <= radius; j++) {
-							for (int k = -radius; k <= radius; k++) {
-								BlockPos ppos = new BlockPos(pos.getX() + i, pos.getY() + j, pos.getZ() + k);
-								BlockState state = world.getBlockState(ppos);
-								if (state.getBlock() == Blocks.WATER) {
-									world.setBlockState(ppos, Blocks.AIR.getDefaultState());
-								}
-							}
-						}
-					}
-					world.setBlockState(pos, Blocks.AIR.getDefaultState());
-					radius = 20;
-					for (int i = -radius; i <= radius; i++) {
-						for (int j = -radius; j <= radius; j++) {
-							for (int k = -radius; k <= radius; k++) {
-								BlockPos ppos = new BlockPos(pos.getX() + i, pos.getY() + j, pos.getZ() + k);
-								BlockState state = world.getBlockState(ppos);
-								if (state.getBlock().getExplosionResistance() < radius) {
-									float distance = (float) Math.sqrt(i * i + j * j + k * k);
-									if (distance < radius && world.rand.nextFloat() < 1 - 0.0001 * distance * distance * distance) {
-										if (world.rand.nextFloat() < 0.9) {
-											world.getBlockState(ppos).onBlockExploded(world, ppos, new Explosion(world, null, pos.getX(), pos.getY(), pos.getZ(), 20, new ArrayList<>()));
-										}
-									}
-								}
-							}
-						}
-					}
-					world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), 20, Mode.DESTROY);
+					meltdown();
 				}
 			}
 			if (world.getWorldInfo().getGameTime() % 10 == 0) {
 				Vector3f source = new Vector3f(pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f);
-				double totstrength = temperature * 5;
+				double totstrength = temperature * 10;
 				double range = Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 1.25;
 				AxisAlignedBB bb = AxisAlignedBB.withSizeAtOrigin(range, range, range);
 				bb = bb.offset(new Vector3d(source));
@@ -139,6 +107,20 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 			ticksOverheating = 0;
 		}
 		temperature = Math.max(AIR_TEMPERATURE, temperature);
+		if (fuelCount > 0) {
+			if (world.rand.nextFloat() < 1 / (1200.0 * MELTDOWN_TEMPERATURE_CALC / temperature)) {
+				ItemStack tritium = getStackInSlot(5);
+				ItemStack deuterium = getStackInSlot(4);
+				if (tritium.getCount() + 1 <= tritium.getMaxStackSize() && deuterium.getItem() == DeferredRegisters.ITEM_CELLDEUTERIUM.get() && deuterium.getCount() > 0) {
+					deuterium.setCount(deuterium.getCount() - 1);
+					if (tritium.isEmpty()) {
+						setInventorySlotContents(5, new ItemStack(DeferredRegisters.ITEM_CELLTRITIUM.get()));
+					} else {
+						tritium.setCount(tritium.getCount() + 1);
+					}
+				}
+			}
+		}
 	}
 
 	@Override
@@ -150,12 +132,48 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 		produceSteam();
 	}
 
+	@SuppressWarnings("deprecation")
+	public void meltdown() {
+		int radius = STEAM_GEN_DIAMETER / 2;
+		world.setBlockState(pos, getBlockState().with(BlockStateProperties.WATERLOGGED, false));
+		for (int i = -radius; i <= radius; i++) {
+			for (int j = -radius; j <= radius; j++) {
+				for (int k = -radius; k <= radius; k++) {
+					BlockPos ppos = new BlockPos(pos.getX() + i, pos.getY() + j, pos.getZ() + k);
+					BlockState state = world.getBlockState(ppos);
+					if (state.getBlock() == Blocks.WATER) {
+						world.setBlockState(ppos, Blocks.AIR.getDefaultState());
+					}
+				}
+			}
+		}
+		world.setBlockState(pos, Blocks.AIR.getDefaultState());
+		radius = 20;
+		for (int i = -radius; i <= radius; i++) {
+			for (int j = -radius; j <= radius; j++) {
+				for (int k = -radius; k <= radius; k++) {
+					BlockPos ppos = new BlockPos(pos.getX() + i, pos.getY() + j, pos.getZ() + k);
+					BlockState state = world.getBlockState(ppos);
+					if (state.getBlock().getExplosionResistance() < radius) {
+						float distance = (float) Math.sqrt(i * i + j * j + k * k);
+						if (distance < radius && world.rand.nextFloat() < 1 - 0.0001 * distance * distance * distance) {
+							if (world.rand.nextFloat() < 0.9) {
+								world.getBlockState(ppos).onBlockExploded(world, ppos, new Explosion(world, null, pos.getX(), pos.getY(), pos.getZ(), 20, new ArrayList<>()));
+							}
+						}
+					}
+				}
+			}
+		}
+		world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), 20, Mode.DESTROY);
+	}
+
 	public static final int STEAM_GEN_DIAMETER = 5;
 	public static final int STEAM_GEN_HEIGHT = 2;
 	private TileTurbine[][][] cachedTurbines = new TileTurbine[STEAM_GEN_DIAMETER][STEAM_GEN_HEIGHT][STEAM_GEN_DIAMETER];
 
 	private void produceSteam() {
-		if (temperature <= 100) {
+		if (temperature <= 400) {
 			return;
 		}
 		for (int i = 0; i < STEAM_GEN_DIAMETER; i++) {
