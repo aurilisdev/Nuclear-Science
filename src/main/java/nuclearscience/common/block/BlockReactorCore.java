@@ -96,6 +96,7 @@ public class BlockReactorCore extends BlockGenericMachine implements IWaterLogga
 	public void onBlockExploded(BlockState state, World world, BlockPos pos, Explosion explosion) {
 		TileEntity core = world.getTileEntity(pos);
 		if (core instanceof TileReactorCore) {
+			((TileReactorCore) core).meltdown();
 		}
 		super.onBlockExploded(state, world, pos, explosion);
 	}

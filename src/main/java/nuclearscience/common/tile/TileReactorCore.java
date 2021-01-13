@@ -148,7 +148,7 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 			}
 		}
 		world.setBlockState(pos, Blocks.AIR.getDefaultState());
-		radius = 20;
+		radius = 3 * fuelCount;
 		for (int i = -radius; i <= radius; i++) {
 			for (int j = -radius; j <= radius; j++) {
 				for (int k = -radius; k <= radius; k++) {
