@@ -1,5 +1,6 @@
 package nuclearscience;
 
+import electrodynamics.api.configuration.ConfigurationHandler;
 import net.minecraft.potion.Effect;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -16,12 +17,14 @@ import nuclearscience.api.radiation.EffectRadiation;
 import nuclearscience.api.radiation.FieldRadioactiveObject;
 import nuclearscience.api.radiation.RadiationRegister;
 import nuclearscience.client.ClientRegister;
+import nuclearscience.common.settings.Constants;
 
 @Mod(References.ID)
 @EventBusSubscriber(modid = References.ID, bus = Bus.MOD)
 public class NuclearScience {
 
 	public NuclearScience() {
+		ConfigurationHandler.registerConfig(Constants.class);
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 		DeferredRegisters.BLOCKS.register(bus);
 		DeferredRegisters.ITEMS.register(bus);

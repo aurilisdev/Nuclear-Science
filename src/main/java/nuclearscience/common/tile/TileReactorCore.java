@@ -29,6 +29,7 @@ import net.minecraft.world.Explosion.Mode;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.api.radiation.RadiationSystem;
 import nuclearscience.common.inventory.container.ContainerReactorCore;
+import nuclearscience.common.settings.Constants;
 
 public class TileReactorCore extends GenericTileInventory implements ITickableTileBase {
 
@@ -134,38 +135,40 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 
 	@SuppressWarnings("deprecation")
 	public void meltdown() {
-		int radius = STEAM_GEN_DIAMETER / 2;
-		world.setBlockState(pos, getBlockState().with(BlockStateProperties.WATERLOGGED, false));
-		for (int i = -radius; i <= radius; i++) {
-			for (int j = -radius; j <= radius; j++) {
-				for (int k = -radius; k <= radius; k++) {
-					BlockPos ppos = new BlockPos(pos.getX() + i, pos.getY() + j, pos.getZ() + k);
-					BlockState state = world.getBlockState(ppos);
-					if (state.getBlock() == Blocks.WATER) {
-						world.setBlockState(ppos, Blocks.AIR.getDefaultState());
+		if (!world.isRemote) {
+			int radius = STEAM_GEN_DIAMETER / 2;
+			world.setBlockState(pos, getBlockState().with(BlockStateProperties.WATERLOGGED, false));
+			for (int i = -radius; i <= radius; i++) {
+				for (int j = -radius; j <= radius; j++) {
+					for (int k = -radius; k <= radius; k++) {
+						BlockPos ppos = new BlockPos(pos.getX() + i, pos.getY() + j, pos.getZ() + k);
+						BlockState state = world.getBlockState(ppos);
+						if (state.getBlock() == Blocks.WATER) {
+							world.setBlockState(ppos, Blocks.AIR.getDefaultState());
+						}
 					}
 				}
 			}
-		}
-		world.setBlockState(pos, Blocks.AIR.getDefaultState());
-		radius = 3 * fuelCount;
-		for (int i = -radius; i <= radius; i++) {
-			for (int j = -radius; j <= radius; j++) {
-				for (int k = -radius; k <= radius; k++) {
-					BlockPos ppos = new BlockPos(pos.getX() + i, pos.getY() + j, pos.getZ() + k);
-					BlockState state = world.getBlockState(ppos);
-					if (state.getBlock().getExplosionResistance() < radius) {
-						float distance = (float) Math.sqrt(i * i + j * j + k * k);
-						if (distance < radius && world.rand.nextFloat() < 1 - 0.0001 * distance * distance * distance) {
-							if (world.rand.nextFloat() < 0.9) {
-								world.getBlockState(ppos).onBlockExploded(world, ppos, new Explosion(world, null, pos.getX(), pos.getY(), pos.getZ(), 20, new ArrayList<>()));
+			world.setBlockState(pos, Blocks.AIR.getDefaultState());
+			radius = 3 * fuelCount;
+			for (int i = -radius; i <= radius; i++) {
+				for (int j = -radius; j <= radius; j++) {
+					for (int k = -radius; k <= radius; k++) {
+						BlockPos ppos = new BlockPos(pos.getX() + i, pos.getY() + j, pos.getZ() + k);
+						BlockState state = world.getBlockState(ppos);
+						if (state.getBlock().getExplosionResistance() < radius) {
+							float distance = (float) Math.sqrt(i * i + j * j + k * k);
+							if (distance < radius && world.rand.nextFloat() < 1 - 0.0001 * distance * distance * distance) {
+								if (world.rand.nextFloat() < 0.9) {
+									world.getBlockState(ppos).onBlockExploded(world, ppos, new Explosion(world, null, pos.getX(), pos.getY(), pos.getZ(), 20, new ArrayList<>()));
+								}
 							}
 						}
 					}
 				}
 			}
+			world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), 20, Mode.DESTROY);
 		}
-		world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), 20, Mode.DESTROY);
 	}
 
 	public static final int STEAM_GEN_DIAMETER = 5;
@@ -197,7 +200,7 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 									if (turbine.isRemoved()) {
 										cachedTurbines[i][j][k] = null;
 									}
-									turbine.addSteam((int) ((temperature - 100) / 10 * 0.075f) * 20 * 20);
+									turbine.addSteam((int) (Constants.FISSIONREACTOR_MAXENERGYTARGET / (STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * 20.0 * (MELTDOWN_TEMPERATURE_ACTUAL / temperature))), (int) temperature);
 								}
 								if (turbine == null || world.loadedTileEntityList.contains(turbine)) {
 									TileEntity above = world.getTileEntity(new BlockPos(offsetX, offsetY + 1, offsetZ));

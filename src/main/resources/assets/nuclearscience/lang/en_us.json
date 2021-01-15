@@ -21,6 +21,7 @@
 	"block.nuclearscience.reactorcore": "Reactor Core",
 	"block.nuclearscience.electromagnet": "Electromagnet",
 	"block.nuclearscience.electromagneticglass": "Electromagnetic Glass",
+	"block.nuclearscience.fusionreactorcore": "Fusion Reactor Core",
 	"container.gascentrifuge": "Gas Centrifuge",
 	"container.chemicalboiler": "Chemical Boiler",
 	"container.chemicalextractor": "Chemical Extractor",

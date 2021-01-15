@@ -15,7 +15,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.block.BlockTurbine;
-import nuclearscience.common.settings.Constants;
 
 public class TileTurbine extends GenericTileBase implements ITickableTileBase, IPowerProvider, IElectricTile {
 
@@ -130,9 +129,8 @@ public class TileTurbine extends GenericTileBase implements ITickableTileBase, I
 		return currentVoltage;
 	}
 
-	public void addSteam(int steam) {
+	public void addSteam(int steam, int temp) {
 		this.steam = Math.min(MAX_STEAM * (isCore ? 9 : 1), this.steam + steam);
-		double temp = 1 / 3.0 * steam + 100;
 		if (temp < 4300) {
 			currentVoltage = 120;
 		} else if (temp < 6000) {
@@ -144,7 +142,7 @@ public class TileTurbine extends GenericTileBase implements ITickableTileBase, I
 			TileEntity core = world.getTileEntity(coreLocation);
 			if (core instanceof TileTurbine && ((TileTurbine) core).isCore()) {
 				TileTurbine turbine = (TileTurbine) core;
-				turbine.addSteam(this.steam);
+				turbine.addSteam(this.steam, temp);
 				this.steam = 0;
 			}
 		}
@@ -165,7 +163,7 @@ public class TileTurbine extends GenericTileBase implements ITickableTileBase, I
 		}
 		if (steam > 0) {
 			wait = 30;
-			TransferPack transfer = TransferPack.joulesVoltage(Constants.STEAMTOJOULESPERTICKRATIO * steam * (hasCore ? 1.111 : 1), getVoltage(Direction.UP));
+			TransferPack transfer = TransferPack.joulesVoltage(steam * (hasCore ? 1.111 : 1), getVoltage(Direction.UP));
 			if (output.get() instanceof IPowerReceiver) {
 				output.<IPowerReceiver>get().receivePower(transfer, Direction.UP, false);
 			}
