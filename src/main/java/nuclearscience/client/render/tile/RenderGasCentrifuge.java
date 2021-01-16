@@ -14,9 +14,9 @@ import net.minecraft.util.math.vector.Quaternion;
 import nuclearscience.client.ClientRegister;
 import nuclearscience.common.tile.TileGasCentrifuge;
 
-public class GasCentrifugeRenderer extends TileEntityRenderer<TileGasCentrifuge> {
+public class RenderGasCentrifuge extends TileEntityRenderer<TileGasCentrifuge> {
 
-	public GasCentrifugeRenderer(TileEntityRendererDispatcher rendererDispatcherIn) {
+	public RenderGasCentrifuge(TileEntityRendererDispatcher rendererDispatcherIn) {
 		super(rendererDispatcherIn);
 	}
 

@@ -1,5 +1,8 @@
 package nuclearscience.common.tile;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import electrodynamics.api.tile.processing.IO2OProcessor;
 import electrodynamics.common.block.subtype.SubtypeOre;
 import electrodynamics.common.tile.generic.GenericTileProcessor;
@@ -15,7 +18,10 @@ import net.minecraft.util.IIntArray;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerChemicalBoiler;
@@ -27,9 +33,19 @@ public class TileChemicalBoiler extends GenericTileProcessor implements IO2OProc
 	public static final int REQUIRED_WATER_CAP = 2400;
 	public static final int[] SLOTS_UP = new int[] { 0 };
 	public static final int[] SLOTS_SIDE = new int[] { 1 };
+	private final LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> this);
 
 	public FluidStack tankWater = new FluidStack(Fluids.WATER, 0);
 	public FluidStack tankU6F = new FluidStack(DeferredRegisters.fluidUraniumHexafluoride, 0);
+
+	@Override
+	@Nonnull
+	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
+		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+			return holder.cast();
+		}
+		return super.getCapability(capability, facing);
+	}
 
 	public TileChemicalBoiler() {
 		super(DeferredRegisters.TILE_CHEMICALBOILER.get());

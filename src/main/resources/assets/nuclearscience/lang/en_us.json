@@ -22,6 +22,7 @@
 	"block.nuclearscience.electromagnet": "Electromagnet",
 	"block.nuclearscience.electromagneticglass": "Electromagnetic Glass",
 	"block.nuclearscience.fusionreactorcore": "Fusion Reactor Core",
+	"block.nuclearscience.plasma": "Plasma",
 	"container.gascentrifuge": "Gas Centrifuge",
 	"container.chemicalboiler": "Chemical Boiler",
 	"container.chemicalextractor": "Chemical Extractor",
@@ -41,6 +42,7 @@
 	"gui.radioisotopegenerator.voltage": "Voltage: %s",
 	"itemGroup.itemgroupnuclearscience": "Nuclear Science",
 	"death.attack.radiation": "%s just did a speedrun of evolution!",
+	"death.attack.plasma": "%s was ionized!",
 	"effect.nuclearscience.radiation": "Radiation",
 	"message.geigercounter.text": "%s Rads per hour"
 }

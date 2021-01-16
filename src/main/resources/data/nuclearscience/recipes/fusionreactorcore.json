@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"sus",
+		"uru",
+		"sus"
+	],
+	"key": {
+		"s": {
+			"item": "nuclearscience:electromagnet"
+		},
+		"u": {
+			"tag": "forge:circuits/ultimate"
+		},
+		"r": {
+			"item": "nuclearscience:reactorcore"
+		}
+	},
+	"result": {
+		"item": "nuclearscience:fusionreactorcore",
+		"count": 1
+	}
+}

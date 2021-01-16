@@ -15,9 +15,9 @@ import net.minecraft.util.math.vector.Quaternion;
 import nuclearscience.client.ClientRegister;
 import nuclearscience.common.tile.TileTurbine;
 
-public class TurbineRenderer extends TileEntityRenderer<TileTurbine> {
+public class RenderTurbine extends TileEntityRenderer<TileTurbine> {
 
-	public TurbineRenderer(TileEntityRendererDispatcher rendererDispatcherIn) {
+	public RenderTurbine(TileEntityRendererDispatcher rendererDispatcherIn) {
 		super(rendererDispatcherIn);
 	}
 

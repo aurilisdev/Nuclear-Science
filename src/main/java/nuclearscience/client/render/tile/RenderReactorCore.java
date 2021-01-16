@@ -13,9 +13,9 @@ import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import nuclearscience.client.ClientRegister;
 import nuclearscience.common.tile.TileReactorCore;
 
-public class ReactorCoreRenderer extends TileEntityRenderer<TileReactorCore> {
+public class RenderReactorCore extends TileEntityRenderer<TileReactorCore> {
 
-	public ReactorCoreRenderer(TileEntityRendererDispatcher rendererDispatcherIn) {
+	public RenderReactorCore(TileEntityRendererDispatcher rendererDispatcherIn) {
 		super(rendererDispatcherIn);
 	}
 
