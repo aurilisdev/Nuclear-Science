@@ -1,0 +1,52 @@
+{
+	"variants": {
+		"facing=west,side=none": {
+			"model": "nuclearscience:block/electromagneticbooster",
+			"y": 270
+		},
+		"facing=south,side=none": {
+			"model": "nuclearscience:block/electromagneticbooster",
+			"y": 180
+		},
+		"facing=north,side=none": {
+			"model": "nuclearscience:block/electromagneticbooster",
+			"y": 0
+		},
+		"facing=east,side=none": {
+			"model": "nuclearscience:block/electromagneticbooster",
+			"y": 90
+		},
+		"facing=west,side=right": {
+			"model": "nuclearscience:block/electromagneticboosterright",
+			"y": 270
+		},
+		"facing=south,side=right": {
+			"model": "nuclearscience:block/electromagneticboosterright",
+			"y": 180
+		},
+		"facing=north,side=right": {
+			"model": "nuclearscience:block/electromagneticboosterright",
+			"y": 0
+		},
+		"facing=east,side=right": {
+			"model": "nuclearscience:block/electromagneticboosterright",
+			"y": 90
+		},
+		"facing=west,side=left": {
+			"model": "nuclearscience:block/electromagneticboosterleft",
+			"y": 270
+		},
+		"facing=south,side=left": {
+			"model": "nuclearscience:block/electromagneticboosterleft",
+			"y": 180
+		},
+		"facing=north,side=left": {
+			"model": "nuclearscience:block/electromagneticboosterleft",
+			"y": 0
+		},
+		"facing=east,side=left": {
+			"model": "nuclearscience:block/electromagneticboosterleft",
+			"y": 90
+		}
+	}
+}

@@ -8,13 +8,11 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.world.World;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.TickEvent.ServerTickEvent;
-import net.minecraftforge.event.TickEvent.Type;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -85,8 +83,8 @@ public class RadiationSystem {
 			}
 			Vector3f end = new Vector3f(entity.getPositionVec());
 			double radiation = 0;
-			if (entity instanceof PlayerEntity
-					&& ((PlayerEntity) entity).getItemStackFromSlot(entity.getActiveHand() == Hand.MAIN_HAND ? EquipmentSlotType.MAINHAND : EquipmentSlotType.OFFHAND).getItem() instanceof ItemGeigerCounter) {
+			if (entity instanceof PlayerEntity && (((PlayerEntity) entity).getItemStackFromSlot(EquipmentSlotType.MAINHAND).getItem() instanceof ItemGeigerCounter
+					|| ((PlayerEntity) entity).getItemStackFromSlot(EquipmentSlotType.OFFHAND).getItem() instanceof ItemGeigerCounter)) {
 				double already = radiationMap.containsKey(entity) ? radiationMap.get(entity) : 0;
 				radiation = getRadiation(entity.world, source, end, strength);
 				radiationMap.put((PlayerEntity) entity, already + radiation);
@@ -110,7 +108,7 @@ public class RadiationSystem {
 
 	@SubscribeEvent
 	public static void onTick(ServerTickEvent event) {
-		if (event.side == LogicalSide.SERVER && event.phase == Phase.END && event.type == Type.SERVER) {
+		if (event.side == LogicalSide.SERVER && event.phase == Phase.END) {
 			radiationMap.clear();
 		}
 	}

@@ -58,6 +58,7 @@ public class ClientRegister {
 		RenderTypeLookup.setRenderLayer(DeferredRegisters.blockChemicalExtractor, ClientRegister::shouldMultilayerRender);
 		RenderTypeLookup.setRenderLayer(DeferredRegisters.blockReactorCore, ClientRegister::shouldMultilayerRender);
 		RenderTypeLookup.setRenderLayer(DeferredRegisters.blockElectromagneticGlass.getBlock(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(DeferredRegisters.blockElectromagneticBooster.getBlock(), RenderType.getTranslucent());
 		RenderTypeLookup.setRenderLayer(DeferredRegisters.blockPlasma, RenderType.getTranslucent());
 	}
 

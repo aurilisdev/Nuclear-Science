@@ -23,6 +23,7 @@ import nuclearscience.common.block.BlockPlasma;
 import nuclearscience.common.block.BlockRadioisotopeGenerator;
 import nuclearscience.common.block.BlockReactorCore;
 import nuclearscience.common.block.BlockTurbine;
+import nuclearscience.common.block.electromagneticbooster.BlockElectromagneticBooster;
 import nuclearscience.common.fluid.FluidUraniumHexafluoride;
 import nuclearscience.common.inventory.container.ContainerChemicalBoiler;
 import nuclearscience.common.inventory.container.ContainerChemicalExtractor;
@@ -56,6 +57,7 @@ public class DeferredRegisters {
 	public static BlockReactorCore blockReactorCore;
 	public static BlockElectromagnet blockElectromagnet;
 	public static BlockElectromagnet blockElectromagneticGlass;
+	public static BlockElectromagneticBooster blockElectromagneticBooster;
 	public static BlockFusionReactorCore blockFusionReactorCore;
 	public static BlockPlasma blockPlasma;
 
@@ -68,6 +70,7 @@ public class DeferredRegisters {
 		BLOCKS.register("reactorcore", supplier(blockReactorCore = new BlockReactorCore()));
 		BLOCKS.register("electromagnet", supplier(blockElectromagnet = new BlockElectromagnet(false)));
 		BLOCKS.register("electromagneticglass", supplier(blockElectromagneticGlass = new BlockElectromagnet(true)));
+		BLOCKS.register("electromagneticbooster", supplier(blockElectromagneticBooster = new BlockElectromagneticBooster()));
 		BLOCKS.register("fusionreactorcore", supplier(blockFusionReactorCore = new BlockFusionReactorCore()));
 		BLOCKS.register("plasma", supplier(blockPlasma = new BlockPlasma()));
 		ITEMS.register("gascentrifuge", supplier(new BlockItemDescriptable(blockGasCentrifuge, new Item.Properties().group(References.NUCLEARTAB))));
@@ -78,6 +81,7 @@ public class DeferredRegisters {
 		ITEMS.register("reactorcore", supplier(new BlockItemDescriptable(blockReactorCore, new Item.Properties().group(References.NUCLEARTAB))));
 		ITEMS.register("electromagnet", supplier(new BlockItemDescriptable(blockElectromagnet, new Item.Properties().group(References.NUCLEARTAB))));
 		ITEMS.register("electromagneticglass", supplier(new BlockItemDescriptable(blockElectromagneticGlass, new Item.Properties().group(References.NUCLEARTAB))));
+		ITEMS.register("electromagneticbooster", supplier(new BlockItemDescriptable(blockElectromagneticBooster, new Item.Properties().group(References.NUCLEARTAB))));
 		ITEMS.register("fusionreactorcore", supplier(new BlockItemDescriptable(blockFusionReactorCore, new Item.Properties().group(References.NUCLEARTAB))));
 		ITEMS.register("plasma", supplier(new BlockItemDescriptable(blockPlasma, new Item.Properties())));
 		FLUIDS.register("fluiduraniumhexafluoride", supplier(fluidUraniumHexafluoride = new FluidUraniumHexafluoride()));
