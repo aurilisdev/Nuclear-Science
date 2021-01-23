@@ -6,26 +6,30 @@ buildscript {
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath 'org.ajoberstar:gradle-git:0.6.1'
     }
+}
+import org.ajoberstar.gradle.git.tasks.GitTag
+import org.ajoberstar.gradle.git.tasks.GitPush
+
+plugins {
+    id "com.matthewprenger.cursegradle" version '1.4.0'
 }
 apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-// define the properties file
-ext.configFile = file "build.properties"
-configFile.withReader {
-	// read config.
-	def prop = new Properties()
-	prop.load(it)
-	ext.config = new ConfigSlurper().parse prop
-}
-
 libsDirName = "../output"
 distsDirName = "../output"
 
-version = "${config.minecraft_version}-${config.version_major}.${config.version_minor}.${config.version_revision}-${config.version_build}"
+def version_minor='1'
+def version_revision='6'
+def minecraft_version='1.16.5'
+def version_build='0'
+def version_major='0'
+
+version = minecraft_version+'-'+version_major+'.'+version_minor+'.'+version_revision+'-'+version_build
 group = 'nuclearscience' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'Nuclear Science'
 
@@ -132,4 +136,32 @@ publishing {
             url "file:///${project.projectDir}/mcmodsrepo"
         }
     }
+}
+
+ext.gittagnew = 'v'+project.version
+
+task createTag(type: GitTag) {
+   repoPath = rootDir
+   tagName = gittagnew
+   message = "tag ${project.version.toString()}"
+}
+
+task pushTag(type: GitPush, dependsOn: createTag) {
+   namesOrSpecs = [gittagnew]
+}
+tasks.curseforge.dependsOn jar
+tasks.curseforge.dependsOn pushTag
+
+curseforge {
+  apiKey = System.getenv("CURSEFORGE_KEY")
+  project {
+    id = '318646'
+    changelog = 'You can find changelog at: https://aurilis.dev/'
+    releaseType = 'release'
+    addGameVersion minecraft_version
+
+    mainArtifact(jar) {
+      displayName=project.name+' ' + project.version
+    }
+  }
 }
