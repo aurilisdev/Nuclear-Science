@@ -50,9 +50,11 @@ public class BlockElectromagneticBooster extends Block implements IElectromagnet
 		BlockState check = context.getWorld().getBlockState(context.getPos().offset(movingdirection.rotateY().getOpposite()));
 		if (check.getBlock() == this && check.get(BlockGenericMachine.FACING).getOpposite() == movingdirection.rotateY().getOpposite()) {
 			state = state.with(FACINGDIRECTION, FacingDirection.LEFT);
-		} else { 
-			// then left check if its hitting from the left but the left is the start of the circle
-
+		} else {
+			check = context.getWorld().getBlockState(context.getPos().offset(movingdirection.rotateY()));
+			if (check.getBlock() == this && check.get(BlockGenericMachine.FACING).getOpposite() == movingdirection.rotateY()) {
+				state = state.with(FACINGDIRECTION, FacingDirection.RIGHT);
+			}
 		}
 		return state;
 	}

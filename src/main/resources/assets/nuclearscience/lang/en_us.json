@@ -24,6 +24,7 @@
 	"block.nuclearscience.electromagneticbooster": "Electromagnetic Booster",
 	"block.nuclearscience.fusionreactorcore": "Fusion Reactor Core",
 	"block.nuclearscience.plasma": "Plasma",
+	"block.nuclearscience.particleinjector": "Particle Injector",
 	"container.gascentrifuge": "Gas Centrifuge",
 	"container.chemicalboiler": "Chemical Boiler",
 	"container.chemicalextractor": "Chemical Extractor",
