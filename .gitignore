@@ -46,3 +46,9 @@ releaseJarsOnly/
 Physica_Client.launch
 
 Physica_Server.launch
+runClient.launch
+
+runData.launch
+
+runServer.launch
+*.launch
