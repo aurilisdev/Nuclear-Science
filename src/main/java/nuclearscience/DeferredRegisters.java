@@ -5,6 +5,8 @@ import com.google.common.collect.Sets;
 
 import electrodynamics.common.blockitem.BlockItemDescriptable;
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntityType;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.inventory.container.ContainerType;
@@ -25,6 +27,7 @@ import nuclearscience.common.block.BlockRadioisotopeGenerator;
 import nuclearscience.common.block.BlockReactorCore;
 import nuclearscience.common.block.BlockTurbine;
 import nuclearscience.common.block.electromagneticbooster.BlockElectromagneticBooster;
+import nuclearscience.common.entity.EntityParticle;
 import nuclearscience.common.fluid.FluidUraniumHexafluoride;
 import nuclearscience.common.inventory.container.ContainerChemicalBoiler;
 import nuclearscience.common.inventory.container.ContainerChemicalExtractor;
@@ -50,6 +53,7 @@ public class DeferredRegisters {
 	public static final DeferredRegister<TileEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, References.ID);
 	public static final DeferredRegister<ContainerType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, References.ID);
 	public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, References.ID);
+	public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, References.ID);
 	public static FluidUraniumHexafluoride fluidUraniumHexafluoride;
 	public static BlockGasCentrifuge blockGasCentrifuge;
 	public static BlockChemicalBoiler blockChemicalBoiler;
@@ -132,6 +136,8 @@ public class DeferredRegisters {
 	public static final RegistryObject<ContainerType<ContainerRadioisotopeGenerator>> CONTAINER_RADIOISOTOPEGENERATOR = CONTAINERS.register("radioisotopegenerator",
 			() -> new ContainerType<>(ContainerRadioisotopeGenerator::new));
 	public static final RegistryObject<ContainerType<ContainerReactorCore>> CONTAINER_REACTORCORE = CONTAINERS.register("reactorcore", () -> new ContainerType<>(ContainerReactorCore::new));
+	public static final RegistryObject<EntityType<EntityParticle>> ENTITY_PARTICLE = ENTITIES.register("particle",
+			() -> EntityType.Builder.<EntityParticle>create(EntityParticle::new, EntityClassification.MISC).trackingRange(8).build(References.ID + ".particle"));
 
 	private static <T extends IForgeRegistryEntry<T>> Supplier<? extends T> supplier(T entry) {
 		return () -> entry;
