@@ -10,6 +10,7 @@ import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3f;
@@ -20,12 +21,14 @@ import nuclearscience.DeferredRegisters;
 import nuclearscience.api.fusion.IElectromagnet;
 import nuclearscience.common.block.electromagneticbooster.BlockElectromagneticBooster;
 import nuclearscience.common.block.electromagneticbooster.FacingDirection;
+import nuclearscience.common.tile.TileParticleInjector;
 
 public class EntityParticle extends Entity {
 	private static final DataParameter<Direction> DIRECTION = EntityDataManager.createKey(EntityParticle.class, DataSerializers.DIRECTION);
 	private static final DataParameter<Float> SPEED = EntityDataManager.createKey(EntityParticle.class, DataSerializers.FLOAT);
 	private Direction direction;
 	private float speed = 0.02f;
+	public BlockPos source = BlockPos.ZERO;
 
 	public EntityParticle(EntityType<?> entityTypeIn, World worldIn) {
 		super(entityTypeIn, worldIn);
@@ -42,6 +45,12 @@ public class EntityParticle extends Entity {
 	@Override
 	public void tick() {
 		if (!world.isRemote) {
+			TileEntity tile = world.getTileEntity(source);
+			if (tile instanceof TileParticleInjector) {
+				((TileParticleInjector) tile).addParticle(this);
+			} else {
+				remove();
+			}
 			dataManager.set(DIRECTION, direction);
 			dataManager.set(SPEED, speed);
 		} else {
@@ -122,10 +131,14 @@ public class EntityParticle extends Entity {
 
 	@Override
 	protected void readAdditional(CompoundNBT compound) {
+		source = new BlockPos(compound.getInt("sourceX"), compound.getInt("sourceY"), compound.getInt("sourceZ"));
 	}
 
 	@Override
 	protected void writeAdditional(CompoundNBT compound) {
+		compound.putInt("sourceX", source.getX());
+		compound.putInt("sourceY", source.getY());
+		compound.putInt("sourceZ", source.getZ());
 	}
 
 	@Override

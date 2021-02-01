@@ -16,8 +16,9 @@ import nuclearscience.common.entity.EntityParticle;
 import nuclearscience.common.settings.Constants;
 
 public class TileParticleInjector extends GenericTileProcessor implements ITickableTileBase, IPowerReceiver, IElectricTile {
-	private double joules;
+	private EntityParticle[] particles = new EntityParticle[2];
 	private long timeSinceSpawn = 0;
+	private double joules;
 
 	public TileParticleInjector() {
 		super(DeferredRegisters.TILE_PARTICLEINJECTOR.get());
@@ -25,8 +26,24 @@ public class TileParticleInjector extends GenericTileProcessor implements ITicka
 
 	@Override
 	public boolean canProcess() {
+		if (particles[0] != null && !particles[0].isAlive()) {
+			particles[0] = null;
+		}
+		if (particles[1] != null && !particles[1].isAlive()) {
+			particles[1] = null;
+		}
+		if (particles[0] != null && particles[1] != null) {
+			EntityParticle one = particles[0];
+			EntityParticle two = particles[1];
+			if (one.getDistance(two) < 1) {
+				one.remove();
+				two.remove();
+				particles[0] = particles[1] = null;
+				System.out.println("collided");
+			}
+		}
 		timeSinceSpawn--;
-		return super.canProcess() && timeSinceSpawn < 100;
+		return super.canProcess() && timeSinceSpawn < 100 && (particles[0] == null);
 	}
 
 	@Override
@@ -34,7 +51,19 @@ public class TileParticleInjector extends GenericTileProcessor implements ITicka
 		Direction dir = getFacing();
 		EntityParticle particle = new EntityParticle(getFacing(), world,
 				new Vector3f(pos.getX() + 0.5f + dir.getXOffset() * 1.5f, pos.getY() + 0.5f + dir.getYOffset() * 1.5f, pos.getZ() + 0.5f + dir.getZOffset() * 1.5f));
+		addParticle(particle);
 		world.addEntity(particle);
+	}
+
+	public void addParticle(EntityParticle particle) {
+		if (particles[0] != particle && particles[1] != particle) {
+			particle.source = getPos();
+			if (particles[0] == null) {
+				particles[0] = particle;
+			} else if (particles[1] == null) {
+				particles[1] = particle;
+			}
+		}
 	}
 
 	@Override
