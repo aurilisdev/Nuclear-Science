@@ -62,11 +62,11 @@ public class EntityParticle extends Entity {
 			float localSpeed = speed / (float) checks;
 			for (int i = 0; i < checks; i++) {
 				BlockPos next = getPosition();
+				BlockState oldState = world.getBlockState(next);
 				if (!world.isRemote) {
-					BlockState nextState = world.getBlockState(next);
-					if (nextState.getBlock() == DeferredRegisters.blockElectromagneticBooster) {
-						Direction dir = nextState.get(BlockGenericMachine.FACING).getOpposite();
-						FacingDirection face = nextState.get(BlockElectromagneticBooster.FACINGDIRECTION);
+					if (oldState.getBlock() == DeferredRegisters.blockElectromagneticBooster) {
+						Direction dir = oldState.get(BlockGenericMachine.FACING).getOpposite();
+						FacingDirection face = oldState.get(BlockElectromagneticBooster.FACINGDIRECTION);
 						if (face == FacingDirection.RIGHT) {
 							dir = dir.rotateY();
 						} else if (face == FacingDirection.LEFT) {
@@ -84,9 +84,15 @@ public class EntityParticle extends Entity {
 						}
 					}
 				}
-				BlockState stateAtPos = world.getBlockState(getPosition());
+				if (speed < 0) {
+					speed *= -1;
+					direction = direction.getOpposite();
+				}
+				setPosition(getPosX() + direction.getXOffset() * localSpeed, getPosY(), getPosZ() + direction.getZOffset() * localSpeed);
+
 				if (!world.isRemote) {
-					if (stateAtPos.getBlock() == Blocks.AIR) {
+					BlockState nextState = world.getBlockState(getPosition());
+					if (nextState.getBlock() == Blocks.AIR) {
 						int amount = 0;
 						for (Direction of : Direction.values()) {
 							if (world.getBlockState(getPosition().offset(of)).getBlock() instanceof IElectromagnet) {
@@ -98,17 +104,35 @@ public class EntityParticle extends Entity {
 							setDead();
 							break;
 						}
-					} else if (stateAtPos.getBlock() != DeferredRegisters.blockElectromagneticBooster.getBlock()) {
-						world.createExplosion(this, getPosX(), getPosY(), getPosZ(), speed, Mode.DESTROY);
-						setDead();
-						break;
+					} else {
+						boolean checkIsBooster = nextState.getBlock() == DeferredRegisters.blockElectromagneticBooster && oldState.getBlock() == DeferredRegisters.blockElectromagneticBooster;
+						Direction oldDir = oldState.get(BlockGenericMachine.FACING);
+						Direction nextDir = nextState.get(BlockGenericMachine.FACING);
+						boolean isSameDirection = oldDir == nextDir;
+						boolean explode = false;
+						if (checkIsBooster) {
+							if (isSameDirection) {
+							} else {
+								FacingDirection face = oldState.get(BlockElectromagneticBooster.FACINGDIRECTION);
+								if (face == FacingDirection.RIGHT) {
+									oldDir = oldDir.rotateY();
+								} else if (face == FacingDirection.LEFT) {
+									oldDir = oldDir.rotateYCCW();
+								}
+								if (oldDir != nextDir) {
+									explode = true;
+								}
+							}
+						} else if (nextState.getBlock() != DeferredRegisters.blockElectromagneticBooster) {
+							explode = true;
+						}
+						if (explode) {
+							world.createExplosion(this, getPosX(), getPosY(), getPosZ(), speed, Mode.DESTROY);
+							setDead();
+							break;
+						}
 					}
 				}
-				if (speed < 0) {
-					speed *= -1;
-					direction = direction.getOpposite();
-				}
-				setPosition(getPosX() + direction.getXOffset() * localSpeed, getPosY(), getPosZ() + direction.getZOffset() * localSpeed);
 			}
 			speed = Math.min(speed, 1.999f);
 		} else {

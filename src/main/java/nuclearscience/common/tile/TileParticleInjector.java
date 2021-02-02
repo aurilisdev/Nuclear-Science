@@ -39,7 +39,6 @@ public class TileParticleInjector extends GenericTileProcessor implements ITicka
 				one.remove();
 				two.remove();
 				particles[0] = particles[1] = null;
-				System.out.println("collided");
 			}
 		}
 		timeSinceSpawn--;
