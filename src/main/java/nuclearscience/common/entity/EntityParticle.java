@@ -84,14 +84,15 @@ public class EntityParticle extends Entity {
 						}
 					}
 				}
+
 				if (speed < 0) {
 					speed *= -1;
 					direction = direction.getOpposite();
 				}
 				setPosition(getPosX() + direction.getXOffset() * localSpeed, getPosY(), getPosZ() + direction.getZOffset() * localSpeed);
-
 				if (!world.isRemote) {
-					BlockState nextState = world.getBlockState(getPosition());
+					BlockPos getPos = getPosition();
+					BlockState nextState = world.getBlockState(getPos);
 					if (nextState.getBlock() == Blocks.AIR) {
 						int amount = 0;
 						for (Direction of : Direction.values()) {
@@ -103,6 +104,27 @@ public class EntityParticle extends Entity {
 							world.createExplosion(this, getPosX(), getPosY(), getPosZ(), speed, Mode.DESTROY);
 							setDead();
 							break;
+						}
+						BlockState testNextBlock = world.getBlockState(getPos.offset(direction));
+						if (testNextBlock.getBlock() instanceof IElectromagnet) {
+							Direction checkRot = direction.rotateY();
+							testNextBlock = world.getBlockState(getPos.offset(checkRot));
+							if (testNextBlock.getBlock() == Blocks.AIR) {
+								BlockPos floor = getPosition();
+								direction = checkRot;
+								setPosition(floor.getX() + 0.5, floor.getY() + 0.5, floor.getZ() + 0.5);
+							} else {
+								checkRot = direction.rotateY().getOpposite();
+								testNextBlock = world.getBlockState(getPos.offset(checkRot));
+								if (testNextBlock.getBlock() == Blocks.AIR) {
+									BlockPos floor = getPosition();
+									setPosition(floor.getX() + 0.5, floor.getY() + 0.5, floor.getZ() + 0.5);
+								} else {
+									world.createExplosion(this, getPosX(), getPosY(), getPosZ(), speed, Mode.DESTROY);
+									setDead();
+									break;
+								}
+							}
 						}
 					} else {
 						boolean checkIsBooster = nextState.getBlock() == DeferredRegisters.blockElectromagneticBooster && oldState.getBlock() == DeferredRegisters.blockElectromagneticBooster;
