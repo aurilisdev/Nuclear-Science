@@ -106,13 +106,11 @@ public class EntityParticle extends Entity {
 						}
 					} else {
 						boolean checkIsBooster = nextState.getBlock() == DeferredRegisters.blockElectromagneticBooster && oldState.getBlock() == DeferredRegisters.blockElectromagneticBooster;
-						Direction oldDir = oldState.get(BlockGenericMachine.FACING);
-						Direction nextDir = nextState.get(BlockGenericMachine.FACING);
-						boolean isSameDirection = oldDir == nextDir;
 						boolean explode = false;
 						if (checkIsBooster) {
-							if (isSameDirection) {
-							} else {
+							Direction oldDir = oldState.get(BlockGenericMachine.FACING);
+							Direction nextDir = nextState.get(BlockGenericMachine.FACING);
+							if (oldDir != nextDir) {
 								FacingDirection face = oldState.get(BlockElectromagneticBooster.FACINGDIRECTION);
 								if (face == FacingDirection.RIGHT) {
 									oldDir = oldDir.rotateY();
