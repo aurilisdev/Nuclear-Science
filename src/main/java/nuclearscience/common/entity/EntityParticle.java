@@ -63,25 +63,23 @@ public class EntityParticle extends Entity {
 			for (int i = 0; i < checks; i++) {
 				BlockPos next = getPosition();
 				BlockState oldState = world.getBlockState(next);
-				if (!world.isRemote) {
-					if (oldState.getBlock() == DeferredRegisters.blockElectromagneticBooster) {
-						Direction dir = oldState.get(BlockGenericMachine.FACING).getOpposite();
-						FacingDirection face = oldState.get(BlockElectromagneticBooster.FACINGDIRECTION);
-						if (face == FacingDirection.RIGHT) {
-							dir = dir.rotateY();
-						} else if (face == FacingDirection.LEFT) {
-							dir = dir.rotateYCCW();
-						}
-						if (dir == direction) {
-							speed += 0.01 / 3;
-						} else if (dir == direction.getOpposite()) {
-							speed -= 0.02;
-						} else {
-							speed += 0.01 / 6;
-							direction = dir;
-							BlockPos floor = getPosition();
-							setPosition(floor.getX() + 0.5, floor.getY() + 0.5, floor.getZ() + 0.5);
-						}
+				if (oldState.getBlock() == DeferredRegisters.blockElectromagneticBooster) {
+					Direction dir = oldState.get(BlockGenericMachine.FACING).getOpposite();
+					FacingDirection face = oldState.get(BlockElectromagneticBooster.FACINGDIRECTION);
+					if (face == FacingDirection.RIGHT) {
+						dir = dir.rotateY();
+					} else if (face == FacingDirection.LEFT) {
+						dir = dir.rotateYCCW();
+					}
+					if (dir == direction) {
+						speed += 0.01 / 3;
+					} else if (dir == direction.getOpposite()) {
+						speed -= 0.02;
+					} else {
+						speed += 0.01 / 6;
+						direction = dir;
+						BlockPos floor = getPosition();
+						setPosition(floor.getX() + 0.5, floor.getY() + 0.5, floor.getZ() + 0.5);
 					}
 				}
 

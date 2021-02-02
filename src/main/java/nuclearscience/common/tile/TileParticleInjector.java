@@ -42,7 +42,7 @@ public class TileParticleInjector extends GenericTileProcessor implements ITicka
 			}
 		}
 		timeSinceSpawn--;
-		return super.canProcess() && timeSinceSpawn < 100 && (particles[0] == null);
+		return super.canProcess() && timeSinceSpawn < 100 && (particles[0] == null || particles[1] == null);
 	}
 
 	@Override
