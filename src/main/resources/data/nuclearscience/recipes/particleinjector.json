@@ -1,0 +1,26 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"ete",
+		"udu",
+		"ete"
+	],
+	"key": {
+		"e": {
+			"item": "nuclearscience:electromagnet"
+		},
+		"u": {
+			"tag": "forge:circuits/ultimate"
+		},
+		"d": {
+			"item": "minecraft:dispenser"
+		},
+		"t": {
+			"item": "electrodynamics:upgradetransformer"
+		}
+	},
+	"result": {
+		"item": "nuclearscience:particleinjector",
+		"count": 1
+	}
+}

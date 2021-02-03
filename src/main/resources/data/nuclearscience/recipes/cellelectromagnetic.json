@@ -1,0 +1,20 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" c ",
+		"csc",
+		" c "
+	],
+	"key": {
+		"c": {
+			"tag": "electrodynamics:coil"
+		},
+		"s": {
+			"item": "nuclearscience:cellempty"
+		}
+	},
+	"result": {
+		"item": "nuclearscience:cellelectromagnetic",
+		"count": 1
+	}
+}
