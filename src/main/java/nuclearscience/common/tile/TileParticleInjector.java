@@ -7,12 +7,17 @@ import electrodynamics.common.tile.generic.GenericTileProcessor;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
+import net.minecraft.util.IIntArray;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.entity.EntityParticle;
+import nuclearscience.common.inventory.container.ContainerParticleInjector;
 import nuclearscience.common.settings.Constants;
 
 public class TileParticleInjector extends GenericTileProcessor implements ITickableTileBase, IPowerReceiver, IElectricTile {
@@ -42,12 +47,15 @@ public class TileParticleInjector extends GenericTileProcessor implements ITicka
 			}
 		}
 		timeSinceSpawn--;
-		return super.canProcess() && timeSinceSpawn < 100 && (particles[0] == null || particles[1] == null);
+		return timeSinceSpawn < 0 && super.canProcess() && (particles[0] == null || particles[1] == null) && getStackInSlot(0).getCount() > 0;
 	}
 
 	@Override
 	public void process() {
+		timeSinceSpawn = 100;
 		Direction dir = getFacing();
+		ItemStack stack = getStackInSlot(0);
+		stack.setCount(stack.getCount() - 1);
 		EntityParticle particle = new EntityParticle(getFacing(), world,
 				new Vector3f(pos.getX() + 0.5f + dir.getXOffset() * 1.5f, pos.getY() + 0.5f + dir.getYOffset() * 1.5f, pos.getZ() + 0.5f + dir.getZOffset() * 1.5f));
 		addParticle(particle);
@@ -100,7 +108,7 @@ public class TileParticleInjector extends GenericTileProcessor implements ITicka
 
 	@Override
 	public int getSizeInventory() {
-		return 0;
+		return 3;
 	}
 
 	@Override
@@ -114,8 +122,43 @@ public class TileParticleInjector extends GenericTileProcessor implements ITicka
 	}
 
 	@Override
-	protected Container createMenu(int arg0, PlayerInventory arg1) {
-		return null;
+	protected Container createMenu(int id, PlayerInventory player) {
+		return new ContainerParticleInjector(id, player, this, inventorydata);
+	}
+
+	protected final IIntArray inventorydata = new IIntArray() {
+		@Override
+		public int get(int index) {
+			switch (index) {
+			case 0:
+				return (int) getVoltage();
+			case 1:
+				return (int) Math.ceil(getJoulesPerTick());
+			case 2:
+				return (int) (getJoulesStored() / getJoulesPerTick() * 100.0);
+			default:
+				return 0;
+			}
+		}
+
+		@Override
+		public void set(int index, int value) {
+			switch (index) {
+			default:
+				break;
+			}
+
+		}
+
+		@Override
+		public int size() {
+			return 3;
+		}
+	};
+
+	@Override
+	public ITextComponent getDisplayName() {
+		return new TranslationTextComponent("container.particleinjector");
 	}
 
 	@Override

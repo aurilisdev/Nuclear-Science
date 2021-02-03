@@ -36,7 +36,7 @@ public class EntityParticle extends Entity {
 
 	public EntityParticle(Direction direction, World worldIn, Vector3f pos) {
 		this(DeferredRegisters.ENTITY_PARTICLE.get(), worldIn);
-		this.forceSetPosition(pos.getX(), pos.getY(), pos.getZ());
+		forceSetPosition(pos.getX(), pos.getY(), pos.getZ());
 		this.direction = direction;
 		ignoreFrustumCheck = true;
 		setRenderDistanceWeight(4);
@@ -59,7 +59,7 @@ public class EntityParticle extends Entity {
 		}
 		if (direction != null) {
 			int checks = (int) (Math.ceil(speed) * 2);
-			float localSpeed = speed / (float) checks;
+			float localSpeed = speed / checks;
 			for (int i = 0; i < checks; i++) {
 				BlockPos next = getPosition();
 				BlockState oldState = world.getBlockState(next);
@@ -116,6 +116,7 @@ public class EntityParticle extends Entity {
 								testNextBlock = world.getBlockState(getPos.offset(checkRot));
 								if (testNextBlock.getBlock() == Blocks.AIR) {
 									BlockPos floor = getPosition();
+									direction = checkRot;
 									setPosition(floor.getX() + 0.5, floor.getY() + 0.5, floor.getZ() + 0.5);
 								} else {
 									world.createExplosion(this, getPosX(), getPosY(), getPosZ(), speed, Mode.DESTROY);

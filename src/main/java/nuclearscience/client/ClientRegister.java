@@ -19,6 +19,7 @@ import nuclearscience.client.render.tile.RenderTurbine;
 import nuclearscience.client.screen.ScreenChemicalBoiler;
 import nuclearscience.client.screen.ScreenChemicalExtractor;
 import nuclearscience.client.screen.ScreenGasCentrifuge;
+import nuclearscience.client.screen.ScreenParticleInjector;
 import nuclearscience.client.screen.ScreenRadioisotopeGenerator;
 import nuclearscience.client.screen.ScreenReactorCore;
 
@@ -58,6 +59,7 @@ public class ClientRegister {
 		ScreenManager.registerFactory(DeferredRegisters.CONTAINER_CHEMICALEXTRACTOR.get(), ScreenChemicalExtractor::new);
 		ScreenManager.registerFactory(DeferredRegisters.CONTAINER_RADIOISOTOPEGENERATOR.get(), ScreenRadioisotopeGenerator::new);
 		ScreenManager.registerFactory(DeferredRegisters.CONTAINER_REACTORCORE.get(), ScreenReactorCore::new);
+		ScreenManager.registerFactory(DeferredRegisters.CONTAINER_PARTICLEINJECTOR.get(), ScreenParticleInjector::new);
 
 		RenderTypeLookup.setRenderLayer(DeferredRegisters.blockChemicalExtractor, ClientRegister::shouldMultilayerRender);
 		RenderTypeLookup.setRenderLayer(DeferredRegisters.blockReactorCore, ClientRegister::shouldMultilayerRender);

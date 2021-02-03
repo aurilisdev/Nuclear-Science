@@ -32,6 +32,7 @@ import nuclearscience.common.fluid.FluidUraniumHexafluoride;
 import nuclearscience.common.inventory.container.ContainerChemicalBoiler;
 import nuclearscience.common.inventory.container.ContainerChemicalExtractor;
 import nuclearscience.common.inventory.container.ContainerGasCentrifuge;
+import nuclearscience.common.inventory.container.ContainerParticleInjector;
 import nuclearscience.common.inventory.container.ContainerRadioisotopeGenerator;
 import nuclearscience.common.inventory.container.ContainerReactorCore;
 import nuclearscience.common.item.ItemGeigerCounter;
@@ -94,6 +95,7 @@ public class DeferredRegisters {
 		ITEMS.register("plasma", supplier(new BlockItemDescriptable(blockPlasma, new Item.Properties())));
 		ITEMS.register("particleinjector", supplier(new BlockItemDescriptable(blockParticleInjector, new Item.Properties().group(References.NUCLEARTAB))));
 		FLUIDS.register("fluiduraniumhexafluoride", supplier(fluidUraniumHexafluoride = new FluidUraniumHexafluoride()));
+
 	}
 	public static final RegistryObject<Item> ITEM_URANIUM235 = ITEMS.register("uranium235", supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
 	public static final RegistryObject<Item> ITEM_URANIUM238 = ITEMS.register("uranium238", supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
@@ -102,6 +104,8 @@ public class DeferredRegisters {
 	public static final RegistryObject<Item> ITEM_CELLDEUTERIUM = ITEMS.register("celldeuterium", supplier(new Item(new Item.Properties().group(References.NUCLEARTAB))));
 	public static final RegistryObject<Item> ITEM_CELLTRITIUM = ITEMS.register("celltritium", supplier(new Item(new Item.Properties().group(References.NUCLEARTAB))));
 	public static final RegistryObject<Item> ITEM_CELLHEAVYWATER = ITEMS.register("cellheavywater", supplier(new Item(new Item.Properties().group(References.NUCLEARTAB))));
+	public static final RegistryObject<Item> ITEM_CELLANTIMATTERSMALL = ITEMS.register("cellantimattersmall", supplier(new Item(new Item.Properties().group(References.NUCLEARTAB))));
+	public static final RegistryObject<Item> ITEM_CELLANTIMATTERLARGE = ITEMS.register("cellantimatterlarge", supplier(new Item(new Item.Properties().group(References.NUCLEARTAB))));
 	public static final RegistryObject<Item> ITEM_FUELHEUO2 = ITEMS.register("fuelheuo2", supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB).maxStackSize(1).defaultMaxDamage(24000))));
 	public static final RegistryObject<Item> ITEM_FUELLEUO2 = ITEMS.register("fuelleuo2", supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB).maxStackSize(1).defaultMaxDamage(26000))));
 	public static final RegistryObject<Item> ITEM_GEIGERCOUNTER = ITEMS.register("geigercounter",
@@ -136,6 +140,7 @@ public class DeferredRegisters {
 	public static final RegistryObject<ContainerType<ContainerRadioisotopeGenerator>> CONTAINER_RADIOISOTOPEGENERATOR = CONTAINERS.register("radioisotopegenerator",
 			() -> new ContainerType<>(ContainerRadioisotopeGenerator::new));
 	public static final RegistryObject<ContainerType<ContainerReactorCore>> CONTAINER_REACTORCORE = CONTAINERS.register("reactorcore", () -> new ContainerType<>(ContainerReactorCore::new));
+	public static final RegistryObject<ContainerType<ContainerParticleInjector>> CONTAINER_PARTICLEINJECTOR = CONTAINERS.register("particleinjetor", () -> new ContainerType<>(ContainerParticleInjector::new));
 	public static final RegistryObject<EntityType<EntityParticle>> ENTITY_PARTICLE = ENTITIES.register("particle",
 			() -> EntityType.Builder.<EntityParticle>create(EntityParticle::new, EntityClassification.MISC).trackingRange(8).build(References.ID + ".particle"));
 
