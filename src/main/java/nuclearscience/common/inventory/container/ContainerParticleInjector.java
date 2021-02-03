@@ -7,6 +7,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.ContainerType;
+import net.minecraft.inventory.container.FurnaceResultSlot;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.IntArray;
 import net.minecraftforge.api.distmarker.Dist;
@@ -34,8 +35,8 @@ public class ContainerParticleInjector extends GenericContainerInventory {
 	@Override
 	public void addInventorySlots(IInventory inv, PlayerInventory playerinv) {
 		addSlot(new GenericSlot(inv, nextIndex(), 98, 14));
-		addSlot(new SlotRestricted(inv, nextIndex(), 98, 49));
-		addSlot(new SlotRestricted(inv, nextIndex(), 132, 32));
+		addSlot(new SlotRestricted(inv, nextIndex(), 98, 50, DeferredRegisters.ITEM_CELLELECTROMAGNETIC.get()));
+		addSlot(new FurnaceResultSlot(playerinv.player, inv, nextIndex(), 133, 32));
 	}
 
 	@OnlyIn(Dist.CLIENT)

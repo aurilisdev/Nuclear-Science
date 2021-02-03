@@ -30,6 +30,11 @@ public class TileParticleInjector extends GenericTileProcessor implements ITicka
 	}
 
 	@Override
+	public boolean isItemValidForSlot(int index, ItemStack stack) {
+		return index == 1 ? stack.getItem() == DeferredRegisters.ITEM_CELLELECTROMAGNETIC.get() : super.isItemValidForSlot(index, stack);
+	}
+
+	@Override
 	public boolean canProcess() {
 		if (particles[0] != null && !particles[0].isAlive()) {
 			particles[0] = null;
@@ -37,17 +42,20 @@ public class TileParticleInjector extends GenericTileProcessor implements ITicka
 		if (particles[1] != null && !particles[1].isAlive()) {
 			particles[1] = null;
 		}
-		if (particles[0] != null && particles[1] != null) {
+		ItemStack resultStack = getStackInSlot(2);
+		ItemStack cellStack = getStackInSlot(0);
+		if (cellStack.getCount() > 0 && particles[0] != null && particles[1] != null) {
 			EntityParticle one = particles[0];
 			EntityParticle two = particles[1];
 			if (one.getDistance(two) < 1) {
 				one.remove();
 				two.remove();
 				particles[0] = particles[1] = null;
+				cellStack.setCount(cellStack.getCount() - 1);
 			}
 		}
 		timeSinceSpawn--;
-		return timeSinceSpawn < 0 && super.canProcess() && (particles[0] == null || particles[1] == null) && getStackInSlot(0).getCount() > 0;
+		return timeSinceSpawn < 0 && super.canProcess() && (particles[0] == null || particles[1] == null) && getStackInSlot(0).getCount() > 0 && resultStack.getCount() < resultStack.getMaxStackSize();
 	}
 
 	@Override
