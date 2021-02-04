@@ -1,0 +1,33 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "nuclearscience:cellantimattersmall"
+        },
+        {
+            "item": "nuclearscience:cellantimattersmall"
+        },
+        {
+            "item": "nuclearscience:cellantimattersmall"
+        },
+        {
+            "item": "nuclearscience:cellantimattersmall"
+        },
+        {
+            "item": "nuclearscience:cellantimattersmall"
+        },
+        {
+            "item": "nuclearscience:cellantimattersmall"
+        },
+        {
+            "item": "nuclearscience:cellantimattersmall"
+        },
+        {
+            "item": "nuclearscience:cellantimattersmall"
+        }
+    ],
+    "result": {
+        "item": "nuclearscience:cellantimatterlarge",
+        "count": 1
+    }
+}
