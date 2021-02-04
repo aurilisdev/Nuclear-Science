@@ -26,6 +26,7 @@
 	"block.nuclearscience.electromagnet": "Electromagnet",
 	"block.nuclearscience.electromagneticglass": "Electromagnetic Glass",
 	"block.nuclearscience.electromagneticbooster": "Electromagnetic Booster",
+	"block.nuclearscience.electromagneticswitch": "Electromagnetic Switch",
 	"block.nuclearscience.fusionreactorcore": "Fusion Reactor Core",
 	"block.nuclearscience.plasma": "Plasma",
 	"block.nuclearscience.particleinjector": "Particle Injector",

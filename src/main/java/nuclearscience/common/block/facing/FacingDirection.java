@@ -1,4 +1,4 @@
-package nuclearscience.common.block.electromagneticbooster;
+package nuclearscience.common.block.facing;
 
 import net.minecraft.util.IStringSerializable;
 

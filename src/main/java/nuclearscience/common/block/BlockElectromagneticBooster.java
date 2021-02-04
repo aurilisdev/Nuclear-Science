@@ -1,4 +1,4 @@
-package nuclearscience.common.block.electromagneticbooster;
+package nuclearscience.common.block;
 
 import electrodynamics.api.tile.IWrenchable;
 import electrodynamics.common.block.BlockGenericMachine;
@@ -22,6 +22,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
 import nuclearscience.api.fusion.IElectromagnet;
+import nuclearscience.common.block.facing.FacingDirection;
+import nuclearscience.common.block.facing.FacingDirectionProperty;
 
 public class BlockElectromagneticBooster extends Block implements IElectromagnet, IWrenchable {
 	public static final FacingDirectionProperty FACINGDIRECTION = FacingDirectionProperty.create("side", FacingDirection.values());

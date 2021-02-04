@@ -7,7 +7,7 @@
 	],
 	"key": {
 		"c": {
-			"tag": "electrodynamics:coil"
+			"item": "electrodynamics:coil"
 		},
 		"s": {
 			"item": "nuclearscience:cellempty"

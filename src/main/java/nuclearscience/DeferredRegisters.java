@@ -19,6 +19,8 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 import nuclearscience.common.block.BlockChemicalBoiler;
 import nuclearscience.common.block.BlockChemicalExtractor;
 import nuclearscience.common.block.BlockElectromagnet;
+import nuclearscience.common.block.BlockElectromagneticBooster;
+import nuclearscience.common.block.BlockElectromagneticSwitch;
 import nuclearscience.common.block.BlockFusionReactorCore;
 import nuclearscience.common.block.BlockGasCentrifuge;
 import nuclearscience.common.block.BlockParticleInjector;
@@ -26,7 +28,6 @@ import nuclearscience.common.block.BlockPlasma;
 import nuclearscience.common.block.BlockRadioisotopeGenerator;
 import nuclearscience.common.block.BlockReactorCore;
 import nuclearscience.common.block.BlockTurbine;
-import nuclearscience.common.block.electromagneticbooster.BlockElectromagneticBooster;
 import nuclearscience.common.entity.EntityParticle;
 import nuclearscience.common.fluid.FluidUraniumHexafluoride;
 import nuclearscience.common.inventory.container.ContainerChemicalBoiler;
@@ -40,6 +41,7 @@ import nuclearscience.common.item.ItemHazmatArmor;
 import nuclearscience.common.item.ItemRadioactive;
 import nuclearscience.common.tile.TileChemicalBoiler;
 import nuclearscience.common.tile.TileChemicalExtractor;
+import nuclearscience.common.tile.TileElectromagneticSwitch;
 import nuclearscience.common.tile.TileFusionReactorCore;
 import nuclearscience.common.tile.TileGasCentrifuge;
 import nuclearscience.common.tile.TileParticleInjector;
@@ -65,6 +67,7 @@ public class DeferredRegisters {
 	public static BlockElectromagnet blockElectromagnet;
 	public static BlockElectromagnet blockElectromagneticGlass;
 	public static BlockElectromagneticBooster blockElectromagneticBooster;
+	public static BlockElectromagneticSwitch blockElectromagneticSwitch;
 	public static BlockFusionReactorCore blockFusionReactorCore;
 	public static BlockPlasma blockPlasma;
 	public static BlockParticleInjector blockParticleInjector;
@@ -79,6 +82,7 @@ public class DeferredRegisters {
 		BLOCKS.register("electromagnet", supplier(blockElectromagnet = new BlockElectromagnet(false)));
 		BLOCKS.register("electromagneticglass", supplier(blockElectromagneticGlass = new BlockElectromagnet(true)));
 		BLOCKS.register("electromagneticbooster", supplier(blockElectromagneticBooster = new BlockElectromagneticBooster()));
+		BLOCKS.register("electromagneticswitch", supplier(blockElectromagneticSwitch = new BlockElectromagneticSwitch()));
 		BLOCKS.register("fusionreactorcore", supplier(blockFusionReactorCore = new BlockFusionReactorCore()));
 		BLOCKS.register("plasma", supplier(blockPlasma = new BlockPlasma()));
 		BLOCKS.register("particleinjector", supplier(blockParticleInjector = new BlockParticleInjector()));
@@ -91,6 +95,7 @@ public class DeferredRegisters {
 		ITEMS.register("electromagnet", supplier(new BlockItemDescriptable(blockElectromagnet, new Item.Properties().group(References.NUCLEARTAB))));
 		ITEMS.register("electromagneticglass", supplier(new BlockItemDescriptable(blockElectromagneticGlass, new Item.Properties().group(References.NUCLEARTAB))));
 		ITEMS.register("electromagneticbooster", supplier(new BlockItemDescriptable(blockElectromagneticBooster, new Item.Properties().group(References.NUCLEARTAB))));
+		ITEMS.register("electromagneticswitch", supplier(new BlockItemDescriptable(blockElectromagneticSwitch, new Item.Properties().group(References.NUCLEARTAB))));
 		ITEMS.register("fusionreactorcore", supplier(new BlockItemDescriptable(blockFusionReactorCore, new Item.Properties().group(References.NUCLEARTAB))));
 		ITEMS.register("plasma", supplier(new BlockItemDescriptable(blockPlasma, new Item.Properties())));
 		ITEMS.register("particleinjector", supplier(new BlockItemDescriptable(blockParticleInjector, new Item.Properties().group(References.NUCLEARTAB))));
@@ -135,6 +140,8 @@ public class DeferredRegisters {
 			() -> new TileEntityType<>(TileFusionReactorCore::new, Sets.newHashSet(blockFusionReactorCore), null));
 	public static final RegistryObject<TileEntityType<TileParticleInjector>> TILE_PARTICLEINJECTOR = TILES.register("particleinjector",
 			() -> new TileEntityType<>(TileParticleInjector::new, Sets.newHashSet(blockParticleInjector), null));
+	public static final RegistryObject<TileEntityType<TileElectromagneticSwitch>> TILE_ELECTROMAGNETICSWITCH = TILES.register("electromagneticswitch",
+			() -> new TileEntityType<>(TileElectromagneticSwitch::new, Sets.newHashSet(blockElectromagneticSwitch), null));
 	public static final RegistryObject<TileEntityType<TilePlasma>> TILE_PLASMA = TILES.register("plasma", () -> new TileEntityType<>(TilePlasma::new, Sets.newHashSet(blockPlasma), null));
 	public static final RegistryObject<ContainerType<ContainerGasCentrifuge>> CONTAINER_GASCENTRIFUGE = CONTAINERS.register("gascentrifuge", () -> new ContainerType<>(ContainerGasCentrifuge::new));
 	public static final RegistryObject<ContainerType<ContainerChemicalBoiler>> CONTAINER_CHEMICALBOILER = CONTAINERS.register("chemicalboiler", () -> new ContainerType<>(ContainerChemicalBoiler::new));

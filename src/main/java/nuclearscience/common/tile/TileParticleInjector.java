@@ -48,19 +48,21 @@ public class TileParticleInjector extends GenericTileProcessor implements ITicka
 			EntityParticle one = particles[0];
 			EntityParticle two = particles[1];
 			if (one.getDistance(two) < 1) {
-				double speedOfMax = (one.speed + two.speed) / 4.0;
+				double speedOfMax = Math.pow((one.speed + two.speed) / 4.0, 2);
+				System.out.println("speed:" + speedOfMax);
 				one.remove();
 				two.remove();
 				particles[0] = particles[1] = null;
 				cellStack.setCount(cellStack.getCount() - 1);
 				double mod = world.rand.nextDouble();
+				System.out.println("mod:" + mod);
 				if (speedOfMax > 0.9999) {
 					if (resultStack.getItem() == DeferredRegisters.ITEM_CELLDARKMATTER.get()) {
 						resultStack.setCount(resultStack.getCount() + 1);
 					} else if (resultStack.isEmpty()) {
 						setInventorySlotContents(2, new ItemStack(DeferredRegisters.ITEM_CELLDARKMATTER.get()));
 					}
-				} else if (speedOfMax < mod) {
+				} else if (speedOfMax > mod) {
 					if (resultStack.getItem() == DeferredRegisters.ITEM_CELLANTIMATTERSMALL.get()) {
 						resultStack.setCount(resultStack.getCount() + 1);
 					} else if (resultStack.isEmpty()) {
