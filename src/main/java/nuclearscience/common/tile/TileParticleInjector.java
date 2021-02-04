@@ -44,14 +44,29 @@ public class TileParticleInjector extends GenericTileProcessor implements ITicka
 		}
 		ItemStack resultStack = getStackInSlot(2);
 		ItemStack cellStack = getStackInSlot(0);
-		if (cellStack.getCount() > 0 && particles[0] != null && particles[1] != null) {
+		if (resultStack.getCount() < resultStack.getMaxStackSize() && cellStack.getCount() > 0 && particles[0] != null && particles[1] != null) {
 			EntityParticle one = particles[0];
 			EntityParticle two = particles[1];
 			if (one.getDistance(two) < 1) {
+				double speedOfMax = (one.speed + two.speed) / 4.0;
 				one.remove();
 				two.remove();
 				particles[0] = particles[1] = null;
 				cellStack.setCount(cellStack.getCount() - 1);
+				double mod = world.rand.nextDouble();
+				if (speedOfMax > 0.9999) {
+					if (resultStack.getItem() == DeferredRegisters.ITEM_CELLDARKMATTER.get()) {
+						resultStack.setCount(resultStack.getCount() + 1);
+					} else if (resultStack.isEmpty()) {
+						setInventorySlotContents(2, new ItemStack(DeferredRegisters.ITEM_CELLDARKMATTER.get()));
+					}
+				} else if (speedOfMax < mod) {
+					if (resultStack.getItem() == DeferredRegisters.ITEM_CELLANTIMATTERSMALL.get()) {
+						resultStack.setCount(resultStack.getCount() + 1);
+					} else if (resultStack.isEmpty()) {
+						setInventorySlotContents(2, new ItemStack(DeferredRegisters.ITEM_CELLANTIMATTERSMALL.get()));
+					}
+				}
 			}
 		}
 		timeSinceSpawn--;

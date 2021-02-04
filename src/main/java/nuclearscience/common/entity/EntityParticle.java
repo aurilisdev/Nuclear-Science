@@ -27,7 +27,7 @@ public class EntityParticle extends Entity {
 	private static final DataParameter<Direction> DIRECTION = EntityDataManager.createKey(EntityParticle.class, DataSerializers.DIRECTION);
 	private static final DataParameter<Float> SPEED = EntityDataManager.createKey(EntityParticle.class, DataSerializers.FLOAT);
 	private Direction direction;
-	private float speed = 0.02f;
+	public float speed = 0.02f;
 	public BlockPos source = BlockPos.ZERO;
 
 	public EntityParticle(EntityType<?> entityTypeIn, World worldIn) {
