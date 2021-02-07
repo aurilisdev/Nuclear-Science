@@ -47,12 +47,13 @@ public class EntityParticle extends Entity {
 
 	@Override
 	public void tick() {
+		TileEntity tile = world.getTileEntity(source);
 		if (!world.isRemote) {
-			TileEntity tile = world.getTileEntity(source);
 			if (tile instanceof TileParticleInjector) {
 				((TileParticleInjector) tile).addParticle(this);
 			} else {
 				remove();
+				return;
 			}
 			dataManager.set(DIRECTION, direction);
 			dataManager.set(SPEED, speed);
@@ -64,6 +65,10 @@ public class EntityParticle extends Entity {
 			int checks = (int) (Math.ceil(speed) * 2);
 			float localSpeed = speed / checks;
 			for (int i = 0; i < checks; i++) {
+				if (!world.isRemote) {
+					TileParticleInjector injector = (TileParticleInjector) tile;
+					injector.checkCollide();
+				}
 				BlockPos next = getPosition();
 				BlockState oldState = world.getBlockState(next);
 				boolean isBooster = false;

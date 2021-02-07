@@ -12,7 +12,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.culling.ClippingHelper;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.texture.AtlasTexture;
@@ -87,11 +86,6 @@ public class RenderParticle extends EntityRenderer<EntityParticle> {
 		GlStateManager.enableAlphaTest();
 
 		GlStateManager.popMatrix();
-	}
-
-	@Override
-	public boolean shouldRender(EntityParticle livingEntityIn, ClippingHelper camera, double camX, double camY, double camZ) {
-		return super.shouldRender(livingEntityIn, camera, camX, camY, camZ);
 	}
 
 	@SuppressWarnings("deprecation")

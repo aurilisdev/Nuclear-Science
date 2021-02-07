@@ -43,20 +43,25 @@ public class TileParticleInjector extends GenericTileProcessor implements ITicka
 			particles[1] = null;
 		}
 		ItemStack resultStack = getStackInSlot(2);
+		timeSinceSpawn--;
+		return timeSinceSpawn < 0 && super.canProcess() && (particles[0] == null || particles[1] == null) && getStackInSlot(0).getCount() > 0 && resultStack.getCount() < resultStack.getMaxStackSize();
+	}
+
+	public void checkCollide() {
+		ItemStack resultStack = getStackInSlot(2);
 		ItemStack cellStack = getStackInSlot(0);
 		if (resultStack.getCount() < resultStack.getMaxStackSize() && cellStack.getCount() > 0 && particles[0] != null && particles[1] != null) {
 			EntityParticle one = particles[0];
 			EntityParticle two = particles[1];
 			if (one.getDistance(two) < 1) {
 				double speedOfMax = Math.pow((one.speed + two.speed) / 4.0, 2);
-				System.out.println("speed:" + speedOfMax);
 				one.remove();
 				two.remove();
 				particles[0] = particles[1] = null;
 				cellStack.setCount(cellStack.getCount() - 1);
 				double mod = world.rand.nextDouble();
-				System.out.println("mod:" + mod);
-				if (speedOfMax > 0.9999) {
+				System.out.println(speedOfMax);
+				if (speedOfMax > 0.999) {
 					if (resultStack.getItem() == DeferredRegisters.ITEM_CELLDARKMATTER.get()) {
 						resultStack.setCount(resultStack.getCount() + 1);
 					} else if (resultStack.isEmpty()) {
@@ -71,8 +76,6 @@ public class TileParticleInjector extends GenericTileProcessor implements ITicka
 				}
 			}
 		}
-		timeSinceSpawn--;
-		return timeSinceSpawn < 0 && super.canProcess() && (particles[0] == null || particles[1] == null) && getStackInSlot(0).getCount() > 0 && resultStack.getCount() < resultStack.getMaxStackSize();
 	}
 
 	@Override
