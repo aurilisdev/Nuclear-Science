@@ -41,7 +41,7 @@ public class TileChemicalBoiler extends GenericTileProcessor implements IO2OProc
 	@Override
 	@Nonnull
 	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
-		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY && facing ==getFacing().getOpposite().rotateYCCW() ) {
 			return holder.cast();
 		}
 		return super.getCapability(capability, facing);
@@ -236,8 +236,6 @@ public class TileChemicalBoiler extends GenericTileProcessor implements IO2OProc
 		if (action == FluidAction.EXECUTE) {
 			tankU6F.shrink(amount);
 		}
-		// This might be dangerous? Doesnt check if its trying to pull from correct
-		// direction
 		return amount == 0 ? FluidStack.EMPTY : new FluidStack(tankU6F.getFluid(), amount);
 	}
 }
