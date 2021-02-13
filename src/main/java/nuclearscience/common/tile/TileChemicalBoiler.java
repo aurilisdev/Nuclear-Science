@@ -25,10 +25,9 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerChemicalBoiler;
+import nuclearscience.common.settings.Constants;
 
 public class TileChemicalBoiler extends GenericTileProcessor implements IO2OProcessor, IFluidHandler {
-	public static final double REQUIRED_JOULES_PER_TICK = 750;
-	public static final int REQUIRED_TICKS = 800;
 	public static final int TANKCAPACITY = 5000;
 	public static final int REQUIRED_WATER_CAP = 2400;
 	public static final int[] SLOTS_UP = new int[] { 0 };
@@ -41,7 +40,7 @@ public class TileChemicalBoiler extends GenericTileProcessor implements IO2OProc
 	@Override
 	@Nonnull
 	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
-		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY && facing ==getFacing().getOpposite().rotateYCCW() ) {
+		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY && facing == getFacing().getOpposite().rotateYCCW()) {
 			return holder.cast();
 		}
 		return super.getCapability(capability, facing);
@@ -54,7 +53,7 @@ public class TileChemicalBoiler extends GenericTileProcessor implements IO2OProc
 
 	@Override
 	public double getJoulesPerTick() {
-		return REQUIRED_JOULES_PER_TICK * currentSpeedMultiplier;
+		return Constants.CHEMICALBOILER_USAGE_PER_TICK * currentSpeedMultiplier;
 	}
 
 	@Override
@@ -111,7 +110,7 @@ public class TileChemicalBoiler extends GenericTileProcessor implements IO2OProc
 
 	@Override
 	public int getRequiredTicks() {
-		return REQUIRED_TICKS;
+		return Constants.CHEMICALBOILER_REQUIRED_TICKS;
 	}
 
 	@Override

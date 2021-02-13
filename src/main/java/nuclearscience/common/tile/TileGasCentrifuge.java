@@ -15,10 +15,9 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerGasCentrifuge;
+import nuclearscience.common.settings.Constants;
 
 public class TileGasCentrifuge extends GenericTileProcessor implements IO2OProcessor, IFluidHandler {
-	public static final double REQUIRED_JOULES_PER_TICK = 1500;
-	public static final int REQUIRED_TICKS = 20;
 	public static final int TANKCAPACITY = 5000;
 	public static final float REQUIRED = 2500;
 	public static final int[] SLOTS_UP = new int[] {};
@@ -35,7 +34,7 @@ public class TileGasCentrifuge extends GenericTileProcessor implements IO2OProce
 
 	@Override
 	public double getJoulesPerTick() {
-		return REQUIRED_JOULES_PER_TICK * currentSpeedMultiplier;
+		return Constants.GASCENTRIFUGE_USAGE_PER_TICK * currentSpeedMultiplier;
 	}
 
 	@Override
@@ -102,7 +101,7 @@ public class TileGasCentrifuge extends GenericTileProcessor implements IO2OProce
 
 	@Override
 	public int getRequiredTicks() {
-		return REQUIRED_TICKS;
+		return Constants.GASCENTRIFUGE_REQUIRED_TICKS_PER_PROCESSING;
 	}
 
 	@Override

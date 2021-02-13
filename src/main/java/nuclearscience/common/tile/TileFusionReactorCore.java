@@ -30,12 +30,12 @@ public class TileFusionReactorCore extends GenericTileBase implements ITickableT
 		if (world.getWorldInfo().getDayTime() % 20 == 0) {
 			sendUpdatePacket();
 		}
-		if (tritium > 0 && deuterium > 0 && timeLeft <= 0 && joules > Constants.FUSIONREACTOR_REQUIREDPOWER / 20.0) {
+		if (tritium > 0 && deuterium > 0 && timeLeft <= 0 && joules > Constants.FUSIONREACTOR_USAGE_PER_TICK) {
 			deuterium -= 1;
 			tritium -= 1;
 			timeLeft = 15 * 20;
 		}
-		if (timeLeft > 0 && joules > Constants.FUSIONREACTOR_REQUIREDPOWER / 20.0) {
+		if (timeLeft > 0 && joules > Constants.FUSIONREACTOR_USAGE_PER_TICK) {
 			for (Direction dir : Direction.values()) {
 				if (dir != Direction.UP && dir != Direction.DOWN) {
 					BlockPos offset = pos.offset(dir);
@@ -50,7 +50,7 @@ public class TileFusionReactorCore extends GenericTileBase implements ITickableT
 					}
 				}
 			}
-			joules -= Constants.FUSIONREACTOR_REQUIREDPOWER / 20.0;
+			joules -= Constants.FUSIONREACTOR_USAGE_PER_TICK;
 		}
 		timeLeft--;
 	}
@@ -110,7 +110,7 @@ public class TileFusionReactorCore extends GenericTileBase implements ITickableT
 	}
 
 	private double getMaxJoulesStored() {
-		return Constants.FUSIONREACTOR_REQUIREDPOWER;
+		return Constants.FUSIONREACTOR_USAGE_PER_TICK * 20.0;
 	}
 
 	@Override

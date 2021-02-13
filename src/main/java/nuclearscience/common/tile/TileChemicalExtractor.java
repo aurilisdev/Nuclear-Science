@@ -23,10 +23,9 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerChemicalExtractor;
+import nuclearscience.common.settings.Constants;
 
 public class TileChemicalExtractor extends GenericTileProcessor implements IO2OProcessor, IFluidHandler {
-	public static final double REQUIRED_JOULES_PER_TICK = 750;
-	public static final int REQUIRED_TICKS = 400;
 	public static final int TANKCAPACITY = 5000;
 	public static final int REQUIRED_WATER_CAP = 4800;
 
@@ -53,7 +52,7 @@ public class TileChemicalExtractor extends GenericTileProcessor implements IO2OP
 
 	@Override
 	public double getJoulesPerTick() {
-		return REQUIRED_JOULES_PER_TICK * currentSpeedMultiplier;
+		return Constants.CHEMICALEXTRACTOR_USAGE_PER_TICK * currentSpeedMultiplier;
 	}
 
 	@Override
@@ -126,7 +125,7 @@ public class TileChemicalExtractor extends GenericTileProcessor implements IO2OP
 
 	@Override
 	public int getRequiredTicks() {
-		return REQUIRED_TICKS;
+		return Constants.CHEMICALEXTRACTOR_REQUIRED_TICKS;
 	}
 
 	@Override

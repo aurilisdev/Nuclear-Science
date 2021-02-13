@@ -196,7 +196,7 @@ public class TileParticleInjector extends GenericTileProcessor implements ITicka
 
 	@Override
 	public double getJoulesPerTick() {
-		return Constants.PARTICLEINJECTOR_REQUIREDPOWER;
+		return Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE;
 	}
 
 }
