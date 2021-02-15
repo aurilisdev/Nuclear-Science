@@ -2,6 +2,7 @@ package nuclearscience.api.radiation;
 
 import java.util.HashMap;
 
+import electrodynamics.api.math.Location;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -9,7 +10,6 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.world.World;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.TickEvent.ServerTickEvent;
@@ -26,21 +26,19 @@ public class RadiationSystem {
 
 	public static HashMap<PlayerEntity, Double> radiationMap = new HashMap<>();
 
-	public static double getRadiationModifier(World world, Vector3f source, Vector3f end, double strength) {
-		double distance = 1 + Math.sqrt(Math.pow(source.getX() - end.getX(), 2) + Math.pow(source.getY() - end.getY(), 2) + Math.pow(source.getZ() - end.getZ(), 2));
-		Vector3f clone = end.copy();
+	public static double getRadiationModifier(World world, Location source, Location end, double strength) {
+		double distance = 1 + source.distance(end);
+		Location clone = new Location(end);
 		double modifier = 1;
-		Vector3f newSource = source.copy();
-		clone.sub(source);
-		clone.normalize();
-		clone.mul(0.33f);
+		Location newSource = new Location(source);
+		clone.add(-source.x, -source.y, -source.z).normalize(null).mul(0.33f);
 		int checks = (int) distance * 3;
-		BlockPos curr = new BlockPos(newSource.getX(), newSource.getY(), newSource.getZ());
+		BlockPos curr = newSource.toBlockPos();
 		double lastHard = 0;
 		while (checks > 0) {
 			newSource.add(clone);
 			double hard = lastHard;
-			BlockPos next = new BlockPos(newSource.getX(), newSource.getY(), newSource.getZ());
+			BlockPos next = newSource.toBlockPos();
 			if (!curr.equals(next)) {
 				curr = next;
 				lastHard = hard = world.getBlockState(curr).getBlockHardness(world, curr) / (world.getFluidState(curr).isEmpty() ? 1 : 50.0);
@@ -51,12 +49,12 @@ public class RadiationSystem {
 		return modifier;
 	}
 
-	public static double getRadiation(World world, Vector3f source, Vector3f end, double strength) {
-		double distance = 1 + Math.sqrt(Math.pow(source.getX() - end.getX(), 2) + Math.pow(source.getY() - end.getY(), 2) + Math.pow(source.getZ() - end.getZ(), 2));
+	public static double getRadiation(World world, Location source, Location end, double strength) {
+		double distance = 1 + source.distance(end);
 		return strength / (getRadiationModifier(world, source, end, strength) * distance * distance);
 	}
 
-	public static void applyRadiation(LivingEntity entity, Vector3f source, double strength) {
+	public static void applyRadiation(LivingEntity entity, Location source, double strength) {
 		int protection = 1;
 		if (!entity.world.isRemote) {
 			boolean isPlayer = entity instanceof PlayerEntity;
@@ -81,7 +79,7 @@ public class RadiationSystem {
 					}
 				}
 			}
-			Vector3f end = new Vector3f(entity.getPositionVec());
+			Location end = new Location(entity.getPositionVec().x, entity.getPositionVec().y, entity.getPositionVec().z);
 			double radiation = 0;
 			if (entity instanceof PlayerEntity && (((PlayerEntity) entity).getItemStackFromSlot(EquipmentSlotType.MAINHAND).getItem() instanceof ItemGeigerCounter
 					|| ((PlayerEntity) entity).getItemStackFromSlot(EquipmentSlotType.OFFHAND).getItem() instanceof ItemGeigerCounter)) {
@@ -93,7 +91,7 @@ public class RadiationSystem {
 				if (radiation == 0) {
 					radiation = getRadiation(entity.world, source, end, strength);
 				}
-				double distance = 1 + Math.sqrt(Math.pow(source.getX() - end.getX(), 2) + Math.pow(source.getY() - end.getY(), 2) + Math.pow(source.getZ() - end.getZ(), 2));
+				double distance = 1 + source.distance(end);
 				double modifier = strength / (radiation * distance * distance);
 				strength /= modifier;
 				int amplitude = (int) Math.max(0, Math.min(strength / (distance * 4000.0), 9));

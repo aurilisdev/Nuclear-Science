@@ -2,6 +2,7 @@ package nuclearscience.common.entity;
 
 import java.util.HashSet;
 
+import electrodynamics.api.math.Location;
 import electrodynamics.common.block.BlockGenericMachine;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -15,7 +16,6 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.world.Explosion.Mode;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -37,9 +37,9 @@ public class EntityParticle extends Entity {
 		super(entityTypeIn, worldIn);
 	}
 
-	public EntityParticle(Direction direction, World worldIn, Vector3f pos) {
+	public EntityParticle(Direction direction, World worldIn, Location pos) {
 		this(DeferredRegisters.ENTITY_PARTICLE.get(), worldIn);
-		forceSetPosition(pos.getX(), pos.getY(), pos.getZ());
+		forceSetPosition(pos.x, pos.y, pos.z);
 		this.direction = direction;
 		ignoreFrustumCheck = true;
 		setRenderDistanceWeight(4);

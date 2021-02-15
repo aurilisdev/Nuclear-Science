@@ -1,5 +1,6 @@
 package nuclearscience.common.tile;
 
+import electrodynamics.api.math.Location;
 import electrodynamics.api.tile.ITickableTileBase;
 import electrodynamics.api.tile.electric.IElectricTile;
 import electrodynamics.api.tile.electric.IPowerReceiver;
@@ -12,7 +13,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import nuclearscience.DeferredRegisters;
@@ -84,7 +84,7 @@ public class TileParticleInjector extends GenericTileProcessor implements ITicka
 		ItemStack stack = getStackInSlot(0);
 		stack.setCount(stack.getCount() - 1);
 		EntityParticle particle = new EntityParticle(getFacing(), world,
-				new Vector3f(pos.getX() + 0.5f + dir.getXOffset() * 1.5f, pos.getY() + 0.5f + dir.getYOffset() * 1.5f, pos.getZ() + 0.5f + dir.getZOffset() * 1.5f));
+				new Location(pos.getX() + 0.5f + dir.getXOffset() * 1.5f, pos.getY() + 0.5f + dir.getYOffset() * 1.5f, pos.getZ() + 0.5f + dir.getZOffset() * 1.5f));
 		addParticle(particle);
 		world.addEntity(particle);
 	}

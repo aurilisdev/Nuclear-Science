@@ -3,6 +3,7 @@ package nuclearscience.common.tile;
 import java.util.ArrayList;
 import java.util.List;
 
+import electrodynamics.api.math.Location;
 import electrodynamics.api.tile.ITickableTileBase;
 import electrodynamics.common.tile.generic.GenericTileInventory;
 import net.minecraft.block.Block;
@@ -21,7 +22,6 @@ import net.minecraft.util.IIntArray;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.Explosion;
@@ -94,11 +94,11 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 				}
 			}
 			if (world.getWorldInfo().getGameTime() % 10 == 0) {
-				Vector3f source = new Vector3f(pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f);
+				Location source = new Location(pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f);
 				double totstrength = temperature * 10;
 				double range = Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 1.25;
 				AxisAlignedBB bb = AxisAlignedBB.withSizeAtOrigin(range, range, range);
-				bb = bb.offset(new Vector3d(source));
+				bb = bb.offset(new Vector3d(source.x, source.y, source.z));
 				List<LivingEntity> list = world.getEntitiesWithinAABB(LivingEntity.class, bb);
 				for (LivingEntity living : list) {
 					RadiationSystem.applyRadiation(living, source, totstrength);
