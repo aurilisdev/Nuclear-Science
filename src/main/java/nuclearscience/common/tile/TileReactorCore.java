@@ -113,11 +113,11 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 				ItemStack tritium = getStackInSlot(5);
 				ItemStack deuterium = getStackInSlot(4);
 				if (tritium.getCount() + 1 <= tritium.getMaxStackSize() && deuterium.getItem() == DeferredRegisters.ITEM_CELLDEUTERIUM.get() && deuterium.getCount() > 0) {
-					deuterium.setCount(deuterium.getCount() - 1);
+					deuterium.shrink(1);
 					if (tritium.isEmpty()) {
 						setInventorySlotContents(5, new ItemStack(DeferredRegisters.ITEM_CELLTRITIUM.get()));
 					} else {
-						tritium.setCount(tritium.getCount() + 1);
+						tritium.grow(1);
 					}
 				}
 			}

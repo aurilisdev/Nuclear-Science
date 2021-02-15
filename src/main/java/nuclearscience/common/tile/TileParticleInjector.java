@@ -58,9 +58,8 @@ public class TileParticleInjector extends GenericTileProcessor implements ITicka
 				one.remove();
 				two.remove();
 				particles[0] = particles[1] = null;
-				cellStack.setCount(cellStack.getCount() - 1);
+				cellStack.shrink(1);
 				double mod = world.rand.nextDouble();
-				System.out.println(speedOfMax);
 				if (speedOfMax > 0.999) {
 					if (resultStack.getItem() == DeferredRegisters.ITEM_CELLDARKMATTER.get()) {
 						resultStack.setCount(resultStack.getCount() + 1);
