@@ -46,6 +46,11 @@ public class TileChemicalBoiler extends GenericTileProcessor implements IO2OProc
 		return super.getCapability(capability, facing);
 	}
 
+	@Override
+	public boolean compareCapabilityDirectionElectricity(Direction dir) {
+		return dir == Direction.DOWN;
+	}
+
 	public TileChemicalBoiler() {
 		super(DeferredRegisters.TILE_CHEMICALBOILER.get());
 		addUpgradeSlots(2, 3, 4);
@@ -126,11 +131,6 @@ public class TileChemicalBoiler extends GenericTileProcessor implements IO2OProc
 	@Override
 	protected Container createMenu(int id, PlayerInventory player) {
 		return new ContainerChemicalBoiler(id, player, this, inventorydata);
-	}
-
-	@Override
-	public boolean canConnectElectrically(Direction direction) {
-		return direction == Direction.DOWN;
 	}
 
 	@Override

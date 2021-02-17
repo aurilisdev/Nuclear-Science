@@ -120,8 +120,8 @@ public class TileGasCentrifuge extends GenericTileProcessor implements IO2OProce
 	}
 
 	@Override
-	public boolean canConnectElectrically(Direction direction) {
-		return direction == Direction.DOWN;
+	public boolean compareCapabilityDirectionElectricity(Direction dir) {
+		return dir == Direction.DOWN;
 	}
 
 	@Override

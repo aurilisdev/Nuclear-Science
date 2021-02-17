@@ -45,6 +45,11 @@ public class TileChemicalExtractor extends GenericTileProcessor implements IO2OP
 		return super.getCapability(capability, facing);
 	}
 
+	@Override
+	public boolean compareCapabilityDirectionElectricity(Direction dir) {
+		return dir == Direction.DOWN;
+	}
+
 	public TileChemicalExtractor() {
 		super(DeferredRegisters.TILE_CHEMICALEXTRACTOR.get());
 		addUpgradeSlots(3, 4, 5);
@@ -141,11 +146,6 @@ public class TileChemicalExtractor extends GenericTileProcessor implements IO2OP
 	@Override
 	protected Container createMenu(int id, PlayerInventory player) {
 		return new ContainerChemicalExtractor(id, player, this, inventorydata);
-	}
-
-	@Override
-	public boolean canConnectElectrically(Direction direction) {
-		return direction == Direction.DOWN;
 	}
 
 	@Override

@@ -1,11 +1,11 @@
 package nuclearscience.common.tile;
 
 import electrodynamics.api.tile.ITickableTileBase;
-import electrodynamics.api.tile.electric.IElectricTile;
-import electrodynamics.api.tile.electric.IPowerProvider;
-import electrodynamics.api.tile.electric.IPowerReceiver;
+import electrodynamics.api.tile.electric.CapabilityElectrodynamic;
+import electrodynamics.api.tile.electric.IElectrodynamic;
 import electrodynamics.api.utilities.CachedTileOutput;
 import electrodynamics.api.utilities.TransferPack;
+import electrodynamics.common.network.ElectricityUtilities;
 import electrodynamics.common.tile.generic.GenericTileInventory;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -15,13 +15,15 @@ import net.minecraft.util.IIntArray;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.api.radiation.IRadioactiveObject;
 import nuclearscience.api.radiation.RadiationRegister;
 import nuclearscience.common.inventory.container.ContainerRadioisotopeGenerator;
 import nuclearscience.common.settings.Constants;
 
-public class TileRadioisotopeGenerator extends GenericTileInventory implements ITickableTileBase, IPowerProvider, IElectricTile {
+public class TileRadioisotopeGenerator extends GenericTileInventory implements ITickableTileBase, IElectrodynamic {
 	public static final int[] SLOTS_INPUT = new int[] { 0 };
 
 	protected CachedTileOutput output1;
@@ -31,8 +33,17 @@ public class TileRadioisotopeGenerator extends GenericTileInventory implements I
 		super(DeferredRegisters.TILE_RADIOISOTOPEGENERATOR.get());
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public double getVoltage(Direction arg0) {
+	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction facing) {
+		if (capability == CapabilityElectrodynamic.ELECTRODYNAMIC && (facing == Direction.UP || facing == Direction.DOWN)) {
+			return (LazyOptional<T>) LazyOptional.of(() -> this);
+		}
+		return super.getCapability(capability, facing);
+	}
+
+	@Override
+	public double getVoltage() {
 		return Constants.RADIOISOTOPEGENERATOR_VOLTAGE;
 	}
 
@@ -48,16 +59,9 @@ public class TileRadioisotopeGenerator extends GenericTileInventory implements I
 		IRadioactiveObject rad = RadiationRegister.get(in.getItem());
 		double currentOutput = in.getCount() * Constants.RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER * rad.getRadiationStrength();
 		if (currentOutput > 0) {
-			TransferPack transfer = TransferPack.ampsVoltage(currentOutput / getVoltage(Direction.UP), getVoltage(Direction.UP));
-			if (output1.get() instanceof IPowerReceiver && output2.get() instanceof IPowerReceiver) {
-				transfer = TransferPack.ampsVoltage(transfer.getAmps() / 2.0, transfer.getVoltage());
-			}
-			if (output1.get() instanceof IPowerReceiver) {
-				output1.<IPowerReceiver>get().receivePower(transfer, getFacing(), false);
-			}
-			if (output2.get() instanceof IPowerReceiver) {
-				output2.<IPowerReceiver>get().receivePower(transfer, getFacing(), false);
-			}
+			TransferPack transfer = TransferPack.ampsVoltage(currentOutput / (getVoltage() * 2.0), getVoltage());
+			ElectricityUtilities.receivePower(output1.get(), Direction.DOWN, transfer, false);
+			ElectricityUtilities.receivePower(output2.get(), Direction.UP, transfer, false);
 		}
 	}
 
@@ -106,13 +110,22 @@ public class TileRadioisotopeGenerator extends GenericTileInventory implements I
 	}
 
 	@Override
-	public TransferPack extractPower(TransferPack transfer, Direction from, boolean debug) {
+	public TransferPack extractPower(TransferPack transfer, boolean debug) {
 		return TransferPack.EMPTY;
 	}
 
 	@Override
-	public boolean canConnectElectrically(Direction direction) {
-		return direction == Direction.UP || direction == Direction.DOWN;
+	public void setJoulesStored(double joules) {
+	}
+
+	@Override
+	public double getJoulesStored() {
+		return 0;
+	}
+
+	@Override
+	public double getMaxJoulesStored() {
+		return 0;
 	}
 
 }

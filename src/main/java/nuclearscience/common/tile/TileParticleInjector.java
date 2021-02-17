@@ -1,15 +1,10 @@
 package nuclearscience.common.tile;
 
 import electrodynamics.api.math.Location;
-import electrodynamics.api.tile.ITickableTileBase;
-import electrodynamics.api.tile.electric.IElectricTile;
-import electrodynamics.api.tile.electric.IPowerReceiver;
 import electrodynamics.common.tile.generic.GenericTileProcessor;
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -20,10 +15,9 @@ import nuclearscience.common.entity.EntityParticle;
 import nuclearscience.common.inventory.container.ContainerParticleInjector;
 import nuclearscience.common.settings.Constants;
 
-public class TileParticleInjector extends GenericTileProcessor implements ITickableTileBase, IPowerReceiver, IElectricTile {
+public class TileParticleInjector extends GenericTileProcessor {
 	private EntityParticle[] particles = new EntityParticle[2];
 	private long timeSinceSpawn = 0;
-	private double joules;
 
 	public TileParticleInjector() {
 		super(DeferredRegisters.TILE_PARTICLEINJECTOR.get());
@@ -106,34 +100,6 @@ public class TileParticleInjector extends GenericTileProcessor implements ITicka
 	}
 
 	@Override
-	public CompoundNBT write(CompoundNBT compound) {
-		compound.putDouble(JOULES_STORED_NBT, joules);
-		return super.write(compound);
-	}
-
-	@Override
-	public void read(BlockState state, CompoundNBT compound) {
-		super.read(state, compound);
-		joules = compound.getDouble(JOULES_STORED_NBT);
-	}
-
-	@Override
-	public CompoundNBT createUpdateTag() {
-		CompoundNBT nbt = super.createUpdateTag();
-		return nbt;
-	}
-
-	@Override
-	public void handleUpdatePacket(CompoundNBT nbt) {
-		super.handleUpdatePacket(nbt);
-	}
-
-	@Override
-	public boolean canConnectElectrically(Direction direction) {
-		return direction == getFacing().getOpposite();
-	}
-
-	@Override
 	public int getSizeInventory() {
 		return 3;
 	}
@@ -190,7 +156,7 @@ public class TileParticleInjector extends GenericTileProcessor implements ITicka
 
 	@Override
 	public double getVoltage() {
-		return DEFAULT_BASIC_MACHINE_VOLTAGE * 8;
+		return super.getVoltage() * 8;
 	}
 
 	@Override

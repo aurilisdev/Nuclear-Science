@@ -1,11 +1,11 @@
 package nuclearscience.common.tile;
 
 import electrodynamics.api.tile.ITickableTileBase;
-import electrodynamics.api.tile.electric.IElectricTile;
-import electrodynamics.api.tile.electric.IPowerProvider;
-import electrodynamics.api.tile.electric.IPowerReceiver;
+import electrodynamics.api.tile.electric.CapabilityElectrodynamic;
+import electrodynamics.api.tile.electric.IElectrodynamic;
 import electrodynamics.api.utilities.CachedTileOutput;
 import electrodynamics.api.utilities.TransferPack;
+import electrodynamics.common.network.ElectricityUtilities;
 import electrodynamics.common.tile.generic.GenericTileBase;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
@@ -13,10 +13,12 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.block.BlockTurbine;
 
-public class TileTurbine extends GenericTileBase implements ITickableTileBase, IPowerProvider, IElectricTile {
+public class TileTurbine extends GenericTileBase implements ITickableTileBase, IElectrodynamic {
 
 	public static final int MAX_STEAM = 3000000;
 	protected CachedTileOutput output;
@@ -36,6 +38,15 @@ public class TileTurbine extends GenericTileBase implements ITickableTileBase, I
 
 	public TileTurbine() {
 		super(DeferredRegisters.TILE_TURBINE.get());
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction facing) {
+		if (capability == CapabilityElectrodynamic.ELECTRODYNAMIC && (facing == Direction.UP && (!hasCore || isCore))) {
+			return (LazyOptional<T>) LazyOptional.of(() -> this);
+		}
+		return super.getCapability(capability, facing);
 	}
 
 	public void constructStructure() {
@@ -125,7 +136,7 @@ public class TileTurbine extends GenericTileBase implements ITickableTileBase, I
 	}
 
 	@Override
-	public double getVoltage(Direction arg0) {
+	public double getVoltage() {
 		return currentVoltage;
 	}
 
@@ -152,7 +163,7 @@ public class TileTurbine extends GenericTileBase implements ITickableTileBase, I
 	public void tickServer() {
 		if (world.getWorldInfo().getDayTime() % 30 == 0) {
 			sendUpdatePacket();
-			spinSpeed = (int) (getVoltage(Direction.UP) / 120);
+			spinSpeed = (int) (getVoltage() / 120);
 		}
 		if (hasCore && !isCore) {
 			currentVoltage = 0;
@@ -163,10 +174,8 @@ public class TileTurbine extends GenericTileBase implements ITickableTileBase, I
 		}
 		if (steam > 0) {
 			wait = 30;
-			TransferPack transfer = TransferPack.joulesVoltage(steam * (hasCore ? 1.111 : 1), getVoltage(Direction.UP));
-			if (output.get() instanceof IPowerReceiver) {
-				output.<IPowerReceiver>get().receivePower(transfer, Direction.UP, false);
-			}
+			TransferPack transfer = TransferPack.joulesVoltage(steam * (hasCore ? 1.111 : 1), getVoltage());
+			ElectricityUtilities.receivePower(output.get(), Direction.DOWN, transfer, false);
 			steam = Math.max(steam - Math.max(75, steam), 0);
 		} else {
 			if (wait <= 0) {
@@ -213,13 +222,22 @@ public class TileTurbine extends GenericTileBase implements ITickableTileBase, I
 	}
 
 	@Override
-	public TransferPack extractPower(TransferPack transfer, Direction from, boolean debug) {
+	public TransferPack extractPower(TransferPack transfer, boolean debug) {
 		return TransferPack.EMPTY;
 	}
 
 	@Override
-	public boolean canConnectElectrically(Direction direction) {
-		return direction == Direction.UP && (!hasCore || isCore);
+	public void setJoulesStored(double joules) {
+	}
+
+	@Override
+	public double getJoulesStored() {
+		return 0;
+	}
+
+	@Override
+	public double getMaxJoulesStored() {
+		return 0;
 	}
 
 }

@@ -1,8 +1,8 @@
 package nuclearscience.common.tile;
 
 import electrodynamics.api.tile.ITickableTileBase;
-import electrodynamics.api.tile.electric.IElectricTile;
-import electrodynamics.api.tile.electric.IPowerReceiver;
+import electrodynamics.api.tile.electric.CapabilityElectrodynamic;
+import electrodynamics.api.tile.electric.IElectrodynamic;
 import electrodynamics.api.utilities.TransferPack;
 import electrodynamics.common.tile.generic.GenericTileBase;
 import net.minecraft.block.BlockState;
@@ -11,11 +11,12 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.Explosion.Mode;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.settings.Constants;
 
-public class TileFusionReactorCore extends GenericTileBase implements ITickableTileBase, IPowerReceiver, IElectricTile {
+public class TileFusionReactorCore extends GenericTileBase implements ITickableTileBase, IElectrodynamic {
 	private double joules;
 	private int timeLeft = 0;
 	public int deuterium;
@@ -23,6 +24,20 @@ public class TileFusionReactorCore extends GenericTileBase implements ITickableT
 
 	public TileFusionReactorCore() {
 		super(DeferredRegisters.TILE_FUSIONREACTORCORE.get());
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction facing) {
+		if (capability == CapabilityElectrodynamic.ELECTRODYNAMIC && (facing == Direction.DOWN || facing == Direction.UP)) {
+			return (LazyOptional<T>) LazyOptional.of(() -> this);
+		}
+		return super.getCapability(capability, facing);
+	}
+
+	@Override
+	public TransferPack extractPower(TransferPack transfer, boolean debug) {
+		return TransferPack.EMPTY;
 	}
 
 	@Override
@@ -56,36 +71,15 @@ public class TileFusionReactorCore extends GenericTileBase implements ITickableT
 	}
 
 	@Override
-	public TransferPack receivePower(TransferPack transfer, Direction dir, boolean debug) {
-		if (!canConnectElectrically(dir)) {
-			return TransferPack.EMPTY;
-		}
-		double received = Math.min(transfer.getJoules(), getMaxJoulesStored() - joules);
-		if (!debug) {
-			if ((int) transfer.getVoltage() == getVoltage()) {
-				joules += received;
-			}
-			if (transfer.getVoltage() > getVoltage()) {
-				world.setBlockState(pos, Blocks.AIR.getDefaultState());
-				world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), (float) Math.log10(10 + transfer.getVoltage() / getVoltage()), Mode.DESTROY);
-				return TransferPack.EMPTY;
-			}
-		}
-		return TransferPack.joulesVoltage(received, transfer.getVoltage());
-	}
-
-	@Override
 	public CompoundNBT write(CompoundNBT compound) {
 		compound.putInt("deuterium", deuterium);
 		compound.putInt("tritium", tritium);
-		compound.putDouble(JOULES_STORED_NBT, joules);
 		return super.write(compound);
 	}
 
 	@Override
 	public void read(BlockState state, CompoundNBT compound) {
 		super.read(state, compound);
-		joules = compound.getDouble(JOULES_STORED_NBT);
 		deuterium = compound.getInt("deuterium");
 		tritium = compound.getInt("tritium");
 	}
@@ -105,17 +99,23 @@ public class TileFusionReactorCore extends GenericTileBase implements ITickableT
 		tritium = nbt.getInt("tritium");
 	}
 
-	private int getVoltage() {
-		return 480;
-	}
-
-	private double getMaxJoulesStored() {
-		return Constants.FUSIONREACTOR_USAGE_PER_TICK * 20.0;
+	@Override
+	public double getVoltage() {
+		return IElectrodynamic.super.getVoltage() * 4;
 	}
 
 	@Override
-	public boolean canConnectElectrically(Direction direction) {
-		return direction == Direction.UP || direction == Direction.DOWN;
+	public void setJoulesStored(double joules) {
+		this.joules = joules;
 	}
 
+	@Override
+	public double getJoulesStored() {
+		return joules;
+	}
+
+	@Override
+	public double getMaxJoulesStored() {
+		return Constants.FUSIONREACTOR_USAGE_PER_TICK * 20.0;
+	}
 }
