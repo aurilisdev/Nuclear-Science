@@ -15,8 +15,8 @@ public class Constants {
 	public static double FISSIONREACTOR_MAXENERGYTARGET = 500000.0;
 	@DoubleValue(def = 4000000.0)
 	public static double FUSIONREACTOR_MAXENERGYTARGET = 4000000.0;
-	@DoubleValue(def = 125000.0)
-	public static double FUSIONREACTOR_USAGE_PER_TICK = 125000.0;
+	@DoubleValue(def = 50000.0)
+	public static double FUSIONREACTOR_USAGE_PER_TICK = 50000.0;
 	@DoubleValue(def = 20000000.0)
 	public static double PARTICLEINJECTOR_USAGE_PER_PARTICLE = 20000000.0;
 	@IntValue(def = 1024)

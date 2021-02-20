@@ -1,0 +1,21 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+		{
+			"item": "minecraft:glass_bottle"
+		},
+		{
+			"item": "minecraft:glass_bottle"
+		},
+		{
+			"item": "minecraft:glass_bottle"
+		},
+		{
+			"tag": "minecraft:fishes"
+		}
+	],
+	"result": {
+		"item": "nuclearscience:antidote",
+		"count": 3
+	}
+}

@@ -1,9 +1,14 @@
 package nuclearscience.api.radiation;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectType;
+import nuclearscience.DeferredRegisters;
 import nuclearscience.References;
 
 public class EffectRadiation extends Effect {
@@ -26,6 +31,13 @@ public class EffectRadiation extends Effect {
 				((PlayerEntity) entityLivingBaseIn).addExhaustion(0.05F * (amplifier + 1));
 			}
 		}
+	}
+
+	@Override
+	public List<ItemStack> getCurativeItems() {
+		ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
+		ret.add(new ItemStack(DeferredRegisters.ITEM_ANTIDOTE.get()));
+		return ret;
 	}
 
 	@Override

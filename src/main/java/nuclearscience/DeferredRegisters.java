@@ -36,6 +36,7 @@ import nuclearscience.common.inventory.container.ContainerGasCentrifuge;
 import nuclearscience.common.inventory.container.ContainerParticleInjector;
 import nuclearscience.common.inventory.container.ContainerRadioisotopeGenerator;
 import nuclearscience.common.inventory.container.ContainerReactorCore;
+import nuclearscience.common.item.ItemAntidote;
 import nuclearscience.common.item.ItemGeigerCounter;
 import nuclearscience.common.item.ItemHazmatArmor;
 import nuclearscience.common.item.ItemRadioactive;
@@ -125,7 +126,8 @@ public class DeferredRegisters {
 			supplier(new ItemHazmatArmor(EquipmentSlotType.LEGS, new Item.Properties().group(References.NUCLEARTAB).maxStackSize(1).defaultMaxDamage(26000))));
 	public static final RegistryObject<Item> ITEM_HAZMATPLATE = ITEMS.register("hazmatplate",
 			supplier(new ItemHazmatArmor(EquipmentSlotType.CHEST, new Item.Properties().group(References.NUCLEARTAB).maxStackSize(1).defaultMaxDamage(26000))));
-
+	public static final RegistryObject<Item> ITEM_ANTIDOTE = ITEMS.register("antidote", supplier(new ItemAntidote(new Item.Properties().group(References.NUCLEARTAB))));
+	
 	public static final RegistryObject<TileEntityType<TileGasCentrifuge>> TILE_GASCENTRIFUGE = TILES.register("gascentrifuge",
 			() -> new TileEntityType<>(TileGasCentrifuge::new, Sets.newHashSet(blockGasCentrifuge), null));
 	public static final RegistryObject<TileEntityType<TileChemicalBoiler>> TILE_CHEMICALBOILER = TILES.register("chemicalboiler",
