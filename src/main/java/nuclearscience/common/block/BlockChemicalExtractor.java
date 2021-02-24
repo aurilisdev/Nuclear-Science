@@ -7,9 +7,9 @@ import net.minecraft.world.IBlockReader;
 import nuclearscience.common.tile.TileChemicalExtractor;
 
 public class BlockChemicalExtractor extends BlockGenericMachine {
-	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return new TileChemicalExtractor();
-	}
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	return new TileChemicalExtractor();
+    }
 
 }

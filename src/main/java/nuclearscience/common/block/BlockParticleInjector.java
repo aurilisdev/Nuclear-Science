@@ -7,9 +7,9 @@ import net.minecraft.world.IBlockReader;
 import nuclearscience.common.tile.TileParticleInjector;
 
 public class BlockParticleInjector extends BlockGenericMachine {
-	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return new TileParticleInjector();
-	}
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	return new TileParticleInjector();
+    }
 
 }

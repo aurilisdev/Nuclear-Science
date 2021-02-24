@@ -10,24 +10,24 @@ import net.minecraft.world.IBlockReader;
 import nuclearscience.common.tile.TileElectromagneticSwitch;
 
 public class BlockElectromagneticSwitch extends BlockElectromagnet {
-	private static final VoxelShape shape = VoxelShapes.create(0, 0, 0, 16.0 / 16.0, 2.0 / 16.0, 16.0 / 16.0);
+    private static final VoxelShape shape = VoxelShapes.create(0, 0, 0, 16.0 / 16.0, 2.0 / 16.0, 16.0 / 16.0);
 
-	public BlockElectromagneticSwitch() {
-		super(false);
-	}
+    public BlockElectromagneticSwitch() {
+	super(false);
+    }
 
-	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		return shape;
-	}
+    @Override
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+	return shape;
+    }
 
-	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return new TileElectromagneticSwitch();
-	}
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	return new TileElectromagneticSwitch();
+    }
 
-	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+	return true;
+    }
 }

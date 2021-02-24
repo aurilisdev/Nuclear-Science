@@ -7,9 +7,9 @@ import net.minecraft.world.IBlockReader;
 import nuclearscience.common.tile.TileRadioisotopeGenerator;
 
 public class BlockRadioisotopeGenerator extends BlockGenericMachine {
-	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return new TileRadioisotopeGenerator();
-	}
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	return new TileRadioisotopeGenerator();
+    }
 
 }

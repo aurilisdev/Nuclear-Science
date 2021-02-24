@@ -13,25 +13,26 @@ import nuclearscience.api.radiation.RadiationRegister;
 
 public class ContainerRadioisotopeGenerator extends GenericContainerInventory {
 
-	public ContainerRadioisotopeGenerator(int id, PlayerInventory playerinv) {
-		this(id, playerinv, new Inventory(1));
-	}
+    public ContainerRadioisotopeGenerator(int id, PlayerInventory playerinv) {
+	this(id, playerinv, new Inventory(1));
+    }
 
-	public ContainerRadioisotopeGenerator(int id, PlayerInventory playerinv, IInventory inventory) {
-		this(id, playerinv, inventory, new IntArray(0));
-	}
+    public ContainerRadioisotopeGenerator(int id, PlayerInventory playerinv, IInventory inventory) {
+	this(id, playerinv, inventory, new IntArray(0));
+    }
 
-	public ContainerRadioisotopeGenerator(int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {
-		super(DeferredRegisters.CONTAINER_RADIOISOTOPEGENERATOR.get(), id, playerinv, inventory, inventorydata);
-	}
+    public ContainerRadioisotopeGenerator(int id, PlayerInventory playerinv, IInventory inventory,
+	    IIntArray inventorydata) {
+	super(DeferredRegisters.CONTAINER_RADIOISOTOPEGENERATOR.get(), id, playerinv, inventory, inventorydata);
+    }
 
-	@Override
-	public void addInventorySlots(IInventory inv, PlayerInventory playerinv) {
-		addSlot(new SlotRestricted(inv, nextIndex(), 25, 42) {
-			@Override
-			public boolean isItemValid(ItemStack stack) {
-				return RadiationRegister.get(stack.getItem()) != RadiationRegister.NULL;
-			}
-		});
-	}
+    @Override
+    public void addInventorySlots(IInventory inv, PlayerInventory playerinv) {
+	addSlot(new SlotRestricted(inv, nextIndex(), 25, 42) {
+	    @Override
+	    public boolean isItemValid(ItemStack stack) {
+		return RadiationRegister.get(stack.getItem()) != RadiationRegister.NULL;
+	    }
+	});
+    }
 }

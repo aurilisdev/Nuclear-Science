@@ -25,91 +25,92 @@ import net.minecraftforge.common.ToolType;
 import nuclearscience.common.tile.TileTurbine;
 
 public class BlockTurbine extends Block implements IWrenchable {
-	public static final BooleanProperty RENDER = BooleanProperty.create("render");
+    public static final BooleanProperty RENDER = BooleanProperty.create("render");
 
-	public BlockTurbine() {
-		super(Properties.create(Material.IRON).hardnessAndResistance(3.5F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).notSolid());
-		setDefaultState(stateContainer.getBaseState().with(RENDER, true));
-	}
+    public BlockTurbine() {
+	super(Properties.create(Material.IRON).hardnessAndResistance(3.5F).sound(SoundType.METAL)
+		.harvestTool(ToolType.PICKAXE).notSolid());
+	setDefaultState(stateContainer.getBaseState().with(RENDER, true));
+    }
 
-	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return new TileTurbine();
-	}
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	return new TileTurbine();
+    }
 
-	@Override
-	public void onRotate(ItemStack stack, BlockPos pos, PlayerEntity player) {
-		TileTurbine turbine = (TileTurbine) player.world.getTileEntity(pos);
-		if (turbine != null) {
-			if (turbine.isCore()) {
-				turbine.deconstructStructure();
-			} else {
-				turbine.constructStructure();
-			}
-		}
+    @Override
+    public void onRotate(ItemStack stack, BlockPos pos, PlayerEntity player) {
+	TileTurbine turbine = (TileTurbine) player.world.getTileEntity(pos);
+	if (turbine != null) {
+	    if (turbine.isCore()) {
+		turbine.deconstructStructure();
+	    } else {
+		turbine.constructStructure();
+	    }
 	}
+    }
 
-	@SuppressWarnings("deprecation")
-	@Override
-	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-		if (state.getBlock() != newState.getBlock()) {
-			TileTurbine turbine = (TileTurbine) worldIn.getTileEntity(pos);
-			if (turbine != null) {
-				turbine.deconstructStructure();
-			}
-			super.onReplaced(state, worldIn, pos, newState, isMoving);
-		}
+    @Override
+    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+	if (state.getBlock() != newState.getBlock()) {
+	    TileTurbine turbine = (TileTurbine) worldIn.getTileEntity(pos);
+	    if (turbine != null) {
+		turbine.deconstructStructure();
+	    }
+	    super.onReplaced(state, worldIn, pos, newState, isMoving);
 	}
+    }
 
-	@Override
-	public BlockRenderType getRenderType(BlockState state) {
-		@SuppressWarnings("deprecation")
-		BlockRenderType type = super.getRenderType(state);
-		if (!state.get(RENDER)) {
-			type = BlockRenderType.INVISIBLE;
-		}
-		return type;
+    @Override
+    public BlockRenderType getRenderType(BlockState state) {
+	BlockRenderType type = super.getRenderType(state);
+	if (!state.get(RENDER)) {
+	    type = BlockRenderType.INVISIBLE;
 	}
+	return type;
+    }
 
-	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+	return true;
+    }
 
-	@Override
-	public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
-		return 0;
-	}
+    @Override
+    public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
+	return 0;
+    }
 
-	@Override
-	public float getAmbientOcclusionLightValue(BlockState state, IBlockReader worldIn, BlockPos pos) {
-		return 1;
-	}
+    @Override
+    public float getAmbientOcclusionLightValue(BlockState state, IBlockReader worldIn, BlockPos pos) {
+	return 1;
+    }
 
-	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-		if (worldIn.isRemote) {
-			return ActionResultType.SUCCESS;
-		} else if (!(player.getHeldItem(handIn).getItem() instanceof IWrench)) {
-			return ActionResultType.CONSUME;
-		}
-		return ActionResultType.FAIL;
+    @Override
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
+	    Hand handIn, BlockRayTraceResult hit) {
+	if (worldIn.isRemote) {
+	    return ActionResultType.SUCCESS;
+	} else if (!(player.getHeldItem(handIn).getItem() instanceof IWrench)) {
+	    return ActionResultType.CONSUME;
 	}
+	return ActionResultType.FAIL;
+    }
 
-	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		return getDefaultState().with(RENDER, true);
-	}
+    @Override
+    public BlockState getStateForPlacement(BlockItemUseContext context) {
+	return getDefaultState().with(RENDER, true);
+    }
 
-	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-		builder.add(RENDER);
-	}
+    @Override
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+	builder.add(RENDER);
+    }
 
-	@Override
-	public void onPickup(ItemStack stack, BlockPos pos, PlayerEntity player) {
-		World world = player.world;
-		world.setBlockState(pos, Blocks.AIR.getDefaultState());
-		world.addEntity(new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, new ItemStack(getSelf())));
-	}
+    @Override
+    public void onPickup(ItemStack stack, BlockPos pos, PlayerEntity player) {
+	World world = player.world;
+	world.setBlockState(pos, Blocks.AIR.getDefaultState());
+	world.addEntity(
+		new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, new ItemStack(getSelf())));
+    }
 }

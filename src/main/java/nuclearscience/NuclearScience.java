@@ -23,34 +23,34 @@ import nuclearscience.common.settings.Constants;
 @EventBusSubscriber(modid = References.ID, bus = Bus.MOD)
 public class NuclearScience {
 
-	public NuclearScience() {
-		ConfigurationHandler.registerConfig(Constants.class);
-		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-		DeferredRegisters.BLOCKS.register(bus);
-		DeferredRegisters.ITEMS.register(bus);
-		DeferredRegisters.TILES.register(bus);
-		DeferredRegisters.CONTAINERS.register(bus);
-		DeferredRegisters.FLUIDS.register(bus);
-		DeferredRegisters.ENTITIES.register(bus);
-	}
+    public NuclearScience() {
+	ConfigurationHandler.registerConfig(Constants.class);
+	IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+	DeferredRegisters.BLOCKS.register(bus);
+	DeferredRegisters.ITEMS.register(bus);
+	DeferredRegisters.TILES.register(bus);
+	DeferredRegisters.CONTAINERS.register(bus);
+	DeferredRegisters.FLUIDS.register(bus);
+	DeferredRegisters.ENTITIES.register(bus);
+    }
 
-	@SubscribeEvent
-	@OnlyIn(Dist.CLIENT)
-	public static void onClientSetup(FMLClientSetupEvent event) {
-		ClientRegister.setup();
-	}
+    @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
+    public static void onClientSetup(FMLClientSetupEvent event) {
+	ClientRegister.setup();
+    }
 
-	@SubscribeEvent
-	public static void onLoadEvent(FMLLoadCompleteEvent event) {
-		RadiationRegister.register(DeferredRegisters.ITEM_URANIUM235.get(), new FieldRadioactiveObject(1000));
-		RadiationRegister.register(DeferredRegisters.ITEM_URANIUM238.get(), new FieldRadioactiveObject(500));
-		RadiationRegister.register(DeferredRegisters.ITEM_YELLOWCAKE.get(), new FieldRadioactiveObject(300));
-		RadiationRegister.register(DeferredRegisters.ITEM_FUELHEUO2.get(), new FieldRadioactiveObject(3000));
-		RadiationRegister.register(DeferredRegisters.ITEM_FUELLEUO2.get(), new FieldRadioactiveObject(2000));
-	}
+    @SubscribeEvent
+    public static void onLoadEvent(FMLLoadCompleteEvent event) {
+	RadiationRegister.register(DeferredRegisters.ITEM_URANIUM235.get(), new FieldRadioactiveObject(1000));
+	RadiationRegister.register(DeferredRegisters.ITEM_URANIUM238.get(), new FieldRadioactiveObject(500));
+	RadiationRegister.register(DeferredRegisters.ITEM_YELLOWCAKE.get(), new FieldRadioactiveObject(300));
+	RadiationRegister.register(DeferredRegisters.ITEM_FUELHEUO2.get(), new FieldRadioactiveObject(3000));
+	RadiationRegister.register(DeferredRegisters.ITEM_FUELLEUO2.get(), new FieldRadioactiveObject(2000));
+    }
 
-	@SubscribeEvent
-	public static void registerEffects(RegistryEvent.Register<Effect> event) {
-		event.getRegistry().registerAll(EffectRadiation.INSTANCE);
-	}
+    @SubscribeEvent
+    public static void registerEffects(RegistryEvent.Register<Effect> event) {
+	event.getRegistry().registerAll(EffectRadiation.INSTANCE);
+    }
 }

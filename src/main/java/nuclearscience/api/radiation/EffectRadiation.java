@@ -13,35 +13,36 @@ import nuclearscience.References;
 
 public class EffectRadiation extends Effect {
 
-	public static final EffectRadiation INSTANCE = (EffectRadiation) new EffectRadiation().setRegistryName(References.ID, "radiation");
+    public static final EffectRadiation INSTANCE = (EffectRadiation) new EffectRadiation()
+	    .setRegistryName(References.ID, "radiation");
 
-	protected EffectRadiation(EffectType typeIn, int liquidColorIn) {
-		super(typeIn, liquidColorIn);
-	}
+    protected EffectRadiation(EffectType typeIn, int liquidColorIn) {
+	super(typeIn, liquidColorIn);
+    }
 
-	public EffectRadiation() {
-		this(EffectType.HARMFUL, 5149489);
-	}
+    public EffectRadiation() {
+	this(EffectType.HARMFUL, 5149489);
+    }
 
-	@Override
-	public void performEffect(LivingEntity entityLivingBaseIn, int amplifier) {
-		if (entityLivingBaseIn.world.rand.nextFloat() < 0.033) {
-			entityLivingBaseIn.attackEntityFrom(DamageSourceRadiation.INSTANCE, (float) (Math.pow(amplifier, 1.3) + 1));
-			if (entityLivingBaseIn instanceof PlayerEntity) {
-				((PlayerEntity) entityLivingBaseIn).addExhaustion(0.05F * (amplifier + 1));
-			}
-		}
+    @Override
+    public void performEffect(LivingEntity entityLivingBaseIn, int amplifier) {
+	if (entityLivingBaseIn.world.rand.nextFloat() < 0.033) {
+	    entityLivingBaseIn.attackEntityFrom(DamageSourceRadiation.INSTANCE, (float) (Math.pow(amplifier, 1.3) + 1));
+	    if (entityLivingBaseIn instanceof PlayerEntity) {
+		((PlayerEntity) entityLivingBaseIn).addExhaustion(0.05F * (amplifier + 1));
+	    }
 	}
+    }
 
-	@Override
-	public List<ItemStack> getCurativeItems() {
-		ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
-		ret.add(new ItemStack(DeferredRegisters.ITEM_ANTIDOTE.get()));
-		return ret;
-	}
+    @Override
+    public List<ItemStack> getCurativeItems() {
+	ArrayList<ItemStack> ret = new ArrayList<>();
+	ret.add(new ItemStack(DeferredRegisters.ITEM_ANTIDOTE.get()));
+	return ret;
+    }
 
-	@Override
-	public boolean isReady(int duration, int amplifier) {
-		return true;
-	}
+    @Override
+    public boolean isReady(int duration, int amplifier) {
+	return true;
+    }
 }
