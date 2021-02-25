@@ -51,12 +51,11 @@ public class EntityParticle extends Entity {
     public void tick() {
 	TileEntity tile = world.getTileEntity(source);
 	if (!world.isRemote) {
-	    if (tile instanceof TileParticleInjector) {
-		((TileParticleInjector) tile).addParticle(this);
-	    } else {
+	    if (!(tile instanceof TileParticleInjector)) {
 		remove();
 		return;
 	    }
+	    ((TileParticleInjector) tile).addParticle(this);
 	    dataManager.set(DIRECTION, direction);
 	    dataManager.set(SPEED, speed);
 	} else {
