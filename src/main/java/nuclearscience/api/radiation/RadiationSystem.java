@@ -98,8 +98,8 @@ public class RadiationSystem {
 		}
 		double distance = 1 + source.distance(end);
 		double modifier = strength / (radiation * distance * distance);
-		int amplitude = (int) Math.max(0, Math.min((strength / modifier) / (distance * 4000.0), 9));
-		int time = (int) ((strength / modifier) / ((amplitude + 1) * distance));
+		int amplitude = (int) Math.max(0, Math.min(strength / modifier / (distance * 4000.0), 9));
+		int time = (int) (strength / modifier / ((amplitude + 1) * distance));
 		if (amplitude == 0 && time <= 40) {
 		    return;
 		}
