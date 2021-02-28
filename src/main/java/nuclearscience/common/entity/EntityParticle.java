@@ -44,7 +44,9 @@ public class EntityParticle extends Entity {
 	forceSetPosition(pos.x, pos.y, pos.z);
 	this.direction = direction;
 	ignoreFrustumCheck = true;
-	setRenderDistanceWeight(4);
+	if (worldIn.isRemote) {
+	    setRenderDistanceWeight(4);
+	}
     }
 
     @Override
