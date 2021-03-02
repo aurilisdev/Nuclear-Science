@@ -89,11 +89,10 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 	    }
 	    temperature += (MELTDOWN_TEMPERATURE_CALC * insertDecimal
 		    * (0.25 * (fuelCount / 2.0) + world.rand.nextDouble() / 5.0) - temperature)
-		    / (200 + 20 * (hasWater ? 4 : 1));
+		    / (200 + 20 * (hasWater ? 14.7 : 1));
 	    if (temperature > MELTDOWN_TEMPERATURE_ACTUAL + world.rand.nextInt(50) && fuelCount > 0) {
 		ticksOverheating++;
 		// Implement some alarm sounds at this time
-		// Implement a warning in the gui at this time
 		if (ticksOverheating > 10 * 20) {
 		    meltdown();
 		}
@@ -113,19 +112,16 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 	    ticksOverheating = 0;
 	}
 	temperature = Math.max(AIR_TEMPERATURE, temperature);
-	if (fuelCount > 0) {
-	    if (world.rand.nextFloat() < 1 / (1200.0 * MELTDOWN_TEMPERATURE_CALC / temperature)) {
-		ItemStack tritium = getStackInSlot(5);
-		ItemStack deuterium = getStackInSlot(4);
-		if (tritium.getCount() + 1 <= tritium.getMaxStackSize()
-			&& deuterium.getItem() == DeferredRegisters.ITEM_CELLDEUTERIUM.get()
-			&& deuterium.getCount() > 0) {
-		    deuterium.shrink(1);
-		    if (tritium.isEmpty()) {
-			setInventorySlotContents(5, new ItemStack(DeferredRegisters.ITEM_CELLTRITIUM.get()));
-		    } else {
-			tritium.grow(1);
-		    }
+	if (fuelCount > 0 && world.rand.nextFloat() < 1 / (1200.0 * MELTDOWN_TEMPERATURE_CALC / temperature)) {
+	    ItemStack tritium = getStackInSlot(5);
+	    ItemStack deuterium = getStackInSlot(4);
+	    if (tritium.getCount() + 1 <= tritium.getMaxStackSize()
+		    && deuterium.getItem() == DeferredRegisters.ITEM_CELLDEUTERIUM.get() && deuterium.getCount() > 0) {
+		deuterium.shrink(1);
+		if (tritium.isEmpty()) {
+		    setInventorySlotContents(5, new ItemStack(DeferredRegisters.ITEM_CELLTRITIUM.get()));
+		} else {
+		    tritium.grow(1);
 		}
 	    }
 	}
@@ -140,6 +136,7 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 	produceSteam();
     }
 
+    @Deprecated
     public void meltdown() {
 	if (!world.isRemote) {
 	    int radius = STEAM_GEN_DIAMETER / 2;
@@ -165,11 +162,10 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 			if (state.getBlock().getExplosionResistance() < radius) {
 			    float distance = (float) Math.sqrt(i * i + j * j + k * k);
 			    if (distance < radius
-				    && world.rand.nextFloat() < 1 - 0.0001 * distance * distance * distance) {
-				if (world.rand.nextFloat() < 0.9) {
-				    world.getBlockState(ppos).onBlockExploded(world, ppos, new Explosion(world, null,
-					    pos.getX(), pos.getY(), pos.getZ(), 20, new ArrayList<>()));
-				}
+				    && world.rand.nextFloat() < 1 - 0.0001 * distance * distance * distance
+				    && world.rand.nextFloat() < 0.9) {
+				world.getBlockState(ppos).onBlockExploded(world, ppos, new Explosion(world, null,
+					pos.getX(), pos.getY(), pos.getZ(), 20, new ArrayList<>()));
 			    }
 			}
 		    }
@@ -221,36 +217,33 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 				    TileEntity above = world.getTileEntity(new BlockPos(offsetX, offsetY + 1, offsetZ));
 				    if (above instanceof TileTurbine) {
 					cachedTurbines[i][j][k] = (TileTurbine) above;
-					turbine = (TileTurbine) above;
 				    } else {
 					cachedTurbines[i][j][k] = null;
-					turbine = null;
 				    }
 				}
-			    } else if (world.isRemote) {
-				if (world.rand.nextFloat() < temperature / (MELTDOWN_TEMPERATURE_ACTUAL * 3)) {
-				    if (world.rand.nextInt(80) == 0) {
-					// world.playSoundEffect(offsetX + 0.5D, offsetY + 0.5D, offsetZ + 0.5D,
-					// "liquid.lava", 0.5F, 2.1F + (world.rand.nextFloat() - world.rand.nextFloat())
-					// * 0.85F);
-				    }
-				    if (world.rand.nextInt(40) == 0) {
-					// world.playSoundEffect(offsetX + 0.5D, offsetY + 0.5D, offsetZ + 0.5D,
-					// "liquid.lavapop", 0.5F, 2.6F + (world.rand.nextFloat() -
-					// world.rand.nextFloat()) * 0.8F);
-				    }
-				    double offsetFX = offsetX
-					    + world.rand.nextDouble() / 2.0 * (world.rand.nextBoolean() ? -1 : 1);
-				    double offsetFY = offsetY
-					    + world.rand.nextDouble() / 2.0 * (world.rand.nextBoolean() ? -1 : 1);
-				    double offsetFZ = offsetZ
-					    + world.rand.nextDouble() / 2.0 * (world.rand.nextBoolean() ? -1 : 1);
-				    world.addParticle(ParticleTypes.BUBBLE, offsetFX + 0.5D,
-					    offsetFY + 0.20000000298023224D, offsetFZ + 0.5D, 0.0D, 0.0D, 0.0D);
-				    if (world.rand.nextInt(3) == 0) {
-					world.addParticle(ParticleTypes.SMOKE, offsetFX + 0.5D, offsetFY + 0.5D,
-						offsetFZ + 0.5D, 0.0D, 0.0D, 0.0D);
-				    }
+			    } else if (world.isRemote
+				    && world.rand.nextFloat() < temperature / (MELTDOWN_TEMPERATURE_ACTUAL * 3)) {
+				if (world.rand.nextInt(80) == 0) {
+				    // world.playSoundEffect(offsetX + 0.5D, offsetY + 0.5D, offsetZ + 0.5D,
+				    // "liquid.lava", 0.5F, 2.1F + (world.rand.nextFloat() - world.rand.nextFloat())
+				    // * 0.85F);
+				}
+				if (world.rand.nextInt(40) == 0) {
+				    // world.playSoundEffect(offsetX + 0.5D, offsetY + 0.5D, offsetZ + 0.5D,
+				    // "liquid.lavapop", 0.5F, 2.6F + (world.rand.nextFloat() -
+				    // world.rand.nextFloat()) * 0.8F);
+				}
+				double offsetFX = offsetX
+					+ world.rand.nextDouble() / 2.0 * (world.rand.nextBoolean() ? -1 : 1);
+				double offsetFY = offsetY
+					+ world.rand.nextDouble() / 2.0 * (world.rand.nextBoolean() ? -1 : 1);
+				double offsetFZ = offsetZ
+					+ world.rand.nextDouble() / 2.0 * (world.rand.nextBoolean() ? -1 : 1);
+				world.addParticle(ParticleTypes.BUBBLE, offsetFX + 0.5D,
+					offsetFY + 0.20000000298023224D, offsetFZ + 0.5D, 0.0D, 0.0D, 0.0D);
+				if (world.rand.nextInt(3) == 0) {
+				    world.addParticle(ParticleTypes.SMOKE, offsetFX + 0.5D, offsetFY + 0.5D,
+					    offsetFZ + 0.5D, 0.0D, 0.0D, 0.0D);
 				}
 			    }
 			}
@@ -301,20 +294,13 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
     protected final IIntArray inventorydata = new IIntArray() {
 	@Override
 	public int get(int index) {
-	    switch (index) {
-	    case 0:
-		return (int) temperature;
-	    default:
-		return 0;
-	    }
+	    return index != 0 ? 0 : (int) temperature;
 	}
 
 	@Override
 	public void set(int index, int value) {
-	    switch (index) {
-	    case 0:
+	    if (index == 0) {
 		temperature = value;
-		break;
 	    }
 	}
 
