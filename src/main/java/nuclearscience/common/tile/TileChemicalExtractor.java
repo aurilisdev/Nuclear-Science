@@ -12,10 +12,13 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
@@ -73,6 +76,9 @@ public class TileChemicalExtractor extends GenericTileProcessor implements IO2OP
 	    setInventorySlotContents(2, new ItemStack(Items.BUCKET));
 	    tankWater.setAmount(Math.min(tankWater.getAmount() + 1000, TANKCAPACITY));
 	}
+	if (world.getDayTime() % 5 == 0) {
+	    sendUpdatePacket();
+	}
 	int requiredWater = getRequiredWater();
 	return getJoulesStored() >= getJoulesPerTick() && !getStackInSlot(0).isEmpty()
 		&& getStackInSlot(0).getCount() > 0 && tankWater.getAmount() >= requiredWater && requiredWater > 0;
@@ -92,13 +98,25 @@ public class TileChemicalExtractor extends GenericTileProcessor implements IO2OP
 		if (output.getItem() == DeferredRegisters.ITEM_CELLDEUTERIUM.get() || output.isEmpty()) {
 		    requiredWater = REQUIRED_WATER_CAP;
 		}
-	    } else if (item == electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeOre.uraninite)) {
-		if (output.getItem() == DeferredRegisters.ITEM_YELLOWCAKE.get() || output.isEmpty()) {
-		    requiredWater = REQUIRED_WATER_CAP / 3;
-		}
+	    } else if (item == electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeOre.uraninite)
+		    && (output.getItem() == DeferredRegisters.ITEM_YELLOWCAKE.get() || output.isEmpty())) {
+		requiredWater = REQUIRED_WATER_CAP / 3;
 	    }
 	}
 	return requiredWater;
+    }
+
+    @Override
+    public CompoundNBT createUpdateTag() {
+	CompoundNBT nbt = super.createUpdateTag();
+	nbt.putFloat("clientFluidProgress", tankWater.getAmount() / 5000.0f);
+	return nbt;
+    }
+
+    @Override
+    public void handleUpdatePacket(CompoundNBT nbt) {
+	super.handleUpdatePacket(nbt);
+	clientFluidProgress = nbt.getFloat("clientFluidProgress");
     }
 
     @Override
@@ -196,6 +214,8 @@ public class TileChemicalExtractor extends GenericTileProcessor implements IO2OP
 	    return 5;
 	}
     };
+    @OnlyIn(value = Dist.CLIENT)
+    public float clientFluidProgress;
 
     @Override
     public void setOutput(ItemStack stack) {

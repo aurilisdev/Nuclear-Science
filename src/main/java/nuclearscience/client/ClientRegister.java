@@ -12,6 +12,7 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.References;
 import nuclearscience.client.render.entity.RenderParticle;
+import nuclearscience.client.render.tile.RenderChemicalExtractor;
 import nuclearscience.client.render.tile.RenderFusionReactorCore;
 import nuclearscience.client.render.tile.RenderGasCentrifuge;
 import nuclearscience.client.render.tile.RenderReactorCore;
@@ -31,6 +32,8 @@ public class ClientRegister {
 	    References.ID + ":block/gascentrifugeoutline");
     public static final ResourceLocation MODEL_GASCENTRIFUGECENTER = new ResourceLocation(
 	    References.ID + ":block/gascentrifugecenter");
+    public static final ResourceLocation MODEL_CHEMICALBOILERWATER = new ResourceLocation(
+	    References.ID + ":block/chemicalboilerwater");
     public static final ResourceLocation MODEL_TURBINEFULL = new ResourceLocation(References.ID + ":block/turbine");
     public static final ResourceLocation MODEL_TURBINECASING = new ResourceLocation(
 	    References.ID + ":block/turbinecasing");
@@ -48,6 +51,7 @@ public class ClientRegister {
 	ModelLoader.addSpecialModel(MODEL_GASCENTRIFUGEFULL);
 	ModelLoader.addSpecialModel(MODEL_GASCENTRIFUGEOUTLINE);
 	ModelLoader.addSpecialModel(MODEL_GASCENTRIFUGECENTER);
+	ModelLoader.addSpecialModel(MODEL_CHEMICALBOILERWATER);
 	ModelLoader.addSpecialModel(MODEL_TURBINEFULL);
 	ModelLoader.addSpecialModel(MODEL_TURBINECASING);
 	ModelLoader.addSpecialModel(MODEL_TURBINEROTORLAYER);
@@ -56,6 +60,8 @@ public class ClientRegister {
 	ModelLoader.addSpecialModel(MODEL_REACTORDEUTERIUM);
 
 	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_GASCENTRIFUGE.get(), RenderGasCentrifuge::new);
+	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_CHEMICALEXTRACTOR.get(),
+		RenderChemicalExtractor::new);
 	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_TURBINE.get(), RenderTurbine::new);
 	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_REACTORCORE.get(), RenderReactorCore::new);
 	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_FUSIONREACTORCORE.get(),

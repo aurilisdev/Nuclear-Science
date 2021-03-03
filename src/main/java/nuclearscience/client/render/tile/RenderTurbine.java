@@ -29,7 +29,7 @@ public class RenderTurbine extends TileEntityRenderer<TileTurbine> {
 	boolean isCore = tileEntityIn.isCore();
 	IBakedModel ibakedmodel = Minecraft.getInstance().getModelManager()
 		.getModel(ClientRegister.MODEL_TURBINEROTORLAYER);
-	double daytime = System.currentTimeMillis() / 5 * (tileEntityIn.spinSpeed / 20.0);
+	double daytime = System.currentTimeMillis() / 5.0 * (tileEntityIn.spinSpeed / 20.0);
 	BlockModelRenderer.enableCache();
 	if (!isCore && tileEntityIn.getBlockState().getBlock()
 		.getRenderType(tileEntityIn.getBlockState()) != BlockRenderType.INVISIBLE) {
