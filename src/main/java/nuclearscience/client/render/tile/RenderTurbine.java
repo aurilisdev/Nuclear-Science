@@ -6,6 +6,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BlockModelRenderer;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.model.IBakedModel;
@@ -22,12 +23,14 @@ public class RenderTurbine extends TileEntityRenderer<TileTurbine> {
     }
 
     @Override
+    @Deprecated
     public void render(TileTurbine tileEntityIn, float partialTicks, MatrixStack matrixStackIn,
 	    IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
 	boolean isCore = tileEntityIn.isCore();
 	IBakedModel ibakedmodel = Minecraft.getInstance().getModelManager()
 		.getModel(ClientRegister.MODEL_TURBINEROTORLAYER);
 	double daytime = System.currentTimeMillis() / 5 * (tileEntityIn.spinSpeed / 20.0);
+	BlockModelRenderer.enableCache();
 	if (!isCore && tileEntityIn.getBlockState().getBlock()
 		.getRenderType(tileEntityIn.getBlockState()) != BlockRenderType.INVISIBLE) {
 	    matrixStackIn.push();
@@ -92,8 +95,8 @@ public class RenderTurbine extends TileEntityRenderer<TileTurbine> {
 		    matrixStackIn, bufferIn.getBuffer(RenderType.getSolid()), true, tileEntityIn.getWorld().rand,
 		    new Random().nextLong(), 1);
 	    matrixStackIn.pop();
-
 	}
+	BlockModelRenderer.disableCache();
     }
 
 }

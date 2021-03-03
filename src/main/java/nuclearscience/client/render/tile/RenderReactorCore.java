@@ -5,6 +5,7 @@ import java.util.Random;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BlockModelRenderer;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.model.IBakedModel;
@@ -20,8 +21,10 @@ public class RenderReactorCore extends TileEntityRenderer<TileReactorCore> {
     }
 
     @Override
+    @Deprecated
     public void render(TileReactorCore tileEntityIn, float partialTicks, MatrixStack matrixStackIn,
 	    IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
+	BlockModelRenderer.enableCache();
 	IBakedModel fuelrod = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_REACTORFUELROD);
 	if (tileEntityIn.fuelCount > 0) {
 	    for (int i = 1; i <= tileEntityIn.fuelCount; i++) {
@@ -62,7 +65,7 @@ public class RenderReactorCore extends TileEntityRenderer<TileReactorCore> {
 		    new Random().nextLong(), 0);
 	    matrixStackIn.pop();
 	}
-
+	BlockModelRenderer.disableCache();
     }
 
 }
