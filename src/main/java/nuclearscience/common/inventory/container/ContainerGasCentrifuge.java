@@ -15,14 +15,14 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.tile.TileGasCentrifuge;
 
-public class ContainerGasCentrifuge extends GenericContainerInventory {
+public class ContainerGasCentrifuge extends GenericContainerInventory<TileGasCentrifuge> {
 
     public ContainerGasCentrifuge(int id, PlayerInventory playerinv) {
 	this(id, playerinv, new Inventory(5));
     }
 
     public ContainerGasCentrifuge(int id, PlayerInventory playerinv, IInventory inventory) {
-	this(id, playerinv, inventory, new IntArray(7));
+	this(id, playerinv, inventory, new IntArray(7 + 3));
     }
 
     public ContainerGasCentrifuge(int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {
@@ -51,37 +51,37 @@ public class ContainerGasCentrifuge extends GenericContainerInventory {
 
     @OnlyIn(Dist.CLIENT)
     public int getBurnLeftScaled() {
-	return inventorydata.get(0) * 34 / (inventorydata.get(3) == 0 ? 1 : inventorydata.get(3));
+	return inventorydata.get(3 + 0) * 34 / (inventorydata.get(3 + 3) == 0 ? 1 : inventorydata.get(3 + 3));
     }
 
     @OnlyIn(Dist.CLIENT)
     public boolean isProcessing() {
-	return inventorydata.get(0) > 0;
+	return inventorydata.get(3 + 0) > 0;
     }
 
     @OnlyIn(Dist.CLIENT)
     public int getVoltage() {
-	return inventorydata.get(1);
+	return inventorydata.get(3 + 1);
     }
 
     @OnlyIn(Dist.CLIENT)
     public int getJoulesPerTick() {
-	return inventorydata.get(2);
+	return inventorydata.get(3 + 2);
     }
 
     @OnlyIn(Dist.CLIENT)
     public int getU6FLevelScaled() {
-	return (int) (inventorydata.get(4) / 100.0 * 50);
+	return (int) (inventorydata.get(3 + 4) / 100.0 * 50);
     }
 
     @OnlyIn(Dist.CLIENT)
     public int getU235LevelScaled() {
-	return (int) (inventorydata.get(5) * 100.0 / TileGasCentrifuge.REQUIRED * 22);
+	return (int) (inventorydata.get(3 + 5) * 100.0 / TileGasCentrifuge.REQUIRED * 22);
     }
 
     @OnlyIn(Dist.CLIENT)
     public int getU238LevelScaled() {
-	return (int) (inventorydata.get(6) * 100.0 / TileGasCentrifuge.REQUIRED * 22);
+	return (int) (inventorydata.get(3 + 6) * 100.0 / TileGasCentrifuge.REQUIRED * 22);
     }
 
 }

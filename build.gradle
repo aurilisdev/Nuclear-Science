@@ -92,7 +92,7 @@ minecraft {
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.0.1'
-    compile fileTree("libs")
+    compile fileTree("C:/AmpzLibz")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

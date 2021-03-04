@@ -116,14 +116,14 @@ public class TileTurbine extends GenericTileBase implements ITickableTileBase, I
 		core.deconstructStructure();
 	    }
 	}
-	sendUpdatePacket();
+	sendCustomPacket();
 
     }
 
     protected void addToStructure(TileTurbine core) {
 	coreLocation = core.pos;
 	hasCore = true;
-	sendUpdatePacket();
+	sendCustomPacket();
     }
 
     public boolean isCore() {
@@ -161,7 +161,7 @@ public class TileTurbine extends GenericTileBase implements ITickableTileBase, I
     @Override
     public void tickServer() {
 	if (world.getWorldInfo().getDayTime() % 30 == 0) {
-	    sendUpdatePacket();
+	    sendCustomPacket();
 	    spinSpeed = (int) (getVoltage() / 120);
 	}
 	if (hasCore && !isCore) {
@@ -187,8 +187,8 @@ public class TileTurbine extends GenericTileBase implements ITickableTileBase, I
     }
 
     @Override
-    public CompoundNBT createUpdateTag() {
-	CompoundNBT tag = super.createUpdateTag();
+    public CompoundNBT writeCustomPacket() {
+	CompoundNBT tag = super.writeCustomPacket();
 	tag.putInt("spinSpeed", spinSpeed);
 	tag.putBoolean("hasCore", hasCore);
 	tag.putBoolean("isCore", isCore);
@@ -196,7 +196,7 @@ public class TileTurbine extends GenericTileBase implements ITickableTileBase, I
     }
 
     @Override
-    public void handleUpdatePacket(CompoundNBT nbt) {
+    public void readCustomPacket(CompoundNBT nbt) {
 	spinSpeed = nbt.getInt("spinSpeed");
 	hasCore = nbt.getBoolean("hasCore");
 	isCore = nbt.getBoolean("isCore");
@@ -223,10 +223,6 @@ public class TileTurbine extends GenericTileBase implements ITickableTileBase, I
     @Override
     public TransferPack extractPower(TransferPack transfer, boolean debug) {
 	return TransferPack.EMPTY;
-    }
-
-    @Override
-    public void setJoulesStored(double joules) {
     }
 
     @Override

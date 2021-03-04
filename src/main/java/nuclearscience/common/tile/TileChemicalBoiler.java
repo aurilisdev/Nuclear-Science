@@ -14,7 +14,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.IIntArray;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -69,6 +68,13 @@ public class TileChemicalBoiler extends GenericTileProcessor implements IO2OProc
 
     @Override
     public boolean canProcess() {
+	trackInteger(0, (int) currentOperatingTick);
+	trackInteger(1, (int) getVoltage());
+	trackInteger(2, (int) Math.ceil(getJoulesPerTick()));
+	trackInteger(3, getRequiredTicks() == 0 ? 1 : getRequiredTicks());
+	trackInteger(4, (int) (tankU6F.getAmount() / (float) TANKCAPACITY * 100));
+	trackInteger(5, (int) (tankWater.getAmount() / (float) TANKCAPACITY * 100));
+
 	BlockPos face = getPos().offset(getFacing().getOpposite().rotateY());
 	TileEntity faceTile = world.getTileEntity(face);
 	if (faceTile instanceof IFluidHandler) {
@@ -133,7 +139,7 @@ public class TileChemicalBoiler extends GenericTileProcessor implements IO2OProc
 
     @Override
     protected Container createMenu(int id, PlayerInventory player) {
-	return new ContainerChemicalBoiler(id, player, this, inventorydata);
+	return new ContainerChemicalBoiler(id, player, this, getInventoryData());
     }
 
     @Override
@@ -146,47 +152,9 @@ public class TileChemicalBoiler extends GenericTileProcessor implements IO2OProc
 	return getStackInSlot(0);
     }
 
-    protected final IIntArray inventorydata = new IIntArray() {
-	@Override
-	public int get(int index) {
-	    switch (index) {
-	    case 0:
-		return (int) currentOperatingTick;
-	    case 1:
-		return (int) getVoltage();
-	    case 2:
-		return (int) Math.ceil(getJoulesPerTick());
-	    case 3:
-		return getRequiredTicks() == 0 ? 1 : getRequiredTicks();
-	    case 4:
-		return (int) (tankU6F.getAmount() / (float) TANKCAPACITY * 100);
-	    case 5:
-		return (int) (tankWater.getAmount() / (float) TANKCAPACITY * 100);
-	    default:
-		return 0;
-	    }
-	}
-
-	@Override
-	public void set(int index, int value) {
-	    switch (index) {
-	    case 0:
-		currentOperatingTick = value;
-		break;
-	    default:
-		break;
-	    }
-
-	}
-
-	@Override
-	public int size() {
-	    return 6;
-	}
-    };
-
     @Override
     public void setOutput(ItemStack stack) {
+	// Does not use this.
     }
 
     @Override

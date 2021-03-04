@@ -13,15 +13,16 @@ import net.minecraft.util.IntArray;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import nuclearscience.DeferredRegisters;
+import nuclearscience.common.tile.TileParticleInjector;
 
-public class ContainerParticleInjector extends GenericContainerInventory {
+public class ContainerParticleInjector extends GenericContainerInventory<TileParticleInjector> {
 
     public ContainerParticleInjector(int id, PlayerInventory playerinv) {
 	this(id, playerinv, new Inventory(3));
     }
 
     public ContainerParticleInjector(int id, PlayerInventory playerinv, IInventory inventory) {
-	this(id, playerinv, inventory, new IntArray(3));
+	this(id, playerinv, inventory, new IntArray(3 + 3));
     }
 
     public ContainerParticleInjector(int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {
@@ -42,16 +43,16 @@ public class ContainerParticleInjector extends GenericContainerInventory {
 
     @OnlyIn(Dist.CLIENT)
     public int getVoltage() {
-	return inventorydata.get(0);
+	return inventorydata.get(3 + 0);
     }
 
     @OnlyIn(Dist.CLIENT)
     public int getJoulesPerTick() {
-	return inventorydata.get(1);
+	return inventorydata.get(3 + 1);
     }
 
     @OnlyIn(Dist.CLIENT)
     public int getCharge() {
-	return inventorydata.get(2);
+	return inventorydata.get(3 + 2);
     }
 }

@@ -116,10 +116,6 @@ public class TileRadioisotopeGenerator extends GenericTileInventory implements I
     }
 
     @Override
-    public void setJoulesStored(double joules) {
-    }
-
-    @Override
     public double getJoulesStored() {
 	return 0;
     }

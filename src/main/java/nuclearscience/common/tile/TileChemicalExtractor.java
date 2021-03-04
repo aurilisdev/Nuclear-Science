@@ -14,7 +14,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
-import net.minecraft.util.IIntArray;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -70,6 +69,11 @@ public class TileChemicalExtractor extends GenericTileProcessor implements IO2OP
 
     @Override
     public boolean canProcess() {
+	trackInteger(0, (int) currentOperatingTick);
+	trackInteger(1, (int) getVoltage());
+	trackInteger(2, (int) Math.ceil(getJoulesPerTick()));
+	trackInteger(3, getRequiredTicks() == 0 ? 1 : getRequiredTicks());
+	trackInteger(4, (int) (tankWater.getAmount() / (float) TANKCAPACITY * 100));
 	ItemStack bucketStack = getStackInSlot(2);
 	if (!bucketStack.isEmpty() && bucketStack.getCount() > 0 && bucketStack.getItem() == Items.WATER_BUCKET
 		&& tankWater.getAmount() <= TANKCAPACITY - 1000) {
@@ -77,7 +81,7 @@ public class TileChemicalExtractor extends GenericTileProcessor implements IO2OP
 	    tankWater.setAmount(Math.min(tankWater.getAmount() + 1000, TANKCAPACITY));
 	}
 	if (world.getDayTime() % 5 == 0) {
-	    sendUpdatePacket();
+	    sendCustomPacket();
 	}
 	int requiredWater = getRequiredWater();
 	return getJoulesStored() >= getJoulesPerTick() && !getStackInSlot(0).isEmpty()
@@ -107,15 +111,15 @@ public class TileChemicalExtractor extends GenericTileProcessor implements IO2OP
     }
 
     @Override
-    public CompoundNBT createUpdateTag() {
-	CompoundNBT nbt = super.createUpdateTag();
+    public CompoundNBT writeCustomPacket() {
+	CompoundNBT nbt = super.writeCustomPacket();
 	nbt.putFloat("clientFluidProgress", tankWater.getAmount() / 5000.0f);
 	return nbt;
     }
 
     @Override
-    public void handleUpdatePacket(CompoundNBT nbt) {
-	super.handleUpdatePacket(nbt);
+    public void readCustomPacket(CompoundNBT nbt) {
+	super.readCustomPacket(nbt);
 	clientFluidProgress = nbt.getFloat("clientFluidProgress");
     }
 
@@ -165,7 +169,7 @@ public class TileChemicalExtractor extends GenericTileProcessor implements IO2OP
 
     @Override
     protected Container createMenu(int id, PlayerInventory player) {
-	return new ContainerChemicalExtractor(id, player, this, inventorydata);
+	return new ContainerChemicalExtractor(id, player, this, getInventoryData());
     }
 
     @Override
@@ -178,42 +182,6 @@ public class TileChemicalExtractor extends GenericTileProcessor implements IO2OP
 	return getStackInSlot(0);
     }
 
-    protected final IIntArray inventorydata = new IIntArray() {
-	@Override
-	public int get(int index) {
-	    switch (index) {
-	    case 0:
-		return (int) currentOperatingTick;
-	    case 1:
-		return (int) getVoltage();
-	    case 2:
-		return (int) Math.ceil(getJoulesPerTick());
-	    case 3:
-		return getRequiredTicks() == 0 ? 1 : getRequiredTicks();
-	    case 4:
-		return (int) (tankWater.getAmount() / (float) TANKCAPACITY * 100);
-	    default:
-		return 0;
-	    }
-	}
-
-	@Override
-	public void set(int index, int value) {
-	    switch (index) {
-	    case 0:
-		currentOperatingTick = value;
-		break;
-	    default:
-		break;
-	    }
-
-	}
-
-	@Override
-	public int size() {
-	    return 5;
-	}
-    };
     @OnlyIn(value = Dist.CLIENT)
     public float clientFluidProgress;
 

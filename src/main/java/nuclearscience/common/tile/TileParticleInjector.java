@@ -6,7 +6,6 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
-import net.minecraft.util.IIntArray;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -31,6 +30,9 @@ public class TileParticleInjector extends GenericTileProcessor {
 
     @Override
     public boolean canProcess() {
+	trackInteger(0, (int) getVoltage());
+	trackInteger(1, (int) Math.ceil(getJoulesPerTick()));
+	trackInteger(2, (int) (getJoulesStored() / getJoulesPerTick() * 100.0));
 	if (particles[0] != null && !particles[0].isAlive()) {
 	    particles[0] = null;
 	}
@@ -120,38 +122,8 @@ public class TileParticleInjector extends GenericTileProcessor {
 
     @Override
     protected Container createMenu(int id, PlayerInventory player) {
-	return new ContainerParticleInjector(id, player, this, inventorydata);
+	return new ContainerParticleInjector(id, player, this, getInventoryData());
     }
-
-    protected final IIntArray inventorydata = new IIntArray() {
-	@Override
-	public int get(int index) {
-	    switch (index) {
-	    case 0:
-		return (int) getVoltage();
-	    case 1:
-		return (int) Math.ceil(getJoulesPerTick());
-	    case 2:
-		return (int) (getJoulesStored() / getJoulesPerTick() * 100.0);
-	    default:
-		return 0;
-	    }
-	}
-
-	@Override
-	public void set(int index, int value) {
-	    switch (index) {
-	    default:
-		break;
-	    }
-
-	}
-
-	@Override
-	public int size() {
-	    return 3;
-	}
-    };
 
     @Override
     public ITextComponent getDisplayName() {

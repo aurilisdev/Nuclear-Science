@@ -8,15 +8,16 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.IntArray;
 import nuclearscience.DeferredRegisters;
+import nuclearscience.common.tile.TileReactorCore;
 
-public class ContainerReactorCore extends GenericContainerInventory {
+public class ContainerReactorCore extends GenericContainerInventory<TileReactorCore> {
 
     public ContainerReactorCore(int id, PlayerInventory playerinv) {
 	this(id, playerinv, new Inventory(6));
     }
 
     public ContainerReactorCore(int id, PlayerInventory playerinv, IInventory inventory) {
-	this(id, playerinv, inventory, new IntArray(1));
+	this(id, playerinv, inventory, new IntArray(1 + 3));
     }
 
     public ContainerReactorCore(int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {
@@ -38,6 +39,6 @@ public class ContainerReactorCore extends GenericContainerInventory {
     }
 
     public int getTemperature() {
-	return inventorydata.get(0);
+	return inventorydata.get(3 + 0);
     }
 }

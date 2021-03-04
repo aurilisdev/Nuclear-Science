@@ -8,7 +8,6 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
-import net.minecraft.util.IIntArray;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fluids.FluidStack;
@@ -44,12 +43,19 @@ public class TileGasCentrifuge extends GenericTileProcessor implements IO2OProce
 
     @Override
     public boolean canProcess() {
+	trackInteger(0, (int) currentOperatingTick);
+	trackInteger(1, (int) getVoltage());
+	trackInteger(2, (int) Math.ceil(getJoulesPerTick()));
+	trackInteger(3, getRequiredTicks() == 0 ? 1 : getRequiredTicks());
+	trackInteger(4, (int) (tankU6F.getAmount() / (float) TANKCAPACITY * 100));
+	trackInteger(5, (int) (stored235 / (float) TANKCAPACITY * 50));
+	trackInteger(6, (int) (stored238 / (float) TANKCAPACITY * 50));
 	boolean val = getJoulesStored() >= getJoulesPerTick() && tankU6F.getAmount() >= REQUIRED / 60.0
 		&& getStackInSlot(0).getCount() < getStackInSlot(0).getMaxStackSize()
 		&& getStackInSlot(1).getCount() < getStackInSlot(1).getMaxStackSize();
 	if (!val && spinSpeed > 0) {
 	    spinSpeed = 0;
-	    sendUpdatePacket();
+	    sendCustomPacket();
 	}
 	return val;
     }
@@ -57,7 +63,7 @@ public class TileGasCentrifuge extends GenericTileProcessor implements IO2OProce
     @Override
     public void process() {
 	spinSpeed = (int) currentSpeedMultiplier;
-	sendUpdatePacket();
+	sendCustomPacket();
 	int processed = (int) (REQUIRED / 60.0);
 	tankU6F.shrink(processed);
 	stored235 += processed * 0.172;
@@ -117,7 +123,7 @@ public class TileGasCentrifuge extends GenericTileProcessor implements IO2OProce
 
     @Override
     protected Container createMenu(int id, PlayerInventory player) {
-	return new ContainerGasCentrifuge(id, player, this, inventorydata);
+	return new ContainerGasCentrifuge(id, player, this, getInventoryData());
     }
 
     @Override
@@ -135,57 +141,17 @@ public class TileGasCentrifuge extends GenericTileProcessor implements IO2OProce
 	return ItemStack.EMPTY;
     }
 
-    protected final IIntArray inventorydata = new IIntArray() {
-	@Override
-	public int get(int index) {
-	    switch (index) {
-	    case 0:
-		return (int) currentOperatingTick;
-	    case 1:
-		return (int) getVoltage();
-	    case 2:
-		return (int) Math.ceil(getJoulesPerTick());
-	    case 3:
-		return getRequiredTicks() == 0 ? 1 : getRequiredTicks();
-	    case 4:
-		return (int) (tankU6F.getAmount() / (float) TANKCAPACITY * 100);
-	    case 5:
-		return (int) (stored235 / (float) TANKCAPACITY * 50);
-	    case 6:
-		return (int) (stored238 / (float) TANKCAPACITY * 50);
-	    default:
-		return 0;
-	    }
-	}
-
-	@Override
-	public void set(int index, int value) {
-	    switch (index) {
-	    case 0:
-		currentOperatingTick = value;
-		break;
-	    default:
-		break;
-	    }
-
-	}
-
-	@Override
-	public int size() {
-	    return 7;
-	}
-    };
     public int spinSpeed;
 
     @Override
-    public CompoundNBT createUpdateTag() {
-	CompoundNBT tag = super.createUpdateTag();
+    public CompoundNBT writeCustomPacket() {
+	CompoundNBT tag = super.writeCustomPacket();
 	tag.putInt("spinSpeed", spinSpeed);
 	return tag;
     }
 
     @Override
-    public void handleUpdatePacket(CompoundNBT nbt) {
+    public void readCustomPacket(CompoundNBT nbt) {
 	spinSpeed = nbt.getInt("spinSpeed");
     }
 

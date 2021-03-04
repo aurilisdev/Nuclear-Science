@@ -18,7 +18,6 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.IIntArray;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
@@ -52,8 +51,9 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 
     @Override
     public void tickServer() {
+	trackInteger(0, (int) temperature);
 	if (world.getWorldInfo().getDayTime() % 10 == 0) {
-	    sendUpdatePacket();
+	    sendCustomPacket();
 	}
 	fuelCount = 0;
 	for (int i = 0; i < 4; i++) {
@@ -254,8 +254,8 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
     }
 
     @Override
-    public CompoundNBT createUpdateTag() {
-	CompoundNBT tag = super.createUpdateTag();
+    public CompoundNBT writeCustomPacket() {
+	CompoundNBT tag = super.writeCustomPacket();
 	tag.putBoolean("hasDeuterium", hasDeuterium);
 	tag.putDouble("temperature", temperature);
 	tag.putInt("fuelCount",
@@ -264,8 +264,8 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
     }
 
     @Override
-    public void handleUpdatePacket(CompoundNBT nbt) {
-	super.handleUpdatePacket(nbt);
+    public void readCustomPacket(CompoundNBT nbt) {
+	super.readCustomPacket(nbt);
 	hasDeuterium = nbt.getBoolean("hasDeuterium");
 	temperature = nbt.getDouble("temperature");
 	fuelCount = nbt.getInt("fuelCount");
@@ -283,31 +283,12 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 
     @Override
     protected Container createMenu(int id, PlayerInventory player) {
-	return new ContainerReactorCore(id, player, this, inventorydata);
+	return new ContainerReactorCore(id, player, this, getInventoryData());
     }
 
     @Override
     public ITextComponent getName() {
 	return new TranslationTextComponent("container.reactorcore");
     }
-
-    protected final IIntArray inventorydata = new IIntArray() {
-	@Override
-	public int get(int index) {
-	    return index != 0 ? 0 : (int) temperature;
-	}
-
-	@Override
-	public void set(int index, int value) {
-	    if (index == 0) {
-		temperature = value;
-	    }
-	}
-
-	@Override
-	public int size() {
-	    return 1;
-	}
-    };
 
 }

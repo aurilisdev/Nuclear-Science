@@ -43,7 +43,7 @@ public class TileFusionReactorCore extends GenericTileBase implements ITickableT
     @Override
     public void tickServer() {
 	if (world.getWorldInfo().getDayTime() % 20 == 0) {
-	    sendUpdatePacket();
+	    sendCustomPacket();
 	}
 	if (tritium > 0 && deuterium > 0 && timeLeft <= 0 && joules > Constants.FUSIONREACTOR_USAGE_PER_TICK) {
 	    deuterium -= 1;
@@ -85,16 +85,16 @@ public class TileFusionReactorCore extends GenericTileBase implements ITickableT
     }
 
     @Override
-    public CompoundNBT createUpdateTag() {
-	CompoundNBT nbt = super.createUpdateTag();
+    public CompoundNBT writeCustomPacket() {
+	CompoundNBT nbt = super.writeCustomPacket();
 	nbt.putInt("deuterium", deuterium);
 	nbt.putInt("tritium", tritium);
 	return nbt;
     }
 
     @Override
-    public void handleUpdatePacket(CompoundNBT nbt) {
-	super.handleUpdatePacket(nbt);
+    public void readCustomPacket(CompoundNBT nbt) {
+	super.readCustomPacket(nbt);
 	deuterium = nbt.getInt("deuterium");
 	tritium = nbt.getInt("tritium");
     }
@@ -105,6 +105,7 @@ public class TileFusionReactorCore extends GenericTileBase implements ITickableT
     }
 
     @Override
+    @Deprecated
     public void setJoulesStored(double joules) {
 	this.joules = joules;
     }
