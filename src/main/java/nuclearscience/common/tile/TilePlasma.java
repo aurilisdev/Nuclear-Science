@@ -53,19 +53,16 @@ public class TilePlasma extends GenericTileBase implements ITickableTileBase {
 		}
 	    }
 	}
-	if (ticksExisted > 1) {
-	    if (world.getBlockState(getPos().offset(Direction.UP)).getBlock() instanceof IElectromagnet) {
-		if (world.getBlockState(getPos().offset(Direction.UP, 2)).getBlock() == Blocks.WATER) {
-		    if (output == null) {
-			output = new CachedTileOutput(world, getPos().offset(Direction.UP, 3));
-		    } else {
-			if (output.get() instanceof TileTurbine) {
-			    TileTurbine turbine = output.get();
-			    // Turbine count for plasma with diameter 15 without center block is 113
-			    turbine.addSteam((int) (Constants.FUSIONREACTOR_MAXENERGYTARGET / (113.0 * 20.0)),
-				    Integer.MAX_VALUE);
-			}
-		    }
+	if (ticksExisted > 1 && world.getBlockState(getPos().offset(Direction.UP)).getBlock() instanceof IElectromagnet
+		&& world.getBlockState(getPos().offset(Direction.UP, 2)).getBlock() == Blocks.WATER) {
+	    if (output == null) {
+		output = new CachedTileOutput(world, getPos().offset(Direction.UP, 3));
+	    } else {
+		if (output.get() instanceof TileTurbine) {
+		    TileTurbine turbine = output.get();
+		    // Turbine count for plasma with diameter 15 without center block is 113
+		    turbine.addSteam((int) (Constants.FUSIONREACTOR_MAXENERGYTARGET / (113.0 * 20.0)),
+			    Integer.MAX_VALUE);
 		}
 	    }
 	}
