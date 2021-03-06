@@ -32,11 +32,6 @@ public class BlockReactorCore extends BlockGenericMachine implements IWaterLogga
     }
 
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-	return new TileReactorCore();
-    }
-
-    @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
 	super.fillStateContainer(builder);
 	builder.add(BlockStateProperties.WATERLOGGED);
@@ -48,16 +43,6 @@ public class BlockReactorCore extends BlockGenericMachine implements IWaterLogga
 	FluidState fluidstate = context.getWorld().getFluidState(context.getPos());
 	return super.getStateForPlacement(context).with(BlockStateProperties.WATERLOGGED,
 		Boolean.valueOf(fluidstate.getFluid() == Fluids.WATER));
-    }
-
-    @Override
-    public BlockRenderType getRenderType(BlockState state) {
-	return BlockRenderType.MODEL;
-    }
-
-    @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-	return VoxelShapes.create(0.5 / 16, 0, 0.5 / 16, 15.5 / 16.0, 15.0 / 16.0, 15.5 / 16.0);
     }
 
     @Override
@@ -75,6 +60,21 @@ public class BlockReactorCore extends BlockGenericMachine implements IWaterLogga
     public FluidState getFluidState(BlockState state) {
 	return state.get(BlockStateProperties.WATERLOGGED) ? Fluids.WATER.getStillFluidState(false)
 		: super.getFluidState(state);
+    }
+
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	return new TileReactorCore();
+    }
+
+    @Override
+    public BlockRenderType getRenderType(BlockState state) {
+	return BlockRenderType.MODEL;
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+	return VoxelShapes.create(0.5 / 16, 0, 0.5 / 16, 15.5 / 16.0, 15.0 / 16.0, 15.5 / 16.0);
     }
 
     @Deprecated
