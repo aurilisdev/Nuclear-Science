@@ -25,6 +25,7 @@ import nuclearscience.common.block.BlockFusionReactorCore;
 import nuclearscience.common.block.BlockGasCentrifuge;
 import nuclearscience.common.block.BlockParticleInjector;
 import nuclearscience.common.block.BlockPlasma;
+import nuclearscience.common.block.BlockQuantumCapacitor;
 import nuclearscience.common.block.BlockRadioisotopeGenerator;
 import nuclearscience.common.block.BlockReactorCore;
 import nuclearscience.common.block.BlockTurbine;
@@ -34,6 +35,7 @@ import nuclearscience.common.inventory.container.ContainerChemicalBoiler;
 import nuclearscience.common.inventory.container.ContainerChemicalExtractor;
 import nuclearscience.common.inventory.container.ContainerGasCentrifuge;
 import nuclearscience.common.inventory.container.ContainerParticleInjector;
+import nuclearscience.common.inventory.container.ContainerQuantumCapacitor;
 import nuclearscience.common.inventory.container.ContainerRadioisotopeGenerator;
 import nuclearscience.common.inventory.container.ContainerReactorCore;
 import nuclearscience.common.item.ItemAntidote;
@@ -47,6 +49,7 @@ import nuclearscience.common.tile.TileFusionReactorCore;
 import nuclearscience.common.tile.TileGasCentrifuge;
 import nuclearscience.common.tile.TileParticleInjector;
 import nuclearscience.common.tile.TilePlasma;
+import nuclearscience.common.tile.TileQuantumCapacitor;
 import nuclearscience.common.tile.TileRadioisotopeGenerator;
 import nuclearscience.common.tile.TileReactorCore;
 import nuclearscience.common.tile.TileTurbine;
@@ -75,6 +78,7 @@ public class DeferredRegisters {
     public static BlockFusionReactorCore blockFusionReactorCore;
     public static BlockPlasma blockPlasma;
     public static BlockParticleInjector blockParticleInjector;
+    public static BlockQuantumCapacitor blockQuantumCapacitor;
 
     static {
 	BLOCKS.register("gascentrifuge", supplier(blockGasCentrifuge = new BlockGasCentrifuge()));
@@ -93,6 +97,7 @@ public class DeferredRegisters {
 	BLOCKS.register("fusionreactorcore", supplier(blockFusionReactorCore = new BlockFusionReactorCore()));
 	BLOCKS.register("plasma", supplier(blockPlasma = new BlockPlasma()));
 	BLOCKS.register("particleinjector", supplier(blockParticleInjector = new BlockParticleInjector()));
+	BLOCKS.register("quantumcapacitor", supplier(blockQuantumCapacitor = new BlockQuantumCapacitor()));
 	ITEMS.register("gascentrifuge", supplier(
 		new BlockItemDescriptable(blockGasCentrifuge, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("chemicalboiler", supplier(
@@ -118,9 +123,12 @@ public class DeferredRegisters {
 	ITEMS.register("plasma", supplier(new BlockItemDescriptable(blockPlasma, new Item.Properties())));
 	ITEMS.register("particleinjector", supplier(
 		new BlockItemDescriptable(blockParticleInjector, new Item.Properties().group(References.NUCLEARTAB))));
+	ITEMS.register("quantumcapacitor", supplier(
+		new BlockItemDescriptable(blockQuantumCapacitor, new Item.Properties().group(References.NUCLEARTAB))));
 	FLUIDS.register("fluiduraniumhexafluoride",
 		supplier(fluidUraniumHexafluoride = new FluidUraniumHexafluoride()));
 
+	BlockItemDescriptable.addDescription(blockQuantumCapacitor, "|translate|tooltip.quantumcapacitor.voltage");
     }
     public static final RegistryObject<Item> ITEM_URANIUM235 = ITEMS.register("uranium235",
 	    supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
@@ -193,6 +201,10 @@ public class DeferredRegisters {
 		    Sets.newHashSet(blockElectromagneticSwitch), null));
     public static final RegistryObject<TileEntityType<TilePlasma>> TILE_PLASMA = TILES.register("plasma",
 	    () -> new TileEntityType<>(TilePlasma::new, Sets.newHashSet(blockPlasma), null));
+    public static final RegistryObject<TileEntityType<TileQuantumCapacitor>> TILE_QUANTUMCAPACITOR = TILES.register(
+	    "quantumcapacitor",
+	    () -> new TileEntityType<>(TileQuantumCapacitor::new, Sets.newHashSet(blockQuantumCapacitor), null));
+
     public static final RegistryObject<ContainerType<ContainerGasCentrifuge>> CONTAINER_GASCENTRIFUGE = CONTAINERS
 	    .register("gascentrifuge", () -> new ContainerType<>(ContainerGasCentrifuge::new));
     public static final RegistryObject<ContainerType<ContainerChemicalBoiler>> CONTAINER_CHEMICALBOILER = CONTAINERS
@@ -205,6 +217,9 @@ public class DeferredRegisters {
 	    .register("reactorcore", () -> new ContainerType<>(ContainerReactorCore::new));
     public static final RegistryObject<ContainerType<ContainerParticleInjector>> CONTAINER_PARTICLEINJECTOR = CONTAINERS
 	    .register("particleinjetor", () -> new ContainerType<>(ContainerParticleInjector::new));
+    public static final RegistryObject<ContainerType<ContainerQuantumCapacitor>> CONTAINER_QUANTUMCAPACITOR = CONTAINERS
+	    .register("quantumcapacitor", () -> new ContainerType<>(ContainerQuantumCapacitor::new));
+
     public static final RegistryObject<EntityType<EntityParticle>> ENTITY_PARTICLE = ENTITIES.register("particle",
 	    () -> EntityType.Builder.<EntityParticle>create(EntityParticle::new, EntityClassification.MISC)
 		    .trackingRange(8).build(References.ID + ".particle"));

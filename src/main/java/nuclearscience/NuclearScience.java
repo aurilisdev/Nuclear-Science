@@ -11,12 +11,14 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import nuclearscience.api.radiation.EffectRadiation;
 import nuclearscience.api.radiation.FieldRadioactiveObject;
 import nuclearscience.api.radiation.RadiationRegister;
 import nuclearscience.client.ClientRegister;
+import nuclearscience.common.packet.NetworkHandler;
 import nuclearscience.common.settings.Constants;
 
 @Mod(References.ID)
@@ -38,6 +40,11 @@ public class NuclearScience {
     @OnlyIn(Dist.CLIENT)
     public static void onClientSetup(FMLClientSetupEvent event) {
 	ClientRegister.setup();
+    }
+
+    @SubscribeEvent
+    public static void onCommonSetup(FMLCommonSetupEvent event) {
+	NetworkHandler.init();
     }
 
     @SubscribeEvent

@@ -15,12 +15,14 @@ import nuclearscience.client.render.entity.RenderParticle;
 import nuclearscience.client.render.tile.RenderChemicalExtractor;
 import nuclearscience.client.render.tile.RenderFusionReactorCore;
 import nuclearscience.client.render.tile.RenderGasCentrifuge;
+import nuclearscience.client.render.tile.RenderQuantumCapacitor;
 import nuclearscience.client.render.tile.RenderReactorCore;
 import nuclearscience.client.render.tile.RenderTurbine;
 import nuclearscience.client.screen.ScreenChemicalBoiler;
 import nuclearscience.client.screen.ScreenChemicalExtractor;
 import nuclearscience.client.screen.ScreenGasCentrifuge;
 import nuclearscience.client.screen.ScreenParticleInjector;
+import nuclearscience.client.screen.ScreenQuantumCapacitor;
 import nuclearscience.client.screen.ScreenRadioisotopeGenerator;
 import nuclearscience.client.screen.ScreenReactorCore;
 
@@ -66,6 +68,8 @@ public class ClientRegister {
 	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_REACTORCORE.get(), RenderReactorCore::new);
 	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_FUSIONREACTORCORE.get(),
 		RenderFusionReactorCore::new);
+	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_QUANTUMCAPACITOR.get(),
+		RenderQuantumCapacitor::new);
 
 	RenderingRegistry.registerEntityRenderingHandler(DeferredRegisters.ENTITY_PARTICLE.get(), RenderParticle::new);
 
@@ -77,6 +81,7 @@ public class ClientRegister {
 		ScreenRadioisotopeGenerator::new);
 	ScreenManager.registerFactory(DeferredRegisters.CONTAINER_REACTORCORE.get(), ScreenReactorCore::new);
 	ScreenManager.registerFactory(DeferredRegisters.CONTAINER_PARTICLEINJECTOR.get(), ScreenParticleInjector::new);
+	ScreenManager.registerFactory(DeferredRegisters.CONTAINER_QUANTUMCAPACITOR.get(), ScreenQuantumCapacitor::new);
 
 	RenderTypeLookup.setRenderLayer(DeferredRegisters.blockChemicalExtractor,
 		ClientRegister::shouldMultilayerRender);
