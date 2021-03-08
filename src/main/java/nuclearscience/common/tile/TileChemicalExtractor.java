@@ -49,7 +49,7 @@ public class TileChemicalExtractor extends GenericTileProcessor implements IO2OP
 
     @Override
     public boolean compareCapabilityDirectionElectricity(Direction dir) {
-	return dir == Direction.DOWN;
+	return true;
     }
 
     public TileChemicalExtractor() {
