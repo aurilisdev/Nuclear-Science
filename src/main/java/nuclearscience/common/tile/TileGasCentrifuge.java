@@ -86,6 +86,10 @@ public class TileGasCentrifuge extends GenericTileProcessor implements IO2OProce
 	    }
 	    stored238 -= 2500;
 	}
+	if(tankU6F.isEmpty())
+	{
+	    tankU6F = new FluidStack(DeferredRegisters.fluidUraniumHexafluoride, 0);
+	}
     }
 
     @Override
