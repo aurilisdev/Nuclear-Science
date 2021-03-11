@@ -1,6 +1,6 @@
 package nuclearscience.common.inventory.container;
 
-import electrodynamics.common.inventory.container.GenericContainerInventory;
+import electrodynamics.common.inventory.container.GenericContainer;
 import electrodynamics.common.inventory.container.slot.GenericSlot;
 import electrodynamics.common.inventory.container.slot.SlotRestricted;
 import electrodynamics.common.item.subtype.SubtypeProcessorUpgrade;
@@ -15,7 +15,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.tile.TileGasCentrifuge;
 
-public class ContainerGasCentrifuge extends GenericContainerInventory<TileGasCentrifuge> {
+public class ContainerGasCentrifuge extends GenericContainer<TileGasCentrifuge> {
 
     public ContainerGasCentrifuge(int id, PlayerInventory playerinv) {
 	this(id, playerinv, new Inventory(5));

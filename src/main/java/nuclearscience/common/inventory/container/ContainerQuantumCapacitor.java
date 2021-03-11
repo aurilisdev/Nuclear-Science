@@ -1,6 +1,6 @@
 package nuclearscience.common.inventory.container;
 
-import electrodynamics.common.inventory.container.GenericContainerInventory;
+import electrodynamics.common.inventory.container.GenericContainer;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Inventory;
@@ -9,7 +9,7 @@ import net.minecraft.util.IntArray;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.tile.TileQuantumCapacitor;
 
-public class ContainerQuantumCapacitor extends GenericContainerInventory<TileQuantumCapacitor> {
+public class ContainerQuantumCapacitor extends GenericContainer<TileQuantumCapacitor> {
 
     public ContainerQuantumCapacitor(int id, PlayerInventory playerinv) {
 	this(id, playerinv, new Inventory(0));

@@ -1,6 +1,6 @@
 package nuclearscience.common.inventory.container;
 
-import electrodynamics.common.inventory.container.GenericContainerInventory;
+import electrodynamics.common.inventory.container.GenericContainer;
 import electrodynamics.common.inventory.container.slot.SlotRestricted;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
@@ -12,7 +12,7 @@ import nuclearscience.DeferredRegisters;
 import nuclearscience.api.radiation.RadiationRegister;
 import nuclearscience.common.tile.TileRadioisotopeGenerator;
 
-public class ContainerRadioisotopeGenerator extends GenericContainerInventory<TileRadioisotopeGenerator> {
+public class ContainerRadioisotopeGenerator extends GenericContainer<TileRadioisotopeGenerator> {
 
     public ContainerRadioisotopeGenerator(int id, PlayerInventory playerinv) {
 	this(id, playerinv, new Inventory(1));
