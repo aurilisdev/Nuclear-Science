@@ -42,7 +42,7 @@ public class BlockTurbine extends Block implements IWrenchable {
     public void onRotate(ItemStack stack, BlockPos pos, PlayerEntity player) {
 	TileTurbine turbine = (TileTurbine) player.world.getTileEntity(pos);
 	if (turbine != null) {
-	    if (turbine.isCore()) {
+	    if (turbine.isCore) {
 		turbine.deconstructStructure();
 	    } else {
 		turbine.constructStructure();
@@ -51,6 +51,7 @@ public class BlockTurbine extends Block implements IWrenchable {
     }
 
     @Override
+    @Deprecated
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
 	if (state.getBlock() != newState.getBlock()) {
 	    TileTurbine turbine = (TileTurbine) worldIn.getTileEntity(pos);
@@ -62,9 +63,10 @@ public class BlockTurbine extends Block implements IWrenchable {
     }
 
     @Override
+    @Deprecated
     public BlockRenderType getRenderType(BlockState state) {
 	BlockRenderType type = super.getRenderType(state);
-	if (!state.get(RENDER)) {
+	if (state.get(RENDER) != Boolean.TRUE) {
 	    type = BlockRenderType.INVISIBLE;
 	}
 	return type;
@@ -81,11 +83,13 @@ public class BlockTurbine extends Block implements IWrenchable {
     }
 
     @Override
+    @Deprecated
     public float getAmbientOcclusionLightValue(BlockState state, IBlockReader worldIn, BlockPos pos) {
 	return 1;
     }
 
     @Override
+    @Deprecated
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
 	    Hand handIn, BlockRayTraceResult hit) {
 	if (worldIn.isRemote) {

@@ -26,7 +26,7 @@ public class RenderTurbine extends TileEntityRenderer<TileTurbine> {
     @Deprecated
     public void render(TileTurbine tileEntityIn, float partialTicks, MatrixStack matrixStackIn,
 	    IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
-	boolean isCore = tileEntityIn.isCore();
+	boolean isCore = tileEntityIn.isCore;
 	IBakedModel ibakedmodel = Minecraft.getInstance().getModelManager()
 		.getModel(ClientRegister.MODEL_TURBINEROTORLAYER);
 	double daytime = System.currentTimeMillis() / 5.0 * (tileEntityIn.spinSpeed / 20.0);

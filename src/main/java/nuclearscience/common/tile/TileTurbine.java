@@ -23,14 +23,13 @@ import nuclearscience.common.block.BlockTurbine;
 public class TileTurbine extends GenericTileTicking {
 
     public static final int MAX_STEAM = 3000000;
+    public int spinSpeed = 0;
+    public boolean isCore;
     protected CachedTileOutput output;
     protected int currentVoltage = 0;
     protected int steam;
     protected int wait = 30;
-    public int spinSpeed = 0;
-
     protected boolean hasCore;
-    protected boolean isCore;
     protected BlockPos coreLocation = BlockPos.ZERO;
 
     @Override

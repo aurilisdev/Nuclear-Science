@@ -41,7 +41,7 @@ public class EntityParticle extends Entity {
 
     public EntityParticle(Direction direction, World worldIn, Location pos) {
 	this(DeferredRegisters.ENTITY_PARTICLE.get(), worldIn);
-	forceSetPosition(pos.x, pos.y, pos.z);
+	forceSetPosition(pos.x(), pos.y(), pos.z());
 	this.direction = direction;
 	ignoreFrustumCheck = true;
 	if (worldIn.isRemote) {
@@ -106,10 +106,9 @@ public class EntityParticle extends Entity {
 		    if (world.getBlockState(positionNow).getBlock() == DeferredRegisters.blockElectromagneticSwitch) {
 			HashSet<Direction> directions = new HashSet<>();
 			for (Direction dir : Direction.values()) {
-			    if (dir != Direction.UP && dir != Direction.DOWN && dir != direction.getOpposite()) {
-				if (world.getBlockState(positionNow.offset(dir)).getBlock() == Blocks.AIR) {
-				    directions.add(dir);
-				}
+			    if (dir != Direction.UP && dir != Direction.DOWN && dir != direction.getOpposite()
+				    && world.getBlockState(positionNow.offset(dir)).getBlock() == Blocks.AIR) {
+				directions.add(dir);
 			    }
 			}
 			TileEntity te = world.getTileEntity(positionNow);
@@ -148,7 +147,7 @@ public class EntityParticle extends Entity {
 			}
 			BlockState testNextBlock = world.getBlockState(getPos.offset(direction));
 			if (testNextBlock.getBlock() instanceof IElectromagnet
-				&& !(testNextBlock.getBlock() == DeferredRegisters.blockElectromagneticSwitch)) {
+				&& testNextBlock.getBlock() != DeferredRegisters.blockElectromagneticSwitch) {
 			    Direction checkRot = direction.rotateY();
 			    testNextBlock = world.getBlockState(getPos.offset(checkRot));
 			    if (testNextBlock.getBlock() == Blocks.AIR

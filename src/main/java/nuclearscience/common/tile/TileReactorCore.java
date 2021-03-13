@@ -146,7 +146,7 @@ public class TileReactorCore extends GenericTileTicking {
     }
 
     @Deprecated
-    protected void meltdown() {
+    public void meltdown() {
 	if (!world.isRemote) {
 	    int radius = STEAM_GEN_DIAMETER / 2;
 	    world.setBlockState(pos, getBlockState().with(BlockStateProperties.WATERLOGGED, false));
