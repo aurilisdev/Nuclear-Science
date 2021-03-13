@@ -4,14 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import electrodynamics.api.math.Location;
-import electrodynamics.api.tile.ITickableTileBase;
-import electrodynamics.common.tile.generic.GenericTileInventory;
+import electrodynamics.common.tile.generic.GenericTileTicking;
+import electrodynamics.common.tile.generic.component.ComponentType;
+import electrodynamics.common.tile.generic.component.type.ComponentContainerProvider;
+import electrodynamics.common.tile.generic.component.type.ComponentInventory;
+import electrodynamics.common.tile.generic.component.type.ComponentPacketHandler;
+import electrodynamics.common.tile.generic.component.type.ComponentTickable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
@@ -21,8 +23,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.Explosion.Mode;
 import nuclearscience.DeferredRegisters;
@@ -30,15 +30,15 @@ import nuclearscience.api.radiation.RadiationSystem;
 import nuclearscience.common.inventory.container.ContainerReactorCore;
 import nuclearscience.common.settings.Constants;
 
-public class TileReactorCore extends GenericTileInventory implements ITickableTileBase {
-
-    public static final int[] SLOTS_UP = new int[] { 0, 1, 2, 3, 4 };
-    public static final int[] SLOTS_DOWN = new int[] { 5 };
+public class TileReactorCore extends GenericTileTicking {
     public static final int MELTDOWN_TEMPERATURE_ACTUAL = 5611;
     public static final int MELTDOWN_TEMPERATURE_CALC = 4407;
     public static final int WATER_TEMPERATURE = 10;
     public static final int AIR_TEMPERATURE = 15;
     public static final int MAX_FUEL_COUNT = 3 * 4;
+    public static final int STEAM_GEN_DIAMETER = 5;
+    public static final int STEAM_GEN_HEIGHT = 2;
+    private TileTurbine[][][] cachedTurbines = new TileTurbine[STEAM_GEN_DIAMETER][STEAM_GEN_HEIGHT][STEAM_GEN_DIAMETER];
     public double temperature = AIR_TEMPERATURE; // Actual real temperature is calculated by temp / 4 + 15 in the gui
     public boolean hasDeuterium = false;
     public int ticksOverheating = 0;
@@ -47,21 +47,31 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 
     public TileReactorCore() {
 	super(DeferredRegisters.TILE_REACTORCORE.get());
+	addComponent(new ComponentTickable().addTickCommon(this::tickCommon).addTickServer(this::tickServer));
+	addComponent(new ComponentPacketHandler().addCustomPacketReader(this::readCustomPacket)
+		.addCustomPacketWriter(this::writeCustomPacket).addGuiPacketReader(this::readCustomPacket)
+		.addGuiPacketWriter(this::writeCustomPacket));
+	addComponent(new ComponentInventory().setInventorySize(6).addSlotOnFace(Direction.UP, 0)
+		.addSlotOnFace(Direction.UP, 1).addSlotOnFace(Direction.UP, 2).addSlotOnFace(Direction.UP, 3)
+		.addSlotOnFace(Direction.UP, 4).addSlotOnFace(Direction.DOWN, 5));
+	addComponent(new ComponentContainerProvider("container.reactorcore")
+		.setCreateMenuFunction((id, player) -> new ContainerReactorCore(id, player,
+			getComponent(ComponentType.Inventory), getCoordsArray())));
     }
 
-    @Override
-    public void tickServer() {
-	trackInteger(0, (int) temperature);
-	if (world.getWorldInfo().getDayTime() % 10 == 0) {
-	    sendCustomPacket();
+    @Deprecated
+    protected void tickServer(ComponentTickable tickable) {
+	ComponentInventory inv = getComponent(ComponentType.Inventory);
+	if (tickable.getTicks() % 10 == 0) {
+	    this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();
 	}
 	fuelCount = 0;
 	for (int i = 0; i < 4; i++) {
-	    ItemStack stack = getStackInSlot(i);
+	    ItemStack stack = inv.getStackInSlot(i);
 	    fuelCount += stack.getItem() == DeferredRegisters.ITEM_FUELLEUO2.get() ? 2
 		    : stack.getItem() == DeferredRegisters.ITEM_FUELHEUO2.get() ? 3 : 0;
 	}
-	hasDeuterium = !getStackInSlot(4).isEmpty();
+	hasDeuterium = !inv.getStackInSlot(4).isEmpty();
 
 	double decrease = (temperature - AIR_TEMPERATURE) / 3000.0;
 	if (fuelCount == 0) {
@@ -79,9 +89,9 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 	    double insertDecimal = /* was "(100 - insertion) / 100.0" before */ 1.0;
 	    if (world.rand.nextFloat() < insertDecimal) {
 		for (int slot = 0; slot < 4; slot++) {
-		    ItemStack fuelRod = getStackInSlot(slot);
+		    ItemStack fuelRod = inv.getStackInSlot(slot);
 		    if (fuelRod.getDamage() >= fuelRod.getMaxDamage()) {
-			setInventorySlotContents(slot, ItemStack.EMPTY);
+			inv.setInventorySlotContents(slot, ItemStack.EMPTY);
 		    }
 		    fuelRod.setDamage(
 			    (int) (fuelRod.getDamage() + 1 + Math.round(temperature) / MELTDOWN_TEMPERATURE_CALC));
@@ -102,7 +112,7 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 		double totstrength = temperature * 10;
 		double range = Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 1.25;
 		AxisAlignedBB bb = AxisAlignedBB.withSizeAtOrigin(range, range, range);
-		bb = bb.offset(new Vector3d(source.x, source.y, source.z));
+		bb = bb.offset(new Vector3d(source.x(), source.y(), source.z()));
 		List<LivingEntity> list = world.getEntitiesWithinAABB(LivingEntity.class, bb);
 		for (LivingEntity living : list) {
 		    RadiationSystem.applyRadiation(living, source, totstrength);
@@ -113,13 +123,13 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 	}
 	temperature = Math.max(AIR_TEMPERATURE, temperature);
 	if (fuelCount > 0 && world.rand.nextFloat() < 1 / (1200.0 * MELTDOWN_TEMPERATURE_CALC / temperature)) {
-	    ItemStack tritium = getStackInSlot(5);
-	    ItemStack deuterium = getStackInSlot(4);
+	    ItemStack tritium = inv.getStackInSlot(5);
+	    ItemStack deuterium = inv.getStackInSlot(4);
 	    if (tritium.getCount() + 1 <= tritium.getMaxStackSize()
 		    && deuterium.getItem() == DeferredRegisters.ITEM_CELLDEUTERIUM.get() && deuterium.getCount() > 0) {
 		deuterium.shrink(1);
 		if (tritium.isEmpty()) {
-		    setInventorySlotContents(5, new ItemStack(DeferredRegisters.ITEM_CELLTRITIUM.get()));
+		    inv.setInventorySlotContents(5, new ItemStack(DeferredRegisters.ITEM_CELLTRITIUM.get()));
 		} else {
 		    tritium.grow(1);
 		}
@@ -127,8 +137,7 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 	}
     }
 
-    @Override
-    public void tickCommon() {
+    protected void tickCommon(ComponentTickable tickable) {
 	ticks = ticks > Integer.MAX_VALUE - 2 ? 0 : ticks + 1;
 	if (ticks % 20 == 0) {
 	    world.getLightManager().checkBlock(pos);
@@ -137,7 +146,7 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
     }
 
     @Deprecated
-    public void meltdown() {
+    protected void meltdown() {
 	if (!world.isRemote) {
 	    int radius = STEAM_GEN_DIAMETER / 2;
 	    world.setBlockState(pos, getBlockState().with(BlockStateProperties.WATERLOGGED, false));
@@ -175,11 +184,7 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 	}
     }
 
-    public static final int STEAM_GEN_DIAMETER = 5;
-    public static final int STEAM_GEN_HEIGHT = 2;
-    private TileTurbine[][][] cachedTurbines = new TileTurbine[STEAM_GEN_DIAMETER][STEAM_GEN_HEIGHT][STEAM_GEN_DIAMETER];
-
-    private void produceSteam() {
+    protected void produceSteam() {
 	if (temperature <= 400) {
 	    return;
 	}
@@ -223,16 +228,6 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 				}
 			    } else if (world.isRemote
 				    && world.rand.nextFloat() < temperature / (MELTDOWN_TEMPERATURE_ACTUAL * 3)) {
-				if (world.rand.nextInt(80) == 0) {
-				    // world.playSoundEffect(offsetX + 0.5D, offsetY + 0.5D, offsetZ + 0.5D,
-				    // "liquid.lava", 0.5F, 2.1F + (world.rand.nextFloat() - world.rand.nextFloat())
-				    // * 0.85F);
-				}
-				if (world.rand.nextInt(40) == 0) {
-				    // world.playSoundEffect(offsetX + 0.5D, offsetY + 0.5D, offsetZ + 0.5D,
-				    // "liquid.lavapop", 0.5F, 2.6F + (world.rand.nextFloat() -
-				    // world.rand.nextFloat()) * 0.8F);
-				}
 				double offsetFX = offsetX
 					+ world.rand.nextDouble() / 2.0 * (world.rand.nextBoolean() ? -1 : 1);
 				double offsetFY = offsetY
@@ -253,42 +248,17 @@ public class TileReactorCore extends GenericTileInventory implements ITickableTi
 	}
     }
 
-    @Override
-    public CompoundNBT writeCustomPacket() {
-	CompoundNBT tag = super.writeCustomPacket();
+    protected void writeCustomPacket(CompoundNBT tag) {
+	ComponentInventory inv = getComponent(ComponentType.Inventory);
 	tag.putBoolean("hasDeuterium", hasDeuterium);
 	tag.putDouble("temperature", temperature);
 	tag.putInt("fuelCount",
-		count(DeferredRegisters.ITEM_FUELHEUO2.get()) + count(DeferredRegisters.ITEM_FUELLEUO2.get()));
-	return tag;
+		inv.count(DeferredRegisters.ITEM_FUELHEUO2.get()) + inv.count(DeferredRegisters.ITEM_FUELLEUO2.get()));
     }
 
-    @Override
-    public void readCustomPacket(CompoundNBT nbt) {
-	super.readCustomPacket(nbt);
+    protected void readCustomPacket(CompoundNBT nbt) {
 	hasDeuterium = nbt.getBoolean("hasDeuterium");
 	temperature = nbt.getDouble("temperature");
 	fuelCount = nbt.getInt("fuelCount");
     }
-
-    @Override
-    public int getSizeInventory() {
-	return 6;
-    }
-
-    @Override
-    public int[] getSlotsForFace(Direction side) {
-	return side == Direction.UP ? SLOTS_UP : side == Direction.DOWN ? SLOTS_DOWN : SLOTS_EMPTY;
-    }
-
-    @Override
-    protected Container createMenu(int id, PlayerInventory player) {
-	return new ContainerReactorCore(id, player, this, getInventoryData());
-    }
-
-    @Override
-    public ITextComponent getName() {
-	return new TranslationTextComponent("container.reactorcore");
-    }
-
 }
