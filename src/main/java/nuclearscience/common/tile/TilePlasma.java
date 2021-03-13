@@ -1,8 +1,8 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.api.tile.ITickableTileBase;
 import electrodynamics.api.utilities.CachedTileOutput;
-import electrodynamics.common.tile.generic.GenericTileBase;
+import electrodynamics.common.tile.generic.GenericTileTicking;
+import electrodynamics.common.tile.generic.component.type.ComponentTickable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.tileentity.TileEntity;
@@ -12,19 +12,17 @@ import nuclearscience.DeferredRegisters;
 import nuclearscience.api.fusion.IElectromagnet;
 import nuclearscience.common.settings.Constants;
 
-public class TilePlasma extends GenericTileBase implements ITickableTileBase {
-
+public class TilePlasma extends GenericTileTicking {
     public int ticksExisted;
     public int spread = 6;
+    private CachedTileOutput output;
 
     public TilePlasma() {
 	super(DeferredRegisters.TILE_PLASMA.get());
+	addComponent(new ComponentTickable().addTickServer(this::tickServer));
     }
 
-    private CachedTileOutput output;
-
-    @Override
-    public void tickServer() {
+    protected void tickServer(ComponentTickable tickable) {
 	ticksExisted++;
 	if (ticksExisted > 80) {
 	    world.setBlockState(pos, Blocks.AIR.getDefaultState());
@@ -60,7 +58,6 @@ public class TilePlasma extends GenericTileBase implements ITickableTileBase {
 	    } else {
 		if (output.get() instanceof TileTurbine) {
 		    TileTurbine turbine = output.get();
-		    // Turbine count for plasma with diameter 15 without center block is 113
 		    turbine.addSteam((int) (Constants.FUSIONREACTOR_MAXENERGYTARGET / (113.0 * 20.0)),
 			    Integer.MAX_VALUE);
 		}

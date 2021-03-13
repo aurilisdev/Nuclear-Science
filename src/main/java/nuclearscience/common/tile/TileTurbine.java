@@ -1,12 +1,14 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.api.tile.ITickableTileBase;
 import electrodynamics.api.tile.electric.CapabilityElectrodynamic;
-import electrodynamics.api.tile.electric.IElectrodynamic;
 import electrodynamics.api.utilities.CachedTileOutput;
 import electrodynamics.api.utilities.TransferPack;
 import electrodynamics.common.network.ElectricityUtilities;
-import electrodynamics.common.tile.generic.GenericTileBase;
+import electrodynamics.common.tile.generic.GenericTileTicking;
+import electrodynamics.common.tile.generic.component.ComponentType;
+import electrodynamics.common.tile.generic.component.type.ComponentElectrodynamic;
+import electrodynamics.common.tile.generic.component.type.ComponentPacketHandler;
+import electrodynamics.common.tile.generic.component.type.ComponentTickable;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
@@ -18,7 +20,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.block.BlockTurbine;
 
-public class TileTurbine extends GenericTileBase implements ITickableTileBase, IElectrodynamic {
+public class TileTurbine extends GenericTileTicking {
 
     public static final int MAX_STEAM = 3000000;
     protected CachedTileOutput output;
@@ -38,6 +40,10 @@ public class TileTurbine extends GenericTileBase implements ITickableTileBase, I
 
     public TileTurbine() {
 	super(DeferredRegisters.TILE_TURBINE.get());
+	addComponent(new ComponentTickable().addTickServer(this::tickServer));
+	addComponent(new ComponentPacketHandler().addCustomPacketWriter(this::writeCustomPacket)
+		.addCustomPacketReader(this::readCustomPacket));
+	addComponent(new ComponentElectrodynamic(this).addOutputDirection(Direction.UP));
     }
 
     @Override
@@ -49,36 +55,28 @@ public class TileTurbine extends GenericTileBase implements ITickableTileBase, I
     }
 
     public void constructStructure() {
-	boolean canConstruct = true;
 	int radius = 1;
 	for (int i = -radius; i <= radius; i++) {
-	    if (!canConstruct) {
-		break;
-	    }
 	    for (int j = -radius; j <= radius; j++) {
 		if (i != 0 || j != 0) {
 		    TileEntity tile = world.getTileEntity(new BlockPos(pos.getX() + i, pos.getY(), pos.getZ() + j));
 		    if (!(tile instanceof TileTurbine)) {
-			canConstruct = false;
-			break;
+			return;
 		    }
 		    TileTurbine turbine = (TileTurbine) tile;
-		    if (turbine.hasCore()) {
-			canConstruct = false;
-			break;
+		    if (turbine.hasCore) {
+			return;
 		    }
 		}
 	    }
 	}
-	if (canConstruct) {
-	    isCore = true;
-	    for (int i = -radius; i <= radius; i++) {
-		for (int j = -radius; j <= radius; j++) {
-		    BlockPos offset = new BlockPos(pos.getX() + i, pos.getY(), pos.getZ() + j);
-		    ((TileTurbine) world.getTileEntity(offset)).addToStructure(this);
-		    BlockState state = world.getBlockState(offset);
-		    world.setBlockState(offset, state.with(BlockTurbine.RENDER, false));
-		}
+	isCore = true;
+	for (int i = -radius; i <= radius; i++) {
+	    for (int j = -radius; j <= radius; j++) {
+		BlockPos offset = new BlockPos(pos.getX() + i, pos.getY(), pos.getZ() + j);
+		((TileTurbine) world.getTileEntity(offset)).addToStructure(this);
+		BlockState state = world.getBlockState(offset);
+		world.setBlockState(offset, state.with(BlockTurbine.RENDER, false));
 	    }
 	}
     }
@@ -116,27 +114,14 @@ public class TileTurbine extends GenericTileBase implements ITickableTileBase, I
 		core.deconstructStructure();
 	    }
 	}
-	sendCustomPacket();
+	this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();
 
     }
 
     protected void addToStructure(TileTurbine core) {
 	coreLocation = core.pos;
 	hasCore = true;
-	sendCustomPacket();
-    }
-
-    public boolean isCore() {
-	return isCore;
-    }
-
-    public boolean hasCore() {
-	return hasCore;
-    }
-
-    @Override
-    public double getVoltage() {
-	return currentVoltage;
+	this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();
     }
 
     public void addSteam(int steam, int temp) {
@@ -150,7 +135,7 @@ public class TileTurbine extends GenericTileBase implements ITickableTileBase, I
 	}
 	if (!isCore && hasCore) {
 	    TileEntity core = world.getTileEntity(coreLocation);
-	    if (core instanceof TileTurbine && ((TileTurbine) core).isCore()) {
+	    if (core instanceof TileTurbine && ((TileTurbine) core).isCore) {
 		TileTurbine turbine = (TileTurbine) core;
 		turbine.addSteam(this.steam, temp);
 		this.steam = 0;
@@ -158,11 +143,11 @@ public class TileTurbine extends GenericTileBase implements ITickableTileBase, I
 	}
     }
 
-    @Override
-    public void tickServer() {
-	if (world.getWorldInfo().getDayTime() % 30 == 0) {
-	    sendCustomPacket();
-	    spinSpeed = (int) (getVoltage() / 120);
+    public void tickServer(ComponentTickable tickable) {
+	this.<ComponentElectrodynamic>getComponent(ComponentType.Electrodynamic).setVoltage(currentVoltage);
+	if (tickable.getTicks() % 30 == 0) {
+	    this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();
+	    spinSpeed = currentVoltage / 120;
 	}
 	if (hasCore && !isCore) {
 	    currentVoltage = 0;
@@ -173,7 +158,7 @@ public class TileTurbine extends GenericTileBase implements ITickableTileBase, I
 	}
 	if (steam > 0) {
 	    wait = 30;
-	    TransferPack transfer = TransferPack.joulesVoltage(steam * (hasCore ? 1.111 : 1), getVoltage());
+	    TransferPack transfer = TransferPack.joulesVoltage(steam * (hasCore ? 1.111 : 1), currentVoltage);
 	    ElectricityUtilities.receivePower(output.get(), Direction.DOWN, transfer, false);
 	    steam = Math.max(steam - Math.max(75, steam), 0);
 	} else {
@@ -186,16 +171,12 @@ public class TileTurbine extends GenericTileBase implements ITickableTileBase, I
 
     }
 
-    @Override
-    public CompoundNBT writeCustomPacket() {
-	CompoundNBT tag = super.writeCustomPacket();
+    public void writeCustomPacket(CompoundNBT tag) {
 	tag.putInt("spinSpeed", spinSpeed);
 	tag.putBoolean("hasCore", hasCore);
 	tag.putBoolean("isCore", isCore);
-	return tag;
     }
 
-    @Override
     public void readCustomPacket(CompoundNBT nbt) {
 	spinSpeed = nbt.getInt("spinSpeed");
 	hasCore = nbt.getBoolean("hasCore");
@@ -218,21 +199,6 @@ public class TileTurbine extends GenericTileBase implements ITickableTileBase, I
 	hasCore = compound.getBoolean("hasCore");
 	isCore = compound.getBoolean("isCore");
 	coreLocation = new BlockPos(compound.getInt("coreX"), compound.getInt("coreY"), compound.getInt("coreZ"));
-    }
-
-    @Override
-    public TransferPack extractPower(TransferPack transfer, boolean debug) {
-	return TransferPack.EMPTY;
-    }
-
-    @Override
-    public double getJoulesStored() {
-	return 0;
-    }
-
-    @Override
-    public double getMaxJoulesStored() {
-	return 0;
     }
 
 }

@@ -5,6 +5,8 @@ import java.util.Random;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import electrodynamics.common.block.BlockGenericMachine;
+import electrodynamics.common.tile.generic.component.ComponentType;
+import electrodynamics.common.tile.generic.component.type.ComponentFluidHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
@@ -33,7 +35,8 @@ public class RenderChemicalExtractor extends TileEntityRenderer<TileChemicalExtr
 	if (face == Direction.NORTH || face == Direction.SOUTH) {
 	    matrixStackIn.rotate(new Quaternion(0, 90, 0, true));
 	}
-	float prog = tileEntityIn.clientFluidProgress;
+	float prog = tileEntityIn.<ComponentFluidHandler>getComponent(ComponentType.FluidHandler).getFluidInTank(0)
+		.getAmount() / (float) TileChemicalExtractor.TANKCAPACITY;
 	if (prog > 0) {
 	    matrixStackIn.scale(1, prog / 16.0f * 5.8f * 2, 1);
 	    Minecraft.getInstance().getBlockRendererDispatcher().getBlockModelRenderer().renderModel(

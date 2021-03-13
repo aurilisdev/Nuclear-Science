@@ -1,12 +1,12 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.common.tile.generic.GenericTileBase;
+import electrodynamics.common.tile.generic.GenericTile;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import nuclearscience.DeferredRegisters;
 
-public class TileElectromagneticSwitch extends GenericTileBase {
+public class TileElectromagneticSwitch extends GenericTile {
     public Direction lastDirection;
 
     public TileElectromagneticSwitch() {

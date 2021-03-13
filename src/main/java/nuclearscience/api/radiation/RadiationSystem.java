@@ -26,12 +26,12 @@ public class RadiationSystem {
 
     public static HashMap<PlayerEntity, Double> radiationMap = new HashMap<>();
 
-    public static double getRadiationModifier(World world, Location source, Location end, double strength) {
+    public static double getRadiationModifier(World world, Location source, Location end) {
 	double distance = 1 + source.distance(end);
 	Location clone = new Location(end);
 	double modifier = 1;
 	Location newSource = new Location(source);
-	clone.add(-source.x, -source.y, -source.z).normalize(null).mul(0.33f);
+	clone.add(-source.x(), -source.y(), -source.z()).normalize().mul(0.33f);
 	int checks = (int) distance * 3;
 	BlockPos curr = newSource.toBlockPos();
 	double lastHard = 0;
@@ -52,19 +52,16 @@ public class RadiationSystem {
 
     public static double getRadiation(World world, Location source, Location end, double strength) {
 	double distance = 1 + source.distance(end);
-	return strength / (getRadiationModifier(world, source, end, strength) * distance * distance);
+	return strength / (getRadiationModifier(world, source, end) * distance * distance);
     }
 
     public static void applyRadiation(LivingEntity entity, Location source, double strength) {
 	int protection = 1;
 	if (!entity.world.isRemote) {
 	    boolean isPlayer = entity instanceof PlayerEntity;
-	    playerCheck: {
-		if (isPlayer) {
-		    PlayerEntity player = (PlayerEntity) entity;
-		    if (player.isCreative()) {
-			break playerCheck;
-		    }
+	    if (isPlayer) {
+		PlayerEntity player = (PlayerEntity) entity;
+		if (!player.isCreative()) {
 		    for (int i = 0; i < player.inventory.armorInventory.size(); i++) {
 			ItemStack next = player.inventory.armorInventory.get(i);
 			if (next.getItem() instanceof ItemHazmatArmor) {
@@ -72,7 +69,7 @@ public class RadiationSystem {
 			    float damage = (float) (strength * 2.15f) / 2169.9975f;
 			    if (Math.random() < damage) {
 				int integerDamage = (int) Math.max(1, damage);
-				if (next.getDamage() > next.getMaxDamage() | next.attemptDamageItem(integerDamage,
+				if (next.getDamage() > next.getMaxDamage() || next.attemptDamageItem(integerDamage,
 					entity.world.rand, (ServerPlayerEntity) player)) {
 				    player.inventory.armorInventory.set(i, ItemStack.EMPTY);
 				}
@@ -81,8 +78,7 @@ public class RadiationSystem {
 		    }
 		}
 	    }
-	    Location end = new Location(entity.getPositionVec().x, entity.getPositionVec().y,
-		    entity.getPositionVec().z);
+	    Location end = new Location(entity.getPositionVec());
 	    double radiation = 0;
 	    if (entity instanceof PlayerEntity && (((PlayerEntity) entity)
 		    .getItemStackFromSlot(EquipmentSlotType.MAINHAND).getItem() instanceof ItemGeigerCounter

@@ -23,7 +23,7 @@ public class RenderQuantumCapacitor extends TileEntityRenderer<TileQuantumCapaci
     public void render(TileQuantumCapacitor tileEntityIn, float partialTicks, MatrixStack matrixStackIn,
 	    IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
 	matrixStackIn.translate(0.5, 0.5, 0.5);
-	GlStateManager.pushMatrix();
+	matrixStackIn.push();
 	RenderSystem.multMatrix(matrixStackIn.getLast().getMatrix());
 	matrixStackIn.rotate(Minecraft.getInstance().getRenderManager().getCameraOrientation());
 	matrixStackIn.rotate(Vector3f.YP.rotationDegrees(180.0F));
@@ -38,7 +38,7 @@ public class RenderQuantumCapacitor extends TileEntityRenderer<TileQuantumCapaci
 		tileEntityIn.getWorld().rand.nextFloat() * 0.1f + 0.4f, 0, 0, 1, false);
 	RenderUtilities.renderStar(tileEntityIn.getWorld().getWorldInfo().getDayTime() + 40, (int) (250 / distance),
 		tileEntityIn.getWorld().rand.nextFloat() * 0.3f + 0.5f, 0, 0, 1, false);
-	GlStateManager.popMatrix();
+	matrixStackIn.pop();
     }
 
 }

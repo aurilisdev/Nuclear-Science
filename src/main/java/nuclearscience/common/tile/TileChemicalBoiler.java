@@ -1,108 +1,89 @@
 package nuclearscience.common.tile;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import electrodynamics.api.tile.processing.IO2OProcessor;
+import electrodynamics.api.tile.electric.CapabilityElectrodynamic;
 import electrodynamics.common.block.subtype.SubtypeOre;
-import electrodynamics.common.tile.generic.GenericTileProcessor;
-import net.minecraft.entity.player.PlayerInventory;
+import electrodynamics.common.tile.generic.GenericTileTicking;
+import electrodynamics.common.tile.generic.component.ComponentType;
+import electrodynamics.common.tile.generic.component.type.ComponentContainerProvider;
+import electrodynamics.common.tile.generic.component.type.ComponentDirection;
+import electrodynamics.common.tile.generic.component.type.ComponentElectrodynamic;
+import electrodynamics.common.tile.generic.component.type.ComponentFluidHandler;
+import electrodynamics.common.tile.generic.component.type.ComponentInventory;
+import electrodynamics.common.tile.generic.component.type.ComponentPacketHandler;
+import electrodynamics.common.tile.generic.component.type.ComponentProcessor;
+import electrodynamics.common.tile.generic.component.type.ComponentProcessorType;
+import electrodynamics.common.tile.generic.component.type.ComponentTickable;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerChemicalBoiler;
 import nuclearscience.common.settings.Constants;
 
-public class TileChemicalBoiler extends GenericTileProcessor implements IO2OProcessor, IFluidHandler {
+public class TileChemicalBoiler extends GenericTileTicking {
     public static final int TANKCAPACITY = 5000;
     public static final int REQUIRED_WATER_CAP = 2400;
-    public static final int[] SLOTS_UP = new int[] { 0 };
-    public static final int[] SLOTS_SIDE = new int[] { 1 };
-    private final LazyOptional<IFluidHandler> holder = LazyOptional.of(() -> this);
-
-    public FluidStack tankWater = new FluidStack(Fluids.WATER, 0);
-    public FluidStack tankU6F = new FluidStack(DeferredRegisters.fluidUraniumHexafluoride, 0);
-
-    @Override
-    @Nonnull
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
-	if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY
-		&& facing == getFacing().getOpposite().rotateYCCW()) {
-	    return holder.cast();
-	}
-	return super.getCapability(capability, facing);
-    }
-
-    @Override
-    public boolean compareCapabilityDirectionElectricity(Direction dir) {
-	return dir == Direction.DOWN;
-    }
 
     public TileChemicalBoiler() {
 	super(DeferredRegisters.TILE_CHEMICALBOILER.get());
-	addUpgradeSlots(2, 3, 4);
+	addComponent(new ComponentTickable());
+	addComponent(new ComponentDirection());
+	addComponent(new ComponentPacketHandler());
+	addComponent(new ComponentElectrodynamic(this).addInputDirection(Direction.DOWN)
+		.setVoltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 2));
+	addComponent(new ComponentFluidHandler(this).addRelativeInputDirection(Direction.WEST)
+		.addFluidTank(Fluids.WATER, TANKCAPACITY)
+		.addFluidTank(DeferredRegisters.fluidUraniumHexafluoride, TANKCAPACITY));
+	addComponent(new ComponentInventory().setInventorySize(5).addSlotOnFace(Direction.UP, 0)
+		.addSlotOnFace(Direction.DOWN, 1));
+	addComponent(new ComponentProcessor(this).addUpgradeSlots(2, 3, 4)
+		.setJoulesPerTick(Constants.CHEMICALBOILER_USAGE_PER_TICK)
+		.setType(ComponentProcessorType.ObjectToObject).setCanProcess(this::canProcess)
+		.setProcess(this::process).setRequiredTicks(Constants.CHEMICALBOILER_REQUIRED_TICKS));
+	addComponent(new ComponentContainerProvider("container.chemicalboiler")
+		.setCreateMenuFunction((id, player) -> new ContainerChemicalBoiler(id, player,
+			getComponent(ComponentType.Inventory), getCoordsArray())));
+
     }
 
-    @Override
-    public double getJoulesPerTick() {
-	return Constants.CHEMICALBOILER_USAGE_PER_TICK * currentSpeedMultiplier;
-    }
-
-    @Override
-    public double getVoltage() {
-	return DEFAULT_BASIC_MACHINE_VOLTAGE * 2;
-    }
-
-    @Override
-    public boolean canProcess() {
-	trackInteger(0, (int) currentOperatingTick);
-	trackInteger(1, (int) getVoltage());
-	trackInteger(2, (int) Math.ceil(getJoulesPerTick()));
-	trackInteger(3, getRequiredTicks() == 0 ? 1 : getRequiredTicks());
-	trackInteger(4, (int) (tankU6F.getAmount() / (float) TANKCAPACITY * 100));
-	trackInteger(5, (int) (tankWater.getAmount() / (float) TANKCAPACITY * 100));
-
-	BlockPos face = getPos().offset(getFacing().getOpposite().rotateY());
+    protected boolean canProcess(ComponentProcessor processor) {
+	ComponentDirection direction = getComponent(ComponentType.Direction);
+	ComponentInventory inv = getComponent(ComponentType.Inventory);
+	ComponentElectrodynamic electro = getComponent(ComponentType.Electrodynamic);
+	ComponentFluidHandler tank = getComponent(ComponentType.FluidHandler);
+	BlockPos face = getPos().offset(direction.getDirection().getOpposite().rotateY());
 	TileEntity faceTile = world.getTileEntity(face);
 	if (faceTile instanceof IFluidHandler) {
 	    IFluidHandler handler = (IFluidHandler) faceTile;
-	    if (handler.isFluidValid(0, tankU6F)) {
-		tankU6F.shrink(handler.fill(tankU6F, FluidAction.EXECUTE));
+	    if (handler.isFluidValid(0, tank.getFluidInTank(1))) {
+		tank.getFluidInTank(1).shrink(handler.fill(tank.getFluidInTank(1), FluidAction.EXECUTE));
 	    }
 	}
-	ItemStack bucketStack = getStackInSlot(1);
+	ItemStack bucketStack = inv.getStackInSlot(1);
 	if (!bucketStack.isEmpty() && bucketStack.getCount() > 0 && bucketStack.getItem() == Items.WATER_BUCKET
-		&& tankWater.getAmount() <= TANKCAPACITY - 1000) {
-	    setInventorySlotContents(1, new ItemStack(Items.BUCKET));
-	    tankWater.setAmount(Math.min(tankWater.getAmount() + 1000, TANKCAPACITY));
+		&& tank.getFluidInTank(0).getAmount() <= TANKCAPACITY - 1000) {
+	    inv.setInventorySlotContents(1, new ItemStack(Items.BUCKET));
+	    tank.getFluidInTank(0).setAmount(Math.min(tank.getFluidInTank(0).getAmount() + 1000, TANKCAPACITY));
 	}
-	int requiredWater = getRequiredWater();
+	int requiredWater = getRequiredWater(inv);
 	if (requiredWater <= 0) {
 	    return false;
 	}
-	if (tankU6F.isEmpty()) {
-	    tankU6F = new FluidStack(DeferredRegisters.fluidUraniumHexafluoride, 0);
-	}
 	int u6f = (int) (500 + (2400 - requiredWater) / 2400.0f * 1500);
-	return getJoulesStored() >= getJoulesPerTick() && !getInput().isEmpty() && getInput().getCount() > 0
-		&& tankWater.getAmount() >= requiredWater && TANKCAPACITY >= tankU6F.getAmount() + u6f;
+	return electro.getJoulesStored() >= processor.getJoulesPerTick() && !processor.getInput().isEmpty()
+		&& processor.getInput().getCount() > 0 && tank.getFluidInTank(0).getAmount() >= requiredWater
+		&& TANKCAPACITY >= tank.getFluidInTank(1).getAmount() + u6f;
     }
 
-    private int getRequiredWater() {
-	ItemStack stack = getStackInSlot(0);
+    protected int getRequiredWater(IInventory inv) {
+	ItemStack stack = inv.getStackInSlot(0);
 	Item item = stack.getItem();
 	int requiredWater = -1;
 	if (item == DeferredRegisters.ITEM_YELLOWCAKE.get()) {
@@ -115,102 +96,13 @@ public class TileChemicalBoiler extends GenericTileProcessor implements IO2OProc
 	return requiredWater;
     }
 
-    @Override
-    public void process() {
-	ItemStack stack = getInput();
-	int requiredWater = getRequiredWater();
+    public void process(ComponentProcessor processor) {
+	ComponentFluidHandler handler = getComponent(ComponentType.FluidHandler);
+	ItemStack stack = processor.getInput();
+	int requiredWater = getRequiredWater(getComponent(ComponentType.Inventory));
 	int createdU6F = (int) (1500 + (2400 - requiredWater) / 2400.0f * 1500);
 	stack.setCount(stack.getCount() - 1);
-	tankWater.shrink(requiredWater);
-	tankU6F.grow(createdU6F);
-    }
-
-    @Override
-    public int getRequiredTicks() {
-	return Constants.CHEMICALBOILER_REQUIRED_TICKS;
-    }
-
-    @Override
-    public int getSizeInventory() {
-	return 5;
-    }
-
-    @Override
-    public int[] getSlotsForFace(Direction side) {
-	return side == Direction.UP ? SLOTS_UP : side == Direction.DOWN ? SLOTS_EMPTY : SLOTS_SIDE;
-    }
-
-    @Override
-    protected Container createMenu(int id, PlayerInventory player) {
-	return new ContainerChemicalBoiler(id, player, this, getInventoryData());
-    }
-
-    @Override
-    public ITextComponent getDisplayName() {
-	return new TranslationTextComponent("container.chemicalboiler");
-    }
-
-    @Override
-    public ItemStack getInput() {
-	return getStackInSlot(0);
-    }
-
-    @Override
-    public void setOutput(ItemStack stack) {
-	// Does not use this.
-    }
-
-    @Override
-    public ItemStack getOutput() {
-	return ItemStack.EMPTY;
-    }
-
-    @Override
-    public FluidStack getFluidInTank(int tank) {
-	return tank == 0 ? tankWater : tank == 1 ? tankU6F : FluidStack.EMPTY;
-    }
-
-    @Override
-    public int getTanks() {
-	return 2;
-    }
-
-    @Override
-    public int getTankCapacity(int tank) {
-	return TANKCAPACITY;
-    }
-
-    @Override
-    public boolean isFluidValid(int tank, FluidStack stack) {
-	return tank == 0 ? stack.getFluid() == Fluids.WATER
-		: tank == 1 ? stack.getFluid() == DeferredRegisters.fluidUraniumHexafluoride : false;
-    }
-
-    @Override
-    public int fill(FluidStack resource, FluidAction action) {
-	FluidStack tank = resource.getFluid() == DeferredRegisters.fluidUraniumHexafluoride ? tankU6F
-		: resource.getFluid() == Fluids.WATER ? tankWater : FluidStack.EMPTY;
-	if (tank == FluidStack.EMPTY) {
-	    return 0;
-	}
-	int amount = Math.min(TANKCAPACITY - tank.getAmount(), resource.getAmount());
-	if (action == FluidAction.EXECUTE) {
-	    tank.grow(amount);
-	}
-	return amount;
-    }
-
-    @Override
-    public FluidStack drain(FluidStack resource, FluidAction action) {
-	return drain(resource.getAmount(), action);
-    }
-
-    @Override
-    public FluidStack drain(int maxDrain, FluidAction action) {
-	int amount = Math.min(tankU6F.getAmount(), maxDrain);
-	if (action == FluidAction.EXECUTE) {
-	    tankU6F.shrink(amount);
-	}
-	return amount == 0 ? FluidStack.EMPTY : new FluidStack(tankU6F.getFluid(), amount);
+	handler.getFluidInTank(0).shrink(requiredWater);
+	handler.getFluidInTank(1).grow(createdU6F);
     }
 }

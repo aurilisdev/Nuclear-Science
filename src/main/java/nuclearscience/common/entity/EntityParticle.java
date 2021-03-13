@@ -70,7 +70,7 @@ public class EntityParticle extends Entity {
 	    for (int i = 0; i < checks; i++) {
 		if (!world.isRemote) {
 		    TileParticleInjector injector = (TileParticleInjector) tile;
-		    injector.checkCollide();
+		    injector.checkCollision();
 		}
 		BlockPos next = getPosition();
 		BlockState oldState = world.getBlockState(next);
