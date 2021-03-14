@@ -10,11 +10,13 @@ import electrodynamics.common.tile.generic.component.type.ComponentElectrodynami
 import electrodynamics.common.tile.generic.component.type.ComponentFluidHandler;
 import electrodynamics.common.tile.generic.component.type.ComponentProcessor;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import nuclearscience.DeferredRegisters;
 import nuclearscience.References;
 import nuclearscience.common.inventory.container.ContainerChemicalBoiler;
 import nuclearscience.common.tile.TileChemicalBoiler;
@@ -64,14 +66,19 @@ public class ScreenChemicalBoiler extends GenericContainerScreenUpgradeable<Cont
 	    if (burnLeftScaled > 17) {
 		blit(stack, guiLeft + 44 + 60, guiTop + 30, 212, 14, Math.min(burnLeftScaled * 2 - 34 + 1, 34), 16);
 	    }
-	    blit(stack, guiLeft + 21, guiTop + 68
-		    - (int) (handler.getFluidInTank(0).getAmount() / (float) TileChemicalBoiler.TANKCAPACITY * 50),
-		    214 + 18, 31, 16,
-		    (int) (handler.getFluidInTank(0).getAmount() / (float) TileChemicalBoiler.TANKCAPACITY * 50));
-	    blit(stack, guiLeft + 139, guiTop + 68
-		    - (int) (handler.getFluidInTank(1).getAmount() / (float) TileChemicalBoiler.TANKCAPACITY * 50), 214,
-		    31, 16,
-		    (int) (handler.getFluidInTank(1).getAmount() / (float) TileChemicalBoiler.TANKCAPACITY * 50));
+	    blit(stack, guiLeft + 21,
+		    guiTop + 68
+			    - (int) (handler.getStackFromFluid(Fluids.WATER).getAmount()
+				    / (float) TileChemicalBoiler.TANKCAPACITY * 50),
+		    214 + 18, 31, 16, (int) (handler.getStackFromFluid(Fluids.WATER).getAmount()
+			    / (float) TileChemicalBoiler.TANKCAPACITY * 50));
+	    blit(stack, guiLeft + 139,
+		    guiTop + 68
+			    - (int) (handler.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride).getAmount()
+				    / (float) TileChemicalBoiler.TANKCAPACITY * 50),
+		    214, 31, 16,
+		    (int) (handler.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride).getAmount()
+			    / (float) TileChemicalBoiler.TANKCAPACITY * 50));
 	}
     }
 

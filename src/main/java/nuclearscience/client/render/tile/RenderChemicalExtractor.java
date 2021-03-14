@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.vector.Quaternion;
 import nuclearscience.client.ClientRegister;
@@ -35,8 +36,8 @@ public class RenderChemicalExtractor extends TileEntityRenderer<TileChemicalExtr
 	if (face == Direction.NORTH || face == Direction.SOUTH) {
 	    matrixStackIn.rotate(new Quaternion(0, 90, 0, true));
 	}
-	float prog = tileEntityIn.<ComponentFluidHandler>getComponent(ComponentType.FluidHandler).getFluidInTank(0)
-		.getAmount() / (float) TileChemicalExtractor.TANKCAPACITY;
+	float prog = tileEntityIn.<ComponentFluidHandler>getComponent(ComponentType.FluidHandler)
+		.getStackFromFluid(Fluids.WATER).getAmount() / (float) TileChemicalExtractor.TANKCAPACITY;
 	if (prog > 0) {
 	    matrixStackIn.scale(1, prog / 16.0f * 5.8f * 2, 1);
 	    Minecraft.getInstance().getBlockRendererDispatcher().getBlockModelRenderer().renderModel(

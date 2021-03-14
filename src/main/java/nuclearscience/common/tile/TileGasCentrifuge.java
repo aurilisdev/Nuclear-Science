@@ -12,6 +12,7 @@ import electrodynamics.common.tile.generic.component.type.ComponentPacketHandler
 import electrodynamics.common.tile.generic.component.type.ComponentProcessor;
 import electrodynamics.common.tile.generic.component.type.ComponentTickable;
 import net.minecraft.block.BlockState;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
@@ -52,7 +53,7 @@ public class TileGasCentrifuge extends GenericTileTicking {
 	ComponentInventory inv = getComponent(ComponentType.Inventory);
 	ComponentFluidHandler tank = getComponent(ComponentType.FluidHandler);
 	boolean val = electro.getJoulesStored() >= processor.getJoulesPerTick()
-		&& tank.getFluidInTank(0).getAmount() >= REQUIRED / 60.0
+		&& tank.getStackFromFluid(Fluids.WATER).getAmount() >= REQUIRED / 60.0
 		&& inv.getStackInSlot(0).getCount() < inv.getStackInSlot(0).getMaxStackSize()
 		&& inv.getStackInSlot(1).getCount() < inv.getStackInSlot(1).getMaxStackSize();
 	if (!val && spinSpeed > 0) {
@@ -68,7 +69,7 @@ public class TileGasCentrifuge extends GenericTileTicking {
 	spinSpeed = (int) processor.operatingSpeed;
 	this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();
 	int processed = (int) (REQUIRED / 60.0);
-	tank.getFluidInTank(0).shrink(processed);
+	tank.getStackFromFluid(Fluids.WATER).shrink(processed);
 	stored235 += processed * 0.172;
 	stored238 += processed * (1 - 0.172);
 	if (stored235 > REQUIRED) {

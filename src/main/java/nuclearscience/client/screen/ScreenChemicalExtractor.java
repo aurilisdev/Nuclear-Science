@@ -10,6 +10,7 @@ import electrodynamics.common.tile.generic.component.type.ComponentElectrodynami
 import electrodynamics.common.tile.generic.component.type.ComponentFluidHandler;
 import electrodynamics.common.tile.generic.component.type.ComponentProcessor;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -61,10 +62,12 @@ public class ScreenChemicalExtractor extends GenericContainerScreenUpgradeable<C
 	    ComponentFluidHandler handler = extractor.getComponent(ComponentType.FluidHandler);
 	    int burnLeftScaled = (int) (processor.operatingTicks * 34.0 / processor.requiredTicks);
 	    blit(stack, guiLeft + 94, guiTop + 30, 212, 14, Math.min(burnLeftScaled, 34), 16);
-	    blit(stack, guiLeft + 51, guiTop + 68
-		    - (int) (handler.getFluidInTank(0).getAmount() / (float) TileChemicalExtractor.TANKCAPACITY * 50),
-		    214, 31, 16,
-		    (int) (handler.getFluidInTank(0).getAmount() / (float) TileChemicalExtractor.TANKCAPACITY * 50));
+	    blit(stack, guiLeft + 51,
+		    guiTop + 68
+			    - (int) (handler.getStackFromFluid(Fluids.WATER).getAmount()
+				    / (float) TileChemicalExtractor.TANKCAPACITY * 50),
+		    214, 31, 16, (int) (handler.getStackFromFluid(Fluids.WATER).getAmount()
+			    / (float) TileChemicalExtractor.TANKCAPACITY * 50));
 	}
     }
 }

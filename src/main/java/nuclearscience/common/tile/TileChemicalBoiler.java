@@ -62,15 +62,17 @@ public class TileChemicalBoiler extends GenericTileTicking {
 	TileEntity faceTile = world.getTileEntity(face);
 	if (faceTile instanceof IFluidHandler) {
 	    IFluidHandler handler = (IFluidHandler) faceTile;
-	    if (handler.isFluidValid(0, tank.getFluidInTank(1))) {
-		tank.getFluidInTank(1).shrink(handler.fill(tank.getFluidInTank(1), FluidAction.EXECUTE));
+	    if (handler.isFluidValid(0, tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride))) {
+		tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride).shrink(handler
+			.fill(tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride), FluidAction.EXECUTE));
 	    }
 	}
 	ItemStack bucketStack = inv.getStackInSlot(1);
 	if (!bucketStack.isEmpty() && bucketStack.getCount() > 0 && bucketStack.getItem() == Items.WATER_BUCKET
-		&& tank.getFluidInTank(0).getAmount() <= TANKCAPACITY - 1000) {
+		&& tank.getStackFromFluid(Fluids.WATER).getAmount() <= TANKCAPACITY - 1000) {
 	    inv.setInventorySlotContents(1, new ItemStack(Items.BUCKET));
-	    tank.getFluidInTank(0).setAmount(Math.min(tank.getFluidInTank(0).getAmount() + 1000, TANKCAPACITY));
+	    tank.getStackFromFluid(Fluids.WATER)
+		    .setAmount(Math.min(tank.getStackFromFluid(Fluids.WATER).getAmount() + 1000, TANKCAPACITY));
 	}
 	int requiredWater = getRequiredWater(inv);
 	if (requiredWater <= 0) {
@@ -78,8 +80,9 @@ public class TileChemicalBoiler extends GenericTileTicking {
 	}
 	int u6f = (int) (500 + (2400 - requiredWater) / 2400.0f * 1500);
 	return electro.getJoulesStored() >= processor.getJoulesPerTick() && !processor.getInput().isEmpty()
-		&& processor.getInput().getCount() > 0 && tank.getFluidInTank(0).getAmount() >= requiredWater
-		&& TANKCAPACITY >= tank.getFluidInTank(1).getAmount() + u6f;
+		&& processor.getInput().getCount() > 0
+		&& tank.getStackFromFluid(Fluids.WATER).getAmount() >= requiredWater
+		&& TANKCAPACITY >= tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride).getAmount() + u6f;
     }
 
     protected int getRequiredWater(IInventory inv) {
@@ -102,7 +105,7 @@ public class TileChemicalBoiler extends GenericTileTicking {
 	int requiredWater = getRequiredWater(getComponent(ComponentType.Inventory));
 	int createdU6F = (int) (1500 + (2400 - requiredWater) / 2400.0f * 1500);
 	stack.setCount(stack.getCount() - 1);
-	handler.getFluidInTank(0).shrink(requiredWater);
-	handler.getFluidInTank(1).grow(createdU6F);
+	handler.getStackFromFluid(Fluids.WATER).shrink(requiredWater);
+	handler.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride).grow(createdU6F);
     }
 }

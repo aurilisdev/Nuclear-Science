@@ -10,6 +10,7 @@ import electrodynamics.common.tile.generic.component.type.ComponentElectrodynami
 import electrodynamics.common.tile.generic.component.type.ComponentFluidHandler;
 import electrodynamics.common.tile.generic.component.type.ComponentProcessor;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -64,9 +65,10 @@ public class ScreenGasCentrifuge extends GenericContainerScreenUpgradeable<Conta
 	    ComponentFluidHandler handler = centrifuge.getComponent(ComponentType.FluidHandler);
 	    blit(stack, guiLeft + 9,
 		    (int) (guiTop + 67
-			    - handler.getFluidInTank(0).getAmount() / (float) TileGasCentrifuge.TANKCAPACITY * 50),
-		    214, 31, 16,
-		    (int) (handler.getFluidInTank(0).getAmount() / (float) TileGasCentrifuge.TANKCAPACITY * 50));
+			    - handler.getStackFromFluid(Fluids.WATER).getAmount()
+				    / (float) TileGasCentrifuge.TANKCAPACITY * 50),
+		    214, 31, 16, (int) (handler.getStackFromFluid(Fluids.WATER).getAmount()
+			    / (float) TileGasCentrifuge.TANKCAPACITY * 50));
 	    blit(stack, guiLeft + 72,
 		    (int) (guiTop + 38
 			    - centrifuge.stored235 * (float) TileGasCentrifuge.TANKCAPACITY / TileGasCentrifuge.REQUIRED

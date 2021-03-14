@@ -50,16 +50,16 @@ public class TileChemicalExtractor extends GenericTileTicking {
 	ComponentFluidHandler tank = getComponent(ComponentType.FluidHandler);
 	ItemStack bucketStack = inv.getStackInSlot(2);
 	if (!bucketStack.isEmpty() && bucketStack.getCount() > 0 && bucketStack.getItem() == Items.WATER_BUCKET
-		&& tank.getFluidInTank(0).getAmount() <= TANKCAPACITY - 1000) {
+		&& tank.getStackFromFluid(Fluids.WATER).getAmount() <= TANKCAPACITY - 1000) {
 	    inv.setInventorySlotContents(2, new ItemStack(Items.BUCKET));
-	    tank.getFluidInTank(0).setAmount(Math.min(tank.getFluidInTank(0).getAmount() + 1000, TANKCAPACITY));
+	    tank.getStackFromFluid(Fluids.WATER).setAmount(Math.min(tank.getStackFromFluid(Fluids.WATER).getAmount() + 1000, TANKCAPACITY));
 	}
 	if (this.<ComponentTickable>getComponent(ComponentType.Tickable).getTicks() % 10 == 0) {
 	    this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendGuiPacketToTracking();
 	}
 	int requiredWater = getRequiredWater(processor);
 	return electro.getJoulesStored() >= processor.getJoulesPerTick() && !inv.getStackInSlot(0).isEmpty()
-		&& inv.getStackInSlot(0).getCount() > 0 && tank.getFluidInTank(0).getAmount() >= requiredWater
+		&& inv.getStackInSlot(0).getCount() > 0 && tank.getStackFromFluid(Fluids.WATER).getAmount() >= requiredWater
 		&& requiredWater > 0;
     }
 
@@ -112,6 +112,6 @@ public class TileChemicalExtractor extends GenericTileTicking {
 	}
 	stack.setCount(stack.getCount() - 1);
 	ComponentFluidHandler tank = getComponent(ComponentType.FluidHandler);
-	tank.getFluidInTank(0).shrink(requiredWater);
+	tank.getStackFromFluid(Fluids.WATER).shrink(requiredWater);
     }
 }
