@@ -30,7 +30,7 @@ public class TileRadioisotopeGenerator extends GenericTileTicking {
 	addComponent(new ComponentElectrodynamic(this).setVoltage(Constants.RADIOISOTOPEGENERATOR_VOLTAGE)
 		.setFunctionExtractPower((x, y) -> TransferPack.EMPTY).addOutputDirection(Direction.UP)
 		.addOutputDirection(Direction.DOWN));
-	addComponent(new ComponentInventory().setInventorySize(1).addSlotOnFace(Direction.UP, 0).setItemValidPredicate(
+	addComponent(new ComponentInventory().setInventorySize(1).addSlotsOnFace(Direction.UP, 0).setItemValidPredicate(
 		(slot, stack) -> RadiationRegister.get(stack.getItem()) != RadiationRegister.NULL));
 	addComponent(new ComponentContainerProvider("container.radioisotopegenerator")
 		.setCreateMenuFunction((id, player) -> new ContainerRadioisotopeGenerator(id, player,

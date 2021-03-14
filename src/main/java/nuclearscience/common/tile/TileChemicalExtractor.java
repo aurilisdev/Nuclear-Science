@@ -33,9 +33,9 @@ public class TileChemicalExtractor extends GenericTileTicking {
 	addComponent(new ComponentElectrodynamic(this).enableUniversalInput()
 		.setVoltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 2));
 	addComponent(new ComponentFluidHandler(this).addFluidTank(Fluids.WATER, TANKCAPACITY).enableUniversalInput());
-	addComponent(new ComponentInventory().setInventorySize(6).addSlotOnFace(Direction.UP, 0)
-		.addSlotOnFace(Direction.DOWN, 1).addSlotOnFace(Direction.SOUTH, 2).addSlotOnFace(Direction.NORTH, 2)
-		.addSlotOnFace(Direction.EAST, 2).addSlotOnFace(Direction.WEST, 2));
+	addComponent(new ComponentInventory().setInventorySize(6).addSlotsOnFace(Direction.UP, 0)
+		.addSlotsOnFace(Direction.DOWN, 1).addSlotsOnFace(Direction.SOUTH, 2).addSlotsOnFace(Direction.NORTH, 2)
+		.addSlotsOnFace(Direction.EAST, 2).addSlotsOnFace(Direction.WEST, 2));
 	addComponent(new ComponentProcessor(this).setJoulesPerTick(Constants.CHEMICALEXTRACTOR_USAGE_PER_TICK)
 		.setRequiredTicks(Constants.CHEMICALEXTRACTOR_REQUIRED_TICKS).setCanProcess(this::canProcess)
 		.addUpgradeSlots(3, 4, 5).setProcess(this::process));

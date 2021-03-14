@@ -43,8 +43,8 @@ public class TileChemicalBoiler extends GenericTileTicking {
 	addComponent(new ComponentFluidHandler(this).addRelativeInputDirection(Direction.EAST)
 		.addFluidTank(Fluids.WATER, TANKCAPACITY)
 		.addFluidTank(DeferredRegisters.fluidUraniumHexafluoride, TANKCAPACITY));
-	addComponent(new ComponentInventory().setInventorySize(5).addSlotOnFace(Direction.UP, 0)
-		.addSlotOnFace(Direction.DOWN, 1));
+	addComponent(new ComponentInventory().setInventorySize(5).addSlotsOnFace(Direction.UP, 0)
+		.addSlotsOnFace(Direction.DOWN, 1));
 	addComponent(new ComponentProcessor(this).addUpgradeSlots(2, 3, 4)
 		.setJoulesPerTick(Constants.CHEMICALBOILER_USAGE_PER_TICK)
 		.setType(ComponentProcessorType.ObjectToObject).setCanProcess(this::canProcess)

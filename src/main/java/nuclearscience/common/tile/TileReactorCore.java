@@ -51,9 +51,8 @@ public class TileReactorCore extends GenericTileTicking {
 	addComponent(new ComponentPacketHandler().addCustomPacketReader(this::readCustomPacket)
 		.addCustomPacketWriter(this::writeCustomPacket).addGuiPacketReader(this::readCustomPacket)
 		.addGuiPacketWriter(this::writeCustomPacket));
-	addComponent(new ComponentInventory().setInventorySize(6).addSlotOnFace(Direction.UP, 0)
-		.addSlotOnFace(Direction.UP, 1).addSlotOnFace(Direction.UP, 2).addSlotOnFace(Direction.UP, 3)
-		.addSlotOnFace(Direction.UP, 4).addSlotOnFace(Direction.DOWN, 5));
+	addComponent(new ComponentInventory().setInventorySize(6).addSlotsOnFace(Direction.UP, 0, 1, 2, 3, 4)
+		.addSlotsOnFace(Direction.DOWN, 5));
 	addComponent(new ComponentContainerProvider("container.reactorcore")
 		.setCreateMenuFunction((id, player) -> new ContainerReactorCore(id, player,
 			getComponent(ComponentType.Inventory), getCoordsArray())));
