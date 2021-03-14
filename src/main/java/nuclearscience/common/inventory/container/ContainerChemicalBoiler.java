@@ -11,19 +11,13 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Items;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.IntArray;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.tile.TileChemicalBoiler;
 
 public class ContainerChemicalBoiler extends GenericContainer<TileChemicalBoiler> {
 
     public ContainerChemicalBoiler(int id, PlayerInventory playerinv) {
-	this(id, playerinv, new Inventory(5));
-    }
-
-    public ContainerChemicalBoiler(int id, PlayerInventory playerinv, IInventory inventory) {
-	this(id, playerinv, inventory, new IntArray(6 + 3));
+	this(id, playerinv, new Inventory(5), new IntArray(3));
     }
 
     public ContainerChemicalBoiler(int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {
@@ -49,36 +43,4 @@ public class ContainerChemicalBoiler extends GenericContainer<TileChemicalBoiler
 		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.basicspeed),
 		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.advancedspeed)));
     }
-
-    @OnlyIn(Dist.CLIENT)
-    public int getBurnLeftScaled() {
-	return (int) (inventorydata.get(3 + 0) * 34
-		/ (float) (inventorydata.get(3 + 3) == 0 ? 1 : inventorydata.get(3 + 3)));
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    public boolean isProcessing() {
-	return inventorydata.get(3 + 0) > 0;
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    public int getVoltage() {
-	return inventorydata.get(3 + 1);
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    public int getJoulesPerTick() {
-	return inventorydata.get(3 + 2);
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    public int getU6FLevelScaled() {
-	return (int) (inventorydata.get(3 + 4) / 100.0 * 50);
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    public int getWaterLevelScaled() {
-	return (int) (inventorydata.get(3 + 5) / 100.0 * 50);
-    }
-
 }

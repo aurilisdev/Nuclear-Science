@@ -83,11 +83,13 @@ public class ScreenQuantumCapacitor extends GenericContainerScreenUpgradeable<Co
 	    try {
 		triedOutput = Double.parseDouble(outputField.getText());
 	    } catch (Exception e) {
+		// Not required
 	    }
 	    Integer frequency = 0;
 	    try {
 		frequency = Integer.parseInt(frequencyField.getText());
 	    } catch (Exception e) {
+		// Not required
 	    }
 	    if (container.getHostFromIntArray() != null) {
 		NetworkHandler.CHANNEL.sendToServer(new PacketSetQuantumCapacitorData(

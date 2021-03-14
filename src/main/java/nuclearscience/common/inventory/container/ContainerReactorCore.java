@@ -13,11 +13,7 @@ import nuclearscience.common.tile.TileReactorCore;
 public class ContainerReactorCore extends GenericContainer<TileReactorCore> {
 
     public ContainerReactorCore(int id, PlayerInventory playerinv) {
-	this(id, playerinv, new Inventory(6));
-    }
-
-    public ContainerReactorCore(int id, PlayerInventory playerinv, IInventory inventory) {
-	this(id, playerinv, inventory, new IntArray(1 + 3));
+	this(id, playerinv, new Inventory(6), new IntArray(3));
     }
 
     public ContainerReactorCore(int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {
@@ -36,9 +32,5 @@ public class ContainerReactorCore extends GenericContainer<TileReactorCore> {
 		DeferredRegisters.ITEM_FUELLEUO2.get()));
 	addSlot(new SlotRestricted(inv, nextIndex(), 116, 24, DeferredRegisters.ITEM_CELLDEUTERIUM.get()));
 	addSlot(new SlotRestricted(inv, nextIndex(), 116, 59, DeferredRegisters.ITEM_CELLDEUTERIUM.get()));
-    }
-
-    public int getTemperature() {
-	return inventorydata.get(3 + 0);
     }
 }

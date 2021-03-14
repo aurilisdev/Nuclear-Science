@@ -15,11 +15,7 @@ import nuclearscience.common.tile.TileRadioisotopeGenerator;
 public class ContainerRadioisotopeGenerator extends GenericContainer<TileRadioisotopeGenerator> {
 
     public ContainerRadioisotopeGenerator(int id, PlayerInventory playerinv) {
-	this(id, playerinv, new Inventory(1));
-    }
-
-    public ContainerRadioisotopeGenerator(int id, PlayerInventory playerinv, IInventory inventory) {
-	this(id, playerinv, inventory, new IntArray(0 + 3));
+	this(id, playerinv, new Inventory(1), new IntArray(3));
     }
 
     public ContainerRadioisotopeGenerator(int id, PlayerInventory playerinv, IInventory inventory,

@@ -5,6 +5,10 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import electrodynamics.api.formatting.ElectricUnit;
 import electrodynamics.api.utilities.ElectricityChatFormatter;
 import electrodynamics.client.screen.generic.GenericContainerScreenUpgradeable;
+import electrodynamics.common.tile.generic.component.ComponentType;
+import electrodynamics.common.tile.generic.component.type.ComponentElectrodynamic;
+import electrodynamics.common.tile.generic.component.type.ComponentFluidHandler;
+import electrodynamics.common.tile.generic.component.type.ComponentProcessor;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -13,6 +17,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import nuclearscience.References;
 import nuclearscience.common.inventory.container.ContainerGasCentrifuge;
+import nuclearscience.common.tile.TileGasCentrifuge;
 
 @OnlyIn(Dist.CLIENT)
 public class ScreenGasCentrifuge extends GenericContainerScreenUpgradeable<ContainerGasCentrifuge> {
@@ -32,29 +37,40 @@ public class ScreenGasCentrifuge extends GenericContainerScreenUpgradeable<Conta
     @Override
     protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
 	font.func_243248_b(matrixStack, title, titleX, titleY, 4210752);
-	font.func_243248_b(matrixStack,
-		new TranslationTextComponent("gui.gascentrifuge.usage",
-			ElectricityChatFormatter.getDisplayShort(container.getJoulesPerTick() * 20, ElectricUnit.WATT)),
-		playerInventoryTitleX, playerInventoryTitleY, 4210752);
-	font.func_243248_b(matrixStack,
-		new TranslationTextComponent("gui.gascentrifuge.voltage",
-			ElectricityChatFormatter.getDisplayShort(container.getVoltage(), ElectricUnit.VOLTAGE)),
-		(float) playerInventoryTitleX + 85, playerInventoryTitleY, 4210752);
-	font.func_243248_b(matrixStack, new TranslationTextComponent("U-238"), (float) playerInventoryTitleX + 30,
-		playerInventoryTitleY - 33 + 17, 4210752);
-	font.func_243248_b(matrixStack, new TranslationTextComponent("U-235"), (float) playerInventoryTitleX + 30,
-		playerInventoryTitleY - 33 - 17, 4210752);
+	TileGasCentrifuge centrifuge = container.getHostFromIntArray();
+	if (centrifuge != null) {
+	    ComponentElectrodynamic electro = centrifuge.getComponent(ComponentType.Electrodynamic);
+	    ComponentProcessor processor = centrifuge.getComponent(ComponentType.Processor);
+	    font.func_243248_b(matrixStack,
+		    new TranslationTextComponent("gui.gascentrifuge.usage", ElectricityChatFormatter
+			    .getDisplayShort(processor.getJoulesPerTick() * 20, ElectricUnit.WATT)),
+		    playerInventoryTitleX, playerInventoryTitleY, 4210752);
+	    font.func_243248_b(matrixStack,
+		    new TranslationTextComponent("gui.gascentrifuge.voltage",
+			    ElectricityChatFormatter.getDisplayShort(electro.getVoltage(), ElectricUnit.VOLTAGE)),
+		    (float) playerInventoryTitleX + 85, playerInventoryTitleY, 4210752);
+	    font.func_243248_b(matrixStack, new TranslationTextComponent("U-238"), (float) playerInventoryTitleX + 30,
+		    playerInventoryTitleY - 33 + 17, 4210752);
+	    font.func_243248_b(matrixStack, new TranslationTextComponent("U-235"), (float) playerInventoryTitleX + 30,
+		    playerInventoryTitleY - 33 - 17, 4210752);
+	}
     }
 
     @Override
     protected void drawGuiContainerBackgroundLayer(MatrixStack stack, float partialTicks, int mouseX, int mouseY) {
 	super.drawGuiContainerBackgroundLayer(stack, partialTicks, mouseX, mouseY);
-	blit(stack, guiLeft + 9, guiTop + 67 - container.getU6FLevelScaled(), 214, 31, 16,
-		container.getU6FLevelScaled());
-	blit(stack, guiLeft + 72, guiTop + 38 - container.getU235LevelScaled(), 214, 31, 16,
-		container.getU235LevelScaled());
-	blit(stack, guiLeft + 72, guiTop + 69 - container.getU238LevelScaled(), 214, 31, 16,
-		container.getU238LevelScaled());
+	TileGasCentrifuge centrifuge = container.getHostFromIntArray();
+	if (centrifuge != null) {
+	    ComponentFluidHandler handler = centrifuge.getComponent(ComponentType.FluidHandler);
+	    blit(stack, guiLeft + 9, (int) (guiTop + 67 - handler.getFluidInTank(0).getAmount() / 100.0 * 50), 214, 31,
+		    16, (int) (handler.getFluidInTank(0).getAmount() / 100.0 * 50));
+	    blit(stack, guiLeft + 72,
+		    (int) (guiTop + 38 - centrifuge.stored235 * 100.0 / TileGasCentrifuge.REQUIRED * 22), 214, 31, 16,
+		    (int) (centrifuge.stored235 * 100.0 / TileGasCentrifuge.REQUIRED * 22));
+	    blit(stack, guiLeft + 72,
+		    (int) (guiTop + 69 - centrifuge.stored238 * 100.0 / TileGasCentrifuge.REQUIRED * 22), 214, 31, 16,
+		    (int) (centrifuge.stored238 * 100.0 / TileGasCentrifuge.REQUIRED * 22));
+	}
     }
 
 }
