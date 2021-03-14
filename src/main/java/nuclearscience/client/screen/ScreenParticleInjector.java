@@ -50,7 +50,7 @@ public class ScreenParticleInjector extends GenericContainerScreen<ContainerPart
 		    titleX, titleY + 30f, 4210752);
 	    font.func_243248_b(matrixStack,
 		    new TranslationTextComponent("gui.particleinjector.usage", ElectricityChatFormatter
-			    .getDisplayShort(processor.getJoulesPerTick() * 20, ElectricUnit.WATT)),
+			    .getDisplayShort(processor.getJoulesPerTick(), ElectricUnit.JOULES)),
 		    playerInventoryTitleX, playerInventoryTitleY, 4210752);
 	    font.func_243248_b(matrixStack,
 		    new TranslationTextComponent("gui.particleinjector.voltage",
