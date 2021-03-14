@@ -22,8 +22,8 @@ public class RenderQuantumCapacitor extends TileEntityRenderer<TileQuantumCapaci
     @Deprecated
     public void render(TileQuantumCapacitor tileEntityIn, float partialTicks, MatrixStack matrixStackIn,
 	    IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
-	matrixStackIn.translate(0.5, 0.5, 0.5);
 	matrixStackIn.push();
+	matrixStackIn.translate(0.5, 0.5, 0.5);
 	RenderSystem.multMatrix(matrixStackIn.getLast().getMatrix());
 	matrixStackIn.rotate(Minecraft.getInstance().getRenderManager().getCameraOrientation());
 	matrixStackIn.rotate(Vector3f.YP.rotationDegrees(180.0F));

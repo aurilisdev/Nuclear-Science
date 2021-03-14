@@ -39,7 +39,8 @@ public class TileQuantumCapacitor extends GenericTileTicking implements IEnergyS
     public TileQuantumCapacitor() {
 	super(DeferredRegisters.TILE_QUANTUMCAPACITOR.get());
 	addComponent(new ComponentTickable().addTickServer(this::tickServer));
-	addComponent(new ComponentPacketHandler());
+	addComponent(new ComponentPacketHandler().addGuiPacketReader(this::readGUIPacket)
+		.addGuiPacketWriter(this::writeGUIPacket));
 	addComponent(new ComponentElectrodynamic(this).setVoltage(16 * CapabilityElectrodynamic.DEFAULT_VOLTAGE)
 		.addOutputDirection(Direction.DOWN).addOutputDirection(Direction.UP).addInputDirection(Direction.WEST)
 		.addInputDirection(Direction.EAST).addInputDirection(Direction.SOUTH).addInputDirection(Direction.NORTH)
