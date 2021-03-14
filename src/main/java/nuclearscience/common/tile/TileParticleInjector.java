@@ -1,6 +1,7 @@
 package nuclearscience.common.tile;
 
 import electrodynamics.api.math.Location;
+import electrodynamics.api.tile.electric.CapabilityElectrodynamic;
 import electrodynamics.common.recipe.MachineRecipes;
 import electrodynamics.common.tile.generic.GenericTileTicking;
 import electrodynamics.common.tile.generic.component.ComponentType;
@@ -30,7 +31,8 @@ public class TileParticleInjector extends GenericTileTicking {
 	addComponent(new ComponentPacketHandler());
 	addComponent(new ComponentInventory().setInventorySize(3).setItemValidPredicate(
 		(index, stack) -> index != 1 || stack.getItem() == DeferredRegisters.ITEM_CELLELECTROMAGNETIC.get()));
-	addComponent(new ComponentElectrodynamic(this));
+	addComponent(new ComponentElectrodynamic(this).setVoltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 8)
+		.addRelativeInputDirection(Direction.NORTH));
 	addComponent(new ComponentProcessor(this).setCanProcess(this::canProcess)
 		.setJoulesPerTick(Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE).setProcess(this::process));
 	addComponent(new ComponentContainerProvider("container.particleinjector")

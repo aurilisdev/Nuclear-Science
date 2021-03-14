@@ -35,7 +35,7 @@ public class ScreenReactorCore extends GenericContainerScreen<ContainerReactorCo
 	TileReactorCore core = container.getHostFromIntArray();
 	if (core != null) {
 	    font.func_243248_b(matrixStack,
-		    new TranslationTextComponent("gui.reactorcore.temperature", core.temperature / 4 + 15 + " C"),
+		    new TranslationTextComponent("gui.reactorcore.temperature", (int)core.temperature / 4 + 15 + " C"),
 		    titleX, (float) titleY + 14 * 3, 4210752);
 	    if (core.temperature > TileReactorCore.MELTDOWN_TEMPERATURE_ACTUAL
 		    && System.currentTimeMillis() % 1000 < 500) {

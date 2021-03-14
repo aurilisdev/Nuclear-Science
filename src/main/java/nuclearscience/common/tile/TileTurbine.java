@@ -1,6 +1,5 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.api.tile.electric.CapabilityElectrodynamic;
 import electrodynamics.api.utilities.CachedTileOutput;
 import electrodynamics.api.utilities.TransferPack;
 import electrodynamics.common.network.ElectricityUtilities;
@@ -15,8 +14,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.block.BlockTurbine;
 
@@ -42,15 +39,8 @@ public class TileTurbine extends GenericTileTicking {
 	addComponent(new ComponentTickable().addTickServer(this::tickServer));
 	addComponent(new ComponentPacketHandler().addCustomPacketWriter(this::writeCustomPacket)
 		.addCustomPacketReader(this::readCustomPacket));
-	addComponent(new ComponentElectrodynamic(this).addOutputDirection(Direction.UP));
-    }
-
-    @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction facing) {
-	if (capability == CapabilityElectrodynamic.ELECTRODYNAMIC && facing == Direction.UP && (!hasCore || isCore)) {
-	    return (LazyOptional<T>) LazyOptional.of(() -> this);
-	}
-	return super.getCapability(capability, facing);
+	addComponent(new ComponentElectrodynamic(this).addOutputDirection(Direction.UP)
+		.setCapabilityTest(() -> (!hasCore || isCore)));
     }
 
     public void constructStructure() {
