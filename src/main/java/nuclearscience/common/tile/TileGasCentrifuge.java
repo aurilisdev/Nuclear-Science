@@ -1,6 +1,7 @@
 package nuclearscience.common.tile;
 
 import electrodynamics.api.tile.electric.CapabilityElectrodynamic;
+import electrodynamics.common.item.ItemProcessorUpgrade;
 import electrodynamics.common.tile.generic.GenericTileTicking;
 import electrodynamics.common.tile.generic.component.ComponentType;
 import electrodynamics.common.tile.generic.component.type.ComponentContainerProvider;
@@ -37,7 +38,9 @@ public class TileGasCentrifuge extends GenericTileTicking {
 			.addRelativeInputDirection(Direction.NORTH));
 	addComponent(new ComponentElectrodynamic(this).setVoltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 2)
 		.addInputDirection(Direction.DOWN));
-	addComponent(new ComponentInventory().setInventorySize(5).addSlotsOnFace(Direction.DOWN, 0, 1));
+	addComponent(new ComponentInventory().setInventorySize(5).addSlotsOnFace(Direction.DOWN, 0, 1)
+		.addRelativeSlotsOnFace(Direction.WEST, 0, 1).setItemValidPredicate(
+			(slot, stack) -> slot == 0 || slot > 2 && stack.getItem() instanceof ItemProcessorUpgrade));
 	addComponent(new ComponentProcessor(this).addUpgradeSlots(2, 3, 4)
 		.setJoulesPerTick(Constants.GASCENTRIFUGE_USAGE_PER_TICK)
 		.setRequiredTicks(Constants.GASCENTRIFUGE_REQUIRED_TICKS_PER_PROCESSING).setCanProcess(this::canProcess)

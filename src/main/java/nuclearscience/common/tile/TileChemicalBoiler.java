@@ -2,6 +2,7 @@ package nuclearscience.common.tile;
 
 import electrodynamics.api.tile.electric.CapabilityElectrodynamic;
 import electrodynamics.common.block.subtype.SubtypeOre;
+import electrodynamics.common.item.ItemProcessorUpgrade;
 import electrodynamics.common.tile.generic.GenericTileTicking;
 import electrodynamics.common.tile.generic.component.ComponentType;
 import electrodynamics.common.tile.generic.component.type.ComponentContainerProvider;
@@ -44,7 +45,8 @@ public class TileChemicalBoiler extends GenericTileTicking {
 		.addFluidTank(Fluids.WATER, TANKCAPACITY)
 		.addFluidTank(DeferredRegisters.fluidUraniumHexafluoride, TANKCAPACITY));
 	addComponent(new ComponentInventory().setInventorySize(5).addSlotsOnFace(Direction.UP, 0)
-		.addSlotsOnFace(Direction.DOWN, 1));
+		.addSlotsOnFace(Direction.DOWN, 1).addRelativeSlotsOnFace(Direction.EAST, 0).setItemValidPredicate(
+			(slot, stack) -> slot == 0 || slot > 2 && stack.getItem() instanceof ItemProcessorUpgrade));
 	addComponent(new ComponentProcessor(this).addUpgradeSlots(2, 3, 4)
 		.setJoulesPerTick(Constants.CHEMICALBOILER_USAGE_PER_TICK)
 		.setType(ComponentProcessorType.ObjectToObject).setCanProcess(this::canProcess)
@@ -62,13 +64,15 @@ public class TileChemicalBoiler extends GenericTileTicking {
 	ComponentFluidHandler tank = getComponent(ComponentType.FluidHandler);
 	BlockPos face = getPos().offset(direction.getDirection().getOpposite().rotateY());
 	TileEntity faceTile = world.getTileEntity(face);
-	LazyOptional<IFluidHandler> cap = faceTile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY,
-		direction.getDirection().getOpposite().rotateY().getOpposite());
-	if (cap.isPresent()) {
-	    IFluidHandler handler = cap.resolve().get();
-	    if (handler.isFluidValid(0, tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride))) {
-		tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride).shrink(handler
-			.fill(tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride), FluidAction.EXECUTE));
+	if (faceTile != null) {
+	    LazyOptional<IFluidHandler> cap = faceTile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY,
+		    direction.getDirection().getOpposite().rotateY().getOpposite());
+	    if (cap.isPresent()) {
+		IFluidHandler handler = cap.resolve().get();
+		if (handler.isFluidValid(0, tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride))) {
+		    tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride).shrink(handler.fill(
+			    tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride), FluidAction.EXECUTE));
+		}
 	    }
 	}
 	ItemStack bucketStack = inv.getStackInSlot(1);
