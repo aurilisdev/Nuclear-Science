@@ -1,6 +1,7 @@
 package nuclearscience.common.entity;
 
 import java.util.HashSet;
+import java.util.List;
 
 import electrodynamics.api.math.Location;
 import electrodynamics.common.block.BlockGenericMachine;
@@ -8,6 +9,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
@@ -15,12 +17,15 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.Explosion.Mode;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.api.fusion.IElectromagnet;
+import nuclearscience.api.radiation.RadiationSystem;
 import nuclearscience.common.block.BlockElectromagneticBooster;
 import nuclearscience.common.block.facing.FacingDirection;
 import nuclearscience.common.tile.TileElectromagneticSwitch;
@@ -63,6 +68,15 @@ public class EntityParticle extends Entity {
 	} else {
 	    direction = dataManager.get(DIRECTION);
 	    speed = dataManager.get(SPEED);
+	}
+	Location source = new Location(getPosition());
+	double totstrength = 1000;
+	double range = 1;
+	AxisAlignedBB bb = AxisAlignedBB.withSizeAtOrigin(range, range, range);
+	bb = bb.offset(new Vector3d(source.x(), source.y(), source.z()));
+	List<LivingEntity> list = world.getEntitiesWithinAABB(LivingEntity.class, bb);
+	for (LivingEntity living : list) {
+	    RadiationSystem.applyRadiation(living, source, totstrength);
 	}
 	if (direction != null) {
 	    int checks = (int) (Math.ceil(speed) * 2);
