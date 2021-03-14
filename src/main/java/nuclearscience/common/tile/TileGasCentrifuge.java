@@ -33,7 +33,8 @@ public class TileGasCentrifuge extends GenericTileTicking {
 	addComponent(new ComponentPacketHandler().addCustomPacketReader(this::readCustomPacket)
 		.addCustomPacketWriter(this::writeCustomPacket));
 	addComponent(
-		new ComponentFluidHandler(this).addFluidTank(DeferredRegisters.fluidUraniumHexafluoride, TANKCAPACITY));
+		new ComponentFluidHandler(this).addFluidTank(DeferredRegisters.fluidUraniumHexafluoride, TANKCAPACITY)
+			.addRelativeInputDirection(Direction.NORTH));
 	addComponent(new ComponentElectrodynamic(this).setVoltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 2)
 		.addInputDirection(Direction.DOWN));
 	addComponent(new ComponentInventory().setInventorySize(5).addSlotOnFace(Direction.DOWN, 0)
@@ -93,8 +94,8 @@ public class TileGasCentrifuge extends GenericTileTicking {
 
     @Override
     public CompoundNBT write(CompoundNBT compound) {
-	compound.putFloat("stored235", stored235);
-	compound.putFloat("stored238", stored238);
+	compound.putInt("stored235", stored235);
+	compound.putInt("stored238", stored238);
 	return super.write(compound);
     }
 
@@ -107,10 +108,14 @@ public class TileGasCentrifuge extends GenericTileTicking {
 
     public void writeCustomPacket(CompoundNBT tag) {
 	tag.putInt("spinSpeed", spinSpeed);
+	tag.putInt("stored235", stored235);
+	tag.putInt("stored238", stored238);
     }
 
     public void readCustomPacket(CompoundNBT nbt) {
 	spinSpeed = nbt.getInt("spinSpeed");
+	stored235 = nbt.getInt("stored235");
+	stored238 = nbt.getInt("stored238");
     }
 
 }

@@ -32,14 +32,14 @@ public class TileChemicalExtractor extends GenericTileTicking {
 	addComponent(new ComponentPacketHandler());
 	addComponent(new ComponentElectrodynamic(this).enableUniversalInput()
 		.setVoltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 2));
-	addComponent(new ComponentFluidHandler(this).addFluidTank(Fluids.WATER, TANKCAPACITY));
+	addComponent(new ComponentFluidHandler(this).addFluidTank(Fluids.WATER, TANKCAPACITY).enableUniversalInput());
 	addComponent(new ComponentInventory().setInventorySize(6).addSlotOnFace(Direction.UP, 0)
 		.addSlotOnFace(Direction.DOWN, 1).addSlotOnFace(Direction.SOUTH, 2).addSlotOnFace(Direction.NORTH, 2)
 		.addSlotOnFace(Direction.EAST, 2).addSlotOnFace(Direction.WEST, 2));
 	addComponent(new ComponentProcessor(this).setJoulesPerTick(Constants.CHEMICALEXTRACTOR_USAGE_PER_TICK)
 		.setRequiredTicks(Constants.CHEMICALEXTRACTOR_REQUIRED_TICKS).setCanProcess(this::canProcess)
-		.addUpgradeSlots(3, 4, 5));
-	addComponent(new ComponentContainerProvider("container.chemicalboiler")
+		.addUpgradeSlots(3, 4, 5).setProcess(this::process));
+	addComponent(new ComponentContainerProvider("container.chemicalextractor")
 		.setCreateMenuFunction((id, player) -> new ContainerChemicalExtractor(id, player,
 			getComponent(ComponentType.Inventory), getCoordsArray())));
     }
@@ -52,15 +52,16 @@ public class TileChemicalExtractor extends GenericTileTicking {
 	if (!bucketStack.isEmpty() && bucketStack.getCount() > 0 && bucketStack.getItem() == Items.WATER_BUCKET
 		&& tank.getStackFromFluid(Fluids.WATER).getAmount() <= TANKCAPACITY - 1000) {
 	    inv.setInventorySlotContents(2, new ItemStack(Items.BUCKET));
-	    tank.getStackFromFluid(Fluids.WATER).setAmount(Math.min(tank.getStackFromFluid(Fluids.WATER).getAmount() + 1000, TANKCAPACITY));
+	    tank.getStackFromFluid(Fluids.WATER)
+		    .setAmount(Math.min(tank.getStackFromFluid(Fluids.WATER).getAmount() + 1000, TANKCAPACITY));
 	}
 	if (this.<ComponentTickable>getComponent(ComponentType.Tickable).getTicks() % 10 == 0) {
 	    this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendGuiPacketToTracking();
 	}
 	int requiredWater = getRequiredWater(processor);
 	return electro.getJoulesStored() >= processor.getJoulesPerTick() && !inv.getStackInSlot(0).isEmpty()
-		&& inv.getStackInSlot(0).getCount() > 0 && tank.getStackFromFluid(Fluids.WATER).getAmount() >= requiredWater
-		&& requiredWater > 0;
+		&& inv.getStackInSlot(0).getCount() > 0
+		&& tank.getStackFromFluid(Fluids.WATER).getAmount() >= requiredWater && requiredWater > 0;
     }
 
     protected int getRequiredWater(ComponentProcessor processor) {

@@ -21,6 +21,8 @@ import net.minecraft.item.Items;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import nuclearscience.DeferredRegisters;
@@ -60,8 +62,10 @@ public class TileChemicalBoiler extends GenericTileTicking {
 	ComponentFluidHandler tank = getComponent(ComponentType.FluidHandler);
 	BlockPos face = getPos().offset(direction.getDirection().getOpposite().rotateY());
 	TileEntity faceTile = world.getTileEntity(face);
-	if (faceTile instanceof IFluidHandler) {
-	    IFluidHandler handler = (IFluidHandler) faceTile;
+	LazyOptional<IFluidHandler> cap = faceTile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY,
+		direction.getDirection().getOpposite().rotateY().getOpposite());
+	if (cap.isPresent()) {
+	    IFluidHandler handler = cap.resolve().get();
 	    if (handler.isFluidValid(0, tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride))) {
 		tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride).shrink(handler
 			.fill(tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride), FluidAction.EXECUTE));
@@ -75,14 +79,15 @@ public class TileChemicalBoiler extends GenericTileTicking {
 		    .setAmount(Math.min(tank.getStackFromFluid(Fluids.WATER).getAmount() + 1000, TANKCAPACITY));
 	}
 	int requiredWater = getRequiredWater(inv);
-	if (requiredWater <= 0) {
+	int u6f = (int) (1500 + (2400 - requiredWater) / 2400.0f * 1500);
+	if (requiredWater <= 0
+		|| TANKCAPACITY < tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride).getAmount()
+			+ u6f) {
 	    return false;
 	}
-	int u6f = (int) (500 + (2400 - requiredWater) / 2400.0f * 1500);
 	return electro.getJoulesStored() >= processor.getJoulesPerTick() && !processor.getInput().isEmpty()
 		&& processor.getInput().getCount() > 0
-		&& tank.getStackFromFluid(Fluids.WATER).getAmount() >= requiredWater
-		&& TANKCAPACITY >= tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride).getAmount() + u6f;
+		&& tank.getStackFromFluid(Fluids.WATER).getAmount() >= requiredWater;
     }
 
     protected int getRequiredWater(IInventory inv) {
