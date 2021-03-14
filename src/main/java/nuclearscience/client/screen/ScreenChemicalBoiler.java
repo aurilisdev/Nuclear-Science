@@ -64,10 +64,14 @@ public class ScreenChemicalBoiler extends GenericContainerScreenUpgradeable<Cont
 	    if (burnLeftScaled > 17) {
 		blit(stack, guiLeft + 44 + 60, guiTop + 30, 212, 14, Math.min(burnLeftScaled * 2 - 34 + 1, 34), 16);
 	    }
-	    blit(stack, guiLeft + 21, guiTop + 68 - (int) (handler.getFluidInTank(0).getAmount() / 100.0 * 50),
-		    214 + 18, 31, 16, (int) (handler.getFluidInTank(0).getAmount() / 100.0 * 50));
-	    blit(stack, guiLeft + 139, guiTop + 68 - (int) (handler.getFluidInTank(1).getAmount() / 100.0 * 50), 214,
-		    31, 16, (int) (handler.getFluidInTank(1).getAmount() / 100.0 * 50));
+	    blit(stack, guiLeft + 21, guiTop + 68
+		    - (int) (handler.getFluidInTank(0).getAmount() / (float) TileChemicalBoiler.TANKCAPACITY * 50),
+		    214 + 18, 31, 16,
+		    (int) (handler.getFluidInTank(0).getAmount() / (float) TileChemicalBoiler.TANKCAPACITY * 50));
+	    blit(stack, guiLeft + 139, guiTop + 68
+		    - (int) (handler.getFluidInTank(1).getAmount() / (float) TileChemicalBoiler.TANKCAPACITY * 50), 214,
+		    31, 16,
+		    (int) (handler.getFluidInTank(1).getAmount() / (float) TileChemicalBoiler.TANKCAPACITY * 50));
 	}
     }
 

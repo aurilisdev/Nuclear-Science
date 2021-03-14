@@ -60,9 +60,11 @@ public class ScreenChemicalExtractor extends GenericContainerScreenUpgradeable<C
 	    ComponentProcessor processor = extractor.getComponent(ComponentType.Processor);
 	    ComponentFluidHandler handler = extractor.getComponent(ComponentType.FluidHandler);
 	    int burnLeftScaled = (int) (processor.operatingTicks * 34.0 / processor.requiredTicks);
-		    blit(stack, guiLeft + 94, guiTop + 30, 212, 14, Math.min(burnLeftScaled, 34), 16);
-	    blit(stack, guiLeft + 51, guiTop + 68 - (int) (handler.getFluidInTank(0).getAmount() / 100.0 * 50), 214, 31,
-		    16, (int) (handler.getFluidInTank(0).getAmount() / 100.0 * 50));
+	    blit(stack, guiLeft + 94, guiTop + 30, 212, 14, Math.min(burnLeftScaled, 34), 16);
+	    blit(stack, guiLeft + 51, guiTop + 68
+		    - (int) (handler.getFluidInTank(0).getAmount() / (float) TileChemicalExtractor.TANKCAPACITY * 50),
+		    214, 31, 16,
+		    (int) (handler.getFluidInTank(0).getAmount() / (float) TileChemicalExtractor.TANKCAPACITY * 50));
 	}
     }
 }

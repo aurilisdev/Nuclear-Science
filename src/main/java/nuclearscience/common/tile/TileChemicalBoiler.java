@@ -38,7 +38,7 @@ public class TileChemicalBoiler extends GenericTileTicking {
 	addComponent(new ComponentPacketHandler());
 	addComponent(new ComponentElectrodynamic(this).addInputDirection(Direction.DOWN)
 		.setVoltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 2));
-	addComponent(new ComponentFluidHandler(this).addRelativeInputDirection(Direction.WEST)
+	addComponent(new ComponentFluidHandler(this).addRelativeInputDirection(Direction.EAST)
 		.addFluidTank(Fluids.WATER, TANKCAPACITY)
 		.addFluidTank(DeferredRegisters.fluidUraniumHexafluoride, TANKCAPACITY));
 	addComponent(new ComponentInventory().setInventorySize(5).addSlotOnFace(Direction.UP, 0)

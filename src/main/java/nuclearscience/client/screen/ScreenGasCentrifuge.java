@@ -50,9 +50,9 @@ public class ScreenGasCentrifuge extends GenericContainerScreenUpgradeable<Conta
 			    ElectricityChatFormatter.getDisplayShort(electro.getVoltage(), ElectricUnit.VOLTAGE)),
 		    (float) playerInventoryTitleX + 85, playerInventoryTitleY, 4210752);
 	    font.func_243248_b(matrixStack, new TranslationTextComponent("U-238"), (float) playerInventoryTitleX + 30,
-		    playerInventoryTitleY - 33 + 17, 4210752);
+		    playerInventoryTitleY - 33 + 17f, 4210752);
 	    font.func_243248_b(matrixStack, new TranslationTextComponent("U-235"), (float) playerInventoryTitleX + 30,
-		    playerInventoryTitleY - 33 - 17, 4210752);
+		    playerInventoryTitleY - 33 - 17f, 4210752);
 	}
     }
 
@@ -62,14 +62,23 @@ public class ScreenGasCentrifuge extends GenericContainerScreenUpgradeable<Conta
 	TileGasCentrifuge centrifuge = container.getHostFromIntArray();
 	if (centrifuge != null) {
 	    ComponentFluidHandler handler = centrifuge.getComponent(ComponentType.FluidHandler);
-	    blit(stack, guiLeft + 9, (int) (guiTop + 67 - handler.getFluidInTank(0).getAmount() / 100.0 * 50), 214, 31,
-		    16, (int) (handler.getFluidInTank(0).getAmount() / 100.0 * 50));
+	    blit(stack, guiLeft + 9,
+		    (int) (guiTop + 67
+			    - handler.getFluidInTank(0).getAmount() / (float) TileGasCentrifuge.TANKCAPACITY * 50),
+		    214, 31, 16,
+		    (int) (handler.getFluidInTank(0).getAmount() / (float) TileGasCentrifuge.TANKCAPACITY * 50));
 	    blit(stack, guiLeft + 72,
-		    (int) (guiTop + 38 - centrifuge.stored235 * 100.0 / TileGasCentrifuge.REQUIRED * 22), 214, 31, 16,
-		    (int) (centrifuge.stored235 * 100.0 / TileGasCentrifuge.REQUIRED * 22));
+		    (int) (guiTop + 38
+			    - centrifuge.stored235 * (float) TileGasCentrifuge.TANKCAPACITY / TileGasCentrifuge.REQUIRED
+				    * 22),
+		    214, 31, 16, (int) (centrifuge.stored235 * (float) TileGasCentrifuge.TANKCAPACITY
+			    / TileGasCentrifuge.REQUIRED * 22));
 	    blit(stack, guiLeft + 72,
-		    (int) (guiTop + 69 - centrifuge.stored238 * 100.0 / TileGasCentrifuge.REQUIRED * 22), 214, 31, 16,
-		    (int) (centrifuge.stored238 * 100.0 / TileGasCentrifuge.REQUIRED * 22));
+		    (int) (guiTop + 69
+			    - centrifuge.stored238 * (float) TileGasCentrifuge.TANKCAPACITY / TileGasCentrifuge.REQUIRED
+				    * 22),
+		    214, 31, 16, (int) (centrifuge.stored238 * (float) TileGasCentrifuge.TANKCAPACITY
+			    / TileGasCentrifuge.REQUIRED * 22));
 	}
     }
 
