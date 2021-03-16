@@ -2,9 +2,9 @@ package nuclearscience.client.screen;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
-import electrodynamics.api.formatting.ElectricUnit;
-import electrodynamics.api.utilities.ElectricityChatFormatter;
-import electrodynamics.api.utilities.TransferPack;
+import electrodynamics.api.electricity.formatting.ElectricUnit;
+import electrodynamics.api.electricity.formatting.ElectricityChatFormatter;
+import electrodynamics.api.utilities.object.TransferPack;
 import electrodynamics.client.screen.generic.GenericContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
@@ -21,11 +21,9 @@ import nuclearscience.common.settings.Constants;
 
 @OnlyIn(Dist.CLIENT)
 public class ScreenRadioisotopeGenerator extends GenericContainerScreen<ContainerRadioisotopeGenerator> {
-    public static final ResourceLocation SCREEN_BACKGROUND = new ResourceLocation(
-	    References.ID + ":textures/gui/radioisotopegenerator.png");
+    public static final ResourceLocation SCREEN_BACKGROUND = new ResourceLocation(References.ID + ":textures/gui/radioisotopegenerator.png");
 
-    public ScreenRadioisotopeGenerator(ContainerRadioisotopeGenerator container, PlayerInventory playerInventory,
-	    ITextComponent title) {
+    public ScreenRadioisotopeGenerator(ContainerRadioisotopeGenerator container, PlayerInventory playerInventory, ITextComponent title) {
 	super(container, playerInventory, title);
     }
 
@@ -39,8 +37,7 @@ public class ScreenRadioisotopeGenerator extends GenericContainerScreen<Containe
 	super.drawGuiContainerForegroundLayer(matrixStack, mouseX, mouseY);
 	ItemStack in = container.getSlot(0).getStack();
 	IRadioactiveObject rad = RadiationRegister.get(in.getItem());
-	double currentOutput = in.getCount() * Constants.RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER
-		* rad.getRadiationStrength();
+	double currentOutput = in.getCount() * Constants.RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER * rad.getRadiationStrength();
 	TransferPack transfer = TransferPack.ampsVoltage(currentOutput / Constants.RADIOISOTOPEGENERATOR_VOLTAGE,
 		Constants.RADIOISOTOPEGENERATOR_VOLTAGE);
 	font.func_243248_b(matrixStack,
@@ -62,8 +59,7 @@ public class ScreenRadioisotopeGenerator extends GenericContainerScreen<Containe
 	super.drawGuiContainerBackgroundLayer(stack, partialTicks, mouseX, mouseY);
 	ItemStack in = container.getSlot(0).getStack();
 	IRadioactiveObject rad = RadiationRegister.get(in.getItem());
-	double currentOutput = in.getCount() * Constants.RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER
-		* rad.getRadiationStrength();
+	double currentOutput = in.getCount() * Constants.RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER * rad.getRadiationStrength();
 	if (currentOutput > 0) {
 	    blit(stack, guiLeft + 25, guiTop + 24, 212, -1, 14, 14);
 	}

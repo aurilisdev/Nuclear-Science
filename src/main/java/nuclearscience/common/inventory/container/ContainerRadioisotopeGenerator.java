@@ -18,8 +18,7 @@ public class ContainerRadioisotopeGenerator extends GenericContainer<TileRadiois
 	this(id, playerinv, new Inventory(1), new IntArray(3));
     }
 
-    public ContainerRadioisotopeGenerator(int id, PlayerInventory playerinv, IInventory inventory,
-	    IIntArray inventorydata) {
+    public ContainerRadioisotopeGenerator(int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {
 	super(DeferredRegisters.CONTAINER_RADIOISOTOPEGENERATOR.get(), id, playerinv, inventory, inventorydata);
     }
 

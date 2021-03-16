@@ -3,7 +3,7 @@ package nuclearscience.common.block;
 import java.util.Arrays;
 import java.util.List;
 
-import electrodynamics.api.tile.electric.IElectrodynamic;
+import electrodynamics.api.electricity.IElectrodynamic;
 import electrodynamics.common.block.BlockGenericMachine;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;

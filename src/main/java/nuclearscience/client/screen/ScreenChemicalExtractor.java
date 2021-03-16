@@ -2,13 +2,13 @@ package nuclearscience.client.screen;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
-import electrodynamics.api.formatting.ElectricUnit;
-import electrodynamics.api.utilities.ElectricityChatFormatter;
+import electrodynamics.api.electricity.formatting.ElectricUnit;
+import electrodynamics.api.electricity.formatting.ElectricityChatFormatter;
+import electrodynamics.api.tile.components.ComponentType;
+import electrodynamics.api.tile.components.type.ComponentElectrodynamic;
+import electrodynamics.api.tile.components.type.ComponentFluidHandler;
+import electrodynamics.api.tile.components.type.ComponentProcessor;
 import electrodynamics.client.screen.generic.GenericContainerScreenUpgradeable;
-import electrodynamics.common.tile.generic.component.ComponentType;
-import electrodynamics.common.tile.generic.component.type.ComponentElectrodynamic;
-import electrodynamics.common.tile.generic.component.type.ComponentFluidHandler;
-import electrodynamics.common.tile.generic.component.type.ComponentProcessor;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.util.ResourceLocation;
@@ -22,11 +22,9 @@ import nuclearscience.common.tile.TileChemicalExtractor;
 
 @OnlyIn(Dist.CLIENT)
 public class ScreenChemicalExtractor extends GenericContainerScreenUpgradeable<ContainerChemicalExtractor> {
-    public static final ResourceLocation SCREEN_BACKGROUND = new ResourceLocation(
-	    References.ID + ":textures/gui/chemicalextractor.png");
+    public static final ResourceLocation SCREEN_BACKGROUND = new ResourceLocation(References.ID + ":textures/gui/chemicalextractor.png");
 
-    public ScreenChemicalExtractor(ContainerChemicalExtractor container, PlayerInventory playerInventory,
-	    ITextComponent title) {
+    public ScreenChemicalExtractor(ContainerChemicalExtractor container, PlayerInventory playerInventory, ITextComponent title) {
 	super(container, playerInventory, title);
     }
 
@@ -43,8 +41,8 @@ public class ScreenChemicalExtractor extends GenericContainerScreenUpgradeable<C
 	    ComponentElectrodynamic electro = extractor.getComponent(ComponentType.Electrodynamic);
 	    ComponentProcessor processor = extractor.getComponent(ComponentType.Processor);
 	    font.func_243248_b(matrixStack,
-		    new TranslationTextComponent("gui.chemicalextractor.usage", ElectricityChatFormatter
-			    .getDisplayShort(processor.getJoulesPerTick() * 20, ElectricUnit.WATT)),
+		    new TranslationTextComponent("gui.chemicalextractor.usage",
+			    ElectricityChatFormatter.getDisplayShort(processor.getJoulesPerTick() * 20, ElectricUnit.WATT)),
 		    playerInventoryTitleX, playerInventoryTitleY, 4210752);
 	    font.func_243248_b(matrixStack,
 		    new TranslationTextComponent("gui.chemicalextractor.voltage",
@@ -63,11 +61,8 @@ public class ScreenChemicalExtractor extends GenericContainerScreenUpgradeable<C
 	    int burnLeftScaled = (int) (processor.operatingTicks * 34.0 / processor.requiredTicks);
 	    blit(stack, guiLeft + 94, guiTop + 30, 212, 14, Math.min(burnLeftScaled, 34), 16);
 	    blit(stack, guiLeft + 51,
-		    guiTop + 68
-			    - (int) (handler.getStackFromFluid(Fluids.WATER).getAmount()
-				    / (float) TileChemicalExtractor.TANKCAPACITY * 50),
-		    214, 31, 16, (int) (handler.getStackFromFluid(Fluids.WATER).getAmount()
-			    / (float) TileChemicalExtractor.TANKCAPACITY * 50));
+		    guiTop + 68 - (int) (handler.getStackFromFluid(Fluids.WATER).getAmount() / (float) TileChemicalExtractor.TANKCAPACITY * 50), 214,
+		    31, 16, (int) (handler.getStackFromFluid(Fluids.WATER).getAmount() / (float) TileChemicalExtractor.TANKCAPACITY * 50));
 	}
     }
 }

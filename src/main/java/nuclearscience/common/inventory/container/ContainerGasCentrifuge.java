@@ -23,8 +23,7 @@ public class ContainerGasCentrifuge extends GenericContainer<TileGasCentrifuge> 
 	super(DeferredRegisters.CONTAINER_GASCENTRIFUGE.get(), id, playerinv, inventory, inventorydata);
     }
 
-    public ContainerGasCentrifuge(ContainerType<?> type, int id, PlayerInventory playerinv, IInventory inventory,
-	    IIntArray inventorydata) {
+    public ContainerGasCentrifuge(ContainerType<?> type, int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {
 	super(type, id, playerinv, inventory, inventorydata);
     }
 

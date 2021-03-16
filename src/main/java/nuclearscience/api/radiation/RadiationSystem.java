@@ -2,7 +2,7 @@ package nuclearscience.api.radiation;
 
 import java.util.HashMap;
 
-import electrodynamics.api.math.Location;
+import electrodynamics.api.utilities.object.Location;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -41,8 +41,7 @@ public class RadiationSystem {
 	    BlockPos next = newSource.toBlockPos();
 	    if (!curr.equals(next)) {
 		curr = next;
-		lastHard = hard = world.getBlockState(curr).getBlockHardness(world, curr)
-			/ (world.getFluidState(curr).isEmpty() ? 1 : 50.0);
+		lastHard = hard = world.getBlockState(curr).getBlockHardness(world, curr) / (world.getFluidState(curr).isEmpty() ? 1 : 50.0);
 	    }
 	    modifier += hard / 4.5f;
 	    checks--;
@@ -69,8 +68,8 @@ public class RadiationSystem {
 			    float damage = (float) (strength * 2.15f) / 2169.9975f;
 			    if (Math.random() < damage) {
 				int integerDamage = (int) Math.max(1, damage);
-				if (next.getDamage() > next.getMaxDamage() || next.attemptDamageItem(integerDamage,
-					entity.world.rand, (ServerPlayerEntity) player)) {
+				if (next.getDamage() > next.getMaxDamage()
+					|| next.attemptDamageItem(integerDamage, entity.world.rand, (ServerPlayerEntity) player)) {
 				    player.inventory.armorInventory.set(i, ItemStack.EMPTY);
 				}
 			    }
@@ -80,10 +79,9 @@ public class RadiationSystem {
 	    }
 	    Location end = new Location(entity.getPositionVec());
 	    double radiation = 0;
-	    if (entity instanceof PlayerEntity && (((PlayerEntity) entity)
-		    .getItemStackFromSlot(EquipmentSlotType.MAINHAND).getItem() instanceof ItemGeigerCounter
-		    || ((PlayerEntity) entity).getItemStackFromSlot(EquipmentSlotType.OFFHAND)
-			    .getItem() instanceof ItemGeigerCounter)) {
+	    if (entity instanceof PlayerEntity
+		    && (((PlayerEntity) entity).getItemStackFromSlot(EquipmentSlotType.MAINHAND).getItem() instanceof ItemGeigerCounter
+			    || ((PlayerEntity) entity).getItemStackFromSlot(EquipmentSlotType.OFFHAND).getItem() instanceof ItemGeigerCounter)) {
 		double already = radiationMap.containsKey(entity) ? radiationMap.get(entity) : 0;
 		radiation = getRadiation(entity.world, source, end, strength);
 		radiationMap.put((PlayerEntity) entity, already + radiation);

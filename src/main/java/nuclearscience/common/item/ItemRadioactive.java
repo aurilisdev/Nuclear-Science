@@ -2,7 +2,7 @@ package nuclearscience.common.item;
 
 import java.util.List;
 
-import electrodynamics.api.math.Location;
+import electrodynamics.api.utilities.object.Location;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;

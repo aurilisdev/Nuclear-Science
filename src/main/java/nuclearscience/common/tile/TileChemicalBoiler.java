@@ -1,19 +1,19 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.api.tile.electric.CapabilityElectrodynamic;
+import electrodynamics.api.electricity.CapabilityElectrodynamic;
+import electrodynamics.api.tile.GenericTileTicking;
+import electrodynamics.api.tile.components.ComponentType;
+import electrodynamics.api.tile.components.type.ComponentContainerProvider;
+import electrodynamics.api.tile.components.type.ComponentDirection;
+import electrodynamics.api.tile.components.type.ComponentElectrodynamic;
+import electrodynamics.api.tile.components.type.ComponentFluidHandler;
+import electrodynamics.api.tile.components.type.ComponentInventory;
+import electrodynamics.api.tile.components.type.ComponentPacketHandler;
+import electrodynamics.api.tile.components.type.ComponentProcessor;
+import electrodynamics.api.tile.components.type.ComponentProcessorType;
+import electrodynamics.api.tile.components.type.ComponentTickable;
 import electrodynamics.common.block.subtype.SubtypeOre;
 import electrodynamics.common.item.ItemProcessorUpgrade;
-import electrodynamics.common.tile.generic.GenericTileTicking;
-import electrodynamics.common.tile.generic.component.ComponentType;
-import electrodynamics.common.tile.generic.component.type.ComponentContainerProvider;
-import electrodynamics.common.tile.generic.component.type.ComponentDirection;
-import electrodynamics.common.tile.generic.component.type.ComponentElectrodynamic;
-import electrodynamics.common.tile.generic.component.type.ComponentFluidHandler;
-import electrodynamics.common.tile.generic.component.type.ComponentInventory;
-import electrodynamics.common.tile.generic.component.type.ComponentPacketHandler;
-import electrodynamics.common.tile.generic.component.type.ComponentProcessor;
-import electrodynamics.common.tile.generic.component.type.ComponentProcessorType;
-import electrodynamics.common.tile.generic.component.type.ComponentTickable;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -39,21 +39,18 @@ public class TileChemicalBoiler extends GenericTileTicking {
 	addComponent(new ComponentTickable());
 	addComponent(new ComponentDirection());
 	addComponent(new ComponentPacketHandler());
-	addComponent(new ComponentElectrodynamic(this).addInputDirection(Direction.DOWN)
-		.setVoltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 2));
-	addComponent(new ComponentFluidHandler(this).addRelativeInputDirection(Direction.EAST)
-		.addFluidTank(Fluids.WATER, TANKCAPACITY)
+	addComponent(new ComponentElectrodynamic(this).addInputDirection(Direction.DOWN).setVoltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 2)
+		.setMaxJoules(Constants.CHEMICALBOILER_USAGE_PER_TICK * 10));
+	addComponent(new ComponentFluidHandler(this).addRelativeInputDirection(Direction.EAST).addFluidTank(Fluids.WATER, TANKCAPACITY)
 		.addFluidTank(DeferredRegisters.fluidUraniumHexafluoride, TANKCAPACITY));
-	addComponent(new ComponentInventory().setInventorySize(5).addSlotsOnFace(Direction.UP, 0)
-		.addSlotsOnFace(Direction.DOWN, 1).addRelativeSlotsOnFace(Direction.EAST, 0).setItemValidPredicate(
-			(slot, stack) -> slot == 0 || slot > 2 && stack.getItem() instanceof ItemProcessorUpgrade));
-	addComponent(new ComponentProcessor(this).addUpgradeSlots(2, 3, 4)
-		.setJoulesPerTick(Constants.CHEMICALBOILER_USAGE_PER_TICK)
-		.setType(ComponentProcessorType.ObjectToObject).setCanProcess(this::canProcess)
-		.setProcess(this::process).setRequiredTicks(Constants.CHEMICALBOILER_REQUIRED_TICKS));
-	addComponent(new ComponentContainerProvider("container.chemicalboiler")
-		.setCreateMenuFunction((id, player) -> new ContainerChemicalBoiler(id, player,
-			getComponent(ComponentType.Inventory), getCoordsArray())));
+	addComponent(new ComponentInventory().setInventorySize(5).addSlotsOnFace(Direction.UP, 0).addSlotsOnFace(Direction.DOWN, 1)
+		.addRelativeSlotsOnFace(Direction.EAST, 0)
+		.setItemValidPredicate((slot, stack) -> slot == 0 || slot > 2 && stack.getItem() instanceof ItemProcessorUpgrade));
+	addComponent(new ComponentProcessor(this).addUpgradeSlots(2, 3, 4).setJoulesPerTick(Constants.CHEMICALBOILER_USAGE_PER_TICK)
+		.setType(ComponentProcessorType.ObjectToObject).setCanProcess(this::canProcess).setProcess(this::process)
+		.setRequiredTicks(Constants.CHEMICALBOILER_REQUIRED_TICKS));
+	addComponent(new ComponentContainerProvider("container.chemicalboiler").setCreateMenuFunction(
+		(id, player) -> new ContainerChemicalBoiler(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 
     }
 
@@ -70,8 +67,8 @@ public class TileChemicalBoiler extends GenericTileTicking {
 	    if (cap.isPresent()) {
 		IFluidHandler handler = cap.resolve().get();
 		if (handler.isFluidValid(0, tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride))) {
-		    tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride).shrink(handler.fill(
-			    tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride), FluidAction.EXECUTE));
+		    tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride)
+			    .shrink(handler.fill(tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride), FluidAction.EXECUTE));
 		}
 	    }
 	}
@@ -79,18 +76,14 @@ public class TileChemicalBoiler extends GenericTileTicking {
 	if (!bucketStack.isEmpty() && bucketStack.getCount() > 0 && bucketStack.getItem() == Items.WATER_BUCKET
 		&& tank.getStackFromFluid(Fluids.WATER).getAmount() <= TANKCAPACITY - 1000) {
 	    inv.setInventorySlotContents(1, new ItemStack(Items.BUCKET));
-	    tank.getStackFromFluid(Fluids.WATER)
-		    .setAmount(Math.min(tank.getStackFromFluid(Fluids.WATER).getAmount() + 1000, TANKCAPACITY));
+	    tank.getStackFromFluid(Fluids.WATER).setAmount(Math.min(tank.getStackFromFluid(Fluids.WATER).getAmount() + 1000, TANKCAPACITY));
 	}
 	int requiredWater = getRequiredWater(inv);
 	int u6f = (int) (1500 + (2400 - requiredWater) / 2400.0f * 1500);
-	if (requiredWater <= 0
-		|| TANKCAPACITY < tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride).getAmount()
-			+ u6f) {
+	if (requiredWater <= 0 || TANKCAPACITY < tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride).getAmount() + u6f) {
 	    return false;
 	}
-	return electro.getJoulesStored() >= processor.getJoulesPerTick() && !processor.getInput().isEmpty()
-		&& processor.getInput().getCount() > 0
+	return electro.getJoulesStored() >= processor.getJoulesPerTick() && !processor.getInput().isEmpty() && processor.getInput().getCount() > 0
 		&& tank.getStackFromFluid(Fluids.WATER).getAmount() >= requiredWater;
     }
 

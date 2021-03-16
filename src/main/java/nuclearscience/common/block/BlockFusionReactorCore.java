@@ -30,14 +30,12 @@ public class BlockFusionReactorCore extends BlockGenericMachine {
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
-	    Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn,
+	    BlockRayTraceResult hit) {
 	if (!worldIn.isRemote) {
-	    ItemStack inHand = player.getItemStackFromSlot(
-		    handIn == Hand.MAIN_HAND ? EquipmentSlotType.MAINHAND : EquipmentSlotType.OFFHAND);
+	    ItemStack inHand = player.getItemStackFromSlot(handIn == Hand.MAIN_HAND ? EquipmentSlotType.MAINHAND : EquipmentSlotType.OFFHAND);
 	    Item itemInHand = inHand.getItem();
-	    if (itemInHand == DeferredRegisters.ITEM_CELLDEUTERIUM.get()
-		    || itemInHand == DeferredRegisters.ITEM_CELLTRITIUM.get()) {
+	    if (itemInHand == DeferredRegisters.ITEM_CELLDEUTERIUM.get() || itemInHand == DeferredRegisters.ITEM_CELLTRITIUM.get()) {
 		TileEntity tile = worldIn.getTileEntity(pos);
 		if (tile instanceof TileFusionReactorCore) {
 		    TileFusionReactorCore core = (TileFusionReactorCore) tile;

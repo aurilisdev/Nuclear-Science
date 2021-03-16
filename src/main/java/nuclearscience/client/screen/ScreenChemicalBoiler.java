@@ -2,13 +2,13 @@ package nuclearscience.client.screen;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
-import electrodynamics.api.formatting.ElectricUnit;
-import electrodynamics.api.utilities.ElectricityChatFormatter;
+import electrodynamics.api.electricity.formatting.ElectricUnit;
+import electrodynamics.api.electricity.formatting.ElectricityChatFormatter;
+import electrodynamics.api.tile.components.ComponentType;
+import electrodynamics.api.tile.components.type.ComponentElectrodynamic;
+import electrodynamics.api.tile.components.type.ComponentFluidHandler;
+import electrodynamics.api.tile.components.type.ComponentProcessor;
 import electrodynamics.client.screen.generic.GenericContainerScreenUpgradeable;
-import electrodynamics.common.tile.generic.component.ComponentType;
-import electrodynamics.common.tile.generic.component.type.ComponentElectrodynamic;
-import electrodynamics.common.tile.generic.component.type.ComponentFluidHandler;
-import electrodynamics.common.tile.generic.component.type.ComponentProcessor;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.util.ResourceLocation;
@@ -23,11 +23,9 @@ import nuclearscience.common.tile.TileChemicalBoiler;
 
 @OnlyIn(Dist.CLIENT)
 public class ScreenChemicalBoiler extends GenericContainerScreenUpgradeable<ContainerChemicalBoiler> {
-    public static final ResourceLocation SCREEN_BACKGROUND = new ResourceLocation(
-	    References.ID + ":textures/gui/chemicalboiler.png");
+    public static final ResourceLocation SCREEN_BACKGROUND = new ResourceLocation(References.ID + ":textures/gui/chemicalboiler.png");
 
-    public ScreenChemicalBoiler(ContainerChemicalBoiler container, PlayerInventory playerInventory,
-	    ITextComponent title) {
+    public ScreenChemicalBoiler(ContainerChemicalBoiler container, PlayerInventory playerInventory, ITextComponent title) {
 	super(container, playerInventory, title);
     }
 
@@ -44,8 +42,8 @@ public class ScreenChemicalBoiler extends GenericContainerScreenUpgradeable<Cont
 	    ComponentElectrodynamic electro = boiler.getComponent(ComponentType.Electrodynamic);
 	    ComponentProcessor processor = boiler.getComponent(ComponentType.Processor);
 	    font.func_243248_b(matrixStack,
-		    new TranslationTextComponent("gui.chemicalboiler.usage", ElectricityChatFormatter
-			    .getDisplayShort(processor.getJoulesPerTick() * 20, ElectricUnit.WATT)),
+		    new TranslationTextComponent("gui.chemicalboiler.usage",
+			    ElectricityChatFormatter.getDisplayShort(processor.getJoulesPerTick() * 20, ElectricUnit.WATT)),
 		    playerInventoryTitleX, playerInventoryTitleY, 4210752);
 	    font.func_243248_b(matrixStack,
 		    new TranslationTextComponent("gui.chemicalboiler.voltage",
@@ -67,17 +65,13 @@ public class ScreenChemicalBoiler extends GenericContainerScreenUpgradeable<Cont
 		blit(stack, guiLeft + 44 + 60, guiTop + 30, 212, 14, Math.min(burnLeftScaled * 2 - 34 + 1, 34), 16);
 	    }
 	    blit(stack, guiLeft + 21,
-		    guiTop + 68
-			    - (int) (handler.getStackFromFluid(Fluids.WATER).getAmount()
-				    / (float) TileChemicalBoiler.TANKCAPACITY * 50),
-		    214 + 18, 31, 16, (int) (handler.getStackFromFluid(Fluids.WATER).getAmount()
-			    / (float) TileChemicalBoiler.TANKCAPACITY * 50));
+		    guiTop + 68 - (int) (handler.getStackFromFluid(Fluids.WATER).getAmount() / (float) TileChemicalBoiler.TANKCAPACITY * 50),
+		    214 + 18, 31, 16, (int) (handler.getStackFromFluid(Fluids.WATER).getAmount() / (float) TileChemicalBoiler.TANKCAPACITY * 50));
 	    blit(stack, guiLeft + 139,
 		    guiTop + 68
 			    - (int) (handler.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride).getAmount()
 				    / (float) TileChemicalBoiler.TANKCAPACITY * 50),
-		    214, 31, 16,
-		    (int) (handler.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride).getAmount()
+		    214, 31, 16, (int) (handler.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride).getAmount()
 			    / (float) TileChemicalBoiler.TANKCAPACITY * 50));
 	}
     }

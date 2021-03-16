@@ -1,13 +1,13 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.api.utilities.CachedTileOutput;
-import electrodynamics.api.utilities.TransferPack;
+import electrodynamics.api.tile.GenericTileTicking;
+import electrodynamics.api.tile.components.ComponentType;
+import electrodynamics.api.tile.components.type.ComponentElectrodynamic;
+import electrodynamics.api.tile.components.type.ComponentPacketHandler;
+import electrodynamics.api.tile.components.type.ComponentTickable;
+import electrodynamics.api.utilities.object.CachedTileOutput;
+import electrodynamics.api.utilities.object.TransferPack;
 import electrodynamics.common.network.ElectricityUtilities;
-import electrodynamics.common.tile.generic.GenericTileTicking;
-import electrodynamics.common.tile.generic.component.ComponentType;
-import electrodynamics.common.tile.generic.component.type.ComponentElectrodynamic;
-import electrodynamics.common.tile.generic.component.type.ComponentPacketHandler;
-import electrodynamics.common.tile.generic.component.type.ComponentTickable;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
@@ -37,10 +37,8 @@ public class TileTurbine extends GenericTileTicking {
     public TileTurbine() {
 	super(DeferredRegisters.TILE_TURBINE.get());
 	addComponent(new ComponentTickable().addTickServer(this::tickServer));
-	addComponent(new ComponentPacketHandler().addCustomPacketWriter(this::writeCustomPacket)
-		.addCustomPacketReader(this::readCustomPacket));
-	addComponent(new ComponentElectrodynamic(this).addOutputDirection(Direction.UP)
-		.setCapabilityTest(() -> (!hasCore || isCore)));
+	addComponent(new ComponentPacketHandler().addCustomPacketWriter(this::writeCustomPacket).addCustomPacketReader(this::readCustomPacket));
+	addComponent(new ComponentElectrodynamic(this).addOutputDirection(Direction.UP).setCapabilityTest(() -> (!hasCore || isCore)));
     }
 
     public void constructStructure() {

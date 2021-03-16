@@ -3,7 +3,7 @@ package nuclearscience.common.entity;
 import java.util.HashSet;
 import java.util.List;
 
-import electrodynamics.api.math.Location;
+import electrodynamics.api.utilities.object.Location;
 import electrodynamics.common.block.BlockGenericMachine;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -32,10 +32,8 @@ import nuclearscience.common.tile.TileElectromagneticSwitch;
 import nuclearscience.common.tile.TileParticleInjector;
 
 public class EntityParticle extends Entity {
-    private static final DataParameter<Direction> DIRECTION = EntityDataManager.createKey(EntityParticle.class,
-	    DataSerializers.DIRECTION);
-    private static final DataParameter<Float> SPEED = EntityDataManager.createKey(EntityParticle.class,
-	    DataSerializers.FLOAT);
+    private static final DataParameter<Direction> DIRECTION = EntityDataManager.createKey(EntityParticle.class, DataSerializers.DIRECTION);
+    private static final DataParameter<Float> SPEED = EntityDataManager.createKey(EntityParticle.class, DataSerializers.FLOAT);
     private Direction direction;
     public float speed = 0.02f;
     public BlockPos source = BlockPos.ZERO;
@@ -113,8 +111,7 @@ public class EntityParticle extends Entity {
 		    speed *= -1;
 		    direction = direction.getOpposite();
 		}
-		setPosition(getPosX() + direction.getXOffset() * localSpeed, getPosY(),
-			getPosZ() + direction.getZOffset() * localSpeed);
+		setPosition(getPosX() + direction.getXOffset() * localSpeed, getPosY(), getPosZ() + direction.getZOffset() * localSpeed);
 		if (isBooster) {
 		    BlockPos positionNow = getPosition();
 		    if (world.getBlockState(positionNow).getBlock() == DeferredRegisters.blockElectromagneticSwitch) {
@@ -137,8 +134,7 @@ public class EntityParticle extends Entity {
 			    for (Direction dir : directions) {
 				switchte.lastDirection = dir;
 				direction = dir;
-				setPosition(positionNow.getX() + 0.5, positionNow.getY() + 0.5,
-					positionNow.getZ() + 0.5);
+				setPosition(positionNow.getX() + 0.5, positionNow.getY() + 0.5, positionNow.getZ() + 0.5);
 			    }
 			}
 		    }
@@ -146,8 +142,7 @@ public class EntityParticle extends Entity {
 		if (!world.isRemote) {
 		    BlockPos getPos = getPosition();
 		    BlockState nextState = world.getBlockState(getPos);
-		    if (nextState.getBlock() == Blocks.AIR
-			    || nextState.getBlock() == DeferredRegisters.blockElectromagneticSwitch) {
+		    if (nextState.getBlock() == Blocks.AIR || nextState.getBlock() == DeferredRegisters.blockElectromagneticSwitch) {
 			int amount = 0;
 			for (Direction of : Direction.values()) {
 			    if (world.getBlockState(getPosition().offset(of)).getBlock() instanceof IElectromagnet) {
@@ -164,8 +159,7 @@ public class EntityParticle extends Entity {
 				&& testNextBlock.getBlock() != DeferredRegisters.blockElectromagneticSwitch) {
 			    Direction checkRot = direction.rotateY();
 			    testNextBlock = world.getBlockState(getPos.offset(checkRot));
-			    if (testNextBlock.getBlock() == Blocks.AIR
-				    || testNextBlock.getBlock() == DeferredRegisters.blockElectromagneticSwitch) {
+			    if (testNextBlock.getBlock() == Blocks.AIR || testNextBlock.getBlock() == DeferredRegisters.blockElectromagneticSwitch) {
 				BlockPos floor = getPosition();
 				direction = checkRot;
 				setPosition(floor.getX() + 0.5, floor.getY() + 0.5, floor.getZ() + 0.5);

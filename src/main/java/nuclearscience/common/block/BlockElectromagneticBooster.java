@@ -26,14 +26,12 @@ import nuclearscience.common.block.facing.FacingDirection;
 import nuclearscience.common.block.facing.FacingDirectionProperty;
 
 public class BlockElectromagneticBooster extends Block implements IElectromagnet, IWrenchable {
-    public static final FacingDirectionProperty FACINGDIRECTION = FacingDirectionProperty.create("side",
-	    FacingDirection.values());
+    public static final FacingDirectionProperty FACINGDIRECTION = FacingDirectionProperty.create("side", FacingDirection.values());
 
     public BlockElectromagneticBooster() {
-	super(Properties.create(Material.GLASS).hardnessAndResistance(3.5f, 20).harvestLevel(2)
-		.harvestTool(ToolType.PICKAXE).notSolid().setOpaque(BlockElectromagneticBooster::isntSolid));
-	setDefaultState(stateContainer.getBaseState().with(BlockGenericMachine.FACING, Direction.NORTH)
-		.with(FACINGDIRECTION, FacingDirection.NONE));
+	super(Properties.create(Material.GLASS).hardnessAndResistance(3.5f, 20).harvestLevel(2).harvestTool(ToolType.PICKAXE).notSolid()
+		.setOpaque(BlockElectromagneticBooster::isntSolid));
+	setDefaultState(stateContainer.getBaseState().with(BlockGenericMachine.FACING, Direction.NORTH).with(FACINGDIRECTION, FacingDirection.NONE));
     }
 
     @Override
@@ -50,18 +48,14 @@ public class BlockElectromagneticBooster extends Block implements IElectromagnet
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
 	Direction movingdirection = context.getPlacementHorizontalFacing();
-	BlockState state = getDefaultState().with(BlockGenericMachine.FACING,
-		context.getPlacementHorizontalFacing().getOpposite());
+	BlockState state = getDefaultState().with(BlockGenericMachine.FACING, context.getPlacementHorizontalFacing().getOpposite());
 	// left check first in front
-	BlockState check = context.getWorld()
-		.getBlockState(context.getPos().offset(movingdirection.rotateY().getOpposite()));
-	if (check.getBlock() == this
-		&& check.get(BlockGenericMachine.FACING).getOpposite() == movingdirection.rotateY().getOpposite()) {
+	BlockState check = context.getWorld().getBlockState(context.getPos().offset(movingdirection.rotateY().getOpposite()));
+	if (check.getBlock() == this && check.get(BlockGenericMachine.FACING).getOpposite() == movingdirection.rotateY().getOpposite()) {
 	    state = state.with(FACINGDIRECTION, FacingDirection.LEFT);
 	} else {
 	    check = context.getWorld().getBlockState(context.getPos().offset(movingdirection.rotateY()));
-	    if (check.getBlock() == this
-		    && check.get(BlockGenericMachine.FACING).getOpposite() == movingdirection.rotateY()) {
+	    if (check.getBlock() == this && check.get(BlockGenericMachine.FACING).getOpposite() == movingdirection.rotateY()) {
 		state = state.with(FACINGDIRECTION, FacingDirection.RIGHT);
 	    }
 	}
@@ -85,8 +79,7 @@ public class BlockElectromagneticBooster extends Block implements IElectromagnet
 	BlockState current = world.getBlockState(pos);
 	FacingDirection face = current.get(FACINGDIRECTION);
 	if (face != FacingDirection.NONE) {
-	    current = current.with(FACINGDIRECTION,
-		    face == FacingDirection.LEFT ? FacingDirection.RIGHT : FacingDirection.LEFT);
+	    current = current.with(FACINGDIRECTION, face == FacingDirection.LEFT ? FacingDirection.RIGHT : FacingDirection.LEFT);
 	    if (face == FacingDirection.RIGHT) {
 		current = rotate(current, Rotation.CLOCKWISE_180);
 	    }

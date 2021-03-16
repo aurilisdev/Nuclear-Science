@@ -23,8 +23,7 @@ public class FluidUraniumHexafluoride extends Fluid {
     }
 
     @Override
-    protected boolean canDisplace(FluidState fluidState, IBlockReader blockReader, BlockPos pos, Fluid fluid,
-	    Direction direction) {
+    protected boolean canDisplace(FluidState fluidState, IBlockReader blockReader, BlockPos pos, Fluid fluid, Direction direction) {
 	return false;
     }
 
@@ -71,8 +70,8 @@ public class FluidUraniumHexafluoride extends Fluid {
     @Override
     protected FluidAttributes createAttributes() {
 
-	return FluidAttributes.builder(null, null).translationKey("block.minecraft.air").color(0).density(0)
-		.temperature(0).luminosity(0).viscosity(0).build(this);
+	return FluidAttributes.builder(null, null).translationKey("block.minecraft.air").color(0).density(0).temperature(0).luminosity(0).viscosity(0)
+		.build(this);
     }
 
     @Override

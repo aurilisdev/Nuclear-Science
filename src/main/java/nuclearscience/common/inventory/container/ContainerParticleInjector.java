@@ -23,8 +23,7 @@ public class ContainerParticleInjector extends GenericContainer<TileParticleInje
 	super(DeferredRegisters.CONTAINER_PARTICLEINJECTOR.get(), id, playerinv, inventory, inventorydata);
     }
 
-    public ContainerParticleInjector(ContainerType<?> type, int id, PlayerInventory playerinv, IInventory inventory,
-	    IIntArray inventorydata) {
+    public ContainerParticleInjector(ContainerType<?> type, int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {
 	super(type, id, playerinv, inventory, inventorydata);
     }
 

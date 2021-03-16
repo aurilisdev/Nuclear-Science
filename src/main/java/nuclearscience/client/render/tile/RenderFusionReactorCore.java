@@ -19,19 +19,17 @@ public class RenderFusionReactorCore extends TileEntityRenderer<TileFusionReacto
     }
 
     @Override
-    public void render(TileFusionReactorCore tileEntityIn, float partialTicks, MatrixStack matrixStackIn,
-	    IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
+    public void render(TileFusionReactorCore tileEntityIn, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn,
+	    int combinedLightIn, int combinedOverlayIn) {
 	BlockPos pos = tileEntityIn.getPos();
 	if (Minecraft.getInstance().player.getDistanceSq(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) <= 32) {
-	    renderFloatingText(matrixStackIn, bufferIn, "Deuterium: " + tileEntityIn.deuterium, 0.6f, 0.7f, 0.6f,
-		    16777215, combinedLightIn);
-	    renderFloatingText(matrixStackIn, bufferIn, "Tritium: " + tileEntityIn.tritium, 0.6f, 0.3f, 0.6f, 16777215,
-		    combinedLightIn);
+	    renderFloatingText(matrixStackIn, bufferIn, "Deuterium: " + tileEntityIn.deuterium, 0.6f, 0.7f, 0.6f, 16777215, combinedLightIn);
+	    renderFloatingText(matrixStackIn, bufferIn, "Tritium: " + tileEntityIn.tritium, 0.6f, 0.3f, 0.6f, 16777215, combinedLightIn);
 	}
     }
 
-    public static void renderFloatingText(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, String text, float x,
-	    float y, float z, int color, int combinedLightIn) {
+    public static void renderFloatingText(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, String text, float x, float y, float z, int color,
+	    int combinedLightIn) {
 	StringTextComponent displayNameIn = new StringTextComponent(text);
 	matrixStackIn.push();
 	matrixStackIn.translate(x, y, z);

@@ -1,8 +1,8 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.api.utilities.CachedTileOutput;
-import electrodynamics.common.tile.generic.GenericTileTicking;
-import electrodynamics.common.tile.generic.component.type.ComponentTickable;
+import electrodynamics.api.tile.GenericTileTicking;
+import electrodynamics.api.tile.components.type.ComponentTickable;
+import electrodynamics.api.utilities.object.CachedTileOutput;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.tileentity.TileEntity;
@@ -58,8 +58,7 @@ public class TilePlasma extends GenericTileTicking {
 	    } else {
 		if (output.get() instanceof TileTurbine) {
 		    TileTurbine turbine = output.get();
-		    turbine.addSteam((int) (Constants.FUSIONREACTOR_MAXENERGYTARGET / (113.0 * 20.0)),
-			    Integer.MAX_VALUE);
+		    turbine.addSteam((int) (Constants.FUSIONREACTOR_MAXENERGYTARGET / (113.0 * 20.0)), Integer.MAX_VALUE);
 		}
 	    }
 	}

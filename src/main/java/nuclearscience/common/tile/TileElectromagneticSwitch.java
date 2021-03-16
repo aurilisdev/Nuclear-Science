@@ -1,6 +1,6 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.common.tile.generic.GenericTile;
+import electrodynamics.api.tile.GenericTile;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;

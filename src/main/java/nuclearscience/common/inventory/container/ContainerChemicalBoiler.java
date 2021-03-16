@@ -24,8 +24,7 @@ public class ContainerChemicalBoiler extends GenericContainer<TileChemicalBoiler
 	super(DeferredRegisters.CONTAINER_CHEMICALBOILER.get(), id, playerinv, inventory, inventorydata);
     }
 
-    public ContainerChemicalBoiler(ContainerType<?> type, int id, PlayerInventory playerinv, IInventory inventory,
-	    IIntArray inventorydata) {
+    public ContainerChemicalBoiler(ContainerType<?> type, int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {
 	super(type, id, playerinv, inventory, inventorydata);
     }
 

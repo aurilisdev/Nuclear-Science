@@ -21,11 +21,10 @@ public class ItemGeigerCounter extends Item {
 	if (!worldIn.isRemote) {
 	    if (entityIn instanceof PlayerEntity) {
 		PlayerEntity player = (PlayerEntity) entityIn;
-		if (isSelected || player.getItemStackFromSlot(EquipmentSlotType.OFFHAND)
-			.getItem() instanceof ItemGeigerCounter) {
+		if (isSelected || player.getItemStackFromSlot(EquipmentSlotType.OFFHAND).getItem() instanceof ItemGeigerCounter) {
 		    if (RadiationSystem.radiationMap.containsKey(entityIn)) {
-			player.sendStatusMessage(new TranslationTextComponent("message.geigercounter.text",
-				RadiationSystem.radiationMap.get(entityIn)), true);
+			player.sendStatusMessage(
+				new TranslationTextComponent("message.geigercounter.text", RadiationSystem.radiationMap.get(entityIn)), true);
 		    }
 		}
 	    }

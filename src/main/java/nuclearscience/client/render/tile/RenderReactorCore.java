@@ -22,8 +22,8 @@ public class RenderReactorCore extends TileEntityRenderer<TileReactorCore> {
 
     @Override
     @Deprecated
-    public void render(TileReactorCore tileEntityIn, float partialTicks, MatrixStack matrixStackIn,
-	    IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
+    public void render(TileReactorCore tileEntityIn, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn,
+	    int combinedOverlayIn) {
 	BlockModelRenderer.enableCache();
 	IBakedModel fuelrod = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_REACTORFUELROD);
 	if (tileEntityIn.fuelCount > 0) {
@@ -47,22 +47,19 @@ public class RenderReactorCore extends TileEntityRenderer<TileReactorCore> {
 		}
 		matrixStackIn.translate(0, 0.05, 0);
 		matrixStackIn.scale(1, 0.75f, 1);
-		Minecraft.getInstance().getBlockRendererDispatcher().getBlockModelRenderer().renderModel(
-			tileEntityIn.getWorld(), fuelrod, tileEntityIn.getBlockState(), tileEntityIn.getPos(),
-			matrixStackIn, bufferIn.getBuffer(RenderType.getSolid()), false, tileEntityIn.getWorld().rand,
-			new Random().nextLong(), 0);
+		Minecraft.getInstance().getBlockRendererDispatcher().getBlockModelRenderer().renderModel(tileEntityIn.getWorld(), fuelrod,
+			tileEntityIn.getBlockState(), tileEntityIn.getPos(), matrixStackIn, bufferIn.getBuffer(RenderType.getSolid()), false,
+			tileEntityIn.getWorld().rand, new Random().nextLong(), 0);
 		matrixStackIn.pop();
 	    }
 	}
 	if (tileEntityIn.hasDeuterium) {
 	    matrixStackIn.push();
-	    IBakedModel deuterium = Minecraft.getInstance().getModelManager()
-		    .getModel(ClientRegister.MODEL_REACTORDEUTERIUM);
+	    IBakedModel deuterium = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_REACTORDEUTERIUM);
 	    matrixStackIn.translate(0.5, 0, 0.5);
-	    Minecraft.getInstance().getBlockRendererDispatcher().getBlockModelRenderer().renderModel(
-		    tileEntityIn.getWorld(), deuterium, tileEntityIn.getBlockState(), tileEntityIn.getPos(),
-		    matrixStackIn, bufferIn.getBuffer(RenderType.getSolid()), false, tileEntityIn.getWorld().rand,
-		    new Random().nextLong(), 0);
+	    Minecraft.getInstance().getBlockRendererDispatcher().getBlockModelRenderer().renderModel(tileEntityIn.getWorld(), deuterium,
+		    tileEntityIn.getBlockState(), tileEntityIn.getPos(), matrixStackIn, bufferIn.getBuffer(RenderType.getSolid()), false,
+		    tileEntityIn.getWorld().rand, new Random().nextLong(), 0);
 	    matrixStackIn.pop();
 	}
 	BlockModelRenderer.disableCache();

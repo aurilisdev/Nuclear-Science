@@ -22,8 +22,8 @@ import nuclearscience.common.tile.TilePlasma;
 public class BlockPlasma extends Block {
 
     public BlockPlasma() {
-	super(AbstractBlock.Properties.create(Material.PORTAL).doesNotBlockMovement().tickRandomly()
-		.hardnessAndResistance(-1.0F).sound(SoundType.GLASS));
+	super(AbstractBlock.Properties.create(Material.PORTAL).doesNotBlockMovement().tickRandomly().hardnessAndResistance(-1.0F)
+		.sound(SoundType.GLASS));
     }
 
     @Override

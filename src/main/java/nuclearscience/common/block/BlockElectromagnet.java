@@ -22,8 +22,8 @@ public class BlockElectromagnet extends Block implements IElectromagnet {
     private final boolean isGlass;
 
     public BlockElectromagnet(boolean isGlass) {
-	super(Properties.create(isGlass ? Material.GLASS : Material.IRON).hardnessAndResistance(3.5f, 20)
-		.harvestLevel(2).harvestTool(ToolType.PICKAXE).notSolid().setOpaque(BlockElectromagnet::isntSolid));
+	super(Properties.create(isGlass ? Material.GLASS : Material.IRON).hardnessAndResistance(3.5f, 20).harvestLevel(2)
+		.harvestTool(ToolType.PICKAXE).notSolid().setOpaque(BlockElectromagnet::isntSolid));
 	this.isGlass = isGlass;
     }
 

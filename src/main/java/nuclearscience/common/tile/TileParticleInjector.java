@@ -1,17 +1,17 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.api.math.Location;
-import electrodynamics.api.tile.electric.CapabilityElectrodynamic;
+import electrodynamics.api.electricity.CapabilityElectrodynamic;
+import electrodynamics.api.tile.GenericTileTicking;
+import electrodynamics.api.tile.components.ComponentType;
+import electrodynamics.api.tile.components.type.ComponentContainerProvider;
+import electrodynamics.api.tile.components.type.ComponentDirection;
+import electrodynamics.api.tile.components.type.ComponentElectrodynamic;
+import electrodynamics.api.tile.components.type.ComponentInventory;
+import electrodynamics.api.tile.components.type.ComponentPacketHandler;
+import electrodynamics.api.tile.components.type.ComponentProcessor;
+import electrodynamics.api.tile.components.type.ComponentTickable;
+import electrodynamics.api.utilities.object.Location;
 import electrodynamics.common.recipe.MachineRecipes;
-import electrodynamics.common.tile.generic.GenericTileTicking;
-import electrodynamics.common.tile.generic.component.ComponentType;
-import electrodynamics.common.tile.generic.component.type.ComponentContainerProvider;
-import electrodynamics.common.tile.generic.component.type.ComponentDirection;
-import electrodynamics.common.tile.generic.component.type.ComponentElectrodynamic;
-import electrodynamics.common.tile.generic.component.type.ComponentInventory;
-import electrodynamics.common.tile.generic.component.type.ComponentPacketHandler;
-import electrodynamics.common.tile.generic.component.type.ComponentProcessor;
-import electrodynamics.common.tile.generic.component.type.ComponentTickable;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -29,15 +29,14 @@ public class TileParticleInjector extends GenericTileTicking {
 	addComponent(new ComponentTickable());
 	addComponent(new ComponentDirection());
 	addComponent(new ComponentPacketHandler());
-	addComponent(new ComponentInventory().setInventorySize(3).setItemValidPredicate(
-		(index, stack) -> index != 1 || stack.getItem() == DeferredRegisters.ITEM_CELLELECTROMAGNETIC.get()));
+	addComponent(new ComponentInventory().setInventorySize(3)
+		.setItemValidPredicate((index, stack) -> index != 1 || stack.getItem() == DeferredRegisters.ITEM_CELLELECTROMAGNETIC.get()));
 	addComponent(new ComponentElectrodynamic(this).setVoltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 8)
-		.addRelativeInputDirection(Direction.NORTH));
-	addComponent(new ComponentProcessor(this).setCanProcess(this::canProcess)
-		.setJoulesPerTick(Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE).setProcess(this::process));
-	addComponent(new ComponentContainerProvider("container.particleinjector")
-		.setCreateMenuFunction((id, player) -> new ContainerParticleInjector(id, player,
-			getComponent(ComponentType.Inventory), getCoordsArray())));
+		.addRelativeInputDirection(Direction.NORTH).setMaxJoules(Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE * 10));
+	addComponent(new ComponentProcessor(this).setCanProcess(this::canProcess).setJoulesPerTick(Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE)
+		.setProcess(this::process));
+	addComponent(new ComponentContainerProvider("container.particleinjector").setCreateMenuFunction(
+		(id, player) -> new ContainerParticleInjector(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
     }
 
     protected boolean canProcess(ComponentProcessor processor) {
@@ -58,8 +57,7 @@ public class TileParticleInjector extends GenericTileTicking {
 	ComponentInventory inv = getComponent(ComponentType.Inventory);
 	ItemStack resultStack = inv.getStackInSlot(2);
 	ItemStack cellStack = inv.getStackInSlot(0);
-	if (resultStack.getCount() < resultStack.getMaxStackSize() && cellStack.getCount() > 0 && particles[0] != null
-		&& particles[1] != null) {
+	if (resultStack.getCount() < resultStack.getMaxStackSize() && cellStack.getCount() > 0 && particles[0] != null && particles[1] != null) {
 	    EntityParticle one = particles[0];
 	    EntityParticle two = particles[1];
 	    if (one.getDistance(two) < 1) {
@@ -79,8 +77,7 @@ public class TileParticleInjector extends GenericTileTicking {
 		    if (resultStack.getItem() == DeferredRegisters.ITEM_CELLANTIMATTERSMALL.get()) {
 			resultStack.setCount(resultStack.getCount() + 1);
 		    } else if (resultStack.isEmpty()) {
-			inv.setInventorySlotContents(2,
-				new ItemStack(DeferredRegisters.ITEM_CELLANTIMATTERSMALL.get()));
+			inv.setInventorySlotContents(2, new ItemStack(DeferredRegisters.ITEM_CELLANTIMATTERSMALL.get()));
 		    }
 		}
 	    }
@@ -92,9 +89,8 @@ public class TileParticleInjector extends GenericTileTicking {
 	Direction dir = this.<ComponentDirection>getComponent(ComponentType.Direction).getDirection();
 	ItemStack stack = processor.getInput();
 	stack.setCount(stack.getCount() - 1);
-	EntityParticle particle = new EntityParticle(dir, world,
-		new Location(pos.getX() + 0.5f + dir.getXOffset() * 1.5f, pos.getY() + 0.5f + dir.getYOffset() * 1.5f,
-			pos.getZ() + 0.5f + dir.getZOffset() * 1.5f));
+	EntityParticle particle = new EntityParticle(dir, world, new Location(pos.getX() + 0.5f + dir.getXOffset() * 1.5f,
+		pos.getY() + 0.5f + dir.getYOffset() * 1.5f, pos.getZ() + 0.5f + dir.getZOffset() * 1.5f));
 	addParticle(particle);
 	world.addEntity(particle);
     }

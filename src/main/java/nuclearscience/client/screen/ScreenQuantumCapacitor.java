@@ -2,9 +2,8 @@ package nuclearscience.client.screen;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
-import electrodynamics.api.References;
-import electrodynamics.api.formatting.ElectricUnit;
-import electrodynamics.api.utilities.ElectricityChatFormatter;
+import electrodynamics.api.electricity.formatting.ElectricUnit;
+import electrodynamics.api.electricity.formatting.ElectricityChatFormatter;
 import electrodynamics.client.screen.generic.GenericContainerScreenUpgradeable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.TextFieldWidget;
@@ -14,6 +13,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import nuclearscience.References;
 import nuclearscience.common.inventory.container.ContainerQuantumCapacitor;
 import nuclearscience.common.packet.NetworkHandler;
 import nuclearscience.common.packet.PacketSetQuantumCapacitorData;
@@ -21,11 +21,9 @@ import nuclearscience.common.tile.TileQuantumCapacitor;
 
 @OnlyIn(Dist.CLIENT)
 public class ScreenQuantumCapacitor extends GenericContainerScreenUpgradeable<ContainerQuantumCapacitor> {
-    public static final ResourceLocation SCREEN_BACKGROUND = new ResourceLocation(
-	    References.ID + ":textures/gui/quantumcapacitor.png");
+    public static final ResourceLocation SCREEN_BACKGROUND = new ResourceLocation(References.ID + ":textures/gui/quantumcapacitor.png");
 
-    public ScreenQuantumCapacitor(ContainerQuantumCapacitor container, PlayerInventory playerInventory,
-	    ITextComponent title) {
+    public ScreenQuantumCapacitor(ContainerQuantumCapacitor container, PlayerInventory playerInventory, ITextComponent title) {
 	super(container, playerInventory, title);
 	xSize = 176;
     }
@@ -55,8 +53,7 @@ public class ScreenQuantumCapacitor extends GenericContainerScreenUpgradeable<Co
 	minecraft.keyboardListener.enableRepeatEvents(true);
 	int i = (width - xSize) / 2;
 	int j = (height - ySize) / 2;
-	outputField = new TextFieldWidget(font, i + 120, j + 18, 46, 13,
-		new TranslationTextComponent("container.quantumcapacitor.joulesoutput"));
+	outputField = new TextFieldWidget(font, i + 120, j + 18, 46, 13, new TranslationTextComponent("container.quantumcapacitor.joulesoutput"));
 	outputField.setTextColor(-1);
 	outputField.setDisabledTextColour(-1);
 	outputField.setEnableBackgroundDrawing(false);
@@ -92,8 +89,8 @@ public class ScreenQuantumCapacitor extends GenericContainerScreenUpgradeable<Co
 		// Not required
 	    }
 	    if (container.getHostFromIntArray() != null) {
-		NetworkHandler.CHANNEL.sendToServer(new PacketSetQuantumCapacitorData(
-			container.getHostFromIntArray().getPos(), triedOutput, frequency));
+		NetworkHandler.CHANNEL
+			.sendToServer(new PacketSetQuantumCapacitorData(container.getHostFromIntArray().getPos(), triedOutput, frequency));
 	    }
 	}
     }
@@ -143,9 +140,9 @@ public class ScreenQuantumCapacitor extends GenericContainerScreenUpgradeable<Co
 	super.drawGuiContainerForegroundLayer(matrixStack, mouseX, mouseY);
 	TileQuantumCapacitor box = container.getHostFromIntArray();
 	if (box != null) {
-	    font.func_243248_b(matrixStack, new TranslationTextComponent("gui.quantumcapacitor.current",
-		    ElectricityChatFormatter.getDisplayShort(
-			    box.getOutputJoules() * 20.0 / TileQuantumCapacitor.DEFAULT_VOLTAGE, ElectricUnit.AMPERE)),
+	    font.func_243248_b(matrixStack,
+		    new TranslationTextComponent("gui.quantumcapacitor.current", ElectricityChatFormatter
+			    .getDisplayShort(box.getOutputJoules() * 20.0 / TileQuantumCapacitor.DEFAULT_VOLTAGE, ElectricUnit.AMPERE)),
 		    playerInventoryTitleX, (float) playerInventoryTitleY - 55, 4210752);
 	    font.func_243248_b(matrixStack,
 		    new TranslationTextComponent("gui.quantumcapacitor.transfer",
@@ -153,14 +150,12 @@ public class ScreenQuantumCapacitor extends GenericContainerScreenUpgradeable<Co
 		    playerInventoryTitleX, (float) playerInventoryTitleY - 42, 4210752);
 	    font.func_243248_b(matrixStack,
 		    new TranslationTextComponent("gui.quantumcapacitor.voltage",
-			    ElectricityChatFormatter.getDisplayShort(TileQuantumCapacitor.DEFAULT_VOLTAGE,
-				    ElectricUnit.VOLTAGE)),
+			    ElectricityChatFormatter.getDisplayShort(TileQuantumCapacitor.DEFAULT_VOLTAGE, ElectricUnit.VOLTAGE)),
 		    playerInventoryTitleX, (float) playerInventoryTitleY - 29, 4210752);
 	    font.func_243248_b(matrixStack,
 		    new TranslationTextComponent("gui.quantumcapacitor.stored",
 			    ElectricityChatFormatter.getDisplayShort(box.joulesClient, ElectricUnit.JOULES) + " / "
-				    + ElectricityChatFormatter.getDisplayShort(TileQuantumCapacitor.DEFAULT_MAX_JOULES,
-					    ElectricUnit.JOULES)),
+				    + ElectricityChatFormatter.getDisplayShort(TileQuantumCapacitor.DEFAULT_MAX_JOULES, ElectricUnit.JOULES)),
 		    playerInventoryTitleX, (float) playerInventoryTitleY - 16, 4210752);
 	}
     }

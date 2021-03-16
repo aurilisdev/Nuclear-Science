@@ -27,8 +27,7 @@ import nuclearscience.common.tile.TileReactorCore;
 public class BlockReactorCore extends BlockGenericMachine implements IWaterLoggable {
     public BlockReactorCore() {
 	super();
-	setDefaultState(stateContainer.getBaseState().with(FACING, Direction.NORTH)
-		.with(BlockStateProperties.WATERLOGGED, false));
+	setDefaultState(stateContainer.getBaseState().with(FACING, Direction.NORTH).with(BlockStateProperties.WATERLOGGED, false));
     }
 
     @Override
@@ -41,14 +40,13 @@ public class BlockReactorCore extends BlockGenericMachine implements IWaterLogga
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
 	FluidState fluidstate = context.getWorld().getFluidState(context.getPos());
-	return super.getStateForPlacement(context).with(BlockStateProperties.WATERLOGGED,
-		Boolean.valueOf(fluidstate.getFluid() == Fluids.WATER));
+	return super.getStateForPlacement(context).with(BlockStateProperties.WATERLOGGED, Boolean.valueOf(fluidstate.getFluid() == Fluids.WATER));
     }
 
     @Override
     @Deprecated
-    public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
-	    BlockPos currentPos, BlockPos facingPos) {
+    public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos,
+	    BlockPos facingPos) {
 	if (stateIn.get(BlockStateProperties.WATERLOGGED)) {
 	    worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
 	}
@@ -58,8 +56,7 @@ public class BlockReactorCore extends BlockGenericMachine implements IWaterLogga
     @Override
     @Deprecated
     public FluidState getFluidState(BlockState state) {
-	return state.get(BlockStateProperties.WATERLOGGED) ? Fluids.WATER.getStillFluidState(false)
-		: super.getFluidState(state);
+	return state.get(BlockStateProperties.WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
     }
 
     @Override
@@ -91,8 +88,7 @@ public class BlockReactorCore extends BlockGenericMachine implements IWaterLogga
     public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
 	TileEntity core = world.getTileEntity(pos);
 	if (core instanceof TileReactorCore) {
-	    return (int) Math.max(0, Math
-		    .min(((TileReactorCore) core).temperature / TileReactorCore.MELTDOWN_TEMPERATURE_ACTUAL * 15, 15));
+	    return (int) Math.max(0, Math.min(((TileReactorCore) core).temperature / TileReactorCore.MELTDOWN_TEMPERATURE_ACTUAL * 15, 15));
 	}
 	return 0;
     }

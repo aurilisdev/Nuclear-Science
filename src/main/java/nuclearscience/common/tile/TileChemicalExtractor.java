@@ -1,17 +1,17 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.api.tile.electric.CapabilityElectrodynamic;
+import electrodynamics.api.electricity.CapabilityElectrodynamic;
+import electrodynamics.api.tile.GenericTileTicking;
+import electrodynamics.api.tile.components.ComponentType;
+import electrodynamics.api.tile.components.type.ComponentContainerProvider;
+import electrodynamics.api.tile.components.type.ComponentDirection;
+import electrodynamics.api.tile.components.type.ComponentElectrodynamic;
+import electrodynamics.api.tile.components.type.ComponentFluidHandler;
+import electrodynamics.api.tile.components.type.ComponentInventory;
+import electrodynamics.api.tile.components.type.ComponentPacketHandler;
+import electrodynamics.api.tile.components.type.ComponentProcessor;
+import electrodynamics.api.tile.components.type.ComponentTickable;
 import electrodynamics.common.block.subtype.SubtypeOre;
-import electrodynamics.common.tile.generic.GenericTileTicking;
-import electrodynamics.common.tile.generic.component.ComponentType;
-import electrodynamics.common.tile.generic.component.type.ComponentContainerProvider;
-import electrodynamics.common.tile.generic.component.type.ComponentDirection;
-import electrodynamics.common.tile.generic.component.type.ComponentElectrodynamic;
-import electrodynamics.common.tile.generic.component.type.ComponentFluidHandler;
-import electrodynamics.common.tile.generic.component.type.ComponentInventory;
-import electrodynamics.common.tile.generic.component.type.ComponentPacketHandler;
-import electrodynamics.common.tile.generic.component.type.ComponentProcessor;
-import electrodynamics.common.tile.generic.component.type.ComponentTickable;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -30,18 +30,17 @@ public class TileChemicalExtractor extends GenericTileTicking {
 	addComponent(new ComponentTickable());
 	addComponent(new ComponentDirection());
 	addComponent(new ComponentPacketHandler());
-	addComponent(new ComponentElectrodynamic(this).enableUniversalInput()
-		.setVoltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 2));
+	addComponent(new ComponentElectrodynamic(this).enableUniversalInput().setVoltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 2)
+		.setMaxJoules(Constants.CHEMICALEXTRACTOR_USAGE_PER_TICK * 10));
 	addComponent(new ComponentFluidHandler(this).addFluidTank(Fluids.WATER, TANKCAPACITY).enableUniversalInput());
-	addComponent(new ComponentInventory().setInventorySize(6).addSlotsOnFace(Direction.UP, 0)
-		.addSlotsOnFace(Direction.DOWN, 1).addSlotsOnFace(Direction.SOUTH, 2).addSlotsOnFace(Direction.NORTH, 2)
-		.addSlotsOnFace(Direction.EAST, 2).addSlotsOnFace(Direction.WEST, 2));
+	addComponent(new ComponentInventory().setInventorySize(6).addSlotsOnFace(Direction.UP, 0).addSlotsOnFace(Direction.DOWN, 1)
+		.addSlotsOnFace(Direction.SOUTH, 2).addSlotsOnFace(Direction.NORTH, 2).addSlotsOnFace(Direction.EAST, 2)
+		.addSlotsOnFace(Direction.WEST, 2));
 	addComponent(new ComponentProcessor(this).setJoulesPerTick(Constants.CHEMICALEXTRACTOR_USAGE_PER_TICK)
-		.setRequiredTicks(Constants.CHEMICALEXTRACTOR_REQUIRED_TICKS).setCanProcess(this::canProcess)
-		.addUpgradeSlots(3, 4, 5).setProcess(this::process));
-	addComponent(new ComponentContainerProvider("container.chemicalextractor")
-		.setCreateMenuFunction((id, player) -> new ContainerChemicalExtractor(id, player,
-			getComponent(ComponentType.Inventory), getCoordsArray())));
+		.setRequiredTicks(Constants.CHEMICALEXTRACTOR_REQUIRED_TICKS).setCanProcess(this::canProcess).addUpgradeSlots(3, 4, 5)
+		.setProcess(this::process));
+	addComponent(new ComponentContainerProvider("container.chemicalextractor").setCreateMenuFunction(
+		(id, player) -> new ContainerChemicalExtractor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
     }
 
     protected boolean canProcess(ComponentProcessor processor) {
@@ -52,15 +51,13 @@ public class TileChemicalExtractor extends GenericTileTicking {
 	if (!bucketStack.isEmpty() && bucketStack.getCount() > 0 && bucketStack.getItem() == Items.WATER_BUCKET
 		&& tank.getStackFromFluid(Fluids.WATER).getAmount() <= TANKCAPACITY - 1000) {
 	    inv.setInventorySlotContents(2, new ItemStack(Items.BUCKET));
-	    tank.getStackFromFluid(Fluids.WATER)
-		    .setAmount(Math.min(tank.getStackFromFluid(Fluids.WATER).getAmount() + 1000, TANKCAPACITY));
+	    tank.getStackFromFluid(Fluids.WATER).setAmount(Math.min(tank.getStackFromFluid(Fluids.WATER).getAmount() + 1000, TANKCAPACITY));
 	}
 	if (this.<ComponentTickable>getComponent(ComponentType.Tickable).getTicks() % 10 == 0) {
 	    this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendGuiPacketToTracking();
 	}
 	int requiredWater = getRequiredWater(processor);
-	return electro.getJoulesStored() >= processor.getJoulesPerTick() && !inv.getStackInSlot(0).isEmpty()
-		&& inv.getStackInSlot(0).getCount() > 0
+	return electro.getJoulesStored() >= processor.getJoulesPerTick() && !inv.getStackInSlot(0).isEmpty() && inv.getStackInSlot(0).getCount() > 0
 		&& tank.getStackFromFluid(Fluids.WATER).getAmount() >= requiredWater && requiredWater > 0;
     }
 

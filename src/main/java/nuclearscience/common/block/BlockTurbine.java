@@ -1,6 +1,6 @@
 package nuclearscience.common.block;
 
-import electrodynamics.api.item.IWrench;
+import electrodynamics.api.IWrenchItem;
 import electrodynamics.api.tile.IWrenchable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
@@ -28,8 +28,7 @@ public class BlockTurbine extends Block implements IWrenchable {
     public static final BooleanProperty RENDER = BooleanProperty.create("render");
 
     public BlockTurbine() {
-	super(Properties.create(Material.IRON).hardnessAndResistance(3.5F).sound(SoundType.METAL)
-		.harvestTool(ToolType.PICKAXE).notSolid());
+	super(Properties.create(Material.IRON).hardnessAndResistance(3.5F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).notSolid());
 	setDefaultState(stateContainer.getBaseState().with(RENDER, true));
     }
 
@@ -90,11 +89,11 @@ public class BlockTurbine extends Block implements IWrenchable {
 
     @Override
     @Deprecated
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
-	    Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn,
+	    BlockRayTraceResult hit) {
 	if (worldIn.isRemote) {
 	    return ActionResultType.SUCCESS;
-	} else if (!(player.getHeldItem(handIn).getItem() instanceof IWrench)) {
+	} else if (!(player.getHeldItem(handIn).getItem() instanceof IWrenchItem)) {
 	    return ActionResultType.CONSUME;
 	}
 	return ActionResultType.FAIL;
@@ -114,7 +113,6 @@ public class BlockTurbine extends Block implements IWrenchable {
     public void onPickup(ItemStack stack, BlockPos pos, PlayerEntity player) {
 	World world = player.world;
 	world.setBlockState(pos, Blocks.AIR.getDefaultState());
-	world.addEntity(
-		new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, new ItemStack(getSelf())));
+	world.addEntity(new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, new ItemStack(getSelf())));
     }
 }

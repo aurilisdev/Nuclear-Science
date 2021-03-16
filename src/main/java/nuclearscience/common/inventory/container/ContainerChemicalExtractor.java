@@ -21,13 +21,11 @@ public class ContainerChemicalExtractor extends GenericContainer<TileChemicalExt
 	this(id, playerinv, new Inventory(6), new IntArray(3));
     }
 
-    public ContainerChemicalExtractor(int id, PlayerInventory playerinv, IInventory inventory,
-	    IIntArray inventorydata) {
+    public ContainerChemicalExtractor(int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {
 	super(DeferredRegisters.CONTAINER_CHEMICALEXTRACTOR.get(), id, playerinv, inventory, inventorydata);
     }
 
-    public ContainerChemicalExtractor(ContainerType<?> type, int id, PlayerInventory playerinv, IInventory inventory,
-	    IIntArray inventorydata) {
+    public ContainerChemicalExtractor(ContainerType<?> type, int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {
 	super(type, id, playerinv, inventory, inventorydata);
     }
 

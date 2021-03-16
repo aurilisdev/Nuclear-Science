@@ -1,11 +1,11 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.api.tile.electric.CapabilityElectrodynamic;
-import electrodynamics.common.tile.generic.GenericTileTicking;
-import electrodynamics.common.tile.generic.component.ComponentType;
-import electrodynamics.common.tile.generic.component.type.ComponentElectrodynamic;
-import electrodynamics.common.tile.generic.component.type.ComponentPacketHandler;
-import electrodynamics.common.tile.generic.component.type.ComponentTickable;
+import electrodynamics.api.electricity.CapabilityElectrodynamic;
+import electrodynamics.api.tile.GenericTileTicking;
+import electrodynamics.api.tile.components.ComponentType;
+import electrodynamics.api.tile.components.type.ComponentElectrodynamic;
+import electrodynamics.api.tile.components.type.ComponentPacketHandler;
+import electrodynamics.api.tile.components.type.ComponentTickable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.nbt.CompoundNBT;
@@ -23,11 +23,9 @@ public class TileFusionReactorCore extends GenericTileTicking {
     public TileFusionReactorCore() {
 	super(DeferredRegisters.TILE_FUSIONREACTORCORE.get());
 	addComponent(new ComponentTickable().addTickServer(this::tickServer));
-	addComponent(new ComponentPacketHandler().addCustomPacketReader(this::readCustomPacket)
-		.addCustomPacketWriter(this::writeCustomPacket));
+	addComponent(new ComponentPacketHandler().addCustomPacketReader(this::readCustomPacket).addCustomPacketWriter(this::writeCustomPacket));
 	addComponent(new ComponentElectrodynamic(this).addInputDirection(Direction.DOWN).addInputDirection(Direction.UP)
-		.setMaxJoules(Constants.FUSIONREACTOR_USAGE_PER_TICK * 20.0)
-		.setVoltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 4));
+		.setMaxJoules(Constants.FUSIONREACTOR_USAGE_PER_TICK * 20.0).setVoltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 4));
     }
 
     public void tickServer(ComponentTickable tick) {
@@ -35,8 +33,7 @@ public class TileFusionReactorCore extends GenericTileTicking {
 	if (world.getWorldInfo().getDayTime() % 20 == 0) {
 	    this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();
 	}
-	if (tritium > 0 && deuterium > 0 && timeLeft <= 0
-		&& electro.getJoulesStored() > Constants.FUSIONREACTOR_USAGE_PER_TICK) {
+	if (tritium > 0 && deuterium > 0 && timeLeft <= 0 && electro.getJoulesStored() > Constants.FUSIONREACTOR_USAGE_PER_TICK) {
 	    deuterium -= 1;
 	    tritium -= 1;
 	    timeLeft = 15 * 20;

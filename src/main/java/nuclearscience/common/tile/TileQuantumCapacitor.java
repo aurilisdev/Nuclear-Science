@@ -2,17 +2,17 @@ package nuclearscience.common.tile;
 
 import java.util.UUID;
 
-import electrodynamics.api.tile.electric.CapabilityElectrodynamic;
-import electrodynamics.api.utilities.CachedTileOutput;
-import electrodynamics.api.utilities.TransferPack;
+import electrodynamics.api.electricity.CapabilityElectrodynamic;
+import electrodynamics.api.tile.GenericTileTicking;
+import electrodynamics.api.tile.components.ComponentType;
+import electrodynamics.api.tile.components.type.ComponentContainerProvider;
+import electrodynamics.api.tile.components.type.ComponentElectrodynamic;
+import electrodynamics.api.tile.components.type.ComponentInventory;
+import electrodynamics.api.tile.components.type.ComponentPacketHandler;
+import electrodynamics.api.tile.components.type.ComponentTickable;
+import electrodynamics.api.utilities.object.CachedTileOutput;
+import electrodynamics.api.utilities.object.TransferPack;
 import electrodynamics.common.network.ElectricityUtilities;
-import electrodynamics.common.tile.generic.GenericTileTicking;
-import electrodynamics.common.tile.generic.component.ComponentType;
-import electrodynamics.common.tile.generic.component.type.ComponentContainerProvider;
-import electrodynamics.common.tile.generic.component.type.ComponentElectrodynamic;
-import electrodynamics.common.tile.generic.component.type.ComponentInventory;
-import electrodynamics.common.tile.generic.component.type.ComponentPacketHandler;
-import electrodynamics.common.tile.generic.component.type.ComponentTickable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.nbt.CompoundNBT;
@@ -39,17 +39,14 @@ public class TileQuantumCapacitor extends GenericTileTicking implements IEnergyS
     public TileQuantumCapacitor() {
 	super(DeferredRegisters.TILE_QUANTUMCAPACITOR.get());
 	addComponent(new ComponentTickable().addTickServer(this::tickServer));
-	addComponent(new ComponentPacketHandler().addGuiPacketReader(this::readGUIPacket)
-		.addGuiPacketWriter(this::writeGUIPacket));
-	addComponent(new ComponentElectrodynamic(this).setVoltage(16 * CapabilityElectrodynamic.DEFAULT_VOLTAGE)
-		.addOutputDirection(Direction.DOWN).addOutputDirection(Direction.UP).addInputDirection(Direction.WEST)
-		.addInputDirection(Direction.EAST).addInputDirection(Direction.SOUTH).addInputDirection(Direction.NORTH)
-		.setFunctionReceivePower(this::receivePower).setFunctionSetJoules(this::setJoulesStored)
-		.setFunctionGetJoules(this::getJoulesStored));
+	addComponent(new ComponentPacketHandler().addGuiPacketReader(this::readGUIPacket).addGuiPacketWriter(this::writeGUIPacket));
+	addComponent(new ComponentElectrodynamic(this).setVoltage(16 * CapabilityElectrodynamic.DEFAULT_VOLTAGE).addOutputDirection(Direction.DOWN)
+		.addOutputDirection(Direction.UP).addInputDirection(Direction.WEST).addInputDirection(Direction.EAST)
+		.addInputDirection(Direction.SOUTH).addInputDirection(Direction.NORTH).setFunctionReceivePower(this::receivePower)
+		.setFunctionSetJoules(this::setJoulesStored).setFunctionGetJoules(this::getJoulesStored));
 	addComponent(new ComponentInventory());
-	addComponent(new ComponentContainerProvider("container.quantumcapacitor")
-		.setCreateMenuFunction((id, player) -> new ContainerQuantumCapacitor(id, player,
-			getComponent(ComponentType.Inventory), getCoordsArray())));
+	addComponent(new ComponentContainerProvider("container.quantumcapacitor").setCreateMenuFunction(
+		(id, player) -> new ContainerQuantumCapacitor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 
     }
 
@@ -66,18 +63,14 @@ public class TileQuantumCapacitor extends GenericTileTicking implements IEnergyS
 	}
 	double joules = getJoulesStored();
 	if (joules > 0) {
-	    double sent = ElectricityUtilities
-		    .receivePower(outputCache.get(), Direction.DOWN,
-			    TransferPack.joulesVoltage(Math.min(joules, outputJoules), DEFAULT_VOLTAGE), false)
-		    .getJoules();
+	    double sent = ElectricityUtilities.receivePower(outputCache.get(), Direction.DOWN,
+		    TransferPack.joulesVoltage(Math.min(joules, outputJoules), DEFAULT_VOLTAGE), false).getJoules();
 	    QuantumCapacitorData.get(world).setJoules(uuid, frequency, getJoulesStored() - sent);
 	}
 	joules = getJoulesStored();
 	if (joules > 0) {
-	    double sent = ElectricityUtilities
-		    .receivePower(outputCache2.get(), Direction.UP,
-			    TransferPack.joulesVoltage(Math.min(joules, outputJoules), DEFAULT_VOLTAGE), false)
-		    .getJoules();
+	    double sent = ElectricityUtilities.receivePower(outputCache2.get(), Direction.UP,
+		    TransferPack.joulesVoltage(Math.min(joules, outputJoules), DEFAULT_VOLTAGE), false).getJoules();
 	    QuantumCapacitorData.get(world).setJoules(uuid, frequency, getJoulesStored() - sent);
 	}
 	if (tickable.getTicks() % 50 == 0) {
@@ -142,8 +135,8 @@ public class TileQuantumCapacitor extends GenericTileTicking implements IEnergyS
 		QuantumCapacitorData.get(world).setJoules(uuid, frequency, joules);
 		if (transfer.getVoltage() > DEFAULT_VOLTAGE) {
 		    world.setBlockState(pos, Blocks.AIR.getDefaultState());
-		    world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(),
-			    (float) Math.log10(10 + transfer.getVoltage() / DEFAULT_VOLTAGE), Mode.DESTROY);
+		    world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), (float) Math.log10(10 + transfer.getVoltage() / DEFAULT_VOLTAGE),
+			    Mode.DESTROY);
 
 		    return TransferPack.EMPTY;
 		}

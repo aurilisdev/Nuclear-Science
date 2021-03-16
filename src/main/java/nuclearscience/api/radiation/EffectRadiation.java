@@ -13,8 +13,7 @@ import nuclearscience.References;
 
 public class EffectRadiation extends Effect {
 
-    public static final EffectRadiation INSTANCE = (EffectRadiation) new EffectRadiation()
-	    .setRegistryName(References.ID, "radiation");
+    public static final EffectRadiation INSTANCE = (EffectRadiation) new EffectRadiation().setRegistryName(References.ID, "radiation");
 
     protected EffectRadiation(EffectType typeIn, int liquidColorIn) {
 	super(typeIn, liquidColorIn);

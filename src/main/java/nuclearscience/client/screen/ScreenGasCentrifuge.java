@@ -2,13 +2,13 @@ package nuclearscience.client.screen;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
-import electrodynamics.api.formatting.ElectricUnit;
-import electrodynamics.api.utilities.ElectricityChatFormatter;
+import electrodynamics.api.electricity.formatting.ElectricUnit;
+import electrodynamics.api.electricity.formatting.ElectricityChatFormatter;
+import electrodynamics.api.tile.components.ComponentType;
+import electrodynamics.api.tile.components.type.ComponentElectrodynamic;
+import electrodynamics.api.tile.components.type.ComponentFluidHandler;
+import electrodynamics.api.tile.components.type.ComponentProcessor;
 import electrodynamics.client.screen.generic.GenericContainerScreenUpgradeable;
-import electrodynamics.common.tile.generic.component.ComponentType;
-import electrodynamics.common.tile.generic.component.type.ComponentElectrodynamic;
-import electrodynamics.common.tile.generic.component.type.ComponentFluidHandler;
-import electrodynamics.common.tile.generic.component.type.ComponentProcessor;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -22,11 +22,9 @@ import nuclearscience.common.tile.TileGasCentrifuge;
 
 @OnlyIn(Dist.CLIENT)
 public class ScreenGasCentrifuge extends GenericContainerScreenUpgradeable<ContainerGasCentrifuge> {
-    public static final ResourceLocation SCREEN_BACKGROUND = new ResourceLocation(
-	    References.ID + ":textures/gui/gascentrifuge.png");
+    public static final ResourceLocation SCREEN_BACKGROUND = new ResourceLocation(References.ID + ":textures/gui/gascentrifuge.png");
 
-    public ScreenGasCentrifuge(ContainerGasCentrifuge container, PlayerInventory playerInventory,
-	    ITextComponent title) {
+    public ScreenGasCentrifuge(ContainerGasCentrifuge container, PlayerInventory playerInventory, ITextComponent title) {
 	super(container, playerInventory, title);
     }
 
@@ -43,8 +41,8 @@ public class ScreenGasCentrifuge extends GenericContainerScreenUpgradeable<Conta
 	    ComponentElectrodynamic electro = centrifuge.getComponent(ComponentType.Electrodynamic);
 	    ComponentProcessor processor = centrifuge.getComponent(ComponentType.Processor);
 	    font.func_243248_b(matrixStack,
-		    new TranslationTextComponent("gui.gascentrifuge.usage", ElectricityChatFormatter
-			    .getDisplayShort(processor.getJoulesPerTick() * 20, ElectricUnit.WATT)),
+		    new TranslationTextComponent("gui.gascentrifuge.usage",
+			    ElectricityChatFormatter.getDisplayShort(processor.getJoulesPerTick() * 20, ElectricUnit.WATT)),
 		    playerInventoryTitleX, playerInventoryTitleY, 4210752);
 	    font.func_243248_b(matrixStack,
 		    new TranslationTextComponent("gui.gascentrifuge.voltage",
@@ -67,16 +65,12 @@ public class ScreenGasCentrifuge extends GenericContainerScreenUpgradeable<Conta
 		    (int) (guiTop + 67
 			    - handler.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride).getAmount()
 				    / (float) TileGasCentrifuge.TANKCAPACITY * 50),
-		    214, 31, 16,
-		    (int) (handler.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride).getAmount()
+		    214, 31, 16, (int) (handler.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride).getAmount()
 			    / (float) TileGasCentrifuge.TANKCAPACITY * 50));
-	    blit(stack, guiLeft + 72,
-		    (int) (guiTop + 38 - centrifuge.stored235 / (float) TileGasCentrifuge.TANKCAPACITY * 22), 214, 31,
-		    16, (int) (centrifuge.stored235 / (float) TileGasCentrifuge.TANKCAPACITY
-			    / TileGasCentrifuge.REQUIRED * 22));
-	    blit(stack, guiLeft + 72,
-		    (int) (guiTop + 69 - centrifuge.stored238 / (float) TileGasCentrifuge.TANKCAPACITY * 22), 214, 31,
-		    16, (int) (centrifuge.stored238 / (float) TileGasCentrifuge.TANKCAPACITY * 22));
+	    blit(stack, guiLeft + 72, (int) (guiTop + 38 - centrifuge.stored235 / (float) TileGasCentrifuge.TANKCAPACITY * 22), 214, 31, 16,
+		    (int) (centrifuge.stored235 / (float) TileGasCentrifuge.TANKCAPACITY / TileGasCentrifuge.REQUIRED * 22));
+	    blit(stack, guiLeft + 72, (int) (guiTop + 69 - centrifuge.stored238 / (float) TileGasCentrifuge.TANKCAPACITY * 22), 214, 31, 16,
+		    (int) (centrifuge.stored238 / (float) TileGasCentrifuge.TANKCAPACITY * 22));
 	}
     }
 

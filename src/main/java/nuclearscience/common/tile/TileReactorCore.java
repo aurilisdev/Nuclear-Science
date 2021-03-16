@@ -3,13 +3,13 @@ package nuclearscience.common.tile;
 import java.util.ArrayList;
 import java.util.List;
 
-import electrodynamics.api.math.Location;
-import electrodynamics.common.tile.generic.GenericTileTicking;
-import electrodynamics.common.tile.generic.component.ComponentType;
-import electrodynamics.common.tile.generic.component.type.ComponentContainerProvider;
-import electrodynamics.common.tile.generic.component.type.ComponentInventory;
-import electrodynamics.common.tile.generic.component.type.ComponentPacketHandler;
-import electrodynamics.common.tile.generic.component.type.ComponentTickable;
+import electrodynamics.api.tile.GenericTileTicking;
+import electrodynamics.api.tile.components.ComponentType;
+import electrodynamics.api.tile.components.type.ComponentContainerProvider;
+import electrodynamics.api.tile.components.type.ComponentInventory;
+import electrodynamics.api.tile.components.type.ComponentPacketHandler;
+import electrodynamics.api.tile.components.type.ComponentTickable;
+import electrodynamics.api.utilities.object.Location;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -48,14 +48,11 @@ public class TileReactorCore extends GenericTileTicking {
     public TileReactorCore() {
 	super(DeferredRegisters.TILE_REACTORCORE.get());
 	addComponent(new ComponentTickable().addTickCommon(this::tickCommon).addTickServer(this::tickServer));
-	addComponent(new ComponentPacketHandler().addCustomPacketReader(this::readCustomPacket)
-		.addCustomPacketWriter(this::writeCustomPacket).addGuiPacketReader(this::readCustomPacket)
-		.addGuiPacketWriter(this::writeCustomPacket));
-	addComponent(new ComponentInventory().setInventorySize(6).addSlotsOnFace(Direction.UP, 0, 1, 2, 3, 4)
-		.addSlotsOnFace(Direction.DOWN, 5));
-	addComponent(new ComponentContainerProvider("container.reactorcore")
-		.setCreateMenuFunction((id, player) -> new ContainerReactorCore(id, player,
-			getComponent(ComponentType.Inventory), getCoordsArray())));
+	addComponent(new ComponentPacketHandler().addCustomPacketReader(this::readCustomPacket).addCustomPacketWriter(this::writeCustomPacket)
+		.addGuiPacketReader(this::readCustomPacket).addGuiPacketWriter(this::writeCustomPacket));
+	addComponent(new ComponentInventory().setInventorySize(6).addSlotsOnFace(Direction.UP, 0, 1, 2, 3, 4).addSlotsOnFace(Direction.DOWN, 5));
+	addComponent(new ComponentContainerProvider("container.reactorcore").setCreateMenuFunction(
+		(id, player) -> new ContainerReactorCore(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
     }
 
     @Deprecated
@@ -81,8 +78,7 @@ public class TileReactorCore extends GenericTileTicking {
 	    decrease += (temperature - WATER_TEMPERATURE) / 5000.0;
 	}
 	if (decrease != 0) {
-	    temperature -= decrease < 0.001 && decrease > 0 ? 0.001
-		    : decrease > -0.001 && decrease < 0 ? -0.001 : decrease;
+	    temperature -= decrease < 0.001 && decrease > 0 ? 0.001 : decrease > -0.001 && decrease < 0 ? -0.001 : decrease;
 	}
 	if (fuelCount > 0 && ticks > 50) {
 	    double insertDecimal = /* was "(100 - insertion) / 100.0" before */ 1.0;
@@ -92,12 +88,10 @@ public class TileReactorCore extends GenericTileTicking {
 		    if (fuelRod.getDamage() >= fuelRod.getMaxDamage()) {
 			inv.setInventorySlotContents(slot, ItemStack.EMPTY);
 		    }
-		    fuelRod.setDamage(
-			    (int) (fuelRod.getDamage() + 1 + Math.round(temperature) / MELTDOWN_TEMPERATURE_CALC));
+		    fuelRod.setDamage((int) (fuelRod.getDamage() + 1 + Math.round(temperature) / MELTDOWN_TEMPERATURE_CALC));
 		}
 	    }
-	    temperature += (MELTDOWN_TEMPERATURE_CALC * insertDecimal
-		    * (0.25 * (fuelCount / 2.0) + world.rand.nextDouble() / 5.0) - temperature)
+	    temperature += (MELTDOWN_TEMPERATURE_CALC * insertDecimal * (0.25 * (fuelCount / 2.0) + world.rand.nextDouble() / 5.0) - temperature)
 		    / (200 + 20 * (hasWater ? 14.7 : 1));
 	    if (temperature > MELTDOWN_TEMPERATURE_ACTUAL + world.rand.nextInt(50) && fuelCount > 0) {
 		ticksOverheating++;
@@ -124,8 +118,8 @@ public class TileReactorCore extends GenericTileTicking {
 	if (fuelCount > 0 && world.rand.nextFloat() < 1 / (1200.0 * MELTDOWN_TEMPERATURE_CALC / temperature)) {
 	    ItemStack tritium = inv.getStackInSlot(5);
 	    ItemStack deuterium = inv.getStackInSlot(4);
-	    if (tritium.getCount() + 1 <= tritium.getMaxStackSize()
-		    && deuterium.getItem() == DeferredRegisters.ITEM_CELLDEUTERIUM.get() && deuterium.getCount() > 0) {
+	    if (tritium.getCount() + 1 <= tritium.getMaxStackSize() && deuterium.getItem() == DeferredRegisters.ITEM_CELLDEUTERIUM.get()
+		    && deuterium.getCount() > 0) {
 		deuterium.shrink(1);
 		if (tritium.isEmpty()) {
 		    inv.setInventorySlotContents(5, new ItemStack(DeferredRegisters.ITEM_CELLTRITIUM.get()));
@@ -169,11 +163,10 @@ public class TileReactorCore extends GenericTileTicking {
 			BlockState state = world.getBlockState(ppos);
 			if (state.getBlock().getExplosionResistance() < radius) {
 			    float distance = (float) Math.sqrt(i * i + j * j + k * k);
-			    if (distance < radius
-				    && world.rand.nextFloat() < 1 - 0.0001 * distance * distance * distance
+			    if (distance < radius && world.rand.nextFloat() < 1 - 0.0001 * distance * distance * distance
 				    && world.rand.nextFloat() < 0.9) {
-				world.getBlockState(ppos).onBlockExploded(world, ppos, new Explosion(world, null,
-					pos.getX(), pos.getY(), pos.getZ(), 20, new ArrayList<>()));
+				world.getBlockState(ppos).onBlockExploded(world, ppos,
+					new Explosion(world, null, pos.getX(), pos.getY(), pos.getZ(), 20, new ArrayList<>()));
 			    }
 			}
 		    }
@@ -199,11 +192,8 @@ public class TileReactorCore extends GenericTileTicking {
 		    int offsetZ = pos.getZ() + k - STEAM_GEN_DIAMETER / 2;
 		    Block offset = world.getBlockState(new BlockPos(offsetX, offsetY, offsetZ)).getBlock();
 		    if (offset == Blocks.WATER) {
-			boolean isFaceWater = world.getBlockState(new BlockPos(offsetX, pos.getY(), pos.getZ()))
-				.getBlock() == Blocks.WATER
-				|| world.getBlockState(new BlockPos(pos.getX(), pos.getY(), offsetZ))
-					.getBlock() == Blocks.WATER
-				|| isReactor2d;
+			boolean isFaceWater = world.getBlockState(new BlockPos(offsetX, pos.getY(), pos.getZ())).getBlock() == Blocks.WATER
+				|| world.getBlockState(new BlockPos(pos.getX(), pos.getY(), offsetZ)).getBlock() == Blocks.WATER || isReactor2d;
 			if (isFaceWater) {
 			    if (!world.isRemote) {
 				TileTurbine turbine = cachedTurbines[i][j][k];
@@ -213,8 +203,7 @@ public class TileReactorCore extends GenericTileTicking {
 				    }
 				    turbine.addSteam(
 					    (int) (Constants.FISSIONREACTOR_MAXENERGYTARGET
-						    / (STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * 20.0
-							    * (MELTDOWN_TEMPERATURE_ACTUAL / temperature))),
+						    / (STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * 20.0 * (MELTDOWN_TEMPERATURE_ACTUAL / temperature))),
 					    (int) temperature);
 				}
 				if (turbine == null || world.loadedTileEntityList.contains(turbine)) {
@@ -225,19 +214,14 @@ public class TileReactorCore extends GenericTileTicking {
 					cachedTurbines[i][j][k] = null;
 				    }
 				}
-			    } else if (world.isRemote
-				    && world.rand.nextFloat() < temperature / (MELTDOWN_TEMPERATURE_ACTUAL * 3)) {
-				double offsetFX = offsetX
-					+ world.rand.nextDouble() / 2.0 * (world.rand.nextBoolean() ? -1 : 1);
-				double offsetFY = offsetY
-					+ world.rand.nextDouble() / 2.0 * (world.rand.nextBoolean() ? -1 : 1);
-				double offsetFZ = offsetZ
-					+ world.rand.nextDouble() / 2.0 * (world.rand.nextBoolean() ? -1 : 1);
-				world.addParticle(ParticleTypes.BUBBLE, offsetFX + 0.5D,
-					offsetFY + 0.20000000298023224D, offsetFZ + 0.5D, 0.0D, 0.0D, 0.0D);
+			    } else if (world.isRemote && world.rand.nextFloat() < temperature / (MELTDOWN_TEMPERATURE_ACTUAL * 3)) {
+				double offsetFX = offsetX + world.rand.nextDouble() / 2.0 * (world.rand.nextBoolean() ? -1 : 1);
+				double offsetFY = offsetY + world.rand.nextDouble() / 2.0 * (world.rand.nextBoolean() ? -1 : 1);
+				double offsetFZ = offsetZ + world.rand.nextDouble() / 2.0 * (world.rand.nextBoolean() ? -1 : 1);
+				world.addParticle(ParticleTypes.BUBBLE, offsetFX + 0.5D, offsetFY + 0.20000000298023224D, offsetFZ + 0.5D, 0.0D, 0.0D,
+					0.0D);
 				if (world.rand.nextInt(3) == 0) {
-				    world.addParticle(ParticleTypes.SMOKE, offsetFX + 0.5D, offsetFY + 0.5D,
-					    offsetFZ + 0.5D, 0.0D, 0.0D, 0.0D);
+				    world.addParticle(ParticleTypes.SMOKE, offsetFX + 0.5D, offsetFY + 0.5D, offsetFZ + 0.5D, 0.0D, 0.0D, 0.0D);
 				}
 			    }
 			}
@@ -251,8 +235,7 @@ public class TileReactorCore extends GenericTileTicking {
 	ComponentInventory inv = getComponent(ComponentType.Inventory);
 	tag.putBoolean("hasDeuterium", hasDeuterium);
 	tag.putDouble("temperature", temperature);
-	tag.putInt("fuelCount",
-		inv.count(DeferredRegisters.ITEM_FUELHEUO2.get()) + inv.count(DeferredRegisters.ITEM_FUELLEUO2.get()));
+	tag.putInt("fuelCount", inv.count(DeferredRegisters.ITEM_FUELHEUO2.get()) + inv.count(DeferredRegisters.ITEM_FUELLEUO2.get()));
     }
 
     protected void readCustomPacket(CompoundNBT nbt) {

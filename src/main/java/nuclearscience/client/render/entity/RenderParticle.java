@@ -27,8 +27,8 @@ public class RenderParticle extends EntityRenderer<EntityParticle> {
     }
 
     @Override
-    public void render(EntityParticle entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn,
-	    IRenderTypeBuffer bufferIn, int packedLightIn) {
+    public void render(EntityParticle entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn,
+	    int packedLightIn) {
 	Tessellator tessellator = Tessellator.getInstance();
 	BufferBuilder bufferBuilder = tessellator.getBuffer();
 
