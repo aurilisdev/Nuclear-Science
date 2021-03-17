@@ -16,6 +16,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.Direction;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerChemicalExtractor;
@@ -27,7 +28,7 @@ public class TileChemicalExtractor extends GenericTileTicking {
 
     public TileChemicalExtractor() {
 	super(DeferredRegisters.TILE_CHEMICALEXTRACTOR.get());
-	addComponent(new ComponentTickable());
+	addComponent(new ComponentTickable().addTickClient(this::tickClient));
 	addComponent(new ComponentDirection());
 	addComponent(new ComponentPacketHandler());
 	addComponent(new ComponentElectrodynamic(this).enableUniversalInput().setVoltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 2)
@@ -41,6 +42,13 @@ public class TileChemicalExtractor extends GenericTileTicking {
 		.setProcess(this::process));
 	addComponent(new ComponentContainerProvider("container.chemicalextractor").setCreateMenuFunction(
 		(id, player) -> new ContainerChemicalExtractor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
+    }
+
+    protected void tickClient(ComponentTickable tickable) {
+	if (this.<ComponentProcessor>getComponent(ComponentType.Processor).operatingTicks > 0 && world.rand.nextDouble() < 0.15) {
+	    world.addParticle(ParticleTypes.SMOKE, pos.getX() + world.rand.nextDouble(), pos.getY() + world.rand.nextDouble() * 0.8 + 0.5,
+		    pos.getZ() + world.rand.nextDouble(), 0.0D, 0.0D, 0.0D);
+	}
     }
 
     protected boolean canProcess(ComponentProcessor processor) {
