@@ -1,5 +1,8 @@
 package nuclearscience.common.block;
 
+import java.util.Arrays;
+import java.util.List;
+
 import electrodynamics.api.tile.IWrenchable;
 import electrodynamics.common.block.BlockGenericMachine;
 import net.minecraft.block.Block;
@@ -8,6 +11,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootContext.Builder;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Mirror;
@@ -35,6 +39,13 @@ public class BlockElectromagneticBooster extends Block implements IElectromagnet
     }
 
     @Override
+    @Deprecated
+    public List<ItemStack> getDrops(BlockState state, Builder builder) {
+	return Arrays.asList(new ItemStack(this));
+    }
+
+    @Override
+    @Deprecated
     public BlockState rotate(BlockState state, Rotation rot) {
 	return state.with(BlockGenericMachine.FACING, rot.rotate(state.get(BlockGenericMachine.FACING)));
     }

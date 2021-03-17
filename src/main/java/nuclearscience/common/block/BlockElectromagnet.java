@@ -1,9 +1,14 @@
 package nuclearscience.common.block;
 
+import java.util.Arrays;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
 import net.minecraft.block.material.Material;
+import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootContext.Builder;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -20,6 +25,12 @@ public class BlockElectromagnet extends Block implements IElectromagnet {
     public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
 
     private final boolean isGlass;
+
+    @Override
+    @Deprecated
+    public List<ItemStack> getDrops(BlockState state, Builder builder) {
+	return Arrays.asList(new ItemStack(this));
+    }
 
     public BlockElectromagnet(boolean isGlass) {
 	super(Properties.create(isGlass ? Material.GLASS : Material.IRON).hardnessAndResistance(3.5f, 20).harvestLevel(2)

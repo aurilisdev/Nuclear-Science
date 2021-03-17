@@ -1,5 +1,8 @@
 package nuclearscience.common.block;
 
+import java.util.Arrays;
+import java.util.List;
+
 import electrodynamics.api.IWrenchItem;
 import electrodynamics.api.tile.IWrenchable;
 import net.minecraft.block.Block;
@@ -12,6 +15,7 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootContext.Builder;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
@@ -47,6 +51,12 @@ public class BlockTurbine extends Block implements IWrenchable {
 		turbine.constructStructure();
 	    }
 	}
+    }
+
+    @Override
+    @Deprecated
+    public List<ItemStack> getDrops(BlockState state, Builder builder) {
+	return Arrays.asList(new ItemStack(this));
     }
 
     @Override
