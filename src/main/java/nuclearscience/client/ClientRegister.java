@@ -12,10 +12,10 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.References;
 import nuclearscience.client.render.entity.RenderParticle;
-import nuclearscience.client.render.tile.RenderNuclearBoiler;
 import nuclearscience.client.render.tile.RenderChemicalExtractor;
 import nuclearscience.client.render.tile.RenderFusionReactorCore;
 import nuclearscience.client.render.tile.RenderGasCentrifuge;
+import nuclearscience.client.render.tile.RenderNuclearBoiler;
 import nuclearscience.client.render.tile.RenderQuantumCapacitor;
 import nuclearscience.client.render.tile.RenderReactorCore;
 import nuclearscience.client.render.tile.RenderTurbine;
@@ -34,6 +34,7 @@ public class ClientRegister {
     public static final ResourceLocation MODEL_GASCENTRIFUGECENTER = new ResourceLocation(References.ID + ":block/gascentrifugecenter");
     public static final ResourceLocation MODEL_CHEMICALEXTRACTORWATER = new ResourceLocation(References.ID + ":block/chemicalextractorwater");
     public static final ResourceLocation MODEL_CHEMICALBOILERWATER = new ResourceLocation(References.ID + ":block/chemicalboilerwater");
+    public static final ResourceLocation MODEL_CHEMICALBOILERHEXAFLUORIDE = new ResourceLocation(References.ID + ":block/chemicalboilerhexafluoride");
     public static final ResourceLocation MODEL_TURBINEFULL = new ResourceLocation(References.ID + ":block/turbine");
     public static final ResourceLocation MODEL_TURBINECASING = new ResourceLocation(References.ID + ":block/turbinecasing");
     public static final ResourceLocation MODEL_TURBINEROTORLAYER = new ResourceLocation(References.ID + ":block/turbinerotorlayer");
@@ -48,6 +49,7 @@ public class ClientRegister {
 	ModelLoader.addSpecialModel(MODEL_GASCENTRIFUGECENTER);
 	ModelLoader.addSpecialModel(MODEL_CHEMICALEXTRACTORWATER);
 	ModelLoader.addSpecialModel(MODEL_CHEMICALBOILERWATER);
+	ModelLoader.addSpecialModel(MODEL_CHEMICALBOILERHEXAFLUORIDE);
 	ModelLoader.addSpecialModel(MODEL_TURBINEFULL);
 	ModelLoader.addSpecialModel(MODEL_TURBINECASING);
 	ModelLoader.addSpecialModel(MODEL_TURBINEROTORLAYER);

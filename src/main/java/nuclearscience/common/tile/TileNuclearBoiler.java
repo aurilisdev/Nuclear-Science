@@ -22,6 +22,7 @@ import net.minecraft.item.Items;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -53,6 +54,11 @@ public class TileNuclearBoiler extends GenericTileTicking {
 	addComponent(new ComponentContainerProvider("container.chemicalboiler").setCreateMenuFunction(
 		(id, player) -> new ContainerChemicalBoiler(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 
+    }
+
+    @Override
+    public AxisAlignedBB getRenderBoundingBox() {
+	return super.getRenderBoundingBox().grow(1);
     }
 
     protected void tickClient(ComponentTickable tickable) {
@@ -117,5 +123,6 @@ public class TileNuclearBoiler extends GenericTileTicking {
 	stack.setCount(stack.getCount() - 1);
 	handler.getStackFromFluid(Fluids.WATER).shrink(requiredWater);
 	handler.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride).grow(createdU6F);
+	this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendGuiPacketToTracking();
     }
 }
