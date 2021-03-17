@@ -67,10 +67,10 @@ public class ScreenGasCentrifuge extends GenericContainerScreenUpgradeable<Conta
 				    / (float) TileGasCentrifuge.TANKCAPACITY * 50),
 		    214, 31, 16, (int) (handler.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride).getAmount()
 			    / (float) TileGasCentrifuge.TANKCAPACITY * 50));
-	    blit(stack, guiLeft + 72, (int) (guiTop + 38 - centrifuge.stored235 / (float) TileGasCentrifuge.TANKCAPACITY * 22), 214, 31, 16,
-		    (int) (centrifuge.stored235 / (float) TileGasCentrifuge.TANKCAPACITY / TileGasCentrifuge.REQUIRED * 22));
-	    blit(stack, guiLeft + 72, (int) (guiTop + 69 - centrifuge.stored238 / (float) TileGasCentrifuge.TANKCAPACITY * 22), 214, 31, 16,
-		    (int) (centrifuge.stored238 / (float) TileGasCentrifuge.TANKCAPACITY * 22));
+	    blit(stack, guiLeft + 72, (int) (guiTop + 39 - centrifuge.stored235 / (float) TileGasCentrifuge.TANKCAPACITY * 47), 214, 31, 16,
+		    (int) (centrifuge.stored235 / (float) TileGasCentrifuge.TANKCAPACITY * 47));
+	    blit(stack, guiLeft + 72, (int) (guiTop + 70 - centrifuge.stored238 / (float) TileGasCentrifuge.TANKCAPACITY * 47), 214, 31, 16,
+		    (int) (centrifuge.stored238 / (float) TileGasCentrifuge.TANKCAPACITY * 47));
 	}
     }
 

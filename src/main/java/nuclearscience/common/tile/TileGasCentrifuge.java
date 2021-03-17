@@ -37,7 +37,7 @@ public class TileGasCentrifuge extends GenericTileTicking {
 	addComponent(new ComponentElectrodynamic(this).setVoltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 2).addInputDirection(Direction.DOWN)
 		.setMaxJoules(Constants.GASCENTRIFUGE_USAGE_PER_TICK * 10));
 	addComponent(new ComponentInventory().setInventorySize(5).addSlotsOnFace(Direction.DOWN, 0, 1).addRelativeSlotsOnFace(Direction.WEST, 0, 1)
-		.setItemValidPredicate((slot, stack) -> slot == 0 || slot > 2 && stack.getItem() instanceof ItemProcessorUpgrade));
+		.setItemValidPredicate((slot, stack) -> slot < 2 || stack.getItem() instanceof ItemProcessorUpgrade));
 	addComponent(new ComponentProcessor(this).addUpgradeSlots(2, 3, 4).setJoulesPerTick(Constants.GASCENTRIFUGE_USAGE_PER_TICK)
 		.setRequiredTicks(Constants.GASCENTRIFUGE_REQUIRED_TICKS_PER_PROCESSING).setCanProcess(this::canProcess).setProcess(this::process));
 	addComponent(new ComponentContainerProvider("container.gascentrifuge").setCreateMenuFunction(
