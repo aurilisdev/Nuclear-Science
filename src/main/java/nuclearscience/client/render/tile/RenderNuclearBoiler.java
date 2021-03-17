@@ -17,17 +17,18 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.vector.Quaternion;
 import nuclearscience.client.ClientRegister;
+import nuclearscience.common.tile.TileNuclearBoiler;
 import nuclearscience.common.tile.TileChemicalExtractor;
 
-public class RenderChemicalExtractor extends TileEntityRenderer<TileChemicalExtractor> {
+public class RenderNuclearBoiler extends TileEntityRenderer<TileNuclearBoiler> {
 
-    public RenderChemicalExtractor(TileEntityRendererDispatcher rendererDispatcherIn) {
+    public RenderNuclearBoiler(TileEntityRendererDispatcher rendererDispatcherIn) {
 	super(rendererDispatcherIn);
     }
 
     @Override
     @Deprecated
-    public void render(TileChemicalExtractor tileEntityIn, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn,
+    public void render(TileNuclearBoiler tileEntityIn, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn,
 	    int combinedLightIn, int combinedOverlayIn) {
 	IBakedModel ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_CHEMICALEXTRACTORWATER);
 	Direction face = tileEntityIn.getBlockState().get(BlockGenericMachine.FACING);

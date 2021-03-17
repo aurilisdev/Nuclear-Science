@@ -16,7 +16,7 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistryEntry;
-import nuclearscience.common.block.BlockChemicalBoiler;
+import nuclearscience.common.block.BlockNuclearBoiler;
 import nuclearscience.common.block.BlockChemicalExtractor;
 import nuclearscience.common.block.BlockElectromagnet;
 import nuclearscience.common.block.BlockElectromagneticBooster;
@@ -42,7 +42,7 @@ import nuclearscience.common.item.ItemAntidote;
 import nuclearscience.common.item.ItemGeigerCounter;
 import nuclearscience.common.item.ItemHazmatArmor;
 import nuclearscience.common.item.ItemRadioactive;
-import nuclearscience.common.tile.TileChemicalBoiler;
+import nuclearscience.common.tile.TileNuclearBoiler;
 import nuclearscience.common.tile.TileChemicalExtractor;
 import nuclearscience.common.tile.TileElectromagneticSwitch;
 import nuclearscience.common.tile.TileFusionReactorCore;
@@ -63,7 +63,7 @@ public class DeferredRegisters {
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, References.ID);
     public static FluidUraniumHexafluoride fluidUraniumHexafluoride;
     public static BlockGasCentrifuge blockGasCentrifuge;
-    public static BlockChemicalBoiler blockChemicalBoiler;
+    public static BlockNuclearBoiler blockChemicalBoiler;
     public static BlockChemicalExtractor blockChemicalExtractor;
     public static BlockRadioisotopeGenerator blockRadioisotopeGenerator;
     public static BlockTurbine blockTurbine;
@@ -79,7 +79,7 @@ public class DeferredRegisters {
 
     static {
 	BLOCKS.register("gascentrifuge", supplier(blockGasCentrifuge = new BlockGasCentrifuge()));
-	BLOCKS.register("chemicalboiler", supplier(blockChemicalBoiler = new BlockChemicalBoiler()));
+	BLOCKS.register("chemicalboiler", supplier(blockChemicalBoiler = new BlockNuclearBoiler()));
 	BLOCKS.register("chemicalextractor", supplier(blockChemicalExtractor = new BlockChemicalExtractor()));
 	BLOCKS.register("radioisotopegenerator", supplier(blockRadioisotopeGenerator = new BlockRadioisotopeGenerator()));
 	BLOCKS.register("turbine", supplier(blockTurbine = new BlockTurbine()));
@@ -160,8 +160,8 @@ public class DeferredRegisters {
 
     public static final RegistryObject<TileEntityType<TileGasCentrifuge>> TILE_GASCENTRIFUGE = TILES.register("gascentrifuge",
 	    () -> new TileEntityType<>(TileGasCentrifuge::new, Sets.newHashSet(blockGasCentrifuge), null));
-    public static final RegistryObject<TileEntityType<TileChemicalBoiler>> TILE_CHEMICALBOILER = TILES.register("chemicalboiler",
-	    () -> new TileEntityType<>(TileChemicalBoiler::new, Sets.newHashSet(blockChemicalBoiler), null));
+    public static final RegistryObject<TileEntityType<TileNuclearBoiler>> TILE_CHEMICALBOILER = TILES.register("chemicalboiler",
+	    () -> new TileEntityType<>(TileNuclearBoiler::new, Sets.newHashSet(blockChemicalBoiler), null));
     public static final RegistryObject<TileEntityType<TileChemicalExtractor>> TILE_CHEMICALEXTRACTOR = TILES.register("chemicalextractor",
 	    () -> new TileEntityType<>(TileChemicalExtractor::new, Sets.newHashSet(blockChemicalExtractor), null));
     public static final RegistryObject<TileEntityType<TileRadioisotopeGenerator>> TILE_RADIOISOTOPEGENERATOR = TILES.register("radioisotopegenerator",

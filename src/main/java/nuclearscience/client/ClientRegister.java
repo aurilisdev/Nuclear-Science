@@ -12,6 +12,7 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.References;
 import nuclearscience.client.render.entity.RenderParticle;
+import nuclearscience.client.render.tile.RenderNuclearBoiler;
 import nuclearscience.client.render.tile.RenderChemicalExtractor;
 import nuclearscience.client.render.tile.RenderFusionReactorCore;
 import nuclearscience.client.render.tile.RenderGasCentrifuge;
@@ -31,6 +32,7 @@ public class ClientRegister {
     public static final ResourceLocation MODEL_GASCENTRIFUGEFULL = new ResourceLocation(References.ID + ":block/gascentrifuge");
     public static final ResourceLocation MODEL_GASCENTRIFUGEOUTLINE = new ResourceLocation(References.ID + ":block/gascentrifugeoutline");
     public static final ResourceLocation MODEL_GASCENTRIFUGECENTER = new ResourceLocation(References.ID + ":block/gascentrifugecenter");
+    public static final ResourceLocation MODEL_CHEMICALEXTRACTORWATER = new ResourceLocation(References.ID + ":block/chemicalextractorwater");
     public static final ResourceLocation MODEL_CHEMICALBOILERWATER = new ResourceLocation(References.ID + ":block/chemicalboilerwater");
     public static final ResourceLocation MODEL_TURBINEFULL = new ResourceLocation(References.ID + ":block/turbine");
     public static final ResourceLocation MODEL_TURBINECASING = new ResourceLocation(References.ID + ":block/turbinecasing");
@@ -44,6 +46,7 @@ public class ClientRegister {
 	ModelLoader.addSpecialModel(MODEL_GASCENTRIFUGEFULL);
 	ModelLoader.addSpecialModel(MODEL_GASCENTRIFUGEOUTLINE);
 	ModelLoader.addSpecialModel(MODEL_GASCENTRIFUGECENTER);
+	ModelLoader.addSpecialModel(MODEL_CHEMICALEXTRACTORWATER);
 	ModelLoader.addSpecialModel(MODEL_CHEMICALBOILERWATER);
 	ModelLoader.addSpecialModel(MODEL_TURBINEFULL);
 	ModelLoader.addSpecialModel(MODEL_TURBINECASING);
@@ -54,6 +57,7 @@ public class ClientRegister {
 
 	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_GASCENTRIFUGE.get(), RenderGasCentrifuge::new);
 	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_CHEMICALEXTRACTOR.get(), RenderChemicalExtractor::new);
+	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_CHEMICALBOILER.get(), RenderNuclearBoiler::new);
 	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_TURBINE.get(), RenderTurbine::new);
 	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_REACTORCORE.get(), RenderReactorCore::new);
 	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_FUSIONREACTORCORE.get(), RenderFusionReactorCore::new);
@@ -70,6 +74,7 @@ public class ClientRegister {
 	ScreenManager.registerFactory(DeferredRegisters.CONTAINER_QUANTUMCAPACITOR.get(), ScreenQuantumCapacitor::new);
 
 	RenderTypeLookup.setRenderLayer(DeferredRegisters.blockChemicalExtractor, ClientRegister::shouldMultilayerRender);
+	RenderTypeLookup.setRenderLayer(DeferredRegisters.blockChemicalBoiler, ClientRegister::shouldMultilayerRender);
 	RenderTypeLookup.setRenderLayer(DeferredRegisters.blockReactorCore, ClientRegister::shouldMultilayerRender);
 	RenderTypeLookup.setRenderLayer(DeferredRegisters.blockElectromagneticGlass.getBlock(), RenderType.getCutout());
 	RenderTypeLookup.setRenderLayer(DeferredRegisters.blockElectromagneticBooster.getBlock(), RenderType.getTranslucent());

@@ -19,7 +19,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.References;
 import nuclearscience.common.inventory.container.ContainerChemicalBoiler;
-import nuclearscience.common.tile.TileChemicalBoiler;
+import nuclearscience.common.tile.TileNuclearBoiler;
 
 @OnlyIn(Dist.CLIENT)
 public class ScreenChemicalBoiler extends GenericContainerScreenUpgradeable<ContainerChemicalBoiler> {
@@ -37,7 +37,7 @@ public class ScreenChemicalBoiler extends GenericContainerScreenUpgradeable<Cont
     @Override
     protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
 	font.func_243248_b(matrixStack, title, titleX, titleY, 4210752);
-	TileChemicalBoiler boiler = container.getHostFromIntArray();
+	TileNuclearBoiler boiler = container.getHostFromIntArray();
 	if (boiler != null) {
 	    ComponentElectrodynamic electro = boiler.getComponent(ComponentType.Electrodynamic);
 	    ComponentProcessor processor = boiler.getComponent(ComponentType.Processor);
@@ -55,7 +55,7 @@ public class ScreenChemicalBoiler extends GenericContainerScreenUpgradeable<Cont
     @Override
     protected void drawGuiContainerBackgroundLayer(MatrixStack stack, float partialTicks, int mouseX, int mouseY) {
 	super.drawGuiContainerBackgroundLayer(stack, partialTicks, mouseX, mouseY);
-	TileChemicalBoiler boiler = container.getHostFromIntArray();
+	TileNuclearBoiler boiler = container.getHostFromIntArray();
 	if (boiler != null) {
 	    ComponentProcessor processor = boiler.getComponent(ComponentType.Processor);
 	    ComponentFluidHandler handler = boiler.getComponent(ComponentType.FluidHandler);
@@ -65,14 +65,14 @@ public class ScreenChemicalBoiler extends GenericContainerScreenUpgradeable<Cont
 		blit(stack, guiLeft + 44 + 60, guiTop + 30, 212, 14, Math.min(burnLeftScaled * 2 - 34 + 1, 34), 16);
 	    }
 	    blit(stack, guiLeft + 21,
-		    guiTop + 68 - (int) (handler.getStackFromFluid(Fluids.WATER).getAmount() / (float) TileChemicalBoiler.TANKCAPACITY * 50),
-		    214 + 18, 31, 16, (int) (handler.getStackFromFluid(Fluids.WATER).getAmount() / (float) TileChemicalBoiler.TANKCAPACITY * 50));
+		    guiTop + 68 - (int) (handler.getStackFromFluid(Fluids.WATER).getAmount() / (float) TileNuclearBoiler.TANKCAPACITY * 50),
+		    214 + 18, 31, 16, (int) (handler.getStackFromFluid(Fluids.WATER).getAmount() / (float) TileNuclearBoiler.TANKCAPACITY * 50));
 	    blit(stack, guiLeft + 139,
 		    guiTop + 68
 			    - (int) (handler.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride).getAmount()
-				    / (float) TileChemicalBoiler.TANKCAPACITY * 50),
+				    / (float) TileNuclearBoiler.TANKCAPACITY * 50),
 		    214, 31, 16, (int) (handler.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride).getAmount()
-			    / (float) TileChemicalBoiler.TANKCAPACITY * 50));
+			    / (float) TileNuclearBoiler.TANKCAPACITY * 50));
 	}
     }
 

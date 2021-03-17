@@ -12,9 +12,9 @@ import net.minecraft.item.Items;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.IntArray;
 import nuclearscience.DeferredRegisters;
-import nuclearscience.common.tile.TileChemicalBoiler;
+import nuclearscience.common.tile.TileNuclearBoiler;
 
-public class ContainerChemicalBoiler extends GenericContainer<TileChemicalBoiler> {
+public class ContainerChemicalBoiler extends GenericContainer<TileNuclearBoiler> {
 
     public ContainerChemicalBoiler(int id, PlayerInventory playerinv) {
 	this(id, playerinv, new Inventory(5), new IntArray(3));

@@ -31,11 +31,11 @@ import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerChemicalBoiler;
 import nuclearscience.common.settings.Constants;
 
-public class TileChemicalBoiler extends GenericTileTicking {
+public class TileNuclearBoiler extends GenericTileTicking {
     public static final int TANKCAPACITY = 5000;
     public static final int REQUIRED_WATER_CAP = 2400;
 
-    public TileChemicalBoiler() {
+    public TileNuclearBoiler() {
 	super(DeferredRegisters.TILE_CHEMICALBOILER.get());
 	addComponent(new ComponentTickable().addTickClient(this::tickClient));
 	addComponent(new ComponentDirection());
