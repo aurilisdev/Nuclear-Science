@@ -29,7 +29,7 @@ public class RenderChemicalExtractor extends TileEntityRenderer<TileChemicalExtr
     @Deprecated
     public void render(TileChemicalExtractor tileEntityIn, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn,
 	    int combinedLightIn, int combinedOverlayIn) {
-	IBakedModel ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_CHEMICALBOILERWATER);
+	IBakedModel ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_CHEMICALEXTRACTORWATER);
 	Direction face = tileEntityIn.getBlockState().get(BlockGenericMachine.FACING);
 	matrixStackIn.translate(8 / 16.0, 6 / 16.0, (8.0 - 0.16667) / 16.0);
 	if (face == Direction.NORTH || face == Direction.SOUTH) {
