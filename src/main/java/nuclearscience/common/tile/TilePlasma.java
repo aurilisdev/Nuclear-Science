@@ -19,7 +19,7 @@ public class TilePlasma extends GenericTileTicking {
 
     public TilePlasma() {
 	super(DeferredRegisters.TILE_PLASMA.get());
-	addComponent(new ComponentTickable().addTickServer(this::tickServer));
+	addComponent(new ComponentTickable().tickServer(this::tickServer));
     }
 
     protected void tickServer(ComponentTickable tickable) {

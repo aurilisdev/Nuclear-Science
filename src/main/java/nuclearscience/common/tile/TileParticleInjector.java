@@ -29,14 +29,14 @@ public class TileParticleInjector extends GenericTileTicking {
 	addComponent(new ComponentTickable());
 	addComponent(new ComponentDirection());
 	addComponent(new ComponentPacketHandler());
-	addComponent(new ComponentInventory().setInventorySize(3)
-		.setItemValidPredicate((index, stack) -> index != 1 || stack.getItem() == DeferredRegisters.ITEM_CELLELECTROMAGNETIC.get()));
-	addComponent(new ComponentElectrodynamic(this).setVoltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 8)
-		.addRelativeInputDirection(Direction.NORTH).setMaxJoules(Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE * 10));
-	addComponent(new ComponentProcessor(this).setCanProcess(this::canProcess).setJoulesPerTick(Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE)
-		.setProcess(this::process));
-	addComponent(new ComponentContainerProvider("container.particleinjector").setCreateMenuFunction(
-		(id, player) -> new ContainerParticleInjector(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
+	addComponent(new ComponentInventory(this).size(3)
+		.valid((index, stack) -> index != 1 || stack.getItem() == DeferredRegisters.ITEM_CELLELECTROMAGNETIC.get()));
+	addComponent(new ComponentElectrodynamic(this).voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 8).relativeInput(Direction.NORTH)
+		.maxJoules(Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE * 10));
+	addComponent(new ComponentProcessor(this).canProcess(this::canProcess).usage(Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE)
+		.process(this::process));
+	addComponent(new ComponentContainerProvider("container.particleinjector")
+		.createMenu((id, player) -> new ContainerParticleInjector(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
     }
 
     protected boolean canProcess(ComponentProcessor processor) {

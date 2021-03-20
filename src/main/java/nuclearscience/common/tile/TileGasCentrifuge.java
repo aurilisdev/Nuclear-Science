@@ -31,24 +31,24 @@ public class TileGasCentrifuge extends GenericTileTicking {
 	super(DeferredRegisters.TILE_GASCENTRIFUGE.get());
 	addComponent(new ComponentTickable());
 	addComponent(new ComponentDirection());
-	addComponent(new ComponentPacketHandler().addCustomPacketReader(this::readCustomPacket).addCustomPacketWriter(this::writeCustomPacket));
-	addComponent(new ComponentFluidHandler(this).addFluidTank(DeferredRegisters.fluidUraniumHexafluoride, TANKCAPACITY)
-		.addRelativeInputDirection(Direction.NORTH));
-	addComponent(new ComponentElectrodynamic(this).setVoltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 2).addInputDirection(Direction.DOWN)
-		.setMaxJoules(Constants.GASCENTRIFUGE_USAGE_PER_TICK * 10));
-	addComponent(new ComponentInventory().setInventorySize(5).addSlotsOnFace(Direction.DOWN, 0, 1).addRelativeSlotsOnFace(Direction.WEST, 0, 1)
-		.setItemValidPredicate((slot, stack) -> slot < 2 || stack.getItem() instanceof ItemProcessorUpgrade));
-	addComponent(new ComponentProcessor(this).addUpgradeSlots(2, 3, 4).setJoulesPerTick(Constants.GASCENTRIFUGE_USAGE_PER_TICK)
-		.setRequiredTicks(Constants.GASCENTRIFUGE_REQUIRED_TICKS_PER_PROCESSING).setCanProcess(this::canProcess).setProcess(this::process));
-	addComponent(new ComponentContainerProvider("container.gascentrifuge").setCreateMenuFunction(
-		(id, player) -> new ContainerGasCentrifuge(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
+	addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket));
+	addComponent(
+		new ComponentFluidHandler(this).fluidTank(DeferredRegisters.fluidUraniumHexafluoride, TANKCAPACITY).relativeInput(Direction.NORTH));
+	addComponent(new ComponentElectrodynamic(this).voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 2).input(Direction.DOWN)
+		.maxJoules(Constants.GASCENTRIFUGE_USAGE_PER_TICK * 10));
+	addComponent(new ComponentInventory(this).size(5).faceSlots(Direction.DOWN, 0, 1).relativeFaceSlots(Direction.WEST, 0, 1)
+		.valid((slot, stack) -> slot < 2 || stack.getItem() instanceof ItemProcessorUpgrade));
+	addComponent(new ComponentProcessor(this).upgradeSlots(2, 3, 4).usage(Constants.GASCENTRIFUGE_USAGE_PER_TICK)
+		.requiredTicks(Constants.GASCENTRIFUGE_REQUIRED_TICKS_PER_PROCESSING).canProcess(this::canProcess).process(this::process));
+	addComponent(new ComponentContainerProvider("container.gascentrifuge")
+		.createMenu((id, player) -> new ContainerGasCentrifuge(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
     }
 
     public boolean canProcess(ComponentProcessor processor) {
 	ComponentElectrodynamic electro = getComponent(ComponentType.Electrodynamic);
 	ComponentInventory inv = getComponent(ComponentType.Inventory);
 	ComponentFluidHandler tank = getComponent(ComponentType.FluidHandler);
-	boolean val = electro.getJoulesStored() >= processor.getJoulesPerTick()
+	boolean val = electro.getJoulesStored() >= processor.getUsage()
 		&& tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride).getAmount() >= REQUIRED / 60.0
 		&& inv.getStackInSlot(0).getCount() < inv.getStackInSlot(0).getMaxStackSize()
 		&& inv.getStackInSlot(1).getCount() < inv.getStackInSlot(1).getMaxStackSize();

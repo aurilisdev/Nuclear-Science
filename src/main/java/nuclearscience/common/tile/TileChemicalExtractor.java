@@ -28,20 +28,18 @@ public class TileChemicalExtractor extends GenericTileTicking {
 
     public TileChemicalExtractor() {
 	super(DeferredRegisters.TILE_CHEMICALEXTRACTOR.get());
-	addComponent(new ComponentTickable().addTickClient(this::tickClient));
+	addComponent(new ComponentTickable().tickClient(this::tickClient));
 	addComponent(new ComponentDirection());
 	addComponent(new ComponentPacketHandler());
-	addComponent(new ComponentElectrodynamic(this).enableUniversalInput().setVoltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 2)
-		.setMaxJoules(Constants.CHEMICALEXTRACTOR_USAGE_PER_TICK * 10));
-	addComponent(new ComponentFluidHandler(this).addFluidTank(Fluids.WATER, TANKCAPACITY).enableUniversalInput());
-	addComponent(new ComponentInventory().setInventorySize(6).addSlotsOnFace(Direction.UP, 0).addSlotsOnFace(Direction.DOWN, 1)
-		.addSlotsOnFace(Direction.SOUTH, 2).addSlotsOnFace(Direction.NORTH, 2).addSlotsOnFace(Direction.EAST, 2)
-		.addSlotsOnFace(Direction.WEST, 2));
-	addComponent(new ComponentProcessor(this).setJoulesPerTick(Constants.CHEMICALEXTRACTOR_USAGE_PER_TICK)
-		.setRequiredTicks(Constants.CHEMICALEXTRACTOR_REQUIRED_TICKS).setCanProcess(this::canProcess).addUpgradeSlots(3, 4, 5)
-		.setProcess(this::process));
-	addComponent(new ComponentContainerProvider("container.chemicalextractor").setCreateMenuFunction(
-		(id, player) -> new ContainerChemicalExtractor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
+	addComponent(new ComponentElectrodynamic(this).enableUniversalInput().voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 2)
+		.maxJoules(Constants.CHEMICALEXTRACTOR_USAGE_PER_TICK * 10));
+	addComponent(new ComponentFluidHandler(this).fluidTank(Fluids.WATER, TANKCAPACITY).universalInput());
+	addComponent(new ComponentInventory(this).size(6).faceSlots(Direction.UP, 0).faceSlots(Direction.DOWN, 1).slotFaces(2, Direction.SOUTH,
+		Direction.NORTH, Direction.EAST, Direction.WEST));
+	addComponent(new ComponentProcessor(this).usage(Constants.CHEMICALEXTRACTOR_USAGE_PER_TICK)
+		.requiredTicks(Constants.CHEMICALEXTRACTOR_REQUIRED_TICKS).canProcess(this::canProcess).upgradeSlots(3, 4, 5).process(this::process));
+	addComponent(new ComponentContainerProvider("container.chemicalextractor")
+		.createMenu((id, player) -> new ContainerChemicalExtractor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
     }
 
     protected void tickClient(ComponentTickable tickable) {
@@ -65,7 +63,7 @@ public class TileChemicalExtractor extends GenericTileTicking {
 	    this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendGuiPacketToTracking();
 	}
 	int requiredWater = getRequiredWater(processor);
-	return electro.getJoulesStored() >= processor.getJoulesPerTick() && !inv.getStackInSlot(0).isEmpty() && inv.getStackInSlot(0).getCount() > 0
+	return electro.getJoulesStored() >= processor.getUsage() && !inv.getStackInSlot(0).isEmpty() && inv.getStackInSlot(0).getCount() > 0
 		&& tank.getStackFromFluid(Fluids.WATER).getAmount() >= requiredWater && requiredWater > 0;
     }
 

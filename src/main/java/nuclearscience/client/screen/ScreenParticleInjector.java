@@ -41,12 +41,12 @@ public class ScreenParticleInjector extends GenericContainerScreen<ContainerPart
 	    ComponentElectrodynamic electro = injector.getComponent(ComponentType.Electrodynamic);
 	    ComponentProcessor processor = injector.getComponent(ComponentType.Processor);
 	    font.func_243248_b(matrixStack,
-		    new TranslationTextComponent("gui.particleinjector.charge",
-			    (int) (electro.getJoulesStored() / processor.getJoulesPerTick() * 100.0)).appendString("%"),
+		    new TranslationTextComponent("gui.particleinjector.charge", (int) (electro.getJoulesStored() / processor.getUsage() * 100.0))
+			    .appendString("%"),
 		    titleX, titleY + 30f, 4210752);
 	    font.func_243248_b(matrixStack,
 		    new TranslationTextComponent("gui.particleinjector.usage",
-			    ElectricityChatFormatter.getDisplayShort(processor.getJoulesPerTick(), ElectricUnit.JOULES)),
+			    ElectricityChatFormatter.getDisplayShort(processor.getUsage(), ElectricUnit.JOULES)),
 		    playerInventoryTitleX, playerInventoryTitleY, 4210752);
 	    font.func_243248_b(matrixStack,
 		    new TranslationTextComponent("gui.particleinjector.voltage",

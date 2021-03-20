@@ -36,9 +36,9 @@ public class TileTurbine extends GenericTileTicking {
 
     public TileTurbine() {
 	super(DeferredRegisters.TILE_TURBINE.get());
-	addComponent(new ComponentTickable().addTickServer(this::tickServer));
-	addComponent(new ComponentPacketHandler().addCustomPacketWriter(this::writeCustomPacket).addCustomPacketReader(this::readCustomPacket));
-	addComponent(new ComponentElectrodynamic(this).addOutputDirection(Direction.UP).setCapabilityTest(() -> (!hasCore || isCore)));
+	addComponent(new ComponentTickable().tickServer(this::tickServer));
+	addComponent(new ComponentPacketHandler().customPacketWriter(this::writeCustomPacket).customPacketReader(this::readCustomPacket));
+	addComponent(new ComponentElectrodynamic(this).output(Direction.UP).setCapabilityTest(() -> (!hasCore || isCore)));
     }
 
     public void constructStructure() {
@@ -131,7 +131,7 @@ public class TileTurbine extends GenericTileTicking {
     }
 
     public void tickServer(ComponentTickable tickable) {
-	this.<ComponentElectrodynamic>getComponent(ComponentType.Electrodynamic).setVoltage(currentVoltage);
+	this.<ComponentElectrodynamic>getComponent(ComponentType.Electrodynamic).voltage(currentVoltage);
 	if (tickable.getTicks() % 30 == 0) {
 	    this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();
 	    spinSpeed = currentVoltage / 120;

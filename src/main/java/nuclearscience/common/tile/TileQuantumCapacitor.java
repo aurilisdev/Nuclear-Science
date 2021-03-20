@@ -38,15 +38,14 @@ public class TileQuantumCapacitor extends GenericTileTicking implements IEnergyS
 
     public TileQuantumCapacitor() {
 	super(DeferredRegisters.TILE_QUANTUMCAPACITOR.get());
-	addComponent(new ComponentTickable().addTickServer(this::tickServer));
-	addComponent(new ComponentPacketHandler().addGuiPacketReader(this::readGUIPacket).addGuiPacketWriter(this::writeGUIPacket));
-	addComponent(new ComponentElectrodynamic(this).setVoltage(16 * CapabilityElectrodynamic.DEFAULT_VOLTAGE).addOutputDirection(Direction.DOWN)
-		.addOutputDirection(Direction.UP).addInputDirection(Direction.WEST).addInputDirection(Direction.EAST)
-		.addInputDirection(Direction.SOUTH).addInputDirection(Direction.NORTH).setFunctionReceivePower(this::receivePower)
-		.setFunctionSetJoules(this::setJoulesStored).setFunctionGetJoules(this::getJoulesStored));
-	addComponent(new ComponentInventory());
-	addComponent(new ComponentContainerProvider("container.quantumcapacitor").setCreateMenuFunction(
-		(id, player) -> new ContainerQuantumCapacitor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
+	addComponent(new ComponentTickable().tickServer(this::tickServer));
+	addComponent(new ComponentPacketHandler().guiPacketReader(this::readGUIPacket).guiPacketWriter(this::writeGUIPacket));
+	addComponent(new ComponentElectrodynamic(this).voltage(16 * CapabilityElectrodynamic.DEFAULT_VOLTAGE).output(Direction.DOWN)
+		.output(Direction.UP).input(Direction.WEST).input(Direction.EAST).input(Direction.SOUTH).input(Direction.NORTH)
+		.receivePower(this::receivePower).setJoules(this::setJoulesStored).getJoules(this::getJoulesStored));
+	addComponent(new ComponentInventory(this));
+	addComponent(new ComponentContainerProvider("container.quantumcapacitor")
+		.createMenu((id, player) -> new ContainerQuantumCapacitor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 
     }
 

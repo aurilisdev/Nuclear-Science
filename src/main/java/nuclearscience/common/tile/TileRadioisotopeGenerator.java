@@ -25,14 +25,14 @@ public class TileRadioisotopeGenerator extends GenericTileTicking {
 
     public TileRadioisotopeGenerator() {
 	super(DeferredRegisters.TILE_RADIOISOTOPEGENERATOR.get());
-	addComponent(new ComponentTickable().addTickServer(this::tickServer));
+	addComponent(new ComponentTickable().tickServer(this::tickServer));
 	addComponent(new ComponentPacketHandler());
-	addComponent(new ComponentElectrodynamic(this).setVoltage(Constants.RADIOISOTOPEGENERATOR_VOLTAGE)
-		.setFunctionExtractPower((x, y) -> TransferPack.EMPTY).addOutputDirection(Direction.UP).addOutputDirection(Direction.DOWN));
-	addComponent(new ComponentInventory().setInventorySize(1).addSlotsOnFace(Direction.UP, 0)
-		.setItemValidPredicate((slot, stack) -> RadiationRegister.get(stack.getItem()) != RadiationRegister.NULL));
-	addComponent(new ComponentContainerProvider("container.radioisotopegenerator").setCreateMenuFunction(
-		(id, player) -> new ContainerRadioisotopeGenerator(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
+	addComponent(new ComponentElectrodynamic(this).voltage(Constants.RADIOISOTOPEGENERATOR_VOLTAGE).extractPower((x, y) -> TransferPack.EMPTY)
+		.output(Direction.UP).output(Direction.DOWN));
+	addComponent(new ComponentInventory(this).size(1).slotFaces(0, Direction.values())
+		.valid((slot, stack) -> RadiationRegister.get(stack.getItem()) != RadiationRegister.NULL));
+	addComponent(new ComponentContainerProvider("container.radioisotopegenerator")
+		.createMenu((id, player) -> new ContainerRadioisotopeGenerator(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
     }
 
     public void tickServer(ComponentTickable tickable) {

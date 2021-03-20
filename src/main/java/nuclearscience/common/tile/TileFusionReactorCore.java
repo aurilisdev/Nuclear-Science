@@ -22,10 +22,10 @@ public class TileFusionReactorCore extends GenericTileTicking {
 
     public TileFusionReactorCore() {
 	super(DeferredRegisters.TILE_FUSIONREACTORCORE.get());
-	addComponent(new ComponentTickable().addTickServer(this::tickServer));
-	addComponent(new ComponentPacketHandler().addCustomPacketReader(this::readCustomPacket).addCustomPacketWriter(this::writeCustomPacket));
-	addComponent(new ComponentElectrodynamic(this).addInputDirection(Direction.DOWN).addInputDirection(Direction.UP)
-		.setMaxJoules(Constants.FUSIONREACTOR_USAGE_PER_TICK * 20.0).setVoltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 4));
+	addComponent(new ComponentTickable().tickServer(this::tickServer));
+	addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket));
+	addComponent(new ComponentElectrodynamic(this).input(Direction.DOWN).input(Direction.UP)
+		.maxJoules(Constants.FUSIONREACTOR_USAGE_PER_TICK * 20.0).voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 4));
     }
 
     public void tickServer(ComponentTickable tick) {
@@ -53,7 +53,7 @@ public class TileFusionReactorCore extends GenericTileTicking {
 		    }
 		}
 	    }
-	    electro.setJoules(electro.getJoulesStored() - Constants.FUSIONREACTOR_USAGE_PER_TICK);
+	    electro.joules(electro.getJoulesStored() - Constants.FUSIONREACTOR_USAGE_PER_TICK);
 	}
 	timeLeft--;
     }

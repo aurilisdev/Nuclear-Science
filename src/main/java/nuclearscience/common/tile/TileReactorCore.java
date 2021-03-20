@@ -47,15 +47,14 @@ public class TileReactorCore extends GenericTileTicking {
 
     public TileReactorCore() {
 	super(DeferredRegisters.TILE_REACTORCORE.get());
-	addComponent(new ComponentTickable().addTickCommon(this::tickCommon).addTickServer(this::tickServer));
-	addComponent(new ComponentPacketHandler().addCustomPacketReader(this::readCustomPacket).addCustomPacketWriter(this::writeCustomPacket)
-		.addGuiPacketReader(this::readCustomPacket).addGuiPacketWriter(this::writeCustomPacket));
-	addComponent(new ComponentInventory().setInventorySize(6).addSlotsOnFace(Direction.UP, 0, 1, 2, 3, 4).addSlotsOnFace(Direction.DOWN, 5));
-	addComponent(new ComponentContainerProvider("container.reactorcore").setCreateMenuFunction(
-		(id, player) -> new ContainerReactorCore(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
+	addComponent(new ComponentTickable().tickCommon(this::tickCommon).tickServer(this::tickServer));
+	addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket)
+		.guiPacketReader(this::readCustomPacket).guiPacketWriter(this::writeCustomPacket));
+	addComponent(new ComponentInventory(this).size(6).faceSlots(Direction.UP, 0, 1, 2, 3, 4).faceSlots(Direction.DOWN, 5));
+	addComponent(new ComponentContainerProvider("container.reactorcore")
+		.createMenu((id, player) -> new ContainerReactorCore(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
     }
 
-    @Deprecated
     protected void tickServer(ComponentTickable tickable) {
 	ComponentInventory inv = getComponent(ComponentType.Inventory);
 	if (tickable.getTicks() % 10 == 0) {
@@ -138,7 +137,6 @@ public class TileReactorCore extends GenericTileTicking {
 	produceSteam();
     }
 
-    @Deprecated
     public void meltdown() {
 	if (!world.isRemote) {
 	    int radius = STEAM_GEN_DIAMETER / 2;
@@ -155,18 +153,18 @@ public class TileReactorCore extends GenericTileTicking {
 		}
 	    }
 	    world.setBlockState(pos, Blocks.AIR.getDefaultState());
+	    Explosion actual = new Explosion(world, null, pos.getX(), pos.getY(), pos.getZ(), 20, new ArrayList<>());
 	    radius = 3 * fuelCount;
 	    for (int i = -radius; i <= radius; i++) {
 		for (int j = -radius; j <= radius; j++) {
 		    for (int k = -radius; k <= radius; k++) {
 			BlockPos ppos = new BlockPos(pos.getX() + i, pos.getY() + j, pos.getZ() + k);
 			BlockState state = world.getBlockState(ppos);
-			if (state.getBlock().getExplosionResistance() < radius) {
+			if (state.getBlock().getExplosionResistance(state, world, ppos, actual) < radius) {
 			    float distance = (float) Math.sqrt(i * i + j * j + k * k);
 			    if (distance < radius && world.rand.nextFloat() < 1 - 0.0001 * distance * distance * distance
 				    && world.rand.nextFloat() < 0.9) {
-				world.getBlockState(ppos).onBlockExploded(world, ppos,
-					new Explosion(world, null, pos.getX(), pos.getY(), pos.getZ(), 20, new ArrayList<>()));
+				world.getBlockState(ppos).onBlockExploded(world, ppos, actual);
 			    }
 			}
 		    }

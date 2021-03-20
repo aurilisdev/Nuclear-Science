@@ -42,7 +42,7 @@ public class ScreenGasCentrifuge extends GenericContainerScreenUpgradeable<Conta
 	    ComponentProcessor processor = centrifuge.getComponent(ComponentType.Processor);
 	    font.func_243248_b(matrixStack,
 		    new TranslationTextComponent("gui.gascentrifuge.usage",
-			    ElectricityChatFormatter.getDisplayShort(processor.getJoulesPerTick() * 20, ElectricUnit.WATT)),
+			    ElectricityChatFormatter.getDisplayShort(processor.getUsage() * 20, ElectricUnit.WATT)),
 		    playerInventoryTitleX, playerInventoryTitleY, 4210752);
 	    font.func_243248_b(matrixStack,
 		    new TranslationTextComponent("gui.gascentrifuge.voltage",

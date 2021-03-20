@@ -38,21 +38,20 @@ public class TileNuclearBoiler extends GenericTileTicking {
 
     public TileNuclearBoiler() {
 	super(DeferredRegisters.TILE_CHEMICALBOILER.get());
-	addComponent(new ComponentTickable().addTickClient(this::tickClient));
+	addComponent(new ComponentTickable().tickClient(this::tickClient));
 	addComponent(new ComponentDirection());
 	addComponent(new ComponentPacketHandler());
-	addComponent(new ComponentElectrodynamic(this).addInputDirection(Direction.DOWN).setVoltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 2)
-		.setMaxJoules(Constants.CHEMICALBOILER_USAGE_PER_TICK * 10));
-	addComponent(new ComponentFluidHandler(this).addRelativeInputDirection(Direction.EAST).addFluidTank(Fluids.WATER, TANKCAPACITY)
-		.addFluidTank(DeferredRegisters.fluidUraniumHexafluoride, TANKCAPACITY));
-	addComponent(new ComponentInventory().setInventorySize(5).addSlotsOnFace(Direction.UP, 0).addSlotsOnFace(Direction.DOWN, 1)
-		.addRelativeSlotsOnFace(Direction.EAST, 0)
-		.setItemValidPredicate((slot, stack) -> slot < 2 || stack.getItem() instanceof ItemProcessorUpgrade));
-	addComponent(new ComponentProcessor(this).addUpgradeSlots(2, 3, 4).setJoulesPerTick(Constants.CHEMICALBOILER_USAGE_PER_TICK)
-		.setType(ComponentProcessorType.ObjectToObject).setCanProcess(this::canProcess).setProcess(this::process)
-		.setRequiredTicks(Constants.CHEMICALBOILER_REQUIRED_TICKS));
-	addComponent(new ComponentContainerProvider("container.chemicalboiler").setCreateMenuFunction(
-		(id, player) -> new ContainerChemicalBoiler(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
+	addComponent(new ComponentElectrodynamic(this).input(Direction.DOWN).voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 2)
+		.maxJoules(Constants.CHEMICALBOILER_USAGE_PER_TICK * 10));
+	addComponent(new ComponentFluidHandler(this).relativeInput(Direction.EAST).fluidTank(Fluids.WATER, TANKCAPACITY)
+		.fluidTank(DeferredRegisters.fluidUraniumHexafluoride, TANKCAPACITY));
+	addComponent(new ComponentInventory(this).size(5).relativeSlotFaces(0, Direction.EAST, Direction.UP).relativeSlotFaces(1, Direction.DOWN)
+		.valid((slot, stack) -> slot < 2 || stack.getItem() instanceof ItemProcessorUpgrade));
+	addComponent(new ComponentProcessor(this).upgradeSlots(2, 3, 4).usage(Constants.CHEMICALBOILER_USAGE_PER_TICK)
+		.type(ComponentProcessorType.ObjectToObject).canProcess(this::canProcess).process(this::process)
+		.requiredTicks(Constants.CHEMICALBOILER_REQUIRED_TICKS));
+	addComponent(new ComponentContainerProvider("container.chemicalboiler")
+		.createMenu((id, player) -> new ContainerChemicalBoiler(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 
     }
 
@@ -97,7 +96,7 @@ public class TileNuclearBoiler extends GenericTileTicking {
 	if (requiredWater <= 0 || TANKCAPACITY < tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride).getAmount() + u6f) {
 	    return false;
 	}
-	return electro.getJoulesStored() >= processor.getJoulesPerTick() && !processor.getInput().isEmpty() && processor.getInput().getCount() > 0
+	return electro.getJoulesStored() >= processor.getUsage() && !processor.getInput().isEmpty() && processor.getInput().getCount() > 0
 		&& tank.getStackFromFluid(Fluids.WATER).getAmount() >= requiredWater;
     }
 
