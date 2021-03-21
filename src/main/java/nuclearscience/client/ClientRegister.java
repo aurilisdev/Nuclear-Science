@@ -32,7 +32,7 @@ import nuclearscience.client.screen.ScreenRadioisotopeGenerator;
 import nuclearscience.client.screen.ScreenReactorCore;
 
 @OnlyIn(Dist.CLIENT)
-@EventBusSubscriber(modid = References.ID, bus = Bus.MOD)
+@EventBusSubscriber(modid = References.ID, bus = Bus.MOD, value = { Dist.CLIENT })
 public class ClientRegister {
     @SubscribeEvent
     public static void onModelEvent(ModelRegistryEvent event) {
