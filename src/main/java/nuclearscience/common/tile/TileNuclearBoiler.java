@@ -1,6 +1,7 @@
 package nuclearscience.common.tile;
 
 import electrodynamics.api.electricity.CapabilityElectrodynamic;
+import electrodynamics.api.sound.DistanceSound;
 import electrodynamics.api.tile.GenericTileTicking;
 import electrodynamics.api.tile.components.ComponentType;
 import electrodynamics.api.tile.components.type.ComponentContainerProvider;
@@ -15,7 +16,6 @@ import electrodynamics.api.tile.components.type.ComponentTickable;
 import electrodynamics.common.block.subtype.SubtypeOre;
 import electrodynamics.common.item.ItemProcessorUpgrade;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SimpleSound;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -71,7 +71,7 @@ public class TileNuclearBoiler extends GenericTileTicking {
 	}
 	if (running && tickable.getTicks() % 100 == 0) {
 	    Minecraft.getInstance().getSoundHandler()
-		    .play(new SimpleSound(DeferredRegisters.SOUND_NUCLEARBOILER.get(), SoundCategory.BLOCKS, 1, 1, pos));
+		    .play(new DistanceSound(DeferredRegisters.SOUND_NUCLEARBOILER.get(), SoundCategory.BLOCKS, 1, 1, pos));
 	}
     }
 

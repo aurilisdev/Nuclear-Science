@@ -1,6 +1,7 @@
 package nuclearscience.common.tile;
 
 import electrodynamics.api.electricity.CapabilityElectrodynamic;
+import electrodynamics.api.sound.DistanceSound;
 import electrodynamics.api.tile.GenericTileTicking;
 import electrodynamics.api.tile.components.ComponentType;
 import electrodynamics.api.tile.components.type.ComponentContainerProvider;
@@ -14,7 +15,6 @@ import electrodynamics.api.tile.components.type.ComponentTickable;
 import electrodynamics.common.item.ItemProcessorUpgrade;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SimpleSound;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
@@ -94,7 +94,7 @@ public class TileGasCentrifuge extends GenericTileTicking {
     protected void tickClient(ComponentTickable tickable) {
 	if (spinSpeed > 0 && tickable.getTicks() % 80 == 0) {
 	    Minecraft.getInstance().getSoundHandler()
-		    .play(new SimpleSound(DeferredRegisters.SOUND_GASCENTRIFUGE.get(), SoundCategory.BLOCKS, 1, 1, pos));
+		    .play(new DistanceSound(DeferredRegisters.SOUND_GASCENTRIFUGE.get(), SoundCategory.BLOCKS, 1, 1, pos));
 	}
     }
 
