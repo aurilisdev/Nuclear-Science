@@ -13,9 +13,12 @@ import electrodynamics.api.tile.components.type.ComponentProcessor;
 import electrodynamics.api.tile.components.type.ComponentTickable;
 import electrodynamics.common.item.ItemProcessorUpgrade;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.SimpleSound;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
+import net.minecraft.util.SoundCategory;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerGasCentrifuge;
 import nuclearscience.common.settings.Constants;
@@ -29,7 +32,7 @@ public class TileGasCentrifuge extends GenericTileTicking {
 
     public TileGasCentrifuge() {
 	super(DeferredRegisters.TILE_GASCENTRIFUGE.get());
-	addComponent(new ComponentTickable());
+	addComponent(new ComponentTickable().tickClient(this::tickClient));
 	addComponent(new ComponentDirection());
 	addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket));
 	addComponent(
@@ -85,6 +88,13 @@ public class TileGasCentrifuge extends GenericTileTicking {
 		inv.setInventorySlotContents(1, new ItemStack(DeferredRegisters.ITEM_URANIUM238.get()));
 	    }
 	    stored238 -= 2500;
+	}
+    }
+
+    protected void tickClient(ComponentTickable tickable) {
+	if (spinSpeed > 0 && tickable.getTicks() % 80 == 0) {
+	    Minecraft.getInstance().getSoundHandler()
+		    .play(new SimpleSound(DeferredRegisters.SOUND_GASCENTRIFUGE.get(), SoundCategory.BLOCKS, 1, 1, pos));
 	}
     }
 

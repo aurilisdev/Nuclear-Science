@@ -9,9 +9,12 @@ import electrodynamics.api.utilities.object.CachedTileOutput;
 import electrodynamics.api.utilities.object.TransferPack;
 import electrodynamics.common.network.ElectricityUtilities;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.SimpleSound;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import nuclearscience.DeferredRegisters;
@@ -36,7 +39,7 @@ public class TileTurbine extends GenericTileTicking {
 
     public TileTurbine() {
 	super(DeferredRegisters.TILE_TURBINE.get());
-	addComponent(new ComponentTickable().tickServer(this::tickServer));
+	addComponent(new ComponentTickable().tickServer(this::tickServer).tickClient(this::tickClient));
 	addComponent(new ComponentPacketHandler().customPacketWriter(this::writeCustomPacket).customPacketReader(this::readCustomPacket));
 	addComponent(new ComponentElectrodynamic(this).output(Direction.UP).setCapabilityTest(() -> (!hasCore || isCore)));
     }
@@ -155,7 +158,12 @@ public class TileTurbine extends GenericTileTicking {
 	    }
 	    wait--;
 	}
+    }
 
+    public void tickClient(ComponentTickable tickable) {
+	if (spinSpeed > 0 && tickable.getTicks() % 200 == 0) {
+	    Minecraft.getInstance().getSoundHandler().play(new SimpleSound(DeferredRegisters.SOUND_TURBINE.get(), SoundCategory.BLOCKS, 1, 1, pos));
+	}
     }
 
     public void writeCustomPacket(CompoundNBT tag) {

@@ -14,6 +14,8 @@ import electrodynamics.api.tile.components.type.ComponentProcessorType;
 import electrodynamics.api.tile.components.type.ComponentTickable;
 import electrodynamics.common.block.subtype.SubtypeOre;
 import electrodynamics.common.item.ItemProcessorUpgrade;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.SimpleSound;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -22,6 +24,7 @@ import net.minecraft.item.Items;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.util.LazyOptional;
@@ -61,9 +64,14 @@ public class TileNuclearBoiler extends GenericTileTicking {
     }
 
     protected void tickClient(ComponentTickable tickable) {
-	if (this.<ComponentProcessor>getComponent(ComponentType.Processor).operatingTicks > 0 && world.rand.nextDouble() < 0.15) {
+	boolean running = this.<ComponentProcessor>getComponent(ComponentType.Processor).operatingTicks > 0;
+	if (running && world.rand.nextDouble() < 0.15) {
 	    world.addParticle(ParticleTypes.SMOKE, pos.getX() + world.rand.nextDouble(), pos.getY() + world.rand.nextDouble() * 0.4 + 0.5,
 		    pos.getZ() + world.rand.nextDouble(), 0.0D, 0.0D, 0.0D);
+	}
+	if (running && tickable.getTicks() % 100 == 0) {
+	    Minecraft.getInstance().getSoundHandler()
+		    .play(new SimpleSound(DeferredRegisters.SOUND_NUCLEARBOILER.get(), SoundCategory.BLOCKS, 1, 1, pos));
 	}
     }
 
