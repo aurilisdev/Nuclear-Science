@@ -36,7 +36,7 @@ public class NuclearScience {
 	DeferredRegisters.FLUIDS.register(bus);
 	DeferredRegisters.ENTITIES.register(bus);
 	if (FMLLoader.getDist() == Dist.CLIENT) {
-	    DeferredRegisters.SOUNDS.register(bus);
+	    SoundRegister.SOUNDS.register(bus);
 	}
     }
 

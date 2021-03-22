@@ -1,6 +1,6 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.api.sound.DistanceSound;
+import electrodynamics.api.sound.SoundAPI;
 import electrodynamics.api.tile.GenericTileTicking;
 import electrodynamics.api.tile.components.ComponentType;
 import electrodynamics.api.tile.components.type.ComponentElectrodynamic;
@@ -10,7 +10,6 @@ import electrodynamics.api.utilities.object.CachedTileOutput;
 import electrodynamics.api.utilities.object.TransferPack;
 import electrodynamics.common.network.ElectricityUtilities;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -18,6 +17,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import nuclearscience.DeferredRegisters;
+import nuclearscience.SoundRegister;
 import nuclearscience.common.block.BlockTurbine;
 
 public class TileTurbine extends GenericTileTicking {
@@ -162,7 +162,7 @@ public class TileTurbine extends GenericTileTicking {
 
     public void tickClient(ComponentTickable tickable) {
 	if (spinSpeed > 0 && tickable.getTicks() % 200 == 0) {
-	    Minecraft.getInstance().getSoundHandler().play(new DistanceSound(DeferredRegisters.SOUND_TURBINE.get(), SoundCategory.BLOCKS, 1, 1, pos));
+	    SoundAPI.playSound(SoundRegister.SOUND_TURBINE.get(), SoundCategory.BLOCKS, 1, 1, pos);
 	}
     }
 

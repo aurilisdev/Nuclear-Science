@@ -1,7 +1,7 @@
 package nuclearscience.common.tile;
 
 import electrodynamics.api.electricity.CapabilityElectrodynamic;
-import electrodynamics.api.sound.DistanceSound;
+import electrodynamics.api.sound.SoundAPI;
 import electrodynamics.api.tile.GenericTileTicking;
 import electrodynamics.api.tile.components.ComponentType;
 import electrodynamics.api.tile.components.type.ComponentContainerProvider;
@@ -15,7 +15,6 @@ import electrodynamics.api.tile.components.type.ComponentProcessorType;
 import electrodynamics.api.tile.components.type.ComponentTickable;
 import electrodynamics.common.block.subtype.SubtypeOre;
 import electrodynamics.common.item.ItemProcessorUpgrade;
-import net.minecraft.client.Minecraft;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -32,6 +31,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import nuclearscience.DeferredRegisters;
+import nuclearscience.SoundRegister;
 import nuclearscience.common.inventory.container.ContainerChemicalBoiler;
 import nuclearscience.common.settings.Constants;
 
@@ -70,8 +70,7 @@ public class TileNuclearBoiler extends GenericTileTicking {
 		    pos.getZ() + world.rand.nextDouble(), 0.0D, 0.0D, 0.0D);
 	}
 	if (running && tickable.getTicks() % 100 == 0) {
-	    Minecraft.getInstance().getSoundHandler()
-		    .play(new DistanceSound(DeferredRegisters.SOUND_NUCLEARBOILER.get(), SoundCategory.BLOCKS, 1, 1, pos));
+	    SoundAPI.playSound(SoundRegister.SOUND_NUCLEARBOILER.get(), SoundCategory.BLOCKS, 1, 1, pos);
 	}
     }
 
