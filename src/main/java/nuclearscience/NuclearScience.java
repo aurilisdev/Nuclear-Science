@@ -14,7 +14,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.FMLLoader;
 import nuclearscience.api.radiation.EffectRadiation;
 import nuclearscience.api.radiation.FieldRadioactiveObject;
 import nuclearscience.api.radiation.RadiationRegister;
@@ -35,9 +34,7 @@ public class NuclearScience {
 	DeferredRegisters.CONTAINERS.register(bus);
 	DeferredRegisters.FLUIDS.register(bus);
 	DeferredRegisters.ENTITIES.register(bus);
-	if (FMLLoader.getDist() == Dist.CLIENT) {
-	    SoundRegister.SOUNDS.register(bus);
-	}
+	SoundRegister.SOUNDS.register(bus);
     }
 
     @SubscribeEvent
