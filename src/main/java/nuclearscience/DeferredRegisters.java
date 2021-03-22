@@ -14,6 +14,8 @@ import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -63,6 +65,7 @@ public class DeferredRegisters {
     public static final DeferredRegister<ContainerType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, References.ID);
     public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, References.ID);
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, References.ID);
+    @OnlyIn(value = Dist.CLIENT)
     public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, References.ID);
     public static FluidUraniumHexafluoride fluidUraniumHexafluoride;
     public static BlockGasCentrifuge blockGasCentrifuge;
@@ -201,11 +204,13 @@ public class DeferredRegisters {
 
     public static final RegistryObject<EntityType<EntityParticle>> ENTITY_PARTICLE = ENTITIES.register("particle", () -> EntityType.Builder
 	    .<EntityParticle>create(EntityParticle::new, EntityClassification.MISC).trackingRange(8).build(References.ID + ".particle"));
-
+    @OnlyIn(value = Dist.CLIENT)
     public static final RegistryObject<SoundEvent> SOUND_TURBINE = SOUNDS.register("turbine",
 	    () -> new SoundEvent(new ResourceLocation(References.ID + ":turbine")));
+    @OnlyIn(value = Dist.CLIENT)
     public static final RegistryObject<SoundEvent> SOUND_NUCLEARBOILER = SOUNDS.register("nuclearboiler",
 	    () -> new SoundEvent(new ResourceLocation(References.ID + ":nuclearboiler")));
+    @OnlyIn(value = Dist.CLIENT)
     public static final RegistryObject<SoundEvent> SOUND_GASCENTRIFUGE = SOUNDS.register("gascentrifuge",
 	    () -> new SoundEvent(new ResourceLocation(References.ID + ":gascentrifuge")));
 
