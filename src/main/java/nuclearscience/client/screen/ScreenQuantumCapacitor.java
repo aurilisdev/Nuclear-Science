@@ -58,7 +58,7 @@ public class ScreenQuantumCapacitor extends GenericContainerScreenUpgradeable<Co
 	outputField.setDisabledTextColour(-1);
 	outputField.setEnableBackgroundDrawing(false);
 	outputField.setMaxStringLength(6);
-	outputField.setResponder(this::updateValues);
+	outputField.setResponder(this::updateOutput);
 
 	frequencyField = new TextFieldWidget(font, i + 120, j + 18 + 20, 46, 13,
 		new TranslationTextComponent("container.quantumcapacitor.frequency"));
@@ -66,7 +66,7 @@ public class ScreenQuantumCapacitor extends GenericContainerScreenUpgradeable<Co
 	frequencyField.setDisabledTextColour(-1);
 	frequencyField.setEnableBackgroundDrawing(false);
 	frequencyField.setMaxStringLength(6);
-	frequencyField.setResponder(this::updateValues);
+	frequencyField.setResponder(this::updateFreq);
 
 	children.add(outputField);
 	children.add(frequencyField);
@@ -95,6 +95,18 @@ public class ScreenQuantumCapacitor extends GenericContainerScreenUpgradeable<Co
 	}
     }
 
+    private void updateFreq(String val) {
+	frequencyField.setFocused2(true);
+	outputField.setFocused2(false);
+	updateValues(val);
+    }
+
+    private void updateOutput(String val) {
+	frequencyField.setFocused2(false);
+	outputField.setFocused2(true);
+	updateValues(val);
+    }
+
     @Override
     public void resize(Minecraft minecraft, int width, int height) {
 	String s = outputField.getText();
@@ -108,19 +120,6 @@ public class ScreenQuantumCapacitor extends GenericContainerScreenUpgradeable<Co
     public void onClose() {
 	super.onClose();
 	minecraft.keyboardListener.enableRepeatEvents(false);
-    }
-
-    @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-	if (keyCode == 256) {
-	    minecraft.player.closeScreen();
-	}
-	boolean x = !outputField.keyPressed(keyCode, scanCode, modifiers) && !outputField.canWrite();
-	boolean y = !frequencyField.keyPressed(keyCode, scanCode, modifiers) && !frequencyField.canWrite();
-	if (x || y) {
-	    return super.keyPressed(keyCode, scanCode, modifiers);
-	}
-	return true;
     }
 
     @Override
