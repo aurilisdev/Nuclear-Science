@@ -65,5 +65,9 @@
 	"death.attack.plasma": "%s was ionized!",
 	"effect.nuclearscience.radiation": "Radiation",
 	"message.geigercounter.text": "%s Rads per hour",
+	"tooltip.particleinjector.voltage": "Voltage: 960 Volts",
+	"tooltip.gascentrifuge.voltage": "Voltage: 240 Volts",
+	"tooltip.chemicalboiler.voltage": "Voltage: 240 Volts",
+	"tooltip.chemicalextractor.voltage": "Voltage: 240 Volts",
 	"tooltip.quantumcapacitor.voltage": "Voltage: 1.92 kV"
 }

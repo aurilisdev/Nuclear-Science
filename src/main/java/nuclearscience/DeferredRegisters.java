@@ -116,7 +116,10 @@ public class DeferredRegisters {
 	ITEMS.register("quantumcapacitor",
 		supplier(new BlockItemDescriptable(blockQuantumCapacitor, new Item.Properties().group(References.NUCLEARTAB))));
 	FLUIDS.register("fluiduraniumhexafluoride", supplier(fluidUraniumHexafluoride = new FluidUraniumHexafluoride()));
-
+	BlockItemDescriptable.addDescription(blockGasCentrifuge, "|translate|tooltip.gascentrifuge.voltage");
+	BlockItemDescriptable.addDescription(blockChemicalBoiler, "|translate|tooltip.chemicalboiler.voltage");
+	BlockItemDescriptable.addDescription(blockChemicalExtractor, "|translate|tooltip.chemicalextractor.voltage");
+	BlockItemDescriptable.addDescription(blockParticleInjector, "|translate|tooltip.particleinjector.voltage");
 	BlockItemDescriptable.addDescription(blockQuantumCapacitor, "|translate|tooltip.quantumcapacitor.voltage");
     }
     public static final RegistryObject<Item> ITEM_URANIUM235 = ITEMS.register("uranium235",
