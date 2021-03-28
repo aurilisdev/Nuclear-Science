@@ -135,22 +135,26 @@ public class TileTurbine extends GenericTileTicking {
 
     public void tickServer(ComponentTickable tickable) {
 	this.<ComponentElectrodynamic>getComponent(ComponentType.Electrodynamic).voltage(currentVoltage);
+	if (output == null) {
+	    output = new CachedTileOutput(world, new BlockPos(pos).offset(Direction.UP));
+	}
 	if (tickable.getTicks() % 30 == 0) {
 	    this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();
 	    spinSpeed = currentVoltage / 120;
+	    output.update();
 	}
 	if (hasCore && !isCore) {
 	    currentVoltage = 0;
 	    return;
 	}
-	if (output == null) {
-	    output = new CachedTileOutput(world, new BlockPos(pos).offset(Direction.UP));
-	}
+
 	if (steam > 0) {
 	    wait = 30;
-	    TransferPack transfer = TransferPack.joulesVoltage(steam * (hasCore ? 1.111 : 1), currentVoltage);
-	    ElectricityUtilities.receivePower(output.get(), Direction.DOWN, transfer, false);
-	    steam = Math.max(steam - Math.max(75, steam), 0);
+	    if (output.valid()) {
+		TransferPack transfer = TransferPack.joulesVoltage(steam * (hasCore ? 1.111 : 1), currentVoltage);
+		ElectricityUtilities.receivePower(output.getSafe(), Direction.DOWN, transfer, false);
+		steam = Math.max(steam - Math.max(75, steam), 0);
+	    }
 	} else {
 	    if (wait <= 0) {
 		currentVoltage = 0;

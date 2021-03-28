@@ -60,15 +60,19 @@ public class TileQuantumCapacitor extends GenericTileTicking implements IEnergyS
 	if (outputCache2 == null) {
 	    outputCache2 = new CachedTileOutput(world, new BlockPos(pos).offset(Direction.DOWN));
 	}
+	if (tickable.getTicks() % 40 == 0) {
+	    outputCache.update();
+	    outputCache2.update();
+	}
 	double joules = getJoulesStored();
-	if (joules > 0) {
-	    double sent = ElectricityUtilities.receivePower(outputCache.get(), Direction.DOWN,
+	if (joules > 0 && outputCache.valid()) {
+	    double sent = ElectricityUtilities.receivePower(outputCache.getSafe(), Direction.DOWN,
 		    TransferPack.joulesVoltage(Math.min(joules, outputJoules), DEFAULT_VOLTAGE), false).getJoules();
 	    QuantumCapacitorData.get(world).setJoules(uuid, frequency, getJoulesStored() - sent);
 	}
 	joules = getJoulesStored();
-	if (joules > 0) {
-	    double sent = ElectricityUtilities.receivePower(outputCache2.get(), Direction.UP,
+	if (joules > 0 && outputCache2.valid()) {
+	    double sent = ElectricityUtilities.receivePower(outputCache2.getSafe(), Direction.UP,
 		    TransferPack.joulesVoltage(Math.min(joules, outputJoules), DEFAULT_VOLTAGE), false).getJoules();
 	    QuantumCapacitorData.get(world).setJoules(uuid, frequency, getJoulesStored() - sent);
 	}

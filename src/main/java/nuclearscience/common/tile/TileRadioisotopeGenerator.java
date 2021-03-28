@@ -42,14 +42,22 @@ public class TileRadioisotopeGenerator extends GenericTileTicking {
 	if (output2 == null) {
 	    output2 = new CachedTileOutput(world, pos.offset(Direction.DOWN));
 	}
+	if (tickable.getTicks() % 40 == 0) {
+	    output1.update();
+	    output2.update();
+	}
 	ItemStack in = this.<ComponentInventory>getComponent(ComponentType.Inventory).getStackInSlot(0);
 	IRadioactiveObject rad = RadiationRegister.get(in.getItem());
 	double currentOutput = in.getCount() * Constants.RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER * rad.getRadiationStrength();
 	if (currentOutput > 0) {
 	    TransferPack transfer = TransferPack.ampsVoltage(currentOutput / (Constants.RADIOISOTOPEGENERATOR_VOLTAGE * 2.0),
 		    Constants.RADIOISOTOPEGENERATOR_VOLTAGE);
-	    ElectricityUtilities.receivePower(output1.get(), Direction.DOWN, transfer, false);
-	    ElectricityUtilities.receivePower(output2.get(), Direction.UP, transfer, false);
+	    if (output1.valid()) {
+		ElectricityUtilities.receivePower(output1.getSafe(), Direction.DOWN, transfer, false);
+	    }
+	    if (output2.valid()) {
+		ElectricityUtilities.receivePower(output2.getSafe(), Direction.UP, transfer, false);
+	    }
 	}
     }
 }

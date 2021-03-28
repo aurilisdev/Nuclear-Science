@@ -56,8 +56,8 @@ public class TilePlasma extends GenericTileTicking {
 	    if (output == null) {
 		output = new CachedTileOutput(world, getPos().offset(Direction.UP, 3));
 	    } else {
-		if (output.get() instanceof TileTurbine) {
-		    TileTurbine turbine = output.get();
+		if (output.getSafe() instanceof TileTurbine) {
+		    TileTurbine turbine = output.getSafe();
 		    turbine.addSteam((int) (Constants.FUSIONREACTOR_MAXENERGYTARGET / (113.0 * 20.0)), Integer.MAX_VALUE);
 		}
 	    }
