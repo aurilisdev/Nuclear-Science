@@ -86,7 +86,8 @@ public class RadiationSystem {
 		radiation = getRadiation(entity.world, source, end, strength);
 		radiationMap.put((PlayerEntity) entity, already + radiation);
 	    }
-	    if (!(entity instanceof PlayerEntity && ((PlayerEntity) entity).isCreative()) && protection < 5 && radiationMap.get(entity) > 10) {
+	    if (!(entity instanceof PlayerEntity && ((PlayerEntity) entity).isCreative()) && protection < 5
+		    && radiationMap.getOrDefault(entity, 11.0) > 10) {
 		if (radiation == 0) {
 		    radiation = getRadiation(entity.world, source, end, strength);
 		}
