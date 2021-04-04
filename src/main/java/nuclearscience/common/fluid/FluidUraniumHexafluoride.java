@@ -69,8 +69,8 @@ public class FluidUraniumHexafluoride extends Fluid {
 
     @Override
     protected FluidAttributes createAttributes() {
-	return FluidAttributes.builder(null, null).translationKey("fluid.nuclearscience.hexafluoride").color(0).density(0).temperature(0).luminosity(0).viscosity(0)
-		.build(this);
+	return FluidAttributes.builder(null, null).translationKey("fluid.nuclearscience.hexafluoride").color(0).density(0).temperature(0)
+		.luminosity(0).viscosity(0).build(this);
     }
 
     @Override
