@@ -60,7 +60,7 @@ public class TileParticleInjector extends GenericTileTicking {
 	if (resultStack.getCount() < resultStack.getMaxStackSize() && cellStack.getCount() > 0 && particles[0] != null && particles[1] != null) {
 	    EntityParticle one = particles[0];
 	    EntityParticle two = particles[1];
-	    if (one.getDistance(two) < 1) {
+	    if (one.getDistance(two) < 2) {
 		double speedOfMax = Math.pow((one.speed + two.speed) / 4.0, 2);
 		one.remove();
 		two.remove();

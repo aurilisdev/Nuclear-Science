@@ -63,9 +63,11 @@ public class EntityParticle extends Entity {
 		return;
 	    }
 	    ((TileParticleInjector) tile).addParticle(this);
-	    if (direction != null) {
-		dataManager.set(DIRECTION, direction);
+	    if (direction == null) {
+		direction = Direction.UP;
 	    }
+	    dataManager.set(DIRECTION, direction);
+
 	    dataManager.set(SPEED, speed);
 	} else {
 	    if (!dataManager.isEmpty()) {
@@ -82,7 +84,7 @@ public class EntityParticle extends Entity {
 	for (LivingEntity living : list) {
 	    RadiationSystem.applyRadiation(living, source, totstrength);
 	}
-	if (direction != null) {
+	if (direction != null && direction != Direction.UP) {
 	    int checks = (int) (Math.ceil(speed) * 2);
 	    float localSpeed = speed / checks;
 	    for (int i = 0; i < checks; i++) {
@@ -223,6 +225,9 @@ public class EntityParticle extends Entity {
 
     @Override
     protected void registerData() {
+	if (direction == null) {
+	    direction = Direction.UP;
+	}
 	dataManager.register(DIRECTION, direction);
 	dataManager.register(SPEED, speed);
     }
