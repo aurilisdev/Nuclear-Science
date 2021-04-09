@@ -98,7 +98,7 @@ public class RadiationSystem {
 		if (amplitude == 0 && time <= 40) {
 		    return;
 		}
-		entity.addPotionEffect(new EffectInstance(EffectRadiation.INSTANCE, time, amplitude, false, true));
+		entity.addPotionEffect(new EffectInstance(EffectRadiation.INSTANCE, time, Math.min(40, amplitude), false, true));
 	    }
 	}
     }

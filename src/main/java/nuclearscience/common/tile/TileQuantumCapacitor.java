@@ -32,7 +32,7 @@ public class TileQuantumCapacitor extends GenericTileTicking implements IEnergyS
     public static final double DEFAULT_VOLTAGE = 1920.0;
     public double outputJoules = 359.0;
     public int frequency = 0;
-    public UUID uuid = null;
+    public UUID uuid = UUID.randomUUID();
     private CachedTileOutput outputCache;
     private CachedTileOutput outputCache2;
 
@@ -198,7 +198,8 @@ public class TileQuantumCapacitor extends GenericTileTicking implements IEnergyS
     }
 
     public double getJoulesStored() {
-	return QuantumCapacitorData.get(world).getJoules(uuid, frequency);
+	QuantumCapacitorData data = QuantumCapacitorData.get(world);
+	return data == null ? 0 : data.getJoules(uuid, frequency);
     }
 
     public double getMaxJoulesStored() {
