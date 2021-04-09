@@ -20,6 +20,8 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.Explosion.Mode;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -39,7 +41,7 @@ public class EntityParticle extends Entity {
     public BlockPos source = BlockPos.ZERO;
 
     public EntityParticle(EntityType<?> entityTypeIn, World worldIn) {
-	super(entityTypeIn, worldIn);
+	super(DeferredRegisters.ENTITY_PARTICLE.get(), worldIn);
     }
 
     public EntityParticle(Direction direction, World worldIn, Location pos) {
@@ -66,8 +68,10 @@ public class EntityParticle extends Entity {
 	    }
 	    dataManager.set(SPEED, speed);
 	} else {
-	    direction = dataManager.get(DIRECTION);
-	    speed = dataManager.get(SPEED);
+	    if (!dataManager.isEmpty()) {
+		direction = dataManager.get(DIRECTION);
+		speed = dataManager.get(SPEED);
+	    }
 	}
 	Location source = new Location(getPosition());
 	double totstrength = 1000;
@@ -231,6 +235,11 @@ public class EntityParticle extends Entity {
     @Override
     protected void readAdditional(CompoundNBT compound) {
 	source = new BlockPos(compound.getInt("sourceX"), compound.getInt("sourceY"), compound.getInt("sourceZ"));
+    }
+
+    @Override
+    public ITextComponent getName() {
+	return new StringTextComponent("entity.particle");
     }
 
     @Override
