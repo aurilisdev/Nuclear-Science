@@ -1,14 +1,14 @@
 package nuclearscience.common.tile;
 
 import electrodynamics.api.sound.SoundAPI;
-import electrodynamics.api.tile.GenericTileTicking;
-import electrodynamics.api.tile.components.ComponentType;
-import electrodynamics.api.tile.components.type.ComponentElectrodynamic;
-import electrodynamics.api.tile.components.type.ComponentPacketHandler;
-import electrodynamics.api.tile.components.type.ComponentTickable;
 import electrodynamics.api.utilities.object.CachedTileOutput;
 import electrodynamics.api.utilities.object.TransferPack;
 import electrodynamics.common.network.ElectricityUtilities;
+import electrodynamics.prefab.tile.GenericTileTicking;
+import electrodynamics.prefab.tile.components.ComponentType;
+import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
+import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
+import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;

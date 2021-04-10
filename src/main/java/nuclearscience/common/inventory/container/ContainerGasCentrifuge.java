@@ -1,8 +1,8 @@
 package nuclearscience.common.inventory.container;
 
-import electrodynamics.common.inventory.container.GenericContainer;
 import electrodynamics.common.inventory.container.slot.SlotRestricted;
 import electrodynamics.common.item.subtype.SubtypeProcessorUpgrade;
+import electrodynamics.prefab.inventory.container.GenericContainer;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Inventory;

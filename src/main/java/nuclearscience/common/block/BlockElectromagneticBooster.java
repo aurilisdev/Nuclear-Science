@@ -3,8 +3,8 @@ package nuclearscience.common.block;
 import java.util.Arrays;
 import java.util.List;
 
-import electrodynamics.api.tile.IWrenchable;
 import electrodynamics.common.block.BlockGenericMachine;
+import electrodynamics.prefab.tile.IWrenchable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;

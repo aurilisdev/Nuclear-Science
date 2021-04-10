@@ -2,7 +2,7 @@ package nuclearscience.client.screen;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
-import electrodynamics.client.screen.generic.GenericContainerScreen;
+import electrodynamics.prefab.screen.GenericContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;

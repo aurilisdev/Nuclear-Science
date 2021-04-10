@@ -33,7 +33,7 @@ public class BlockPlasma extends Block {
 
     @Override
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
-	entityIn.attackEntityFrom(DamageSourcePlasma.INSTANCE, Float.MAX_VALUE);
+	entityIn.attackEntityFrom(DamageSourcePlasma.INSTANCE, 99999);
     }
 
     @Override

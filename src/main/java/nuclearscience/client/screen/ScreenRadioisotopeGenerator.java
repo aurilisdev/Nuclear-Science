@@ -2,10 +2,10 @@ package nuclearscience.client.screen;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
+import electrodynamics.api.electricity.formatting.ChatFormatter;
 import electrodynamics.api.electricity.formatting.ElectricUnit;
-import electrodynamics.api.electricity.formatting.ElectricityChatFormatter;
 import electrodynamics.api.utilities.object.TransferPack;
-import electrodynamics.client.screen.generic.GenericContainerScreen;
+import electrodynamics.prefab.screen.GenericContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -42,15 +42,15 @@ public class ScreenRadioisotopeGenerator extends GenericContainerScreen<Containe
 		Constants.RADIOISOTOPEGENERATOR_VOLTAGE);
 	font.func_243248_b(matrixStack,
 		new TranslationTextComponent("gui.radioisotopegenerator.current",
-			ElectricityChatFormatter.getDisplayShort(transfer.getAmps(), ElectricUnit.AMPERE)),
+			ChatFormatter.getElectricDisplayShort(transfer.getAmps(), ElectricUnit.AMPERE)),
 		(float) playerInventoryTitleX + 60, (float) playerInventoryTitleY - 48, 4210752);
 	font.func_243248_b(matrixStack,
 		new TranslationTextComponent("gui.radioisotopegenerator.output",
-			ElectricityChatFormatter.getDisplayShort(transfer.getWatts(), ElectricUnit.WATT)),
+			ChatFormatter.getElectricDisplayShort(transfer.getWatts(), ElectricUnit.WATT)),
 		(float) playerInventoryTitleX + 60, (float) playerInventoryTitleY - 35, 4210752);
 	font.func_243248_b(matrixStack,
 		new TranslationTextComponent("gui.radioisotopegenerator.voltage",
-			ElectricityChatFormatter.getDisplayShort(transfer.getVoltage(), ElectricUnit.VOLTAGE)),
+			ChatFormatter.getElectricDisplayShort(transfer.getVoltage(), ElectricUnit.VOLTAGE)),
 		(float) playerInventoryTitleX + 60, (float) playerInventoryTitleY - 22, 4210752);
     }
 

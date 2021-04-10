@@ -1,6 +1,6 @@
 package nuclearscience;
 
-import electrodynamics.api.configuration.ConfigurationHandler;
+import electrodynamics.prefab.configuration.ConfigurationHandler;
 import net.minecraft.potion.Effect;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;

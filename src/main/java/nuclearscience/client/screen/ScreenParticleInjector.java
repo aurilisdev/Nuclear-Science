@@ -2,12 +2,12 @@ package nuclearscience.client.screen;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
+import electrodynamics.api.electricity.formatting.ChatFormatter;
 import electrodynamics.api.electricity.formatting.ElectricUnit;
-import electrodynamics.api.electricity.formatting.ElectricityChatFormatter;
-import electrodynamics.api.tile.components.ComponentType;
-import electrodynamics.api.tile.components.type.ComponentElectrodynamic;
-import electrodynamics.api.tile.components.type.ComponentProcessor;
-import electrodynamics.client.screen.generic.GenericContainerScreen;
+import electrodynamics.prefab.screen.GenericContainerScreen;
+import electrodynamics.prefab.tile.components.ComponentType;
+import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
+import electrodynamics.prefab.tile.components.type.ComponentProcessor;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -46,11 +46,11 @@ public class ScreenParticleInjector extends GenericContainerScreen<ContainerPart
 		    titleX, titleY + 30f, 4210752);
 	    font.func_243248_b(matrixStack,
 		    new TranslationTextComponent("gui.particleinjector.usage",
-			    ElectricityChatFormatter.getDisplayShort(processor.getUsage(), ElectricUnit.JOULES)),
+			    ChatFormatter.getElectricDisplayShort(processor.getUsage(), ElectricUnit.JOULES)),
 		    playerInventoryTitleX, playerInventoryTitleY, 4210752);
 	    font.func_243248_b(matrixStack,
 		    new TranslationTextComponent("gui.particleinjector.voltage",
-			    ElectricityChatFormatter.getDisplayShort(electro.getVoltage(), ElectricUnit.VOLTAGE)),
+			    ChatFormatter.getElectricDisplayShort(electro.getVoltage(), ElectricUnit.VOLTAGE)),
 		    (float) playerInventoryTitleX + 85, playerInventoryTitleY, 4210752);
 	}
     }

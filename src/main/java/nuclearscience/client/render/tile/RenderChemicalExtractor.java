@@ -4,9 +4,9 @@ import java.util.Random;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
-import electrodynamics.api.tile.components.ComponentType;
-import electrodynamics.api.tile.components.type.ComponentFluidHandler;
 import electrodynamics.common.block.BlockGenericMachine;
+import electrodynamics.prefab.tile.components.ComponentType;
+import electrodynamics.prefab.tile.components.type.ComponentFluidHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;

@@ -1,17 +1,17 @@
 package nuclearscience.common.tile;
 
 import electrodynamics.api.electricity.CapabilityElectrodynamic;
-import electrodynamics.api.tile.GenericTileTicking;
-import electrodynamics.api.tile.components.ComponentType;
-import electrodynamics.api.tile.components.type.ComponentContainerProvider;
-import electrodynamics.api.tile.components.type.ComponentDirection;
-import electrodynamics.api.tile.components.type.ComponentElectrodynamic;
-import electrodynamics.api.tile.components.type.ComponentFluidHandler;
-import electrodynamics.api.tile.components.type.ComponentInventory;
-import electrodynamics.api.tile.components.type.ComponentPacketHandler;
-import electrodynamics.api.tile.components.type.ComponentProcessor;
-import electrodynamics.api.tile.components.type.ComponentTickable;
 import electrodynamics.common.block.subtype.SubtypeOre;
+import electrodynamics.prefab.tile.GenericTileTicking;
+import electrodynamics.prefab.tile.components.ComponentType;
+import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
+import electrodynamics.prefab.tile.components.type.ComponentDirection;
+import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
+import electrodynamics.prefab.tile.components.type.ComponentFluidHandler;
+import electrodynamics.prefab.tile.components.type.ComponentInventory;
+import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
+import electrodynamics.prefab.tile.components.type.ComponentProcessor;
+import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

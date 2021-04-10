@@ -2,13 +2,13 @@ package nuclearscience.client.screen;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
+import electrodynamics.api.electricity.formatting.ChatFormatter;
 import electrodynamics.api.electricity.formatting.ElectricUnit;
-import electrodynamics.api.electricity.formatting.ElectricityChatFormatter;
-import electrodynamics.api.tile.components.ComponentType;
-import electrodynamics.api.tile.components.type.ComponentElectrodynamic;
-import electrodynamics.api.tile.components.type.ComponentFluidHandler;
-import electrodynamics.api.tile.components.type.ComponentProcessor;
-import electrodynamics.client.screen.generic.GenericContainerScreenUpgradeable;
+import electrodynamics.prefab.screen.GenericContainerScreenUpgradeable;
+import electrodynamics.prefab.tile.components.ComponentType;
+import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
+import electrodynamics.prefab.tile.components.type.ComponentFluidHandler;
+import electrodynamics.prefab.tile.components.type.ComponentProcessor;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -42,11 +42,11 @@ public class ScreenGasCentrifuge extends GenericContainerScreenUpgradeable<Conta
 	    ComponentProcessor processor = centrifuge.getComponent(ComponentType.Processor);
 	    font.func_243248_b(matrixStack,
 		    new TranslationTextComponent("gui.gascentrifuge.usage",
-			    ElectricityChatFormatter.getDisplayShort(processor.getUsage() * 20, ElectricUnit.WATT)),
+			    ChatFormatter.getElectricDisplayShort(processor.getUsage() * 20, ElectricUnit.WATT)),
 		    playerInventoryTitleX, playerInventoryTitleY, 4210752);
 	    font.func_243248_b(matrixStack,
 		    new TranslationTextComponent("gui.gascentrifuge.voltage",
-			    ElectricityChatFormatter.getDisplayShort(electro.getVoltage(), ElectricUnit.VOLTAGE)),
+			    ChatFormatter.getElectricDisplayShort(electro.getVoltage(), ElectricUnit.VOLTAGE)),
 		    (float) playerInventoryTitleX + 85, playerInventoryTitleY, 4210752);
 	    font.func_243248_b(matrixStack, new TranslationTextComponent("U-238"), (float) playerInventoryTitleX + 30,
 		    playerInventoryTitleY - 33 + 17f, 4210752);
