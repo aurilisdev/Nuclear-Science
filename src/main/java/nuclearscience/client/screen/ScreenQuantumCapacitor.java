@@ -4,33 +4,26 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 
 import electrodynamics.api.electricity.formatting.ChatFormatter;
 import electrodynamics.api.electricity.formatting.ElectricUnit;
-import electrodynamics.prefab.screen.GenericCustomScreenUpgradeable;
+import electrodynamics.prefab.screen.GenericScreen;
+import electrodynamics.prefab.screen.component.ScreenComponentTextInputBar;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import nuclearscience.References;
 import nuclearscience.common.inventory.container.ContainerQuantumCapacitor;
 import nuclearscience.common.packet.NetworkHandler;
 import nuclearscience.common.packet.PacketSetQuantumCapacitorData;
 import nuclearscience.common.tile.TileQuantumCapacitor;
 
 @OnlyIn(Dist.CLIENT)
-public class ScreenQuantumCapacitor extends GenericCustomScreenUpgradeable<ContainerQuantumCapacitor> {
-    public static final ResourceLocation SCREEN_BACKGROUND = new ResourceLocation(References.ID + ":textures/gui/quantumcapacitor.png");
-
+public class ScreenQuantumCapacitor extends GenericScreen<ContainerQuantumCapacitor> {
     public ScreenQuantumCapacitor(ContainerQuantumCapacitor container, PlayerInventory playerInventory, ITextComponent title) {
 	super(container, playerInventory, title);
-	xSize = 176;
-    }
-
-    @Override
-    public ResourceLocation getScreenBackground() {
-	return SCREEN_BACKGROUND;
+	components.add(new ScreenComponentTextInputBar(this, 115, 14));
+	components.add(new ScreenComponentTextInputBar(this, 115, 34));
     }
 
     private TextFieldWidget outputField;
