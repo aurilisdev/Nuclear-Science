@@ -48,10 +48,6 @@ public class ScreenGasCentrifuge extends GenericCustomScreenUpgradeable<Containe
 		    new TranslationTextComponent("gui.gascentrifuge.voltage",
 			    ChatFormatter.getElectricDisplayShort(electro.getVoltage(), ElectricUnit.VOLTAGE)),
 		    (float) playerInventoryTitleX + 85, playerInventoryTitleY, 4210752);
-	    font.func_243248_b(matrixStack, new TranslationTextComponent("U-238"), (float) playerInventoryTitleX + 30,
-		    playerInventoryTitleY - 33 + 17f, 4210752);
-	    font.func_243248_b(matrixStack, new TranslationTextComponent("U-235"), (float) playerInventoryTitleX + 30,
-		    playerInventoryTitleY - 33 - 17f, 4210752);
 	}
     }
 
