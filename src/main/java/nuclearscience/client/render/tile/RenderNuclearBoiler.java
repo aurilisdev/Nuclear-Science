@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.util.Direction;
+import nuclearscience.DeferredRegisters;
 import nuclearscience.client.ClientRegister;
 import nuclearscience.common.tile.TileNuclearBoiler;
 
@@ -49,7 +50,7 @@ public class RenderNuclearBoiler extends TileEntityRenderer<TileNuclearBoiler> {
 	matrixStackIn.translate(face.getXOffset(), face.getYOffset(), face.getZOffset());
 	UtilitiesRendering.prepareRotationalTileModel(tileEntityIn, matrixStackIn);
 	matrixStackIn.translate(-0.5, 0, 0.5);
-	prog = tileEntityIn.<ComponentFluidHandler>getComponent(ComponentType.FluidHandler).getStackFromFluid(Fluids.WATER).getAmount()
+	prog = tileEntityIn.<ComponentFluidHandler>getComponent(ComponentType.FluidHandler).getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride).getAmount()
 		/ (float) TileNuclearBoiler.TANKCAPACITY;
 	if (prog > 0) {
 	    matrixStackIn.translate(0, 4.5 / 16.0, -2.0 / 16.0);
