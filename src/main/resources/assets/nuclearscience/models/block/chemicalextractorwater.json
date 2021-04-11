@@ -2,8 +2,8 @@
 	"credit": "aurilisdev",
 	"parent": "block/cube_all",
 	"textures": {
-		"2": "nuclearscience:model/water",
-		"particle": "nuclearscience:model/chemicalextractor"
+		"2": "nuclearscience:fluid/water",
+		"particle": "nuclearscience:fluid/water"
 	},
 	"elements": [
 		{

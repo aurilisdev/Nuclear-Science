@@ -3,7 +3,6 @@ package nuclearscience.client.screen;
 import java.util.ArrayList;
 import java.util.List;
 
-import electrodynamics.DeferredRegisters;
 import electrodynamics.api.electricity.formatting.ChatFormatter;
 import electrodynamics.api.electricity.formatting.ElectricUnit;
 import electrodynamics.api.gui.GenericScreen;
@@ -31,6 +30,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerNuclearBoiler;
 import nuclearscience.common.tile.TileNuclearBoiler;
 
@@ -71,7 +71,7 @@ public class ScreenNuclearBoiler extends GenericScreen<ContainerNuclearBoiler> {
 	    TileNuclearBoiler boiler = container.getHostFromIntArray();
 	    if (boiler != null) {
 		ComponentFluidHandler handler = boiler.getComponent(ComponentType.FluidHandler);
-		return handler.getTankFromFluid(DeferredRegisters.fluidEthanol);
+		return handler.getTankFromFluid(DeferredRegisters.fluidUraniumHexafluoride);
 	    }
 	    return null;
 	}, this, 127, 18));
