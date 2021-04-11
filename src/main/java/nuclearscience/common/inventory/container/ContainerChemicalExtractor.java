@@ -1,9 +1,9 @@
 package nuclearscience.common.inventory.container;
 
-import electrodynamics.common.inventory.container.slot.GenericSlot;
-import electrodynamics.common.inventory.container.slot.SlotRestricted;
 import electrodynamics.common.item.subtype.SubtypeProcessorUpgrade;
 import electrodynamics.prefab.inventory.container.GenericContainer;
+import electrodynamics.prefab.inventory.container.slot.GenericSlot;
+import electrodynamics.prefab.inventory.container.slot.SlotRestricted;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Inventory;
@@ -31,16 +31,16 @@ public class ContainerChemicalExtractor extends GenericContainer<TileChemicalExt
 
     @Override
     public void addInventorySlots(IInventory inv, PlayerInventory playerinv) {
-	addSlot(new GenericSlot(inv, nextIndex(), 75, 31));
+	addSlot(new GenericSlot(inv, nextIndex(), 74, 31));
 	addSlot(new FurnaceResultSlot(playerinv.player, inv, nextIndex(), 133, 31));
-	addSlot(new SlotRestricted(inv, nextIndex(), 113, 51, Items.WATER_BUCKET));
-	addSlot(new SlotRestricted(inv, nextIndex(), 186, 14,
+	addSlot(new SlotRestricted(inv, nextIndex(), 74, 51, Items.WATER_BUCKET));
+	addSlot(new SlotRestricted(inv, nextIndex(), 153, 14,
 		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.basicspeed),
 		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.advancedspeed)));
-	addSlot(new SlotRestricted(inv, nextIndex(), 186, 34,
+	addSlot(new SlotRestricted(inv, nextIndex(), 153, 34,
 		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.basicspeed),
 		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.advancedspeed)));
-	addSlot(new SlotRestricted(inv, nextIndex(), 186, 54,
+	addSlot(new SlotRestricted(inv, nextIndex(), 153, 54,
 		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.basicspeed),
 		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.advancedspeed)));
     }

@@ -50,8 +50,8 @@ public class RenderNuclearBoiler extends TileEntityRenderer<TileNuclearBoiler> {
 	matrixStackIn.translate(face.getXOffset(), face.getYOffset(), face.getZOffset());
 	UtilitiesRendering.prepareRotationalTileModel(tileEntityIn, matrixStackIn);
 	matrixStackIn.translate(-0.5, 0, 0.5);
-	prog = tileEntityIn.<ComponentFluidHandler>getComponent(ComponentType.FluidHandler).getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride).getAmount()
-		/ (float) TileNuclearBoiler.TANKCAPACITY;
+	prog = tileEntityIn.<ComponentFluidHandler>getComponent(ComponentType.FluidHandler)
+		.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride).getAmount() / (float) TileNuclearBoiler.TANKCAPACITY;
 	if (prog > 0) {
 	    matrixStackIn.translate(0, 4.5 / 16.0, -2.0 / 16.0);
 	    matrixStackIn.scale(1, prog / 16.0f * 12f, 1);
