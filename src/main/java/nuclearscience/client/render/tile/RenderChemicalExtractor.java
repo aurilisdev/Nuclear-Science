@@ -36,6 +36,7 @@ public class RenderChemicalExtractor extends TileEntityRenderer<TileChemicalExtr
 		/ (float) TileChemicalExtractor.TANKCAPACITY;
 	if (prog > 0) {
 	    matrixStackIn.scale(1, prog / 16.0f * 5.8f * 2, 1);
+	    matrixStackIn.translate(0, prog / 16.0f * 5.8f, 0);
 	    UtilitiesRendering.renderModel(ibakedmodel, tileEntityIn, RenderType.getCutout(), matrixStackIn, bufferIn, combinedLightIn,
 		    combinedOverlayIn);
 	}

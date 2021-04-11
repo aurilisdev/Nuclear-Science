@@ -1,9 +1,8 @@
 package nuclearscience.client.render.tile;
 
-import java.util.Random;
-
 import com.mojang.blaze3d.matrix.MatrixStack;
 
+import electrodynamics.api.utilities.UtilitiesRendering;
 import electrodynamics.common.block.BlockGenericMachine;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentFluidHandler;
@@ -15,8 +14,6 @@ import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.util.Direction;
-import net.minecraft.util.math.vector.Quaternion;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.client.ClientRegister;
 import nuclearscience.common.tile.TileNuclearBoiler;
 
@@ -33,44 +30,33 @@ public class RenderNuclearBoiler extends TileEntityRenderer<TileNuclearBoiler> {
 	matrixStackIn.push();
 	IBakedModel ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_CHEMICALBOILERWATER);
 	Direction face = tileEntityIn.getBlockState().get(BlockGenericMachine.FACING);
-	matrixStackIn.translate(0.5, 8.5 / 16.0, 0.5);
-	if (face == Direction.NORTH) {
-	    matrixStackIn.translate(2.0 / 8.0, 0, 0);
-	}
-	if (face == Direction.EAST) {
-	    matrixStackIn.translate(0, 0, 2.0 / 8.0);
-	}
-	if (face == Direction.NORTH || face == Direction.SOUTH) {
-	    matrixStackIn.rotate(new Quaternion(0, 90, 0, true));
-	}
+	matrixStackIn.translate(face.getXOffset(), face.getYOffset(), face.getZOffset());
+	UtilitiesRendering.prepareRotationalTileModel(tileEntityIn, matrixStackIn);
+	matrixStackIn.translate(-0.5, 0, 0.5);
 	float prog = tileEntityIn.<ComponentFluidHandler>getComponent(ComponentType.FluidHandler).getStackFromFluid(Fluids.WATER).getAmount()
 		/ (float) TileNuclearBoiler.TANKCAPACITY;
 	if (prog > 0) {
+	    matrixStackIn.translate(0, 4.5 / 16.0, 2.0 / 16.0);
 	    matrixStackIn.scale(1, prog / 16.0f * 12f, 1);
-	    Minecraft.getInstance().getBlockRendererDispatcher().getBlockModelRenderer().renderModel(tileEntityIn.getWorld(), ibakedmodel,
-		    tileEntityIn.getBlockState(), tileEntityIn.getPos(), matrixStackIn, bufferIn.getBuffer(RenderType.getCutout()), false,
-		    tileEntityIn.getWorld().rand, new Random().nextLong(), 1);
+	    matrixStackIn.translate(0, prog / 16.0f * 6f, 0);
+	    UtilitiesRendering.renderModel(ibakedmodel, tileEntityIn, RenderType.getCutout(), matrixStackIn, bufferIn, combinedLightIn,
+		    combinedOverlayIn);
 	}
 	matrixStackIn.pop();
 	matrixStackIn.push();
 	ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_CHEMICALBOILERHEXAFLUORIDE);
-	matrixStackIn.translate(0.5, 8.5 / 16.0, 0.5);
-	if (face == Direction.NORTH) {
-	    matrixStackIn.translate(-2.0 / 8.0, 0, 0);
-	}
-	if (face == Direction.EAST) {
-	    matrixStackIn.translate(0, 0, -2.0 / 8.0);
-	}
-	if (face == Direction.NORTH || face == Direction.SOUTH) {
-	    matrixStackIn.rotate(new Quaternion(0, 90, 0, true));
-	}
-	prog = tileEntityIn.<ComponentFluidHandler>getComponent(ComponentType.FluidHandler)
-		.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride).getAmount() / (float) TileNuclearBoiler.TANKCAPACITY;
+	face = tileEntityIn.getBlockState().get(BlockGenericMachine.FACING);
+	matrixStackIn.translate(face.getXOffset(), face.getYOffset(), face.getZOffset());
+	UtilitiesRendering.prepareRotationalTileModel(tileEntityIn, matrixStackIn);
+	matrixStackIn.translate(-0.5, 0, 0.5);
+	prog = tileEntityIn.<ComponentFluidHandler>getComponent(ComponentType.FluidHandler).getStackFromFluid(Fluids.WATER).getAmount()
+		/ (float) TileNuclearBoiler.TANKCAPACITY;
 	if (prog > 0) {
+	    matrixStackIn.translate(0, 4.5 / 16.0, -2.0 / 16.0);
 	    matrixStackIn.scale(1, prog / 16.0f * 12f, 1);
-	    Minecraft.getInstance().getBlockRendererDispatcher().getBlockModelRenderer().renderModel(tileEntityIn.getWorld(), ibakedmodel,
-		    tileEntityIn.getBlockState(), tileEntityIn.getPos(), matrixStackIn, bufferIn.getBuffer(RenderType.getCutout()), false,
-		    tileEntityIn.getWorld().rand, new Random().nextLong(), 1);
+	    matrixStackIn.translate(0, prog / 16.0f * 6f, 0);
+	    UtilitiesRendering.renderModel(ibakedmodel, tileEntityIn, RenderType.getCutout(), matrixStackIn, bufferIn, combinedLightIn,
+		    combinedOverlayIn);
 	}
 	matrixStackIn.pop();
     }
