@@ -2,7 +2,7 @@ package nuclearscience.client.screen;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
-import electrodynamics.prefab.screen.GenericContainerScreen;
+import electrodynamics.prefab.screen.GenericCustomScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -14,7 +14,7 @@ import nuclearscience.common.inventory.container.ContainerReactorCore;
 import nuclearscience.common.tile.TileReactorCore;
 
 @OnlyIn(Dist.CLIENT)
-public class ScreenReactorCore extends GenericContainerScreen<ContainerReactorCore> {
+public class ScreenReactorCore extends GenericCustomScreen<ContainerReactorCore> {
     public static final ResourceLocation SCREEN_BACKGROUND = new ResourceLocation(References.ID + ":textures/gui/reactorcore.png");
 
     public ScreenReactorCore(ContainerReactorCore container, PlayerInventory playerInventory, ITextComponent title) {

@@ -3,8 +3,6 @@ package nuclearscience.common.tile;
 import java.util.UUID;
 
 import electrodynamics.api.electricity.CapabilityElectrodynamic;
-import electrodynamics.api.utilities.object.CachedTileOutput;
-import electrodynamics.api.utilities.object.TransferPack;
 import electrodynamics.common.network.ElectricityUtilities;
 import electrodynamics.prefab.tile.GenericTileTicking;
 import electrodynamics.prefab.tile.components.ComponentType;
@@ -13,6 +11,8 @@ import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
+import electrodynamics.prefab.utilities.object.CachedTileOutput;
+import electrodynamics.prefab.utilities.object.TransferPack;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.nbt.CompoundNBT;

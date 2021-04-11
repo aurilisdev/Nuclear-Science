@@ -4,8 +4,8 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 
 import electrodynamics.api.electricity.formatting.ChatFormatter;
 import electrodynamics.api.electricity.formatting.ElectricUnit;
-import electrodynamics.api.utilities.object.TransferPack;
-import electrodynamics.prefab.screen.GenericContainerScreen;
+import electrodynamics.prefab.screen.GenericCustomScreen;
+import electrodynamics.prefab.utilities.object.TransferPack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -20,7 +20,7 @@ import nuclearscience.common.inventory.container.ContainerRadioisotopeGenerator;
 import nuclearscience.common.settings.Constants;
 
 @OnlyIn(Dist.CLIENT)
-public class ScreenRadioisotopeGenerator extends GenericContainerScreen<ContainerRadioisotopeGenerator> {
+public class ScreenRadioisotopeGenerator extends GenericCustomScreen<ContainerRadioisotopeGenerator> {
     public static final ResourceLocation SCREEN_BACKGROUND = new ResourceLocation(References.ID + ":textures/gui/radioisotopegenerator.png");
 
     public ScreenRadioisotopeGenerator(ContainerRadioisotopeGenerator container, PlayerInventory playerInventory, ITextComponent title) {

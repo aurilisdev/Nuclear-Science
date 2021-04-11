@@ -4,7 +4,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 
 import electrodynamics.api.electricity.formatting.ChatFormatter;
 import electrodynamics.api.electricity.formatting.ElectricUnit;
-import electrodynamics.prefab.screen.GenericContainerScreenUpgradeable;
+import electrodynamics.prefab.screen.GenericCustomScreenUpgradeable;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentFluidHandler;
@@ -21,7 +21,7 @@ import nuclearscience.common.inventory.container.ContainerGasCentrifuge;
 import nuclearscience.common.tile.TileGasCentrifuge;
 
 @OnlyIn(Dist.CLIENT)
-public class ScreenGasCentrifuge extends GenericContainerScreenUpgradeable<ContainerGasCentrifuge> {
+public class ScreenGasCentrifuge extends GenericCustomScreenUpgradeable<ContainerGasCentrifuge> {
     public static final ResourceLocation SCREEN_BACKGROUND = new ResourceLocation(References.ID + ":textures/gui/gascentrifuge.png");
 
     public ScreenGasCentrifuge(ContainerGasCentrifuge container, PlayerInventory playerInventory, ITextComponent title) {

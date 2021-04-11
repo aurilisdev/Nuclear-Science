@@ -4,7 +4,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 
 import electrodynamics.api.electricity.formatting.ChatFormatter;
 import electrodynamics.api.electricity.formatting.ElectricUnit;
-import electrodynamics.prefab.screen.GenericContainerScreen;
+import electrodynamics.prefab.screen.GenericCustomScreen;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
@@ -19,7 +19,7 @@ import nuclearscience.common.inventory.container.ContainerParticleInjector;
 import nuclearscience.common.tile.TileParticleInjector;
 
 @OnlyIn(Dist.CLIENT)
-public class ScreenParticleInjector extends GenericContainerScreen<ContainerParticleInjector> {
+public class ScreenParticleInjector extends GenericCustomScreen<ContainerParticleInjector> {
     public static final ResourceLocation SCREEN_BACKGROUND = new ResourceLocation(References.ID + ":textures/gui/particleinjector.png");
 
     public ScreenParticleInjector(ContainerParticleInjector container, PlayerInventory playerInventory, ITextComponent title) {

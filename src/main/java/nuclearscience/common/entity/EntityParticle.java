@@ -3,8 +3,8 @@ package nuclearscience.common.entity;
 import java.util.HashSet;
 import java.util.List;
 
-import electrodynamics.api.utilities.object.Location;
 import electrodynamics.common.block.BlockGenericMachine;
+import electrodynamics.prefab.utilities.object.Location;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;

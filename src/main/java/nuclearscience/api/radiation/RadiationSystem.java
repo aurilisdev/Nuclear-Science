@@ -2,7 +2,7 @@ package nuclearscience.api.radiation;
 
 import java.util.HashMap;
 
-import electrodynamics.api.utilities.object.Location;
+import electrodynamics.prefab.utilities.object.Location;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;

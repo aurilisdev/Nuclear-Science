@@ -4,7 +4,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 
 import electrodynamics.api.electricity.formatting.ChatFormatter;
 import electrodynamics.api.electricity.formatting.ElectricUnit;
-import electrodynamics.prefab.screen.GenericContainerScreenUpgradeable;
+import electrodynamics.prefab.screen.GenericCustomScreenUpgradeable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.entity.player.PlayerInventory;
@@ -20,7 +20,7 @@ import nuclearscience.common.packet.PacketSetQuantumCapacitorData;
 import nuclearscience.common.tile.TileQuantumCapacitor;
 
 @OnlyIn(Dist.CLIENT)
-public class ScreenQuantumCapacitor extends GenericContainerScreenUpgradeable<ContainerQuantumCapacitor> {
+public class ScreenQuantumCapacitor extends GenericCustomScreenUpgradeable<ContainerQuantumCapacitor> {
     public static final ResourceLocation SCREEN_BACKGROUND = new ResourceLocation(References.ID + ":textures/gui/quantumcapacitor.png");
 
     public ScreenQuantumCapacitor(ContainerQuantumCapacitor container, PlayerInventory playerInventory, ITextComponent title) {

@@ -71,7 +71,9 @@ public class FluidUraniumHexafluoride extends Fluid {
 
     @Override
     protected FluidAttributes createAttributes() {
-	return FluidAttributes.builder(new ResourceLocation(References.ID + ":fluid/uraniumhexafluoride"), new ResourceLocation(References.ID + ":fluid/uraniumhexafluoride"))
+	return FluidAttributes
+		.builder(new ResourceLocation(References.ID + ":fluid/uraniumhexafluoride"),
+			new ResourceLocation(References.ID + ":fluid/uraniumhexafluoride"))
 		.translationKey("fluid.nuclearscience.hexafluoride").color(-431922120).build(this);
     }
 

@@ -1,8 +1,8 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.api.utilities.object.CachedTileOutput;
 import electrodynamics.prefab.tile.GenericTileTicking;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
+import electrodynamics.prefab.utilities.object.CachedTileOutput;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.tileentity.TileEntity;
