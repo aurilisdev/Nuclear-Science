@@ -30,7 +30,8 @@ public class TileParticleInjector extends GenericTileTicking {
 	addComponent(new ComponentDirection());
 	addComponent(new ComponentPacketHandler());
 	addComponent(new ComponentInventory(this).size(3)
-		.valid((index, stack) -> index != 1 || stack.getItem() == DeferredRegisters.ITEM_CELLELECTROMAGNETIC.get()));
+		.valid((index, stack) -> index != 1 || stack.getItem() == DeferredRegisters.ITEM_CELLELECTROMAGNETIC.get())
+		.relativeFaceSlots(Direction.UP, 0, 1).relativeFaceSlots(Direction.WEST, 0, 1).relativeSlotFaces(2, Direction.DOWN, Direction.EAST));
 	addComponent(new ComponentElectrodynamic(this).voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 8).relativeInput(Direction.NORTH)
 		.maxJoules(Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE * 10));
 	addComponent(new ComponentProcessor(this).canProcess(this::canProcess).usage(Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE)
@@ -56,7 +57,7 @@ public class TileParticleInjector extends GenericTileTicking {
     public void checkCollision() {
 	ComponentInventory inv = getComponent(ComponentType.Inventory);
 	ItemStack resultStack = inv.getStackInSlot(2);
-	ItemStack cellStack = inv.getStackInSlot(0);
+	ItemStack cellStack = inv.getStackInSlot(1);
 	if (resultStack.getCount() < resultStack.getMaxStackSize() && cellStack.getCount() > 0 && particles[0] != null && particles[1] != null) {
 	    EntityParticle one = particles[0];
 	    EntityParticle two = particles[1];

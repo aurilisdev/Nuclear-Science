@@ -31,9 +31,9 @@ import nuclearscience.common.block.BlockReactorCore;
 import nuclearscience.common.block.BlockTurbine;
 import nuclearscience.common.entity.EntityParticle;
 import nuclearscience.common.fluid.FluidUraniumHexafluoride;
-import nuclearscience.common.inventory.container.ContainerChemicalBoiler;
 import nuclearscience.common.inventory.container.ContainerChemicalExtractor;
 import nuclearscience.common.inventory.container.ContainerGasCentrifuge;
+import nuclearscience.common.inventory.container.ContainerNuclearBoiler;
 import nuclearscience.common.inventory.container.ContainerParticleInjector;
 import nuclearscience.common.inventory.container.ContainerQuantumCapacitor;
 import nuclearscience.common.inventory.container.ContainerRadioisotopeGenerator;
@@ -79,7 +79,8 @@ public class DeferredRegisters {
 
     static {
 	BLOCKS.register("gascentrifuge", supplier(blockGasCentrifuge = new BlockGasCentrifuge()));
-	BLOCKS.register("chemicalboiler", supplier(blockChemicalBoiler = new BlockNuclearBoiler()));
+	BLOCKS.register("chemicalboiler", supplier(blockChemicalBoiler = new BlockNuclearBoiler()));// TODO: Cant change this chemical boiler name
+												    // until next reset
 	BLOCKS.register("chemicalextractor", supplier(blockChemicalExtractor = new BlockChemicalExtractor()));
 	BLOCKS.register("radioisotopegenerator", supplier(blockRadioisotopeGenerator = new BlockRadioisotopeGenerator()));
 	BLOCKS.register("turbine", supplier(blockTurbine = new BlockTurbine()));
@@ -164,7 +165,8 @@ public class DeferredRegisters {
     public static final RegistryObject<TileEntityType<TileGasCentrifuge>> TILE_GASCENTRIFUGE = TILES.register("gascentrifuge",
 	    () -> new TileEntityType<>(TileGasCentrifuge::new, Sets.newHashSet(blockGasCentrifuge), null));
     public static final RegistryObject<TileEntityType<TileNuclearBoiler>> TILE_CHEMICALBOILER = TILES.register("chemicalboiler",
-	    () -> new TileEntityType<>(TileNuclearBoiler::new, Sets.newHashSet(blockChemicalBoiler), null));
+	    () -> new TileEntityType<>(TileNuclearBoiler::new, Sets.newHashSet(blockChemicalBoiler), null)); // TODO: Cant change this chemical boiler
+													     // name until next reset
     public static final RegistryObject<TileEntityType<TileChemicalExtractor>> TILE_CHEMICALEXTRACTOR = TILES.register("chemicalextractor",
 	    () -> new TileEntityType<>(TileChemicalExtractor::new, Sets.newHashSet(blockChemicalExtractor), null));
     public static final RegistryObject<TileEntityType<TileRadioisotopeGenerator>> TILE_RADIOISOTOPEGENERATOR = TILES.register("radioisotopegenerator",
@@ -186,8 +188,8 @@ public class DeferredRegisters {
 
     public static final RegistryObject<ContainerType<ContainerGasCentrifuge>> CONTAINER_GASCENTRIFUGE = CONTAINERS.register("gascentrifuge",
 	    () -> new ContainerType<>(ContainerGasCentrifuge::new));
-    public static final RegistryObject<ContainerType<ContainerChemicalBoiler>> CONTAINER_CHEMICALBOILER = CONTAINERS.register("chemicalboiler",
-	    () -> new ContainerType<>(ContainerChemicalBoiler::new));
+    public static final RegistryObject<ContainerType<ContainerNuclearBoiler>> CONTAINER_NUCLEARBOILER = CONTAINERS.register("nuclearboiler",
+	    () -> new ContainerType<>(ContainerNuclearBoiler::new));
     public static final RegistryObject<ContainerType<ContainerChemicalExtractor>> CONTAINER_CHEMICALEXTRACTOR = CONTAINERS
 	    .register("chemicalextractor", () -> new ContainerType<>(ContainerChemicalExtractor::new));
     public static final RegistryObject<ContainerType<ContainerRadioisotopeGenerator>> CONTAINER_RADIOISOTOPEGENERATOR = CONTAINERS

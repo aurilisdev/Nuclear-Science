@@ -33,7 +33,7 @@
 	"block.nuclearscience.particleinjector": "Particle Injector",
 	"block.nuclearscience.quantumcapacitor": "Quantum Capacitor",
 	"container.gascentrifuge": "Gas Centrifuge",
-	"container.chemicalboiler": "Nuclear Boiler",
+	"container.nuclearboiler": "Nuclear Boiler",
 	"container.chemicalextractor": "Chemical Extractor",
 	"container.radioisotopegenerator": "Radioisotope Generator",
 	"container.reactorcore": "Reactor Core",

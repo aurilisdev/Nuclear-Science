@@ -14,17 +14,17 @@ import net.minecraft.util.IntArray;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.tile.TileNuclearBoiler;
 
-public class ContainerChemicalBoiler extends GenericContainer<TileNuclearBoiler> {
+public class ContainerNuclearBoiler extends GenericContainer<TileNuclearBoiler> {
 
-    public ContainerChemicalBoiler(int id, PlayerInventory playerinv) {
+    public ContainerNuclearBoiler(int id, PlayerInventory playerinv) {
 	this(id, playerinv, new Inventory(5), new IntArray(3));
     }
 
-    public ContainerChemicalBoiler(int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {
-	super(DeferredRegisters.CONTAINER_CHEMICALBOILER.get(), id, playerinv, inventory, inventorydata);
+    public ContainerNuclearBoiler(int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {
+	super(DeferredRegisters.CONTAINER_NUCLEARBOILER.get(), id, playerinv, inventory, inventorydata);
     }
 
-    public ContainerChemicalBoiler(ContainerType<?> type, int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {
+    public ContainerNuclearBoiler(ContainerType<?> type, int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {
 	super(type, id, playerinv, inventory, inventorydata);
     }
 

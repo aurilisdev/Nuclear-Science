@@ -32,7 +32,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.SoundRegister;
-import nuclearscience.common.inventory.container.ContainerChemicalBoiler;
+import nuclearscience.common.inventory.container.ContainerNuclearBoiler;
 import nuclearscience.common.settings.Constants;
 
 public class TileNuclearBoiler extends GenericTileTicking {
@@ -53,8 +53,8 @@ public class TileNuclearBoiler extends GenericTileTicking {
 	addComponent(new ComponentProcessor(this).upgradeSlots(2, 3, 4).usage(Constants.CHEMICALBOILER_USAGE_PER_TICK)
 		.type(ComponentProcessorType.ObjectToObject).canProcess(this::canProcess).process(this::process)
 		.requiredTicks(Constants.CHEMICALBOILER_REQUIRED_TICKS));
-	addComponent(new ComponentContainerProvider("container.chemicalboiler")
-		.createMenu((id, player) -> new ContainerChemicalBoiler(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
+	addComponent(new ComponentContainerProvider("container.nuclearboiler")
+		.createMenu((id, player) -> new ContainerNuclearBoiler(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 
     }
 

@@ -140,7 +140,6 @@ public class TileQuantumCapacitor extends GenericTileTicking implements IEnergyS
 		    world.setBlockState(pos, Blocks.AIR.getDefaultState());
 		    world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), (float) Math.log10(10 + transfer.getVoltage() / DEFAULT_VOLTAGE),
 			    Mode.DESTROY);
-
 		    return TransferPack.EMPTY;
 		}
 	    }
