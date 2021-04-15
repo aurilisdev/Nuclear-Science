@@ -1,0 +1,20 @@
+{
+	"variants": {
+		"facing=east": {
+			"model": "nuclearscience:block/teleporter",
+			"y": 0
+		},
+		"facing=north": {
+			"model": "nuclearscience:block/teleporter",
+			"y": 270
+		},
+		"facing=south": {
+			"model": "nuclearscience:block/teleporter",
+			"y": 90
+		},
+		"facing=west": {
+			"model": "nuclearscience:block/teleporter",
+			"y": 180
+		}
+	}
+}

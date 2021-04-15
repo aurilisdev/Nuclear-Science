@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" # ",
+		"MTM",
+		" # "
+	],
+	"key": {
+		"#": {
+			"tag": "forge:plates/iron"
+		},
+		"M": {
+			"item": "electrodynamics:wirecopper"
+		},
+		"T": {
+			"tag": "forge:circuits/basic"
+		}
+	},
+	"result": {
+		"item": "nuclearscience:frequencycard",
+		"count": 1
+	}
+}

@@ -1,0 +1,32 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "_D_",
+        "#B#",
+        "SRS"
+    ],
+    "key": {
+        "_": {
+            "tag": "forge:plates/iorn"
+        },
+        "D": {
+            "tag": "electrodynamics:ceramicfuse"
+        },
+        "#": {
+            "tag": "forge:plates/steel"
+        },
+        "B": {
+            "tag": "forge:circuits/elite"
+        },
+        "S": {
+            "item": "minecraft:ender_pearl"
+        },
+        "R": {
+            "item": "nuclearscience:celldarkmatter"
+        }
+    },
+    "result": {
+        "item": "nuclearscience:teleporter",
+        "count": 1
+    }
+}

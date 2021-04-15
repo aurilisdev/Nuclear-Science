@@ -28,6 +28,7 @@ import nuclearscience.common.block.BlockPlasma;
 import nuclearscience.common.block.BlockQuantumCapacitor;
 import nuclearscience.common.block.BlockRadioisotopeGenerator;
 import nuclearscience.common.block.BlockReactorCore;
+import nuclearscience.common.block.BlockTeleporter;
 import nuclearscience.common.block.BlockTurbine;
 import nuclearscience.common.entity.EntityParticle;
 import nuclearscience.common.fluid.FluidUraniumHexafluoride;
@@ -39,6 +40,7 @@ import nuclearscience.common.inventory.container.ContainerQuantumCapacitor;
 import nuclearscience.common.inventory.container.ContainerRadioisotopeGenerator;
 import nuclearscience.common.inventory.container.ContainerReactorCore;
 import nuclearscience.common.item.ItemAntidote;
+import nuclearscience.common.item.ItemFrequencyCard;
 import nuclearscience.common.item.ItemGeigerCounter;
 import nuclearscience.common.item.ItemHazmatArmor;
 import nuclearscience.common.item.ItemRadioactive;
@@ -52,6 +54,7 @@ import nuclearscience.common.tile.TilePlasma;
 import nuclearscience.common.tile.TileQuantumCapacitor;
 import nuclearscience.common.tile.TileRadioisotopeGenerator;
 import nuclearscience.common.tile.TileReactorCore;
+import nuclearscience.common.tile.TileTeleporter;
 import nuclearscience.common.tile.TileTurbine;
 
 public class DeferredRegisters {
@@ -76,6 +79,7 @@ public class DeferredRegisters {
     public static BlockPlasma blockPlasma;
     public static BlockParticleInjector blockParticleInjector;
     public static BlockQuantumCapacitor blockQuantumCapacitor;
+    public static BlockTeleporter blockTeleporter;
 
     static {
 	BLOCKS.register("gascentrifuge", supplier(blockGasCentrifuge = new BlockGasCentrifuge()));
@@ -93,6 +97,7 @@ public class DeferredRegisters {
 	BLOCKS.register("plasma", supplier(blockPlasma = new BlockPlasma()));
 	BLOCKS.register("particleinjector", supplier(blockParticleInjector = new BlockParticleInjector()));
 	BLOCKS.register("quantumcapacitor", supplier(blockQuantumCapacitor = new BlockQuantumCapacitor()));
+	BLOCKS.register("teleporter", supplier(blockTeleporter = new BlockTeleporter()));
 	ITEMS.register("gascentrifuge", supplier(new BlockItemDescriptable(blockGasCentrifuge, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("chemicalboiler",
 		supplier(new BlockItemDescriptable(blockChemicalBoiler, new Item.Properties().group(References.NUCLEARTAB))));
@@ -122,6 +127,7 @@ public class DeferredRegisters {
 	BlockItemDescriptable.addDescription(blockChemicalExtractor, "|translate|tooltip.chemicalextractor.voltage");
 	BlockItemDescriptable.addDescription(blockParticleInjector, "|translate|tooltip.particleinjector.voltage");
 	BlockItemDescriptable.addDescription(blockQuantumCapacitor, "|translate|tooltip.quantumcapacitor.voltage");
+	BlockItemDescriptable.addDescription(blockTeleporter, "|translate|tooltip.teleporter.voltage");
     }
     public static final RegistryObject<Item> ITEM_URANIUM235 = ITEMS.register("uranium235",
 	    supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
@@ -161,6 +167,8 @@ public class DeferredRegisters {
 	    new Item.Properties().group(References.NUCLEARTAB).maxStackSize(1).defaultMaxDamage(26000))));
     public static final RegistryObject<Item> ITEM_ANTIDOTE = ITEMS.register("antidote",
 	    supplier(new ItemAntidote(new Item.Properties().group(References.NUCLEARTAB))));
+    public static final RegistryObject<Item> ITEM_FREQUENCYCARD = ITEMS.register("frequencycard",
+	    supplier(new ItemFrequencyCard(new Item.Properties().group(References.NUCLEARTAB))));
 
     public static final RegistryObject<TileEntityType<TileGasCentrifuge>> TILE_GASCENTRIFUGE = TILES.register("gascentrifuge",
 	    () -> new TileEntityType<>(TileGasCentrifuge::new, Sets.newHashSet(blockGasCentrifuge), null));
@@ -185,6 +193,8 @@ public class DeferredRegisters {
 	    () -> new TileEntityType<>(TilePlasma::new, Sets.newHashSet(blockPlasma), null));
     public static final RegistryObject<TileEntityType<TileQuantumCapacitor>> TILE_QUANTUMCAPACITOR = TILES.register("quantumcapacitor",
 	    () -> new TileEntityType<>(TileQuantumCapacitor::new, Sets.newHashSet(blockQuantumCapacitor), null));
+    public static final RegistryObject<TileEntityType<TileTeleporter>> TILE_TELEPORTER = TILES.register("teleporter",
+	    () -> new TileEntityType<>(TileTeleporter::new, Sets.newHashSet(blockTeleporter), null));
 
     public static final RegistryObject<ContainerType<ContainerGasCentrifuge>> CONTAINER_GASCENTRIFUGE = CONTAINERS.register("gascentrifuge",
 	    () -> new ContainerType<>(ContainerGasCentrifuge::new));

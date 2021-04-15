@@ -18,6 +18,7 @@
 	"item.nuclearscience.hazmatlegs": "Hazmat Leggings",
 	"item.nuclearscience.hazmatplate": "Hazmat Chestplate",
 	"item.nuclearscience.antidote": "Antidote",
+	"item.nuclearscience.frequencycard": "Frequency Card",
 	"block.nuclearscience.gascentrifuge": "Gas Centrifuge",
 	"block.nuclearscience.chemicalboiler": "Nuclear Boiler",
 	"block.nuclearscience.chemicalextractor": "Chemical Extractor",
@@ -32,6 +33,7 @@
 	"block.nuclearscience.plasma": "Plasma",
 	"block.nuclearscience.particleinjector": "Particle Injector",
 	"block.nuclearscience.quantumcapacitor": "Quantum Capacitor",
+	"block.nuclearscience.teleporter": "Teleporter",
 	"container.gascentrifuge": "Gas Centrifuge",
 	"container.nuclearboiler": "Nuclear Boiler",
 	"container.chemicalextractor": "Chemical Extractor",
@@ -70,5 +72,8 @@
 	"tooltip.chemicalboiler.voltage": "Voltage: 240 Volts",
 	"tooltip.chemicalextractor.voltage": "Voltage: 240 Volts",
 	"tooltip.quantumcapacitor.voltage": "Voltage: 1.92 kV",
+	"tooltip.teleporter.voltage": "Voltage: 960 Volts",
+	"tooltip.frequencycard.linked": "Linked to %s",
+	"tooltip.frequencycard.notag": "No link",
 	"fluid.nuclearscience.hexafluoride": "Uranium Hexafluoride"
 }

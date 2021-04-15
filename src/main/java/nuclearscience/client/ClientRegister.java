@@ -22,6 +22,7 @@ import nuclearscience.client.render.tile.RenderGasCentrifuge;
 import nuclearscience.client.render.tile.RenderNuclearBoiler;
 import nuclearscience.client.render.tile.RenderQuantumCapacitor;
 import nuclearscience.client.render.tile.RenderReactorCore;
+import nuclearscience.client.render.tile.RenderTeleporter;
 import nuclearscience.client.render.tile.RenderTurbine;
 import nuclearscience.client.screen.ScreenChemicalExtractor;
 import nuclearscience.client.screen.ScreenGasCentrifuge;
@@ -48,6 +49,8 @@ public class ClientRegister {
 	ModelLoader.addSpecialModel(MODEL_REACTORCORE);
 	ModelLoader.addSpecialModel(MODEL_REACTORFUELROD);
 	ModelLoader.addSpecialModel(MODEL_REACTORDEUTERIUM);
+	ModelLoader.addSpecialModel(MODEL_TELEPORTERON);
+	ModelLoader.addSpecialModel(MODEL_TELEPORTER);
     }
 
     public static final ResourceLocation MODEL_GASCENTRIFUGEFULL = new ResourceLocation(References.ID + ":block/gascentrifuge");
@@ -63,6 +66,8 @@ public class ClientRegister {
     public static final ResourceLocation MODEL_REACTORFUELROD = new ResourceLocation(References.ID + ":block/reactorfuelrod");
     public static final ResourceLocation MODEL_REACTORDEUTERIUM = new ResourceLocation(References.ID + ":block/reactordeuterium");
     public static final ResourceLocation TEXTURE_REACTORCOREEMPTY = new ResourceLocation(References.ID + ":textures/model/reactorcore.png");
+    public static final ResourceLocation MODEL_TELEPORTERON = new ResourceLocation(References.ID + ":block/teleporteron");
+    public static final ResourceLocation MODEL_TELEPORTER = new ResourceLocation(References.ID + ":block/teleporter");
 
     public static void setup() {
 	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_GASCENTRIFUGE.get(), RenderGasCentrifuge::new);
@@ -72,6 +77,7 @@ public class ClientRegister {
 	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_REACTORCORE.get(), RenderReactorCore::new);
 	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_FUSIONREACTORCORE.get(), RenderFusionReactorCore::new);
 	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_QUANTUMCAPACITOR.get(), RenderQuantumCapacitor::new);
+	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_TELEPORTER.get(), RenderTeleporter::new);
 
 	RenderingRegistry.registerEntityRenderingHandler(DeferredRegisters.ENTITY_PARTICLE.get(), RenderParticle::new);
 
