@@ -2,5 +2,14 @@
 	"parent": "item/generated",
 	"textures": {
 		"layer0": "nuclearscience:item/frequencycard"
+	},
+	"display": {
+		"gui": {
+			"scale": [
+				0.75,
+				0.75,
+				0.75
+			]
+		}
 	}
 }
