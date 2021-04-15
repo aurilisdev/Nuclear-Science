@@ -10,7 +10,7 @@
             "tag": "forge:plates/iorn"
         },
         "D": {
-            "tag": "electrodynamics:ceramicfuse"
+            "item": "electrodynamics:ceramicfuse"
         },
         "#": {
             "tag": "forge:plates/steel"

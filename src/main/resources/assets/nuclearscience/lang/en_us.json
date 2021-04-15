@@ -72,7 +72,7 @@
 	"tooltip.chemicalboiler.voltage": "Voltage: 240 Volts",
 	"tooltip.chemicalextractor.voltage": "Voltage: 240 Volts",
 	"tooltip.quantumcapacitor.voltage": "Voltage: 1.92 kV",
-	"tooltip.teleporter.voltage": "Voltage: 960 Volts",
+	"tooltip.teleporter.voltage": "Voltage: 480 Volts",
 	"tooltip.frequencycard.linked": "Linked to %s",
 	"tooltip.frequencycard.notag": "No link",
 	"fluid.nuclearscience.hexafluoride": "Uranium Hexafluoride"
