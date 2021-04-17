@@ -121,8 +121,7 @@ public class DeferredRegisters {
 		supplier(new BlockItemDescriptable(blockParticleInjector, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("quantumcapacitor",
 		supplier(new BlockItemDescriptable(blockQuantumCapacitor, new Item.Properties().group(References.NUCLEARTAB))));
-	ITEMS.register("teleporter",
-		supplier(new BlockItemDescriptable(blockTeleporter, new Item.Properties().group(References.NUCLEARTAB))));
+	ITEMS.register("teleporter", supplier(new BlockItemDescriptable(blockTeleporter, new Item.Properties().group(References.NUCLEARTAB))));
 	FLUIDS.register("fluiduraniumhexafluoride", supplier(fluidUraniumHexafluoride = new FluidUraniumHexafluoride()));
 	BlockItemDescriptable.addDescription(blockGasCentrifuge, "|translate|tooltip.gascentrifuge.voltage");
 	BlockItemDescriptable.addDescription(blockChemicalBoiler, "|translate|tooltip.chemicalboiler.voltage");
