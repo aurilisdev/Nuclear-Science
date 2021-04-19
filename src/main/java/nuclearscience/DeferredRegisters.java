@@ -5,13 +5,19 @@ import com.google.common.collect.Sets;
 
 import electrodynamics.common.blockitem.BlockItemDescriptable;
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
+import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.inventory.container.ContainerType;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -80,7 +86,7 @@ public class DeferredRegisters {
     public static BlockParticleInjector blockParticleInjector;
     public static BlockQuantumCapacitor blockQuantumCapacitor;
     public static BlockTeleporter blockTeleporter;
-
+    public static Block blocklead;
     static {
 	BLOCKS.register("gascentrifuge", supplier(blockGasCentrifuge = new BlockGasCentrifuge()));
 	BLOCKS.register("chemicalboiler", supplier(blockChemicalBoiler = new BlockNuclearBoiler()));// TODO: Cant change this chemical boiler name
@@ -98,11 +104,16 @@ public class DeferredRegisters {
 	BLOCKS.register("particleinjector", supplier(blockParticleInjector = new BlockParticleInjector()));
 	BLOCKS.register("quantumcapacitor", supplier(blockQuantumCapacitor = new BlockQuantumCapacitor()));
 	BLOCKS.register("teleporter", supplier(blockTeleporter = new BlockTeleporter()));
+	BLOCKS.register("leadblock", supplier(blocklead = new Block(Properties.create(Material.IRON, MaterialColor.BLACK)
+		.hardnessAndResistance(5.0f, 3.0f).sound(SoundType.METAL).setRequiresTool()
+		.harvestTool(ToolType.PICKAXE).harvestLevel(1))));
 	ITEMS.register("gascentrifuge", supplier(new BlockItemDescriptable(blockGasCentrifuge, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("chemicalboiler",
 		supplier(new BlockItemDescriptable(blockChemicalBoiler, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("chemicalextractor",
 		supplier(new BlockItemDescriptable(blockChemicalExtractor, new Item.Properties().group(References.NUCLEARTAB))));
+	ITEMS.register("leadblock",
+		supplier(new BlockItemDescriptable(blocklead, new BlockItem.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("radioisotopegenerator",
 		supplier(new BlockItemDescriptable(blockRadioisotopeGenerator, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("turbine", supplier(new BlockItemDescriptable(blockTurbine, new Item.Properties().group(References.NUCLEARTAB))));
