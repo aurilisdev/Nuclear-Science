@@ -111,11 +111,11 @@ public class DeferredRegisters {
 		supplier(new BlockItemDescriptable(blockChemicalBoiler, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("chemicalextractor",
 		supplier(new BlockItemDescriptable(blockChemicalExtractor, new Item.Properties().group(References.NUCLEARTAB))));
-	ITEMS.register("leadblock", supplier(new BlockItemDescriptable(blocklead, new BlockItem.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("radioisotopegenerator",
 		supplier(new BlockItemDescriptable(blockRadioisotopeGenerator, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("turbine", supplier(new BlockItemDescriptable(blockTurbine, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("reactorcore", supplier(new BlockItemDescriptable(blockReactorCore, new Item.Properties().group(References.NUCLEARTAB))));
+	ITEMS.register("leadblock", supplier(new BlockItemDescriptable(blocklead, new BlockItem.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("electromagnet", supplier(new BlockItemDescriptable(blockElectromagnet, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("electromagneticglass",
 		supplier(new BlockItemDescriptable(blockElectromagneticGlass, new Item.Properties().group(References.NUCLEARTAB))));
