@@ -47,7 +47,7 @@ public class NuclearSciencePlugin implements IModPlugin {
 	registration.addRecipeCatalyst(new ItemStack(nuclearscience.DeferredRegisters.blockGasCentrifuge), GasCentrifugeRecipeCategory.UID);
 
 	// Nuclear Boiler
-	registration.addRecipeCatalyst(new ItemStack(nuclearscience.DeferredRegisters.blockChemicalBoiler), NuclearBoilerRecipeCategory.UID);
+	registration.addRecipeCatalyst(new ItemStack(nuclearscience.DeferredRegisters.blockNuclearBoiler), NuclearBoilerRecipeCategory.UID);
 
 	// Chemical Extractor
 	registration.addRecipeCatalyst(new ItemStack(nuclearscience.DeferredRegisters.blockChemicalExtractor), ChemicalExtractorRecipeCategory.UID);

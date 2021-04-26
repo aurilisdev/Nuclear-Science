@@ -32,7 +32,7 @@ public class NuclearBoilerRecipeCategory extends SolAndLiqToLiquidRecipeCategory
     private static final String modID = References.ID;
     private static final String recipeGroup = "nuclear_boiler";
     private static final String guiTexture = "textures/gui/jei/sol_and_liq_to_liq_recipe_gui.png";
-    private static final ItemStack inputMachine = new ItemStack(DeferredRegisters.blockChemicalBoiler);
+    private static final ItemStack inputMachine = new ItemStack(DeferredRegisters.blockNuclearBoiler);
     private static final ArrayList<int[]> inputCoordinates = new ArrayList<>(
 	    Arrays.asList(GUIBackground, MajorProcessingArrowLocation, MinorProcessingArrowLocation, InputItemOffset, InputFluidBucketOffset,
 		    InputFluidTank, OutputFluidTank, MajorProcessingArrowOffset, MinorProcessingArrowOffset, FluidBarLocation));

@@ -79,7 +79,7 @@ public class NuclearSciencePsuedoRecipes {
 
 	NUCLEAR_SCIENCE_MACHINES.add(new ItemStack(nuclearscience.DeferredRegisters.blockReactorCore));
 	NUCLEAR_SCIENCE_MACHINES.add(new ItemStack(nuclearscience.DeferredRegisters.blockFusionReactorCore));
-	NUCLEAR_SCIENCE_MACHINES.add(new ItemStack(nuclearscience.DeferredRegisters.blockChemicalBoiler));
+	NUCLEAR_SCIENCE_MACHINES.add(new ItemStack(nuclearscience.DeferredRegisters.blockNuclearBoiler));
 	NUCLEAR_SCIENCE_MACHINES.add(new ItemStack(nuclearscience.DeferredRegisters.blockChemicalExtractor));
 	NUCLEAR_SCIENCE_MACHINES.add(new ItemStack(nuclearscience.DeferredRegisters.blockElectromagnet));
 	NUCLEAR_SCIENCE_MACHINES.add(new ItemStack(nuclearscience.DeferredRegisters.blockElectromagneticBooster));
