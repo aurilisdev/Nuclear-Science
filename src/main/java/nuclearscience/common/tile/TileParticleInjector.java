@@ -50,7 +50,7 @@ public class TileParticleInjector extends GenericTileTicking {
 	ComponentInventory inv = getComponent(ComponentType.Inventory);
 	ItemStack resultStack = inv.getStackInSlot(2);
 	timeSinceSpawn--;
-	return timeSinceSpawn < 0 && MachineRecipes.canProcess(this) && (particles[0] == null || particles[1] == null)
+	return timeSinceSpawn < 0 && MachineRecipes.canProcess(this, processor, getType()) && (particles[0] == null || particles[1] == null)
 		&& inv.getStackInSlot(0).getCount() > 0 && resultStack.getCount() < resultStack.getMaxStackSize();
     }
 
