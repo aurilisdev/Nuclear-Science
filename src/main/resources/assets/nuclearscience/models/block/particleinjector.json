@@ -4,7 +4,7 @@
 	"texture_size": [64, 64],
 	"textures": {
 		"1": "nuclearscience:model/particleinjector",
-		"particle": "nuclearscience:block/electromagneticbooster"
+		"particle": "nuclearscience:model/particleinjector"
 	},
 	"elements": [
 		{
