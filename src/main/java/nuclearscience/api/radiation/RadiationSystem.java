@@ -3,6 +3,7 @@ package nuclearscience.api.radiation;
 import java.util.HashMap;
 
 import electrodynamics.prefab.utilities.object.Location;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -17,6 +18,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import nuclearscience.DeferredRegisters;
 import nuclearscience.References;
 import nuclearscience.common.item.ItemGeigerCounter;
 import nuclearscience.common.item.ItemHazmatArmor;
@@ -41,7 +43,9 @@ public class RadiationSystem {
 	    BlockPos next = newSource.toBlockPos();
 	    if (!curr.equals(next)) {
 		curr = next;
-		lastHard = hard = world.getBlockState(curr).getBlockHardness(world, curr) / (world.getFluidState(curr).isEmpty() ? 1 : 50.0);
+		BlockState state = world.getBlockState(curr);
+		lastHard = hard = (state.getBlock() == DeferredRegisters.blocklead ? 20000 : state.getBlockHardness(world, curr))
+			/ (world.getFluidState(curr).isEmpty() ? 1 : 50.0);
 	    }
 	    modifier += hard / 4.5f;
 	    checks--;

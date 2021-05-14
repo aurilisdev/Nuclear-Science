@@ -91,7 +91,7 @@ minecraft {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.5-36.0.1'
+    minecraft 'net.minecraftforge:forge:1.16.5-36.0.42'
     compile fileTree("E:/Games/Minecraft/Mod Code/Mods/JARS")
     /*
 	Compiles against source code as well as JAR at runtime. Recommend to keep it
@@ -171,6 +171,7 @@ task pushTag(type: GitPush, dependsOn: createTag) {
 }
 tasks.curseforge.dependsOn jar
 tasks.curseforge.dependsOn pushTag
+
 /*
 curseforge {
   apiKey = System.getenv("CURSEFORGE_KEY")

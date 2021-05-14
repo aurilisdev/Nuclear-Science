@@ -4,14 +4,20 @@ import com.google.common.base.Supplier;
 import com.google.common.collect.Sets;
 
 import electrodynamics.common.blockitem.BlockItemDescriptable;
+import net.minecraft.block.AbstractBlock.Properties;
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.inventory.container.ContainerType;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -66,7 +72,7 @@ public class DeferredRegisters {
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, References.ID);
     public static FluidUraniumHexafluoride fluidUraniumHexafluoride;
     public static BlockGasCentrifuge blockGasCentrifuge;
-    public static BlockNuclearBoiler blockChemicalBoiler;
+    public static BlockNuclearBoiler blockNuclearBoiler;
     public static BlockChemicalExtractor blockChemicalExtractor;
     public static BlockRadioisotopeGenerator blockRadioisotopeGenerator;
     public static BlockTurbine blockTurbine;
@@ -80,11 +86,11 @@ public class DeferredRegisters {
     public static BlockParticleInjector blockParticleInjector;
     public static BlockQuantumCapacitor blockQuantumCapacitor;
     public static BlockTeleporter blockTeleporter;
-
+    public static Block blocklead;
     static {
 	BLOCKS.register("gascentrifuge", supplier(blockGasCentrifuge = new BlockGasCentrifuge()));
-	BLOCKS.register("chemicalboiler", supplier(blockChemicalBoiler = new BlockNuclearBoiler()));// TODO: Cant change this chemical boiler name
-												    // until next reset
+	BLOCKS.register("chemicalboiler", supplier(blockNuclearBoiler = new BlockNuclearBoiler()));// TODO: Cant change this chemical boiler name
+												   // until next reset
 	BLOCKS.register("chemicalextractor", supplier(blockChemicalExtractor = new BlockChemicalExtractor()));
 	BLOCKS.register("radioisotopegenerator", supplier(blockRadioisotopeGenerator = new BlockRadioisotopeGenerator()));
 	BLOCKS.register("turbine", supplier(blockTurbine = new BlockTurbine()));
@@ -98,15 +104,17 @@ public class DeferredRegisters {
 	BLOCKS.register("particleinjector", supplier(blockParticleInjector = new BlockParticleInjector()));
 	BLOCKS.register("quantumcapacitor", supplier(blockQuantumCapacitor = new BlockQuantumCapacitor()));
 	BLOCKS.register("teleporter", supplier(blockTeleporter = new BlockTeleporter()));
+	BLOCKS.register("blocklead", supplier(blocklead = new Block(Properties.create(Material.IRON, MaterialColor.BLACK)
+		.hardnessAndResistance(5.0f, 3.0f).sound(SoundType.METAL).setRequiresTool().harvestTool(ToolType.PICKAXE).harvestLevel(1))));
 	ITEMS.register("gascentrifuge", supplier(new BlockItemDescriptable(blockGasCentrifuge, new Item.Properties().group(References.NUCLEARTAB))));
-	ITEMS.register("chemicalboiler",
-		supplier(new BlockItemDescriptable(blockChemicalBoiler, new Item.Properties().group(References.NUCLEARTAB))));
+	ITEMS.register("chemicalboiler", supplier(new BlockItemDescriptable(blockNuclearBoiler, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("chemicalextractor",
 		supplier(new BlockItemDescriptable(blockChemicalExtractor, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("radioisotopegenerator",
 		supplier(new BlockItemDescriptable(blockRadioisotopeGenerator, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("turbine", supplier(new BlockItemDescriptable(blockTurbine, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("reactorcore", supplier(new BlockItemDescriptable(blockReactorCore, new Item.Properties().group(References.NUCLEARTAB))));
+	ITEMS.register("blocklead", supplier(new BlockItemDescriptable(blocklead, new BlockItem.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("electromagnet", supplier(new BlockItemDescriptable(blockElectromagnet, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("electromagneticglass",
 		supplier(new BlockItemDescriptable(blockElectromagneticGlass, new Item.Properties().group(References.NUCLEARTAB))));
@@ -121,11 +129,10 @@ public class DeferredRegisters {
 		supplier(new BlockItemDescriptable(blockParticleInjector, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("quantumcapacitor",
 		supplier(new BlockItemDescriptable(blockQuantumCapacitor, new Item.Properties().group(References.NUCLEARTAB))));
-	ITEMS.register("teleporter",
-		supplier(new BlockItemDescriptable(blockTeleporter, new Item.Properties().group(References.NUCLEARTAB))));
+	ITEMS.register("teleporter", supplier(new BlockItemDescriptable(blockTeleporter, new Item.Properties().group(References.NUCLEARTAB))));
 	FLUIDS.register("fluiduraniumhexafluoride", supplier(fluidUraniumHexafluoride = new FluidUraniumHexafluoride()));
 	BlockItemDescriptable.addDescription(blockGasCentrifuge, "|translate|tooltip.gascentrifuge.voltage");
-	BlockItemDescriptable.addDescription(blockChemicalBoiler, "|translate|tooltip.chemicalboiler.voltage");
+	BlockItemDescriptable.addDescription(blockNuclearBoiler, "|translate|tooltip.nuclearboiler.voltage");
 	BlockItemDescriptable.addDescription(blockChemicalExtractor, "|translate|tooltip.chemicalextractor.voltage");
 	BlockItemDescriptable.addDescription(blockParticleInjector, "|translate|tooltip.particleinjector.voltage");
 	BlockItemDescriptable.addDescription(blockQuantumCapacitor, "|translate|tooltip.quantumcapacitor.voltage");
@@ -175,8 +182,8 @@ public class DeferredRegisters {
     public static final RegistryObject<TileEntityType<TileGasCentrifuge>> TILE_GASCENTRIFUGE = TILES.register("gascentrifuge",
 	    () -> new TileEntityType<>(TileGasCentrifuge::new, Sets.newHashSet(blockGasCentrifuge), null));
     public static final RegistryObject<TileEntityType<TileNuclearBoiler>> TILE_CHEMICALBOILER = TILES.register("chemicalboiler",
-	    () -> new TileEntityType<>(TileNuclearBoiler::new, Sets.newHashSet(blockChemicalBoiler), null)); // TODO: Cant change this chemical boiler
-													     // name until next reset
+	    () -> new TileEntityType<>(TileNuclearBoiler::new, Sets.newHashSet(blockNuclearBoiler), null)); // TODO: Cant change this chemical boiler
+													    // name until next reset
     public static final RegistryObject<TileEntityType<TileChemicalExtractor>> TILE_CHEMICALEXTRACTOR = TILES.register("chemicalextractor",
 	    () -> new TileEntityType<>(TileChemicalExtractor::new, Sets.newHashSet(blockChemicalExtractor), null));
     public static final RegistryObject<TileEntityType<TileRadioisotopeGenerator>> TILE_RADIOISOTOPEGENERATOR = TILES.register("radioisotopegenerator",
