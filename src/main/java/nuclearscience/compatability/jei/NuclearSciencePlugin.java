@@ -151,7 +151,7 @@ public class NuclearSciencePlugin implements IModPlugin {
 	 * 
 	 * Fission Reactor Core Fusion Reactor Core Chemical Boiler Chemical Extractor
 	 * Electromagnet Electromagnetic Booster Electromagnetic Switch Gas Centrifuge
-	 * Particle Injector Quantum Capacitor Radioisotope Generator Turbine
+	 * Particle Injector Quantum Capacitor Radioisotope Generator Turbine Teleporter
 	 * 
 	 */
 	ArrayList<ItemStack> nsMachines = NuclearSciencePsuedoRecipes.NUCLEAR_SCIENCE_MACHINES;

@@ -83,14 +83,13 @@ public class NuclearSciencePsuedoRecipes {
 	NUCLEAR_SCIENCE_MACHINES.add(new ItemStack(nuclearscience.DeferredRegisters.blockChemicalExtractor));
 	NUCLEAR_SCIENCE_MACHINES.add(new ItemStack(nuclearscience.DeferredRegisters.blockElectromagnet));
 	NUCLEAR_SCIENCE_MACHINES.add(new ItemStack(nuclearscience.DeferredRegisters.blockElectromagneticBooster));
-	// NUCLEAR_SCIENCE_MACHINES.add(new ItemStack(Items.ACACIA_BOAT));
 	NUCLEAR_SCIENCE_MACHINES.add(new ItemStack(nuclearscience.DeferredRegisters.blockElectromagneticSwitch));
 	NUCLEAR_SCIENCE_MACHINES.add(new ItemStack(nuclearscience.DeferredRegisters.blockGasCentrifuge));
 	NUCLEAR_SCIENCE_MACHINES.add(new ItemStack(nuclearscience.DeferredRegisters.blockParticleInjector));
 	NUCLEAR_SCIENCE_MACHINES.add(new ItemStack(nuclearscience.DeferredRegisters.blockQuantumCapacitor));
 	NUCLEAR_SCIENCE_MACHINES.add(new ItemStack(nuclearscience.DeferredRegisters.blockRadioisotopeGenerator));
 	NUCLEAR_SCIENCE_MACHINES.add(new ItemStack(nuclearscience.DeferredRegisters.blockTurbine));
-	// NUCLEAR_SCIENCE_MACHINES.add(new ItemStack(Items.ACACIA_BOAT));
+	NUCLEAR_SCIENCE_MACHINES.add(new ItemStack(nuclearscience.DeferredRegisters.blockTeleporter));
 
     }
 
