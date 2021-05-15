@@ -10,7 +10,8 @@ import mezz.jei.api.helpers.IGuiHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import nuclearscience.DeferredRegisters;
-import electrodynamics.api.References;
+
+import nuclearscience.References;
 
 public class ChemicalExtractorRecipeCategory extends SolAndLiqToSolidRecipeCategory {
     // JEI Window Parameters
@@ -46,7 +47,6 @@ public class ChemicalExtractorRecipeCategory extends SolAndLiqToSolidRecipeCateg
 	super(guiHelper, modID, recipeGroup, guiTexture, inputMachine, inputCoordinates, smeltTime, majorArrowStartDirection,
 		minorArrowStartDirection, textYHeight);
     }
-
     @Override
     public ResourceLocation getUid() {
 	return UID;
