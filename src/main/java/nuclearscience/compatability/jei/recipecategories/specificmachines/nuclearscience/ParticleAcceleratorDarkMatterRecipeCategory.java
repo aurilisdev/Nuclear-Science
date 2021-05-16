@@ -8,7 +8,6 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
-import nuclearscience.References;
 import electrodynamics.prefab.tile.processing.O2OProcessingRecipe;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
@@ -25,6 +24,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TranslationTextComponent;
+import nuclearscience.References;
 
 public class ParticleAcceleratorDarkMatterRecipeCategory implements IRecipeCategory<O2OProcessingRecipe> {
 

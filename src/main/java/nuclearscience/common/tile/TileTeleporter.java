@@ -23,6 +23,7 @@ public class TileTeleporter extends GenericTileTicking {
     public int xCoord;
     public int yCoord;
     public int zCoord;
+    public int cooldown = 0;
     public String world;
 
     public TileTeleporter() {
@@ -41,21 +42,28 @@ public class TileTeleporter extends GenericTileTicking {
     }
 
     protected void tickServer(ComponentTickable tickable) {
-	if (tickable.getTicks() % 40 == 0) {
+	ComponentElectrodynamic electro = getComponent(ComponentType.Electrodynamic);
+	if (tickable.getTicks() % (electro.getJoulesStored() == 0 ? 40 : 15) == 0) {
 	    this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendGuiPacketToTracking();
 	}
-	ComponentElectrodynamic electro = getComponent(ComponentType.Electrodynamic);
-//	if (electro.getJoulesStored() == electro.getMaxJoulesStored()) {
-	AxisAlignedBB BB = new AxisAlignedBB(pos).expand(1, 2, 1);
-	List<PlayerEntity> player = getWorld().getEntitiesWithinAABB(EntityType.PLAYER, BB, en -> true);
-	if (!player.isEmpty()) {
-	    ServerWorld serverWorld = ItemFrequencyCard.getFromNBT((ServerWorld) getWorld(), world);
-	    if (serverWorld == player.get(0).getEntityWorld()) {
-		player.get(0).teleportKeepLoaded(xCoord, yCoord + 1, zCoord);
-		electro.joules(0);
+	if (cooldown <= 0) {
+	    cooldown = 20;
+	    System.out.println(electro.getJoulesStored());
+	    if (electro.getJoulesStored() == electro.getMaxJoulesStored()) {
+		AxisAlignedBB BB = new AxisAlignedBB(getPos(), getPos().add(1, 2, 1));
+		List<PlayerEntity> player = getWorld().getEntitiesWithinAABB(EntityType.PLAYER, BB, en -> true);
+		if (!player.isEmpty()) {
+		    ServerWorld serverWorld = ItemFrequencyCard.getFromNBT((ServerWorld) getWorld(), world);
+		    if (serverWorld == player.get(0).getEntityWorld()) {
+			player.get(0).teleportKeepLoaded(xCoord, yCoord + 1, zCoord);
+			cooldown = 80;
+			electro.joules(0);
+		    }
+		}
+
 	    }
 	}
-//	}
+	cooldown--;
     }
 
     @Override
