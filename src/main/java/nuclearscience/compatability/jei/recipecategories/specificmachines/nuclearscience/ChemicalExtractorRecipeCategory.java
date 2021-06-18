@@ -3,6 +3,7 @@ package nuclearscience.compatability.jei.recipecategories.specificmachines.nucle
 import java.util.ArrayList;
 import java.util.Arrays;
 
+
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import mezz.jei.api.gui.drawable.IDrawableAnimated.StartDirection;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -12,9 +13,11 @@ import nuclearscience.DeferredRegisters;
 import electrodynamics.api.References;
 import electrodynamics.compatability.jei.recipecategories.FluidItem2ItemRecipeCategory;
 
+
 import nuclearscience.References;
 
 public class ChemicalExtractorRecipeCategory extends FluidItem2ItemRecipeCategory {
+
     // JEI Window Parameters
     private static final int[] GUIBackground = { 0, 0, 132, 64 };
     private static final int[] MajorProcessingArrowLocation = { 0, 65, 68, 15 };

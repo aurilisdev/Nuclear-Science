@@ -3,14 +3,15 @@ package nuclearscience.compatability.jei.recipecategories.specificmachines.nucle
 import java.util.ArrayList;
 import java.util.Arrays;
 
+
 import electrodynamics.compatability.jei.recipecategories.FluidItem2FluidRecipeCategory;
+
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import mezz.jei.api.gui.drawable.IDrawableAnimated.StartDirection;
 import mezz.jei.api.helpers.IGuiHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import nuclearscience.DeferredRegisters;
-import nuclearscience.References;
 
 public class NuclearBoilerRecipeCategory extends FluidItem2FluidRecipeCategory {
 
