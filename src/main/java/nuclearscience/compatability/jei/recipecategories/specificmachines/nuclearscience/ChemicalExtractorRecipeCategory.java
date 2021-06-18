@@ -3,7 +3,6 @@ package nuclearscience.compatability.jei.recipecategories.specificmachines.nucle
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import electrodynamics.compatability.jei.recipecategories.SolAndLiqToSolidRecipeCategory;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import mezz.jei.api.gui.drawable.IDrawableAnimated.StartDirection;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -11,8 +10,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import nuclearscience.DeferredRegisters;
 import electrodynamics.api.References;
+import electrodynamics.compatability.jei.recipecategories.FluidItem2ItemRecipeCategory;
 
-public class ChemicalExtractorRecipeCategory extends SolAndLiqToSolidRecipeCategory {
+public class ChemicalExtractorRecipeCategory extends FluidItem2ItemRecipeCategory {
     // JEI Window Parameters
     private static final int[] GUIBackground = { 0, 0, 132, 64 };
     private static final int[] MajorProcessingArrowLocation = { 0, 65, 68, 15 };
@@ -49,7 +49,7 @@ public class ChemicalExtractorRecipeCategory extends SolAndLiqToSolidRecipeCateg
 
     @Override
     public ResourceLocation getUid() {
-	return UID;
+    	return UID;
     }
 
 }

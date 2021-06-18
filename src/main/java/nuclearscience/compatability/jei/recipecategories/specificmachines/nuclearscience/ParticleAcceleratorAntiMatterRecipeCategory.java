@@ -4,8 +4,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import electrodynamics.compatability.jei.recipecategories.O2OProcessingRecipeCategory;
-import electrodynamics.prefab.tile.processing.O2OProcessingRecipe;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+import com.mojang.blaze3d.matrix.MatrixStack;
+
+import electrodynamics.compatability.jei.recipecategories.ElectrodynamicsRecipeCategory;
+import electrodynamics.compatability.jei.recipecategories.psuedorecipes.PsuedoO2ORecipe;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
@@ -13,104 +18,141 @@ import mezz.jei.api.gui.drawable.IDrawableAnimated.StartDirection;
 import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.item.AirItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.registries.ForgeRegistries;
 import nuclearscience.References;
 
-public class ParticleAcceleratorAntiMatterRecipeCategory extends O2OProcessingRecipeCategory {
+public class ParticleAcceleratorAntiMatterRecipeCategory extends ElectrodynamicsRecipeCategory<PsuedoO2ORecipe> {
     // JEI Window Parameters
+	private static int INPUT_SLOT = 0;
+	private static int OUTPUT_SLOT = 1;
     private static int ANY_ITEM_INPUT_SLOT = 2;
 
-    private static int[] GUIBackground = { 0, 0, 132, 66 };
-    private static final int[] ProcessingArrowLocation = { 0, 67, 82, 47 };
+    private static int[] GUI_BACKGROUND = { 0, 0, 132, 66 };
+    private static final int[] PROCESSING_ARROW_COORDS = { 0, 67, 82, 47 };
 
-    private static int[] InputItemOffset = { 12, 39 };
-    private static int[] OutputItemOffset = { 101, 20 };
-    private static int[] ProcessingArrowOffset = { 17, 6 };
+    private static int[] INPUT_OFFSET = { 12, 39 };
+    private static int[] OUTPUT_OFFSET = { 101, 20 };
+    private static int[] PROCESSING_ARROW_OFFSET = { 17, 6 };
 
-    private static String modID = References.ID;
-    private static String recipeGroup = "partical_accelerator_antimatter";
-    private static String guiTexture = "textures/gui/jei/particle_accelerator_antimatter_gui.png";
-    private static ItemStack inputMachine = new ItemStack(nuclearscience.DeferredRegisters.blockParticleInjector);
-    private static ArrayList<int[]> inputCoordinates = new ArrayList<>(
-	    Arrays.asList(GUIBackground, ProcessingArrowLocation, InputItemOffset, OutputItemOffset, ProcessingArrowOffset));
-    private static int smeltTime = 50;
-    private static int textYHeight = 58;
-    private static StartDirection arrowStartDirection = IDrawableAnimated.StartDirection.LEFT;
+    private static String MOD_ID = References.ID;
+    private static String RECIPE_GROUP = "partical_accelerator_antimatter";
+    private static String GUI_TEXTURE = "textures/gui/jei/particle_accelerator_antimatter_gui.png";
+    
+    private static ItemStack INPUT_MACHINE = new ItemStack(nuclearscience.DeferredRegisters.blockParticleInjector);
+    
+    private static int ARROW_SMELT_TIME = 50;
+    private static int Y_HEIGHT = 58;
+    
+    private LoadingCache<Integer, IDrawableAnimated> CACHED_ARROWS;
+    private static StartDirection ARROW_START_DIRECTION = IDrawableAnimated.StartDirection.LEFT;
 
-    public static ResourceLocation UID = new ResourceLocation(modID, recipeGroup);
+    public static ResourceLocation UID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
 
     public ParticleAcceleratorAntiMatterRecipeCategory(IGuiHelper guiHelper) {
-	super(guiHelper, modID, recipeGroup, guiTexture, inputMachine, inputCoordinates, smeltTime, textYHeight, arrowStartDirection);
+    	
+    	super(guiHelper, MOD_ID, RECIPE_GROUP, GUI_TEXTURE, INPUT_MACHINE, GUI_BACKGROUND,PsuedoO2ORecipe.class,Y_HEIGHT, ARROW_SMELT_TIME);
+    	CACHED_ARROWS = CacheBuilder.newBuilder().maximumSize(25).build(new CacheLoader<Integer, IDrawableAnimated>() {
+		    @Override
+		    public IDrawableAnimated load(Integer cookTime) {
+			return guiHelper.drawableBuilder(getGuiTexture(), PROCESSING_ARROW_COORDS[0], PROCESSING_ARROW_COORDS[1], PROCESSING_ARROW_COORDS[2],
+				PROCESSING_ARROW_COORDS[3]).buildAnimated(cookTime, ARROW_START_DIRECTION, false);
+		    }
+	});
     }
 
     @Override
     public ResourceLocation getUid() {
 	return UID;
     }
-
+    
     @Override
-    public void setIngredients(O2OProcessingRecipe recipe, IIngredients ingredients) {
-
-	ingredients.setInputLists(VanillaTypes.ITEM, recipeInput(recipe));
-
-	ingredients.setOutput(VanillaTypes.ITEM, recipe.getOutput());
+    public void setIngredients(PsuedoO2ORecipe recipe, IIngredients ingredients) {
+		ingredients.setInputLists(VanillaTypes.ITEM, recipeInput(recipe));
+		ingredients.setOutput(VanillaTypes.ITEM, recipe.OUTPUT);
     }
 
     @Override
-    public void setRecipe(IRecipeLayout recipeLayout, O2OProcessingRecipe recipe, IIngredients ingredients) {
+    public void setRecipe(IRecipeLayout recipeLayout, PsuedoO2ORecipe recipe, IIngredients ingredients) {
 
-	IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
+		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
+	
+		guiItemStacks.init(INPUT_SLOT, true, INPUT_OFFSET[0], INPUT_OFFSET[1]);
+		guiItemStacks.init(ANY_ITEM_INPUT_SLOT, true, 12, 2);
+		guiItemStacks.init(OUTPUT_SLOT, false, OUTPUT_OFFSET[0], OUTPUT_OFFSET[1]);
+	
+		guiItemStacks.set(ingredients);
 
-	guiItemStacks.init(INPUT_SLOT, true, InputItemOffset[0], InputItemOffset[1]);
-	guiItemStacks.init(ANY_ITEM_INPUT_SLOT, true, 12, 2);
-	guiItemStacks.init(OUTPUT_SLOT, false, OutputItemOffset[0], OutputItemOffset[1]);
+    }
+    
+    @Override
+    public void draw(PsuedoO2ORecipe recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
+		IDrawableAnimated arrow = getArrow(recipe);
+		arrow.draw(matrixStack, PROCESSING_ARROW_OFFSET[0], PROCESSING_ARROW_OFFSET[1]);
+	
+		drawSmeltTime(recipe, matrixStack, getYHeight());
+    }
 
-	guiItemStacks.set(ingredients);
+    protected IDrawableAnimated getArrow(PsuedoO2ORecipe recipe) {
+    	return CACHED_ARROWS.getUnchecked(getArrowSmeltTime());
+    }
+
+    protected void drawSmeltTime(PsuedoO2ORecipe recipe, MatrixStack matrixStack, int y) {
+
+		int smeltTimeSeconds = getArrowSmeltTime() / 20;
+		TranslationTextComponent timeString = new TranslationTextComponent("gui.jei.category." + getRecipeGroup() + ".info.power", smeltTimeSeconds);
+		Minecraft minecraft = Minecraft.getInstance();
+		FontRenderer fontRenderer = minecraft.fontRenderer;
+		int stringWidth = fontRenderer.getStringPropertyWidth(timeString);
+		fontRenderer.func_243248_b(matrixStack, timeString, getBackground().getWidth() - stringWidth, y, 0xFF808080);
 
     }
 
-    private static List<List<ItemStack>> recipeInput(O2OProcessingRecipe recipe) {
+    private static List<List<ItemStack>> recipeInput(PsuedoO2ORecipe recipe) {
 
-	List<ItemStack> emagCell = new ArrayList<>();
-	emagCell.add(recipe.getInput());
-
-	/* Gets a list of all Vanilla items */
-	int i = 0;
-	List<Item> allItems = new ArrayList<>(ForgeRegistries.ITEMS.getValues());
-	List<Item> vanillaItems = new ArrayList<>();
-	ItemGroup[] vanillaItemGroups = { ItemGroup.BREWING, ItemGroup.BUILDING_BLOCKS, ItemGroup.COMBAT, ItemGroup.DECORATIONS, ItemGroup.FOOD,
-		ItemGroup.MISC, ItemGroup.REDSTONE, ItemGroup.TOOLS, ItemGroup.TRANSPORTATION };
-	for (Item item : allItems) {
-	    for (i = 0; i < vanillaItemGroups.length; i++) {
-		if (item.getGroup() == vanillaItemGroups[i]) {
-		    vanillaItems.add(item);
-		    break;
+		List<ItemStack> emagCell = new ArrayList<>();
+		emagCell.add(recipe.INPUT.getMatchingStacks()[0]);
+	
+		/* Gets a list of all Vanilla items */
+	    
+		int i = 0;
+		List<Item> allItems = new ArrayList<>(ForgeRegistries.ITEMS.getValues());
+		List<Item> vanillaItems = new ArrayList<>();
+		ItemGroup[] vanillaItemGroups = { ItemGroup.BREWING, ItemGroup.BUILDING_BLOCKS, ItemGroup.COMBAT, ItemGroup.DECORATIONS, ItemGroup.FOOD,
+			ItemGroup.MISC, ItemGroup.REDSTONE, ItemGroup.TOOLS, ItemGroup.TRANSPORTATION };
+		for (Item item : allItems) {
+		    for (i = 0; i < vanillaItemGroups.length; i++) {
+			if (item.getGroup() == vanillaItemGroups[i]) {
+			    vanillaItems.add(item);
+			    break;
+			}
+		    }
 		}
+		// Filters out Air item; breaks JEI category if left!
+		for (Item item : vanillaItems) {
+		    if (item instanceof AirItem) {
+			vanillaItems.remove(item);
+		    }
+		}
+	
+		List<ItemStack> vanillaItemStacks = new ArrayList<>();
+		for (Item item : vanillaItems) {
+		    vanillaItemStacks.add(new ItemStack(item));
+		}
+	
+		List<List<ItemStack>> inputSlots = new ArrayList<>();
+		inputSlots.add(emagCell);
+		inputSlots.add(vanillaItemStacks);
+	
+		return inputSlots;
+	
 	    }
-	}
-	// Filters out Air item; breaks JEI category if left!
-	for (Item item : vanillaItems) {
-	    if (item instanceof AirItem) {
-		vanillaItems.remove(item);
-	    }
-	}
-
-	List<ItemStack> vanillaItemStacks = new ArrayList<>();
-	for (Item item : vanillaItems) {
-	    vanillaItemStacks.add(new ItemStack(item));
-	}
-
-	List<List<ItemStack>> inputSlots = new ArrayList<>();
-	inputSlots.add(emagCell);
-	inputSlots.add(vanillaItemStacks);
-
-	return inputSlots;
-
-    }
-
+	
 }

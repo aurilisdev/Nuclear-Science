@@ -3,7 +3,7 @@ package nuclearscience.compatability.jei.recipecategories.specificmachines.nucle
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import electrodynamics.compatability.jei.recipecategories.SolAndLiqToLiquidRecipeCategory;
+import electrodynamics.compatability.jei.recipecategories.FluidItem2FluidRecipeCategory;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import mezz.jei.api.gui.drawable.IDrawableAnimated.StartDirection;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -12,7 +12,7 @@ import net.minecraft.util.ResourceLocation;
 import nuclearscience.DeferredRegisters;
 import electrodynamics.api.References;
 
-public class NuclearBoilerRecipeCategory extends SolAndLiqToLiquidRecipeCategory {
+public class NuclearBoilerRecipeCategory extends FluidItem2FluidRecipeCategory {
 
     // JEI Window Parameters
     private static int[] GUIBackground = { 0, 0, 132, 64 };
