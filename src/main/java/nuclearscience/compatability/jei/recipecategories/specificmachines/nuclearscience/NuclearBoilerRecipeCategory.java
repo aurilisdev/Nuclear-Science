@@ -10,7 +10,7 @@ import mezz.jei.api.helpers.IGuiHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import nuclearscience.DeferredRegisters;
-import electrodynamics.api.References;
+import nuclearscience.References;
 
 public class NuclearBoilerRecipeCategory extends FluidItem2FluidRecipeCategory {
 
