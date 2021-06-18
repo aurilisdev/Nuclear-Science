@@ -1,7 +1,6 @@
 package nuclearscience.common.tile;
 
 import electrodynamics.api.electricity.CapabilityElectrodynamic;
-import electrodynamics.common.recipe.MachineRecipes;
 import electrodynamics.prefab.tile.GenericTileTicking;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
@@ -13,6 +12,7 @@ import electrodynamics.prefab.tile.components.type.ComponentProcessor;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import electrodynamics.prefab.utilities.object.Location;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import nuclearscience.DeferredRegisters;
@@ -50,7 +50,19 @@ public class TileParticleInjector extends GenericTileTicking {
 	ComponentInventory inv = getComponent(ComponentType.Inventory);
 	ItemStack resultStack = inv.getStackInSlot(2);
 	timeSinceSpawn--;
-	return timeSinceSpawn < 0 && MachineRecipes.canProcess(this, processor, getType()) && (particles[0] == null || particles[1] == null)
+	
+	/**
+	 * This is a far simpler check to perform. It can use any item, so all you have to do
+	 * is check if the thing in the input slot is an item and is not air.
+	 */
+	boolean isItem = false;
+	ItemStack inputItem = inv.getStackInSlot(0);
+	
+	if((inputItem != null) && !(inputItem.equals(new ItemStack(Items.AIR), true))) {
+		isItem = true;
+	}
+	
+	return timeSinceSpawn < 0 && isItem && (particles[0] == null || particles[1] == null)
 		&& inv.getStackInSlot(0).getCount() > 0 && resultStack.getCount() < resultStack.getMaxStackSize();
     }
 

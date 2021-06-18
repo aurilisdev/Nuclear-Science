@@ -1,6 +1,7 @@
 package nuclearscience;
 
 import electrodynamics.prefab.configuration.ConfigurationHandler;
+import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 import net.minecraft.potion.Effect;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -34,6 +35,7 @@ public class NuclearScience {
 	DeferredRegisters.CONTAINERS.register(bus);
 	DeferredRegisters.FLUIDS.register(bus);
 	DeferredRegisters.ENTITIES.register(bus);
+	NuclearScienceRecipeInit.RECIPE_SERIALIZER.register(bus);
 	SoundRegister.SOUNDS.register(bus);
     }
 

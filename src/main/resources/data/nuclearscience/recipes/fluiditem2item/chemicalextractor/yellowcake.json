@@ -1,0 +1,16 @@
+{
+	"type" : "nuclearscience:chemical_extractor_recipe",
+	
+	"item_input":{
+		"tag":"forge:ores/uranium",
+		"count":1
+	},
+	"fluid_input":{
+		"fluid":"minecraft:water",
+		"amount": 1600
+	},
+	"item_output":{
+		"item":"nuclearscience:yellowcake",
+		"count": 1
+	}
+}

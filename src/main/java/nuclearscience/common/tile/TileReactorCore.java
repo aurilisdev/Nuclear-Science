@@ -2,7 +2,11 @@ package nuclearscience.common.tile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
+import electrodynamics.common.recipe.ElectrodynamicsRecipe;
+import electrodynamics.common.recipe.categories.o2o.O2ORecipe;
+import electrodynamics.common.recipe.recipeutils.CountableIngredient;
 import electrodynamics.prefab.tile.GenericTileTicking;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
@@ -15,6 +19,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -28,6 +34,7 @@ import net.minecraft.world.Explosion.Mode;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.api.radiation.RadiationSystem;
 import nuclearscience.common.inventory.container.ContainerReactorCore;
+import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 import nuclearscience.common.settings.Constants;
 
 public class TileReactorCore extends GenericTileTicking {
@@ -51,82 +58,73 @@ public class TileReactorCore extends GenericTileTicking {
 	addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket)
 		.guiPacketReader(this::readCustomPacket).guiPacketWriter(this::writeCustomPacket));
 	addComponent(new ComponentInventory(this).size(6).faceSlots(Direction.UP, 0, 1, 2, 3, 4).faceSlots(Direction.DOWN, 5));
+	
 	addComponent(new ComponentContainerProvider("container.reactorcore")
 		.createMenu((id, player) -> new ContainerReactorCore(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
     }
 
     protected void tickServer(ComponentTickable tickable) {
-	ComponentInventory inv = getComponent(ComponentType.Inventory);
-	if (tickable.getTicks() % 10 == 0) {
-	    this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();
-	}
-	fuelCount = 0;
-	for (int i = 0; i < 4; i++) {
-	    ItemStack stack = inv.getStackInSlot(i);
-	    fuelCount += stack.getItem() == DeferredRegisters.ITEM_FUELLEUO2.get() ? 2
-		    : stack.getItem() == DeferredRegisters.ITEM_FUELHEUO2.get() ? 3 : 0;
-	}
-	hasDeuterium = !inv.getStackInSlot(4).isEmpty();
-
-	double decrease = (temperature - AIR_TEMPERATURE) / 3000.0;
-	if (fuelCount == 0) {
-	    decrease *= 25;
-	}
-	boolean hasWater = !getBlockState().getFluidState().isEmpty();
-	if (hasWater) {
-	    decrease += (temperature - WATER_TEMPERATURE) / 5000.0;
-	}
-	if (decrease != 0) {
-	    temperature -= decrease < 0.001 && decrease > 0 ? 0.001 : decrease > -0.001 && decrease < 0 ? -0.001 : decrease;
-	}
-	if (fuelCount > 0 && ticks > 50) {
-	    double insertDecimal = /* was "(100 - insertion) / 100.0" before */ 1.0;
-	    if (world.rand.nextFloat() < insertDecimal) {
-		for (int slot = 0; slot < 4; slot++) {
-		    ItemStack fuelRod = inv.getStackInSlot(slot);
-		    if (fuelRod.getDamage() >= fuelRod.getMaxDamage()) {
-			inv.setInventorySlotContents(slot, ItemStack.EMPTY);
+		ComponentInventory inv = getComponent(ComponentType.Inventory);
+		if (tickable.getTicks() % 10 == 0) {
+		    this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();
+		}
+		fuelCount = 0;
+		for (int i = 0; i < 4; i++) {
+		    ItemStack stack = inv.getStackInSlot(i);
+		    fuelCount += stack.getItem() == DeferredRegisters.ITEM_FUELLEUO2.get() ? 2
+			    : stack.getItem() == DeferredRegisters.ITEM_FUELHEUO2.get() ? 3 : 0;
+		}
+		hasDeuterium = !inv.getStackInSlot(4).isEmpty();
+	
+		double decrease = (temperature - AIR_TEMPERATURE) / 3000.0;
+		if (fuelCount == 0) {
+		    decrease *= 25;
+		}
+		boolean hasWater = !getBlockState().getFluidState().isEmpty();
+		if (hasWater) {
+		    decrease += (temperature - WATER_TEMPERATURE) / 5000.0;
+		}
+		if (decrease != 0) {
+		    temperature -= decrease < 0.001 && decrease > 0 ? 0.001 : decrease > -0.001 && decrease < 0 ? -0.001 : decrease;
+		}
+		if (fuelCount > 0 && ticks > 50) {
+		    double insertDecimal = /* was "(100 - insertion) / 100.0" before */ 1.0;
+		    if (world.rand.nextFloat() < insertDecimal) {
+			for (int slot = 0; slot < 4; slot++) {
+			    ItemStack fuelRod = inv.getStackInSlot(slot);
+			    if (fuelRod.getDamage() >= fuelRod.getMaxDamage()) {
+				inv.setInventorySlotContents(slot, ItemStack.EMPTY);
+			    }
+			    fuelRod.setDamage((int) (fuelRod.getDamage() + 1 + Math.round(temperature) / MELTDOWN_TEMPERATURE_CALC));
+			}
 		    }
-		    fuelRod.setDamage((int) (fuelRod.getDamage() + 1 + Math.round(temperature) / MELTDOWN_TEMPERATURE_CALC));
-		}
-	    }
-	    temperature += (MELTDOWN_TEMPERATURE_CALC * insertDecimal * (0.25 * (fuelCount / 2.0) + world.rand.nextDouble() / 5.0) - temperature)
-		    / (200 + 20 * (hasWater ? 14.7 : 1));
-	    if (temperature > MELTDOWN_TEMPERATURE_ACTUAL + world.rand.nextInt(50) && fuelCount > 0) {
-		ticksOverheating++;
-		// Implement some alarm sounds at this time
-		if (ticksOverheating > 10 * 20) {
-		    meltdown();
-		}
-	    }
-	    if (world.getWorldInfo().getGameTime() % 10 == 0) {
-		Location source = new Location(pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f);
-		double totstrength = temperature * 10;
-		double range = Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 1.25;
-		AxisAlignedBB bb = AxisAlignedBB.withSizeAtOrigin(range, range, range);
-		bb = bb.offset(new Vector3d(source.x(), source.y(), source.z()));
-		List<LivingEntity> list = world.getEntitiesWithinAABB(LivingEntity.class, bb);
-		for (LivingEntity living : list) {
-		    RadiationSystem.applyRadiation(living, source, totstrength);
-		}
-	    }
-	} else {
-	    ticksOverheating = 0;
-	}
-	temperature = Math.max(AIR_TEMPERATURE, temperature);
-	if (fuelCount > 0 && world.rand.nextFloat() < 1 / (1200.0 * MELTDOWN_TEMPERATURE_CALC / temperature)) {
-	    ItemStack tritium = inv.getStackInSlot(5);
-	    ItemStack deuterium = inv.getStackInSlot(4);
-	    if (tritium.getCount() + 1 <= tritium.getMaxStackSize() && deuterium.getItem() == DeferredRegisters.ITEM_CELLDEUTERIUM.get()
-		    && deuterium.getCount() > 0) {
-		deuterium.shrink(1);
-		if (tritium.isEmpty()) {
-		    inv.setInventorySlotContents(5, new ItemStack(DeferredRegisters.ITEM_CELLTRITIUM.get()));
+		    temperature += (MELTDOWN_TEMPERATURE_CALC * insertDecimal * (0.25 * (fuelCount / 2.0) + world.rand.nextDouble() / 5.0) - temperature)
+			    / (200 + 20 * (hasWater ? 14.7 : 1));
+		    if (temperature > MELTDOWN_TEMPERATURE_ACTUAL + world.rand.nextInt(50) && fuelCount > 0) {
+			ticksOverheating++;
+			// Implement some alarm sounds at this time
+			if (ticksOverheating > 10 * 20) {
+			    meltdown();
+			}
+		    }
+		    if (world.getWorldInfo().getGameTime() % 10 == 0) {
+			Location source = new Location(pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f);
+			double totstrength = temperature * 10;
+			double range = Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 1.25;
+			AxisAlignedBB bb = AxisAlignedBB.withSizeAtOrigin(range, range, range);
+			bb = bb.offset(new Vector3d(source.x(), source.y(), source.z()));
+			List<LivingEntity> list = world.getEntitiesWithinAABB(LivingEntity.class, bb);
+			for (LivingEntity living : list) {
+			    RadiationSystem.applyRadiation(living, source, totstrength);
+			}
+		    }
 		} else {
-		    tritium.grow(1);
+		    ticksOverheating = 0;
 		}
-	    }
-	}
+		temperature = Math.max(AIR_TEMPERATURE, temperature);
+		if (fuelCount > 0 && world.rand.nextFloat() < 1 / (1200.0 * MELTDOWN_TEMPERATURE_CALC / temperature)) {
+			processFissReact(inv);
+		}
     }
 
     protected void tickCommon(ComponentTickable tickable) {
@@ -240,5 +238,30 @@ public class TileReactorCore extends GenericTileTicking {
 	hasDeuterium = nbt.getBoolean("hasDeuterium");
 	temperature = nbt.getDouble("temperature");
 	fuelCount = nbt.getInt("fuelCount");
+    }
+    
+    public void processFissReact(ComponentInventory inv) {
+    	
+    	int inputSlot = 4;
+    	int outputSlot = 5;
+    	
+    	ItemStack input = inv.getStackInSlot(inputSlot);
+    	ItemStack output = inv.getStackInSlot(outputSlot);
+	   
+	    if(input != null && !(input.equals(new ItemStack(Items.AIR), true))) {
+	    	Set<IRecipe<?>> recipes = ElectrodynamicsRecipe.findRecipesbyType(NuclearScienceRecipeInit.FISSION_REACTOR_TYPE, this.world);
+			for(IRecipe<?> iRecipe: recipes) {
+				O2ORecipe recipe = (O2ORecipe)iRecipe;
+				if(recipe.matchesRecipe(input)) {
+					if(output.isEmpty()) {
+						inv.setInventorySlotContents(outputSlot, recipe.getRecipeOutput().copy());
+						input.shrink(((CountableIngredient)recipe.getIngredients().get(0)).getStackSize());
+					}else if(output.getCount() <= output.getMaxStackSize() + recipe.getRecipeOutput().getCount()) {
+						output.grow(recipe.getRecipeOutput().getCount());
+						input.shrink(((CountableIngredient)recipe.getIngredients().get(0)).getStackSize());
+					}
+				}
+			}
+		}
     }
 }

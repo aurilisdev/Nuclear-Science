@@ -1,0 +1,12 @@
+{
+	"type" : "nuclearscience:fission_reactor_recipe",
+	
+	"input":{
+		"item":"nuclearscience:celldeuterium",
+		"count":1
+	},
+	"output":{
+		"item":"nuclearscience:celltritium",
+		"count":1
+	}
+}

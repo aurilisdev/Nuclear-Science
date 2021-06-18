@@ -96,8 +96,8 @@ dependencies {
     /*
 	Compiles against source code as well as JAR at runtime. Recommend to keep it
 	*/
-  	compileOnly fg.deobf("mezz.jei:jei-1.16.5:7.6.3.81:api")
-  	runtimeOnly fg.deobf("mezz.jei:jei-1.16.5:7.6.3.81")
+  	compileOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.0.101:api")
+  	runtimeOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.0.101")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
