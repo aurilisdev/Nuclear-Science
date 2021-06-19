@@ -50,20 +50,20 @@ public class TileParticleInjector extends GenericTileTicking {
 	ComponentInventory inv = getComponent(ComponentType.Inventory);
 	ItemStack resultStack = inv.getStackInSlot(2);
 	timeSinceSpawn--;
-	
+
 	/**
-	 * This is a far simpler check to perform. It can use any item, so all you have to do
-	 * is check if the thing in the input slot is an item and is not air.
+	 * This is a far simpler check to perform. It can use any item, so all you have
+	 * to do is check if the thing in the input slot is an item and is not air.
 	 */
 	boolean isItem = false;
 	ItemStack inputItem = inv.getStackInSlot(0);
-	
-	if((inputItem != null) && !(inputItem.equals(new ItemStack(Items.AIR), true))) {
-		isItem = true;
+
+	if (inputItem != null && !inputItem.equals(new ItemStack(Items.AIR), true)) {
+	    isItem = true;
 	}
-	
-	return timeSinceSpawn < 0 && isItem && (particles[0] == null || particles[1] == null)
-		&& inv.getStackInSlot(0).getCount() > 0 && resultStack.getCount() < resultStack.getMaxStackSize();
+
+	return timeSinceSpawn < 0 && isItem && (particles[0] == null || particles[1] == null) && inv.getStackInSlot(0).getCount() > 0
+		&& resultStack.getCount() < resultStack.getMaxStackSize();
     }
 
     public void checkCollision() {

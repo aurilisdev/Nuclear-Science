@@ -1,7 +1,6 @@
 package nuclearscience;
 
 import electrodynamics.prefab.configuration.ConfigurationHandler;
-import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 import net.minecraft.potion.Effect;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -20,6 +19,7 @@ import nuclearscience.api.radiation.FieldRadioactiveObject;
 import nuclearscience.api.radiation.RadiationRegister;
 import nuclearscience.client.ClientRegister;
 import nuclearscience.common.packet.NetworkHandler;
+import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 import nuclearscience.common.settings.Constants;
 
 @Mod(References.ID)
