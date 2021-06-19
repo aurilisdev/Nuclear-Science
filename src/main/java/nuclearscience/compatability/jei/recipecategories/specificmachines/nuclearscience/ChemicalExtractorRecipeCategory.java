@@ -13,9 +13,6 @@ import nuclearscience.DeferredRegisters;
 import electrodynamics.api.References;
 import electrodynamics.compatability.jei.recipecategories.FluidItem2ItemRecipeCategory;
 
-
-import nuclearscience.References;
-
 public class ChemicalExtractorRecipeCategory extends FluidItem2ItemRecipeCategory {
 
     // JEI Window Parameters

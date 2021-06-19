@@ -7,7 +7,6 @@ import java.util.Set;
 
 import com.google.common.collect.ImmutableSet;
 
-import electrodynamics.common.recipe.ElectrodynamicsRecipeInit;
 import electrodynamics.common.recipe.categories.fluiditem2fluid.FluidItem2FluidRecipe;
 import electrodynamics.common.recipe.categories.fluiditem2item.FluidItem2ItemRecipe;
 import electrodynamics.common.recipe.categories.o2o.O2ORecipe;

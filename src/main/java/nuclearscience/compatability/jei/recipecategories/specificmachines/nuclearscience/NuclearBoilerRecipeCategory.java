@@ -30,7 +30,7 @@ public class NuclearBoilerRecipeCategory extends FluidItem2FluidRecipeCategory {
 
     private static int[] FluidBarLocation = { 0, 0, 0, 0 };
 
-    private static final String modID = References.ID;
+    private static final String modID = electrodynamics.api.References.ID;
     private static final String recipeGroup = "nuclear_boiler";
     private static final String guiTexture = "textures/gui/jei/sol_and_liq_to_liq_recipe_gui.png";
     private static final ItemStack inputMachine = new ItemStack(DeferredRegisters.blockNuclearBoiler);

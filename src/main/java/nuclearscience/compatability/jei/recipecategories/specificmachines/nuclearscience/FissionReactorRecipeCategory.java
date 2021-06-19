@@ -8,7 +8,6 @@ import java.util.List;
 import electrodynamics.common.recipe.categories.o2o.O2ORecipe;
 import electrodynamics.common.recipe.recipeutils.CountableIngredient;
 import electrodynamics.compatability.jei.recipecategories.O2ORecipeCategory;
-import electrodynamics.prefab.tile.processing.O2OProcessingRecipe;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
