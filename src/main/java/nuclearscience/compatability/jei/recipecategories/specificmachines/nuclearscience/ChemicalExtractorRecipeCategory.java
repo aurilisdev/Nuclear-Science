@@ -15,39 +15,41 @@ import nuclearscience.DeferredRegisters;
 public class ChemicalExtractorRecipeCategory extends FluidItem2ItemRecipeCategory {
 
     // JEI Window Parameters
-    private static final int[] GUIBackground = { 0, 0, 132, 64 };
-    private static final int[] MajorProcessingArrowLocation = { 0, 65, 68, 15 };
-    private static final int[] MinorProcessingArrowLocation = { 0, 80, 20, 15 };
+    private static int[] GUI_BACKGROUND = { 0, 0, 132, 64 };
+    private static int[] MAJOR_PROCESSING_ARROW_LOCATION = { 0, 65, 68, 15 };
+    private static int[] MINOR_PROCESSING_ARROW_LOCATION = { 0, 80, 20, 15 };
 
-    private static final int[] InputItemOffset = { 58, 16 };
-    private static final int[] InputFluidBucketOffset = { 58, 36 };
-    private static final int[] InputFluidTank = { 11, 52, 12, 47, 5000 };
-    private static final int[] OutputItemOffset = { 104, 16 };
+    private static int[] INPUT_ITEM_OFFSET = { 58, 16 };
+    private static int[] INPUT_FLUID_BUCKET_OFFSET = { 58, 36 };
+    private static int[] INPUT_FLUID_TANK = { 11, 52, 12, 47, 5000 };
+    private static int[] OUTPUT_FLUID_TANK = { 104, 16 };
 
-    private static final int[] MajorProcessingArrowOffset = { 32, 17 };
-    private static final int[] MinorProcessingArrowOffset = { 32, 37 };
+    private static int[] MAJOR_PROCESSING_ARROW_OFFSET = { 32, 17 };
+    private static int[] MINOR_PROCESSING_ARROW_OFFSET = { 32, 37 };
+    
+    private static int SMELT_TIME = 50;
+    private static int TEXT_Y_HEIGHT = 48;
 
-    private static final String modID = References.ID;
-    private static final String recipeGroup = "chemical_extractor";
-    private static final String guiTexture = "textures/gui/jei/sol_and_liq_to_sol_recipe_gui.png";
-    private static final ItemStack inputMachine = new ItemStack(DeferredRegisters.blockChemicalExtractor);
-    private static final ArrayList<int[]> inputCoordinates = new ArrayList<>(
-	    Arrays.asList(GUIBackground, MajorProcessingArrowLocation, MinorProcessingArrowLocation, InputItemOffset, InputFluidBucketOffset,
-		    InputFluidTank, OutputItemOffset, MajorProcessingArrowOffset, MinorProcessingArrowOffset));
-    private static final int smeltTime = 50;
+    private static String MOD_ID = References.ID;
+    private static String RECIPE_GROUP = "chemical_extractor";
+    private static String GUI_TEXTURE = "textures/gui/jei/sol_and_liq_to_sol_recipe_gui.png";
+    
+    private static ItemStack INPUT_MACHINE = new ItemStack(DeferredRegisters.blockChemicalExtractor);
+    
+    private static StartDirection MAJOR_ARROW_START_DIRECTION = IDrawableAnimated.StartDirection.LEFT;
+    private static StartDirection MINOR_ARROW_START_DIRECTION = IDrawableAnimated.StartDirection.RIGHT;
 
-    private static StartDirection majorArrowStartDirection = IDrawableAnimated.StartDirection.LEFT;
-    private static StartDirection minorArrowStartDirection = IDrawableAnimated.StartDirection.RIGHT;
-
-    private static int textYHeight = 48;
-
-    public static final ResourceLocation UID = new ResourceLocation(modID, recipeGroup);
+    public static ResourceLocation UID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
+    
+    private static ArrayList<int[]> INPUT_COORDINATES = new ArrayList<>(
+	    Arrays.asList(GUI_BACKGROUND, MAJOR_PROCESSING_ARROW_LOCATION, MINOR_PROCESSING_ARROW_LOCATION, INPUT_ITEM_OFFSET, INPUT_FLUID_BUCKET_OFFSET,
+		    INPUT_FLUID_TANK, OUTPUT_FLUID_TANK, MAJOR_PROCESSING_ARROW_OFFSET, MINOR_PROCESSING_ARROW_OFFSET));
 
     public ChemicalExtractorRecipeCategory(IGuiHelper guiHelper) {
-	super(guiHelper, modID, recipeGroup, guiTexture, inputMachine, inputCoordinates, smeltTime, majorArrowStartDirection,
-		minorArrowStartDirection, textYHeight);
+	super(guiHelper, MOD_ID, RECIPE_GROUP, GUI_TEXTURE, INPUT_MACHINE, INPUT_COORDINATES, SMELT_TIME, MAJOR_ARROW_START_DIRECTION,
+		MINOR_ARROW_START_DIRECTION, TEXT_Y_HEIGHT);
     }
-
+    
     @Override
     public ResourceLocation getUid() {
 	return UID;

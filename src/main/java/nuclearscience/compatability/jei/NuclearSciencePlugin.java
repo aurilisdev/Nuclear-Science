@@ -41,9 +41,6 @@ import nuclearscience.compatability.jei.recipecategories.specificmachines.nuclea
 @JeiPlugin
 public class NuclearSciencePlugin implements IModPlugin {
 
-    // public static final boolean isNuclearScienceLoaded =
-    // ModList.get().isLoaded("nuclearscience");
-
     @Override
     public ResourceLocation getPluginUid() {
 	return new ResourceLocation(nuclearscience.References.ID, "nucsci_jei_plugin");

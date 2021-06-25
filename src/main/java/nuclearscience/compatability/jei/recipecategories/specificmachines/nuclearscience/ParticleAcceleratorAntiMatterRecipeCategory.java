@@ -29,44 +29,45 @@ import net.minecraftforge.registries.ForgeRegistries;
 import nuclearscience.References;
 
 public class ParticleAcceleratorAntiMatterRecipeCategory extends ElectrodynamicsRecipeCategory<PsuedoO2ORecipe> {
-    // JEI Window Parameters
-    private static int INPUT_SLOT = 0;
-    private static int OUTPUT_SLOT = 1;
-    private static int ANY_ITEM_INPUT_SLOT = 2;
+    
+	// JEI Window Parameters
+    private static final int INPUT_SLOT = 0;
+    private static final int OUTPUT_SLOT = 1;
+    private static final int ANY_ITEM_INPUT_SLOT = 2;
 
     private static int[] GUI_BACKGROUND = { 0, 0, 132, 66 };
-    private static final int[] PROCESSING_ARROW_COORDS = { 0, 67, 82, 47 };
+    private static int[] PROCESSING_ARROW_COORDS = { 0, 67, 82, 47 };
 
     private static int[] INPUT_OFFSET = { 12, 39 };
     private static int[] OUTPUT_OFFSET = { 101, 20 };
     private static int[] PROCESSING_ARROW_OFFSET = { 17, 6 };
 
+    private static int SMELT_TIME = 50;
+    private static int TEXT_Y_HEIGHT = 58;
+    
     private static String MOD_ID = References.ID;
     private static String RECIPE_GROUP = "partical_accelerator_antimatter";
     private static String GUI_TEXTURE = "textures/gui/jei/particle_accelerator_antimatter_gui.png";
 
     private static ItemStack INPUT_MACHINE = new ItemStack(nuclearscience.DeferredRegisters.blockParticleInjector);
-
-    private static int ARROW_SMELT_TIME = 50;
-    private static int Y_HEIGHT = 58;
-
     private LoadingCache<Integer, IDrawableAnimated> CACHED_ARROWS;
     private static StartDirection ARROW_START_DIRECTION = IDrawableAnimated.StartDirection.LEFT;
 
     public static ResourceLocation UID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
 
     public ParticleAcceleratorAntiMatterRecipeCategory(IGuiHelper guiHelper) {
-
-	super(guiHelper, MOD_ID, RECIPE_GROUP, GUI_TEXTURE, INPUT_MACHINE, GUI_BACKGROUND, PsuedoO2ORecipe.class, Y_HEIGHT, ARROW_SMELT_TIME);
-	CACHED_ARROWS = CacheBuilder.newBuilder().maximumSize(25).build(new CacheLoader<Integer, IDrawableAnimated>() {
-	    @Override
-	    public IDrawableAnimated load(Integer cookTime) {
-		return guiHelper.drawableBuilder(getGuiTexture(), PROCESSING_ARROW_COORDS[0], PROCESSING_ARROW_COORDS[1], PROCESSING_ARROW_COORDS[2],
-			PROCESSING_ARROW_COORDS[3]).buildAnimated(cookTime, ARROW_START_DIRECTION, false);
-	    }
-	});
+    	
+	super(guiHelper, MOD_ID, RECIPE_GROUP, GUI_TEXTURE, INPUT_MACHINE, GUI_BACKGROUND,
+			PsuedoO2ORecipe.class, TEXT_Y_HEIGHT, SMELT_TIME);
+		CACHED_ARROWS = CacheBuilder.newBuilder().maximumSize(25).build(new CacheLoader<Integer, IDrawableAnimated>() {
+		    @Override
+		    public IDrawableAnimated load(Integer cookTime) {
+			return guiHelper.drawableBuilder(getGuiTexture(), PROCESSING_ARROW_COORDS[0], PROCESSING_ARROW_COORDS[1], PROCESSING_ARROW_COORDS[2],
+				PROCESSING_ARROW_COORDS[3]).buildAnimated(cookTime, ARROW_START_DIRECTION, false);
+		    }
+		});
     }
-
+    
     @Override
     public ResourceLocation getUid() {
 	return UID;

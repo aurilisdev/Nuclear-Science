@@ -9,16 +9,15 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
+import electrodynamics.compatability.jei.recipecategories.ElectrodynamicsRecipeCategory;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
-import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import mezz.jei.api.gui.drawable.IDrawableStatic;
 import mezz.jei.api.gui.ingredient.IGuiFluidStackGroup;
 import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.item.ItemStack;
@@ -30,99 +29,75 @@ import nuclearscience.DeferredRegisters;
 import nuclearscience.References;
 import nuclearscience.compatability.jei.recipecategories.psuedorecipes.PsuedoGasCentrifugeRecipe;
 
-public class GasCentrifugeRecipeCategory implements IRecipeCategory<PsuedoGasCentrifugeRecipe> {
+public class GasCentrifugeRecipeCategory extends ElectrodynamicsRecipeCategory<PsuedoGasCentrifugeRecipe> {
 
     public static final int INPUT_FLUID_STACK_SLOT = 0;
     public static final int OUTPUT_1_ITEM_SLOT = 1;
     public static final int OUTPUT_2_ITEM_SLOT = 2;
+    
+    private static int[] GUI_BACKGROUND = {0, 0, 132, 61};
+    
+    private static int SMELT_TIME = 100;
+    private static int TEXT_Y_HEIGHT = 70;
 
-    private static final String MOD_ID = References.ID;
-    private static final String RECIPE_GROUP = "gas_centrifuge";
+    private static String MOD_ID = References.ID;
+    private static String RECIPE_GROUP = "gas_centrifuge";
+    private static String GUI_TEXTURE = "textures/gui/jei/gas_centrifuge_gui.png";
+    
+    private static ItemStack INPUT_MACHINE = new ItemStack(DeferredRegisters.blockGasCentrifuge);
 
-    public static final ResourceLocation UID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
-
-    private static final String GUI_TEXTURE_STRING = "textures/gui/jei/gas_centrifuge_gui.png";
-
-    private static final int ARROW_SMELT_TIME = 100;
-
-    private IDrawable background;
-    private IDrawable icon;
-
-    private LoadingCache<Integer, ArrayList<IDrawableAnimated>> cachedArrows;
-    private LoadingCache<Integer, ArrayList<IDrawableStatic>> cachedFluidBars;
-
-    private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(MOD_ID, GUI_TEXTURE_STRING);
-
-    // private static final Logger logger =
-    // LogManager.getLogger(ElectrodynamicsPatches.MOD_ID);
+    private LoadingCache<Integer, ArrayList<IDrawableAnimated>> CACHED_ARROWS;
+    private LoadingCache<Integer, ArrayList<IDrawableStatic>> CACHED_FLUID_BARS;
+    
+    public static ResourceLocation UID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
 
     public GasCentrifugeRecipeCategory(IGuiHelper guiHelper) {
 
-	icon = guiHelper.createDrawableIngredient(new ItemStack(DeferredRegisters.blockGasCentrifuge));
-	background = guiHelper.createDrawable(GUI_TEXTURE, 0, 0, 132, 61);
-
-	cachedArrows = CacheBuilder.newBuilder().maximumSize(25).build(new CacheLoader<Integer, ArrayList<IDrawableAnimated>>() {
-
-	    @Override
-	    public ArrayList<IDrawableAnimated> load(Integer cookTime) {
-
-		IDrawableAnimated distillArrow = guiHelper.drawableBuilder(GUI_TEXTURE, 0, 70, 27, 47).buildAnimated(cookTime,
-			IDrawableAnimated.StartDirection.LEFT, false);
-
-		IDrawableAnimated condArrow = guiHelper.drawableBuilder(GUI_TEXTURE, 27, 70, 46, 55).buildAnimated(cookTime,
-			IDrawableAnimated.StartDirection.LEFT, false);
-
-		IDrawableAnimated uF6FluidBar = guiHelper.drawableBuilder(GUI_TEXTURE, 180, 0, 16, 50).buildAnimated(cookTime,
-			IDrawableAnimated.StartDirection.TOP, false);
-
-		IDrawableAnimated u235FluidBar = guiHelper.drawableBuilder(GUI_TEXTURE, 148, 0, 16, 22).buildAnimated(cookTime,
-			IDrawableAnimated.StartDirection.BOTTOM, false);
-
-		IDrawableAnimated u238FluidBar = guiHelper.drawableBuilder(GUI_TEXTURE, 164, 0, 16, 22).buildAnimated(cookTime,
-			IDrawableAnimated.StartDirection.BOTTOM, false);
-
-		IDrawableAnimated[] arrows = { distillArrow, condArrow, uF6FluidBar, u235FluidBar, u238FluidBar };
-		return new ArrayList<>(Arrays.asList(arrows));
-	    }
-	});
-
-	cachedFluidBars = CacheBuilder.newBuilder().maximumSize(25).build(new CacheLoader<Integer, ArrayList<IDrawableStatic>>() {
-	    @Override
-	    public ArrayList<IDrawableStatic> load(Integer fluidHeight) {
-
-		IDrawableStatic fluidBar = guiHelper.drawableBuilder(GUI_TEXTURE, 132, 0, 16, 50).build();
-
-		IDrawableStatic[] fluidBars = { fluidBar };
-
-		return new ArrayList<>(Arrays.asList(fluidBars));
-	    }
-	});
+		super(guiHelper,MOD_ID,RECIPE_GROUP,GUI_TEXTURE,INPUT_MACHINE,GUI_BACKGROUND,PsuedoGasCentrifugeRecipe.class,
+				SMELT_TIME,TEXT_Y_HEIGHT);
+    	
+    	CACHED_ARROWS = CacheBuilder.newBuilder().maximumSize(25).build(new CacheLoader<Integer, ArrayList<IDrawableAnimated>>() {
+	
+		    @Override
+		    public ArrayList<IDrawableAnimated> load(Integer cookTime) {
+	
+			IDrawableAnimated distillArrow = guiHelper.drawableBuilder(getGuiTexture(), 0, 70, 27, 47).buildAnimated(cookTime,
+				IDrawableAnimated.StartDirection.LEFT, false);
+	
+			IDrawableAnimated condArrow = guiHelper.drawableBuilder(getGuiTexture(), 27, 70, 46, 55).buildAnimated(cookTime,
+				IDrawableAnimated.StartDirection.LEFT, false);
+	
+			IDrawableAnimated uF6FluidBar = guiHelper.drawableBuilder(getGuiTexture(), 180, 0, 16, 50).buildAnimated(cookTime,
+				IDrawableAnimated.StartDirection.TOP, false);
+	
+			IDrawableAnimated u235FluidBar = guiHelper.drawableBuilder(getGuiTexture(), 148, 0, 16, 22).buildAnimated(cookTime,
+				IDrawableAnimated.StartDirection.BOTTOM, false);
+	
+			IDrawableAnimated u238FluidBar = guiHelper.drawableBuilder(getGuiTexture(), 164, 0, 16, 22).buildAnimated(cookTime,
+				IDrawableAnimated.StartDirection.BOTTOM, false);
+	
+			IDrawableAnimated[] arrows = { distillArrow, condArrow, uF6FluidBar, u235FluidBar, u238FluidBar };
+			return new ArrayList<>(Arrays.asList(arrows));
+		    }
+		});
+	
+		CACHED_FLUID_BARS = CacheBuilder.newBuilder().maximumSize(25).build(new CacheLoader<Integer, ArrayList<IDrawableStatic>>() {
+		    @Override
+		    public ArrayList<IDrawableStatic> load(Integer fluidHeight) {
+	
+			IDrawableStatic fluidBar = guiHelper.drawableBuilder(getGuiTexture(), 132, 0, 16, 50).build();
+	
+			IDrawableStatic[] fluidBars = { fluidBar };
+	
+			return new ArrayList<>(Arrays.asList(fluidBars));
+		    }
+		});
 
     }
 
     @Override
     public ResourceLocation getUid() {
 	return UID;
-    }
-
-    @Override
-    public Class<? extends PsuedoGasCentrifugeRecipe> getRecipeClass() {
-	return PsuedoGasCentrifugeRecipe.class;
-    }
-
-    @Override
-    public String getTitle() {
-	return new TranslationTextComponent("gui.jei.category." + RECIPE_GROUP).getString();
-    }
-
-    @Override
-    public IDrawable getBackground() {
-	return background;
-    }
-
-    @Override
-    public IDrawable getIcon() {
-	return icon;
     }
 
     @Override
@@ -163,31 +138,31 @@ public class GasCentrifugeRecipeCategory implements IRecipeCategory<PsuedoGasCen
 	arrows.get(3).draw(matrixStack, 51, 4);
 	arrows.get(4).draw(matrixStack, 51, 35);
 
-	drawSmeltTime(recipe, matrixStack, 70);
+	drawSmeltTime(recipe, matrixStack, getYHeight());
     }
 
     protected ArrayList<IDrawableAnimated> getArrows(PsuedoGasCentrifugeRecipe recipe) {
-	return cachedArrows.getUnchecked(ARROW_SMELT_TIME);
+	return CACHED_ARROWS.getUnchecked(getArrowSmeltTime());
     }
 
     protected ArrayList<IDrawableStatic> getFluidBars(PsuedoGasCentrifugeRecipe recipe) {
-	return cachedFluidBars.getUnchecked(ARROW_SMELT_TIME);
+	return CACHED_FLUID_BARS.getUnchecked(getArrowSmeltTime());
     }
 
     protected void drawSmeltTime(PsuedoGasCentrifugeRecipe recipe, MatrixStack matrixStack, int y) {
 
-	int smeltTimeSeconds = ARROW_SMELT_TIME / 20;
+	int smeltTimeSeconds = getArrowSmeltTime() / 20;
 
-	TranslationTextComponent indivU235String = new TranslationTextComponent("gui.jei.category." + RECIPE_GROUP + ".info.indiv_u235",
+	TranslationTextComponent indivU235String = new TranslationTextComponent("gui.jei.category." + getRecipeGroup() + ".info.indiv_u235",
 		smeltTimeSeconds);
 
-	TranslationTextComponent indivU238String = new TranslationTextComponent("gui.jei.category." + RECIPE_GROUP + ".info.indiv_u238",
+	TranslationTextComponent indivU238String = new TranslationTextComponent("gui.jei.category." + getRecipeGroup() + ".info.indiv_u238",
 		smeltTimeSeconds);
 
-	TranslationTextComponent percentU235String = new TranslationTextComponent("gui.jei.category." + RECIPE_GROUP + ".info.percent_u235",
+	TranslationTextComponent percentU235String = new TranslationTextComponent("gui.jei.category." + getRecipeGroup() + ".info.percent_u235",
 		smeltTimeSeconds);
 
-	TranslationTextComponent percentU238String = new TranslationTextComponent("gui.jei.category." + RECIPE_GROUP + ".info.percent_u238",
+	TranslationTextComponent percentU238String = new TranslationTextComponent("gui.jei.category." + getRecipeGroup() + ".info.percent_u238",
 		smeltTimeSeconds);
 
 	Minecraft minecraft = Minecraft.getInstance();
@@ -198,10 +173,10 @@ public class GasCentrifugeRecipeCategory implements IRecipeCategory<PsuedoGasCen
 	int percentU238StringWidth = fontRenderer.getStringPropertyWidth(percentU238String);
 	int percentU235StringWidth = fontRenderer.getStringPropertyWidth(percentU235String);
 
-	fontRenderer.func_243248_b(matrixStack, indivU238String, background.getWidth() - indivU238StringWidth - 27, y - 27, 0xFF616161);
-	fontRenderer.func_243248_b(matrixStack, percentU238String, background.getWidth() - percentU238StringWidth - 27, y - 37, 0xFF616161);
-	fontRenderer.func_243248_b(matrixStack, indivU235String, background.getWidth() - indivU235StringWidth - 27, y - 59, 0xFF616161);
-	fontRenderer.func_243248_b(matrixStack, percentU235String, background.getWidth() - percentU235StringWidth - 27, y - 49, 0xFF616161);
+	fontRenderer.func_243248_b(matrixStack, indivU238String, getBackground().getWidth() - indivU238StringWidth - 27, y - 27, 0xFF616161);
+	fontRenderer.func_243248_b(matrixStack, percentU238String, getBackground().getWidth() - percentU238StringWidth - 27, y - 37, 0xFF616161);
+	fontRenderer.func_243248_b(matrixStack, indivU235String, getBackground().getWidth() - indivU235StringWidth - 27, y - 59, 0xFF616161);
+	fontRenderer.func_243248_b(matrixStack, percentU235String, getBackground().getWidth() - percentU235StringWidth - 27, y - 49, 0xFF616161);
 
     }
 

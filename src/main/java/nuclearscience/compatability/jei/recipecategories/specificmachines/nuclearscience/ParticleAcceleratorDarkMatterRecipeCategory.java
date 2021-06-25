@@ -28,49 +28,45 @@ import nuclearscience.References;
 public class ParticleAcceleratorDarkMatterRecipeCategory extends ElectrodynamicsRecipeCategory<PsuedoO2ORecipe> {
 
     public static final int OUTPUT_SLOT = 0;
+    
+    private static int[] GUI_BACKGROUND_COORDS = { 0, 0, 132, 132 };
+    private static int[] OUTPUT_OFFSET = { 57, 57 };
+    
+    public static int SMELT_TIME = 50;
+    private static int TEXT_Y_HEIGHT = 122;
 
     private static String MOD_ID = References.ID;
     private static String RECIPE_GROUP = "partical_accelerator_darkmatter";
-
-    private static int[] GUI_BACKGROUND_COORDS = { 0, 0, 132, 132 };
-    private static int[] OUTPUT_OFFSET = { 57, 57 };
-
-    public static int ARROW_SMELT_TIME = 50;
-
-    private LoadingCache<Integer, ArrayList<IDrawableAnimated>> CACHED_ARROWS;
-
-    private static ItemStack INPUT_MACHINE = new ItemStack(nuclearscience.DeferredRegisters.blockParticleInjector);
     private static String GUI_TEXTURE_STRING = "textures/gui/jei/particle_accelerator_dark_matter_gui.png";
-
+    
+    private static ItemStack INPUT_MACHINE = new ItemStack(nuclearscience.DeferredRegisters.blockParticleInjector);
+   
+    private LoadingCache<Integer, ArrayList<IDrawableAnimated>> CACHED_ARROWS;
+    
     public static ResourceLocation UID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
-
-    private static int Y_HEIGHT = 122;
-
-    // private static final Logger logger =
-    // LogManager.getLogger(ElectrodynamicsPatches.MOD_ID);
 
     public ParticleAcceleratorDarkMatterRecipeCategory(IGuiHelper guiHelper) {
 
-	super(guiHelper, MOD_ID, RECIPE_GROUP, GUI_TEXTURE_STRING, INPUT_MACHINE, GUI_BACKGROUND_COORDS, PsuedoO2ORecipe.class, Y_HEIGHT,
-		ARROW_SMELT_TIME);
-
-	CACHED_ARROWS = CacheBuilder.newBuilder().maximumSize(25).build(new CacheLoader<Integer, ArrayList<IDrawableAnimated>>() {
-	    @Override
-	    public ArrayList<IDrawableAnimated> load(Integer cookTime) {
-
-		IDrawableAnimated majorArrowBottom = guiHelper.drawableBuilder(getGuiTexture(), 179, 17, 37, 75).buildAnimated(cookTime,
-			IDrawableAnimated.StartDirection.BOTTOM, false);
-
-		IDrawableAnimated majorArrowTop = guiHelper.drawableBuilder(getGuiTexture(), 132, 0, 37, 75).buildAnimated(cookTime,
-			IDrawableAnimated.StartDirection.TOP, false);
-
-		IDrawableAnimated[] arrows = { majorArrowBottom, majorArrowTop };
-		return new ArrayList<>(Arrays.asList(arrows));
-	    }
-	});
+	super(guiHelper, MOD_ID, RECIPE_GROUP, GUI_TEXTURE_STRING, INPUT_MACHINE, GUI_BACKGROUND_COORDS, 
+				PsuedoO2ORecipe.class, TEXT_Y_HEIGHT, SMELT_TIME);
+	
+		CACHED_ARROWS = CacheBuilder.newBuilder().maximumSize(25).build(new CacheLoader<Integer, ArrayList<IDrawableAnimated>>() {
+		    @Override
+		    public ArrayList<IDrawableAnimated> load(Integer cookTime) {
+	
+			IDrawableAnimated majorArrowBottom = guiHelper.drawableBuilder(getGuiTexture(), 179, 17, 37, 75).buildAnimated(cookTime,
+				IDrawableAnimated.StartDirection.BOTTOM, false);
+	
+			IDrawableAnimated majorArrowTop = guiHelper.drawableBuilder(getGuiTexture(), 132, 0, 37, 75).buildAnimated(cookTime,
+				IDrawableAnimated.StartDirection.TOP, false);
+	
+			IDrawableAnimated[] arrows = { majorArrowBottom, majorArrowTop };
+			return new ArrayList<>(Arrays.asList(arrows));
+		    }
+		});
 
     }
-
+    
     @Override
     public ResourceLocation getUid() {
 	return UID;
@@ -110,7 +106,7 @@ public class ParticleAcceleratorDarkMatterRecipeCategory extends Electrodynamics
 
     protected void drawSmeltTime(PsuedoO2ORecipe recipe, MatrixStack matrixStack, int y) {
 	int smeltTimeSeconds = getArrowSmeltTime() / 20;
-	TranslationTextComponent timeString = new TranslationTextComponent("gui.jei.category." + RECIPE_GROUP + ".info.power", smeltTimeSeconds);
+	TranslationTextComponent timeString = new TranslationTextComponent("gui.jei.category." + getRecipeGroup() + ".info.power", smeltTimeSeconds);
 	Minecraft minecraft = Minecraft.getInstance();
 	FontRenderer fontRenderer = minecraft.fontRenderer;
 	int stringWidth = fontRenderer.getStringPropertyWidth(timeString);
