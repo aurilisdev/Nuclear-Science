@@ -28,31 +28,28 @@ import nuclearscience.References;
 public class ParticleAcceleratorDarkMatterRecipeCategory extends ElectrodynamicsRecipeCategory<PsuedoO2ORecipe> {
 
     public static final int OUTPUT_SLOT = 0;
+    
+    private static int[] GUI_BACKGROUND_COORDS = { 0, 0, 132, 132 };
+    private static int[] OUTPUT_OFFSET = { 57, 57 };
+    
+    public static int SMELT_TIME = 50;
+    private static int TEXT_Y_HEIGHT = 122;
 
     private static String MOD_ID = References.ID;
     private static String RECIPE_GROUP = "partical_accelerator_darkmatter";
-
-    private static int[] GUI_BACKGROUND_COORDS = { 0, 0, 132, 132 };
-    private static int[] OUTPUT_OFFSET = { 57, 57 };
-
-    public static int ARROW_SMELT_TIME = 50;
-
-    private LoadingCache<Integer, ArrayList<IDrawableAnimated>> CACHED_ARROWS;
-
-    private static ItemStack INPUT_MACHINE = new ItemStack(nuclearscience.DeferredRegisters.blockParticleInjector);
     private static String GUI_TEXTURE_STRING = "textures/gui/jei/particle_accelerator_dark_matter_gui.png";
-
+    
+    private static ItemStack INPUT_MACHINE = new ItemStack(nuclearscience.DeferredRegisters.blockParticleInjector);
+   
+    private LoadingCache<Integer, ArrayList<IDrawableAnimated>> CACHED_ARROWS;
+    
     public static ResourceLocation UID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
-
-    private static int Y_HEIGHT = 122;
-
-    // private static final Logger logger =
-    // LogManager.getLogger(ElectrodynamicsPatches.MOD_ID);
 
     public ParticleAcceleratorDarkMatterRecipeCategory(IGuiHelper guiHelper) {
 
-    	super(guiHelper, MOD_ID, RECIPE_GROUP, GUI_TEXTURE_STRING, INPUT_MACHINE,GUI_BACKGROUND_COORDS, PsuedoO2ORecipe.class, Y_HEIGHT, ARROW_SMELT_TIME);
-
+		super(guiHelper, MOD_ID, RECIPE_GROUP, GUI_TEXTURE_STRING, INPUT_MACHINE, GUI_BACKGROUND_COORDS, 
+				PsuedoO2ORecipe.class, TEXT_Y_HEIGHT, SMELT_TIME);
+	
 		CACHED_ARROWS = CacheBuilder.newBuilder().maximumSize(25).build(new CacheLoader<Integer, ArrayList<IDrawableAnimated>>() {
 		    @Override
 		    public ArrayList<IDrawableAnimated> load(Integer cookTime) {
@@ -69,58 +66,58 @@ public class ParticleAcceleratorDarkMatterRecipeCategory extends Electrodynamics
 		});
 
     }
-
+    
     @Override
     public ResourceLocation getUid() {
-    	return UID;
+	return UID;
     }
 
     @Override
     public void setIngredients(PsuedoO2ORecipe recipe, IIngredients ingredients) {
-		NonNullList<Ingredient> inputs = NonNullList.create();
-		inputs.addAll(getIngredients(recipe));
-	
-		ingredients.setInputIngredients(inputs);
-		ingredients.setOutput(VanillaTypes.ITEM, recipe.OUTPUT);
+	NonNullList<Ingredient> inputs = NonNullList.create();
+	inputs.addAll(getIngredients(recipe));
+
+	ingredients.setInputIngredients(inputs);
+	ingredients.setOutput(VanillaTypes.ITEM, recipe.OUTPUT);
     }
 
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, PsuedoO2ORecipe recipe, IIngredients ingredients) {
 
-		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-	
-		guiItemStacks.init(OUTPUT_SLOT, false, OUTPUT_OFFSET[0], OUTPUT_OFFSET[1]);
-		guiItemStacks.set(ingredients);
+	IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
+
+	guiItemStacks.init(OUTPUT_SLOT, false, OUTPUT_OFFSET[0], OUTPUT_OFFSET[1]);
+	guiItemStacks.set(ingredients);
 
     }
 
     @Override
     public void draw(PsuedoO2ORecipe recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
-		ArrayList<IDrawableAnimated> arrow = getArrow(recipe);
-		arrow.get(0).draw(matrixStack, 70, 38);
-		arrow.get(1).draw(matrixStack, 23, 21);
-	
-		drawSmeltTime(recipe, matrixStack, getYHeight());
+	ArrayList<IDrawableAnimated> arrow = getArrow(recipe);
+	arrow.get(0).draw(matrixStack, 70, 38);
+	arrow.get(1).draw(matrixStack, 23, 21);
+
+	drawSmeltTime(recipe, matrixStack, getYHeight());
     }
 
     protected ArrayList<IDrawableAnimated> getArrow(PsuedoO2ORecipe recipe) {
-    	return CACHED_ARROWS.getUnchecked(getArrowSmeltTime());
+	return CACHED_ARROWS.getUnchecked(getArrowSmeltTime());
     }
 
     protected void drawSmeltTime(PsuedoO2ORecipe recipe, MatrixStack matrixStack, int y) {
-		int smeltTimeSeconds = getArrowSmeltTime() / 20;
-		TranslationTextComponent timeString = new TranslationTextComponent("gui.jei.category." + RECIPE_GROUP + ".info.power", smeltTimeSeconds);
-		Minecraft minecraft = Minecraft.getInstance();
-		FontRenderer fontRenderer = minecraft.fontRenderer;
-		int stringWidth = fontRenderer.getStringPropertyWidth(timeString);
-		fontRenderer.func_243248_b(matrixStack, timeString, getBackground().getWidth() - stringWidth, y, 0xFF808080);
+	int smeltTimeSeconds = getArrowSmeltTime() / 20;
+	TranslationTextComponent timeString = new TranslationTextComponent("gui.jei.category." + getRecipeGroup() + ".info.power", smeltTimeSeconds);
+	Minecraft minecraft = Minecraft.getInstance();
+	FontRenderer fontRenderer = minecraft.fontRenderer;
+	int stringWidth = fontRenderer.getStringPropertyWidth(timeString);
+	fontRenderer.func_243248_b(matrixStack, timeString, getBackground().getWidth() - stringWidth, y, 0xFF808080);
     }
 
     public NonNullList<Ingredient> getIngredients(PsuedoO2ORecipe recipe) {
-		Ingredient ingredient1 = recipe.INPUT;
-		NonNullList<Ingredient> ingredients = NonNullList.create();
-		ingredients.add(ingredient1);
-		return ingredients;
+	Ingredient ingredient1 = recipe.INPUT;
+	NonNullList<Ingredient> ingredients = NonNullList.create();
+	ingredients.add(ingredient1);
+	return ingredients;
     }
 
 }

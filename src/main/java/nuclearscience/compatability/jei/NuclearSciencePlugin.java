@@ -12,7 +12,6 @@ import electrodynamics.common.recipe.categories.fluiditem2item.FluidItem2ItemRec
 import electrodynamics.common.recipe.categories.o2o.O2ORecipe;
 import electrodynamics.compatability.jei.recipecategories.psuedorecipes.PsuedoO2ORecipe;
 import electrodynamics.compatability.jei.recipecategories.psuedorecipes.PsuedoRecipes;
-import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
@@ -29,6 +28,7 @@ import nuclearscience.client.screen.ScreenGasCentrifuge;
 import nuclearscience.client.screen.ScreenNuclearBoiler;
 import nuclearscience.client.screen.ScreenParticleInjector;
 import nuclearscience.client.screen.ScreenReactorCore;
+import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 import nuclearscience.compatability.jei.recipecategories.psuedorecipes.NuclearSciencePsuedoRecipes;
 import nuclearscience.compatability.jei.recipecategories.psuedorecipes.PsuedoGasCentrifugeRecipe;
 import nuclearscience.compatability.jei.recipecategories.specificmachines.nuclearscience.ChemicalExtractorRecipeCategory;
@@ -40,9 +40,6 @@ import nuclearscience.compatability.jei.recipecategories.specificmachines.nuclea
 
 @JeiPlugin
 public class NuclearSciencePlugin implements IModPlugin {
-
-    // public static final boolean isNuclearScienceLoaded =
-    // ModList.get().isLoaded("nuclearscience");
 
     @Override
     public ResourceLocation getPluginUid() {
@@ -63,8 +60,7 @@ public class NuclearSciencePlugin implements IModPlugin {
 	// Fisison Reactor
 
 	registration.addRecipeCatalyst(new ItemStack(nuclearscience.DeferredRegisters.blockReactorCore), FissionReactorRecipeCategory.UID);
-	
-	
+
 	// Anti Matter
 
 	registration.addRecipeCatalyst(new ItemStack(nuclearscience.DeferredRegisters.blockParticleInjector),
@@ -74,7 +70,7 @@ public class NuclearSciencePlugin implements IModPlugin {
 
 	registration.addRecipeCatalyst(new ItemStack(nuclearscience.DeferredRegisters.blockParticleInjector),
 		ParticleAcceleratorDarkMatterRecipeCategory.UID);
-	
+
     }
 
     @Override
@@ -90,23 +86,25 @@ public class NuclearSciencePlugin implements IModPlugin {
 	registration.addRecipes(gasCentrifugeRecipes, GasCentrifugeRecipeCategory.UID);
 
 	// Nuclear Boiler
-	Set<FluidItem2FluidRecipe> nuclearBoilerRecipes = ImmutableSet.copyOf(world.getRecipeManager().getRecipesForType(NuclearScienceRecipeInit.NUCLEAR_BOILER_TYPE));
+	Set<FluidItem2FluidRecipe> nuclearBoilerRecipes = ImmutableSet
+		.copyOf(world.getRecipeManager().getRecipesForType(NuclearScienceRecipeInit.NUCLEAR_BOILER_TYPE));
 	registration.addRecipes(nuclearBoilerRecipes, NuclearBoilerRecipeCategory.UID);
 
 	// Chemical Extractor
-	Set<FluidItem2ItemRecipe> chemicalExtractorRecipes = ImmutableSet.copyOf(world.getRecipeManager().getRecipesForType(NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE));
+	Set<FluidItem2ItemRecipe> chemicalExtractorRecipes = ImmutableSet
+		.copyOf(world.getRecipeManager().getRecipesForType(NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE));
 	registration.addRecipes(chemicalExtractorRecipes, ChemicalExtractorRecipeCategory.UID);
 
-	Set<O2ORecipe> fissionReactorRecipes = ImmutableSet.copyOf(world.getRecipeManager().getRecipesForType(NuclearScienceRecipeInit.FISSION_REACTOR_TYPE));
+	Set<O2ORecipe> fissionReactorRecipes = ImmutableSet
+		.copyOf(world.getRecipeManager().getRecipesForType(NuclearScienceRecipeInit.FISSION_REACTOR_TYPE));
 	registration.addRecipes(fissionReactorRecipes, FissionReactorRecipeCategory.UID);
 
-	
 	Set<PsuedoO2ORecipe> antiMatterRecipes = new HashSet<>(NuclearSciencePsuedoRecipes.ANTI_MATTER_RECIPES);
 	registration.addRecipes(antiMatterRecipes, ParticleAcceleratorAntiMatterRecipeCategory.UID);
 
 	Set<PsuedoO2ORecipe> darkMatterRecipes = new HashSet<>(NuclearSciencePsuedoRecipes.DARK_MATTER_RECIPES);
 	registration.addRecipes(darkMatterRecipes, ParticleAcceleratorDarkMatterRecipeCategory.UID);
-	
+
 	nuclearScienceInfoTabs(registration);
     }
 
@@ -124,13 +122,12 @@ public class NuclearSciencePlugin implements IModPlugin {
 	// Fision Reactor
 	registration.addRecipeCategories(new FissionReactorRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
 
-	
 	// Anti Matter
 	registration.addRecipeCategories(new ParticleAcceleratorAntiMatterRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
 
 	// Dark Matter
 	registration.addRecipeCategories(new ParticleAcceleratorDarkMatterRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
-    
+
     }
 
     @Override
@@ -152,11 +149,10 @@ public class NuclearSciencePlugin implements IModPlugin {
 	// Fission Reactor
 	registry.addRecipeClickArea(ScreenReactorCore.class, 117, 43, 14, 13, FissionReactorRecipeCategory.UID);
 
-	
 	// Particle Accelerator
 	registry.addRecipeClickArea(ScreenParticleInjector.class, 102, 33, 28, 14, ParticleAcceleratorAntiMatterRecipeCategory.UID,
 		ParticleAcceleratorDarkMatterRecipeCategory.UID);
-	
+
     }
 
     private static void nuclearScienceInfoTabs(IRecipeRegistration registration) {

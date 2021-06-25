@@ -33,7 +33,6 @@ public class NuclearSciencePsuedoRecipes {
 	GAS_CENTRIFUGE_RECIPES.add(new PsuedoGasCentrifugeRecipe(new FluidStack(NUCLEAR_SCIENCE_FLUIDS.get(0), 1000),
 		NUCLEAR_SCIENCE_ITEMS.get(0).get(2), NUCLEAR_SCIENCE_ITEMS.get(0).get(1)));
 
-
 	/* Anit Matter Production */
 
 	ANTI_MATTER_RECIPES.add(new PsuedoO2ORecipe(NUCLEAR_SCIENCE_ITEMS.get(1).get(4), NUCLEAR_SCIENCE_ITEMS.get(1).get(5)));
