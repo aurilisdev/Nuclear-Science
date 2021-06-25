@@ -34,64 +34,64 @@ public class GasCentrifugeRecipeCategory extends ElectrodynamicsRecipeCategory<P
     public static final int INPUT_FLUID_STACK_SLOT = 0;
     public static final int OUTPUT_1_ITEM_SLOT = 1;
     public static final int OUTPUT_2_ITEM_SLOT = 2;
-    
-    private static int[] GUI_BACKGROUND = {0, 0, 132, 61};
-    
+
+    private static int[] GUI_BACKGROUND = { 0, 0, 132, 61 };
+
     private static int SMELT_TIME = 100;
     private static int TEXT_Y_HEIGHT = 70;
 
     private static String MOD_ID = References.ID;
     private static String RECIPE_GROUP = "gas_centrifuge";
     private static String GUI_TEXTURE = "textures/gui/jei/gas_centrifuge_gui.png";
-    
+
     private static ItemStack INPUT_MACHINE = new ItemStack(DeferredRegisters.blockGasCentrifuge);
 
     private LoadingCache<Integer, ArrayList<IDrawableAnimated>> CACHED_ARROWS;
     private LoadingCache<Integer, ArrayList<IDrawableStatic>> CACHED_FLUID_BARS;
-    
+
     public static ResourceLocation UID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
 
     public GasCentrifugeRecipeCategory(IGuiHelper guiHelper) {
 
-		super(guiHelper,MOD_ID,RECIPE_GROUP,GUI_TEXTURE,INPUT_MACHINE,GUI_BACKGROUND,PsuedoGasCentrifugeRecipe.class,
-				SMELT_TIME,TEXT_Y_HEIGHT);
-    	
-    	CACHED_ARROWS = CacheBuilder.newBuilder().maximumSize(25).build(new CacheLoader<Integer, ArrayList<IDrawableAnimated>>() {
-	
-		    @Override
-		    public ArrayList<IDrawableAnimated> load(Integer cookTime) {
-	
-			IDrawableAnimated distillArrow = guiHelper.drawableBuilder(getGuiTexture(), 0, 70, 27, 47).buildAnimated(cookTime,
-				IDrawableAnimated.StartDirection.LEFT, false);
-	
-			IDrawableAnimated condArrow = guiHelper.drawableBuilder(getGuiTexture(), 27, 70, 46, 55).buildAnimated(cookTime,
-				IDrawableAnimated.StartDirection.LEFT, false);
-	
-			IDrawableAnimated uF6FluidBar = guiHelper.drawableBuilder(getGuiTexture(), 180, 0, 16, 50).buildAnimated(cookTime,
-				IDrawableAnimated.StartDirection.TOP, false);
-	
-			IDrawableAnimated u235FluidBar = guiHelper.drawableBuilder(getGuiTexture(), 148, 0, 16, 22).buildAnimated(cookTime,
-				IDrawableAnimated.StartDirection.BOTTOM, false);
-	
-			IDrawableAnimated u238FluidBar = guiHelper.drawableBuilder(getGuiTexture(), 164, 0, 16, 22).buildAnimated(cookTime,
-				IDrawableAnimated.StartDirection.BOTTOM, false);
-	
-			IDrawableAnimated[] arrows = { distillArrow, condArrow, uF6FluidBar, u235FluidBar, u238FluidBar };
-			return new ArrayList<>(Arrays.asList(arrows));
-		    }
-		});
-	
-		CACHED_FLUID_BARS = CacheBuilder.newBuilder().maximumSize(25).build(new CacheLoader<Integer, ArrayList<IDrawableStatic>>() {
-		    @Override
-		    public ArrayList<IDrawableStatic> load(Integer fluidHeight) {
-	
-			IDrawableStatic fluidBar = guiHelper.drawableBuilder(getGuiTexture(), 132, 0, 16, 50).build();
-	
-			IDrawableStatic[] fluidBars = { fluidBar };
-	
-			return new ArrayList<>(Arrays.asList(fluidBars));
-		    }
-		});
+	super(guiHelper, MOD_ID, RECIPE_GROUP, GUI_TEXTURE, INPUT_MACHINE, GUI_BACKGROUND, PsuedoGasCentrifugeRecipe.class, SMELT_TIME,
+		TEXT_Y_HEIGHT);
+
+	CACHED_ARROWS = CacheBuilder.newBuilder().maximumSize(25).build(new CacheLoader<Integer, ArrayList<IDrawableAnimated>>() {
+
+	    @Override
+	    public ArrayList<IDrawableAnimated> load(Integer cookTime) {
+
+		IDrawableAnimated distillArrow = guiHelper.drawableBuilder(getGuiTexture(), 0, 70, 27, 47).buildAnimated(cookTime,
+			IDrawableAnimated.StartDirection.LEFT, false);
+
+		IDrawableAnimated condArrow = guiHelper.drawableBuilder(getGuiTexture(), 27, 70, 46, 55).buildAnimated(cookTime,
+			IDrawableAnimated.StartDirection.LEFT, false);
+
+		IDrawableAnimated uF6FluidBar = guiHelper.drawableBuilder(getGuiTexture(), 180, 0, 16, 50).buildAnimated(cookTime,
+			IDrawableAnimated.StartDirection.TOP, false);
+
+		IDrawableAnimated u235FluidBar = guiHelper.drawableBuilder(getGuiTexture(), 148, 0, 16, 22).buildAnimated(cookTime,
+			IDrawableAnimated.StartDirection.BOTTOM, false);
+
+		IDrawableAnimated u238FluidBar = guiHelper.drawableBuilder(getGuiTexture(), 164, 0, 16, 22).buildAnimated(cookTime,
+			IDrawableAnimated.StartDirection.BOTTOM, false);
+
+		IDrawableAnimated[] arrows = { distillArrow, condArrow, uF6FluidBar, u235FluidBar, u238FluidBar };
+		return new ArrayList<>(Arrays.asList(arrows));
+	    }
+	});
+
+	CACHED_FLUID_BARS = CacheBuilder.newBuilder().maximumSize(25).build(new CacheLoader<Integer, ArrayList<IDrawableStatic>>() {
+	    @Override
+	    public ArrayList<IDrawableStatic> load(Integer fluidHeight) {
+
+		IDrawableStatic fluidBar = guiHelper.drawableBuilder(getGuiTexture(), 132, 0, 16, 50).build();
+
+		IDrawableStatic[] fluidBars = { fluidBar };
+
+		return new ArrayList<>(Arrays.asList(fluidBars));
+	    }
+	});
 
     }
 
