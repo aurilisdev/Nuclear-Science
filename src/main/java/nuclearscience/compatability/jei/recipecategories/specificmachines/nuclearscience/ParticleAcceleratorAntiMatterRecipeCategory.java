@@ -50,14 +50,13 @@ public class ParticleAcceleratorAntiMatterRecipeCategory extends Electrodynamics
     private static String GUI_TEXTURE = "textures/gui/jei/particle_accelerator_antimatter_gui.png";
 
     private static ItemStack INPUT_MACHINE = new ItemStack(nuclearscience.DeferredRegisters.blockParticleInjector);
-
     private LoadingCache<Integer, IDrawableAnimated> CACHED_ARROWS;
     private static StartDirection ARROW_START_DIRECTION = IDrawableAnimated.StartDirection.LEFT;
 
     public static ResourceLocation UID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
 
     public ParticleAcceleratorAntiMatterRecipeCategory(IGuiHelper guiHelper) {
-
+    	
 	super(guiHelper, MOD_ID, RECIPE_GROUP, GUI_TEXTURE, INPUT_MACHINE, GUI_BACKGROUND,
 			PsuedoO2ORecipe.class, TEXT_Y_HEIGHT, SMELT_TIME);
 		CACHED_ARROWS = CacheBuilder.newBuilder().maximumSize(25).build(new CacheLoader<Integer, IDrawableAnimated>() {

@@ -53,7 +53,6 @@ public class FissionReactorRecipeCategory extends O2ORecipeCategory {
     public FissionReactorRecipeCategory(IGuiHelper guiHelper) {
 	super(guiHelper, MOD_ID, RECIPE_GROUP, GUI_TEXTURE, INPUT_MACHINE, INPUT_COORDINATES, SMELT_TIME, 
 			TEXT_Y_HEIGHT, ARROW_START_DIRECTION);
-    }
     
     @Override
     public ResourceLocation getUid() {

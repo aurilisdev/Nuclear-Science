@@ -47,7 +47,7 @@ public class ParticleAcceleratorDarkMatterRecipeCategory extends Electrodynamics
 
     public ParticleAcceleratorDarkMatterRecipeCategory(IGuiHelper guiHelper) {
 
-		super(guiHelper, MOD_ID, RECIPE_GROUP, GUI_TEXTURE_STRING, INPUT_MACHINE, GUI_BACKGROUND_COORDS, 
+	super(guiHelper, MOD_ID, RECIPE_GROUP, GUI_TEXTURE_STRING, INPUT_MACHINE, GUI_BACKGROUND_COORDS, 
 				PsuedoO2ORecipe.class, TEXT_Y_HEIGHT, SMELT_TIME);
 	
 		CACHED_ARROWS = CacheBuilder.newBuilder().maximumSize(25).build(new CacheLoader<Integer, ArrayList<IDrawableAnimated>>() {
