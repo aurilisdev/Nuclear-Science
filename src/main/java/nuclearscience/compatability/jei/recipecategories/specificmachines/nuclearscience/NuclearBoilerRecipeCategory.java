@@ -22,6 +22,7 @@ public class NuclearBoilerRecipeCategory extends FluidItem2FluidRecipeCategory {
     private static int[] INPUT_FLUID_BUCKET_OFFSET = { 60, 36 };
     private static int[] INPUT_FLUID_TANK = { 15, 52, 12, 47, 5000 };
     private static int[] OUTPUT_FLUID_TANK = { 109, 52, 12, 47, 5000 };
+    private static int[] OUTPUT_FLUID_BUCKET_OFFSET = {88, 36};
 
     private static int[] MAJOR_PROCESSING_ARROW_OFFSET = { 34, 17 };
     private static int[] MINOR_PROCESSING_ARROW_OFFSET = { 34, 37 };
@@ -44,7 +45,7 @@ public class NuclearBoilerRecipeCategory extends FluidItem2FluidRecipeCategory {
 
     private static ArrayList<int[]> INPUT_COORDINATES = new ArrayList<>(Arrays.asList(GUI_BACKGROUND, MAJOR_PROCESSING_ARROW_LOCATION,
 	    MINOR_PROCESSING_ARROW_LOCATION, INPUT_ITEM_OFFSET, INPUT_FLUID_BUCKET_OFFSET, INPUT_FLUID_TANK, OUTPUT_FLUID_TANK,
-	    MAJOR_PROCESSING_ARROW_OFFSET, MINOR_PROCESSING_ARROW_OFFSET, FLUID_BAR_LOCATION));
+	    OUTPUT_FLUID_BUCKET_OFFSET, MAJOR_PROCESSING_ARROW_OFFSET, MINOR_PROCESSING_ARROW_OFFSET, FLUID_BAR_LOCATION));
 
     public NuclearBoilerRecipeCategory(IGuiHelper guiHelper) {
 	super(guiHelper, MOD_ID, RECIPE_GROUP, GUI_TEXTURE, INPUT_MACHINE, INPUT_COORDINATES, SMELT_TIME, MAJOR_ARROW_START_DIRECTION,

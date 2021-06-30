@@ -17,7 +17,7 @@ import nuclearscience.common.tile.TileNuclearBoiler;
 public class ContainerNuclearBoiler extends GenericContainer<TileNuclearBoiler> {
 
     public ContainerNuclearBoiler(int id, PlayerInventory playerinv) {
-	this(id, playerinv, new Inventory(5), new IntArray(3));
+	this(id, playerinv, new Inventory(6), new IntArray(3));
     }
 
     public ContainerNuclearBoiler(int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {
@@ -31,7 +31,8 @@ public class ContainerNuclearBoiler extends GenericContainer<TileNuclearBoiler> 
     @Override
     public void addInventorySlots(IInventory inv, PlayerInventory playerinv) {
 	addSlot(new GenericSlot(inv, nextIndex(), 74, 31));
-	addSlot(new SlotRestricted(inv, nextIndex(), 74, 51, Items.WATER_BUCKET));
+	addSlot(new SlotRestricted(inv, nextIndex(), 74, 51, TileNuclearBoiler.SUPPORTED_INPUT_FLUIDS));
+	addSlot(new SlotRestricted(inv, nextIndex(), 108, 51, SlotRestricted.VALID_EMPTY_BUCKETS[2]));
 	addSlot(new SlotRestricted(inv, nextIndex(), 150, 14,
 		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.basicspeed),
 		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.advancedspeed)));
