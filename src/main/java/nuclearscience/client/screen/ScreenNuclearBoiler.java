@@ -62,26 +62,26 @@ public class ScreenNuclearBoiler extends GenericScreen<ContainerNuclearBoiler> {
 	components.add(new ScreenComponentFluid(() -> {
 	    TileNuclearBoiler boiler = container.getHostFromIntArray();
 	    if (boiler != null) {
-	    	ComponentFluidHandler handler = boiler.getComponent(ComponentType.FluidHandler);
-			for(Fluid fluid : handler.getInputFluids()) {
-				FluidTank tank = handler.getTankFromFluid(fluid);
-				if(tank.getFluidAmount() > 0) {
-					return handler.getTankFromFluid(tank.getFluid().getFluid());
-				}
-			}
+		ComponentFluidHandler handler = boiler.getComponent(ComponentType.FluidHandler);
+		for (Fluid fluid : handler.getInputFluids()) {
+		    FluidTank tank = handler.getTankFromFluid(fluid);
+		    if (tank.getFluidAmount() > 0) {
+			return handler.getTankFromFluid(tank.getFluid().getFluid());
+		    }
+		}
 	    }
 	    return null;
 	}, this, 21, 18));
 	components.add(new ScreenComponentFluid(() -> {
 	    TileNuclearBoiler boiler = container.getHostFromIntArray();
 	    if (boiler != null) {
-	    	ComponentFluidHandler handler = boiler.getComponent(ComponentType.FluidHandler);
-			for(Fluid fluid : handler.getOutputFluids()) {
-				FluidTank tank = handler.getTankFromFluid(fluid);
-				if(tank.getFluidAmount() > 0) {
-					return handler.getTankFromFluid(tank.getFluid().getFluid());
-				}
-			}
+		ComponentFluidHandler handler = boiler.getComponent(ComponentType.FluidHandler);
+		for (Fluid fluid : handler.getOutputFluids()) {
+		    FluidTank tank = handler.getTankFromFluid(fluid);
+		    if (tank.getFluidAmount() > 0) {
+			return handler.getTankFromFluid(tank.getFluid().getFluid());
+		    }
+		}
 	    }
 	    return null;
 	}, this, 127, 18));

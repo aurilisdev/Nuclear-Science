@@ -5,7 +5,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
-import net.minecraft.item.Items;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -21,7 +20,7 @@ public class FluidUraniumHexafluoride extends Fluid {
 
     @Override
     public Item getFilledBucket() {
-    	return null;
+	return null;
     }
 
     @Override

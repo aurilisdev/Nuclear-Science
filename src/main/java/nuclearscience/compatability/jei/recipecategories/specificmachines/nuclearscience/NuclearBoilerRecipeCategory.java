@@ -22,7 +22,7 @@ public class NuclearBoilerRecipeCategory extends FluidItem2FluidRecipeCategory {
     private static int[] INPUT_FLUID_BUCKET_OFFSET = { 60, 36 };
     private static int[] INPUT_FLUID_TANK = { 15, 52, 12, 47, 5000 };
     private static int[] OUTPUT_FLUID_TANK = { 109, 52, 12, 47, 5000 };
-    private static int[] OUTPUT_FLUID_BUCKET_OFFSET = {88, 36};
+    private static int[] OUTPUT_FLUID_BUCKET_OFFSET = { 88, 36 };
 
     private static int[] MAJOR_PROCESSING_ARROW_OFFSET = { 34, 17 };
     private static int[] MINOR_PROCESSING_ARROW_OFFSET = { 34, 37 };

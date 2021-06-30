@@ -62,13 +62,13 @@ public class ScreenChemicalExtractor extends GenericScreen<ContainerChemicalExtr
 	components.add(new ScreenComponentFluid(() -> {
 	    TileChemicalExtractor boiler = container.getHostFromIntArray();
 	    if (boiler != null) {
-	    	ComponentFluidHandler handler = boiler.getComponent(ComponentType.FluidHandler);
-			for(Fluid fluid : handler.getInputFluids()) {
-				FluidTank tank = handler.getTankFromFluid(fluid);
-				if(tank.getFluidAmount() > 0) {
-					return handler.getTankFromFluid(tank.getFluid().getFluid());
-				}
-			}
+		ComponentFluidHandler handler = boiler.getComponent(ComponentType.FluidHandler);
+		for (Fluid fluid : handler.getInputFluids()) {
+		    FluidTank tank = handler.getTankFromFluid(fluid);
+		    if (tank.getFluidAmount() > 0) {
+			return handler.getTankFromFluid(tank.getFluid().getFluid());
+		    }
+		}
 	    }
 	    return null;
 	}, this, 21, 18));
