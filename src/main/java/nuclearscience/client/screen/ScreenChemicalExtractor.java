@@ -20,7 +20,7 @@ import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentFluidHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.fluid.Fluids;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
@@ -30,6 +30,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 import nuclearscience.common.inventory.container.ContainerChemicalExtractor;
 import nuclearscience.common.tile.TileChemicalExtractor;
 
@@ -61,8 +62,13 @@ public class ScreenChemicalExtractor extends GenericScreen<ContainerChemicalExtr
 	components.add(new ScreenComponentFluid(() -> {
 	    TileChemicalExtractor boiler = container.getHostFromIntArray();
 	    if (boiler != null) {
-		ComponentFluidHandler handler = boiler.getComponent(ComponentType.FluidHandler);
-		return handler.getTankFromFluid(Fluids.WATER);
+	    	ComponentFluidHandler handler = boiler.getComponent(ComponentType.FluidHandler);
+			for(Fluid fluid : handler.getInputFluids()) {
+				FluidTank tank = handler.getTankFromFluid(fluid);
+				if(tank.getFluidAmount() > 0) {
+					return handler.getTankFromFluid(tank.getFluid().getFluid());
+				}
+			}
 	    }
 	    return null;
 	}, this, 21, 18));

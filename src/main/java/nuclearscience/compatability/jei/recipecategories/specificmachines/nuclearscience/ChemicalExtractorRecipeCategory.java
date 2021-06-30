@@ -26,30 +26,30 @@ public class ChemicalExtractorRecipeCategory extends FluidItem2ItemRecipeCategor
 
     private static int[] MAJOR_PROCESSING_ARROW_OFFSET = { 32, 17 };
     private static int[] MINOR_PROCESSING_ARROW_OFFSET = { 32, 37 };
-    
+
     private static int SMELT_TIME = 50;
     private static int TEXT_Y_HEIGHT = 48;
 
     private static String MOD_ID = References.ID;
     private static String RECIPE_GROUP = "chemical_extractor";
     private static String GUI_TEXTURE = "textures/gui/jei/sol_and_liq_to_sol_recipe_gui.png";
-    
+
     private static ItemStack INPUT_MACHINE = new ItemStack(DeferredRegisters.blockChemicalExtractor);
-    
+
     private static StartDirection MAJOR_ARROW_START_DIRECTION = IDrawableAnimated.StartDirection.LEFT;
     private static StartDirection MINOR_ARROW_START_DIRECTION = IDrawableAnimated.StartDirection.RIGHT;
 
     public static ResourceLocation UID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
-    
+
     private static ArrayList<int[]> INPUT_COORDINATES = new ArrayList<>(
-	    Arrays.asList(GUI_BACKGROUND, MAJOR_PROCESSING_ARROW_LOCATION, MINOR_PROCESSING_ARROW_LOCATION, INPUT_ITEM_OFFSET, INPUT_FLUID_BUCKET_OFFSET,
-		    INPUT_FLUID_TANK, OUTPUT_FLUID_TANK, MAJOR_PROCESSING_ARROW_OFFSET, MINOR_PROCESSING_ARROW_OFFSET));
+	    Arrays.asList(GUI_BACKGROUND, MAJOR_PROCESSING_ARROW_LOCATION, MINOR_PROCESSING_ARROW_LOCATION, INPUT_ITEM_OFFSET,
+		    INPUT_FLUID_BUCKET_OFFSET, INPUT_FLUID_TANK, OUTPUT_FLUID_TANK, MAJOR_PROCESSING_ARROW_OFFSET, MINOR_PROCESSING_ARROW_OFFSET));
 
     public ChemicalExtractorRecipeCategory(IGuiHelper guiHelper) {
 	super(guiHelper, MOD_ID, RECIPE_GROUP, GUI_TEXTURE, INPUT_MACHINE, INPUT_COORDINATES, SMELT_TIME, MAJOR_ARROW_START_DIRECTION,
 		MINOR_ARROW_START_DIRECTION, TEXT_Y_HEIGHT);
     }
-    
+
     @Override
     public ResourceLocation getUid() {
 	return UID;

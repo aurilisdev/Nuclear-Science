@@ -29,8 +29,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import nuclearscience.References;
 
 public class ParticleAcceleratorAntiMatterRecipeCategory extends ElectrodynamicsRecipeCategory<PsuedoO2ORecipe> {
-    
-	// JEI Window Parameters
+
+    // JEI Window Parameters
     private static final int INPUT_SLOT = 0;
     private static final int OUTPUT_SLOT = 1;
     private static final int ANY_ITEM_INPUT_SLOT = 2;
@@ -44,7 +44,7 @@ public class ParticleAcceleratorAntiMatterRecipeCategory extends Electrodynamics
 
     private static int SMELT_TIME = 50;
     private static int TEXT_Y_HEIGHT = 58;
-    
+
     private static String MOD_ID = References.ID;
     private static String RECIPE_GROUP = "partical_accelerator_antimatter";
     private static String GUI_TEXTURE = "textures/gui/jei/particle_accelerator_antimatter_gui.png";
@@ -56,18 +56,17 @@ public class ParticleAcceleratorAntiMatterRecipeCategory extends Electrodynamics
     public static ResourceLocation UID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
 
     public ParticleAcceleratorAntiMatterRecipeCategory(IGuiHelper guiHelper) {
-    	
-	super(guiHelper, MOD_ID, RECIPE_GROUP, GUI_TEXTURE, INPUT_MACHINE, GUI_BACKGROUND,
-			PsuedoO2ORecipe.class, TEXT_Y_HEIGHT, SMELT_TIME);
-		CACHED_ARROWS = CacheBuilder.newBuilder().maximumSize(25).build(new CacheLoader<Integer, IDrawableAnimated>() {
-		    @Override
-		    public IDrawableAnimated load(Integer cookTime) {
-			return guiHelper.drawableBuilder(getGuiTexture(), PROCESSING_ARROW_COORDS[0], PROCESSING_ARROW_COORDS[1], PROCESSING_ARROW_COORDS[2],
-				PROCESSING_ARROW_COORDS[3]).buildAnimated(cookTime, ARROW_START_DIRECTION, false);
-		    }
-		});
+
+	super(guiHelper, MOD_ID, RECIPE_GROUP, GUI_TEXTURE, INPUT_MACHINE, GUI_BACKGROUND, PsuedoO2ORecipe.class, TEXT_Y_HEIGHT, SMELT_TIME);
+	CACHED_ARROWS = CacheBuilder.newBuilder().maximumSize(25).build(new CacheLoader<Integer, IDrawableAnimated>() {
+	    @Override
+	    public IDrawableAnimated load(Integer cookTime) {
+		return guiHelper.drawableBuilder(getGuiTexture(), PROCESSING_ARROW_COORDS[0], PROCESSING_ARROW_COORDS[1], PROCESSING_ARROW_COORDS[2],
+			PROCESSING_ARROW_COORDS[3]).buildAnimated(cookTime, ARROW_START_DIRECTION, false);
+	    }
+	});
     }
-    
+
     @Override
     public ResourceLocation getUid() {
 	return UID;

@@ -23,37 +23,37 @@ public class FissionReactorRecipeCategory extends O2ORecipeCategory {
 
     private static final int INPUT_SLOT = 0;
     private static final int OUTPUT_SLOT = 1;
-	
-	// JEI Window Parameters
+
+    // JEI Window Parameters
     private static int[] GUI_BACKGROUND = { 0, 0, 132, 132 };
     private static int[] PROCESSING_ARROW_LOCATION = { 132, 0, 48, 42 };
 
     private static int[] INPUT_ITEM_OFFSET = { 57, 25 };
     private static int[] OUTPUT_ITEM_OFFSET = { 57, 89 };
     private static int[] PROCESSING_ARROW_OFFSET = { 42, 45 };
-    
+
     private static int[] FUEL_ROD_SLOTS = { 2, 3, 4, 5 };
-    
+
     private static int SMELT_TIME = 50;
     private static int TEXT_Y_HEIGHT = 122;
 
     private static String MOD_ID = References.ID;
     private static String RECIPE_GROUP = "fission_reactor";
     private static String GUI_TEXTURE = "textures/gui/jei/fission_reactor_gui.png";
-   
+
     private static ItemStack INPUT_MACHINE = new ItemStack(nuclearscience.DeferredRegisters.blockReactorCore);
-    
+
     private static StartDirection ARROW_START_DIRECTION = IDrawableAnimated.StartDirection.TOP;
-    
+
     public static ResourceLocation UID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
-    
+
     private static ArrayList<int[]> INPUT_COORDINATES = new ArrayList<>(
 	    Arrays.asList(GUI_BACKGROUND, PROCESSING_ARROW_LOCATION, INPUT_ITEM_OFFSET, OUTPUT_ITEM_OFFSET, PROCESSING_ARROW_OFFSET));
-    
+
     public FissionReactorRecipeCategory(IGuiHelper guiHelper) {
-	super(guiHelper, MOD_ID, RECIPE_GROUP, GUI_TEXTURE, INPUT_MACHINE, INPUT_COORDINATES, SMELT_TIME, 
-			TEXT_Y_HEIGHT, ARROW_START_DIRECTION);
-    
+	super(guiHelper, MOD_ID, RECIPE_GROUP, GUI_TEXTURE, INPUT_MACHINE, INPUT_COORDINATES, SMELT_TIME, TEXT_Y_HEIGHT, ARROW_START_DIRECTION);
+    }
+
     @Override
     public ResourceLocation getUid() {
 	return UID;

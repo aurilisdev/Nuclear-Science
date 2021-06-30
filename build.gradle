@@ -92,7 +92,7 @@ minecraft {
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.0.42'
-    compile fileTree("E:/Games/Minecraft/Mod Code/Mods/JARS")
+    compile fileTree("C:/AmpzLibz")
     /*
 	Compiles against source code as well as JAR at runtime. Recommend to keep it
 	*/
