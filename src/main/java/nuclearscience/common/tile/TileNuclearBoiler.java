@@ -18,15 +18,9 @@ import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.SoundRegister;
 import nuclearscience.common.inventory.container.ContainerNuclearBoiler;
@@ -60,7 +54,13 @@ public class TileNuclearBoiler extends GenericTileTicking {
 			.addMultipleFluidTanks(SUPPORTED_OUTPUT_FLUIDS, MAX_TANK_CAPACITY, false));
 	addComponent(new ComponentInventory(this).size(6).relativeSlotFaces(0, Direction.EAST, Direction.UP).relativeSlotFaces(1, Direction.DOWN)
 		.valid((slot, stack) -> slot < 3 || stack.getItem() instanceof ItemProcessorUpgrade));
-	addComponent(new ComponentProcessor(this).upgradeSlots(3, 4, 5).canProcess(component -> canProcessNuclBoil(component))
+	addComponent(new ComponentProcessor(this).upgradeSlots(3, 4, 5)
+		.canProcess
+		(component -> component.outputToPipe(component, SUPPORTED_OUTPUT_FLUIDS)
+					.consumeBucket(MAX_TANK_CAPACITY, SUPPORTED_INPUT_FLUIDS, 1)
+					.dispenseBucket(MAX_TANK_CAPACITY, 2)
+					.canProcessFluidItem2FluidRecipe(component, FluidItem2FluidRecipe.class, NuclearScienceRecipeInit.NUCLEAR_BOILER_TYPE)
+		)
 		.process(component -> component.processFluidItem2FluidRecipe(component, FluidItem2FluidRecipe.class))
 		.usage(Constants.CHEMICALBOILER_USAGE_PER_TICK).type(ComponentProcessorType.ObjectToObject)
 		.requiredTicks(Constants.CHEMICALBOILER_REQUIRED_TICKS));
@@ -82,28 +82,6 @@ public class TileNuclearBoiler extends GenericTileTicking {
 	if (running && tickable.getTicks() % 100 == 0) {
 	    SoundAPI.playSound(SoundRegister.SOUND_NUCLEARBOILER.get(), SoundCategory.BLOCKS, 1, 1, pos);
 	}
-    }
-
-    protected boolean canProcessNuclBoil(ComponentProcessor processor) {
-	ComponentDirection direction = getComponent(ComponentType.Direction);
-	ComponentFluidHandler tank = getComponent(ComponentType.FluidHandler);
-	BlockPos face = getPos().offset(direction.getDirection().getOpposite().rotateY());
-	TileEntity faceTile = world.getTileEntity(face);
-	if (faceTile != null) {
-	    LazyOptional<IFluidHandler> cap = faceTile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY,
-		    direction.getDirection().getOpposite().rotateY().getOpposite());
-	    if (cap.isPresent()) {
-		IFluidHandler handler = cap.resolve().get();
-		for (Fluid fluid : SUPPORTED_OUTPUT_FLUIDS) {
-		    if (tank.getTankFromFluid(fluid).getFluidAmount() > 0) {
-			tank.getStackFromFluid(fluid).shrink(handler.fill(tank.getStackFromFluid(fluid), FluidAction.EXECUTE));
-			break;
-		    }
-		}
-	    }
-	}
-	processor.consumeBucket(MAX_TANK_CAPACITY, SUPPORTED_INPUT_FLUIDS, 1).dispenseBucket(MAX_TANK_CAPACITY, 2);
-	return processor.canProcessFluidItem2FluidRecipe(processor, FluidItem2FluidRecipe.class, NuclearScienceRecipeInit.NUCLEAR_BOILER_TYPE);
     }
 
 }

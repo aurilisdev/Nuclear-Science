@@ -12,3 +12,9 @@ credits="Thanks to all contributors" #optional
 authors="aurilisdev" #optional
 description='''
 '''
+[[dependencies.nuclearscience]]
+    modId="electrodynamics"
+    mandatory=true
+    versionRange="[1.1,)"
+    ordering="NONE"
+    side="BOTH"
