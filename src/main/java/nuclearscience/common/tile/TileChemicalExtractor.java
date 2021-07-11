@@ -44,7 +44,10 @@ public class TileChemicalExtractor extends GenericTileTicking {
 		Direction.NORTH, Direction.EAST, Direction.WEST));
 	addComponent(new ComponentProcessor(this).upgradeSlots(3, 4, 5).type(ComponentProcessorType.ObjectToObject)
 		.usage(Constants.CHEMICALEXTRACTOR_USAGE_PER_TICK).requiredTicks(Constants.CHEMICALEXTRACTOR_REQUIRED_TICKS)
-		.canProcess(component -> canProcessChemExtra(component))
+		.canProcess
+		(component -> component.consumeBucket(MAX_TANK_CAPACITY, SUPPORTED_INPUT_FLUIDS, 2)
+					.canProcessFluidItem2ItemRecipe(component, FluidItem2ItemRecipe.class, NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE)
+		)
 		.process(component -> component.processFluidItem2ItemRecipe(component, FluidItem2ItemRecipe.class)));
 	addComponent(new ComponentContainerProvider("container.chemicalextractor")
 		.createMenu((id, player) -> new ContainerChemicalExtractor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
@@ -55,16 +58,6 @@ public class TileChemicalExtractor extends GenericTileTicking {
 	    world.addParticle(ParticleTypes.SMOKE, pos.getX() + world.rand.nextDouble(), pos.getY() + world.rand.nextDouble() * 0.8 + 0.5,
 		    pos.getZ() + world.rand.nextDouble(), 0.0D, 0.0D, 0.0D);
 	}
-    }
-
-    protected boolean canProcessChemExtra(ComponentProcessor processor) {
-
-	if (this.<ComponentTickable>getComponent(ComponentType.Tickable).getTicks() % 10 == 0) {
-	    this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendGuiPacketToTracking();
-	}
-
-	processor.consumeBucket(MAX_TANK_CAPACITY, SUPPORTED_INPUT_FLUIDS, 2);
-	return processor.canProcessFluidItem2ItemRecipe(processor, FluidItem2ItemRecipe.class, NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE);
     }
 
 }
