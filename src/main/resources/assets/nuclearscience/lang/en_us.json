@@ -103,7 +103,7 @@
 							    //this is a test to see how long I
 	"info.jei.block.reactorcore":"Operation Specs:\n    Max U235 Output: 500 kW\n    V/Turbine: 240 V\n\n    Max U238 Output: 250 kW\n    V/Turbine: 120 V\n\n    Max Safe Temp: 4400 C\n\nHarneses the power of nuclear decay, converting it into heat. Surround with water to harness this heat by generating steam. Placing Turbines on top of the water will generate electricity. See the wiki for design details!",
 	"info.jei.block.fusionreactorcore":"Operation Specs:\n    Max Output: 5 MW\n    V/Turbine: 480 V\nFuses Deuterium and Tritium into Plasma. This plasma, if contained in electromagnets, can be used to heat water into steam for power generation.",
-	"info.jei.block.chemicalboiler":"This machine can convert Uranium 238 and Yellowcake into Uranium Hexafluoride gas(UF6). This gas cannot be interacted with. If placed next to a Gas Centrifuge, the gas will automatically be inserted into it. Otherwise, it can be manually extracted using a pipe.",
+	"info.jei.block.nuclearboiler":"This machine can convert Uranium 238 and Yellowcake into Uranium Hexafluoride gas(UF6). This gas cannot be interacted with. If placed next to a Gas Centrifuge, the gas will automatically be inserted into it. Otherwise, it can be manually extracted using a pipe.",
 	"info.jei.block.chemicalextractor":"This machine is used to extract radioactive elements from materials.",
 	"info.jei.block.electromagnet":"This block is designed to contain the raw power of nature. It can be used to either contain Plasma from a Fusion Reactor, or contain particles produced by the Particle Injector.",
 	"info.jei.block.electromagneticbooster":"This specialized electromagnet is used to increase the starting speed of Particle to a maximum of 40 m/s.",
