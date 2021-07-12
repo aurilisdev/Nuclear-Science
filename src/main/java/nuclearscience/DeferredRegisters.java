@@ -89,8 +89,7 @@ public class DeferredRegisters {
     public static Block blocklead;
     static {
 	BLOCKS.register("gascentrifuge", supplier(blockGasCentrifuge = new BlockGasCentrifuge()));
-	BLOCKS.register("chemicalboiler", supplier(blockNuclearBoiler = new BlockNuclearBoiler()));// TODO: Cant change this chemical boiler name
-												   // until next reset
+	BLOCKS.register("nuclearboiler", supplier(blockNuclearBoiler = new BlockNuclearBoiler()));
 	BLOCKS.register("chemicalextractor", supplier(blockChemicalExtractor = new BlockChemicalExtractor()));
 	BLOCKS.register("radioisotopegenerator", supplier(blockRadioisotopeGenerator = new BlockRadioisotopeGenerator()));
 	BLOCKS.register("turbine", supplier(blockTurbine = new BlockTurbine()));
@@ -107,7 +106,7 @@ public class DeferredRegisters {
 	BLOCKS.register("blocklead", supplier(blocklead = new Block(Properties.create(Material.IRON, MaterialColor.BLACK)
 		.hardnessAndResistance(5.0f, 3.0f).sound(SoundType.METAL).setRequiresTool().harvestTool(ToolType.PICKAXE).harvestLevel(1))));
 	ITEMS.register("gascentrifuge", supplier(new BlockItemDescriptable(blockGasCentrifuge, new Item.Properties().group(References.NUCLEARTAB))));
-	ITEMS.register("chemicalboiler", supplier(new BlockItemDescriptable(blockNuclearBoiler, new Item.Properties().group(References.NUCLEARTAB))));
+	ITEMS.register("nuclearboiler", supplier(new BlockItemDescriptable(blockNuclearBoiler, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("chemicalextractor",
 		supplier(new BlockItemDescriptable(blockChemicalExtractor, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("radioisotopegenerator",
@@ -181,9 +180,8 @@ public class DeferredRegisters {
 
     public static final RegistryObject<TileEntityType<TileGasCentrifuge>> TILE_GASCENTRIFUGE = TILES.register("gascentrifuge",
 	    () -> new TileEntityType<>(TileGasCentrifuge::new, Sets.newHashSet(blockGasCentrifuge), null));
-    public static final RegistryObject<TileEntityType<TileNuclearBoiler>> TILE_CHEMICALBOILER = TILES.register("chemicalboiler",
-	    () -> new TileEntityType<>(TileNuclearBoiler::new, Sets.newHashSet(blockNuclearBoiler), null)); // TODO: Cant change this chemical boiler
-													    // name until next reset
+    public static final RegistryObject<TileEntityType<TileNuclearBoiler>> TILE_CHEMICALBOILER = TILES.register("nuclearboiler",
+	    () -> new TileEntityType<>(TileNuclearBoiler::new, Sets.newHashSet(blockNuclearBoiler), null));
     public static final RegistryObject<TileEntityType<TileChemicalExtractor>> TILE_CHEMICALEXTRACTOR = TILES.register("chemicalextractor",
 	    () -> new TileEntityType<>(TileChemicalExtractor::new, Sets.newHashSet(blockChemicalExtractor), null));
     public static final RegistryObject<TileEntityType<TileRadioisotopeGenerator>> TILE_RADIOISOTOPEGENERATOR = TILES.register("radioisotopegenerator",

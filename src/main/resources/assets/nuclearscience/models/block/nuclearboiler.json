@@ -3,8 +3,8 @@
 	"parent": "block/cube_all",
 	"texture_size": [128, 128],
 	"textures": {
-		"0": "nuclearscience:model/chemicalboiler",
-		"particle": "nuclearscience:model/chemicalboiler"
+		"0": "nuclearscience:model/nuclearboiler",
+		"particle": "nuclearscience:model/nuclearboiler"
 	},
 	"groups": [
 		{
@@ -23,8 +23,8 @@
 		"solid": {
 			"parent": "block/cube_all",
 			"textures": {
-				"0": "nuclearscience:model/chemicalboiler",
-				"particle": "nuclearscience:model/chemicalboiler"
+				"0": "nuclearscience:model/nuclearboiler",
+				"particle": "nuclearscience:model/nuclearboiler"
 			},
 			"elements": [
 				{
@@ -386,8 +386,8 @@
 		"translucent": {
 			"parent": "block/cube_all",
 			"textures": {
-				"0": "nuclearscience:model/chemicalboiler",
-				"particle": "nuclearscience:model/chemicalboiler"
+				"0": "nuclearscience:model/nuclearboiler",
+				"particle": "nuclearscience:model/nuclearboiler"
 			},
 			"elements": [
 				{

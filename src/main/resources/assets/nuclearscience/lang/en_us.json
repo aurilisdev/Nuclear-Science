@@ -20,7 +20,7 @@
 	"item.nuclearscience.antidote": "Antidote",
 	"item.nuclearscience.frequencycard": "Frequency Card",
 	"block.nuclearscience.gascentrifuge": "Gas Centrifuge",
-	"block.nuclearscience.chemicalboiler": "Nuclear Boiler",
+	"block.nuclearscience.nuclearboiler": "Nuclear Boiler",
 	"block.nuclearscience.chemicalextractor": "Chemical Extractor",
 	"block.nuclearscience.radioisotopegenerator": "Radioisotope Generator",
 	"block.nuclearscience.turbine": "Steam Turbine",
