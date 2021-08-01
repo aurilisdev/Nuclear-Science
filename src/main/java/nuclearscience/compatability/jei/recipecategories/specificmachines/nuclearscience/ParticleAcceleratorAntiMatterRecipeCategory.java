@@ -49,7 +49,7 @@ public class ParticleAcceleratorAntiMatterRecipeCategory extends Electrodynamics
     private static String RECIPE_GROUP = "partical_accelerator_antimatter";
     private static String GUI_TEXTURE = "textures/gui/jei/particle_accelerator_antimatter_gui.png";
 
-    private static ItemStack INPUT_MACHINE = new ItemStack(nuclearscience.DeferredRegisters.blockParticleInjector);
+    public static ItemStack INPUT_MACHINE = new ItemStack(nuclearscience.DeferredRegisters.blockParticleInjector);
     private LoadingCache<Integer, IDrawableAnimated> CACHED_ARROWS;
     private static StartDirection ARROW_START_DIRECTION = IDrawableAnimated.StartDirection.LEFT;
 

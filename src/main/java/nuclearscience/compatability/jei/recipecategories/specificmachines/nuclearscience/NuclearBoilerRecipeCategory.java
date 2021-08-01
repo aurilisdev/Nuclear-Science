@@ -36,7 +36,7 @@ public class NuclearBoilerRecipeCategory extends FluidItem2FluidRecipeCategory {
     private static String RECIPE_GROUP = "nuclear_boiler";
     private static String GUI_TEXTURE = "textures/gui/jei/sol_and_liq_to_liq_recipe_gui.png";
 
-    private static ItemStack INPUT_MACHINE = new ItemStack(DeferredRegisters.blockNuclearBoiler);
+    public static ItemStack INPUT_MACHINE = new ItemStack(DeferredRegisters.blockNuclearBoiler);
 
     private static StartDirection MAJOR_ARROW_START_DIRECTION = IDrawableAnimated.StartDirection.LEFT;
     private static StartDirection MINOR_ARROW_START_DIRECTION = IDrawableAnimated.StartDirection.RIGHT;

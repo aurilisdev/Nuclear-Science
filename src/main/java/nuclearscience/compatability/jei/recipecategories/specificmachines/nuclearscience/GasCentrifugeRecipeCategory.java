@@ -44,7 +44,7 @@ public class GasCentrifugeRecipeCategory extends ElectrodynamicsRecipeCategory<P
     private static String RECIPE_GROUP = "gas_centrifuge";
     private static String GUI_TEXTURE = "textures/gui/jei/gas_centrifuge_gui.png";
 
-    private static ItemStack INPUT_MACHINE = new ItemStack(DeferredRegisters.blockGasCentrifuge);
+    public static ItemStack INPUT_MACHINE = new ItemStack(DeferredRegisters.blockGasCentrifuge);
 
     private LoadingCache<Integer, ArrayList<IDrawableAnimated>> CACHED_ARROWS;
     private LoadingCache<Integer, ArrayList<IDrawableStatic>> CACHED_FLUID_BARS;
