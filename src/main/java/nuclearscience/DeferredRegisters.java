@@ -23,6 +23,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import nuclearscience.common.block.BlockChemicalExtractor;
+import nuclearscience.common.block.BlockControlRodAssembly;
 import nuclearscience.common.block.BlockElectromagnet;
 import nuclearscience.common.block.BlockElectromagneticBooster;
 import nuclearscience.common.block.BlockElectromagneticSwitch;
@@ -51,6 +52,7 @@ import nuclearscience.common.item.ItemGeigerCounter;
 import nuclearscience.common.item.ItemHazmatArmor;
 import nuclearscience.common.item.ItemRadioactive;
 import nuclearscience.common.tile.TileChemicalExtractor;
+import nuclearscience.common.tile.TileControlRodAssembly;
 import nuclearscience.common.tile.TileElectromagneticSwitch;
 import nuclearscience.common.tile.TileFusionReactorCore;
 import nuclearscience.common.tile.TileGasCentrifuge;
@@ -86,6 +88,7 @@ public class DeferredRegisters {
     public static BlockParticleInjector blockParticleInjector;
     public static BlockQuantumCapacitor blockQuantumCapacitor;
     public static BlockTeleporter blockTeleporter;
+    public static BlockControlRodAssembly blockControlRodAssembly;
     public static Block blocklead;
     static {
 	BLOCKS.register("gascentrifuge", supplier(blockGasCentrifuge = new BlockGasCentrifuge()));
@@ -103,6 +106,7 @@ public class DeferredRegisters {
 	BLOCKS.register("particleinjector", supplier(blockParticleInjector = new BlockParticleInjector()));
 	BLOCKS.register("quantumcapacitor", supplier(blockQuantumCapacitor = new BlockQuantumCapacitor()));
 	BLOCKS.register("teleporter", supplier(blockTeleporter = new BlockTeleporter()));
+	BLOCKS.register("controlrodassembly", supplier(blockControlRodAssembly = new BlockControlRodAssembly()));
 	BLOCKS.register("blocklead", supplier(blocklead = new Block(Properties.create(Material.IRON, MaterialColor.BLACK)
 		.hardnessAndResistance(5.0f, 3.0f).sound(SoundType.METAL).setRequiresTool().harvestTool(ToolType.PICKAXE).harvestLevel(1))));
 	ITEMS.register("gascentrifuge", supplier(new BlockItemDescriptable(blockGasCentrifuge, new Item.Properties().group(References.NUCLEARTAB))));
@@ -129,6 +133,8 @@ public class DeferredRegisters {
 	ITEMS.register("quantumcapacitor",
 		supplier(new BlockItemDescriptable(blockQuantumCapacitor, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("teleporter", supplier(new BlockItemDescriptable(blockTeleporter, new Item.Properties().group(References.NUCLEARTAB))));
+	ITEMS.register("controlrodassembly",
+		supplier(new BlockItemDescriptable(blockControlRodAssembly, new Item.Properties().group(References.NUCLEARTAB))));
 	FLUIDS.register("fluiduraniumhexafluoride", supplier(fluidUraniumHexafluoride = new FluidUraniumHexafluoride()));
 	BlockItemDescriptable.addDescription(blockGasCentrifuge, "|translate|tooltip.gascentrifuge.voltage");
 	BlockItemDescriptable.addDescription(blockNuclearBoiler, "|translate|tooltip.nuclearboiler.voltage");
@@ -200,8 +206,12 @@ public class DeferredRegisters {
 	    () -> new TileEntityType<>(TilePlasma::new, Sets.newHashSet(blockPlasma), null));
     public static final RegistryObject<TileEntityType<TileQuantumCapacitor>> TILE_QUANTUMCAPACITOR = TILES.register("quantumcapacitor",
 	    () -> new TileEntityType<>(TileQuantumCapacitor::new, Sets.newHashSet(blockQuantumCapacitor), null));
+
     public static final RegistryObject<TileEntityType<TileTeleporter>> TILE_TELEPORTER = TILES.register("teleporter",
 	    () -> new TileEntityType<>(TileTeleporter::new, Sets.newHashSet(blockTeleporter), null));
+
+    public static final RegistryObject<TileEntityType<TileControlRodAssembly>> TILE_CONTROLRODASSEMBLY = TILES.register("controlrodassembly",
+	    () -> new TileEntityType<>(TileControlRodAssembly::new, Sets.newHashSet(blockTeleporter), null));
 
     public static final RegistryObject<ContainerType<ContainerGasCentrifuge>> CONTAINER_GASCENTRIFUGE = CONTAINERS.register("gascentrifuge",
 	    () -> new ContainerType<>(ContainerGasCentrifuge::new));
