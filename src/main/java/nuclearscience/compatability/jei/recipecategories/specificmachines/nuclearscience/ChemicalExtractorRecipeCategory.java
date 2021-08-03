@@ -34,7 +34,7 @@ public class ChemicalExtractorRecipeCategory extends FluidItem2ItemRecipeCategor
     private static String RECIPE_GROUP = "chemical_extractor";
     private static String GUI_TEXTURE = "textures/gui/jei/sol_and_liq_to_sol_recipe_gui.png";
 
-    private static ItemStack INPUT_MACHINE = new ItemStack(DeferredRegisters.blockChemicalExtractor);
+    public static ItemStack INPUT_MACHINE = new ItemStack(DeferredRegisters.blockChemicalExtractor);
 
     private static StartDirection MAJOR_ARROW_START_DIRECTION = IDrawableAnimated.StartDirection.LEFT;
     private static StartDirection MINOR_ARROW_START_DIRECTION = IDrawableAnimated.StartDirection.RIGHT;
