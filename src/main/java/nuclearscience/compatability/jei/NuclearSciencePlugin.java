@@ -63,10 +63,10 @@ public class NuclearSciencePlugin implements IModPlugin {
 	registration.addRecipeCatalyst(FissionReactorRecipeCategory.INPUT_MACHINE, FissionReactorRecipeCategory.UID);
 
 	// Anti Matter
-	registration.addRecipeCatalyst(ParticleAcceleratorAntiMatterRecipeCategory.INPUT_MACHINE,ParticleAcceleratorAntiMatterRecipeCategory.UID);
+	registration.addRecipeCatalyst(ParticleAcceleratorAntiMatterRecipeCategory.INPUT_MACHINE, ParticleAcceleratorAntiMatterRecipeCategory.UID);
 
 	// Dark Matter
-	registration.addRecipeCatalyst(ParticleAcceleratorDarkMatterRecipeCategory.INPUT_MACHINE,ParticleAcceleratorDarkMatterRecipeCategory.UID);
+	registration.addRecipeCatalyst(ParticleAcceleratorDarkMatterRecipeCategory.INPUT_MACHINE, ParticleAcceleratorDarkMatterRecipeCategory.UID);
 
     }
 
@@ -83,11 +83,13 @@ public class NuclearSciencePlugin implements IModPlugin {
 	registration.addRecipes(gasCentrifugeRecipes, GasCentrifugeRecipeCategory.UID);
 
 	// Nuclear Boiler
-	Set<FluidItem2FluidRecipe> nuclearBoilerRecipes = ImmutableSet.copyOf(recipeManager.getRecipesForType(NuclearScienceRecipeInit.NUCLEAR_BOILER_TYPE));
+	Set<FluidItem2FluidRecipe> nuclearBoilerRecipes = ImmutableSet
+		.copyOf(recipeManager.getRecipesForType(NuclearScienceRecipeInit.NUCLEAR_BOILER_TYPE));
 	registration.addRecipes(nuclearBoilerRecipes, NuclearBoilerRecipeCategory.UID);
 
 	// Chemical Extractor
-	Set<FluidItem2ItemRecipe> chemicalExtractorRecipes = ImmutableSet.copyOf(recipeManager.getRecipesForType(NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE));
+	Set<FluidItem2ItemRecipe> chemicalExtractorRecipes = ImmutableSet
+		.copyOf(recipeManager.getRecipesForType(NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE));
 	registration.addRecipes(chemicalExtractorRecipes, ChemicalExtractorRecipeCategory.UID);
 
 	Set<O2ORecipe> fissionReactorRecipes = ImmutableSet.copyOf(recipeManager.getRecipesForType(NuclearScienceRecipeInit.FISSION_REACTOR_TYPE));
@@ -104,24 +106,24 @@ public class NuclearSciencePlugin implements IModPlugin {
 
     @Override
     public void registerCategories(IRecipeCategoryRegistration registration) {
-    	IGuiHelper helper = registration.getJeiHelpers().getGuiHelper();
-		// Gas Centrifuge
-		registration.addRecipeCategories(new GasCentrifugeRecipeCategory(helper));
-	
-		// Nuclear Boiler
-		registration.addRecipeCategories(new NuclearBoilerRecipeCategory(helper));
-	
-		// Chemical Extractor
-		registration.addRecipeCategories(new ChemicalExtractorRecipeCategory(helper));
-	
-		// Fision Reactor
-		registration.addRecipeCategories(new FissionReactorRecipeCategory(helper));
-	
-		// Anti Matter
-		registration.addRecipeCategories(new ParticleAcceleratorAntiMatterRecipeCategory(helper));
-	
-		// Dark Matter
-		registration.addRecipeCategories(new ParticleAcceleratorDarkMatterRecipeCategory(helper));
+	IGuiHelper helper = registration.getJeiHelpers().getGuiHelper();
+	// Gas Centrifuge
+	registration.addRecipeCategories(new GasCentrifugeRecipeCategory(helper));
+
+	// Nuclear Boiler
+	registration.addRecipeCategories(new NuclearBoilerRecipeCategory(helper));
+
+	// Chemical Extractor
+	registration.addRecipeCategories(new ChemicalExtractorRecipeCategory(helper));
+
+	// Fision Reactor
+	registration.addRecipeCategories(new FissionReactorRecipeCategory(helper));
+
+	// Anti Matter
+	registration.addRecipeCategories(new ParticleAcceleratorAntiMatterRecipeCategory(helper));
+
+	// Dark Matter
+	registration.addRecipeCategories(new ParticleAcceleratorDarkMatterRecipeCategory(helper));
 
     }
 
