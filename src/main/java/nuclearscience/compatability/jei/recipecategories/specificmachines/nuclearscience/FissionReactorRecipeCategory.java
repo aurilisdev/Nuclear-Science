@@ -41,7 +41,7 @@ public class FissionReactorRecipeCategory extends O2ORecipeCategory {
     private static String RECIPE_GROUP = "fission_reactor";
     private static String GUI_TEXTURE = "textures/gui/jei/fission_reactor_gui.png";
 
-    private static ItemStack INPUT_MACHINE = new ItemStack(nuclearscience.DeferredRegisters.blockReactorCore);
+    public static ItemStack INPUT_MACHINE = new ItemStack(nuclearscience.DeferredRegisters.blockReactorCore);
 
     private static StartDirection ARROW_START_DIRECTION = IDrawableAnimated.StartDirection.TOP;
 

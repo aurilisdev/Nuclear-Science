@@ -39,7 +39,7 @@ public class ParticleAcceleratorDarkMatterRecipeCategory extends Electrodynamics
     private static String RECIPE_GROUP = "partical_accelerator_darkmatter";
     private static String GUI_TEXTURE_STRING = "textures/gui/jei/particle_accelerator_dark_matter_gui.png";
 
-    private static ItemStack INPUT_MACHINE = new ItemStack(nuclearscience.DeferredRegisters.blockParticleInjector);
+    public static ItemStack INPUT_MACHINE = new ItemStack(nuclearscience.DeferredRegisters.blockParticleInjector);
 
     private LoadingCache<Integer, ArrayList<IDrawableAnimated>> CACHED_ARROWS;
 

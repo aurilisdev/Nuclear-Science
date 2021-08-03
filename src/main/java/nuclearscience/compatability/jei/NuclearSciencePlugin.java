@@ -15,6 +15,7 @@ import electrodynamics.compatability.jei.recipecategories.psuedorecipes.PsuedoRe
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
+import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
@@ -22,6 +23,7 @@ import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.util.ResourceLocation;
 import nuclearscience.client.screen.ScreenChemicalExtractor;
 import nuclearscience.client.screen.ScreenGasCentrifuge;
@@ -49,27 +51,22 @@ public class NuclearSciencePlugin implements IModPlugin {
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
 	// Gas Centrifuge
-	registration.addRecipeCatalyst(new ItemStack(nuclearscience.DeferredRegisters.blockGasCentrifuge), GasCentrifugeRecipeCategory.UID);
+	registration.addRecipeCatalyst(GasCentrifugeRecipeCategory.INPUT_MACHINE, GasCentrifugeRecipeCategory.UID);
 
 	// Nuclear Boiler
-	registration.addRecipeCatalyst(new ItemStack(nuclearscience.DeferredRegisters.blockNuclearBoiler), NuclearBoilerRecipeCategory.UID);
+	registration.addRecipeCatalyst(NuclearBoilerRecipeCategory.INPUT_MACHINE, NuclearBoilerRecipeCategory.UID);
 
 	// Chemical Extractor
-	registration.addRecipeCatalyst(new ItemStack(nuclearscience.DeferredRegisters.blockChemicalExtractor), ChemicalExtractorRecipeCategory.UID);
+	registration.addRecipeCatalyst(ChemicalExtractorRecipeCategory.INPUT_MACHINE, ChemicalExtractorRecipeCategory.UID);
 
 	// Fisison Reactor
-
-	registration.addRecipeCatalyst(new ItemStack(nuclearscience.DeferredRegisters.blockReactorCore), FissionReactorRecipeCategory.UID);
+	registration.addRecipeCatalyst(FissionReactorRecipeCategory.INPUT_MACHINE, FissionReactorRecipeCategory.UID);
 
 	// Anti Matter
-
-	registration.addRecipeCatalyst(new ItemStack(nuclearscience.DeferredRegisters.blockParticleInjector),
-		ParticleAcceleratorAntiMatterRecipeCategory.UID);
+	registration.addRecipeCatalyst(ParticleAcceleratorAntiMatterRecipeCategory.INPUT_MACHINE,ParticleAcceleratorAntiMatterRecipeCategory.UID);
 
 	// Dark Matter
-
-	registration.addRecipeCatalyst(new ItemStack(nuclearscience.DeferredRegisters.blockParticleInjector),
-		ParticleAcceleratorDarkMatterRecipeCategory.UID);
+	registration.addRecipeCatalyst(ParticleAcceleratorDarkMatterRecipeCategory.INPUT_MACHINE,ParticleAcceleratorDarkMatterRecipeCategory.UID);
 
     }
 
@@ -79,24 +76,21 @@ public class NuclearSciencePlugin implements IModPlugin {
 	PsuedoRecipes.addElectrodynamicsRecipes();
 	Minecraft mc = Minecraft.getInstance();
 	ClientWorld world = Objects.requireNonNull(mc.world);
+	RecipeManager recipeManager = world.getRecipeManager();
 
 	// Gas Centrifuge
 	Set<PsuedoGasCentrifugeRecipe> gasCentrifugeRecipes = new HashSet<>(NuclearSciencePsuedoRecipes.GAS_CENTRIFUGE_RECIPES);
-
 	registration.addRecipes(gasCentrifugeRecipes, GasCentrifugeRecipeCategory.UID);
 
 	// Nuclear Boiler
-	Set<FluidItem2FluidRecipe> nuclearBoilerRecipes = ImmutableSet
-		.copyOf(world.getRecipeManager().getRecipesForType(NuclearScienceRecipeInit.NUCLEAR_BOILER_TYPE));
+	Set<FluidItem2FluidRecipe> nuclearBoilerRecipes = ImmutableSet.copyOf(recipeManager.getRecipesForType(NuclearScienceRecipeInit.NUCLEAR_BOILER_TYPE));
 	registration.addRecipes(nuclearBoilerRecipes, NuclearBoilerRecipeCategory.UID);
 
 	// Chemical Extractor
-	Set<FluidItem2ItemRecipe> chemicalExtractorRecipes = ImmutableSet
-		.copyOf(world.getRecipeManager().getRecipesForType(NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE));
+	Set<FluidItem2ItemRecipe> chemicalExtractorRecipes = ImmutableSet.copyOf(recipeManager.getRecipesForType(NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE));
 	registration.addRecipes(chemicalExtractorRecipes, ChemicalExtractorRecipeCategory.UID);
 
-	Set<O2ORecipe> fissionReactorRecipes = ImmutableSet
-		.copyOf(world.getRecipeManager().getRecipesForType(NuclearScienceRecipeInit.FISSION_REACTOR_TYPE));
+	Set<O2ORecipe> fissionReactorRecipes = ImmutableSet.copyOf(recipeManager.getRecipesForType(NuclearScienceRecipeInit.FISSION_REACTOR_TYPE));
 	registration.addRecipes(fissionReactorRecipes, FissionReactorRecipeCategory.UID);
 
 	Set<PsuedoO2ORecipe> antiMatterRecipes = new HashSet<>(NuclearSciencePsuedoRecipes.ANTI_MATTER_RECIPES);
@@ -110,23 +104,24 @@ public class NuclearSciencePlugin implements IModPlugin {
 
     @Override
     public void registerCategories(IRecipeCategoryRegistration registration) {
-	// Gas Centrifuge
-	registration.addRecipeCategories(new GasCentrifugeRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
-
-	// Nuclear Boiler
-	registration.addRecipeCategories(new NuclearBoilerRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
-
-	// Chemical Extractor
-	registration.addRecipeCategories(new ChemicalExtractorRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
-
-	// Fision Reactor
-	registration.addRecipeCategories(new FissionReactorRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
-
-	// Anti Matter
-	registration.addRecipeCategories(new ParticleAcceleratorAntiMatterRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
-
-	// Dark Matter
-	registration.addRecipeCategories(new ParticleAcceleratorDarkMatterRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
+    	IGuiHelper helper = registration.getJeiHelpers().getGuiHelper();
+		// Gas Centrifuge
+		registration.addRecipeCategories(new GasCentrifugeRecipeCategory(helper));
+	
+		// Nuclear Boiler
+		registration.addRecipeCategories(new NuclearBoilerRecipeCategory(helper));
+	
+		// Chemical Extractor
+		registration.addRecipeCategories(new ChemicalExtractorRecipeCategory(helper));
+	
+		// Fision Reactor
+		registration.addRecipeCategories(new FissionReactorRecipeCategory(helper));
+	
+		// Anti Matter
+		registration.addRecipeCategories(new ParticleAcceleratorAntiMatterRecipeCategory(helper));
+	
+		// Dark Matter
+		registration.addRecipeCategories(new ParticleAcceleratorDarkMatterRecipeCategory(helper));
 
     }
 
