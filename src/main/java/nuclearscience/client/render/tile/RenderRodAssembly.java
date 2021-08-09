@@ -26,7 +26,7 @@ public class RenderRodAssembly extends TileEntityRenderer<TileControlRodAssembly
 	IBakedModel ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_CONTROLRODASSEMBLYSTRUCTURE);
 	stack.translate(0.5, 0.5, 0.5);
 	UtilitiesRendering.renderModel(ibakedmodel, tileEntityIn, RenderType.getSolid(), stack, bufferIn, combinedLightIn, combinedOverlayIn);
-	int insertion = -tileEntityIn.insertion;
+	int insertion = tileEntityIn.insertion - 100;
 	stack.translate(0, 13 / 16.0 * insertion / 100.0, 0);
 	ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_CONTROLRODASSEMBLYSROD);
 	UtilitiesRendering.renderModel(ibakedmodel, tileEntityIn, RenderType.getSolid(), stack, bufferIn, combinedLightIn, combinedOverlayIn);

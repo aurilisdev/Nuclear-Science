@@ -89,7 +89,13 @@ public class TileReactorCore extends GenericTileTicking {
 	    temperature -= decrease < 0.001 && decrease > 0 ? 0.001 : decrease > -0.001 && decrease < 0 ? -0.001 : decrease;
 	}
 	if (fuelCount > 0 && ticks > 50) {
-	    double insertDecimal = /* was "(100 - insertion) / 100.0" before */ 1.0;
+	    TileEntity tile = world.getTileEntity(pos.down());
+	    int insertion = 0;
+	    if (tile instanceof TileControlRodAssembly) {
+		TileControlRodAssembly assembly = (TileControlRodAssembly) tile;
+		insertion = assembly.insertion;
+	    }
+	    double insertDecimal = (100 - insertion) / 100.0;
 	    if (world.rand.nextFloat() < insertDecimal) {
 		for (int slot = 0; slot < 4; slot++) {
 		    ItemStack fuelRod = inv.getStackInSlot(slot);
