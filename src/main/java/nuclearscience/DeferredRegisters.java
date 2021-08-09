@@ -211,7 +211,7 @@ public class DeferredRegisters {
 	    () -> new TileEntityType<>(TileTeleporter::new, Sets.newHashSet(blockTeleporter), null));
 
     public static final RegistryObject<TileEntityType<TileControlRodAssembly>> TILE_CONTROLRODASSEMBLY = TILES.register("controlrodassembly",
-	    () -> new TileEntityType<>(TileControlRodAssembly::new, Sets.newHashSet(blockTeleporter), null));
+	    () -> new TileEntityType<>(TileControlRodAssembly::new, Sets.newHashSet(blockControlRodAssembly), null));
 
     public static final RegistryObject<ContainerType<ContainerGasCentrifuge>> CONTAINER_GASCENTRIFUGE = CONTAINERS.register("gascentrifuge",
 	    () -> new ContainerType<>(ContainerGasCentrifuge::new));

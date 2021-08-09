@@ -22,6 +22,7 @@ import nuclearscience.client.render.tile.RenderGasCentrifuge;
 import nuclearscience.client.render.tile.RenderNuclearBoiler;
 import nuclearscience.client.render.tile.RenderQuantumCapacitor;
 import nuclearscience.client.render.tile.RenderReactorCore;
+import nuclearscience.client.render.tile.RenderRodAssembly;
 import nuclearscience.client.render.tile.RenderTeleporter;
 import nuclearscience.client.render.tile.RenderTurbine;
 import nuclearscience.client.screen.ScreenChemicalExtractor;
@@ -83,6 +84,7 @@ public class ClientRegister {
 	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_FUSIONREACTORCORE.get(), RenderFusionReactorCore::new);
 	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_QUANTUMCAPACITOR.get(), RenderQuantumCapacitor::new);
 	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_TELEPORTER.get(), RenderTeleporter::new);
+	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_CONTROLRODASSEMBLY.get(), RenderRodAssembly::new);
 
 	RenderingRegistry.registerEntityRenderingHandler(DeferredRegisters.ENTITY_PARTICLE.get(), RenderParticle::new);
 

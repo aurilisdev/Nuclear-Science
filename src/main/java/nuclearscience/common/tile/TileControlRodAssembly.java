@@ -10,7 +10,7 @@ import nuclearscience.DeferredRegisters;
 
 public class TileControlRodAssembly extends GenericTileTicking {
 
-    private int insertion = 0;
+    public int insertion = 0;
 
     public TileControlRodAssembly() {
 	super(DeferredRegisters.TILE_CONTROLRODASSEMBLY.get());
