@@ -22,7 +22,6 @@ public class TileControlRodAssembly extends GenericTileTicking {
 	if (tickable.getTicks() % 20 == 0) {
 	    this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();
 	}
-	System.out.println(insertion);
     }
 
     public void writePacket(CompoundNBT compound) {
