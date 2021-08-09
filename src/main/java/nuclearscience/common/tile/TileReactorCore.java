@@ -31,7 +31,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.Explosion.Mode;
-import net.minecraftforge.fml.ModList;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.api.radiation.RadiationSystem;
 import nuclearscience.common.inventory.container.ContainerReactorCore;
@@ -159,32 +158,24 @@ public class TileReactorCore extends GenericTileTicking {
 	    }
 	    world.setBlockState(pos, Blocks.AIR.getDefaultState());
 
-	    if (ModList.get().isLoaded("ballistix")) {
-//		ballistix.common.blast.Blast b = ballistix.common.blast.Blast.createFromSubtype(ballistix.common.block.SubtypeBlast.nuclear, world,
-//			pos);
-//		if (b != null) {
-//		    b.performExplosion();
-//		}
-	    } else {
-		Explosion actual = new Explosion(world, null, pos.getX(), pos.getY(), pos.getZ(), 20, new ArrayList<>());
-		radius = 3 * fuelCount;
-		for (int i = -radius; i <= radius; i++) {
-		    for (int j = -radius; j <= radius; j++) {
-			for (int k = -radius; k <= radius; k++) {
-			    BlockPos ppos = new BlockPos(pos.getX() + i, pos.getY() + j, pos.getZ() + k);
-			    BlockState state = world.getBlockState(ppos);
-			    if (state.getBlock().getExplosionResistance(state, world, ppos, actual) < radius) {
-				float distance = (float) Math.sqrt(i * i + j * j + k * k);
-				if (distance < radius && world.rand.nextFloat() < 1 - 0.0001 * distance * distance * distance
-					&& world.rand.nextFloat() < 0.9) {
-				    world.getBlockState(ppos).onBlockExploded(world, ppos, actual);
-				}
+	    Explosion actual = new Explosion(world, null, pos.getX(), pos.getY(), pos.getZ(), 20, new ArrayList<>());
+	    radius = 3 * fuelCount;
+	    for (int i = -radius; i <= radius; i++) {
+		for (int j = -radius; j <= radius; j++) {
+		    for (int k = -radius; k <= radius; k++) {
+			BlockPos ppos = new BlockPos(pos.getX() + i, pos.getY() + j, pos.getZ() + k);
+			BlockState state = world.getBlockState(ppos);
+			if (state.getBlock().getExplosionResistance(state, world, ppos, actual) < radius) {
+			    float distance = (float) Math.sqrt(i * i + j * j + k * k);
+			    if (distance < radius && world.rand.nextFloat() < 1 - 0.0001 * distance * distance * distance
+				    && world.rand.nextFloat() < 0.9) {
+				world.getBlockState(ppos).onBlockExploded(world, ppos, actual);
 			    }
 			}
 		    }
 		}
-		world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), 20, Mode.DESTROY);
 	    }
+	    world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), 20, Mode.DESTROY);
 	}
     }
 
