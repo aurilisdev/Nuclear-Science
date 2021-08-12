@@ -105,7 +105,7 @@ public class TileReactorCore extends GenericTileTicking {
 		}
 	    }
 	    temperature += (MELTDOWN_TEMPERATURE_CALC * insertDecimal * (0.25 * (fuelCount / 2.0) + world.rand.nextDouble() / 5.0) - temperature)
-		    / (200 + 20 * (hasWater ? 14.7 : 1));
+		    / (200 + 20 * (hasWater ? 5 : 1));
 	    if (temperature > MELTDOWN_TEMPERATURE_ACTUAL + world.rand.nextInt(50) && fuelCount > 0) {
 		ticksOverheating++;
 		// Implement some alarm sounds at this time
@@ -188,12 +188,17 @@ public class TileReactorCore extends GenericTileTicking {
 		for (int k = 0; k < STEAM_GEN_DIAMETER; k++) {
 		    boolean isReactor2d = i - STEAM_GEN_DIAMETER / 2 == 0 && k - STEAM_GEN_DIAMETER / 2 == 0;
 		    if (isReactor2d && j == 0) {
+			if (world.rand.nextFloat() < temperature
+				/ (MELTDOWN_TEMPERATURE_CALC * 20.0 * STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * STEAM_GEN_HEIGHT / 2.0)) {
+			    world.setBlockState(pos, getBlockState().with(BlockStateProperties.WATERLOGGED, false));
+			}
 			continue;
 		    }
 		    int offsetX = pos.getX() + i - STEAM_GEN_DIAMETER / 2;
 		    int offsetY = pos.getY() + j;
 		    int offsetZ = pos.getZ() + k - STEAM_GEN_DIAMETER / 2;
-		    Block offset = world.getBlockState(new BlockPos(offsetX, offsetY, offsetZ)).getBlock();
+		    BlockPos offpos = new BlockPos(offsetX, offsetY, offsetZ);
+		    Block offset = world.getBlockState(offpos).getBlock();
 		    if (offset == Blocks.WATER) {
 			boolean isFaceWater = world.getBlockState(new BlockPos(offsetX, pos.getY(), pos.getZ())).getBlock() == Blocks.WATER
 				|| world.getBlockState(new BlockPos(pos.getX(), pos.getY(), offsetZ)).getBlock() == Blocks.WATER || isReactor2d;
@@ -208,6 +213,11 @@ public class TileReactorCore extends GenericTileTicking {
 					    (int) (Constants.FISSIONREACTOR_MAXENERGYTARGET
 						    / (STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * 20.0 * (MELTDOWN_TEMPERATURE_ACTUAL / temperature))),
 					    (int) temperature);
+				}
+				if (world.rand.nextFloat() < temperature
+					/ (MELTDOWN_TEMPERATURE_CALC * 20.0 * STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * STEAM_GEN_HEIGHT)) {
+				    world.setBlockState(offpos, Blocks.AIR.getDefaultState());
+				    continue;
 				}
 				if (turbine == null || world.loadedTileEntityList.contains(turbine)) {
 				    TileEntity above = world.getTileEntity(new BlockPos(offsetX, offsetY + 1, offsetZ));
