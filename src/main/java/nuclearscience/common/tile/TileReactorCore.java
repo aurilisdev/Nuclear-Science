@@ -166,7 +166,7 @@ public class TileReactorCore extends GenericTileTicking {
 			BlockPos ppos = new BlockPos(pos.getX() + i, pos.getY() + j, pos.getZ() + k);
 			BlockState state = world.getBlockState(ppos);
 			if (state.getBlock().getExplosionResistance(state, world, ppos, actual) < radius) {
-			    float distance = (float) Math.sqrt(i * i + j * j + k * k);
+			    double distance = Math.sqrt(i * i + j * j + k * k);
 			    if (distance < radius && world.rand.nextFloat() < 1 - 0.0001 * distance * distance * distance
 				    && world.rand.nextFloat() < 0.9) {
 				world.getBlockState(ppos).onBlockExploded(world, ppos, actual);

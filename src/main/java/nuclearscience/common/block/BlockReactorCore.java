@@ -47,7 +47,7 @@ public class BlockReactorCore extends BlockGenericMachine implements IWaterLogga
     @Deprecated
     public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos,
 	    BlockPos facingPos) {
-	if (stateIn.get(BlockStateProperties.WATERLOGGED)) {
+	if (stateIn.get(BlockStateProperties.WATERLOGGED) == Boolean.TRUE) {
 	    worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
 	}
 	return super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
@@ -56,7 +56,7 @@ public class BlockReactorCore extends BlockGenericMachine implements IWaterLogga
     @Override
     @Deprecated
     public FluidState getFluidState(BlockState state) {
-	return state.get(BlockStateProperties.WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
+	return state.get(BlockStateProperties.WATERLOGGED) == Boolean.TRUE ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
     }
 
     @Override
@@ -65,11 +65,13 @@ public class BlockReactorCore extends BlockGenericMachine implements IWaterLogga
     }
 
     @Override
+    @Deprecated
     public BlockRenderType getRenderType(BlockState state) {
 	return BlockRenderType.MODEL;
     }
 
     @Override
+    @Deprecated
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
 	return VoxelShapes.create(0.5 / 16, 0, 0.5 / 16, 15.5 / 16.0, 15.0 / 16.0, 15.5 / 16.0);
     }

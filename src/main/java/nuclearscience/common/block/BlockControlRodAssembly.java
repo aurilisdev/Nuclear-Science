@@ -39,6 +39,7 @@ public class BlockControlRodAssembly extends BlockGenericMachine implements IWat
     }
 
     @Override
+    @Deprecated
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn,
 	    BlockRayTraceResult hit) {
 	TileEntity tile = worldIn.getTileEntity(pos);
@@ -70,7 +71,7 @@ public class BlockControlRodAssembly extends BlockGenericMachine implements IWat
     @Deprecated
     public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos,
 	    BlockPos facingPos) {
-	if (stateIn.get(BlockStateProperties.WATERLOGGED)) {
+	if (stateIn.get(BlockStateProperties.WATERLOGGED) == Boolean.TRUE) {
 	    worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
 	}
 	return super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
@@ -79,6 +80,6 @@ public class BlockControlRodAssembly extends BlockGenericMachine implements IWat
     @Override
     @Deprecated
     public FluidState getFluidState(BlockState state) {
-	return state.get(BlockStateProperties.WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
+	return state.get(BlockStateProperties.WATERLOGGED) == Boolean.TRUE ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
     }
 }
