@@ -105,7 +105,7 @@ public class TileReactorCore extends GenericTileTicking {
 		}
 	    }
 	    temperature += (MELTDOWN_TEMPERATURE_CALC * insertDecimal * (0.25 * (fuelCount / 2.0) + world.rand.nextDouble() / 5.0) - temperature)
-		    / (200 + 20 * (hasWater ? 5 : 1));
+		    / (200 + 20 * (hasWater ? 4.0 : 1));
 	    if (temperature > MELTDOWN_TEMPERATURE_ACTUAL + world.rand.nextInt(50) && fuelCount > 0) {
 		ticksOverheating++;
 		// Implement some alarm sounds at this time
@@ -116,7 +116,7 @@ public class TileReactorCore extends GenericTileTicking {
 	    if (world.getWorldInfo().getGameTime() % 10 == 0) {
 		Location source = new Location(pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f);
 		double totstrength = temperature * 10;
-		double range = Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 1.25;
+		double range = Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 2;
 		AxisAlignedBB bb = AxisAlignedBB.withSizeAtOrigin(range, range, range);
 		bb = bb.offset(new Vector3d(source.x(), source.y(), source.z()));
 		List<LivingEntity> list = world.getEntitiesWithinAABB(LivingEntity.class, bb);
@@ -188,8 +188,8 @@ public class TileReactorCore extends GenericTileTicking {
 		for (int k = 0; k < STEAM_GEN_DIAMETER; k++) {
 		    boolean isReactor2d = i - STEAM_GEN_DIAMETER / 2 == 0 && k - STEAM_GEN_DIAMETER / 2 == 0;
 		    if (isReactor2d && j == 0) {
-			if (world.rand.nextFloat() < temperature
-				/ (MELTDOWN_TEMPERATURE_CALC * 20.0 * STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * STEAM_GEN_HEIGHT / 2.0)) {
+			if (!world.isRemote && world.rand.nextFloat() < temperature
+				/ (MELTDOWN_TEMPERATURE_CALC * 20.0 * STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * STEAM_GEN_HEIGHT)) {
 			    world.setBlockState(pos, getBlockState().with(BlockStateProperties.WATERLOGGED, false));
 			}
 			continue;
