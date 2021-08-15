@@ -56,7 +56,7 @@ public class TileNuclearBoiler extends GenericTileTicking {
 		.valid((slot, stack) -> slot < 3 || stack.getItem() instanceof ItemProcessorUpgrade));
 	addComponent(new ComponentProcessor(this).upgradeSlots(3, 4, 5)
 		.canProcess(component -> component.outputToPipe(component, SUPPORTED_OUTPUT_FLUIDS)
-			.consumeBucket(MAX_TANK_CAPACITY, SUPPORTED_INPUT_FLUIDS, 1).dispenseBucket(MAX_TANK_CAPACITY, 2)
+			.consumeBucket(1).dispenseBucket(2)
 			.canProcessFluidItem2FluidRecipe(component, FluidItem2FluidRecipe.class, NuclearScienceRecipeInit.NUCLEAR_BOILER_TYPE))
 		.process(component -> component.processFluidItem2FluidRecipe(component, FluidItem2FluidRecipe.class))
 		.usage(Constants.CHEMICALBOILER_USAGE_PER_TICK).type(ComponentProcessorType.ObjectToObject)
