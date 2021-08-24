@@ -59,9 +59,9 @@ public class ScreenGasCentrifuge extends GenericCustomScreenUpgradeable<Containe
 	    ComponentFluidHandler handler = centrifuge.getComponent(ComponentType.FluidHandler);
 	    blit(stack, guiLeft + 9,
 		    (int) (guiTop + 68
-			    - handler.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride).getAmount()
+			    - handler.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride, false).getAmount()
 				    / (float) TileGasCentrifuge.TANKCAPACITY * 50),
-		    214, 31, 16, (int) (handler.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride).getAmount()
+		    214, 31, 16, (int) (handler.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride, false).getAmount()
 			    / (float) TileGasCentrifuge.TANKCAPACITY * 50));
 	    blit(stack, guiLeft + 72, (int) (guiTop + 39 - centrifuge.stored235 / (float) TileGasCentrifuge.TANKCAPACITY * 47), 214, 31, 16,
 		    (int) (centrifuge.stored235 / (float) TileGasCentrifuge.TANKCAPACITY * 47));
