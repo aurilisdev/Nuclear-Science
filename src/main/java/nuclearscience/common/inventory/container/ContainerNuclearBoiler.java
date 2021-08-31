@@ -1,5 +1,6 @@
 package nuclearscience.common.inventory.container;
 
+import electrodynamics.common.item.gear.tools.ItemCanister;
 import electrodynamics.common.item.subtype.SubtypeProcessorUpgrade;
 import electrodynamics.prefab.inventory.container.GenericContainer;
 import electrodynamics.prefab.inventory.container.slot.GenericSlot;
@@ -8,7 +9,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.item.Items;
+import net.minecraft.item.BucketItem;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.IntArray;
 import nuclearscience.DeferredRegisters;
@@ -31,8 +32,8 @@ public class ContainerNuclearBoiler extends GenericContainer<TileNuclearBoiler> 
     @Override
     public void addInventorySlots(IInventory inv, PlayerInventory playerinv) {
 	addSlot(new GenericSlot(inv, nextIndex(), 74, 31));
-	addSlot(new SlotRestricted(inv, nextIndex(), 74, 51, TileNuclearBoiler.SUPPORTED_INPUT_FLUIDS));
-	addSlot(new SlotRestricted(inv, nextIndex(), 108, 51, Items.APPLE)); //TODO: FILLER
+	addSlot(new SlotRestricted(inv, nextIndex(), 74, 51, false, ItemCanister.class, BucketItem.class));
+	addSlot(new SlotRestricted(inv, nextIndex(), 108, 51, false, ItemCanister.class, BucketItem.class));
 	addSlot(new SlotRestricted(inv, nextIndex(), 150, 14,
 		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.basicspeed),
 		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.advancedspeed)));

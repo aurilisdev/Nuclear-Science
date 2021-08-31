@@ -13,8 +13,6 @@ import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
 import electrodynamics.prefab.tile.components.type.ComponentProcessorType;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.Direction;
 import nuclearscience.DeferredRegisters;
@@ -26,12 +24,6 @@ public class TileChemicalExtractor extends GenericTileTicking {
 
     public static final int MAX_TANK_CAPACITY = 5000;
 
-    public static Fluid[] SUPPORTED_INPUT_FLUIDS = new Fluid[] {
-
-	    Fluids.WATER
-
-    };
-
     public TileChemicalExtractor() {
 	super(DeferredRegisters.TILE_CHEMICALEXTRACTOR.get());
 	addComponent(new ComponentTickable().tickClient(this::tickClient));
@@ -39,12 +31,13 @@ public class TileChemicalExtractor extends GenericTileTicking {
 	addComponent(new ComponentPacketHandler());
 	addComponent(new ComponentElectrodynamic(this).enableUniversalInput().voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 2)
 		.maxJoules(Constants.CHEMICALEXTRACTOR_USAGE_PER_TICK * 10));
-	addComponent(new ComponentFluidHandler(this).addMultipleFluidTanks(SUPPORTED_INPUT_FLUIDS, MAX_TANK_CAPACITY, true).universalInput());
+	addComponent(new ComponentFluidHandler(this).universalInput()
+		.setAddFluidsValues(FluidItem2ItemRecipe.class, NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE, MAX_TANK_CAPACITY, true, false));
 	addComponent(new ComponentInventory(this).size(6).faceSlots(Direction.UP, 0).faceSlots(Direction.DOWN, 1).slotFaces(2, Direction.SOUTH,
 		Direction.NORTH, Direction.EAST, Direction.WEST));
 	addComponent(new ComponentProcessor(this).upgradeSlots(3, 4, 5).type(ComponentProcessorType.ObjectToObject)
 		.usage(Constants.CHEMICALEXTRACTOR_USAGE_PER_TICK).requiredTicks(Constants.CHEMICALEXTRACTOR_REQUIRED_TICKS)
-		.canProcess(component -> component.consumeBucket(MAX_TANK_CAPACITY, SUPPORTED_INPUT_FLUIDS, 2)
+		.canProcess(component -> component.consumeBucket(2)
 			.canProcessFluidItem2ItemRecipe(component, FluidItem2ItemRecipe.class, NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE))
 		.process(component -> component.processFluidItem2ItemRecipe(component, FluidItem2ItemRecipe.class)));
 	addComponent(new ComponentContainerProvider("container.chemicalextractor")

@@ -1,4 +1,4 @@
-package nuclearscience.common.tile;
+ package nuclearscience.common.tile;
 
 import electrodynamics.api.electricity.CapabilityElectrodynamic;
 import electrodynamics.api.sound.SoundAPI;
@@ -35,8 +35,8 @@ public class TileGasCentrifuge extends GenericTileTicking {
 	addComponent(new ComponentTickable().tickClient(this::tickClient));
 	addComponent(new ComponentDirection());
 	addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket));
-	addComponent(
-		new ComponentFluidHandler(this).fluidTank(DeferredRegisters.fluidUraniumHexafluoride, TANKCAPACITY).relativeInput(Direction.NORTH));
+	addComponent(new ComponentFluidHandler(this).addFluidTank(DeferredRegisters.fluidUraniumHexafluoride, TANKCAPACITY, false)
+		.relativeInput(Direction.NORTH));
 	addComponent(new ComponentElectrodynamic(this).voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 2).input(Direction.DOWN)
 		.maxJoules(Constants.GASCENTRIFUGE_USAGE_PER_TICK * 10));
 	addComponent(new ComponentInventory(this).size(5).faceSlots(Direction.DOWN, 0, 1).relativeFaceSlots(Direction.WEST, 0, 1)
@@ -52,7 +52,7 @@ public class TileGasCentrifuge extends GenericTileTicking {
 	ComponentInventory inv = getComponent(ComponentType.Inventory);
 	ComponentFluidHandler tank = getComponent(ComponentType.FluidHandler);
 	boolean val = electro.getJoulesStored() >= processor.getUsage()
-		&& tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride).getAmount() >= REQUIRED / 60.0
+		&& tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride, false).getAmount() >= REQUIRED / 60.0
 		&& inv.getStackInSlot(0).getCount() < inv.getStackInSlot(0).getMaxStackSize()
 		&& inv.getStackInSlot(1).getCount() < inv.getStackInSlot(1).getMaxStackSize();
 	if (!val && spinSpeed > 0) {
@@ -68,7 +68,7 @@ public class TileGasCentrifuge extends GenericTileTicking {
 	spinSpeed = (int) processor.operatingSpeed;
 	this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();
 	int processed = (int) (REQUIRED / 60.0);
-	tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride).shrink(processed);
+	tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride, false).shrink(processed);
 	stored235 += processed * 0.172;
 	stored238 += processed * (1 - 0.172);
 	if (stored235 > REQUIRED) {

@@ -14,13 +14,14 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraftforge.fluids.FluidAttributes;
+import nuclearscience.DeferredRegisters;
 import nuclearscience.References;
 
 public class FluidUraniumHexafluoride extends Fluid {
 
     @Override
     public Item getFilledBucket() {
-	return null;
+    	return DeferredRegisters.ITEM_CANISTERLEAD.get();
     }
 
     @Override
