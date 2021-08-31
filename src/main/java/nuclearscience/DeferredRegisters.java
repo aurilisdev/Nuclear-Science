@@ -185,7 +185,7 @@ public class DeferredRegisters {
     public static final RegistryObject<Item> ITEM_FREQUENCYCARD = ITEMS.register("frequencycard",
 	    supplier(new ItemFrequencyCard(new Item.Properties().group(References.NUCLEARTAB))));
     public static final RegistryObject<Item> ITEM_CANISTERLEAD = ITEMS.register("canisterlead",
-    	supplier(new ItemCanisterLead(new Item.Properties().maxStackSize(1).group(References.NUCLEARTAB))));
+	    supplier(new ItemCanisterLead(new Item.Properties().maxStackSize(1).group(References.NUCLEARTAB))));
 
     public static final RegistryObject<TileEntityType<TileGasCentrifuge>> TILE_GASCENTRIFUGE = TILES.register("gascentrifuge",
 	    () -> new TileEntityType<>(TileGasCentrifuge::new, Sets.newHashSet(blockGasCentrifuge), null));

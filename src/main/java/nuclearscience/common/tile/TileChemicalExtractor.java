@@ -31,14 +31,14 @@ public class TileChemicalExtractor extends GenericTileTicking {
 	addComponent(new ComponentPacketHandler());
 	addComponent(new ComponentElectrodynamic(this).enableUniversalInput().voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 2)
 		.maxJoules(Constants.CHEMICALEXTRACTOR_USAGE_PER_TICK * 10));
-	addComponent(new ComponentFluidHandler(this).universalInput()
-		.setAddFluidsValues(FluidItem2ItemRecipe.class, NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE, MAX_TANK_CAPACITY, true, false));
+	addComponent(new ComponentFluidHandler(this).universalInput().setAddFluidsValues(FluidItem2ItemRecipe.class,
+		NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE, MAX_TANK_CAPACITY, true, false));
 	addComponent(new ComponentInventory(this).size(6).faceSlots(Direction.UP, 0).faceSlots(Direction.DOWN, 1).slotFaces(2, Direction.SOUTH,
 		Direction.NORTH, Direction.EAST, Direction.WEST));
 	addComponent(new ComponentProcessor(this).upgradeSlots(3, 4, 5).type(ComponentProcessorType.ObjectToObject)
 		.usage(Constants.CHEMICALEXTRACTOR_USAGE_PER_TICK).requiredTicks(Constants.CHEMICALEXTRACTOR_REQUIRED_TICKS)
-		.canProcess(component -> component.consumeBucket(2)
-			.canProcessFluidItem2ItemRecipe(component, FluidItem2ItemRecipe.class, NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE))
+		.canProcess(component -> component.consumeBucket(2).canProcessFluidItem2ItemRecipe(component, FluidItem2ItemRecipe.class,
+			NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE))
 		.process(component -> component.processFluidItem2ItemRecipe(component, FluidItem2ItemRecipe.class)));
 	addComponent(new ComponentContainerProvider("container.chemicalextractor")
 		.createMenu((id, player) -> new ContainerChemicalExtractor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));

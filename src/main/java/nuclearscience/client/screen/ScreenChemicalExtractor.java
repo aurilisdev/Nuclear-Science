@@ -66,7 +66,7 @@ public class ScreenChemicalExtractor extends GenericScreen<ContainerChemicalExtr
 		for (Fluid fluid : handler.getValidInputFluids()) {
 		    FluidTank tank = handler.getTankFromFluid(fluid, true);
 		    if (tank.getFluidAmount() > 0) {
-		    	return tank;
+			return tank;
 		    }
 		}
 	    }

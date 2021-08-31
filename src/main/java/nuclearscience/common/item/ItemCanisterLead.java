@@ -11,30 +11,30 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fml.RegistryObject;
 import nuclearscience.DeferredRegisters;
 
-public class ItemCanisterLead extends ItemCanister{
+public class ItemCanisterLead extends ItemCanister {
 
-	public ItemCanisterLead(Properties itemProperty) {
-		super(itemProperty);
+    public ItemCanisterLead(Properties itemProperty) {
+	super(itemProperty);
+    }
+
+    @Override
+    public ItemStack getContainerItem(ItemStack itemStack) {
+	boolean isEmpty = itemStack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).map(m -> {
+	    return m.getFluidInTank(0).getFluid().isEquivalentTo(Fluids.EMPTY);
+	}).orElse(true);
+	if (isEmpty) {
+	    return new ItemStack(Items.AIR);
 	}
-	
-	@Override
-	public ItemStack getContainerItem(ItemStack itemStack) {
-		boolean isEmpty = itemStack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).map(m ->{
-    		return m.getFluidInTank(0).getFluid().isEquivalentTo(Fluids.EMPTY);
-    	}).orElse(true);
-    	if(isEmpty) {
-    		return new ItemStack(Items.AIR);
-    	}
-		return new ItemStack(DeferredRegisters.ITEM_CANISTERLEAD.get());
+	return new ItemStack(DeferredRegisters.ITEM_CANISTERLEAD.get());
+    }
+
+    @Override
+    public ArrayList<Fluid> getWhitelistedFluids() {
+	ArrayList<Fluid> whitelist = new ArrayList<>();
+	for (RegistryObject<Fluid> fluid : DeferredRegisters.FLUIDS.getEntries()) {
+	    whitelist.add(fluid.get());
 	}
-	
-	@Override
-	public ArrayList<Fluid> getWhitelistedFluids(){
-		ArrayList<Fluid> whitelist = new ArrayList<>();
-		for(RegistryObject<Fluid> fluid : DeferredRegisters.FLUIDS.getEntries()) {
-			whitelist.add(fluid.get());
-		}
-		return whitelist;
-	}
+	return whitelist;
+    }
 
 }

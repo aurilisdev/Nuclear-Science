@@ -1,4 +1,4 @@
- package nuclearscience.common.tile;
+package nuclearscience.common.tile;
 
 import electrodynamics.api.electricity.CapabilityElectrodynamic;
 import electrodynamics.api.sound.SoundAPI;

@@ -21,7 +21,7 @@ public class FluidUraniumHexafluoride extends Fluid {
 
     @Override
     public Item getFilledBucket() {
-    	return DeferredRegisters.ITEM_CANISTERLEAD.get();
+	return DeferredRegisters.ITEM_CANISTERLEAD.get();
     }
 
     @Override
