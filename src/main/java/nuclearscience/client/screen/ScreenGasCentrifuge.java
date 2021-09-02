@@ -7,8 +7,8 @@ import electrodynamics.api.electricity.formatting.ElectricUnit;
 import electrodynamics.prefab.screen.GenericCustomScreenUpgradeable;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
-import electrodynamics.prefab.tile.components.type.ComponentFluidHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
+import electrodynamics.prefab.tile.components.utils.AbstractFluidHandler;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -56,7 +56,7 @@ public class ScreenGasCentrifuge extends GenericCustomScreenUpgradeable<Containe
 	super.drawGuiContainerBackgroundLayer(stack, partialTicks, mouseX, mouseY);
 	TileGasCentrifuge centrifuge = container.getHostFromIntArray();
 	if (centrifuge != null) {
-	    ComponentFluidHandler handler = centrifuge.getComponent(ComponentType.FluidHandler);
+	    AbstractFluidHandler<?> handler = centrifuge.getComponent(ComponentType.FluidHandler);
 	    blit(stack, guiLeft + 9,
 		    (int) (guiTop + 68
 			    - handler.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride, false).getAmount()
