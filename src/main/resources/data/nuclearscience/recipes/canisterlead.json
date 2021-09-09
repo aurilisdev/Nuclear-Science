@@ -10,11 +10,7 @@
            "tag": "forge:plates/lead"
         },
         "C": {
-            "item": "electrodynamics:canisterreinforced",
-            "nbt":{
-            	"fluid":"minecraft:water",
-            	"amount":"3000"
-            }
+            "item": "electrodynamics:canisterreinforced"
         },
         "V": {
             "tag": "forge:plates/vanadiumsteel"

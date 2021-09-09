@@ -31,7 +31,7 @@ public class TileChemicalExtractor extends GenericTileTicking {
 	addComponent(new ComponentPacketHandler());
 	addComponent(new ComponentElectrodynamic(this).enableUniversalInput().voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 2)
 		.maxJoules(Constants.CHEMICALEXTRACTOR_USAGE_PER_TICK * 10));
-	addComponent(new ComponentFluidHandler(this).universalInput().setAddFluidsValues(FluidItem2ItemRecipe.class,
+	addComponent(((ComponentFluidHandler) new ComponentFluidHandler(this).universalInput()).setAddFluidsValues(FluidItem2ItemRecipe.class,
 		NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE, MAX_TANK_CAPACITY, true, false));
 	addComponent(new ComponentInventory(this).size(6).faceSlots(Direction.UP, 0).faceSlots(Direction.DOWN, 1).slotFaces(2, Direction.SOUTH,
 		Direction.NORTH, Direction.EAST, Direction.WEST));
