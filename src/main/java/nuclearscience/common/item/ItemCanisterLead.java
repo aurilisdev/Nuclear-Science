@@ -13,8 +13,8 @@ public class ItemCanisterLead extends ItemCanister {
 	super(itemProperty);
     }
 
-    //TODO handle container item crafting
-    
+    // TODO handle container item crafting
+
     @Override
     public ArrayList<Fluid> getWhitelistedFluids() {
 	ArrayList<Fluid> whitelist = new ArrayList<>();

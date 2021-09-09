@@ -8,7 +8,7 @@ import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
 import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
-import electrodynamics.prefab.tile.components.type.ComponentFluidHandler;
+import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
 import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
@@ -35,7 +35,7 @@ public class TileGasCentrifuge extends GenericTileTicking {
 	addComponent(new ComponentTickable().tickClient(this::tickClient));
 	addComponent(new ComponentDirection());
 	addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket));
-	addComponent(new ComponentFluidHandler(this).addFluidTank(DeferredRegisters.fluidUraniumHexafluoride, TANKCAPACITY, false)
+	addComponent(new ComponentFluidHandlerMulti(this).addFluidTank(DeferredRegisters.fluidUraniumHexafluoride, TANKCAPACITY, false)
 		.relativeInput(Direction.NORTH));
 	addComponent(new ComponentElectrodynamic(this).voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 2).input(Direction.DOWN)
 		.maxJoules(Constants.GASCENTRIFUGE_USAGE_PER_TICK * 10));
@@ -50,7 +50,7 @@ public class TileGasCentrifuge extends GenericTileTicking {
     public boolean canProcess(ComponentProcessor processor) {
 	ComponentElectrodynamic electro = getComponent(ComponentType.Electrodynamic);
 	ComponentInventory inv = getComponent(ComponentType.Inventory);
-	ComponentFluidHandler tank = getComponent(ComponentType.FluidHandler);
+	ComponentFluidHandlerMulti tank = getComponent(ComponentType.FluidHandler);
 	boolean val = electro.getJoulesStored() >= processor.getUsage()
 		&& tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride, false).getAmount() >= REQUIRED / 60.0
 		&& inv.getStackInSlot(0).getCount() < inv.getStackInSlot(0).getMaxStackSize()
@@ -64,7 +64,7 @@ public class TileGasCentrifuge extends GenericTileTicking {
 
     public void process(ComponentProcessor processor) {
 	ComponentInventory inv = getComponent(ComponentType.Inventory);
-	ComponentFluidHandler tank = getComponent(ComponentType.FluidHandler);
+	ComponentFluidHandlerMulti tank = getComponent(ComponentType.FluidHandler);
 	spinSpeed = (int) processor.operatingSpeed;
 	this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();
 	int processed = (int) (REQUIRED / 60.0);

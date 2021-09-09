@@ -4,7 +4,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 
 import electrodynamics.common.block.BlockGenericMachine;
 import electrodynamics.prefab.tile.components.ComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentFluidHandler;
+import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
 import electrodynamics.prefab.utilities.UtilitiesRendering;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -32,7 +32,7 @@ public class RenderChemicalExtractor extends TileEntityRenderer<TileChemicalExtr
 	matrixStackIn.translate(face.getXOffset(), face.getYOffset(), face.getZOffset());
 	UtilitiesRendering.prepareRotationalTileModel(tileEntityIn, matrixStackIn);
 	matrixStackIn.translate(-0.5, 0, 0.5);
-	float prog = tileEntityIn.<ComponentFluidHandler>getComponent(ComponentType.FluidHandler).getStackFromFluid(Fluids.WATER, true).getAmount()
+	float prog = tileEntityIn.<ComponentFluidHandlerMulti>getComponent(ComponentType.FluidHandler).getStackFromFluid(Fluids.WATER, true).getAmount()
 		/ (float) TileChemicalExtractor.MAX_TANK_CAPACITY;
 	if (prog > 0) {
 	    matrixStackIn.scale(1, prog / 16.0f * 5.8f * 2, 1);

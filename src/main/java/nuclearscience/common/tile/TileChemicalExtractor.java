@@ -7,7 +7,7 @@ import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
 import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
-import electrodynamics.prefab.tile.components.type.ComponentFluidHandler;
+import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
 import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
@@ -31,8 +31,8 @@ public class TileChemicalExtractor extends GenericTileTicking {
 	addComponent(new ComponentPacketHandler());
 	addComponent(new ComponentElectrodynamic(this).enableUniversalInput().voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 2)
 		.maxJoules(Constants.CHEMICALEXTRACTOR_USAGE_PER_TICK * 10));
-	addComponent(((ComponentFluidHandler) new ComponentFluidHandler(this).universalInput()).setAddFluidsValues(FluidItem2ItemRecipe.class,
-		NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE, MAX_TANK_CAPACITY, true, false));
+	addComponent(new ComponentFluidHandlerMulti(this).setAddFluidsValues(FluidItem2ItemRecipe.class,
+		NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE, MAX_TANK_CAPACITY, true, false).universalInput());
 	addComponent(new ComponentInventory(this).size(6).faceSlots(Direction.UP, 0).faceSlots(Direction.DOWN, 1).slotFaces(2, Direction.SOUTH,
 		Direction.NORTH, Direction.EAST, Direction.WEST));
 	addComponent(new ComponentProcessor(this).upgradeSlots(3, 4, 5).type(ComponentProcessorType.ObjectToObject)

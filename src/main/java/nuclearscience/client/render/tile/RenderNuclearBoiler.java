@@ -4,7 +4,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 
 import electrodynamics.common.block.BlockGenericMachine;
 import electrodynamics.prefab.tile.components.ComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentFluidHandler;
+import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
 import electrodynamics.prefab.utilities.UtilitiesRendering;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -34,8 +34,8 @@ public class RenderNuclearBoiler extends TileEntityRenderer<TileNuclearBoiler> {
 	matrixStackIn.translate(face.getXOffset(), face.getYOffset(), face.getZOffset());
 	UtilitiesRendering.prepareRotationalTileModel(tileEntityIn, matrixStackIn);
 	matrixStackIn.translate(-0.5, 0, 0.5);
-	float prog = tileEntityIn.<ComponentFluidHandler>getComponent(ComponentType.FluidHandler).getStackFromFluid(Fluids.WATER, true).getAmount()
-		/ (float) TileNuclearBoiler.MAX_TANK_CAPACITY;
+	float prog = tileEntityIn.<ComponentFluidHandlerMulti>getComponent(ComponentType.FluidHandler).getStackFromFluid(Fluids.WATER, true)
+		.getAmount() / (float) TileNuclearBoiler.MAX_TANK_CAPACITY;
 	if (prog > 0) {
 	    matrixStackIn.translate(0, 4.5 / 16.0, 2.0 / 16.0);
 	    matrixStackIn.scale(1, prog / 16.0f * 12f, 1);
@@ -50,7 +50,7 @@ public class RenderNuclearBoiler extends TileEntityRenderer<TileNuclearBoiler> {
 	matrixStackIn.translate(face.getXOffset(), face.getYOffset(), face.getZOffset());
 	UtilitiesRendering.prepareRotationalTileModel(tileEntityIn, matrixStackIn);
 	matrixStackIn.translate(-0.5, 0, 0.5);
-	prog = tileEntityIn.<ComponentFluidHandler>getComponent(ComponentType.FluidHandler)
+	prog = tileEntityIn.<ComponentFluidHandlerMulti>getComponent(ComponentType.FluidHandler)
 		.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride, false).getAmount() / (float) TileNuclearBoiler.MAX_TANK_CAPACITY;
 	if (prog > 0) {
 	    matrixStackIn.translate(0, 4.5 / 16.0, -2.0 / 16.0);

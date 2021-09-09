@@ -9,7 +9,7 @@ import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
 import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
-import electrodynamics.prefab.tile.components.type.ComponentFluidHandler;
+import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
 import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
@@ -36,8 +36,8 @@ public class TileNuclearBoiler extends GenericTileTicking {
 	addComponent(new ComponentPacketHandler());
 	addComponent(new ComponentElectrodynamic(this).input(Direction.DOWN).voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 2)
 		.maxJoules(Constants.CHEMICALBOILER_USAGE_PER_TICK * 10));
-	addComponent(((ComponentFluidHandler) new ComponentFluidHandler(this).relativeInput(Direction.EAST)).setAddFluidsValues(FluidItem2FluidRecipe.class,
-		NuclearScienceRecipeInit.NUCLEAR_BOILER_TYPE, MAX_TANK_CAPACITY, true, true));
+	addComponent(new ComponentFluidHandlerMulti(this).setAddFluidsValues(FluidItem2FluidRecipe.class,
+		NuclearScienceRecipeInit.NUCLEAR_BOILER_TYPE, MAX_TANK_CAPACITY, true, true).relativeInput(Direction.EAST));
 	addComponent(new ComponentInventory(this).size(6).relativeSlotFaces(0, Direction.EAST, Direction.UP).relativeSlotFaces(1, Direction.DOWN)
 		.valid((slot, stack) -> slot < 3 || stack.getItem() instanceof ItemProcessorUpgrade));
 	addComponent(new ComponentProcessor(this).upgradeSlots(3, 4, 5)
