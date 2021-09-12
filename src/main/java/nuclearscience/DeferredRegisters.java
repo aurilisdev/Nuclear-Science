@@ -27,23 +27,28 @@ import nuclearscience.common.block.BlockControlRodAssembly;
 import nuclearscience.common.block.BlockElectromagnet;
 import nuclearscience.common.block.BlockElectromagneticBooster;
 import nuclearscience.common.block.BlockElectromagneticSwitch;
+import nuclearscience.common.block.BlockFuelReprocessor;
 import nuclearscience.common.block.BlockFusionReactorCore;
 import nuclearscience.common.block.BlockGasCentrifuge;
 import nuclearscience.common.block.BlockNuclearBoiler;
 import nuclearscience.common.block.BlockParticleInjector;
 import nuclearscience.common.block.BlockPlasma;
 import nuclearscience.common.block.BlockQuantumCapacitor;
+import nuclearscience.common.block.BlockRadioactiveProcessor;
 import nuclearscience.common.block.BlockRadioisotopeGenerator;
 import nuclearscience.common.block.BlockReactorCore;
 import nuclearscience.common.block.BlockTeleporter;
 import nuclearscience.common.block.BlockTurbine;
 import nuclearscience.common.entity.EntityParticle;
+import nuclearscience.common.fluid.FluidAmmonia;
+import nuclearscience.common.fluid.FluidIronSulfamate;
 import nuclearscience.common.fluid.FluidUraniumHexafluoride;
 import nuclearscience.common.inventory.container.ContainerChemicalExtractor;
 import nuclearscience.common.inventory.container.ContainerGasCentrifuge;
 import nuclearscience.common.inventory.container.ContainerNuclearBoiler;
 import nuclearscience.common.inventory.container.ContainerParticleInjector;
 import nuclearscience.common.inventory.container.ContainerQuantumCapacitor;
+import nuclearscience.common.inventory.container.ContainerRadioactiveProcessor;
 import nuclearscience.common.inventory.container.ContainerRadioisotopeGenerator;
 import nuclearscience.common.inventory.container.ContainerReactorCore;
 import nuclearscience.common.item.ItemAntidote;
@@ -55,12 +60,14 @@ import nuclearscience.common.item.ItemRadioactive;
 import nuclearscience.common.tile.TileChemicalExtractor;
 import nuclearscience.common.tile.TileControlRodAssembly;
 import nuclearscience.common.tile.TileElectromagneticSwitch;
+import nuclearscience.common.tile.TileFuelReprocessor;
 import nuclearscience.common.tile.TileFusionReactorCore;
 import nuclearscience.common.tile.TileGasCentrifuge;
 import nuclearscience.common.tile.TileNuclearBoiler;
 import nuclearscience.common.tile.TileParticleInjector;
 import nuclearscience.common.tile.TilePlasma;
 import nuclearscience.common.tile.TileQuantumCapacitor;
+import nuclearscience.common.tile.TileRadioactiveProcessor;
 import nuclearscience.common.tile.TileRadioisotopeGenerator;
 import nuclearscience.common.tile.TileReactorCore;
 import nuclearscience.common.tile.TileTeleporter;
@@ -73,7 +80,11 @@ public class DeferredRegisters {
     public static final DeferredRegister<ContainerType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, References.ID);
     public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, References.ID);
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, References.ID);
+    
     public static FluidUraniumHexafluoride fluidUraniumHexafluoride;
+    public static FluidIronSulfamate fluidIronSulfamate;
+    public static FluidAmmonia fluidAmmonia;
+    
     public static BlockGasCentrifuge blockGasCentrifuge;
     public static BlockNuclearBoiler blockNuclearBoiler;
     public static BlockChemicalExtractor blockChemicalExtractor;
@@ -90,66 +101,106 @@ public class DeferredRegisters {
     public static BlockQuantumCapacitor blockQuantumCapacitor;
     public static BlockTeleporter blockTeleporter;
     public static BlockControlRodAssembly blockControlRodAssembly;
+    public static BlockFuelReprocessor blockFuelReprocessor;
+    public static BlockRadioactiveProcessor blockRadioactiveProcessor;
+    
+    
+    
     public static Block blocklead;
+   
+    
     static {
-	BLOCKS.register("gascentrifuge", supplier(blockGasCentrifuge = new BlockGasCentrifuge()));
-	BLOCKS.register("nuclearboiler", supplier(blockNuclearBoiler = new BlockNuclearBoiler()));
-	BLOCKS.register("chemicalextractor", supplier(blockChemicalExtractor = new BlockChemicalExtractor()));
-	BLOCKS.register("radioisotopegenerator", supplier(blockRadioisotopeGenerator = new BlockRadioisotopeGenerator()));
-	BLOCKS.register("turbine", supplier(blockTurbine = new BlockTurbine()));
-	BLOCKS.register("reactorcore", supplier(blockReactorCore = new BlockReactorCore()));
-	BLOCKS.register("electromagnet", supplier(blockElectromagnet = new BlockElectromagnet(false)));
-	BLOCKS.register("electromagneticglass", supplier(blockElectromagneticGlass = new BlockElectromagnet(true)));
-	BLOCKS.register("electromagneticbooster", supplier(blockElectromagneticBooster = new BlockElectromagneticBooster()));
-	BLOCKS.register("electromagneticswitch", supplier(blockElectromagneticSwitch = new BlockElectromagneticSwitch()));
-	BLOCKS.register("fusionreactorcore", supplier(blockFusionReactorCore = new BlockFusionReactorCore()));
-	BLOCKS.register("plasma", supplier(blockPlasma = new BlockPlasma()));
-	BLOCKS.register("particleinjector", supplier(blockParticleInjector = new BlockParticleInjector()));
-	BLOCKS.register("quantumcapacitor", supplier(blockQuantumCapacitor = new BlockQuantumCapacitor()));
-	BLOCKS.register("teleporter", supplier(blockTeleporter = new BlockTeleporter()));
-	BLOCKS.register("controlrodassembly", supplier(blockControlRodAssembly = new BlockControlRodAssembly()));
-	BLOCKS.register("blocklead", supplier(blocklead = new Block(Properties.create(Material.IRON, MaterialColor.BLACK)
-		.hardnessAndResistance(5.0f, 3.0f).sound(SoundType.METAL).setRequiresTool().harvestTool(ToolType.PICKAXE).harvestLevel(1))));
-	ITEMS.register("gascentrifuge", supplier(new BlockItemDescriptable(blockGasCentrifuge, new Item.Properties().group(References.NUCLEARTAB))));
-	ITEMS.register("nuclearboiler", supplier(new BlockItemDescriptable(blockNuclearBoiler, new Item.Properties().group(References.NUCLEARTAB))));
-	ITEMS.register("chemicalextractor",
-		supplier(new BlockItemDescriptable(blockChemicalExtractor, new Item.Properties().group(References.NUCLEARTAB))));
-	ITEMS.register("radioisotopegenerator",
-		supplier(new BlockItemDescriptable(blockRadioisotopeGenerator, new Item.Properties().group(References.NUCLEARTAB))));
-	ITEMS.register("turbine", supplier(new BlockItemDescriptable(blockTurbine, new Item.Properties().group(References.NUCLEARTAB))));
-	ITEMS.register("reactorcore", supplier(new BlockItemDescriptable(blockReactorCore, new Item.Properties().group(References.NUCLEARTAB))));
-	ITEMS.register("blocklead", supplier(new BlockItemDescriptable(blocklead, new BlockItem.Properties().group(References.NUCLEARTAB))));
-	ITEMS.register("electromagnet", supplier(new BlockItemDescriptable(blockElectromagnet, new Item.Properties().group(References.NUCLEARTAB))));
-	ITEMS.register("electromagneticglass",
-		supplier(new BlockItemDescriptable(blockElectromagneticGlass, new Item.Properties().group(References.NUCLEARTAB))));
-	ITEMS.register("electromagneticbooster",
-		supplier(new BlockItemDescriptable(blockElectromagneticBooster, new Item.Properties().group(References.NUCLEARTAB))));
-	ITEMS.register("electromagneticswitch",
-		supplier(new BlockItemDescriptable(blockElectromagneticSwitch, new Item.Properties().group(References.NUCLEARTAB))));
-	ITEMS.register("fusionreactorcore",
-		supplier(new BlockItemDescriptable(blockFusionReactorCore, new Item.Properties().group(References.NUCLEARTAB))));
-	ITEMS.register("plasma", supplier(new BlockItemDescriptable(blockPlasma, new Item.Properties())));
-	ITEMS.register("particleinjector",
-		supplier(new BlockItemDescriptable(blockParticleInjector, new Item.Properties().group(References.NUCLEARTAB))));
-	ITEMS.register("quantumcapacitor",
-		supplier(new BlockItemDescriptable(blockQuantumCapacitor, new Item.Properties().group(References.NUCLEARTAB))));
-	ITEMS.register("teleporter", supplier(new BlockItemDescriptable(blockTeleporter, new Item.Properties().group(References.NUCLEARTAB))));
-	ITEMS.register("controlrodassembly",
-		supplier(new BlockItemDescriptable(blockControlRodAssembly, new Item.Properties().group(References.NUCLEARTAB))));
-	FLUIDS.register("fluiduraniumhexafluoride", supplier(fluidUraniumHexafluoride = new FluidUraniumHexafluoride()));
-	BlockItemDescriptable.addDescription(blockGasCentrifuge, "|translate|tooltip.gascentrifuge.voltage");
-	BlockItemDescriptable.addDescription(blockNuclearBoiler, "|translate|tooltip.nuclearboiler.voltage");
-	BlockItemDescriptable.addDescription(blockChemicalExtractor, "|translate|tooltip.chemicalextractor.voltage");
-	BlockItemDescriptable.addDescription(blockParticleInjector, "|translate|tooltip.particleinjector.voltage");
-	BlockItemDescriptable.addDescription(blockQuantumCapacitor, "|translate|tooltip.quantumcapacitor.voltage");
-	BlockItemDescriptable.addDescription(blockTeleporter, "|translate|tooltip.teleporter.voltage");
+		BLOCKS.register("gascentrifuge", supplier(blockGasCentrifuge = new BlockGasCentrifuge()));
+		BLOCKS.register("nuclearboiler", supplier(blockNuclearBoiler = new BlockNuclearBoiler()));
+		BLOCKS.register("chemicalextractor", supplier(blockChemicalExtractor = new BlockChemicalExtractor()));
+		BLOCKS.register("radioisotopegenerator", supplier(blockRadioisotopeGenerator = new BlockRadioisotopeGenerator()));
+		BLOCKS.register("turbine", supplier(blockTurbine = new BlockTurbine()));
+		BLOCKS.register("reactorcore", supplier(blockReactorCore = new BlockReactorCore()));
+		BLOCKS.register("electromagnet", supplier(blockElectromagnet = new BlockElectromagnet(false)));
+		BLOCKS.register("electromagneticglass", supplier(blockElectromagneticGlass = new BlockElectromagnet(true)));
+		BLOCKS.register("electromagneticbooster", supplier(blockElectromagneticBooster = new BlockElectromagneticBooster()));
+		BLOCKS.register("electromagneticswitch", supplier(blockElectromagneticSwitch = new BlockElectromagneticSwitch()));
+		BLOCKS.register("fusionreactorcore", supplier(blockFusionReactorCore = new BlockFusionReactorCore()));
+		BLOCKS.register("plasma", supplier(blockPlasma = new BlockPlasma()));
+		BLOCKS.register("particleinjector", supplier(blockParticleInjector = new BlockParticleInjector()));
+		BLOCKS.register("quantumcapacitor", supplier(blockQuantumCapacitor = new BlockQuantumCapacitor()));
+		BLOCKS.register("teleporter", supplier(blockTeleporter = new BlockTeleporter()));
+		
+		BLOCKS.register("controlrodassembly", supplier(blockControlRodAssembly = new BlockControlRodAssembly()));
+		BLOCKS.register("fuelreprocessor", supplier(blockFuelReprocessor = new BlockFuelReprocessor()));
+		BLOCKS.register("radioactiveprocessor", supplier(blockRadioactiveProcessor = new BlockRadioactiveProcessor()));
+		
+		BLOCKS.register("blocklead", supplier(blocklead = new Block(Properties.create(Material.IRON, MaterialColor.BLACK)
+			.hardnessAndResistance(5.0f, 3.0f).sound(SoundType.METAL).setRequiresTool().harvestTool(ToolType.PICKAXE).harvestLevel(1))));
+		
+		ITEMS.register("gascentrifuge", supplier(new BlockItemDescriptable(blockGasCentrifuge, new Item.Properties().group(References.NUCLEARTAB))));
+		ITEMS.register("nuclearboiler", supplier(new BlockItemDescriptable(blockNuclearBoiler, new Item.Properties().group(References.NUCLEARTAB))));
+		ITEMS.register("chemicalextractor",
+			supplier(new BlockItemDescriptable(blockChemicalExtractor, new Item.Properties().group(References.NUCLEARTAB))));
+		ITEMS.register("radioisotopegenerator",
+			supplier(new BlockItemDescriptable(blockRadioisotopeGenerator, new Item.Properties().group(References.NUCLEARTAB))));
+		ITEMS.register("turbine", supplier(new BlockItemDescriptable(blockTurbine, new Item.Properties().group(References.NUCLEARTAB))));
+		ITEMS.register("reactorcore", supplier(new BlockItemDescriptable(blockReactorCore, new Item.Properties().group(References.NUCLEARTAB))));
+		
+		ITEMS.register("fuelreprocessor", supplier(new BlockItemDescriptable(blockFuelReprocessor, new Item.Properties().group(References.NUCLEARTAB))));
+		ITEMS.register("radioactiveprocessor", supplier(new BlockItemDescriptable(blockRadioactiveProcessor, new Item.Properties().group(References.NUCLEARTAB))));
+		
+		ITEMS.register("blocklead", supplier(new BlockItemDescriptable(blocklead, new BlockItem.Properties().group(References.NUCLEARTAB))));
+		ITEMS.register("electromagnet", supplier(new BlockItemDescriptable(blockElectromagnet, new Item.Properties().group(References.NUCLEARTAB))));
+		ITEMS.register("electromagneticglass",
+			supplier(new BlockItemDescriptable(blockElectromagneticGlass, new Item.Properties().group(References.NUCLEARTAB))));
+		ITEMS.register("electromagneticbooster",
+			supplier(new BlockItemDescriptable(blockElectromagneticBooster, new Item.Properties().group(References.NUCLEARTAB))));
+		ITEMS.register("electromagneticswitch",
+			supplier(new BlockItemDescriptable(blockElectromagneticSwitch, new Item.Properties().group(References.NUCLEARTAB))));
+		ITEMS.register("fusionreactorcore",
+			supplier(new BlockItemDescriptable(blockFusionReactorCore, new Item.Properties().group(References.NUCLEARTAB))));
+		ITEMS.register("plasma", supplier(new BlockItemDescriptable(blockPlasma, new Item.Properties())));
+		ITEMS.register("particleinjector",
+			supplier(new BlockItemDescriptable(blockParticleInjector, new Item.Properties().group(References.NUCLEARTAB))));
+		ITEMS.register("quantumcapacitor",
+			supplier(new BlockItemDescriptable(blockQuantumCapacitor, new Item.Properties().group(References.NUCLEARTAB))));
+		ITEMS.register("teleporter", supplier(new BlockItemDescriptable(blockTeleporter, new Item.Properties().group(References.NUCLEARTAB))));
+		ITEMS.register("controlrodassembly",
+			supplier(new BlockItemDescriptable(blockControlRodAssembly, new Item.Properties().group(References.NUCLEARTAB))));
+		
+		FLUIDS.register("fluiduraniumhexafluoride", supplier(fluidUraniumHexafluoride = new FluidUraniumHexafluoride()));
+		
+		FLUIDS.register("fluidironsulfamate", supplier(fluidIronSulfamate = new FluidIronSulfamate()));
+		FLUIDS.register("fluidammonia", supplier(fluidAmmonia = new FluidAmmonia()));
+		
+		BlockItemDescriptable.addDescription(blockGasCentrifuge, "|translate|tooltip.gascentrifuge.voltage");
+		BlockItemDescriptable.addDescription(blockNuclearBoiler, "|translate|tooltip.nuclearboiler.voltage");
+		BlockItemDescriptable.addDescription(blockChemicalExtractor, "|translate|tooltip.chemicalextractor.voltage");
+		BlockItemDescriptable.addDescription(blockParticleInjector, "|translate|tooltip.particleinjector.voltage");
+		BlockItemDescriptable.addDescription(blockQuantumCapacitor, "|translate|tooltip.quantumcapacitor.voltage");
+		BlockItemDescriptable.addDescription(blockTeleporter, "|translate|tooltip.teleporter.voltage");
+		BlockItemDescriptable.addDescription(blockFuelReprocessor, "|translate|tooltip.fuelreprocessor.voltage");
+		BlockItemDescriptable.addDescription(blockRadioactiveProcessor, "|translate|tooltip.radioactiveprocessor.voltage");
+    
     }
+    
+    
     public static final RegistryObject<Item> ITEM_URANIUM235 = ITEMS.register("uranium235",
 	    supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
     public static final RegistryObject<Item> ITEM_URANIUM238 = ITEMS.register("uranium238",
 	    supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
     public static final RegistryObject<Item> ITEM_YELLOWCAKE = ITEMS.register("yellowcake",
 	    supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
+    
+    public static final RegistryObject<Item> ITEM_FISSILEDUST = ITEMS.register("fissiledust",
+        supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
+    public static final RegistryObject<Item> ITEM_PLUTONIUMOXIDE = ITEMS.register("plutoniumoxide",
+    	supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
+    public static final RegistryObject<Item> ITEM_PLUTONIUM239 = ITEMS.register("plutonium239",
+        	supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
+    public static final RegistryObject<Item> ITEM_THORIANITEDUST = ITEMS.register("thorianitedust",
+        	supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
+    public static final RegistryObject<Item> ITEM_THORIUMOXIDE = ITEMS.register("thoriumoxide",
+        	supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
+    public static final RegistryObject<Item> ITEM_THORIUM232 = ITEMS.register("thorium232",
+        	supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
+    
     public static final RegistryObject<Item> ITEM_CELLEMPTY = ITEMS.register("cellempty",
 	    supplier(new Item(new Item.Properties().group(References.NUCLEARTAB))));
     public static final RegistryObject<Item> ITEM_CELLDEUTERIUM = ITEMS.register("celldeuterium",
@@ -170,6 +221,13 @@ public class DeferredRegisters {
 	    supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB).maxStackSize(1).defaultMaxDamage(24000))));
     public static final RegistryObject<Item> ITEM_FUELLEUO2 = ITEMS.register("fuelleuo2",
 	    supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB).maxStackSize(1).defaultMaxDamage(26000))));
+    
+    public static final RegistryObject<Item> ITEM_FUELSPENT = ITEMS.register("fuelspent",
+    	supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB).maxStackSize(1))));
+    //Incredibly long life-span, but hard to get
+    public static final RegistryObject<Item> ITEM_FUELPLUTONIUM = ITEMS.register("fuelplutonium",
+        supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB).maxStackSize(1).defaultMaxDamage(96000))));
+    
     public static final RegistryObject<Item> ITEM_GEIGERCOUNTER = ITEMS.register("geigercounter",
 	    supplier(new ItemGeigerCounter(new Item.Properties().group(References.NUCLEARTAB).maxStackSize(1).defaultMaxDamage(26000))));
     public static final RegistryObject<Item> ITEM_HAZMATBOOTS = ITEMS.register("hazmatboots", supplier(
@@ -209,7 +267,12 @@ public class DeferredRegisters {
 	    () -> new TileEntityType<>(TilePlasma::new, Sets.newHashSet(blockPlasma), null));
     public static final RegistryObject<TileEntityType<TileQuantumCapacitor>> TILE_QUANTUMCAPACITOR = TILES.register("quantumcapacitor",
 	    () -> new TileEntityType<>(TileQuantumCapacitor::new, Sets.newHashSet(blockQuantumCapacitor), null));
-
+    
+    public static final RegistryObject<TileEntityType<TileFuelReprocessor>> TILE_FUELREPROCESSOR = TILES.register("fuelreprocessor",
+    	() -> new TileEntityType<>(TileFuelReprocessor::new, Sets.newHashSet(blockFuelReprocessor),null));
+    public static final RegistryObject<TileEntityType<TileRadioactiveProcessor>> TILE_RADIOACTIVEPROCESSOR = TILES.register("radioactiveprocessor",
+    	() -> new TileEntityType<>(TileRadioactiveProcessor::new, Sets.newHashSet(blockRadioactiveProcessor),null));
+    
     public static final RegistryObject<TileEntityType<TileTeleporter>> TILE_TELEPORTER = TILES.register("teleporter",
 	    () -> new TileEntityType<>(TileTeleporter::new, Sets.newHashSet(blockTeleporter), null));
 
@@ -230,6 +293,8 @@ public class DeferredRegisters {
 	    () -> new ContainerType<>(ContainerParticleInjector::new));
     public static final RegistryObject<ContainerType<ContainerQuantumCapacitor>> CONTAINER_QUANTUMCAPACITOR = CONTAINERS.register("quantumcapacitor",
 	    () -> new ContainerType<>(ContainerQuantumCapacitor::new));
+    public static final RegistryObject<ContainerType<ContainerRadioactiveProcessor>> CONTAINER_RADIOACTIVEPROCESSOR = CONTAINERS.register("radioactiveprocessor",
+    	() -> new ContainerType<>(ContainerRadioactiveProcessor::new));
 
     public static final RegistryObject<EntityType<EntityParticle>> ENTITY_PARTICLE = ENTITIES.register("particle", () -> EntityType.Builder
 	    .<EntityParticle>create(EntityParticle::new, EntityClassification.MISC).trackingRange(8).build(References.ID + ".particle"));
