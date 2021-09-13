@@ -30,6 +30,7 @@ import nuclearscience.common.block.BlockElectromagneticSwitch;
 import nuclearscience.common.block.BlockFuelReprocessor;
 import nuclearscience.common.block.BlockFusionReactorCore;
 import nuclearscience.common.block.BlockGasCentrifuge;
+import nuclearscience.common.block.BlockMSRFuelPreProcessor;
 import nuclearscience.common.block.BlockNuclearBoiler;
 import nuclearscience.common.block.BlockParticleInjector;
 import nuclearscience.common.block.BlockPlasma;
@@ -63,6 +64,7 @@ import nuclearscience.common.tile.TileElectromagneticSwitch;
 import nuclearscience.common.tile.TileFuelReprocessor;
 import nuclearscience.common.tile.TileFusionReactorCore;
 import nuclearscience.common.tile.TileGasCentrifuge;
+import nuclearscience.common.tile.TileMSRFuelPreProcessor;
 import nuclearscience.common.tile.TileNuclearBoiler;
 import nuclearscience.common.tile.TileParticleInjector;
 import nuclearscience.common.tile.TilePlasma;
@@ -103,6 +105,7 @@ public class DeferredRegisters {
     public static BlockControlRodAssembly blockControlRodAssembly;
     public static BlockFuelReprocessor blockFuelReprocessor;
     public static BlockRadioactiveProcessor blockRadioactiveProcessor;
+    public static BlockMSRFuelPreProcessor blockMSRFuelPreProcessor;
 
     public static Block blocklead;
 
@@ -126,6 +129,7 @@ public class DeferredRegisters {
 	BLOCKS.register("controlrodassembly", supplier(blockControlRodAssembly = new BlockControlRodAssembly()));
 	BLOCKS.register("fuelreprocessor", supplier(blockFuelReprocessor = new BlockFuelReprocessor()));
 	BLOCKS.register("radioactiveprocessor", supplier(blockRadioactiveProcessor = new BlockRadioactiveProcessor()));
+	BLOCKS.register("msrfuelpreprocessor", supplier(blockMSRFuelPreProcessor = new BlockMSRFuelPreProcessor()));
 
 	BLOCKS.register("blocklead", supplier(blocklead = new Block(Properties.create(Material.IRON, MaterialColor.BLACK)
 		.hardnessAndResistance(5.0f, 3.0f).sound(SoundType.METAL).setRequiresTool().harvestTool(ToolType.PICKAXE).harvestLevel(1))));
@@ -143,6 +147,8 @@ public class DeferredRegisters {
 		supplier(new BlockItemDescriptable(blockFuelReprocessor, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("radioactiveprocessor",
 		supplier(new BlockItemDescriptable(blockRadioactiveProcessor, new Item.Properties().group(References.NUCLEARTAB))));
+	ITEMS.register("msrfuelpreprocessor",
+		supplier(new BlockItemDescriptable(blockMSRFuelPreProcessor, new Item.Properties().group(References.NUCLEARTAB))));
 
 	ITEMS.register("blocklead", supplier(new BlockItemDescriptable(blocklead, new BlockItem.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("electromagnet", supplier(new BlockItemDescriptable(blockElectromagnet, new Item.Properties().group(References.NUCLEARTAB))));
@@ -186,6 +192,8 @@ public class DeferredRegisters {
     public static final RegistryObject<Item> ITEM_PLUTONIUM239 = ITEMS.register("plutonium239",
 	    supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
     public static final RegistryObject<Item> ITEM_YELLOWCAKE = ITEMS.register("yellowcake",
+	    supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
+    public static final RegistryObject<Item> ITEM_LIFHT4PUF3 = ITEMS.register("lifthf4puf3",
 	    supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
 
     public static final RegistryObject<Item> ITEM_FISSILEDUST = ITEMS.register("fissiledust",
@@ -265,6 +273,8 @@ public class DeferredRegisters {
 	    () -> new TileEntityType<>(TileFuelReprocessor::new, Sets.newHashSet(blockFuelReprocessor), null));
     public static final RegistryObject<TileEntityType<TileRadioactiveProcessor>> TILE_RADIOACTIVEPROCESSOR = TILES.register("radioactiveprocessor",
 	    () -> new TileEntityType<>(TileRadioactiveProcessor::new, Sets.newHashSet(blockRadioactiveProcessor), null));
+    public static final RegistryObject<TileEntityType<TileMSRFuelPreProcessor>> TILE_MSRFUELPREPROCESSOR = TILES.register("msrfuelpreprocessor",
+	    () -> new TileEntityType<>(TileMSRFuelPreProcessor::new, Sets.newHashSet(blockControlRodAssembly), null));
 
     public static final RegistryObject<TileEntityType<TileTeleporter>> TILE_TELEPORTER = TILES.register("teleporter",
 	    () -> new TileEntityType<>(TileTeleporter::new, Sets.newHashSet(blockTeleporter), null));

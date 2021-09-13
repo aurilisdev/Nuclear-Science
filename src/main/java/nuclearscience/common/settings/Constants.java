@@ -35,4 +35,8 @@ public class Constants {
     public static double GASCENTRIFUGE_USAGE_PER_TICK = 1500.0;
     @IntValue(def = 20)
     public static int GASCENTRIFUGE_REQUIRED_TICKS_PER_PROCESSING = 20;
+    @DoubleValue(def = 400.0)
+    public static double MSRFUELPREPROCESSOR_USAGE_PER_TICK = 1200.0;
+    @IntValue(def = 200)
+    public static int MSRFUELPREPROCESSOR_REQUIRED_TICKS = 200;
 }
