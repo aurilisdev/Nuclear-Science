@@ -1,0 +1,20 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"gpg",
+		"gpg",
+		"gpg"
+	],
+	"key": {
+		"g": {
+			"item": "minecraft:glass"
+		},
+		"p": {
+			"item": "nuclearscience:plutonium239"
+		}
+	},
+	"result": {
+		"item": "nuclearscience:fuelplutonium",
+		"count": 1
+	}
+}

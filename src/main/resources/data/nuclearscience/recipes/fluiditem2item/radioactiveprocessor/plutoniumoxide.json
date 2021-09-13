@@ -1,0 +1,16 @@
+{
+	"type" : "nuclearscience:radioactive_processor_recipe",
+	
+	"item_input":{
+		"item":"nuclearscience:fissiledust",
+		"count":10
+	},
+	"fluid_input":{
+		"fluid":"nuclearscience:fluidironsulfamate",
+		"amount": 3000
+	},
+	"item_output":{
+		"item":"nuclearscience:plutoniumoxide",
+		"count": 1
+	}
+}

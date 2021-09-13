@@ -35,10 +35,12 @@ import nuclearscience.compatability.jei.recipecategories.psuedorecipes.NuclearSc
 import nuclearscience.compatability.jei.recipecategories.psuedorecipes.PsuedoGasCentrifugeRecipe;
 import nuclearscience.compatability.jei.recipecategories.specificmachines.nuclearscience.ChemicalExtractorRecipeCategory;
 import nuclearscience.compatability.jei.recipecategories.specificmachines.nuclearscience.FissionReactorRecipeCategory;
+import nuclearscience.compatability.jei.recipecategories.specificmachines.nuclearscience.FuelReprocessorRecipeCategory;
 import nuclearscience.compatability.jei.recipecategories.specificmachines.nuclearscience.GasCentrifugeRecipeCategory;
 import nuclearscience.compatability.jei.recipecategories.specificmachines.nuclearscience.NuclearBoilerRecipeCategory;
 import nuclearscience.compatability.jei.recipecategories.specificmachines.nuclearscience.ParticleAcceleratorAntiMatterRecipeCategory;
 import nuclearscience.compatability.jei.recipecategories.specificmachines.nuclearscience.ParticleAcceleratorDarkMatterRecipeCategory;
+import nuclearscience.compatability.jei.recipecategories.specificmachines.nuclearscience.RadioactiveProcessorRecipeCategory;
 
 @JeiPlugin
 public class NuclearSciencePlugin implements IModPlugin {
@@ -68,6 +70,10 @@ public class NuclearSciencePlugin implements IModPlugin {
 	// Dark Matter
 	registration.addRecipeCatalyst(ParticleAcceleratorDarkMatterRecipeCategory.INPUT_MACHINE, ParticleAcceleratorDarkMatterRecipeCategory.UID);
 
+	registration.addRecipeCatalyst(FuelReprocessorRecipeCategory.INPUT_MACHINE, FuelReprocessorRecipeCategory.UID);
+	
+	registration.addRecipeCatalyst(RadioactiveProcessorRecipeCategory.INPUT_MACHINE, RadioactiveProcessorRecipeCategory.UID);
+	
     }
 
     @Override
@@ -100,7 +106,15 @@ public class NuclearSciencePlugin implements IModPlugin {
 
 	Set<PsuedoO2ORecipe> darkMatterRecipes = new HashSet<>(NuclearSciencePsuedoRecipes.DARK_MATTER_RECIPES);
 	registration.addRecipes(darkMatterRecipes, ParticleAcceleratorDarkMatterRecipeCategory.UID);
-
+	
+	Set<O2ORecipe> fuelReprocessorRecipes = ImmutableSet
+		.copyOf(recipeManager.getRecipesForType(NuclearScienceRecipeInit.FUEL_REPROCESSOR_TYPE));
+	registration.addRecipes(fuelReprocessorRecipes, FuelReprocessorRecipeCategory.UID);
+	
+	Set<FluidItem2ItemRecipe> radioactiveProcessorRecipes = ImmutableSet
+		.copyOf(recipeManager.getRecipesForType(NuclearScienceRecipeInit.RADIOACTIVE_PROCESSOR_TYPE));
+	registration.addRecipes(radioactiveProcessorRecipes, RadioactiveProcessorRecipeCategory.UID);
+	
 	nuclearScienceInfoTabs(registration);
     }
 
@@ -124,6 +138,10 @@ public class NuclearSciencePlugin implements IModPlugin {
 
 	// Dark Matter
 	registration.addRecipeCategories(new ParticleAcceleratorDarkMatterRecipeCategory(helper));
+	
+	registration.addRecipeCategories(new FuelReprocessorRecipeCategory(helper));
+	
+	registration.addRecipeCategories(new RadioactiveProcessorRecipeCategory(helper));
 
     }
 

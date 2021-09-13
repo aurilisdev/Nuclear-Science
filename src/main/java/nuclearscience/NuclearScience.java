@@ -52,11 +52,17 @@ public class NuclearScience {
 
     @SubscribeEvent
     public static void onLoadEvent(FMLLoadCompleteEvent event) {
-	RadiationRegister.register(DeferredRegisters.ITEM_URANIUM235.get(), new FieldRadioactiveObject(1000));
-	RadiationRegister.register(DeferredRegisters.ITEM_URANIUM238.get(), new FieldRadioactiveObject(500));
-	RadiationRegister.register(DeferredRegisters.ITEM_YELLOWCAKE.get(), new FieldRadioactiveObject(300));
-	RadiationRegister.register(DeferredRegisters.ITEM_FUELHEUO2.get(), new FieldRadioactiveObject(3000));
-	RadiationRegister.register(DeferredRegisters.ITEM_FUELLEUO2.get(), new FieldRadioactiveObject(2000));
+		RadiationRegister.register(DeferredRegisters.ITEM_URANIUM235.get(), new FieldRadioactiveObject(1000));
+		RadiationRegister.register(DeferredRegisters.ITEM_URANIUM238.get(), new FieldRadioactiveObject(500));
+		RadiationRegister.register(DeferredRegisters.ITEM_YELLOWCAKE.get(), new FieldRadioactiveObject(300));
+		RadiationRegister.register(DeferredRegisters.ITEM_FUELHEUO2.get(), new FieldRadioactiveObject(3000));
+		RadiationRegister.register(DeferredRegisters.ITEM_FUELLEUO2.get(), new FieldRadioactiveObject(2000));
+		RadiationRegister.register(DeferredRegisters.ITEM_FISSILEDUST.get(), new FieldRadioactiveObject(2000));
+		RadiationRegister.register(DeferredRegisters.ITEM_PLUTONIUMOXIDE.get(), new FieldRadioactiveObject(4000));
+		RadiationRegister.register(DeferredRegisters.ITEM_PLUTONIUM239.get(), new FieldRadioactiveObject(4500));
+		RadiationRegister.register(DeferredRegisters.ITEM_THORIANITEDUST.get(), new FieldRadioactiveObject(2000));
+		RadiationRegister.register(DeferredRegisters.ITEM_THORIUMOXIDE.get(), new FieldRadioactiveObject(2500));
+		RadiationRegister.register(DeferredRegisters.ITEM_THORIUM232.get(), new FieldRadioactiveObject(3000));
     }
 
     @SubscribeEvent

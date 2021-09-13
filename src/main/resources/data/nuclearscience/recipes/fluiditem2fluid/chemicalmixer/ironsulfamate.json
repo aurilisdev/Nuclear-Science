@@ -1,0 +1,15 @@
+{
+	"type": "electrodynamics:chemical_mixer_recipe",
+	"item_input": {
+		"tag": "forge:dusts/iron",
+		"count": 1
+	},
+	"fluid_input": {
+		"fluid": "electrodynamics:fluidsulfuricacid",
+		"amount": 1000
+	},
+	"fluid_output": {
+		"fluid": "nuclearscience:fluidironsulfamate",
+		"amount": 1000
+	}
+}

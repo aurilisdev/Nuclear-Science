@@ -1,0 +1,20 @@
+{
+	"variants": {
+		"facing=west": {
+			"model": "nuclearscience:block/fuelreprocessor",
+			"y": 0
+		},
+		"facing=south": {
+			"model": "nuclearscience:block/fuelreprocessor",
+			"y": 270
+		},
+		"facing=north": {
+			"model": "nuclearscience:block/fuelreprocessor",
+			"y": 90
+		},
+		"facing=east": {
+			"model": "nuclearscience:block/fuelreprocessor",
+			"y": 180
+		}
+	}
+}
