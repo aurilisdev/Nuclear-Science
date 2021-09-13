@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import electrodynamics.common.item.gear.tools.ItemCanister;
 import net.minecraft.fluid.Fluid;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.ForgeRegistries;
 import nuclearscience.DeferredRegisters;
 
 public class ItemCanisterLead extends ItemCanister {
@@ -18,8 +18,10 @@ public class ItemCanisterLead extends ItemCanister {
     @Override
     public ArrayList<Fluid> getWhitelistedFluids() {
 	ArrayList<Fluid> whitelist = new ArrayList<>();
-	for (RegistryObject<Fluid> fluid : DeferredRegisters.FLUIDS.getEntries()) {
-	    whitelist.add(fluid.get());
+	for(Fluid fluid : ForgeRegistries.FLUIDS.getValues()) {
+		if(fluid.getFilledBucket().getRegistryName().equals(DeferredRegisters.ITEM_CANISTERLEAD.get().getRegistryName())) {
+			whitelist.add(fluid);
+		}
 	}
 	return whitelist;
     }

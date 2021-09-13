@@ -96,7 +96,7 @@
 	"tooltip.radioactiveprocessor.voltage":"Voltage: 480 Volts",
 	"tooltip.frequencycard.linked": "Linked to %s",
 	"tooltip.frequencycard.notag": "No link",
-	"fluid.nuclearscience.hexafluoride": "Uranium Hexafluoride",
+	"fluid.nuclearscience.uraniumhexafluoride": "Uranium Hexafluoride",
 	"fluid.nuclearscience.ammonia": "Ammonia",
 	"fluid.nuclearscience.ironsulfamate": "Iron Sulfamate",
 	"gui.jei.category.nuclear_boiler": "Nuclear Boiler",
