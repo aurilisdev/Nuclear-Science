@@ -72,7 +72,8 @@ public class TileReactorCore extends GenericTileTicking {
 	for (int i = 0; i < 4; i++) {
 	    ItemStack stack = inv.getStackInSlot(i);
 	    fuelCount += stack.getItem() == DeferredRegisters.ITEM_FUELLEUO2.get() ? 2
-		    : stack.getItem() == DeferredRegisters.ITEM_FUELHEUO2.get() ? 3 : 0;
+		    : stack.getItem() == DeferredRegisters.ITEM_FUELHEUO2.get() ? 3
+			    : stack.getItem() == DeferredRegisters.ITEM_FUELPLUTONIUM.get() ? 2 : 0;
 	}
 	hasDeuterium = !inv.getStackInSlot(4).isEmpty();
 
