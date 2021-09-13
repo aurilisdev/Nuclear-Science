@@ -194,10 +194,6 @@ public class DeferredRegisters {
 	    supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
     public static final RegistryObject<Item> ITEM_THORIANITEDUST = ITEMS.register("thorianitedust",
 	    supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
-    public static final RegistryObject<Item> ITEM_THORIUMOXIDE = ITEMS.register("thoriumoxide",
-	    supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
-    public static final RegistryObject<Item> ITEM_THORIUM232 = ITEMS.register("thorium232",
-	    supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
 
     public static final RegistryObject<Item> ITEM_CELLEMPTY = ITEMS.register("cellempty",
 	    supplier(new Item(new Item.Properties().group(References.NUCLEARTAB))));
