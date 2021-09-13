@@ -40,6 +40,7 @@
 	"block.nuclearscience.fusionreactorcore": "Fusion Reactor Core",
 	"block.nuclearscience.fuelreprocessor": "Fuel Reprocessor",
 	"block.nuclearscience.radioactiveprocessor": "Radioactive Processor",
+	"block.nuclearscience.msrfuelpreprocessor": "MSR Fuel Preprocessor",
 	"block.nuclearscience.plasma": "Plasma",
 	"block.nuclearscience.particleinjector": "Particle Injector",
 	"block.nuclearscience.quantumcapacitor": "Quantum Capacitor",
