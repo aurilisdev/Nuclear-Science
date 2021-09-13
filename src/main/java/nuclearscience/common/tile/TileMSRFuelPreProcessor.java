@@ -1,7 +1,6 @@
 package nuclearscience.common.tile;
 
 import electrodynamics.api.electricity.CapabilityElectrodynamic;
-import electrodynamics.common.inventory.container.ContainerChemicalMixer;
 import electrodynamics.common.item.ItemProcessorUpgrade;
 import electrodynamics.common.recipe.categories.fluiditem2fluid.FluidItem2FluidRecipe;
 import electrodynamics.common.recipe.recipeutils.CountableIngredient;
@@ -22,6 +21,7 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.Direction;
 import net.minecraftforge.fluids.FluidStack;
 import nuclearscience.DeferredRegisters;
+import nuclearscience.common.inventory.container.ContainerMSRFuelPreProcessor;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 import nuclearscience.common.recipe.categories.fluid3items2item.specificmachines.MSRFuelPreProcessorRecipe;
 import nuclearscience.common.settings.Constants;
@@ -41,15 +41,15 @@ public class TileMSRFuelPreProcessor extends GenericTileTicking {
 		.setAddFluidsValues(MSRFuelPreProcessorRecipe.class, NuclearScienceRecipeInit.MSR_FUEL_PREPROCESSOR_TYPE, MAX_TANK_CAPACITY, true,
 			true));
 	addComponent(new ComponentInventory(this).size(8).relativeFaceSlots(Direction.EAST, 0, 1, 2).relativeFaceSlots(Direction.UP, 0, 1, 2)
-		.relativeSlotFaces(4, Direction.DOWN).valid((slot, stack) -> slot < 5 || stack.getItem() instanceof ItemProcessorUpgrade));
+		.relativeSlotFaces(3, Direction.DOWN).valid((slot, stack) -> slot < 4 || stack.getItem() instanceof ItemProcessorUpgrade));
 	addComponent(new ComponentProcessor(this).upgradeSlots(5, 6, 7)
-		.canProcess(component -> component.outputToPipe(component).consumeBucket(1).canProcessFluidItem2FluidRecipe(component,
+		.canProcess(component -> component.outputToPipe(component).consumeBucket(4).canProcessFluidItem2FluidRecipe(component,
 			FluidItem2FluidRecipe.class, NuclearScienceRecipeInit.MSR_FUEL_PREPROCESSOR_TYPE))
 		.process(component -> processFluid3Items2ItemRecipe(component, MSRFuelPreProcessorRecipe.class))
 		.usage(Constants.MSRFUELPREPROCESSOR_USAGE_PER_TICK).type(ComponentProcessorType.ObjectToObject)
 		.requiredTicks(Constants.MSRFUELPREPROCESSOR_REQUIRED_TICKS));
 	addComponent(new ComponentContainerProvider("container.msrfuelpreprocessor")
-		.createMenu((id, player) -> new ContainerChemicalMixer(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
+		.createMenu((id, player) -> new ContainerMSRFuelPreProcessor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 
     }
 

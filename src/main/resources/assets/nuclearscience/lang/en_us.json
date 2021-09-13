@@ -56,7 +56,7 @@
 	"container.quantumcapacitor": "Quantum Capacitor",
 	"container.fuelreprocessor": "Fuel Reprocessor",
 	"container.radioactiveprocessor": "Radioactive Processor",
-	"container.container.msrfuelpreprocessor": "MSR Fuel Preprocessor",
+	"container.msrfuelpreprocessor": "MSR Fuel Preprocessor",
 	"gui.reactorcore.deuterium": "Deuterium",
 	"gui.reactorcore.temperature": "Temp: %s",
 	"gui.reactorcore.warning": "OVERHEATING!",
