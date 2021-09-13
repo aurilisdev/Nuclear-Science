@@ -18,15 +18,12 @@ public class ItemGeigerCounter extends Item {
     @Override
     public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 	super.inventoryTick(stack, worldIn, entityIn, itemSlot, isSelected);
-	if (!worldIn.isRemote) {
-	    if (entityIn instanceof PlayerEntity) {
-		PlayerEntity player = (PlayerEntity) entityIn;
-		if (isSelected || player.getItemStackFromSlot(EquipmentSlotType.OFFHAND).getItem() instanceof ItemGeigerCounter) {
-		    if (RadiationSystem.radiationMap.containsKey(entityIn)) {
-			player.sendStatusMessage(
-				new TranslationTextComponent("message.geigercounter.text", RadiationSystem.radiationMap.get(entityIn)), true);
-		    }
-		}
+	if (!worldIn.isRemote && entityIn instanceof PlayerEntity) {
+	    PlayerEntity player = (PlayerEntity) entityIn;
+	    if ((isSelected || player.getItemStackFromSlot(EquipmentSlotType.OFFHAND).getItem() instanceof ItemGeigerCounter)
+		    && RadiationSystem.radiationMap.containsKey(entityIn)) {
+		player.sendStatusMessage(new TranslationTextComponent("message.geigercounter.text", RadiationSystem.radiationMap.get(entityIn)),
+			true);
 	    }
 	}
     }

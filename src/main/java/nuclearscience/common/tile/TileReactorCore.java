@@ -141,6 +141,7 @@ public class TileReactorCore extends GenericTileTicking {
 	produceSteam();
     }
 
+    @SuppressWarnings("java:S2184")
     public void meltdown() {
 	if (!world.isRemote) {
 	    int radius = STEAM_GEN_DIAMETER / 2;

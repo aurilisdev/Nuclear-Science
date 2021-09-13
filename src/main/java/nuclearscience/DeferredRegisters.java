@@ -183,14 +183,14 @@ public class DeferredRegisters {
 	    supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
     public static final RegistryObject<Item> ITEM_URANIUM238 = ITEMS.register("uranium238",
 	    supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
+    public static final RegistryObject<Item> ITEM_PLUTONIUM239 = ITEMS.register("plutonium239",
+	    supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
     public static final RegistryObject<Item> ITEM_YELLOWCAKE = ITEMS.register("yellowcake",
 	    supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
 
     public static final RegistryObject<Item> ITEM_FISSILEDUST = ITEMS.register("fissiledust",
 	    supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
     public static final RegistryObject<Item> ITEM_PLUTONIUMOXIDE = ITEMS.register("plutoniumoxide",
-	    supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
-    public static final RegistryObject<Item> ITEM_PLUTONIUM239 = ITEMS.register("plutonium239",
 	    supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
     public static final RegistryObject<Item> ITEM_THORIANITEDUST = ITEMS.register("thorianitedust",
 	    supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
@@ -215,7 +215,6 @@ public class DeferredRegisters {
 	    supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB).maxStackSize(1).defaultMaxDamage(24000))));
     public static final RegistryObject<Item> ITEM_FUELLEUO2 = ITEMS.register("fuelleuo2",
 	    supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB).maxStackSize(1).defaultMaxDamage(26000))));
-
     public static final RegistryObject<Item> ITEM_FUELSPENT = ITEMS.register("fuelspent",
 	    supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB).maxStackSize(1))));
     // Incredibly long life-span, but hard to get
