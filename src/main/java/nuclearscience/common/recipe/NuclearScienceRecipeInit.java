@@ -27,7 +27,7 @@ public class NuclearScienceRecipeInit {
     public static final IRecipeType<FissionReactorRecipe> FISSION_REACTOR_TYPE = ElectrodynamicsRecipeInit
 	    .registerType(FissionReactorRecipe.RECIPE_ID);
     public static final IRecipeType<FuelReprocessorRecipe> FUEL_REPROCESSOR_TYPE = ElectrodynamicsRecipeInit
-    	.registerType(FuelReprocessorRecipe.RECIPE_ID);
+	    .registerType(FuelReprocessorRecipe.RECIPE_ID);
 
     // FLUIDITEM2FLUID
     public static final IRecipeType<NuclearBoilerRecipe> NUCLEAR_BOILER_TYPE = ElectrodynamicsRecipeInit.registerType(NuclearBoilerRecipe.RECIPE_ID);
@@ -36,7 +36,7 @@ public class NuclearScienceRecipeInit {
     public static final IRecipeType<ChemicalExtractorRecipe> CHEMICAL_EXTRACTOR_TYPE = ElectrodynamicsRecipeInit
 	    .registerType(ChemicalExtractorRecipe.RECIPE_ID);
     public static final IRecipeType<RadioactiveProcessorRecipe> RADIOACTIVE_PROCESSOR_TYPE = ElectrodynamicsRecipeInit
-    	.registerType(RadioactiveProcessorRecipe.RECIPE_ID);
+	    .registerType(RadioactiveProcessorRecipe.RECIPE_ID);
 
     /* RECIPE SERIALIZERS */
 
@@ -44,7 +44,7 @@ public class NuclearScienceRecipeInit {
     public static final RegistryObject<IRecipeSerializer<?>> FISSION_REACTOR_SERIALIZER = RECIPE_SERIALIZER
 	    .register(FissionReactorRecipe.RECIPE_GROUP, () -> O2ORecipeTypes.FISSION_REACTOR_JSON_SERIALIZER);
     public static final RegistryObject<IRecipeSerializer<?>> FUEL_REPROCESSOR_SERIALIZER = RECIPE_SERIALIZER
-    	.register(FuelReprocessorRecipe.RECIPE_GROUP, () -> O2ORecipeTypes.FUEL_REPROCESSOR_JSON_SERIALIZER);
+	    .register(FuelReprocessorRecipe.RECIPE_GROUP, () -> O2ORecipeTypes.FUEL_REPROCESSOR_JSON_SERIALIZER);
 
     // FLUIDITEM2FLUID
     public static final RegistryObject<IRecipeSerializer<?>> NUCLEAR_BOILER_SERIALIZER = RECIPE_SERIALIZER.register(NuclearBoilerRecipe.RECIPE_GROUP,
@@ -54,6 +54,6 @@ public class NuclearScienceRecipeInit {
     public static final RegistryObject<IRecipeSerializer<?>> CHEMICAL_EXTRACTOR_SERIALIZER = RECIPE_SERIALIZER
 	    .register(ChemicalExtractorRecipe.RECIPE_GROUP, () -> FluidItem2ItemRecipeTypes.CHEMICAL_EXTRACTOR_JSON_SERIALIZER);
     public static final RegistryObject<IRecipeSerializer<?>> RADIOACTIVE_PROCESSOR_SERIALIZER = RECIPE_SERIALIZER
-    	.register(RadioactiveProcessorRecipe.RECIPE_GROUP, () -> FluidItem2ItemRecipeTypes.RADIOACTIVE_PROCESSOR_JSON_SERIALIZER);
-    
+	    .register(RadioactiveProcessorRecipe.RECIPE_GROUP, () -> FluidItem2ItemRecipeTypes.RADIOACTIVE_PROCESSOR_JSON_SERIALIZER);
+
 }

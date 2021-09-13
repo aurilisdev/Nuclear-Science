@@ -6,11 +6,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
 import nuclearscience.common.tile.TileRadioactiveProcessor;
 
-public class BlockRadioactiveProcessor extends BlockGenericMachine{
+public class BlockRadioactiveProcessor extends BlockGenericMachine {
 
-	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return new TileRadioactiveProcessor();
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	return new TileRadioactiveProcessor();
     }
-	
+
 }

@@ -32,8 +32,8 @@ public class RenderChemicalExtractor extends TileEntityRenderer<TileChemicalExtr
 	matrixStackIn.translate(face.getXOffset(), face.getYOffset(), face.getZOffset());
 	UtilitiesRendering.prepareRotationalTileModel(tileEntityIn, matrixStackIn);
 	matrixStackIn.translate(-0.5, 0, 0.5);
-	float prog = tileEntityIn.<ComponentFluidHandlerMulti>getComponent(ComponentType.FluidHandler).getStackFromFluid(Fluids.WATER, true).getAmount()
-		/ (float) TileChemicalExtractor.MAX_TANK_CAPACITY;
+	float prog = tileEntityIn.<ComponentFluidHandlerMulti>getComponent(ComponentType.FluidHandler).getStackFromFluid(Fluids.WATER, true)
+		.getAmount() / (float) TileChemicalExtractor.MAX_TANK_CAPACITY;
 	if (prog > 0) {
 	    matrixStackIn.scale(1, prog / 16.0f * 5.8f * 2, 1);
 	    matrixStackIn.translate(0, prog / 16.0f * 5.8f, 0);

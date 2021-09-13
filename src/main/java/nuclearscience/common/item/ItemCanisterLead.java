@@ -18,10 +18,10 @@ public class ItemCanisterLead extends ItemCanister {
     @Override
     public ArrayList<Fluid> getWhitelistedFluids() {
 	ArrayList<Fluid> whitelist = new ArrayList<>();
-	for(Fluid fluid : ForgeRegistries.FLUIDS.getValues()) {
-		if(fluid.getFilledBucket().getRegistryName().equals(DeferredRegisters.ITEM_CANISTERLEAD.get().getRegistryName())) {
-			whitelist.add(fluid);
-		}
+	for (Fluid fluid : ForgeRegistries.FLUIDS.getValues()) {
+	    if (fluid.getFilledBucket().getRegistryName().equals(DeferredRegisters.ITEM_CANISTERLEAD.get().getRegistryName())) {
+		whitelist.add(fluid);
+	    }
 	}
 	return whitelist;
     }

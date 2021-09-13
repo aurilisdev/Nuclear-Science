@@ -12,9 +12,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import nuclearscience.DeferredRegisters;
 
-public class RadioactiveProcessorRecipeCategory extends FluidItem2ItemRecipeCategory{
+public class RadioactiveProcessorRecipeCategory extends FluidItem2ItemRecipeCategory {
 
-	// JEI Window Parameters
+    // JEI Window Parameters
     private static int[] GUI_BACKGROUND = { 0, 0, 132, 64 };
     private static int[] MAJOR_PROCESSING_ARROW_LOCATION = { 0, 65, 68, 15 };
     private static int[] MINOR_PROCESSING_ARROW_LOCATION = { 0, 80, 20, 15 };
@@ -46,13 +46,13 @@ public class RadioactiveProcessorRecipeCategory extends FluidItem2ItemRecipeCate
 		    INPUT_FLUID_BUCKET_OFFSET, INPUT_FLUID_TANK, OUTPUT_FLUID_TANK, MAJOR_PROCESSING_ARROW_OFFSET, MINOR_PROCESSING_ARROW_OFFSET));
 
     public RadioactiveProcessorRecipeCategory(IGuiHelper guiHelper) {
-		super(guiHelper, MOD_ID, RECIPE_GROUP, GUI_TEXTURE, INPUT_MACHINE, INPUT_COORDINATES, SMELT_TIME, MAJOR_ARROW_START_DIRECTION,
-			MINOR_ARROW_START_DIRECTION, TEXT_Y_HEIGHT);
+	super(guiHelper, MOD_ID, RECIPE_GROUP, GUI_TEXTURE, INPUT_MACHINE, INPUT_COORDINATES, SMELT_TIME, MAJOR_ARROW_START_DIRECTION,
+		MINOR_ARROW_START_DIRECTION, TEXT_Y_HEIGHT);
     }
 
     @Override
     public ResourceLocation getUid() {
-    	return UID;
+	return UID;
     }
 
 }

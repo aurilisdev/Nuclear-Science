@@ -6,11 +6,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
 import nuclearscience.common.tile.TileFuelReprocessor;
 
-public class BlockFuelReprocessor extends BlockGenericMachine{
+public class BlockFuelReprocessor extends BlockGenericMachine {
 
-	@Override
+    @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return new TileFuelReprocessor();
+	return new TileFuelReprocessor();
     }
-	
+
 }

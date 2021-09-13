@@ -10,7 +10,7 @@ import mezz.jei.api.helpers.IGuiHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-public class FuelReprocessorRecipeCategory extends O2ORecipeCategory{
+public class FuelReprocessorRecipeCategory extends O2ORecipeCategory {
 
     // JEI Window Parameters
     private static int[] GUI_BACKGROUND = { 0, 0, 132, 58 };
@@ -37,11 +37,11 @@ public class FuelReprocessorRecipeCategory extends O2ORecipeCategory{
 	    Arrays.asList(GUI_BACKGROUND, PROCESSING_ARROW_LOCATION, INPUT_ITEM_OFFSET, OUTPUT_ITEM_OFFSET, PROCESSING_ARROW_OFFSET));
 
     public FuelReprocessorRecipeCategory(IGuiHelper guiHelper) {
-    	super(guiHelper, MOD_ID, RECIPE_GROUP, GUI_TEXTURE, INPUT_MACHINE, INPUT_COORDINATES, SMELT_TIME, TEXT_Y_HEIGHT, ARROW_START_DIRECTION);
+	super(guiHelper, MOD_ID, RECIPE_GROUP, GUI_TEXTURE, INPUT_MACHINE, INPUT_COORDINATES, SMELT_TIME, TEXT_Y_HEIGHT, ARROW_START_DIRECTION);
     }
 
     @Override
     public ResourceLocation getUid() {
-    	return UID;
+	return UID;
     }
 }

@@ -7,7 +7,7 @@ import nuclearscience.References;
 public class FluidUraniumHexafluoride extends FluidNonPlaceable {
 
     public FluidUraniumHexafluoride() {
-		super(() -> DeferredRegisters.ITEM_CANISTERLEAD, References.ID,"uraniumhexafluoride", -431922120);
-	}
+	super(() -> DeferredRegisters.ITEM_CANISTERLEAD, References.ID, "uraniumhexafluoride", -431922120);
+    }
 
 }

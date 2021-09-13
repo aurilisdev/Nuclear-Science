@@ -3,11 +3,11 @@ package nuclearscience.common.tile;
 import electrodynamics.prefab.tile.GenericTileTicking;
 import nuclearscience.DeferredRegisters;
 
-public class TileRadioactiveProcessor extends GenericTileTicking{
+public class TileRadioactiveProcessor extends GenericTileTicking {
 
-	public TileRadioactiveProcessor() {
-		super(DeferredRegisters.TILE_RADIOACTIVEPROCESSOR.get());
+    public TileRadioactiveProcessor() {
+	super(DeferredRegisters.TILE_RADIOACTIVEPROCESSOR.get());
 
-	}
+    }
 
 }
