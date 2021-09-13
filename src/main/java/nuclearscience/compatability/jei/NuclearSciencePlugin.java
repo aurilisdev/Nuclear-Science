@@ -170,6 +170,7 @@ public class NuclearSciencePlugin implements IModPlugin {
 
     }
 
+    @SuppressWarnings("java:S1874")
     private static void nuclearScienceInfoTabs(IRecipeRegistration registration) {
 
 	/*

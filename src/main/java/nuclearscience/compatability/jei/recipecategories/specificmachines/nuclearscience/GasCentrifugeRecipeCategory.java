@@ -46,8 +46,8 @@ public class GasCentrifugeRecipeCategory extends ElectrodynamicsRecipeCategory<P
 
     public static ItemStack INPUT_MACHINE = new ItemStack(DeferredRegisters.blockGasCentrifuge);
 
-    private LoadingCache<Integer, ArrayList<IDrawableAnimated>> CACHED_ARROWS;
-    private LoadingCache<Integer, ArrayList<IDrawableStatic>> CACHED_FLUID_BARS;
+    private LoadingCache<Integer, ArrayList<IDrawableAnimated>> arrowCache;
+    private LoadingCache<Integer, ArrayList<IDrawableStatic>> fluidBarCache;
 
     public static ResourceLocation UID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
 
@@ -56,7 +56,7 @@ public class GasCentrifugeRecipeCategory extends ElectrodynamicsRecipeCategory<P
 	super(guiHelper, MOD_ID, RECIPE_GROUP, GUI_TEXTURE, INPUT_MACHINE, GUI_BACKGROUND, PsuedoGasCentrifugeRecipe.class, SMELT_TIME,
 		TEXT_Y_HEIGHT);
 
-	CACHED_ARROWS = CacheBuilder.newBuilder().maximumSize(25).build(new CacheLoader<Integer, ArrayList<IDrawableAnimated>>() {
+	arrowCache = CacheBuilder.newBuilder().maximumSize(25).build(new CacheLoader<Integer, ArrayList<IDrawableAnimated>>() {
 
 	    @Override
 	    public ArrayList<IDrawableAnimated> load(Integer cookTime) {
@@ -81,7 +81,7 @@ public class GasCentrifugeRecipeCategory extends ElectrodynamicsRecipeCategory<P
 	    }
 	});
 
-	CACHED_FLUID_BARS = CacheBuilder.newBuilder().maximumSize(25).build(new CacheLoader<Integer, ArrayList<IDrawableStatic>>() {
+	fluidBarCache = CacheBuilder.newBuilder().maximumSize(25).build(new CacheLoader<Integer, ArrayList<IDrawableStatic>>() {
 	    @Override
 	    public ArrayList<IDrawableStatic> load(Integer fluidHeight) {
 
@@ -127,10 +127,10 @@ public class GasCentrifugeRecipeCategory extends ElectrodynamicsRecipeCategory<P
     @Override
     public void draw(PsuedoGasCentrifugeRecipe recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
 
-	ArrayList<IDrawableStatic> fluidBars = getFluidBars(recipe);
+	ArrayList<IDrawableStatic> fluidBars = getFluidBars();
 	fluidBars.get(0).draw(matrixStack, 3, 5);
 
-	ArrayList<IDrawableAnimated> arrows = getArrows(recipe);
+	ArrayList<IDrawableAnimated> arrows = getArrows();
 
 	arrows.get(0).draw(matrixStack, 22, 7);
 	arrows.get(1).draw(matrixStack, 70, 3);
@@ -138,18 +138,19 @@ public class GasCentrifugeRecipeCategory extends ElectrodynamicsRecipeCategory<P
 	arrows.get(3).draw(matrixStack, 51, 4);
 	arrows.get(4).draw(matrixStack, 51, 35);
 
-	drawSmeltTime(recipe, matrixStack, getYHeight());
+	drawSmeltTime(matrixStack, getYHeight());
     }
 
-    protected ArrayList<IDrawableAnimated> getArrows(PsuedoGasCentrifugeRecipe recipe) {
-	return CACHED_ARROWS.getUnchecked(getArrowSmeltTime());
+    protected ArrayList<IDrawableAnimated> getArrows() {
+	return arrowCache.getUnchecked(getArrowSmeltTime());
     }
 
-    protected ArrayList<IDrawableStatic> getFluidBars(PsuedoGasCentrifugeRecipe recipe) {
-	return CACHED_FLUID_BARS.getUnchecked(getArrowSmeltTime());
+    protected ArrayList<IDrawableStatic> getFluidBars() {
+	return fluidBarCache.getUnchecked(getArrowSmeltTime());
     }
 
-    protected void drawSmeltTime(PsuedoGasCentrifugeRecipe recipe, MatrixStack matrixStack, int y) {
+    @SuppressWarnings("java:S2184")
+    protected void drawSmeltTime(MatrixStack matrixStack, int y) {
 
 	int smeltTimeSeconds = getArrowSmeltTime() / 20;
 
@@ -173,10 +174,10 @@ public class GasCentrifugeRecipeCategory extends ElectrodynamicsRecipeCategory<P
 	int percentU238StringWidth = fontRenderer.getStringPropertyWidth(percentU238String);
 	int percentU235StringWidth = fontRenderer.getStringPropertyWidth(percentU235String);
 
-	fontRenderer.func_243248_b(matrixStack, indivU238String, getBackground().getWidth() - indivU238StringWidth - 27, y - 27, 0xFF616161);
-	fontRenderer.func_243248_b(matrixStack, percentU238String, getBackground().getWidth() - percentU238StringWidth - 27, y - 37, 0xFF616161);
-	fontRenderer.func_243248_b(matrixStack, indivU235String, getBackground().getWidth() - indivU235StringWidth - 27, y - 59, 0xFF616161);
-	fontRenderer.func_243248_b(matrixStack, percentU235String, getBackground().getWidth() - percentU235StringWidth - 27, y - 49, 0xFF616161);
+	fontRenderer.func_243248_b(matrixStack, indivU238String, getBackground().getWidth() - indivU238StringWidth - 27, y - 27 - 30, 0xFF616161);
+	fontRenderer.func_243248_b(matrixStack, percentU238String, getBackground().getWidth() - percentU238StringWidth - 27, y - 37 - 30, 0xFF616161);
+	fontRenderer.func_243248_b(matrixStack, indivU235String, getBackground().getWidth() - indivU235StringWidth - 27, y - 59 - 30, 0xFF616161);
+	fontRenderer.func_243248_b(matrixStack, percentU235String, getBackground().getWidth() - percentU235StringWidth - 27, y - 49 - 30, 0xFF616161);
 
     }
 
