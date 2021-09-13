@@ -63,7 +63,7 @@ public class NuclearScienceRecipeInit {
 	    .register(RadioactiveProcessorRecipe.RECIPE_GROUP, () -> FluidItem2ItemRecipeTypes.RADIOACTIVE_PROCESSOR_JSON_SERIALIZER);
 
     // FLUID3ITEMS2ITEM
-    public static final RegistryObject<IRecipeSerializer<?>> MSR_FUEL_PREPROCESSOR_SERIALIZER = RECIPE_SERIALIZER.register(null,
-	    () -> Fluid3Items2ItemRecipeTypes.MSR_FUEL_PREPROCESSOR_JSON_SERIALIZER);
+    public static final RegistryObject<IRecipeSerializer<?>> MSR_FUEL_PREPROCESSOR_SERIALIZER = RECIPE_SERIALIZER
+	    .register(MSRFuelPreProcessorRecipe.RECIPE_GROUP, () -> Fluid3Items2ItemRecipeTypes.MSR_FUEL_PREPROCESSOR_JSON_SERIALIZER);
 
 }

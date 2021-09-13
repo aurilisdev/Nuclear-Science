@@ -34,6 +34,16 @@ public class MSRFuelPreProcessorRecipe extends ElectrodynamicsRecipe implements 
 
     private ItemStack OUTPUT_ITEM;
 
+    public MSRFuelPreProcessorRecipe(FluidIngredient iNPUT_FLUID, CountableIngredient iNPUT_ITEM1, CountableIngredient iNPUT_ITEM2,
+	    CountableIngredient iNPUT_ITEM3, ItemStack oUTPUT_ITEM) {
+	super(RECIPE_ID);
+	INPUT_FLUID = iNPUT_FLUID;
+	INPUT_ITEM1 = iNPUT_ITEM1;
+	INPUT_ITEM2 = iNPUT_ITEM2;
+	INPUT_ITEM3 = iNPUT_ITEM3;
+	OUTPUT_ITEM = oUTPUT_ITEM;
+    }
+
     @Override
     public IRecipeSerializer<?> getSerializer() {
 	return NuclearScienceRecipeInit.MSR_FUEL_PREPROCESSOR_SERIALIZER.get();
@@ -45,18 +55,23 @@ public class MSRFuelPreProcessorRecipe extends ElectrodynamicsRecipe implements 
     }
 
     @Override
+    @SuppressWarnings("java:S1066")
     public boolean matchesRecipe(ComponentProcessor pr) {
-	if (INPUT_ITEM1.testStack(pr.getInput()) && INPUT_ITEM2.testStack(pr.getSecondInput()) && INPUT_ITEM3.testStack(pr.getThirdInput())) {
-	    AbstractFluidHandler<?> fluid = pr.getHolder().getComponent(ComponentType.FluidHandler);
-	    List<Fluid> inputFluids = fluid.getValidInputFluids();
-	    for (int i = 0; i < inputFluids.size(); i++) {
-		FluidTank tank = fluid.getTankFromFluid(inputFluids.get(i), true);
-		if (tank != null && tank.getFluid().getFluid().isEquivalentTo(INPUT_FLUID.getFluidStack().getFluid())
-			&& tank.getFluidAmount() >= INPUT_FLUID.getFluidStack().getAmount()) {
-		    return true;
+	if (INPUT_ITEM1.testStack(pr.getInput()) || INPUT_ITEM1.testStack(pr.getSecondInput()) || INPUT_ITEM1.testStack(pr.getThirdInput())) {
+	    if (INPUT_ITEM2.testStack(pr.getInput()) || INPUT_ITEM2.testStack(pr.getSecondInput()) || INPUT_ITEM2.testStack(pr.getThirdInput())) {
+		if (INPUT_ITEM3.testStack(pr.getInput()) || INPUT_ITEM3.testStack(pr.getSecondInput()) || INPUT_ITEM3.testStack(pr.getThirdInput())) {
+		    AbstractFluidHandler<?> fluid = pr.getHolder().getComponent(ComponentType.FluidHandler);
+		    List<Fluid> inputFluids = fluid.getValidInputFluids();
+		    for (int i = 0; i < inputFluids.size(); i++) {
+			FluidTank tank = fluid.getTankFromFluid(inputFluids.get(i), true);
+			if (tank != null && tank.getFluid().getFluid().isEquivalentTo(INPUT_FLUID.getFluidStack().getFluid())
+				&& tank.getFluidAmount() >= INPUT_FLUID.getFluidStack().getAmount()) {
+			    return true;
+			}
+		    }
+
 		}
 	    }
-
 	}
 	return false;
     }
