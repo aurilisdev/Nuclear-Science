@@ -84,10 +84,12 @@ public class FissionReactorRecipeCategory extends O2ORecipeCategory {
     private static List<List<ItemStack>> recipeInput(O2ORecipe recipe) {
 	ItemStack u235Cell = new ItemStack(nuclearscience.DeferredRegisters.ITEM_FUELHEUO2.get(), 1);
 	ItemStack u238Cell = new ItemStack(nuclearscience.DeferredRegisters.ITEM_FUELLEUO2.get(), 1);
+	ItemStack plutoniumCell = new ItemStack(nuclearscience.DeferredRegisters.ITEM_FUELPLUTONIUM.get(), 1);
 
 	List<ItemStack> fuels = new ArrayList<>();
 	fuels.add(u238Cell);
 	fuels.add(u235Cell);
+	fuels.add(plutoniumCell);
 
 	List<List<ItemStack>> inputSlots = new ArrayList<>();
 	inputSlots.add(((CountableIngredient) recipe.getIngredients().get(0)).fetchCountedStacks());
