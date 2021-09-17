@@ -2,9 +2,6 @@ package nuclearscience.common.tile;
 
 import electrodynamics.api.electricity.CapabilityElectrodynamic;
 import electrodynamics.common.item.ItemProcessorUpgrade;
-import electrodynamics.common.recipe.categories.fluiditem2fluid.FluidItem2FluidRecipe;
-import electrodynamics.common.recipe.recipeutils.CountableIngredient;
-import electrodynamics.common.recipe.recipeutils.FluidIngredient;
 import electrodynamics.prefab.tile.GenericTileTicking;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
@@ -16,10 +13,8 @@ import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
 import electrodynamics.prefab.tile.components.type.ComponentProcessorType;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import electrodynamics.prefab.tile.components.utils.AbstractFluidHandler;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.Direction;
-import net.minecraftforge.fluids.FluidStack;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerMSRFuelPreProcessor;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
@@ -41,39 +36,16 @@ public class TileMSRFuelPreProcessor extends GenericTileTicking {
 		.setAddFluidsValues(MSRFuelPreProcessorRecipe.class, NuclearScienceRecipeInit.MSR_FUEL_PREPROCESSOR_TYPE, MAX_TANK_CAPACITY, true,
 			true));
 	addComponent(new ComponentInventory(this).size(8).relativeFaceSlots(Direction.EAST, 0, 1, 2).relativeFaceSlots(Direction.UP, 0, 1, 2)
-		.relativeSlotFaces(3, Direction.DOWN).valid((slot, stack) -> slot < 4 || stack.getItem() instanceof ItemProcessorUpgrade));
+		.relativeSlotFaces(3, Direction.DOWN).valid((slot, stack) -> slot < 5 || stack.getItem() instanceof ItemProcessorUpgrade));
 	addComponent(new ComponentProcessor(this).upgradeSlots(5, 6, 7)
-		.canProcess(component -> component.outputToPipe(component).consumeBucket(4).canProcessFluidItem2FluidRecipe(component,
-			FluidItem2FluidRecipe.class, NuclearScienceRecipeInit.MSR_FUEL_PREPROCESSOR_TYPE))
-		.process(component -> processFluid3Items2ItemRecipe(component, MSRFuelPreProcessorRecipe.class))
-		.usage(Constants.MSRFUELPREPROCESSOR_USAGE_PER_TICK).type(ComponentProcessorType.ObjectToObject)
+		.canProcess(component -> component.outputToPipe(component).consumeBucket(4).canProcessFluid3Items2ItemRecipe(component,
+			MSRFuelPreProcessorRecipe.class, NuclearScienceRecipeInit.MSR_FUEL_PREPROCESSOR_TYPE))
+		.process(component -> component.processFluid3Items2ItemRecipe(component, MSRFuelPreProcessorRecipe.class))
+		.usage(Constants.MSRFUELPREPROCESSOR_USAGE_PER_TICK).type(ComponentProcessorType.TripleObjectToObject)
 		.requiredTicks(Constants.MSRFUELPREPROCESSOR_REQUIRED_TICKS));
 	addComponent(new ComponentContainerProvider("container.msrfuelpreprocessor")
 		.createMenu((id, player) -> new ContainerMSRFuelPreProcessor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 
-    }
-
-    // TODO: Why the fuck did i do this here...
-    public void processFluid3Items2ItemRecipe(ComponentProcessor pr, Class<MSRFuelPreProcessorRecipe> recipeClass) {
-	if (pr.getRecipe() != null) {
-	    MSRFuelPreProcessorRecipe locRecipe = recipeClass.cast(pr.getRecipe());
-	    AbstractFluidHandler<?> fluid = pr.getHolder().getComponent(ComponentType.FluidHandler);
-	    FluidStack inputFluid = ((FluidIngredient) locRecipe.getIngredients().get(1)).getFluidStack();
-
-	    if (pr.getOutputCap() >= pr.getOutput().getCount() + locRecipe.getRecipeOutput().getCount()) {
-		if (pr.getOutput().isEmpty()) {
-		    pr.output(locRecipe.getRecipeOutput().copy());
-		} else {
-		    pr.getOutput().setCount(pr.getOutput().getCount() + locRecipe.getRecipeOutput().getCount());
-		}
-		pr.getInput().setCount(pr.getInput().getCount() - ((CountableIngredient) locRecipe.getIngredients().get(0)).getStackSize());
-		pr.getSecondInput()
-			.setCount(pr.getSecondInput().getCount() - ((CountableIngredient) locRecipe.getIngredients().get(1)).getStackSize());
-		pr.getThirdInput().setCount(pr.getThirdInput().getCount() - ((CountableIngredient) locRecipe.getIngredients().get(2)).getStackSize());
-		fluid.getStackFromFluid(inputFluid.getFluid(), true).shrink(inputFluid.getAmount());
-		this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendGuiPacketToTracking();
-	    }
-	}
     }
 
     protected void tickClient(ComponentTickable tickable) {

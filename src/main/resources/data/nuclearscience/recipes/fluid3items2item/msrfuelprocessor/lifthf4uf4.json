@@ -1,0 +1,23 @@
+{
+	"type": "nuclearscience:msrfuel_preprocessor_recipe",
+	"item_input1": {
+		"tag": "forge:dusts/lithium",
+		"count": 1
+	},
+	"item_input2": {
+		"item": "nuclearscience:thorianitedust",
+		"count": 2
+	},
+	"item_input3": {
+		"item": "nuclearscience:yellowcake",
+		"count": 2
+	},
+	"fluid_input": {
+		"fluid": "electrodynamics:fluidhydrogenfluoride",
+		"amount": 2500
+	},
+	"item_output": {
+		"item": "nuclearscience:lifthf4uf4",
+		"count": 5
+	}
+}

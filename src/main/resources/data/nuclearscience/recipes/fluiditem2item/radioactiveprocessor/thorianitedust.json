@@ -10,7 +10,7 @@
 		"amount": 1000
 	},
 	"item_output":{
-		"item":"nuclearscience:thorianitedust",
+		"item": "nuclearscience:thorianitedust",
 		"count": 1
 	}
 }
