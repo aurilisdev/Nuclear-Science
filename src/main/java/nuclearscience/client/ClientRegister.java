@@ -97,7 +97,7 @@ public class ClientRegister {
 	ScreenManager.registerFactory(DeferredRegisters.CONTAINER_PARTICLEINJECTOR.get(), ScreenParticleInjector::new);
 	ScreenManager.registerFactory(DeferredRegisters.CONTAINER_QUANTUMCAPACITOR.get(), ScreenQuantumCapacitor::new);
 	ScreenManager.registerFactory(DeferredRegisters.CONTAINER_MSRFUELPREPROCESSOR.get(), ScreenMSRFuelPreProcessor::new);
-	
+
 	RenderTypeLookup.setRenderLayer(DeferredRegisters.blockChemicalExtractor, ClientRegister::shouldMultilayerRender);
 	RenderTypeLookup.setRenderLayer(DeferredRegisters.blockNuclearBoiler, ClientRegister::shouldMultilayerRender);
 	RenderTypeLookup.setRenderLayer(DeferredRegisters.blockReactorCore, ClientRegister::shouldMultilayerRender);

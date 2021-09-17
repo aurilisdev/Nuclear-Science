@@ -1,16 +1,15 @@
 {
-	"type" : "nuclearscience:nuclear_boiler_recipe",
-	
-	"item_input":{
-		"item":"nuclearscience:uranium238",
-		"count":1
+	"type": "nuclearscience:nuclear_boiler_recipe",
+	"item_input": {
+		"item": "nuclearscience:uranium238",
+		"count": 1
 	},
-	"fluid_input":{
-		"fluid":"minecraft:water",
+	"fluid_input": {
+		"fluid": "electrodynamics:fluidhydrogenfluoride",
 		"amount": 1600
 	},
-	"fluid_output":{
-		"fluid":"nuclearscience:fluiduraniumhexafluoride",
-		"amount":2000
+	"fluid_output": {
+		"fluid": "nuclearscience:fluiduraniumhexafluoride",
+		"amount": 2000
 	}
 }

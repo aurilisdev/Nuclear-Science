@@ -1,15 +1,14 @@
 {
-	"type" : "nuclearscience:nuclear_boiler_recipe",
-	
-	"item_input":{
-		"item":"nuclearscience:yellowcake",
-		"count":1
+	"type": "nuclearscience:nuclear_boiler_recipe",
+	"item_input": {
+		"item": "nuclearscience:yellowcake",
+		"count": 1
 	},
-	"fluid_input":{
-		"fluid":"minecraft:water",
+	"fluid_input": {
+		"fluid": "electrodynamics:fluidhydrogenfluoride",
 		"amount": 800
 	},
-	"fluid_output":{
+	"fluid_output": {
 		"fluid": "nuclearscience:fluiduraniumhexafluoride",
 		"amount": 2500
 	}
