@@ -99,7 +99,7 @@ public class TileReactorCore extends GenericTileTicking {
 	    if (world.rand.nextFloat() < insertDecimal) {
 		for (int slot = 0; slot < 4; slot++) {
 		    ItemStack fuelRod = inv.getStackInSlot(slot);
-		    if (fuelRod.getDamage() >= fuelRod.getMaxDamage()) {
+		    if (fuelRod != ItemStack.EMPTY && fuelRod.getDamage() >= fuelRod.getMaxDamage()) {
 			inv.setInventorySlotContents(slot, new ItemStack(DeferredRegisters.ITEM_FUELSPENT.get()));
 		    }
 		    fuelRod.setDamage((int) (fuelRod.getDamage() + 1 + Math.round(temperature) / MELTDOWN_TEMPERATURE_CALC));
