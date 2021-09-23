@@ -16,8 +16,8 @@ public class MSRFuelPreProcessorRecipe extends Fluid3Items2ItemRecipe {
     public static final String MOD_ID = nuclearscience.References.ID;
     public static final ResourceLocation RECIPE_ID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
 
-    public MSRFuelPreProcessorRecipe(ResourceLocation location, FluidIngredient iNPUT_FLUID, CountableIngredient iNPUT_ITEM1, CountableIngredient iNPUT_ITEM2,
-	    CountableIngredient iNPUT_ITEM3, ItemStack oUTPUT_ITEM) {
+    public MSRFuelPreProcessorRecipe(ResourceLocation location, FluidIngredient iNPUT_FLUID, CountableIngredient iNPUT_ITEM1,
+	    CountableIngredient iNPUT_ITEM2, CountableIngredient iNPUT_ITEM3, ItemStack oUTPUT_ITEM) {
 	super(location, iNPUT_FLUID, iNPUT_ITEM1, iNPUT_ITEM2, iNPUT_ITEM3, oUTPUT_ITEM);
     }
 
