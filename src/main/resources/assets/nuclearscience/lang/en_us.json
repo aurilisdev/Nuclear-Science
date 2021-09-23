@@ -1,7 +1,8 @@
 {
 	"item.nuclearscience.uranium235": "Uranium-235",
 	"item.nuclearscience.uranium238": "Uranium-238",
-	"item.nuclearscience.lifthf4uf4": "LiF-ThF4-UF4 salt",
+	"item.nuclearscience.lifthf4uf4": "LiF-ThF4-UF4 Salt",
+	"item.nuclearscience.flinak": "FLiNaK Salt",
 	"item.nuclearscience.yellowcake": "Yellowcake",
 	"item.nuclearscience.fissiledust": "Fissile Dust",
 	"item.nuclearscience.plutoniumoxide": "Plutonium Tetroxide",

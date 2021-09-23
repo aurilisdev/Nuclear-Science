@@ -192,11 +192,14 @@ public class DeferredRegisters {
 	    supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
     public static final RegistryObject<Item> ITEM_PLUTONIUM239 = ITEMS.register("plutonium239",
 	    supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
-    public static final RegistryObject<Item> ITEM_YELLOWCAKE = ITEMS.register("yellowcake",
-	    supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
     public static final RegistryObject<Item> ITEM_LIFHT4PUF3 = ITEMS.register("lifthf4uf4",
 	    supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
+    public static final RegistryObject<Item> ITEM_FLINAK = ITEMS.register("flinak",
+	    supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
 
+    
+    public static final RegistryObject<Item> ITEM_YELLOWCAKE = ITEMS.register("yellowcake",
+	    supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
     public static final RegistryObject<Item> ITEM_FISSILEDUST = ITEMS.register("fissiledust",
 	    supplier(new ItemRadioactive(new Item.Properties().group(References.NUCLEARTAB))));
     public static final RegistryObject<Item> ITEM_PLUTONIUMOXIDE = ITEMS.register("plutoniumoxide",
