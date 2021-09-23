@@ -27,6 +27,7 @@ import nuclearscience.common.block.BlockControlRodAssembly;
 import nuclearscience.common.block.BlockElectromagnet;
 import nuclearscience.common.block.BlockElectromagneticBooster;
 import nuclearscience.common.block.BlockElectromagneticSwitch;
+import nuclearscience.common.block.BlockFreezePlug;
 import nuclearscience.common.block.BlockFuelReprocessor;
 import nuclearscience.common.block.BlockFusionReactorCore;
 import nuclearscience.common.block.BlockGasCentrifuge;
@@ -45,6 +46,7 @@ import nuclearscience.common.fluid.types.FluidAmmonia;
 import nuclearscience.common.fluid.types.FluidIronSulfamate;
 import nuclearscience.common.fluid.types.FluidUraniumHexafluoride;
 import nuclearscience.common.inventory.container.ContainerChemicalExtractor;
+import nuclearscience.common.inventory.container.ContainerFreezePlug;
 import nuclearscience.common.inventory.container.ContainerGasCentrifuge;
 import nuclearscience.common.inventory.container.ContainerMSRFuelPreProcessor;
 import nuclearscience.common.inventory.container.ContainerNuclearBoiler;
@@ -62,6 +64,7 @@ import nuclearscience.common.item.ItemRadioactive;
 import nuclearscience.common.tile.TileChemicalExtractor;
 import nuclearscience.common.tile.TileControlRodAssembly;
 import nuclearscience.common.tile.TileElectromagneticSwitch;
+import nuclearscience.common.tile.TileFreezePlug;
 import nuclearscience.common.tile.TileFuelReprocessor;
 import nuclearscience.common.tile.TileFusionReactorCore;
 import nuclearscience.common.tile.TileGasCentrifuge;
@@ -107,6 +110,7 @@ public class DeferredRegisters {
     public static BlockFuelReprocessor blockFuelReprocessor;
     public static BlockRadioactiveProcessor blockRadioactiveProcessor;
     public static BlockMSRFuelPreProcessor blockMSRFuelPreProcessor;
+    public static BlockFreezePlug blockFreezePlug;
 
     public static Block blocklead;
 
@@ -115,6 +119,7 @@ public class DeferredRegisters {
 	BLOCKS.register("nuclearboiler", supplier(blockNuclearBoiler = new BlockNuclearBoiler()));
 	BLOCKS.register("chemicalextractor", supplier(blockChemicalExtractor = new BlockChemicalExtractor()));
 	BLOCKS.register("radioisotopegenerator", supplier(blockRadioisotopeGenerator = new BlockRadioisotopeGenerator()));
+	BLOCKS.register("freezeplug", supplier(blockFreezePlug = new BlockFreezePlug()));
 	BLOCKS.register("turbine", supplier(blockTurbine = new BlockTurbine()));
 	BLOCKS.register("reactorcore", supplier(blockReactorCore = new BlockReactorCore()));
 	BLOCKS.register("electromagnet", supplier(blockElectromagnet = new BlockElectromagnet(false)));
@@ -140,6 +145,8 @@ public class DeferredRegisters {
 	ITEMS.register("chemicalextractor",
 		supplier(new BlockItemDescriptable(blockChemicalExtractor, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("radioisotopegenerator",
+		supplier(new BlockItemDescriptable(blockRadioisotopeGenerator, new Item.Properties().group(References.NUCLEARTAB))));
+	ITEMS.register("freezeplug",
 		supplier(new BlockItemDescriptable(blockRadioisotopeGenerator, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("turbine", supplier(new BlockItemDescriptable(blockTurbine, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("reactorcore", supplier(new BlockItemDescriptable(blockReactorCore, new Item.Properties().group(References.NUCLEARTAB))));
@@ -257,6 +264,8 @@ public class DeferredRegisters {
 	    () -> new TileEntityType<>(TileChemicalExtractor::new, Sets.newHashSet(blockChemicalExtractor), null));
     public static final RegistryObject<TileEntityType<TileRadioisotopeGenerator>> TILE_RADIOISOTOPEGENERATOR = TILES.register("radioisotopegenerator",
 	    () -> new TileEntityType<>(TileRadioisotopeGenerator::new, Sets.newHashSet(blockRadioisotopeGenerator), null));
+    public static final RegistryObject<TileEntityType<TileFreezePlug>> TILE_FREEZEPLUG = TILES.register("freezeplug",
+	    () -> new TileEntityType<>(TileFreezePlug::new, Sets.newHashSet(blockFreezePlug), null));
     public static final RegistryObject<TileEntityType<TileTurbine>> TILE_TURBINE = TILES.register("turbine",
 	    () -> new TileEntityType<>(TileTurbine::new, Sets.newHashSet(blockTurbine), null));
     public static final RegistryObject<TileEntityType<TileReactorCore>> TILE_REACTORCORE = TILES.register("reactorcore",
@@ -293,6 +302,8 @@ public class DeferredRegisters {
 	    .register("chemicalextractor", () -> new ContainerType<>(ContainerChemicalExtractor::new));
     public static final RegistryObject<ContainerType<ContainerRadioisotopeGenerator>> CONTAINER_RADIOISOTOPEGENERATOR = CONTAINERS
 	    .register("radioisotopegenerator", () -> new ContainerType<>(ContainerRadioisotopeGenerator::new));
+    public static final RegistryObject<ContainerType<ContainerFreezePlug>> CONTAINER_FREEZEPLUG = CONTAINERS.register("freezeplug",
+	    () -> new ContainerType<>(ContainerFreezePlug::new));
     public static final RegistryObject<ContainerType<ContainerReactorCore>> CONTAINER_REACTORCORE = CONTAINERS.register("reactorcore",
 	    () -> new ContainerType<>(ContainerReactorCore::new));
     public static final RegistryObject<ContainerType<ContainerParticleInjector>> CONTAINER_PARTICLEINJECTOR = CONTAINERS.register("particleinjetor",

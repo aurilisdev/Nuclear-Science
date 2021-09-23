@@ -39,4 +39,6 @@ public class Constants {
     public static double MSRFUELPREPROCESSOR_USAGE_PER_TICK = 1200.0;
     @IntValue(def = 200)
     public static int MSRFUELPREPROCESSOR_REQUIRED_TICKS = 200;
+    @DoubleValue(def = 1200.0)
+    public static double FREEZEPLUG_USAGE_PER_TICK = 200.0;
 }
