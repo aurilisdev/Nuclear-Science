@@ -11,7 +11,6 @@ import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import electrodynamics.prefab.utilities.object.TransferPack;
 import net.minecraft.util.Direction;
 import nuclearscience.DeferredRegisters;
-import nuclearscience.api.radiation.RadiationRegister;
 import nuclearscience.common.inventory.container.ContainerFreezePlug;
 import nuclearscience.common.settings.Constants;
 
@@ -25,16 +24,19 @@ public class TileFreezePlug extends GenericTileTicking {
 	addComponent(new ComponentElectrodynamic(this).voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE).extractPower((x, y) -> TransferPack.EMPTY)
 		.output(Direction.UP).output(Direction.DOWN));
 	addComponent(new ComponentInventory(this).size(1).slotFaces(0, Direction.values())
-		.valid((slot, stack) -> RadiationRegister.get(stack.getItem()) != RadiationRegister.NULL));
+		.valid((slot, stack) -> stack.getItem() == DeferredRegisters.ITEM_FLINAK.get()));
 	addComponent(new ComponentContainerProvider("container.freezeplug")
 		.createMenu((id, player) -> new ContainerFreezePlug(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
     }
 
     public void tickServer(ComponentTickable tickable) {
 	ComponentElectrodynamic el = getComponent(ComponentType.Electrodynamic);
-	isFrozen = el.getJoulesStored() >= Constants.FREEZEPLUG_USAGE_PER_TICK;
-	if (isFrozen) {
-	    el.extractPower(TransferPack.joulesVoltage(Constants.FREEZEPLUG_USAGE_PER_TICK, 120), false);
+	ComponentInventory inv = getComponent(ComponentType.Inventory);
+	if (!inv.getStackInSlot(0).isEmpty()) {
+	    isFrozen = el.getJoulesStored() >= Constants.FREEZEPLUG_USAGE_PER_TICK;
+	    if (isFrozen) {
+		el.extractPower(TransferPack.joulesVoltage(Constants.FREEZEPLUG_USAGE_PER_TICK, 120), false);
+	    }
 	}
     }
 

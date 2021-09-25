@@ -146,8 +146,7 @@ public class DeferredRegisters {
 		supplier(new BlockItemDescriptable(blockChemicalExtractor, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("radioisotopegenerator",
 		supplier(new BlockItemDescriptable(blockRadioisotopeGenerator, new Item.Properties().group(References.NUCLEARTAB))));
-	ITEMS.register("freezeplug",
-		supplier(new BlockItemDescriptable(blockRadioisotopeGenerator, new Item.Properties().group(References.NUCLEARTAB))));
+	ITEMS.register("freezeplug", supplier(new BlockItemDescriptable(blockFreezePlug, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("turbine", supplier(new BlockItemDescriptable(blockTurbine, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("reactorcore", supplier(new BlockItemDescriptable(blockReactorCore, new Item.Properties().group(References.NUCLEARTAB))));
 

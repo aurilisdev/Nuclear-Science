@@ -26,6 +26,7 @@ import nuclearscience.client.render.tile.RenderRodAssembly;
 import nuclearscience.client.render.tile.RenderTeleporter;
 import nuclearscience.client.render.tile.RenderTurbine;
 import nuclearscience.client.screen.ScreenChemicalExtractor;
+import nuclearscience.client.screen.ScreenFreezePlug;
 import nuclearscience.client.screen.ScreenGasCentrifuge;
 import nuclearscience.client.screen.ScreenMSRFuelPreProcessor;
 import nuclearscience.client.screen.ScreenNuclearBoiler;
@@ -93,6 +94,7 @@ public class ClientRegister {
 	ScreenManager.registerFactory(DeferredRegisters.CONTAINER_NUCLEARBOILER.get(), ScreenNuclearBoiler::new);
 	ScreenManager.registerFactory(DeferredRegisters.CONTAINER_CHEMICALEXTRACTOR.get(), ScreenChemicalExtractor::new);
 	ScreenManager.registerFactory(DeferredRegisters.CONTAINER_RADIOISOTOPEGENERATOR.get(), ScreenRadioisotopeGenerator::new);
+	ScreenManager.registerFactory(DeferredRegisters.CONTAINER_FREEZEPLUG.get(), ScreenFreezePlug::new);
 	ScreenManager.registerFactory(DeferredRegisters.CONTAINER_REACTORCORE.get(), ScreenReactorCore::new);
 	ScreenManager.registerFactory(DeferredRegisters.CONTAINER_PARTICLEINJECTOR.get(), ScreenParticleInjector::new);
 	ScreenManager.registerFactory(DeferredRegisters.CONTAINER_QUANTUMCAPACITOR.get(), ScreenQuantumCapacitor::new);
