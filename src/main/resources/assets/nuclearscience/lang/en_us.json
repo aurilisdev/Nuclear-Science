@@ -121,7 +121,7 @@
 	"gui.jei.category.gas_centrifuge.info.percent_u235": "17.5%",
 	"gui.jei.category.gas_centrifuge.info.percent_u238": "82.5%",
 	"gui.jei.category.fission_reactor": "Fissile Irradiation",
-	"gui.jei.category.fission_reactor.info.power": "Range: 0 C to 4400 C",
+	"gui.jei.category.fission_reactor.info.power": "Range: 0 C to 1400 C",
 	"gui.jei.category.partical_accelerator_antimatter": "Particle Acceleration",
 	"gui.jei.category.partical_accelerator_antimatter.info.power": "Charge:100% Speed<100%",
 	"gui.jei.category.partical_accelerator_darkmatter": "Particle Collision",
