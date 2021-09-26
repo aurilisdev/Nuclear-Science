@@ -85,6 +85,8 @@
 	"gui.quantumcapacitor.current": "Current: %s",
 	"gui.quantumcapacitor.voltage": "Voltage: %s",
 	"gui.quantumcapacitor.stored": "Stored: %s",
+	"gui.freezeplug.usage": "Usage: %s",
+	"gui.freezeplug.voltage": "Voltage: %s",
 	"itemGroup.itemgroupnuclearscience": "Nuclear Science",
 	"death.attack.radiation": "%s just did a speedrun of evolution!",
 	"death.attack.plasma": "%s was ionized!",
