@@ -17,6 +17,7 @@ import nuclearscience.DeferredRegisters;
 import nuclearscience.References;
 import nuclearscience.client.render.entity.RenderParticle;
 import nuclearscience.client.render.tile.RenderChemicalExtractor;
+import nuclearscience.client.render.tile.RenderFuelReprocessor;
 import nuclearscience.client.render.tile.RenderFusionReactorCore;
 import nuclearscience.client.render.tile.RenderGasCentrifuge;
 import nuclearscience.client.render.tile.RenderNuclearBoiler;
@@ -41,22 +42,24 @@ import nuclearscience.client.screen.ScreenReactorCore;
 public class ClientRegister {
     @SubscribeEvent
     public static void onModelEvent(ModelRegistryEvent event) {
-	ModelLoader.addSpecialModel(MODEL_GASCENTRIFUGEFULL);
-	ModelLoader.addSpecialModel(MODEL_GASCENTRIFUGEOUTLINE);
-	ModelLoader.addSpecialModel(MODEL_GASCENTRIFUGECENTER);
-	ModelLoader.addSpecialModel(MODEL_CHEMICALEXTRACTORWATER);
-	ModelLoader.addSpecialModel(MODEL_CHEMICALBOILERWATER);
-	ModelLoader.addSpecialModel(MODEL_CHEMICALBOILERHEXAFLUORIDE);
-	ModelLoader.addSpecialModel(MODEL_TURBINEFULL);
-	ModelLoader.addSpecialModel(MODEL_TURBINECASING);
-	ModelLoader.addSpecialModel(MODEL_TURBINEROTORLAYER);
-	ModelLoader.addSpecialModel(MODEL_REACTORCORE);
-	ModelLoader.addSpecialModel(MODEL_REACTORFUELROD);
-	ModelLoader.addSpecialModel(MODEL_REACTORDEUTERIUM);
-	ModelLoader.addSpecialModel(MODEL_TELEPORTERON);
-	ModelLoader.addSpecialModel(MODEL_TELEPORTER);
-	ModelLoader.addSpecialModel(MODEL_CONTROLRODASSEMBLYSTRUCTURE);
-	ModelLoader.addSpecialModel(MODEL_CONTROLRODASSEMBLYSROD);
+		ModelLoader.addSpecialModel(MODEL_GASCENTRIFUGEFULL);
+		ModelLoader.addSpecialModel(MODEL_GASCENTRIFUGEOUTLINE);
+		ModelLoader.addSpecialModel(MODEL_GASCENTRIFUGECENTER);
+		ModelLoader.addSpecialModel(MODEL_CHEMICALEXTRACTORWATER);
+		ModelLoader.addSpecialModel(MODEL_CHEMICALBOILERWATER);
+		ModelLoader.addSpecialModel(MODEL_CHEMICALBOILERHEXAFLUORIDE);
+		ModelLoader.addSpecialModel(MODEL_TURBINEFULL);
+		ModelLoader.addSpecialModel(MODEL_TURBINECASING);
+		ModelLoader.addSpecialModel(MODEL_TURBINEROTORLAYER);
+		ModelLoader.addSpecialModel(MODEL_REACTORCORE);
+		ModelLoader.addSpecialModel(MODEL_REACTORFUELROD);
+		ModelLoader.addSpecialModel(MODEL_REACTORDEUTERIUM);
+		ModelLoader.addSpecialModel(MODEL_TELEPORTERON);
+		ModelLoader.addSpecialModel(MODEL_TELEPORTER);
+		ModelLoader.addSpecialModel(MODEL_CONTROLRODASSEMBLYSTRUCTURE);
+		ModelLoader.addSpecialModel(MODEL_CONTROLRODASSEMBLYSROD);
+		ModelLoader.addSpecialModel(MODEL_FUELREPROCESSOR);
+		ModelLoader.addSpecialModel(MODEL_FUELREPROCESSOR_ON);
     }
 
     public static final ResourceLocation MODEL_GASCENTRIFUGEFULL = new ResourceLocation(References.ID + ":block/gascentrifuge");
@@ -77,6 +80,8 @@ public class ClientRegister {
     public static final ResourceLocation MODEL_CONTROLRODASSEMBLYSTRUCTURE = new ResourceLocation(
 	    References.ID + ":block/controlrodassemblystructure");
     public static final ResourceLocation MODEL_CONTROLRODASSEMBLYSROD = new ResourceLocation(References.ID + ":block/controlrodassemblyrod");
+    public static final ResourceLocation MODEL_FUELREPROCESSOR = new ResourceLocation(References.ID + ":block/fuelreprocessor");
+    public static final ResourceLocation MODEL_FUELREPROCESSOR_ON = new ResourceLocation(References.ID + ":block/fuelreprocessoron");
 
     public static void setup() {
 	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_GASCENTRIFUGE.get(), RenderGasCentrifuge::new);
@@ -88,7 +93,8 @@ public class ClientRegister {
 	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_QUANTUMCAPACITOR.get(), RenderQuantumCapacitor::new);
 	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_TELEPORTER.get(), RenderTeleporter::new);
 	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_CONTROLRODASSEMBLY.get(), RenderRodAssembly::new);
-
+	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_FUELREPROCESSOR.get(), RenderFuelReprocessor::new);
+	
 	RenderingRegistry.registerEntityRenderingHandler(DeferredRegisters.ENTITY_PARTICLE.get(), RenderParticle::new);
 
 	ScreenManager.registerFactory(DeferredRegisters.CONTAINER_GASCENTRIFUGE.get(), ScreenGasCentrifuge::new);
