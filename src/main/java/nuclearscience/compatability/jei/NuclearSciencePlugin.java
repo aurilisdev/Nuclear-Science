@@ -117,11 +117,11 @@ public class NuclearSciencePlugin implements IModPlugin {
 	Set<FluidItem2ItemRecipe> radioactiveProcessorRecipes = ImmutableSet
 		.copyOf(recipeManager.getRecipesForType(NuclearScienceRecipeInit.RADIOACTIVE_PROCESSOR_TYPE));
 	registration.addRecipes(radioactiveProcessorRecipes, RadioactiveProcessorRecipeCategory.UID);
-	
+
 	Set<Fluid3Items2ItemRecipe> msrProcessorRecipes = ImmutableSet
 		.copyOf(recipeManager.getRecipesForType(NuclearScienceRecipeInit.MSR_FUEL_PREPROCESSOR_TYPE));
 	registration.addRecipes(msrProcessorRecipes, MSRProcessorRecipeCategory.UID);
-	
+
 	nuclearScienceInfoTabs(registration);
     }
 
@@ -149,7 +149,7 @@ public class NuclearSciencePlugin implements IModPlugin {
 	registration.addRecipeCategories(new FuelReprocessorRecipeCategory(helper));
 
 	registration.addRecipeCategories(new RadioactiveProcessorRecipeCategory(helper));
-	
+
 	registration.addRecipeCategories(new MSRProcessorRecipeCategory(helper));
 
     }

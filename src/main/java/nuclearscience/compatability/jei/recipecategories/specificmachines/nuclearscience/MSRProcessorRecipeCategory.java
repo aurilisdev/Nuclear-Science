@@ -31,18 +31,17 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fluids.FluidStack;
 import nuclearscience.References;
 
-public class MSRProcessorRecipeCategory extends ElectrodynamicsRecipeCategory<Fluid3Items2ItemRecipe>{
-	
-	
-	public static final int ITEM_INPUT_1 = 0;
-	public static final int ITEM_INPUT_2 = 1;
-	public static final int ITEM_INPUT_3 = 2;
-	public static final int FLUID_BUCKET = 3;
-	public static final int FLUID_INPUT = 4;
-	public static final int OUTPUT_SLOT = 5;
+public class MSRProcessorRecipeCategory extends ElectrodynamicsRecipeCategory<Fluid3Items2ItemRecipe> {
+
+    public static final int ITEM_INPUT_1 = 0;
+    public static final int ITEM_INPUT_2 = 1;
+    public static final int ITEM_INPUT_3 = 2;
+    public static final int FLUID_BUCKET = 3;
+    public static final int FLUID_INPUT = 4;
+    public static final int OUTPUT_SLOT = 5;
 
     private static int[] GUI_BACKGROUND_COORDS = { 0, 0, 132, 64 };
-    
+
     private static int[] INPUT_FLUID_TANK = { 11, 52, 12, 47, 5000 };
 
     public static int SMELT_TIME = 50;
@@ -58,94 +57,94 @@ public class MSRProcessorRecipeCategory extends ElectrodynamicsRecipeCategory<Fl
 
     public static ResourceLocation UID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
 
-	public MSRProcessorRecipeCategory(IGuiHelper guiHelper) {
-		super(guiHelper, MOD_ID, RECIPE_GROUP, GUI_TEXTURE_STRING, INPUT_MACHINE, GUI_BACKGROUND_COORDS, Fluid3Items2ItemRecipe.class, TEXT_Y_HEIGHT,
-				SMELT_TIME);
-		
-		CACHED_ARROWS = CacheBuilder.newBuilder().maximumSize(25).build(new CacheLoader<Integer, IDrawableAnimated>() {
-		    @Override
-		    public IDrawableAnimated load(Integer cookTime) {
-		    	return guiHelper.drawableBuilder(getGuiTexture(), 0, 65, 68, 22).buildAnimated(cookTime, StartDirection.LEFT, false);
-		    }
-		});
-	}
+    public MSRProcessorRecipeCategory(IGuiHelper guiHelper) {
+	super(guiHelper, MOD_ID, RECIPE_GROUP, GUI_TEXTURE_STRING, INPUT_MACHINE, GUI_BACKGROUND_COORDS, Fluid3Items2ItemRecipe.class, TEXT_Y_HEIGHT,
+		SMELT_TIME);
 
-	@Override
-	public ResourceLocation getUid() {
-		return UID;
-	}
+	CACHED_ARROWS = CacheBuilder.newBuilder().maximumSize(25).build(new CacheLoader<Integer, IDrawableAnimated>() {
+	    @Override
+	    public IDrawableAnimated load(Integer cookTime) {
+		return guiHelper.drawableBuilder(getGuiTexture(), 0, 65, 68, 22).buildAnimated(cookTime, StartDirection.LEFT, false);
+	    }
+	});
+    }
 
-	@Override
-	public void setIngredients(Fluid3Items2ItemRecipe recipe, IIngredients ingredients) {
-		ingredients.setInputLists(VanillaTypes.ITEM, getItemIngredients(recipe));
-		ingredients.setInputs(VanillaTypes.FLUID, getFluids(recipe));
-		ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
-	}
+    @Override
+    public ResourceLocation getUid() {
+	return UID;
+    }
 
-	@Override
-	public void setRecipe(IRecipeLayout recipeLayout, Fluid3Items2ItemRecipe recipe, IIngredients ingredients) {
-		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-		IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
+    @Override
+    public void setIngredients(Fluid3Items2ItemRecipe recipe, IIngredients ingredients) {
+	ingredients.setInputLists(VanillaTypes.ITEM, getItemIngredients(recipe));
+	ingredients.setInputs(VanillaTypes.FLUID, getFluids(recipe));
+	ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
+    }
 
-		guiItemStacks.init(ITEM_INPUT_1, true, 58, 2);
-		guiItemStacks.init(ITEM_INPUT_2, true, 58, 23);
-		guiItemStacks.init(ITEM_INPUT_3, true, 58, 44);
-		guiItemStacks.init(FLUID_BUCKET, true, 27, 36);
+    @Override
+    public void setRecipe(IRecipeLayout recipeLayout, Fluid3Items2ItemRecipe recipe, IIngredients ingredients) {
+	IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
+	IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
 
-		guiItemStacks.init(OUTPUT_SLOT, false, 104, 23);
+	guiItemStacks.init(ITEM_INPUT_1, true, 58, 2);
+	guiItemStacks.init(ITEM_INPUT_2, true, 58, 23);
+	guiItemStacks.init(ITEM_INPUT_3, true, 58, 44);
+	guiItemStacks.init(FLUID_BUCKET, true, 27, 36);
 
-		int fluidInputAmount = ((FluidIngredient) recipe.getIngredients().get(3)).getFluidStack().getAmount();
+	guiItemStacks.init(OUTPUT_SLOT, false, 104, 23);
 
-		int leftHeightOffset = (int) Math.ceil(fluidInputAmount / (float) INPUT_FLUID_TANK[4] * INPUT_FLUID_TANK[3]);
-		int leftStartY = INPUT_FLUID_TANK[1] - leftHeightOffset + 1;
+	int fluidInputAmount = ((FluidIngredient) recipe.getIngredients().get(3)).getFluidStack().getAmount();
 
-		guiFluidStacks.init(FLUID_INPUT, true, INPUT_FLUID_TANK[0], leftStartY, INPUT_FLUID_TANK[2], leftHeightOffset, fluidInputAmount,
-			true, null);
+	int leftHeightOffset = (int) Math.ceil(fluidInputAmount / (float) INPUT_FLUID_TANK[4] * INPUT_FLUID_TANK[3]);
+	int leftStartY = INPUT_FLUID_TANK[1] - leftHeightOffset + 1;
 
-		guiItemStacks.set(ingredients);
-		guiFluidStacks.set(ingredients);
-	}
-	
-	@Override
-	public void draw(Fluid3Items2ItemRecipe recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
-		IDrawableAnimated arrow = getArrow(recipe);
-		arrow.draw(matrixStack, 32, 17);
+	guiFluidStacks.init(FLUID_INPUT, true, INPUT_FLUID_TANK[0], leftStartY, INPUT_FLUID_TANK[2], leftHeightOffset, fluidInputAmount, true, null);
 
-		drawSmeltTime(recipe, matrixStack, getYHeight());
-	}
-	
-	protected IDrawableAnimated getArrow(Fluid3Items2ItemRecipe recipe) {
-		return CACHED_ARROWS.getUnchecked(getArrowSmeltTime());
-	}
-	
-	protected void drawSmeltTime(Fluid3Items2ItemRecipe recipe, MatrixStack matrixStack, int y) {
-		int smeltTimeSeconds = getArrowSmeltTime() / 20;
-		TranslationTextComponent timeString = new TranslationTextComponent("gui.jei.category." + getRecipeGroup() + ".info.power", smeltTimeSeconds);
-		Minecraft minecraft = Minecraft.getInstance();
-		FontRenderer fontRenderer = minecraft.fontRenderer;
-		int stringWidth = fontRenderer.getStringPropertyWidth(timeString);
-		fontRenderer.func_243248_b(matrixStack, timeString, getBackground().getWidth() - stringWidth, y, 0xFF808080);
-	}
-	
-	public List<List<ItemStack>> getItemIngredients(Fluid3Items2ItemRecipe recipe) {
-		List<List<ItemStack>> stacks = new ArrayList<>();
-		NonNullList<Ingredient> recipeIngredients = recipe.getIngredients();
-		stacks.add(((CountableIngredient)recipeIngredients.get(0)).fetchCountedStacks());
-		stacks.add(((CountableIngredient)recipeIngredients.get(1)).fetchCountedStacks());
-		stacks.add(((CountableIngredient)recipeIngredients.get(2)).fetchCountedStacks());
-		FluidStack fluid = ((FluidIngredient) recipeIngredients.get(3)).getFluidStack();
-		ItemStack filledBucket = new ItemStack(fluid.getFluid().getFilledBucket());
-		CapabilityUtils.fill(filledBucket, fluid);
-		List<ItemStack> bucketList = new ArrayList<>();
-		bucketList.add(filledBucket);
-		stacks.add(bucketList);
-		return stacks;
-	}
-	
-	private List<FluidStack> getFluids(Fluid3Items2ItemRecipe recipe) {
-		List<FluidStack> list = new ArrayList<>();
-		list.add(((FluidIngredient)recipe.getIngredients().get(3)).getFluidStack());
-		return list;
-	}
+	guiItemStacks.set(ingredients);
+	guiFluidStacks.set(ingredients);
+    }
+
+    @Override
+    public void draw(Fluid3Items2ItemRecipe recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
+	IDrawableAnimated arrow = getArrow(recipe);
+	arrow.draw(matrixStack, 32, 17);
+
+	drawSmeltTime(recipe, matrixStack, getYHeight());
+    }
+
+    protected IDrawableAnimated getArrow(Fluid3Items2ItemRecipe recipe) {
+	return CACHED_ARROWS.getUnchecked(getArrowSmeltTime());
+    }
+
+    @SuppressWarnings("java:S1066")
+    protected void drawSmeltTime(Fluid3Items2ItemRecipe recipe, MatrixStack matrixStack, int y) {
+	int smeltTimeSeconds = getArrowSmeltTime() / 20;
+	TranslationTextComponent timeString = new TranslationTextComponent("gui.jei.category." + getRecipeGroup() + ".info.power", smeltTimeSeconds);
+	Minecraft minecraft = Minecraft.getInstance();
+	FontRenderer fontRenderer = minecraft.fontRenderer;
+	int stringWidth = fontRenderer.getStringPropertyWidth(timeString);
+	fontRenderer.func_243248_b(matrixStack, timeString, getBackground().getWidth() - stringWidth, y, 0xFF808080);
+    }
+
+    public List<List<ItemStack>> getItemIngredients(Fluid3Items2ItemRecipe recipe) {
+	List<List<ItemStack>> stacks = new ArrayList<>();
+	NonNullList<Ingredient> recipeIngredients = recipe.getIngredients();
+	stacks.add(((CountableIngredient) recipeIngredients.get(0)).fetchCountedStacks());
+	stacks.add(((CountableIngredient) recipeIngredients.get(1)).fetchCountedStacks());
+	stacks.add(((CountableIngredient) recipeIngredients.get(2)).fetchCountedStacks());
+	FluidStack fluid = ((FluidIngredient) recipeIngredients.get(3)).getFluidStack();
+	ItemStack filledBucket = new ItemStack(fluid.getFluid().getFilledBucket());
+	CapabilityUtils.fill(filledBucket, fluid);
+	List<ItemStack> bucketList = new ArrayList<>();
+	bucketList.add(filledBucket);
+	stacks.add(bucketList);
+	return stacks;
+    }
+
+    private static List<FluidStack> getFluids(Fluid3Items2ItemRecipe recipe) {
+	List<FluidStack> list = new ArrayList<>();
+	list.add(((FluidIngredient) recipe.getIngredients().get(3)).getFluidStack());
+	return list;
+    }
 
 }

@@ -24,29 +24,29 @@ import nuclearscience.common.settings.Constants;
 public class TileFuelReprocessor extends GenericTileTicking {
 
     public TileFuelReprocessor() {
-    	super(DeferredRegisters.TILE_FUELREPROCESSOR.get());
-    	addComponent(new ComponentDirection());
-    	addComponent(new ComponentPacketHandler());
-    	addComponent(new ComponentTickable().tickClient(this::tickClient));
-    	addComponent(new ComponentElectrodynamic(this).voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 4).relativeInput(Direction.NORTH));
-    	addComponent(new ComponentInventory(this).size(5).faceSlots(Direction.UP, 0).faceSlots(Direction.DOWN, 1).relativeFaceSlots(Direction.EAST, 1)
-    		.relativeFaceSlots(Direction.WEST, 2)
-    		.valid((slot, stack) -> slot == 0 || slot > 2 && stack.getItem() instanceof ItemProcessorUpgrade));
-    	addProcessor(new ComponentProcessor(this).upgradeSlots(2, 3, 4)
-    		.canProcess(component -> component.canProcessO2ORecipe(component, FuelReprocessorRecipe.class,
-    			NuclearScienceRecipeInit.FUEL_REPROCESSOR_TYPE))
-    		.process(component -> component.processO2ORecipe(component, FuelReprocessorRecipe.class))
-    		.requiredTicks((long) Constants.FUELREPROCESSOR_REQUIRED_TICKS).usage(Constants.FUELREPROCESSOR_USAGE_PER_TICK)
-    		.type(ComponentProcessorType.ObjectToObject));
-    	addComponent(new ComponentContainerProvider("container.fuelreprocessor")
-    		.createMenu((id, player) -> new ContainerO2OProcessor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
+	super(DeferredRegisters.TILE_FUELREPROCESSOR.get());
+	addComponent(new ComponentDirection());
+	addComponent(new ComponentPacketHandler());
+	addComponent(new ComponentTickable().tickClient(this::tickClient));
+	addComponent(new ComponentElectrodynamic(this).voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 4).relativeInput(Direction.NORTH));
+	addComponent(new ComponentInventory(this).size(5).faceSlots(Direction.UP, 0).faceSlots(Direction.DOWN, 1).relativeFaceSlots(Direction.EAST, 1)
+		.relativeFaceSlots(Direction.WEST, 2)
+		.valid((slot, stack) -> slot == 0 || slot > 2 && stack.getItem() instanceof ItemProcessorUpgrade));
+	addProcessor(new ComponentProcessor(this).upgradeSlots(2, 3, 4)
+		.canProcess(component -> component.canProcessO2ORecipe(component, FuelReprocessorRecipe.class,
+			NuclearScienceRecipeInit.FUEL_REPROCESSOR_TYPE))
+		.process(component -> component.processO2ORecipe(component, FuelReprocessorRecipe.class))
+		.requiredTicks((long) Constants.FUELREPROCESSOR_REQUIRED_TICKS).usage(Constants.FUELREPROCESSOR_USAGE_PER_TICK)
+		.type(ComponentProcessorType.ObjectToObject));
+	addComponent(new ComponentContainerProvider("container.fuelreprocessor")
+		.createMenu((id, player) -> new ContainerO2OProcessor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
     }
-    
+
     public void tickClient(ComponentTickable tickable) {
-    	boolean running = getProcessor(0).operatingTicks > 0;
-    	if (running && tickable.getTicks() % 100 == 0) {
-    	    SoundAPI.playSound(electrodynamics.SoundRegister.SOUND_MINERALCRUSHER.get(), SoundCategory.BLOCKS, 1, 1, pos);
-    	}
+	boolean running = getProcessor(0).operatingTicks > 0;
+	if (running && tickable.getTicks() % 100 == 0) {
+	    SoundAPI.playSound(electrodynamics.SoundRegister.SOUND_MINERALCRUSHER.get(), SoundCategory.BLOCKS, 1, 1, pos);
+	}
     }
 
 }
