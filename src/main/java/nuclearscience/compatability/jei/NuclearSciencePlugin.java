@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.google.common.collect.ImmutableSet;
 
+import electrodynamics.common.recipe.categories.fluid3items2item.Fluid3Items2ItemRecipe;
 import electrodynamics.common.recipe.categories.fluiditem2fluid.FluidItem2FluidRecipe;
 import electrodynamics.common.recipe.categories.fluiditem2item.FluidItem2ItemRecipe;
 import electrodynamics.common.recipe.categories.o2o.O2ORecipe;
@@ -27,6 +28,7 @@ import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.util.ResourceLocation;
 import nuclearscience.client.screen.ScreenChemicalExtractor;
 import nuclearscience.client.screen.ScreenGasCentrifuge;
+import nuclearscience.client.screen.ScreenMSRFuelPreProcessor;
 import nuclearscience.client.screen.ScreenNuclearBoiler;
 import nuclearscience.client.screen.ScreenParticleInjector;
 import nuclearscience.client.screen.ScreenReactorCore;
@@ -37,6 +39,7 @@ import nuclearscience.compatability.jei.recipecategories.specificmachines.nuclea
 import nuclearscience.compatability.jei.recipecategories.specificmachines.nuclearscience.FissionReactorRecipeCategory;
 import nuclearscience.compatability.jei.recipecategories.specificmachines.nuclearscience.FuelReprocessorRecipeCategory;
 import nuclearscience.compatability.jei.recipecategories.specificmachines.nuclearscience.GasCentrifugeRecipeCategory;
+import nuclearscience.compatability.jei.recipecategories.specificmachines.nuclearscience.MSRProcessorRecipeCategory;
 import nuclearscience.compatability.jei.recipecategories.specificmachines.nuclearscience.NuclearBoilerRecipeCategory;
 import nuclearscience.compatability.jei.recipecategories.specificmachines.nuclearscience.ParticleAcceleratorAntiMatterRecipeCategory;
 import nuclearscience.compatability.jei.recipecategories.specificmachines.nuclearscience.ParticleAcceleratorDarkMatterRecipeCategory;
@@ -74,6 +77,7 @@ public class NuclearSciencePlugin implements IModPlugin {
 
 	registration.addRecipeCatalyst(RadioactiveProcessorRecipeCategory.INPUT_MACHINE, RadioactiveProcessorRecipeCategory.UID);
 
+	registration.addRecipeCatalyst(MSRProcessorRecipeCategory.INPUT_MACHINE, MSRProcessorRecipeCategory.UID);
     }
 
     @Override
@@ -113,7 +117,11 @@ public class NuclearSciencePlugin implements IModPlugin {
 	Set<FluidItem2ItemRecipe> radioactiveProcessorRecipes = ImmutableSet
 		.copyOf(recipeManager.getRecipesForType(NuclearScienceRecipeInit.RADIOACTIVE_PROCESSOR_TYPE));
 	registration.addRecipes(radioactiveProcessorRecipes, RadioactiveProcessorRecipeCategory.UID);
-
+	
+	Set<Fluid3Items2ItemRecipe> msrProcessorRecipes = ImmutableSet
+		.copyOf(recipeManager.getRecipesForType(NuclearScienceRecipeInit.MSR_FUEL_PREPROCESSOR_TYPE));
+	registration.addRecipes(msrProcessorRecipes, MSRProcessorRecipeCategory.UID);
+	
 	nuclearScienceInfoTabs(registration);
     }
 
@@ -141,6 +149,8 @@ public class NuclearSciencePlugin implements IModPlugin {
 	registration.addRecipeCategories(new FuelReprocessorRecipeCategory(helper));
 
 	registration.addRecipeCategories(new RadioactiveProcessorRecipeCategory(helper));
+	
+	registration.addRecipeCategories(new MSRProcessorRecipeCategory(helper));
 
     }
 
@@ -167,9 +177,9 @@ public class NuclearSciencePlugin implements IModPlugin {
 	registry.addRecipeClickArea(ScreenParticleInjector.class, 102, 33, 28, 14, ParticleAcceleratorAntiMatterRecipeCategory.UID,
 		ParticleAcceleratorDarkMatterRecipeCategory.UID);
 
+	registry.addRecipeClickArea(ScreenMSRFuelPreProcessor.class, 98, 40, 16, 16, MSRProcessorRecipeCategory.UID);
     }
 
-    @SuppressWarnings("java:S1874")
     private static void nuclearScienceInfoTabs(IRecipeRegistration registration) {
 
 	/*
