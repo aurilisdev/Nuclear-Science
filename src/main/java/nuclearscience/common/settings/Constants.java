@@ -43,10 +43,12 @@ public class Constants {
     public static double FREEZEPLUG_USAGE_PER_TICK = 200.0;
     @IntValue(def = 480)
     public static int FUELREPROCESSOR_USAGE_PER_TICK = 480;
-    @DoubleValue(def = 200)
-    public static double FUELREPROCESSOR_REQUIRED_TICKS = 200;
+    @DoubleValue(def = 200.0)
+    public static double FUELREPROCESSOR_REQUIRED_TICKS = 200.0;
     @IntValue(def = 480)
     public static int RADIOACTIVEPROCESSOR_USAGE_PER_TICK = 480;
     @DoubleValue(def = 300.0)
     public static double RADIOACTIVEPROCESSOR_REQUIRED_TICKS = 300.0;
+    
+    
 }
