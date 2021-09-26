@@ -11,7 +11,6 @@ import electrodynamics.prefab.screen.component.ScreenComponentInfo;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
-import electrodynamics.prefab.tile.components.type.ComponentProcessor;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.ITextProperties;
@@ -21,6 +20,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import nuclearscience.common.inventory.container.ContainerFreezePlug;
+import nuclearscience.common.settings.Constants;
 
 @OnlyIn(Dist.CLIENT)
 public class ScreenFreezePlug extends GenericScreen<ContainerFreezePlug> {
@@ -35,9 +35,8 @@ public class ScreenFreezePlug extends GenericScreen<ContainerFreezePlug> {
 	GenericTile box = container.getHostFromIntArray();
 	if (box != null) {
 	    ComponentElectrodynamic electro = box.getComponent(ComponentType.Electrodynamic);
-	    ComponentProcessor processor = box.getComponent(ComponentType.Processor);
 	    list.add(new TranslationTextComponent("gui.freezeplug.usage",
-		    new StringTextComponent(ChatFormatter.getElectricDisplayShort(processor.getUsage() * 20, ElectricUnit.WATT))
+		    new StringTextComponent(ChatFormatter.getElectricDisplayShort(Constants.FREEZEPLUG_USAGE_PER_TICK * 20, ElectricUnit.WATT))
 			    .mergeStyle(TextFormatting.GRAY)).mergeStyle(TextFormatting.DARK_GRAY));
 	    list.add(new TranslationTextComponent("gui.freezeplug.voltage",
 		    new StringTextComponent(ChatFormatter.getElectricDisplayShort(electro.getVoltage(), ElectricUnit.VOLTAGE))
