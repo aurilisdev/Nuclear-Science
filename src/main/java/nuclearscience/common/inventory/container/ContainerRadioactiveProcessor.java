@@ -32,17 +32,17 @@ public class ContainerRadioactiveProcessor extends GenericContainer<TileRadioact
 
     @Override
     public void addInventorySlots(IInventory inv, PlayerInventory playerinv) {
-    	addSlot(new GenericSlot(inv, nextIndex(), 74, 31));
-    	addSlot(new FurnaceResultSlot(playerinv.player, inv, nextIndex(), 133, 31));
-    	addSlot(new SlotRestricted(inv, nextIndex(), 74, 51, false, ItemCanister.class, BucketItem.class));
-    	addSlot(new SlotRestricted(inv, nextIndex(), 153, 14,
-    		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.basicspeed),
-    		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.advancedspeed)));
-    	addSlot(new SlotRestricted(inv, nextIndex(), 153, 34,
-    		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.basicspeed),
-    		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.advancedspeed)));
-    	addSlot(new SlotRestricted(inv, nextIndex(), 153, 54,
-    		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.basicspeed),
-    		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.advancedspeed)));
+	addSlot(new GenericSlot(inv, nextIndex(), 74, 31));
+	addSlot(new FurnaceResultSlot(playerinv.player, inv, nextIndex(), 133, 31));
+	addSlot(new SlotRestricted(inv, nextIndex(), 74, 51, false, ItemCanister.class, BucketItem.class));
+	addSlot(new SlotRestricted(inv, nextIndex(), 153, 14,
+		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.basicspeed),
+		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.advancedspeed)));
+	addSlot(new SlotRestricted(inv, nextIndex(), 153, 34,
+		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.basicspeed),
+		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.advancedspeed)));
+	addSlot(new SlotRestricted(inv, nextIndex(), 153, 54,
+		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.basicspeed),
+		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.advancedspeed)));
     }
 }

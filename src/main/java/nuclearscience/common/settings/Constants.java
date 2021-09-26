@@ -49,6 +49,5 @@ public class Constants {
     public static int RADIOACTIVEPROCESSOR_USAGE_PER_TICK = 480;
     @DoubleValue(def = 300.0)
     public static double RADIOACTIVEPROCESSOR_REQUIRED_TICKS = 300.0;
-    
-    
+
 }

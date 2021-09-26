@@ -13,11 +13,11 @@ public class BlockFuelReprocessor extends BlockGenericMachine {
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
 	return new TileFuelReprocessor();
     }
-    
+
     @Override
     @Deprecated
     public BlockRenderType getRenderType(BlockState state) {
-    	return BlockRenderType.ENTITYBLOCK_ANIMATED;
+	return BlockRenderType.ENTITYBLOCK_ANIMATED;
     }
 
 }
