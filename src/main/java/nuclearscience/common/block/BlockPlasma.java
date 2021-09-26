@@ -32,6 +32,7 @@ public class BlockPlasma extends Block {
     }
 
     @Override
+    @Deprecated
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
 	entityIn.attackEntityFrom(DamageSourcePlasma.INSTANCE, 99999);
     }
@@ -51,7 +52,7 @@ public class BlockPlasma extends Block {
     @OnlyIn(Dist.CLIENT)
     @Deprecated
     public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) {
-	return adjacentBlockState.isIn(this) ? true : super.isSideInvisible(state, adjacentBlockState, side);
+	return adjacentBlockState.isIn(this) || super.isSideInvisible(state, adjacentBlockState, side);
     }
 
     @Override

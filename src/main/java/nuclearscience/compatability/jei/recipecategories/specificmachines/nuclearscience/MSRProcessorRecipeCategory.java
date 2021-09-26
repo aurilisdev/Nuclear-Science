@@ -53,7 +53,7 @@ public class MSRProcessorRecipeCategory extends ElectrodynamicsRecipeCategory<Fl
 
     public static ItemStack INPUT_MACHINE = new ItemStack(nuclearscience.DeferredRegisters.blockMSRFuelPreProcessor);
 
-    private LoadingCache<Integer, IDrawableAnimated> CACHED_ARROWS;
+    private LoadingCache<Integer, IDrawableAnimated> cache;
 
     public static ResourceLocation UID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
 
@@ -61,7 +61,7 @@ public class MSRProcessorRecipeCategory extends ElectrodynamicsRecipeCategory<Fl
 	super(guiHelper, MOD_ID, RECIPE_GROUP, GUI_TEXTURE_STRING, INPUT_MACHINE, GUI_BACKGROUND_COORDS, Fluid3Items2ItemRecipe.class, TEXT_Y_HEIGHT,
 		SMELT_TIME);
 
-	CACHED_ARROWS = CacheBuilder.newBuilder().maximumSize(25).build(new CacheLoader<Integer, IDrawableAnimated>() {
+	cache = CacheBuilder.newBuilder().maximumSize(25).build(new CacheLoader<Integer, IDrawableAnimated>() {
 	    @Override
 	    public IDrawableAnimated load(Integer cookTime) {
 		return guiHelper.drawableBuilder(getGuiTexture(), 0, 65, 68, 22).buildAnimated(cookTime, StartDirection.LEFT, false);
@@ -106,24 +106,24 @@ public class MSRProcessorRecipeCategory extends ElectrodynamicsRecipeCategory<Fl
 
     @Override
     public void draw(Fluid3Items2ItemRecipe recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
-	IDrawableAnimated arrow = getArrow(recipe);
+	IDrawableAnimated arrow = getArrow();
 	arrow.draw(matrixStack, 32, 17);
 
 	drawSmeltTime(recipe, matrixStack, getYHeight());
     }
 
-    protected IDrawableAnimated getArrow(Fluid3Items2ItemRecipe recipe) {
-	return CACHED_ARROWS.getUnchecked(getArrowSmeltTime());
+    protected IDrawableAnimated getArrow() {
+	return cache.getUnchecked(getArrowSmeltTime());
     }
 
-    @SuppressWarnings("java:S1066")
+    @SuppressWarnings({ "java:S1066", "java:S2184" })
     protected void drawSmeltTime(Fluid3Items2ItemRecipe recipe, MatrixStack matrixStack, int y) {
 	int smeltTimeSeconds = getArrowSmeltTime() / 20;
 	TranslationTextComponent timeString = new TranslationTextComponent("gui.jei.category." + getRecipeGroup() + ".info.power", smeltTimeSeconds);
 	Minecraft minecraft = Minecraft.getInstance();
 	FontRenderer fontRenderer = minecraft.fontRenderer;
-	int stringWidth = fontRenderer.getStringPropertyWidth(timeString);
-	fontRenderer.func_243248_b(matrixStack, timeString, getBackground().getWidth() - stringWidth, y, 0xFF808080);
+	fontRenderer.func_243248_b(matrixStack, timeString, getBackground().getWidth() - fontRenderer.getStringPropertyWidth(timeString), y,
+		0xFF808080);
     }
 
     public List<List<ItemStack>> getItemIngredients(Fluid3Items2ItemRecipe recipe) {
