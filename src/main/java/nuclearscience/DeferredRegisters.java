@@ -32,6 +32,7 @@ import nuclearscience.common.block.BlockFuelReprocessor;
 import nuclearscience.common.block.BlockFusionReactorCore;
 import nuclearscience.common.block.BlockGasCentrifuge;
 import nuclearscience.common.block.BlockMSRFuelPreProcessor;
+import nuclearscience.common.block.BlockMSRReactorCore;
 import nuclearscience.common.block.BlockNuclearBoiler;
 import nuclearscience.common.block.BlockParticleInjector;
 import nuclearscience.common.block.BlockPlasma;
@@ -69,6 +70,7 @@ import nuclearscience.common.tile.TileFuelReprocessor;
 import nuclearscience.common.tile.TileFusionReactorCore;
 import nuclearscience.common.tile.TileGasCentrifuge;
 import nuclearscience.common.tile.TileMSRFuelPreProcessor;
+import nuclearscience.common.tile.TileMSRReactorCore;
 import nuclearscience.common.tile.TileNuclearBoiler;
 import nuclearscience.common.tile.TileParticleInjector;
 import nuclearscience.common.tile.TilePlasma;
@@ -111,6 +113,7 @@ public class DeferredRegisters {
     public static BlockRadioactiveProcessor blockRadioactiveProcessor;
     public static BlockMSRFuelPreProcessor blockMSRFuelPreProcessor;
     public static BlockFreezePlug blockFreezePlug;
+    public static BlockMSRReactorCore blockMsrReactorCore;
 
     public static Block blocklead;
 
@@ -139,7 +142,9 @@ public class DeferredRegisters {
 
 	BLOCKS.register("blocklead", supplier(blocklead = new Block(Properties.create(Material.IRON, MaterialColor.BLACK)
 		.hardnessAndResistance(5.0f, 3.0f).sound(SoundType.METAL).setRequiresTool().harvestTool(ToolType.PICKAXE).harvestLevel(1))));
-
+	
+	BLOCKS.register("msrreactorcore",supplier(blockMsrReactorCore = new BlockMSRReactorCore()));
+	
 	ITEMS.register("gascentrifuge", supplier(new BlockItemDescriptable(blockGasCentrifuge, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("nuclearboiler", supplier(new BlockItemDescriptable(blockNuclearBoiler, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("chemicalextractor",
@@ -175,7 +180,8 @@ public class DeferredRegisters {
 	ITEMS.register("teleporter", supplier(new BlockItemDescriptable(blockTeleporter, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("controlrodassembly",
 		supplier(new BlockItemDescriptable(blockControlRodAssembly, new Item.Properties().group(References.NUCLEARTAB))));
-
+	ITEMS.register("msrreactorcore", supplier(new BlockItemDescriptable(blockMsrReactorCore, new Item.Properties().group(References.NUCLEARTAB))));
+	
 	FLUIDS.register("fluiduraniumhexafluoride", supplier(fluidUraniumHexafluoride = new FluidUraniumHexafluoride()));
 
 	FLUIDS.register("fluidironsulfamate", supplier(fluidIronSulfamate = new FluidIronSulfamate()));
@@ -293,6 +299,9 @@ public class DeferredRegisters {
     public static final RegistryObject<TileEntityType<TileControlRodAssembly>> TILE_CONTROLRODASSEMBLY = TILES.register("controlrodassembly",
 	    () -> new TileEntityType<>(TileControlRodAssembly::new, Sets.newHashSet(blockControlRodAssembly), null));
 
+    public static final RegistryObject<TileEntityType<TileMSRReactorCore>> TILE_MSRREACTORCORE = TILES.register("msrreactorcore",
+    	() -> new TileEntityType<>(TileMSRReactorCore::new, Sets.newHashSet(blockMsrReactorCore),null));
+    
     public static final RegistryObject<ContainerType<ContainerGasCentrifuge>> CONTAINER_GASCENTRIFUGE = CONTAINERS.register("gascentrifuge",
 	    () -> new ContainerType<>(ContainerGasCentrifuge::new));
     public static final RegistryObject<ContainerType<ContainerNuclearBoiler>> CONTAINER_NUCLEARBOILER = CONTAINERS.register("nuclearboiler",
