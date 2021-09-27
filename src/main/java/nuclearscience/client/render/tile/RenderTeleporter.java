@@ -47,8 +47,8 @@ public class RenderTeleporter extends TileEntityRenderer<TileTeleporter> {
 	}
 	UtilitiesRendering.renderModel(ibakedmodel, tileEntityIn, RenderType.getSolid(), stack, bufferIn, combinedLightIn, combinedOverlayIn);
 	if (electro.getJoulesStored() > 0) {
-	    AxisAlignedBB BB = new AxisAlignedBB(tileEntityIn.getPos(), tileEntityIn.getPos().add(1, 2, 1));
-	    List<PlayerEntity> player = tileEntityIn.getWorld().getEntitiesWithinAABB(EntityType.PLAYER, BB, en -> true);
+	    AxisAlignedBB bb = new AxisAlignedBB(tileEntityIn.getPos(), tileEntityIn.getPos().add(1, 2, 1));
+	    List<PlayerEntity> player = tileEntityIn.getWorld().getEntitiesWithinAABB(EntityType.PLAYER, bb, en -> true);
 	    if (!player.isEmpty()) {
 
 		stack.push();
@@ -84,7 +84,7 @@ public class RenderTeleporter extends TileEntityRenderer<TileTeleporter> {
 		    GlStateManager.translated(0, 40, 0);
 		    for (int i1 = 0; i1 < (int) scale * 2; i1++) {
 			bufferBuilder.begin(GL11.GL_POLYGON, DefaultVertexFormats.POSITION_COLOR);
-			GL11.glLineWidth(1 + rand.nextInt(2));
+			GL11.glLineWidth(1f + rand.nextInt(2));
 			bufferBuilder
 				.pos(rand.nextFloat() * 30 - 15 + rand.nextFloat() * scale - scale * 0.5,
 					rand.nextFloat() * 30 - 15 + rand.nextFloat() * 20 * 2 - 20,
@@ -114,7 +114,7 @@ public class RenderTeleporter extends TileEntityRenderer<TileTeleporter> {
 		    GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
 		    for (int i1 = 0; i1 < (int) scale * 2; i1++) {
 			bufferBuilder.begin(GL11.GL_POLYGON, DefaultVertexFormats.POSITION_COLOR);
-			GL11.glLineWidth(1 + rand.nextInt(2));
+			GL11.glLineWidth(1f + rand.nextInt(2));
 			bufferBuilder
 				.pos(rand.nextFloat() * 30 - 15 + rand.nextFloat() * scale - scale * 0.5,
 					rand.nextFloat() * 30 - 15 + rand.nextFloat() * 20 * 2 - 20,
