@@ -142,9 +142,9 @@ public class DeferredRegisters {
 
 	BLOCKS.register("blocklead", supplier(blocklead = new Block(Properties.create(Material.IRON, MaterialColor.BLACK)
 		.hardnessAndResistance(5.0f, 3.0f).sound(SoundType.METAL).setRequiresTool().harvestTool(ToolType.PICKAXE).harvestLevel(1))));
-	
-	BLOCKS.register("msrreactorcore",supplier(blockMsrReactorCore = new BlockMSRReactorCore()));
-	
+
+	BLOCKS.register("msrreactorcore", supplier(blockMsrReactorCore = new BlockMSRReactorCore()));
+
 	ITEMS.register("gascentrifuge", supplier(new BlockItemDescriptable(blockGasCentrifuge, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("nuclearboiler", supplier(new BlockItemDescriptable(blockNuclearBoiler, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("chemicalextractor",
@@ -180,8 +180,9 @@ public class DeferredRegisters {
 	ITEMS.register("teleporter", supplier(new BlockItemDescriptable(blockTeleporter, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("controlrodassembly",
 		supplier(new BlockItemDescriptable(blockControlRodAssembly, new Item.Properties().group(References.NUCLEARTAB))));
-	ITEMS.register("msrreactorcore", supplier(new BlockItemDescriptable(blockMsrReactorCore, new Item.Properties().group(References.NUCLEARTAB))));
-	
+	ITEMS.register("msrreactorcore",
+		supplier(new BlockItemDescriptable(blockMsrReactorCore, new Item.Properties().group(References.NUCLEARTAB))));
+
 	FLUIDS.register("fluiduraniumhexafluoride", supplier(fluidUraniumHexafluoride = new FluidUraniumHexafluoride()));
 
 	FLUIDS.register("fluidironsulfamate", supplier(fluidIronSulfamate = new FluidIronSulfamate()));
@@ -300,8 +301,8 @@ public class DeferredRegisters {
 	    () -> new TileEntityType<>(TileControlRodAssembly::new, Sets.newHashSet(blockControlRodAssembly), null));
 
     public static final RegistryObject<TileEntityType<TileMSRReactorCore>> TILE_MSRREACTORCORE = TILES.register("msrreactorcore",
-    	() -> new TileEntityType<>(TileMSRReactorCore::new, Sets.newHashSet(blockMsrReactorCore),null));
-    
+	    () -> new TileEntityType<>(TileMSRReactorCore::new, Sets.newHashSet(blockMsrReactorCore), null));
+
     public static final RegistryObject<ContainerType<ContainerGasCentrifuge>> CONTAINER_GASCENTRIFUGE = CONTAINERS.register("gascentrifuge",
 	    () -> new ContainerType<>(ContainerGasCentrifuge::new));
     public static final RegistryObject<ContainerType<ContainerNuclearBoiler>> CONTAINER_NUCLEARBOILER = CONTAINERS.register("nuclearboiler",

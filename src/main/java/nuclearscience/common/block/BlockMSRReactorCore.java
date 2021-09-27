@@ -10,13 +10,13 @@ import nuclearscience.common.tile.TileMSRReactorCore;
 public class BlockMSRReactorCore extends BlockGenericMachine {
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-    	return new TileMSRReactorCore();
+	return new TileMSRReactorCore();
     }
-    
+
     @Override
     @Deprecated
     public BlockRenderType getRenderType(BlockState state) {
-    	return BlockRenderType.ENTITYBLOCK_ANIMATED;
+	return BlockRenderType.ENTITYBLOCK_ANIMATED;
     }
 
 }

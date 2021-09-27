@@ -6,9 +6,9 @@ import nuclearscience.DeferredRegisters;
 
 public class TileMSRReactorCore extends GenericTileTicking {
 
-	public TileMSRReactorCore() {
-		super(DeferredRegisters.TILE_MSRREACTORCORE.get());
-		addComponent(new ComponentDirection());
-	}
+    public TileMSRReactorCore() {
+	super(DeferredRegisters.TILE_MSRREACTORCORE.get());
+	addComponent(new ComponentDirection());
+    }
 
 }
