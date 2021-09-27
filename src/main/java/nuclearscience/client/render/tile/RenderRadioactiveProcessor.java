@@ -20,38 +20,38 @@ import nuclearscience.common.tile.TileRadioactiveProcessor;
 
 public class RenderRadioactiveProcessor extends TileEntityRenderer<TileRadioactiveProcessor> {
 
-	public RenderRadioactiveProcessor(TileEntityRendererDispatcher rendererDispatcherIn) {
-		super(rendererDispatcherIn);
-	}
+    public RenderRadioactiveProcessor(TileEntityRendererDispatcher rendererDispatcherIn) {
+	super(rendererDispatcherIn);
+    }
 
-	@Override
-	public void render(TileRadioactiveProcessor tile, float partialTicks, MatrixStack matrixStack,
-			IRenderTypeBuffer buffer, int combinedLightIn, int combinedOverlayIn) {
-		
-		matrixStack.push();
-		matrixStack.translate(0.5, 0.5, 0.5);
-		Direction dir = tile.<ComponentDirection>getComponent(ComponentType.Direction).getDirection();
-		switch(dir) {
-			case WEST:
-				matrixStack.rotate(new Quaternion(new Vector3f(0.0F, 1.0F, 0.0F), 180, true));
-				break;
-			case NORTH:
-				matrixStack.rotate(new Quaternion(new Vector3f(0.0F, 1.0F, 0.0F), 90, true));
-				break;
-			case SOUTH:
-				matrixStack.rotate(new Quaternion(new Vector3f(0.0F, 1.0F, 0.0F), -90, true));
-				break;
-			default:
-				break;
-		}
-		if (tile.<ComponentProcessor>getComponent(ComponentType.Processor).operatingTicks > 0) {
-		    IBakedModel on = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_RADIOACTIVEPROCESSOR_ON);
-		    UtilitiesRendering.renderModel(on, tile, RenderType.getSolid(), matrixStack, buffer, combinedLightIn, combinedOverlayIn);
-		} else {
-		    IBakedModel off = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_RADIOACTIVEPROCESSOR);
-		    UtilitiesRendering.renderModel(off, tile, RenderType.getSolid(), matrixStack, buffer, combinedLightIn, combinedOverlayIn);
-		}
-		matrixStack.pop();
+    @Override
+    public void render(TileRadioactiveProcessor tile, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLightIn,
+	    int combinedOverlayIn) {
+
+	matrixStack.push();
+	matrixStack.translate(0.5, 0.5, 0.5);
+	Direction dir = tile.<ComponentDirection>getComponent(ComponentType.Direction).getDirection();
+	switch (dir) {
+	case WEST:
+	    matrixStack.rotate(new Quaternion(new Vector3f(0.0F, 1.0F, 0.0F), 180, true));
+	    break;
+	case NORTH:
+	    matrixStack.rotate(new Quaternion(new Vector3f(0.0F, 1.0F, 0.0F), 90, true));
+	    break;
+	case SOUTH:
+	    matrixStack.rotate(new Quaternion(new Vector3f(0.0F, 1.0F, 0.0F), -90, true));
+	    break;
+	default:
+	    break;
 	}
+	if (tile.<ComponentProcessor>getComponent(ComponentType.Processor).operatingTicks > 0) {
+	    IBakedModel on = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_RADIOACTIVEPROCESSOR_ON);
+	    UtilitiesRendering.renderModel(on, tile, RenderType.getSolid(), matrixStack, buffer, combinedLightIn, combinedOverlayIn);
+	} else {
+	    IBakedModel off = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_RADIOACTIVEPROCESSOR);
+	    UtilitiesRendering.renderModel(off, tile, RenderType.getSolid(), matrixStack, buffer, combinedLightIn, combinedOverlayIn);
+	}
+	matrixStack.pop();
+    }
 
 }
