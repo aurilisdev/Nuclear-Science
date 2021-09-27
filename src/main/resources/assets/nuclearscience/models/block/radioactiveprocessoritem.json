@@ -1,4 +1,5 @@
 {
+	"parent":"block/cube_all",
 	"credit":"skip999",
 	"texture_size":[128,128],
 	"textures":{

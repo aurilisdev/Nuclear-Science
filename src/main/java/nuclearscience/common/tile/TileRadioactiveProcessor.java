@@ -28,11 +28,11 @@ public class TileRadioactiveProcessor extends GenericTileTicking {
 	addComponent(new ComponentTickable().tickClient(this::tickClient));
 	addComponent(new ComponentDirection());
 	addComponent(new ComponentPacketHandler());
-	addComponent(new ComponentElectrodynamic(this).enableUniversalInput().voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 4)
-		.maxJoules(Constants.RADIOACTIVEPROCESSOR_USAGE_PER_TICK * 10));
+	addComponent(new ComponentElectrodynamic(this).voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 4)
+		.maxJoules(Constants.RADIOACTIVEPROCESSOR_USAGE_PER_TICK * 10).relativeInput(Direction.NORTH));
 	addComponent(new ComponentFluidHandlerMulti(this)
 		.setAddFluidsValues(FluidItem2ItemRecipe.class, NuclearScienceRecipeInit.RADIOACTIVE_PROCESSOR_TYPE, MAX_TANK_CAPACITY, true, false)
-		.universalInput());
+		.input(Direction.UP));
 	addComponent(new ComponentInventory(this).size(6).faceSlots(Direction.UP, 0).faceSlots(Direction.DOWN, 1).slotFaces(2, Direction.SOUTH,
 		Direction.NORTH, Direction.EAST, Direction.WEST));
 	addComponent(new ComponentProcessor(this).upgradeSlots(3, 4, 5).type(ComponentProcessorType.ObjectToObject)

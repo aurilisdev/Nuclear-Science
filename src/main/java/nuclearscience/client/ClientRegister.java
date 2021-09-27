@@ -22,6 +22,7 @@ import nuclearscience.client.render.tile.RenderFusionReactorCore;
 import nuclearscience.client.render.tile.RenderGasCentrifuge;
 import nuclearscience.client.render.tile.RenderNuclearBoiler;
 import nuclearscience.client.render.tile.RenderQuantumCapacitor;
+import nuclearscience.client.render.tile.RenderRadioactiveProcessor;
 import nuclearscience.client.render.tile.RenderReactorCore;
 import nuclearscience.client.render.tile.RenderRodAssembly;
 import nuclearscience.client.render.tile.RenderTeleporter;
@@ -60,6 +61,8 @@ public class ClientRegister {
 	ModelLoader.addSpecialModel(MODEL_CONTROLRODASSEMBLYSROD);
 	ModelLoader.addSpecialModel(MODEL_FUELREPROCESSOR);
 	ModelLoader.addSpecialModel(MODEL_FUELREPROCESSOR_ON);
+	ModelLoader.addSpecialModel(MODEL_RADIOACTIVEPROCESSOR);
+	ModelLoader.addSpecialModel(MODEL_RADIOACTIVEPROCESSOR_ON);
     }
 
     public static final ResourceLocation MODEL_GASCENTRIFUGEFULL = new ResourceLocation(References.ID + ":block/gascentrifuge");
@@ -82,7 +85,10 @@ public class ClientRegister {
     public static final ResourceLocation MODEL_CONTROLRODASSEMBLYSROD = new ResourceLocation(References.ID + ":block/controlrodassemblyrod");
     public static final ResourceLocation MODEL_FUELREPROCESSOR = new ResourceLocation(References.ID + ":block/fuelreprocessor");
     public static final ResourceLocation MODEL_FUELREPROCESSOR_ON = new ResourceLocation(References.ID + ":block/fuelreprocessoron");
-
+    public static final ResourceLocation MODEL_RADIOACTIVEPROCESSOR = new ResourceLocation(References.ID + ":block/radioactiveprocessor");
+    public static final ResourceLocation MODEL_RADIOACTIVEPROCESSOR_ON = new ResourceLocation(References.ID + ":block/radioactiveprocessoron");
+    
+    
     public static void setup() {
 	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_GASCENTRIFUGE.get(), RenderGasCentrifuge::new);
 	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_CHEMICALEXTRACTOR.get(), RenderChemicalExtractor::new);
@@ -94,7 +100,8 @@ public class ClientRegister {
 	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_TELEPORTER.get(), RenderTeleporter::new);
 	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_CONTROLRODASSEMBLY.get(), RenderRodAssembly::new);
 	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_FUELREPROCESSOR.get(), RenderFuelReprocessor::new);
-
+	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_RADIOACTIVEPROCESSOR.get(), RenderRadioactiveProcessor::new);
+	
 	RenderingRegistry.registerEntityRenderingHandler(DeferredRegisters.ENTITY_PARTICLE.get(), RenderParticle::new);
 
 	ScreenManager.registerFactory(DeferredRegisters.CONTAINER_GASCENTRIFUGE.get(), ScreenGasCentrifuge::new);
