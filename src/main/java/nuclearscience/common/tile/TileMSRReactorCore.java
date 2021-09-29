@@ -19,9 +19,8 @@ public class TileMSRReactorCore extends GenericTileTicking {
     }
 
     private void tickServer(ComponentTickable tick) {
-	if(currentFuel > 0)
-	{
-	    
+	if (currentFuel > 0) {
+
 	}
     }
 

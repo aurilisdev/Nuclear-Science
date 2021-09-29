@@ -23,9 +23,8 @@ public class TileHeatExchanger extends GenericTileTicking {
     public TileHeatExchanger() {
 	super(DeferredRegisters.TILE_HEATEXCHANGER.get());
 	addComponent(new ComponentTickable().tickCommon(this::tickCommon).tickServer(this::tickServer));
-	addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket)
-		.customPacketWriter(this::writeCustomPacket).guiPacketReader(this::readCustomPacket)
-		.guiPacketWriter(this::writeCustomPacket));
+	addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket)
+		.guiPacketReader(this::readCustomPacket).guiPacketWriter(this::writeCustomPacket));
     }
 
     protected void tickServer(ComponentTickable tickable) {
@@ -48,9 +47,8 @@ public class TileHeatExchanger extends GenericTileTicking {
 		for (int k = 0; k < STEAM_GEN_DIAMETER; k++) {
 		    boolean isReactor2d = i - STEAM_GEN_DIAMETER / 2 == 0 && k - STEAM_GEN_DIAMETER / 2 == 0;
 		    if (isReactor2d && j == 0) {
-			if (!world.isRemote
-				&& world.rand.nextFloat() < temperature / (TileMSRReactorCore.MELTDOWN_TEMPERATURE
-					* 20.0 * STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * STEAM_GEN_HEIGHT)) {
+			if (!world.isRemote && world.rand.nextFloat() < temperature
+				/ (TileMSRReactorCore.MELTDOWN_TEMPERATURE * 20.0 * STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * STEAM_GEN_HEIGHT)) {
 			    world.setBlockState(pos, getBlockState().with(BlockStateProperties.WATERLOGGED, false));
 			}
 			continue;
@@ -61,11 +59,8 @@ public class TileHeatExchanger extends GenericTileTicking {
 		    BlockPos offpos = new BlockPos(offsetX, offsetY, offsetZ);
 		    Block offset = world.getBlockState(offpos).getBlock();
 		    if (offset == Blocks.WATER) {
-			boolean isFaceWater = world.getBlockState(new BlockPos(offsetX, pos.getY(), pos.getZ()))
-				.getBlock() == Blocks.WATER
-				|| world.getBlockState(new BlockPos(pos.getX(), pos.getY(), offsetZ))
-					.getBlock() == Blocks.WATER
-				|| isReactor2d;
+			boolean isFaceWater = world.getBlockState(new BlockPos(offsetX, pos.getY(), pos.getZ())).getBlock() == Blocks.WATER
+				|| world.getBlockState(new BlockPos(pos.getX(), pos.getY(), offsetZ)).getBlock() == Blocks.WATER || isReactor2d;
 			if (isFaceWater) {
 			    if (!world.isRemote) {
 				TileTurbine turbine = cachedTurbines[i][j][k];
@@ -73,14 +68,11 @@ public class TileHeatExchanger extends GenericTileTicking {
 				    if (turbine.isRemoved()) {
 					cachedTurbines[i][j][k] = null;
 				    }
-				    turbine.addSteam(
-					    (int) (Constants.MSRREACTOR_MAXENERGYTARGET
-						    / (STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * 20.0
-							    * (TileMSRReactorCore.MELTDOWN_TEMPERATURE / temperature))),
-					    (int) temperature);
+				    turbine.addSteam((int) (Constants.MSRREACTOR_MAXENERGYTARGET / (STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * 20.0
+					    * (TileMSRReactorCore.MELTDOWN_TEMPERATURE / temperature))), (int) temperature);
 				}
-				if (world.rand.nextFloat() < temperature / (TileMSRReactorCore.MELTDOWN_TEMPERATURE
-					* 20.0 * STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * STEAM_GEN_HEIGHT)) {
+				if (world.rand.nextFloat() < temperature / (TileMSRReactorCore.MELTDOWN_TEMPERATURE * 20.0 * STEAM_GEN_DIAMETER
+					* STEAM_GEN_DIAMETER * STEAM_GEN_HEIGHT)) {
 				    world.setBlockState(offpos, Blocks.AIR.getDefaultState());
 				    continue;
 				}
@@ -92,19 +84,14 @@ public class TileHeatExchanger extends GenericTileTicking {
 					cachedTurbines[i][j][k] = null;
 				    }
 				}
-			    } else if (world.isRemote && world.rand.nextFloat() < temperature
-				    / (TileMSRReactorCore.MELTDOWN_TEMPERATURE * 3)) {
-				double offsetFX = offsetX
-					+ world.rand.nextDouble() / 2.0 * (world.rand.nextBoolean() ? -1 : 1);
-				double offsetFY = offsetY
-					+ world.rand.nextDouble() / 2.0 * (world.rand.nextBoolean() ? -1 : 1);
-				double offsetFZ = offsetZ
-					+ world.rand.nextDouble() / 2.0 * (world.rand.nextBoolean() ? -1 : 1);
-				world.addParticle(ParticleTypes.BUBBLE, offsetFX + 0.5D,
-					offsetFY + 0.20000000298023224D, offsetFZ + 0.5D, 0.0D, 0.0D, 0.0D);
+			    } else if (world.isRemote && world.rand.nextFloat() < temperature / (TileMSRReactorCore.MELTDOWN_TEMPERATURE * 3)) {
+				double offsetFX = offsetX + world.rand.nextDouble() / 2.0 * (world.rand.nextBoolean() ? -1 : 1);
+				double offsetFY = offsetY + world.rand.nextDouble() / 2.0 * (world.rand.nextBoolean() ? -1 : 1);
+				double offsetFZ = offsetZ + world.rand.nextDouble() / 2.0 * (world.rand.nextBoolean() ? -1 : 1);
+				world.addParticle(ParticleTypes.BUBBLE, offsetFX + 0.5D, offsetFY + 0.20000000298023224D, offsetFZ + 0.5D, 0.0D, 0.0D,
+					0.0D);
 				if (world.rand.nextInt(3) == 0) {
-				    world.addParticle(ParticleTypes.SMOKE, offsetFX + 0.5D, offsetFY + 0.5D,
-					    offsetFZ + 0.5D, 0.0D, 0.0D, 0.0D);
+				    world.addParticle(ParticleTypes.SMOKE, offsetFX + 0.5D, offsetFY + 0.5D, offsetFZ + 0.5D, 0.0D, 0.0D, 0.0D);
 				}
 			    }
 			}

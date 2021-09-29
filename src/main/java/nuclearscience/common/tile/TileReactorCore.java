@@ -40,8 +40,10 @@ import nuclearscience.common.settings.Constants;
 public class TileReactorCore extends GenericTileTicking {
     public static final int MELTDOWN_TEMPERATURE_ACTUAL = 5611;
     public static final int MELTDOWN_TEMPERATURE_CALC = 4407;
-    // NB! THE VALUES ABOVE ARE USED FROM THE VERY OLD CALCULATION CODE I MADE BACK IN EARLY 2019. READ LINE 51
-    // TO SEE WHAT THE ACTUAL "TEMPERATURE" IS. THE VALUES ABOVE ARENT "REAL" VALUES.
+    // NB! THE VALUES ABOVE ARE USED FROM THE VERY OLD CALCULATION CODE I MADE BACK
+    // IN EARLY 2019. READ LINE 51
+    // TO SEE WHAT THE ACTUAL "TEMPERATURE" IS. THE VALUES ABOVE ARENT "REAL"
+    // VALUES.
     public static final int WATER_TEMPERATURE = 10;
     public static final int AIR_TEMPERATURE = 15;
     public static final int MAX_FUEL_COUNT = 3 * 4;

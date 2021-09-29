@@ -181,8 +181,7 @@ public class DeferredRegisters {
 		supplier(new BlockItemDescriptable(blockControlRodAssembly, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("msrreactorcore",
 		supplier(new BlockItemDescriptable(blockMsrReactorCore, new Item.Properties().group(References.NUCLEARTAB))));
-	ITEMS.register("heatexchanger",
-		supplier(new BlockItemDescriptable(blockHeatExchanger, new Item.Properties().group(References.NUCLEARTAB))));
+	ITEMS.register("heatexchanger", supplier(new BlockItemDescriptable(blockHeatExchanger, new Item.Properties().group(References.NUCLEARTAB))));
 
 	FLUIDS.register("fluiduraniumhexafluoride", supplier(fluidUraniumHexafluoride = new FluidUraniumHexafluoride()));
 
