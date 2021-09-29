@@ -13,8 +13,10 @@ public class Constants {
     public static double RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER = 0.15f;
     @DoubleValue(def = 375000.0)
     public static double FISSIONREACTOR_MAXENERGYTARGET = 375000.0;
-    @DoubleValue(def = 5000000.0)
-    public static double FUSIONREACTOR_MAXENERGYTARGET = 5000000.0;
+    @DoubleValue(def = 700000.0)
+    public static double MSRREACTOR_MAXENERGYTARGET = 700000.0;
+    @DoubleValue(def = 4000000.0)
+    public static double FUSIONREACTOR_MAXENERGYTARGET = 4000000.0;
     @DoubleValue(def = 50000.0)
     public static double FUSIONREACTOR_USAGE_PER_TICK = 50000.0;
     @DoubleValue(def = 20000000.0)
