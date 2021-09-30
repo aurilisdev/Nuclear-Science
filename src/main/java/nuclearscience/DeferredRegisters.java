@@ -56,6 +56,7 @@ import nuclearscience.common.inventory.container.ContainerChemicalExtractor;
 import nuclearscience.common.inventory.container.ContainerFreezePlug;
 import nuclearscience.common.inventory.container.ContainerGasCentrifuge;
 import nuclearscience.common.inventory.container.ContainerMSRFuelPreProcessor;
+import nuclearscience.common.inventory.container.ContainerMSRReactorCore;
 import nuclearscience.common.inventory.container.ContainerNuclearBoiler;
 import nuclearscience.common.inventory.container.ContainerParticleInjector;
 import nuclearscience.common.inventory.container.ContainerQuantumCapacitor;
@@ -343,6 +344,8 @@ public class DeferredRegisters {
 	    .register("radioactiveprocessor", () -> new ContainerType<>(ContainerRadioactiveProcessor::new));
     public static final RegistryObject<ContainerType<ContainerMSRFuelPreProcessor>> CONTAINER_MSRFUELPREPROCESSOR = CONTAINERS
 	    .register("msrfuelpreprocessor", () -> new ContainerType<>(ContainerMSRFuelPreProcessor::new));
+    public static final RegistryObject<ContainerType<ContainerMSRReactorCore>> CONTAINER_MSRREACTORCORE = CONTAINERS.register("msrreactorcore",
+	    () -> new ContainerType<>(ContainerMSRReactorCore::new));
 
     public static final RegistryObject<EntityType<EntityParticle>> ENTITY_PARTICLE = ENTITIES.register("particle", () -> EntityType.Builder
 	    .<EntityParticle>create(EntityParticle::new, EntityClassification.MISC).trackingRange(8).build(References.ID + ".particle"));

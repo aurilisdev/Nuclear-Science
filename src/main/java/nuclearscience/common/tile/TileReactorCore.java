@@ -62,7 +62,6 @@ public class TileReactorCore extends GenericTileTicking {
 	addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket)
 		.guiPacketReader(this::readCustomPacket).guiPacketWriter(this::writeCustomPacket));
 	addComponent(new ComponentInventory(this).size(6).faceSlots(Direction.UP, 0, 1, 2, 3, 4).faceSlots(Direction.DOWN, 5));
-
 	addComponent(new ComponentContainerProvider("container.reactorcore")
 		.createMenu((id, player) -> new ContainerReactorCore(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
     }
@@ -97,7 +96,7 @@ public class TileReactorCore extends GenericTileTicking {
 	    int insertion = 0;
 	    if (tile instanceof TileControlRodAssembly) {
 		TileControlRodAssembly assembly = (TileControlRodAssembly) tile;
-		insertion = assembly.insertion;
+		insertion = assembly.isMSR ? 0 : assembly.insertion;
 	    }
 	    double insertDecimal = (100 - insertion) / 100.0;
 	    if (world.rand.nextFloat() < insertDecimal) {
