@@ -12,8 +12,6 @@ import com.google.common.collect.Maps;
 
 import electrodynamics.DeferredRegisters;
 import electrodynamics.common.block.connect.EnumConnectType;
-import electrodynamics.common.network.FluidUtilities;
-import electrodynamics.common.tile.network.TilePipe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
@@ -43,6 +41,7 @@ import nuclearscience.api.network.moltensalt.IMoltenSaltPipe;
 import nuclearscience.common.block.subtype.SubtypeMoltenSaltPipe;
 import nuclearscience.common.tile.TileHeatExchanger;
 import nuclearscience.common.tile.TileMSRReactorCore;
+import nuclearscience.common.tile.network.TileMoltenSaltPipe;
 
 public class BlockMoltenSaltPipe extends Block {
 
@@ -187,9 +186,10 @@ public class BlockMoltenSaltPipe extends Block {
 	BlockState acc = stateIn;
 	for (Direction d : Direction.values()) {
 	    TileEntity facingTile = worldIn.getTileEntity(pos.offset(d));
-	    if (FluidUtilities.isConductor(facingTile)) {
+	    if (facingTile instanceof IMoltenSaltPipe) {
 		acc = acc.with(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.WIRE);
-	    } else if (FluidUtilities.isFluidReceiver(facingTile, d.getOpposite())) {
+	    } else if (facingTile instanceof TileMSRReactorCore && d.getOpposite() == Direction.UP
+		    || facingTile instanceof TileHeatExchanger && d.getOpposite() == Direction.DOWN) {
 		acc = acc.with(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.INVENTORY);
 	    }
 	}
@@ -247,6 +247,6 @@ public class BlockMoltenSaltPipe extends Block {
 
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-	return new TilePipe();
+	return new TileMoltenSaltPipe();
     }
 }

@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "electrodynamics:item/pipe/pipesteel"
+		"layer0": "nuclearscience:item/moltensaltpipevanadiumsteelceramic"
 	}
 }
