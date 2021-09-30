@@ -108,4 +108,9 @@ public class TileHeatExchanger extends GenericTileTicking {
     protected void readCustomPacket(CompoundNBT nbt) {
 	temperature = nbt.getDouble("temperature");
     }
+
+    public Double receiveHeat(Double perReceiver) {
+	this.temperature = perReceiver;
+	return perReceiver;
+    }
 }

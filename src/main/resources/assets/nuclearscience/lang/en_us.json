@@ -51,6 +51,7 @@
 	"block.nuclearscience.blocklead": "Ceramic-Lead Radiation Shielding",
 	"block.nuclearscience.msrreactorcore": "MSR Reactor Core",
 	"block.nuclearscience.heatexchanger": "Heat Exchanger",
+	"block.nuclearscience.moltensaltpipevanadiumsteelceramic": "VS-Ceramic pipe"
 	"container.gascentrifuge": "Gas Centrifuge",
 	"container.nuclearboiler": "Nuclear Boiler",
 	"container.chemicalextractor": "Chemical Extractor",

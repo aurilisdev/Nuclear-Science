@@ -1,8 +1,11 @@
 package nuclearscience;
 
+import java.util.HashMap;
+
 import com.google.common.base.Supplier;
 import com.google.common.collect.Sets;
 
+import electrodynamics.api.ISubtype;
 import electrodynamics.common.blockitem.BlockItemDescriptable;
 import net.minecraft.block.AbstractBlock.Properties;
 import net.minecraft.block.Block;
@@ -43,6 +46,8 @@ import nuclearscience.common.block.BlockRadioisotopeGenerator;
 import nuclearscience.common.block.BlockReactorCore;
 import nuclearscience.common.block.BlockTeleporter;
 import nuclearscience.common.block.BlockTurbine;
+import nuclearscience.common.block.connect.BlockMoltenSaltPipe;
+import nuclearscience.common.block.subtype.SubtypeMoltenSaltPipe;
 import nuclearscience.common.entity.EntityParticle;
 import nuclearscience.common.fluid.types.FluidAmmonia;
 import nuclearscience.common.fluid.types.FluidIronSulfamate;
@@ -82,6 +87,7 @@ import nuclearscience.common.tile.TileRadioisotopeGenerator;
 import nuclearscience.common.tile.TileReactorCore;
 import nuclearscience.common.tile.TileTeleporter;
 import nuclearscience.common.tile.TileTurbine;
+import nuclearscience.common.tile.network.TileMoltenSaltPipe;
 
 public class DeferredRegisters {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, References.ID);
@@ -90,6 +96,11 @@ public class DeferredRegisters {
     public static final DeferredRegister<ContainerType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, References.ID);
     public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, References.ID);
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, References.ID);
+    public static final HashMap<ISubtype, RegistryObject<Item>> SUBTYPEITEMREGISTER_MAPPINGS = new HashMap<>();
+    public static final HashMap<ISubtype, RegistryObject<Block>> SUBTYPEBLOCKREGISTER_MAPPINGS = new HashMap<>();
+    public static final HashMap<ISubtype, Item> SUBTYPEITEM_MAPPINGS = new HashMap<>();
+    public static final HashMap<Item, ISubtype> ITEMSUBTYPE_MAPPINGS = new HashMap<>();
+    public static final HashMap<ISubtype, Block> SUBTYPEBLOCK_MAPPINGS = new HashMap<>();
 
     public static FluidUraniumHexafluoride fluidUraniumHexafluoride;
     public static FluidIronSulfamate fluidIronSulfamate;
@@ -145,7 +156,9 @@ public class DeferredRegisters {
 		.hardnessAndResistance(5.0f, 3.0f).sound(SoundType.METAL).setRequiresTool().harvestTool(ToolType.PICKAXE).harvestLevel(1))));
 	BLOCKS.register("msrreactorcore", supplier(blockMsrReactorCore = new BlockMSRReactorCore()));
 	BLOCKS.register("heatexchanger", supplier(blockHeatExchanger = new BlockHeatExchanger()));
-
+	for (SubtypeMoltenSaltPipe subtype : SubtypeMoltenSaltPipe.values()) {
+	    SUBTYPEBLOCKREGISTER_MAPPINGS.put(subtype, BLOCKS.register(subtype.tag(), supplier(new BlockMoltenSaltPipe(subtype), subtype)));
+	}
 	ITEMS.register("gascentrifuge", supplier(new BlockItemDescriptable(blockGasCentrifuge, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("nuclearboiler", supplier(new BlockItemDescriptable(blockNuclearBoiler, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("chemicalextractor",
@@ -182,7 +195,10 @@ public class DeferredRegisters {
 	ITEMS.register("msrreactorcore",
 		supplier(new BlockItemDescriptable(blockMsrReactorCore, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("heatexchanger", supplier(new BlockItemDescriptable(blockHeatExchanger, new Item.Properties().group(References.NUCLEARTAB))));
-
+	for (SubtypeMoltenSaltPipe subtype : SubtypeMoltenSaltPipe.values()) {
+	    ITEMS.register(subtype.tag(), supplier(
+		    new BlockItemDescriptable(SUBTYPEBLOCK_MAPPINGS.get(subtype), new Item.Properties().group(References.NUCLEARTAB)), subtype));
+	}
 	FLUIDS.register("fluiduraniumhexafluoride", supplier(fluidUraniumHexafluoride = new FluidUraniumHexafluoride()));
 
 	FLUIDS.register("fluidironsulfamate", supplier(fluidIronSulfamate = new FluidIronSulfamate()));
@@ -304,6 +320,9 @@ public class DeferredRegisters {
     public static final RegistryObject<TileEntityType<TileControlRodAssembly>> TILE_CONTROLRODASSEMBLY = TILES.register("controlrodassembly",
 	    () -> new TileEntityType<>(TileControlRodAssembly::new, Sets.newHashSet(blockControlRodAssembly), null));
 
+    public static final RegistryObject<TileEntityType<TileMoltenSaltPipe>> TILE_MOLTENSALTPIPE = TILES.register("pipegenerictile",
+	    () -> new TileEntityType<>(TileMoltenSaltPipe::new, BlockMoltenSaltPipe.PIPESET, null));
+
     public static final RegistryObject<ContainerType<ContainerGasCentrifuge>> CONTAINER_GASCENTRIFUGE = CONTAINERS.register("gascentrifuge",
 	    () -> new ContainerType<>(ContainerGasCentrifuge::new));
     public static final RegistryObject<ContainerType<ContainerNuclearBoiler>> CONTAINER_NUCLEARBOILER = CONTAINERS.register("nuclearboiler",
@@ -330,5 +349,15 @@ public class DeferredRegisters {
 
     private static <T extends IForgeRegistryEntry<T>> Supplier<? extends T> supplier(T entry) {
 	return () -> entry;
+    }
+
+    private static <T extends IForgeRegistryEntry<T>> Supplier<? extends T> supplier(T entry, ISubtype en) {
+	if (entry instanceof Block) {
+	    SUBTYPEBLOCK_MAPPINGS.put(en, (Block) entry);
+	} else if (entry instanceof Item) {
+	    SUBTYPEITEM_MAPPINGS.put(en, (Item) entry);
+	    ITEMSUBTYPE_MAPPINGS.put((Item) entry, en);
+	}
+	return supplier(entry);
     }
 }
