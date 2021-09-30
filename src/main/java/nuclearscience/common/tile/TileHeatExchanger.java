@@ -110,7 +110,7 @@ public class TileHeatExchanger extends GenericTileTicking {
     }
 
     public Double receiveHeat(Double perReceiver) {
-	this.temperature = perReceiver;
+	temperature = perReceiver;
 	return perReceiver;
     }
 }

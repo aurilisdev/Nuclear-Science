@@ -49,10 +49,10 @@ public class MoltenSaltNetwork extends AbstractNetwork<IMoltenSaltPipe, SubtypeM
     public Double emit(Double transfer, ArrayList<TileEntity> ignored, boolean debug) {
 	if (transfer > 0) {
 	    Set<TileEntity> availableAcceptors = getFluidAcceptors(transfer);
-	    Double heat = 0.0;
+	    double heat = 0.0;
 	    availableAcceptors.removeAll(ignored);
 	    if (!availableAcceptors.isEmpty()) {
-		Double perReceiver = transfer / availableAcceptors.size();
+		double perReceiver = transfer / availableAcceptors.size();
 		for (TileEntity receiver : availableAcceptors) {
 		    if (acceptorInputMap.containsKey(receiver)) {
 			Double rec = ((TileHeatExchanger) receiver).receiveHeat(perReceiver - getSize() * 5);
@@ -125,6 +125,6 @@ public class MoltenSaltNetwork extends AbstractNetwork<IMoltenSaltPipe, SubtypeM
 
     @Override
     public boolean canConnect(TileEntity acceptor, Direction orientation) {
-	return (acceptor instanceof TileHeatExchanger && orientation.getOpposite() == Direction.DOWN) || isConductor(acceptor);
+	return acceptor instanceof TileHeatExchanger && orientation.getOpposite() == Direction.DOWN || isConductor(acceptor);
     }
 }
