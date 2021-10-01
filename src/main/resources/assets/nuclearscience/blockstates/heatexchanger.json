@@ -1,0 +1,20 @@
+{
+	"variants": {
+		"facing=east": {
+			"model": "nuclearscience:block/heatexchanger",
+			"y": 0
+		},
+		"facing=north": {
+			"model": "nuclearscience:block/heatexchanger",
+			"y": 270
+		},
+		"facing=south": {
+			"model": "nuclearscience:block/heatexchanger",
+			"y": 90
+		},
+		"facing=west": {
+			"model": "nuclearscience:block/heatexchanger",
+			"y": 180
+		}
+	}
+}
