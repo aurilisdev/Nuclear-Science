@@ -35,7 +35,7 @@ public class TileMoltenSaltSupplier extends GenericTileTicking {
 
     public void tickServer(ComponentTickable tickable) {
 	if (output == null) {
-	    output = new CachedTileOutput(world, pos.offset(null /* TODO: FIX THIS */));
+	    output = new CachedTileOutput(world, pos.offset(Direction.DOWN) /* TODO: FIX THIS */);
 	}
 	if (tickable.getTicks() % 40 == 0) {
 	    output.update();
