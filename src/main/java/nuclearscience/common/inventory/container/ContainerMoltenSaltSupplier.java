@@ -22,6 +22,6 @@ public class ContainerMoltenSaltSupplier extends GenericContainer<TileMoltenSalt
 
     @Override
     public void addInventorySlots(IInventory inv, PlayerInventory playerinv) {
-	addSlot(new SlotRestricted(inv, nextIndex(), 25, 42, DeferredRegisters.blockMoltenSaltSupplier.asItem()));
+	addSlot(new SlotRestricted(inv, nextIndex(), 25, 42, DeferredRegisters.ITEM_LIFHT4PUF3.get()));
     }
 }

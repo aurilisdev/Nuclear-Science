@@ -3,6 +3,7 @@ package nuclearscience.common.tile;
 import java.util.ArrayList;
 
 import electrodynamics.prefab.tile.GenericTileTicking;
+import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
 import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
@@ -36,10 +37,12 @@ public class TileMSRReactorCore extends GenericTileTicking {
 
     protected void writeCustomPacket(CompoundNBT tag) {
 	tag.putDouble("temperature", temperature);
+	tag.putDouble("currentFuel", currentFuel);
     }
 
     protected void readCustomPacket(CompoundNBT nbt) {
 	temperature = nbt.getDouble("temperature");
+	currentFuel = nbt.getDouble("currentFuel");
     }
 
     protected void tickServer(ComponentTickable tick) {
@@ -68,6 +71,11 @@ public class TileMSRReactorCore extends GenericTileTicking {
 		MoltenSaltNetwork net = (MoltenSaltNetwork) ((IMoltenSaltPipe) above).getNetwork();
 		net.emit(temperature, new ArrayList<>(), false);
 	    }
+	    if (tick.getTicks() % 3 == 0) {
+		this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendGuiPacketToTracking();
+	    }
+	} else if (tick.getTicks() % 50 == 0) {
+	    this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendGuiPacketToTracking();
 	}
     }
 
