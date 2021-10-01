@@ -1,5 +1,5 @@
 {
-	"parent": "electrodynamics:parent/pipe_side",
+	"parent": "nuclearscience:parent/pipe_side",
 	"textures": {
 		"particle": "nuclearscience:block/pipe/moltensaltpipevanadiumsteelceramic_base",
 		"texture": "nuclearscience:block/pipe/moltensaltpipevanadiumsteelceramic_base"
