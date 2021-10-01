@@ -51,5 +51,9 @@ public class Constants {
     public static int RADIOACTIVEPROCESSOR_USAGE_PER_TICK = 480;
     @DoubleValue(def = 300.0)
     public static double RADIOACTIVEPROCESSOR_REQUIRED_TICKS = 300.0;
+    @DoubleValue(def = 120.0)
+    public static double MOLTENSALTSUPPLIER_VOLTAGE = 120.0;
+    @DoubleValue(def = 1200.0)
+    public static double MOLTENSALTSUPPLIER_USAGE_PER_TICK = 1200.0;
 
 }

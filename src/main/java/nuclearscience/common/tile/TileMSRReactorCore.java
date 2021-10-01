@@ -28,8 +28,9 @@ public class TileMSRReactorCore extends GenericTileTicking {
 	super(DeferredRegisters.TILE_MSRREACTORCORE.get());
 	addComponent(new ComponentDirection());
 	addComponent(new ComponentTickable().tickServer(this::tickServer).tickClient(this::tickClient));
-	addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket)
-		.guiPacketReader(this::readCustomPacket).guiPacketWriter(this::writeCustomPacket));
+	addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket)
+		.customPacketWriter(this::writeCustomPacket).guiPacketReader(this::readCustomPacket)
+		.guiPacketWriter(this::writeCustomPacket));
 	addComponent(new ComponentContainerProvider("container.msrreactorcore")
 		.createMenu((id, player) -> new ContainerMSRReactorCore(id, player, null, getCoordsArray())));
     }
@@ -43,10 +44,10 @@ public class TileMSRReactorCore extends GenericTileTicking {
     }
 
     protected void tickServer(ComponentTickable tick) {
-
 	if (currentFuel > 0) {
 	    currentFuel -= FUEL_USAGE_RATE;
-	    double change = (temperature - TileReactorCore.AIR_TEMPERATURE) / 3000.0 + (temperature - TileReactorCore.AIR_TEMPERATURE) / 5000.0;
+	    double change = (temperature - TileReactorCore.AIR_TEMPERATURE) / 3000.0
+		    + (temperature - TileReactorCore.AIR_TEMPERATURE) / 5000.0;
 	    if (change != 0) {
 		temperature -= change < 0.001 && change > 0 ? 0.001 : change > -0.001 && change < 0 ? -0.001 : change;
 	    }
@@ -63,7 +64,8 @@ public class TileMSRReactorCore extends GenericTileTicking {
 		}
 	    }
 	    double insertDecimal = (100 - insertion) / 100.0;
-	    temperature += (MELTDOWN_TEMPERATURE * insertDecimal * (0.5 + world.rand.nextDouble() / 5.0) - temperature) / (200 + 80);
+	    temperature += (MELTDOWN_TEMPERATURE * insertDecimal * (0.5 + world.rand.nextDouble() / 5.0) - temperature)
+		    / (200 + 80);
 	    TileEntity above = world.getTileEntity(pos.up());
 	    if (above instanceof IMoltenSaltPipe) {
 		MoltenSaltNetwork net = (MoltenSaltNetwork) ((IMoltenSaltPipe) above).getNetwork();
