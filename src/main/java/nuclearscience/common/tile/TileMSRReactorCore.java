@@ -19,7 +19,7 @@ import nuclearscience.common.network.MoltenSaltNetwork;
 public class TileMSRReactorCore extends GenericTileTicking {
     public static final int MELTDOWN_TEMPERATURE = 900;
     public static final double FUEL_CAPACITY = 1000;
-    public static final double FUEL_USAGE_RATE = 0.1;
+    public static final double FUEL_USAGE_RATE = 0.01;
     public double temperature = TileReactorCore.AIR_TEMPERATURE;
     public int ticksOverheating = 0;
     public double currentFuel = 0;
