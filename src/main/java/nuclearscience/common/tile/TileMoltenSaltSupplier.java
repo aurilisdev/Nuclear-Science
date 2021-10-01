@@ -43,19 +43,16 @@ public class TileMoltenSaltSupplier extends GenericTileTicking {
 	    this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendGuiPacketToTracking();
 	}
 	ComponentElectrodynamic electro = getComponent(ComponentType.Electrodynamic);
-	if (electro.getJoulesStored() > Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK) {
-	    electro.extractPower(TransferPack.joulesVoltage(Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK, Constants.MOLTENSALTSUPPLIER_VOLTAGE),
-		    false);
-	    if (tickable.getTicks() % 40 == 0) {
-		output.update();
-		ItemStack in = this.<ComponentInventory>getComponent(ComponentType.Inventory).getStackInSlot(0);
-		if (in.getCount() > 0 && output.valid() && output.<TileEntity>getSafe() instanceof TileMSRReactorCore) {
-		    TileMSRReactorCore core = output.getSafe();
-		    if (core.<ComponentDirection>getComponent(ComponentType.Direction).getDirection() == dir.getOpposite()) {
-			if (TileMSRReactorCore.FUEL_CAPACITY - core.currentFuel >= 250) {
-			    in.shrink(1);
-			    core.currentFuel += 250;
-			}
+	electro.extractPower(TransferPack.joulesVoltage(Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK, Constants.MOLTENSALTSUPPLIER_VOLTAGE), false);
+	if (tickable.getTicks() % 40 == 0) {
+	    output.update();
+	    ItemStack in = this.<ComponentInventory>getComponent(ComponentType.Inventory).getStackInSlot(0);
+	    if (in.getCount() > 0 && output.valid() && output.<TileEntity>getSafe() instanceof TileMSRReactorCore) {
+		TileMSRReactorCore core = output.getSafe();
+		if (core.<ComponentDirection>getComponent(ComponentType.Direction).getDirection() == dir) {
+		    if (TileMSRReactorCore.FUEL_CAPACITY - core.currentFuel >= 250) {
+			in.shrink(1);
+			core.currentFuel += 250;
 		    }
 		}
 	    }

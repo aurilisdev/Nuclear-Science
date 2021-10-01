@@ -34,7 +34,10 @@ public class TileHeatExchanger extends GenericTileTicking {
     }
 
     protected void tickCommon(ComponentTickable tickable) {
-	produceSteam();
+	if (temperature > 100) {
+	    produceSteam();
+	}
+	temperature *= 0.9;
     }
 
     /**

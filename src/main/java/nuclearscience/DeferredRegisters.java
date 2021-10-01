@@ -330,7 +330,7 @@ public class DeferredRegisters {
     public static final RegistryObject<TileEntityType<TileControlRodAssembly>> TILE_CONTROLRODASSEMBLY = TILES.register("controlrodassembly",
 	    () -> new TileEntityType<>(TileControlRodAssembly::new, Sets.newHashSet(blockControlRodAssembly), null));
 
-    public static final RegistryObject<TileEntityType<TileMoltenSaltPipe>> TILE_MOLTENSALTPIPE = TILES.register("pipegenerictile",
+    public static final RegistryObject<TileEntityType<TileMoltenSaltPipe>> TILE_MOLTENSALTPIPE = TILES.register("moltensaltpipegenerictile",
 	    () -> new TileEntityType<>(TileMoltenSaltPipe::new, BlockMoltenSaltPipe.PIPESET, null));
 
     public static final RegistryObject<ContainerType<ContainerGasCentrifuge>> CONTAINER_GASCENTRIFUGE = CONTAINERS.register("gascentrifuge",

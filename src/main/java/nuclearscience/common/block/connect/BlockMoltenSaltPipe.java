@@ -233,9 +233,7 @@ public class BlockMoltenSaltPipe extends Block {
 	} else if (tile instanceof TileMSRReactorCore && facing.getOpposite() == Direction.UP
 		|| tile instanceof TileHeatExchanger && facing.getOpposite() == Direction.DOWN) {
 	    return stateIn.with(property, EnumConnectType.INVENTORY);
-	} else
-
-	{
+	} else {
 	    return stateIn.with(property, EnumConnectType.NONE);
 	}
     }

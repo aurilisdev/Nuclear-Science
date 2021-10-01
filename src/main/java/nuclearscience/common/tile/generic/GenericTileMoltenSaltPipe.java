@@ -5,7 +5,6 @@ import java.util.HashSet;
 
 import com.google.common.collect.Sets;
 
-import electrodynamics.common.network.FluidUtilities;
 import electrodynamics.prefab.network.AbstractNetwork;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
@@ -17,6 +16,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import nuclearscience.api.network.moltensalt.IMoltenSaltPipe;
 import nuclearscience.common.network.MoltenSaltNetwork;
+import nuclearscience.common.tile.TileHeatExchanger;
 
 public abstract class GenericTileMoltenSaltPipe extends GenericTile implements IMoltenSaltPipe {
 
@@ -117,7 +117,7 @@ public abstract class GenericTileMoltenSaltPipe extends GenericTile implements I
 	boolean flag = false;
 	for (Direction dir : Direction.values()) {
 	    TileEntity tile = world.getTileEntity(pos.offset(dir));
-	    boolean is = FluidUtilities.isFluidReceiver(tile, dir.getOpposite());
+	    boolean is = tile instanceof IMoltenSaltPipe || tile instanceof TileHeatExchanger;
 	    if (connections[dir.ordinal()] != is) {
 		connections[dir.ordinal()] = is;
 		tileConnections[dir.ordinal()] = tile;

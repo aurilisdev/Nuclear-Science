@@ -125,6 +125,6 @@ public class MoltenSaltNetwork extends AbstractNetwork<IMoltenSaltPipe, SubtypeM
 
     @Override
     public boolean canConnect(TileEntity acceptor, Direction orientation) {
-	return acceptor instanceof TileHeatExchanger && orientation.getOpposite() == Direction.DOWN || isConductor(acceptor);
+	return acceptor instanceof TileHeatExchanger && orientation == Direction.UP || isConductor(acceptor);
     }
 }
