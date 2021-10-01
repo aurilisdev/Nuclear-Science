@@ -82,6 +82,7 @@ public abstract class GenericTileMoltenSaltPipe extends GenericTile implements I
     @Override
     public void refreshNetwork() {
 	if (!world.isRemote) {
+	    updateAdjacent();
 	    ArrayList<MoltenSaltNetwork> foundNetworks = new ArrayList<>();
 	    for (Direction dir : Direction.values()) {
 		TileEntity facing = world.getTileEntity(new BlockPos(pos).offset(dir));
@@ -123,7 +124,6 @@ public abstract class GenericTileMoltenSaltPipe extends GenericTile implements I
 		tileConnections[dir.ordinal()] = tile;
 		flag = true;
 	    }
-
 	}
 	return flag;
     }
