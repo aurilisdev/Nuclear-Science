@@ -25,11 +25,9 @@ import nuclearscience.common.settings.Constants;
 @OnlyIn(Dist.CLIENT)
 public class ScreenMoltenSaltSupplier extends GenericScreen<ContainerMoltenSaltSupplier> {
 
-    public ScreenMoltenSaltSupplier(ContainerMoltenSaltSupplier container, PlayerInventory playerInventory,
-	    ITextComponent title) {
+    public ScreenMoltenSaltSupplier(ContainerMoltenSaltSupplier container, PlayerInventory playerInventory, ITextComponent title) {
 	super(container, playerInventory, title);
-	components.add(
-		new ScreenComponentElectricInfo(this::getEnergyInformation, this, -ScreenComponentInfo.SIZE + 1, 2));
+	components.add(new ScreenComponentElectricInfo(this::getEnergyInformation, this, -ScreenComponentInfo.SIZE + 1, 2));
     }
 
     private List<? extends ITextProperties> getEnergyInformation() {
@@ -38,13 +36,12 @@ public class ScreenMoltenSaltSupplier extends GenericScreen<ContainerMoltenSaltS
 	if (box != null) {
 	    ComponentElectrodynamic electro = box.getComponent(ComponentType.Electrodynamic);
 	    list.add(new TranslationTextComponent("gui.moltensaltsupplier.usage",
-		    new StringTextComponent(ChatFormatter.getElectricDisplayShort(
-			    Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK * 20, ElectricUnit.WATT))
+		    new StringTextComponent(
+			    ChatFormatter.getElectricDisplayShort(Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK * 20, ElectricUnit.WATT))
 				    .mergeStyle(TextFormatting.GRAY)).mergeStyle(TextFormatting.DARK_GRAY));
 	    list.add(new TranslationTextComponent("gui.moltensaltsupplier.voltage",
-		    new StringTextComponent(
-			    ChatFormatter.getElectricDisplayShort(electro.getVoltage(), ElectricUnit.VOLTAGE))
-				    .mergeStyle(TextFormatting.GRAY)).mergeStyle(TextFormatting.DARK_GRAY));
+		    new StringTextComponent(ChatFormatter.getElectricDisplayShort(electro.getVoltage(), ElectricUnit.VOLTAGE))
+			    .mergeStyle(TextFormatting.GRAY)).mergeStyle(TextFormatting.DARK_GRAY));
 	}
 	return list;
     }

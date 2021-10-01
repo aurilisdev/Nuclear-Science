@@ -25,13 +25,12 @@ public class TileMoltenSaltSupplier extends GenericTileTicking {
 	super(DeferredRegisters.TILE_MOLTENSALTSUPPLIER.get());
 	addComponent(new ComponentTickable().tickServer(this::tickServer));
 	addComponent(new ComponentPacketHandler());
-	addComponent(new ComponentElectrodynamic(this).voltage(Constants.MOLTENSALTSUPPLIER_VOLTAGE)
-		.extractPower((x, y) -> TransferPack.EMPTY).output(Direction.UP).output(Direction.DOWN));
+	addComponent(new ComponentElectrodynamic(this).voltage(Constants.MOLTENSALTSUPPLIER_VOLTAGE).extractPower((x, y) -> TransferPack.EMPTY)
+		.output(Direction.UP).output(Direction.DOWN));
 	addComponent(new ComponentInventory(this).size(1).slotFaces(0, Direction.values())
 		.valid((slot, stack) -> RadiationRegister.get(stack.getItem()) != RadiationRegister.NULL));
 	addComponent(new ComponentContainerProvider("container.moltensaltsupplier")
-		.createMenu((id, player) -> new ContainerMoltenSaltSupplier(id, player,
-			getComponent(ComponentType.Inventory), getCoordsArray())));
+		.createMenu((id, player) -> new ContainerMoltenSaltSupplier(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
     }
 
     public void tickServer(ComponentTickable tickable) {

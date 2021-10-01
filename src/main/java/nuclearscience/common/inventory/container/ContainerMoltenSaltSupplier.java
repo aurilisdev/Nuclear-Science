@@ -16,8 +16,7 @@ public class ContainerMoltenSaltSupplier extends GenericContainer<TileMoltenSalt
 	this(id, playerinv, new Inventory(1), new IntArray(3));
     }
 
-    public ContainerMoltenSaltSupplier(int id, PlayerInventory playerinv, IInventory inventory,
-	    IIntArray inventorydata) {
+    public ContainerMoltenSaltSupplier(int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {
 	super(DeferredRegisters.CONTAINER_MOLTENSALTSUPPLIER.get(), id, playerinv, inventory, inventorydata);
     }
 
