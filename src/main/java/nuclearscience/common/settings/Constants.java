@@ -11,10 +11,10 @@ public class Constants {
     public static double RADIOISOTOPEGENERATOR_VOLTAGE = 120.0;
     @DoubleValue(def = 0.15)
     public static double RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER = 0.15f;
-    @DoubleValue(def = 375000.0)
-    public static double FISSIONREACTOR_MAXENERGYTARGET = 375000.0;
-    @DoubleValue(def = 700000.0)
-    public static double MSRREACTOR_MAXENERGYTARGET = 700000.0;
+    @DoubleValue(def = 400000.0)
+    public static double FISSIONREACTOR_MAXENERGYTARGET = 400000.0;
+    @DoubleValue(def = 750000.0)
+    public static double MSRREACTOR_MAXENERGYTARGET = 750000.0;
     @DoubleValue(def = 4000000.0)
     public static double FUSIONREACTOR_MAXENERGYTARGET = 4000000.0;
     @DoubleValue(def = 50000.0)
@@ -53,7 +53,7 @@ public class Constants {
     public static double RADIOACTIVEPROCESSOR_REQUIRED_TICKS = 300.0;
     @DoubleValue(def = 120.0)
     public static double MOLTENSALTSUPPLIER_VOLTAGE = 120.0;
-    @DoubleValue(def = 1200.0)
-    public static double MOLTENSALTSUPPLIER_USAGE_PER_TICK = 1200.0;
+    @DoubleValue(def = 200.0)
+    public static double MOLTENSALTSUPPLIER_USAGE_PER_TICK = 200.0;
 
 }

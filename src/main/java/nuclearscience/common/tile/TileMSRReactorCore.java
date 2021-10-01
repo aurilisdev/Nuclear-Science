@@ -1,6 +1,7 @@
 package nuclearscience.common.tile;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import electrodynamics.prefab.tile.GenericTileTicking;
 import electrodynamics.prefab.tile.components.ComponentType;
@@ -8,12 +9,17 @@ import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
 import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
+import electrodynamics.prefab.utilities.object.Location;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.vector.Vector3d;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.api.network.moltensalt.IMoltenSaltPipe;
+import nuclearscience.api.radiation.RadiationSystem;
 import nuclearscience.common.inventory.container.ContainerMSRReactorCore;
 import nuclearscience.common.network.MoltenSaltNetwork;
 
@@ -47,7 +53,8 @@ public class TileMSRReactorCore extends GenericTileTicking {
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {writeCustomPacket(compound);
+    public CompoundNBT write(CompoundNBT compound) {
+	writeCustomPacket(compound);
 	return super.write(compound);
     }
 
@@ -59,7 +66,6 @@ public class TileMSRReactorCore extends GenericTileTicking {
 
     protected void tickServer(ComponentTickable tick) {
 	if (currentFuel > 0) {
-	    currentFuel -= FUEL_USAGE_RATE;
 	    double change = (temperature - TileReactorCore.AIR_TEMPERATURE) / 3000.0 + (temperature - TileReactorCore.AIR_TEMPERATURE) / 5000.0;
 	    if (change != 0) {
 		temperature -= change < 0.001 && change > 0 ? 0.001 : change > -0.001 && change < 0 ? -0.001 : change;
@@ -76,8 +82,21 @@ public class TileMSRReactorCore extends GenericTileTicking {
 		    }
 		}
 	    }
+	    if (world.getWorldInfo().getGameTime() % 10 == 0) {
+		Location source = new Location(pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f);
+		double totstrength = temperature * 7
+			* Math.pow(2, Math.pow(temperature / (MELTDOWN_TEMPERATURE), temperature > MELTDOWN_TEMPERATURE ? 5 : 4));
+		double range = Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 2;
+		AxisAlignedBB bb = AxisAlignedBB.withSizeAtOrigin(range, range, range);
+		bb = bb.offset(new Vector3d(source.x(), source.y(), source.z()));
+		List<LivingEntity> list = world.getEntitiesWithinAABB(LivingEntity.class, bb);
+		for (LivingEntity living : list) {
+		    RadiationSystem.applyRadiation(living, source, totstrength);
+		}
+	    }
 	    double insertDecimal = (100 - insertion) / 100.0;
-	    temperature += (MELTDOWN_TEMPERATURE * insertDecimal * (0.5 + world.rand.nextDouble() / 5.0) - temperature) / (200 + 80);
+	    currentFuel -= FUEL_USAGE_RATE * insertDecimal * Math.pow(2, Math.pow(temperature / (MELTDOWN_TEMPERATURE - 100), 4));
+	    temperature += (MELTDOWN_TEMPERATURE * insertDecimal * (1.2 + world.rand.nextDouble() / 5.0) - temperature) / 200;
 	    TileEntity above = world.getTileEntity(pos.up());
 	    if (above instanceof IMoltenSaltPipe) {
 		MoltenSaltNetwork net = (MoltenSaltNetwork) ((IMoltenSaltPipe) above).getNetwork();

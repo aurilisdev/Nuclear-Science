@@ -35,9 +35,9 @@ public class TileMoltenSaltSupplier extends GenericTileTicking {
     }
 
     public void tickServer(ComponentTickable tickable) {
+	Direction dir = this.<ComponentDirection>getComponent(ComponentType.Direction).getDirection();
 	if (output == null) {
-	    output = new CachedTileOutput(world,
-		    pos.offset(this.<ComponentDirection>getComponent(ComponentType.Direction).getDirection().getOpposite()));
+	    output = new CachedTileOutput(world, pos.offset(dir.getOpposite()));
 	}
 	if (tickable.getTicks() % 50 == 0) {
 	    this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendGuiPacketToTracking();
@@ -51,9 +51,11 @@ public class TileMoltenSaltSupplier extends GenericTileTicking {
 		ItemStack in = this.<ComponentInventory>getComponent(ComponentType.Inventory).getStackInSlot(0);
 		if (in.getCount() > 0 && output.valid() && output.<TileEntity>getSafe() instanceof TileMSRReactorCore) {
 		    TileMSRReactorCore core = output.getSafe();
-		    if (TileMSRReactorCore.FUEL_CAPACITY - core.currentFuel >= 250) {
-			in.shrink(1);
-			core.currentFuel += 250;
+		    if (core.<ComponentDirection>getComponent(ComponentType.Direction).getDirection() == dir.getOpposite()) {
+			if (TileMSRReactorCore.FUEL_CAPACITY - core.currentFuel >= 250) {
+			    in.shrink(1);
+			    core.currentFuel += 250;
+			}
 		    }
 		}
 	    }

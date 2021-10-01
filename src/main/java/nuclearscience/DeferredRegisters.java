@@ -322,7 +322,7 @@ public class DeferredRegisters {
     public static final RegistryObject<TileEntityType<TileMSRReactorCore>> TILE_MSRREACTORCORE = TILES.register("msrreactorcore",
 	    () -> new TileEntityType<>(TileMSRReactorCore::new, Sets.newHashSet(blockMsrReactorCore), null));
     public static final RegistryObject<TileEntityType<TileHeatExchanger>> TILE_HEATEXCHANGER = TILES.register("heatexchanger",
-	    () -> new TileEntityType<>(TileHeatExchanger::new, Sets.newHashSet(blockMsrReactorCore), null));
+	    () -> new TileEntityType<>(TileHeatExchanger::new, Sets.newHashSet(blockHeatExchanger), null));
 
     public static final RegistryObject<TileEntityType<TileTeleporter>> TILE_TELEPORTER = TILES.register("teleporter",
 	    () -> new TileEntityType<>(TileTeleporter::new, Sets.newHashSet(blockTeleporter), null));
