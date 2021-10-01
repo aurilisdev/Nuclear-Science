@@ -201,6 +201,8 @@ public class DeferredRegisters {
 	ITEMS.register("msrreactorcore",
 		supplier(new BlockItemDescriptable(blockMsrReactorCore, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("heatexchanger", supplier(new BlockItemDescriptable(blockHeatExchanger, new Item.Properties().group(References.NUCLEARTAB))));
+	ITEMS.register("moltensaltsupplier",
+		supplier(new BlockItemDescriptable(blockMoltenSaltSupplier, new Item.Properties().group(References.NUCLEARTAB))));
 	for (SubtypeMoltenSaltPipe subtype : SubtypeMoltenSaltPipe.values()) {
 	    ITEMS.register(subtype.tag(), supplier(
 		    new BlockItemDescriptable(SUBTYPEBLOCK_MAPPINGS.get(subtype), new Item.Properties().group(References.NUCLEARTAB)), subtype));
