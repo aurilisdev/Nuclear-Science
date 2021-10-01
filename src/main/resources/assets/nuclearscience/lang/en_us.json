@@ -52,6 +52,7 @@
 	"block.nuclearscience.msrreactorcore": "MSR Reactor Core",
 	"block.nuclearscience.heatexchanger": "Heat Exchanger",
 	"block.nuclearscience.moltensaltpipevanadiumsteelceramic": "VS-Ceramic pipe",
+	"block.nuclearscience.moltensaltsupplier": "Molten Salt Supplier",
 	"container.gascentrifuge": "Gas Centrifuge",
 	"container.nuclearboiler": "Nuclear Boiler",
 	"container.chemicalextractor": "Chemical Extractor",
