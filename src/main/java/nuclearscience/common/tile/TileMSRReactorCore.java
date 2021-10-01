@@ -8,6 +8,7 @@ import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
 import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
+import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -43,6 +44,17 @@ public class TileMSRReactorCore extends GenericTileTicking {
     protected void readCustomPacket(CompoundNBT nbt) {
 	temperature = nbt.getDouble("temperature");
 	currentFuel = nbt.getDouble("currentFuel");
+    }
+
+    @Override
+    public CompoundNBT write(CompoundNBT compound) {writeCustomPacket(compound);
+	return super.write(compound);
+    }
+
+    @Override
+    public void read(BlockState state, CompoundNBT compound) {
+	readCustomPacket(compound);
+	super.read(state, compound);
     }
 
     protected void tickServer(ComponentTickable tick) {
