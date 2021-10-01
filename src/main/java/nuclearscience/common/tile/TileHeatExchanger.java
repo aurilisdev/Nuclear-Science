@@ -49,7 +49,9 @@ public class TileHeatExchanger extends GenericTileTicking {
 		    if (isReactor2d && j == 0) {
 			if (!world.isRemote && world.rand.nextFloat() < temperature
 				/ (TileMSRReactorCore.MELTDOWN_TEMPERATURE * 20.0 * STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * STEAM_GEN_HEIGHT)) {
-			    world.setBlockState(pos, getBlockState().with(BlockStateProperties.WATERLOGGED, false));
+			    if (world.getBlockState(pos).hasProperty(BlockStateProperties.WATERLOGGED)) {
+				world.setBlockState(pos, getBlockState().with(BlockStateProperties.WATERLOGGED, false));
+			    }
 			}
 			continue;
 		    }
