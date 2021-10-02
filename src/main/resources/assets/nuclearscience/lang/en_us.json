@@ -96,6 +96,7 @@
   "gui.moltensaltsupplier.usage" : "Usage: %s",
   "gui.moltensaltsupplier.voltage" : "Voltage: %s",
   "gui.msrreactorcore.fuel" : "Fuel amount (mb): %s",
+  "gui.msrreactorcore.nofreezeplug": "Can't find freeze-plug!",
   "itemGroup.itemgroupnuclearscience" : "Nuclear Science",
   "death.attack.radiation" : "%s just did a speedrun of evolution!",
   "death.attack.plasma" : "%s was ionized!",

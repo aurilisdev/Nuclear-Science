@@ -9,6 +9,7 @@ import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
 import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
+import electrodynamics.prefab.utilities.object.CachedTileOutput;
 import electrodynamics.prefab.utilities.object.Location;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
@@ -16,6 +17,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.api.network.moltensalt.IMoltenSaltPipe;
@@ -31,6 +33,8 @@ public class TileMSRReactorCore extends GenericTileTicking {
     public double temperature = TileReactorCore.AIR_TEMPERATURE;
     public int ticksOverheating = 0;
     public double currentFuel = 0;
+    private CachedTileOutput outputCache;
+    public CachedTileOutput plugCache;
 
     public TileMSRReactorCore() {
 	super(DeferredRegisters.TILE_MSRREACTORCORE.get());
@@ -65,43 +69,54 @@ public class TileMSRReactorCore extends GenericTileTicking {
     }
 
     protected void tickServer(ComponentTickable tick) {
+	if (outputCache == null) {
+	    outputCache = new CachedTileOutput(world, new BlockPos(pos).offset(Direction.UP));
+	}
+	if (plugCache == null) {
+	    plugCache = new CachedTileOutput(world, new BlockPos(pos).offset(Direction.DOWN));
+	}
+	if (tick.getTicks() % 40 == 0) {
+	    outputCache.update();
+	    plugCache.update();
+	}
 	double change = (temperature - TileReactorCore.AIR_TEMPERATURE) / 3000.0 + (temperature - TileReactorCore.AIR_TEMPERATURE) / 5000.0;
 	if (change != 0) {
 	    temperature -= change < 0.001 && change > 0 ? 0.001 : change > -0.001 && change < 0 ? -0.001 : change;
 	}
-	if (currentFuel > FUEL_USAGE_RATE) {
-	    int insertion = 0;
-	    for (Direction dir : Direction.values()) {
-		if (dir != Direction.UP && dir != Direction.DOWN) {
-		    TileEntity tile = world.getTileEntity(getPos().offset(dir));
-		    if (tile instanceof TileControlRodAssembly) {
-			TileControlRodAssembly control = (TileControlRodAssembly) tile;
-			if (control.dir == dir.getOpposite()) {
-			    insertion += control.insertion;
+	if (plugCache.valid() && plugCache.getSafe() instanceof TileFreezePlug) {
+	    if (currentFuel > FUEL_USAGE_RATE) {
+		int insertion = 0;
+		for (Direction dir : Direction.values()) {
+		    if (dir != Direction.UP && dir != Direction.DOWN) {
+			TileEntity tile = world.getTileEntity(getPos().offset(dir));
+			if (tile instanceof TileControlRodAssembly) {
+			    TileControlRodAssembly control = (TileControlRodAssembly) tile;
+			    if (control.dir == dir.getOpposite()) {
+				insertion += control.insertion;
+			    }
 			}
 		    }
 		}
-	    }
-	    if (world.getWorldInfo().getGameTime() % 10 == 0) {
-		Location source = new Location(pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f);
-		double totstrength = temperature * 7
-			* Math.pow(2, Math.pow(temperature / MELTDOWN_TEMPERATURE, temperature > MELTDOWN_TEMPERATURE ? 5 : 4));
-		double range = Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 2;
-		AxisAlignedBB bb = AxisAlignedBB.withSizeAtOrigin(range, range, range);
-		bb = bb.offset(new Vector3d(source.x(), source.y(), source.z()));
-		List<LivingEntity> list = world.getEntitiesWithinAABB(LivingEntity.class, bb);
-		for (LivingEntity living : list) {
-		    RadiationSystem.applyRadiation(living, source, totstrength);
+		if (world.getWorldInfo().getGameTime() % 10 == 0) {
+		    Location source = new Location(pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f);
+		    double totstrength = temperature * 7
+			    * Math.pow(2, Math.pow(temperature / MELTDOWN_TEMPERATURE, temperature > MELTDOWN_TEMPERATURE ? 5 : 4));
+		    double range = Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 2;
+		    AxisAlignedBB bb = AxisAlignedBB.withSizeAtOrigin(range, range, range);
+		    bb = bb.offset(new Vector3d(source.x(), source.y(), source.z()));
+		    List<LivingEntity> list = world.getEntitiesWithinAABB(LivingEntity.class, bb);
+		    for (LivingEntity living : list) {
+			RadiationSystem.applyRadiation(living, source, totstrength);
+		    }
 		}
-	    }
-	    double insertDecimal = (100 - insertion) / 100.0;
-	    currentFuel -= Math.min(currentFuel,
-		    FUEL_USAGE_RATE * insertDecimal * Math.pow(2, Math.pow(temperature / (MELTDOWN_TEMPERATURE - 100), 4)));
-	    temperature += (MELTDOWN_TEMPERATURE * insertDecimal * (1.2 + world.rand.nextDouble() / 5.0) - temperature) / 200;
-	    TileEntity above = world.getTileEntity(pos.up());
-	    if (above instanceof IMoltenSaltPipe) {
-		MoltenSaltNetwork net = (MoltenSaltNetwork) ((IMoltenSaltPipe) above).getNetwork();
-		net.emit(temperature, new ArrayList<>(), false);
+		double insertDecimal = (100 - insertion) / 100.0;
+		currentFuel -= Math.min(currentFuel,
+			FUEL_USAGE_RATE * insertDecimal * Math.pow(2, Math.pow(temperature / (MELTDOWN_TEMPERATURE - 100), 4)));
+		temperature += (MELTDOWN_TEMPERATURE * insertDecimal * (1.2 + world.rand.nextDouble() / 5.0) - temperature) / 200;
+		if (outputCache.valid() && outputCache.getSafe() instanceof IMoltenSaltPipe) {
+		    MoltenSaltNetwork net = (MoltenSaltNetwork) outputCache.<IMoltenSaltPipe>getSafe().getNetwork();
+		    net.emit(temperature, new ArrayList<>(), false);
+		}
 	    }
 	}
 	if (tick.getTicks() % 5 == 0) {
@@ -110,5 +125,8 @@ public class TileMSRReactorCore extends GenericTileTicking {
     }
 
     protected void tickClient(ComponentTickable tick) {
+	if (plugCache == null) {
+	    plugCache = new CachedTileOutput(world, new BlockPos(pos).offset(Direction.DOWN));
+	}
     }
 }
