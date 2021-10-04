@@ -1,0 +1,12 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+		{
+			"item": "nuclearscience:frequencycard"
+		}
+	],
+	"result": {
+		"item": "nuclearscience:frequencycard",
+		"count": 1
+	}
+}

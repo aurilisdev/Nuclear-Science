@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "sss",
+        "sss",
+        "SCS"
+    ],
+    "key": {
+        "S": {
+           "tag": "forge:plates/stainlesssteel"
+        },
+        "s": {
+            "tag": "forge:ingots/silver"
+        },
+        "C": {
+            "tag": "forge:storage_blocks/copper"
+        }
+    },
+    "result": {
+        "item": "nuclearscience:heatexchanger",
+        "count": 1
+    }
+}

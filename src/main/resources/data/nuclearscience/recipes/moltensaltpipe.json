@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "CCC",
+        "VVV",
+        "CCC"
+    ],
+    "key": {
+        "C": {
+           "item": "electrodynamics:ceramicplate"
+        },
+        "V": {
+            "tag": "forge:plates/vanadiumsteel"
+        }
+    },
+    "result": {
+        "item": "nuclearscience:moltensaltpipevanadiumsteelceramic",
+        "count": 2
+    }
+}
