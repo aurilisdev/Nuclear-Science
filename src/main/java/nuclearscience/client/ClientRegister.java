@@ -20,6 +20,7 @@ import nuclearscience.client.render.tile.RenderChemicalExtractor;
 import nuclearscience.client.render.tile.RenderFuelReprocessor;
 import nuclearscience.client.render.tile.RenderFusionReactorCore;
 import nuclearscience.client.render.tile.RenderGasCentrifuge;
+import nuclearscience.client.render.tile.RenderMoltenSaltSupplier;
 import nuclearscience.client.render.tile.RenderNuclearBoiler;
 import nuclearscience.client.render.tile.RenderQuantumCapacitor;
 import nuclearscience.client.render.tile.RenderRadioactiveProcessor;
@@ -65,6 +66,8 @@ public class ClientRegister {
 	ModelLoader.addSpecialModel(MODEL_FUELREPROCESSOR_ON);
 	ModelLoader.addSpecialModel(MODEL_RADIOACTIVEPROCESSOR);
 	ModelLoader.addSpecialModel(MODEL_RADIOACTIVEPROCESSOR_ON);
+	ModelLoader.addSpecialModel(MODEL_MOLTENSALTSUPPLIER);
+	ModelLoader.addSpecialModel(MODEL_MOLTENSALTSUPPLIER_ON);
     }
 
     public static final ResourceLocation MODEL_GASCENTRIFUGEFULL = new ResourceLocation(References.ID + ":block/gascentrifuge");
@@ -89,7 +92,9 @@ public class ClientRegister {
     public static final ResourceLocation MODEL_FUELREPROCESSOR_ON = new ResourceLocation(References.ID + ":block/fuelreprocessoron");
     public static final ResourceLocation MODEL_RADIOACTIVEPROCESSOR = new ResourceLocation(References.ID + ":block/radioactiveprocessor");
     public static final ResourceLocation MODEL_RADIOACTIVEPROCESSOR_ON = new ResourceLocation(References.ID + ":block/radioactiveprocessoron");
-
+    public static final ResourceLocation MODEL_MOLTENSALTSUPPLIER = new ResourceLocation(References.ID + ":block/moltensaltsupplier");
+    public static final ResourceLocation MODEL_MOLTENSALTSUPPLIER_ON = new ResourceLocation(References.ID + ":block/moltensaltsupplieron");
+    
     public static void setup() {
 	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_GASCENTRIFUGE.get(), RenderGasCentrifuge::new);
 	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_CHEMICALEXTRACTOR.get(), RenderChemicalExtractor::new);
@@ -102,7 +107,8 @@ public class ClientRegister {
 	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_CONTROLRODASSEMBLY.get(), RenderRodAssembly::new);
 	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_FUELREPROCESSOR.get(), RenderFuelReprocessor::new);
 	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_RADIOACTIVEPROCESSOR.get(), RenderRadioactiveProcessor::new);
-
+	ClientRegistry.bindTileEntityRenderer(DeferredRegisters.TILE_MOLTENSALTSUPPLIER.get(), RenderMoltenSaltSupplier::new);
+	
 	RenderingRegistry.registerEntityRenderingHandler(DeferredRegisters.ENTITY_PARTICLE.get(), RenderParticle::new);
 
 	ScreenManager.registerFactory(DeferredRegisters.CONTAINER_GASCENTRIFUGE.get(), ScreenGasCentrifuge::new);
