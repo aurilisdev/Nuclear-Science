@@ -53,6 +53,7 @@
   "block.nuclearscience.heatexchanger" : "Heat Exchanger",
   "block.nuclearscience.moltensaltpipevanadiumsteelceramic" : "VS-Ceramic pipe",
   "block.nuclearscience.moltensaltsupplier" : "Molten Salt Supplier",
+  "block.nuclearscience.radioactivegrass": "Radioactive Grass",
   "container.gascentrifuge" : "Gas Centrifuge",
   "container.nuclearboiler" : "Nuclear Boiler",
   "container.chemicalextractor" : "Chemical Extractor",
