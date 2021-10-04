@@ -23,7 +23,7 @@ public class BlockRadioactiveSoil extends SnowyDirtBlock {
     public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn) {
 	if (entityIn instanceof LivingEntity) {
 	    LivingEntity living = (LivingEntity) entityIn;
-	    living.addPotionEffect(new EffectInstance(EffectRadiation.INSTANCE, 20));
+	    living.addPotionEffect(new EffectInstance(EffectRadiation.INSTANCE, (int) (20 * 40 * worldIn.rand.nextFloat())));
 	}
     }
 }
