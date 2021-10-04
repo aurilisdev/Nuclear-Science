@@ -1,8 +1,8 @@
 package nuclearscience.common.block;
 
 import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.SnowyDirtBlock;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.SpreadableSnowyDirtBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.Entity;
@@ -12,9 +12,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import nuclearscience.api.radiation.EffectRadiation;
 
-public class BlockRadioactiveGrass extends SpreadableSnowyDirtBlock {
+public class BlockRadioactiveSoil extends SnowyDirtBlock {
 
-    public BlockRadioactiveGrass() {
+    public BlockRadioactiveSoil() {
 	super(AbstractBlock.Properties.create(Material.ORGANIC, MaterialColor.GREEN).tickRandomly().hardnessAndResistance(0.6F)
 		.sound(SoundType.PLANT));
     }

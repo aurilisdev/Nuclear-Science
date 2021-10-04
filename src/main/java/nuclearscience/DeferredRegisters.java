@@ -42,8 +42,8 @@ import nuclearscience.common.block.BlockNuclearBoiler;
 import nuclearscience.common.block.BlockParticleInjector;
 import nuclearscience.common.block.BlockPlasma;
 import nuclearscience.common.block.BlockQuantumCapacitor;
-import nuclearscience.common.block.BlockRadioactiveGrass;
 import nuclearscience.common.block.BlockRadioactiveProcessor;
+import nuclearscience.common.block.BlockRadioactiveSoil;
 import nuclearscience.common.block.BlockRadioisotopeGenerator;
 import nuclearscience.common.block.BlockReactorCore;
 import nuclearscience.common.block.BlockTeleporter;
@@ -134,7 +134,7 @@ public class DeferredRegisters {
     public static BlockMSRReactorCore blockMsrReactorCore;
     public static BlockHeatExchanger blockHeatExchanger;
     public static BlockMoltenSaltSupplier blockMoltenSaltSupplier;
-    public static BlockRadioactiveGrass blockRadioactiveGrass;
+    public static BlockRadioactiveSoil blockRadioactiveSoil;
 
     public static Block blocklead;
 
@@ -167,7 +167,7 @@ public class DeferredRegisters {
 	for (SubtypeMoltenSaltPipe subtype : SubtypeMoltenSaltPipe.values()) {
 	    SUBTYPEBLOCKREGISTER_MAPPINGS.put(subtype, BLOCKS.register(subtype.tag(), supplier(new BlockMoltenSaltPipe(subtype), subtype)));
 	}
-	BLOCKS.register("radioactivegrass", supplier(blockRadioactiveGrass = new BlockRadioactiveGrass()));
+	BLOCKS.register("radioactivesoil", supplier(blockRadioactiveSoil = new BlockRadioactiveSoil()));
 	ITEMS.register("gascentrifuge", supplier(new BlockItemDescriptable(blockGasCentrifuge, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("nuclearboiler", supplier(new BlockItemDescriptable(blockNuclearBoiler, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("chemicalextractor",
@@ -211,7 +211,7 @@ public class DeferredRegisters {
 		    new BlockItemDescriptable(SUBTYPEBLOCK_MAPPINGS.get(subtype), new Item.Properties().group(References.NUCLEARTAB)), subtype));
 	}
 	ITEMS.register("radioactivegrass",
-		supplier(new BlockItemDescriptable(blockRadioactiveGrass, new Item.Properties().group(References.NUCLEARTAB))));
+		supplier(new BlockItemDescriptable(blockRadioactiveSoil, new Item.Properties().group(References.NUCLEARTAB))));
 	FLUIDS.register("fluiduraniumhexafluoride", supplier(fluidUraniumHexafluoride = new FluidUraniumHexafluoride()));
 
 	FLUIDS.register("fluidironsulfamate", supplier(fluidIronSulfamate = new FluidIronSulfamate()));
