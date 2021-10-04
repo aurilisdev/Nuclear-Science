@@ -14,6 +14,7 @@ import electrodynamics.DeferredRegisters;
 import electrodynamics.common.block.connect.EnumConnectType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.IWaterLoggable;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.LivingEntity;
@@ -43,7 +44,7 @@ import nuclearscience.common.tile.TileHeatExchanger;
 import nuclearscience.common.tile.TileMSRReactorCore;
 import nuclearscience.common.tile.network.TileMoltenSaltPipe;
 
-public class BlockMoltenSaltPipe extends Block {
+public class BlockMoltenSaltPipe extends Block implements IWaterLoggable {
 
     public static final Map<Direction, EnumProperty<EnumConnectType>> FACING_TO_PROPERTY_MAP = Util.make(Maps.newEnumMap(Direction.class), p -> {
 	p.put(Direction.NORTH, EnumConnectType.NORTH);
