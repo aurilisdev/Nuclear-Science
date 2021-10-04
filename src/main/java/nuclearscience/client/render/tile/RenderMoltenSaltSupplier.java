@@ -20,43 +20,44 @@ import nuclearscience.client.ClientRegister;
 import nuclearscience.common.settings.Constants;
 import nuclearscience.common.tile.TileMoltenSaltSupplier;
 
-public class RenderMoltenSaltSupplier extends TileEntityRenderer<TileMoltenSaltSupplier>{
+public class RenderMoltenSaltSupplier extends TileEntityRenderer<TileMoltenSaltSupplier> {
 
-	private static final TransferPack PACK = TransferPack.joulesVoltage(Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK, Constants.MOLTENSALTSUPPLIER_VOLTAGE);
-	
-	public RenderMoltenSaltSupplier(TileEntityRendererDispatcher rendererDispatcherIn) {
-		super(rendererDispatcherIn);
-	}
+    private static final TransferPack PACK = TransferPack.joulesVoltage(Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK,
+	    Constants.MOLTENSALTSUPPLIER_VOLTAGE);
 
-	@Override
-	public void render(TileMoltenSaltSupplier tile, float partialTicks, MatrixStack matrixStack,
-			IRenderTypeBuffer buffer, int combinedLightIn, int combinedOverlayIn) {
-		matrixStack.push();
-		matrixStack.translate(0.5, 0.5, 0.5);
-		Direction dir = tile.<ComponentDirection>getComponent(ComponentType.Direction).getDirection();
-		switch (dir) {
-		case WEST:
-		    matrixStack.rotate(new Quaternion(new Vector3f(0.0F, 1.0F, 0.0F), 180, true));
-		    break;
-		case NORTH:
-		    matrixStack.rotate(new Quaternion(new Vector3f(0.0F, 1.0F, 0.0F), 90, true));
-		    break;
-		case SOUTH:
-		    matrixStack.rotate(new Quaternion(new Vector3f(0.0F, 1.0F, 0.0F), -90, true));
-		    break;
-		default:
-		    break;
-		}
-		ComponentElectrodynamic electro = tile.getComponent(ComponentType.Electrodynamic);
-		if (electro != null && electro.getJoulesStored() >= PACK.getJoules()) {
-		    IBakedModel on = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_MOLTENSALTSUPPLIER_ON);
-		    UtilitiesRendering.renderModel(on, tile, RenderType.getSolid(), matrixStack, buffer, combinedLightIn, combinedOverlayIn);
-		} else {
-		    IBakedModel off = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_MOLTENSALTSUPPLIER);
-		    UtilitiesRendering.renderModel(off, tile, RenderType.getSolid(), matrixStack, buffer, combinedLightIn, combinedOverlayIn);
-		}
-		matrixStack.pop();
-		
+    public RenderMoltenSaltSupplier(TileEntityRendererDispatcher rendererDispatcherIn) {
+	super(rendererDispatcherIn);
+    }
+
+    @Override
+    public void render(TileMoltenSaltSupplier tile, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLightIn,
+	    int combinedOverlayIn) {
+	matrixStack.push();
+	matrixStack.translate(0.5, 0.5, 0.5);
+	Direction dir = tile.<ComponentDirection>getComponent(ComponentType.Direction).getDirection();
+	switch (dir) {
+	case WEST:
+	    matrixStack.rotate(new Quaternion(new Vector3f(0.0F, 1.0F, 0.0F), 180, true));
+	    break;
+	case NORTH:
+	    matrixStack.rotate(new Quaternion(new Vector3f(0.0F, 1.0F, 0.0F), 90, true));
+	    break;
+	case SOUTH:
+	    matrixStack.rotate(new Quaternion(new Vector3f(0.0F, 1.0F, 0.0F), -90, true));
+	    break;
+	default:
+	    break;
 	}
+	ComponentElectrodynamic electro = tile.getComponent(ComponentType.Electrodynamic);
+	if (electro != null && electro.getJoulesStored() >= PACK.getJoules()) {
+	    IBakedModel on = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_MOLTENSALTSUPPLIER_ON);
+	    UtilitiesRendering.renderModel(on, tile, RenderType.getSolid(), matrixStack, buffer, combinedLightIn, combinedOverlayIn);
+	} else {
+	    IBakedModel off = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_MOLTENSALTSUPPLIER);
+	    UtilitiesRendering.renderModel(off, tile, RenderType.getSolid(), matrixStack, buffer, combinedLightIn, combinedOverlayIn);
+	}
+	matrixStack.pop();
+
+    }
 
 }

@@ -15,8 +15,8 @@ import nuclearscience.api.radiation.EffectRadiation;
 public class BlockRadioactiveGrass extends SpreadableSnowyDirtBlock {
 
     public BlockRadioactiveGrass() {
-	super((AbstractBlock.Properties.create(Material.ORGANIC, MaterialColor.GREEN).tickRandomly()
-		.hardnessAndResistance(0.6F).sound(SoundType.PLANT)));
+	super(AbstractBlock.Properties.create(Material.ORGANIC, MaterialColor.GREEN).tickRandomly().hardnessAndResistance(0.6F)
+		.sound(SoundType.PLANT));
     }
 
     @Override

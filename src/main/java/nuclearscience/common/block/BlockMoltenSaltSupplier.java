@@ -12,7 +12,7 @@ public class BlockMoltenSaltSupplier extends BlockGenericMachine {
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
 	return new TileMoltenSaltSupplier();
     }
-    
+
     @Override
     @Deprecated
     public BlockRenderType getRenderType(BlockState state) {
