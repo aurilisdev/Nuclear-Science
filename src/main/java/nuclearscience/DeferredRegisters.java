@@ -42,8 +42,8 @@ import nuclearscience.common.block.BlockNuclearBoiler;
 import nuclearscience.common.block.BlockParticleInjector;
 import nuclearscience.common.block.BlockPlasma;
 import nuclearscience.common.block.BlockQuantumCapacitor;
-import nuclearscience.common.block.BlockRadioactiveProcessor;
 import nuclearscience.common.block.BlockRadioactiveSoil;
+import nuclearscience.common.block.BlockRadioactiveProcessor;
 import nuclearscience.common.block.BlockRadioisotopeGenerator;
 import nuclearscience.common.block.BlockReactorCore;
 import nuclearscience.common.block.BlockTeleporter;
@@ -210,7 +210,7 @@ public class DeferredRegisters {
 	    ITEMS.register(subtype.tag(), supplier(
 		    new BlockItemDescriptable(SUBTYPEBLOCK_MAPPINGS.get(subtype), new Item.Properties().group(References.NUCLEARTAB)), subtype));
 	}
-	ITEMS.register("radioactivegrass",
+	ITEMS.register("radioactivesoil",
 		supplier(new BlockItemDescriptable(blockRadioactiveSoil, new Item.Properties().group(References.NUCLEARTAB))));
 	FLUIDS.register("fluiduraniumhexafluoride", supplier(fluidUraniumHexafluoride = new FluidUraniumHexafluoride()));
 
