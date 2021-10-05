@@ -1,15 +1,22 @@
 package nuclearscience.common.tile;
 
+import java.util.List;
+
 import electrodynamics.prefab.tile.GenericTileTicking;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
+import electrodynamics.prefab.utilities.object.Location;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import nuclearscience.DeferredRegisters;
+import nuclearscience.api.radiation.RadiationSystem;
 
 public class TileMeltedReactor extends GenericTileTicking {
     public static final float RADIATION_RADIUS = 30;
@@ -24,7 +31,7 @@ public class TileMeltedReactor extends GenericTileTicking {
 
     protected void tickServer(ComponentTickable tickable) {
 	long ticks = tickable.getTicks();
-	if (ticks % 10 == 0) {
+	if (ticks % 3 == 0) {
 	    BlockState state = world.getBlockState(pos.down());
 	    if (state.getMaterial() == Material.AIR || state.getBlock() instanceof FlowingFluidBlock) {
 		world.setBlockState(pos.down(), getBlockState());
@@ -84,6 +91,17 @@ public class TileMeltedReactor extends GenericTileTicking {
 		if (block == Blocks.GRASS_BLOCK || block == Blocks.DIRT) {
 		    world.setBlockState(p, DeferredRegisters.blockRadioactiveSoil.getDefaultState());
 		}
+	    }
+	}
+	if (world.getWorldInfo().getGameTime() % 10 == 0) {
+	    Location source = new Location(pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f);
+	    double totstrength = temperature * 10;
+	    double range = Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 2;
+	    AxisAlignedBB bb = AxisAlignedBB.withSizeAtOrigin(range, range, range);
+	    bb = bb.offset(new Vector3d(source.x(), source.y(), source.z()));
+	    List<LivingEntity> list = world.getEntitiesWithinAABB(LivingEntity.class, bb);
+	    for (LivingEntity living : list) {
+		RadiationSystem.applyRadiation(living, source, totstrength);
 	    }
 	}
     }
