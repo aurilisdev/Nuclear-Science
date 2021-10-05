@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"THT",
+		"HmH",
+		"THT"
+	],
+	"key": {
+		"T": {
+			"tag": "forge:plates/titanium"
+		},
+		"H": {
+			"tag": "forge:plates/hslasteel"
+		},
+		"m": {
+			"item": "electrodynamics:motor"
+		}
+	},
+	"result": {
+		"item": "nuclearscience:electromagnet",
+		"count": 6
+	}
+}
