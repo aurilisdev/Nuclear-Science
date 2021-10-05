@@ -37,13 +37,14 @@ import nuclearscience.common.block.BlockGasCentrifuge;
 import nuclearscience.common.block.BlockHeatExchanger;
 import nuclearscience.common.block.BlockMSRFuelPreProcessor;
 import nuclearscience.common.block.BlockMSRReactorCore;
+import nuclearscience.common.block.BlockMeltedReactor;
 import nuclearscience.common.block.BlockMoltenSaltSupplier;
 import nuclearscience.common.block.BlockNuclearBoiler;
 import nuclearscience.common.block.BlockParticleInjector;
 import nuclearscience.common.block.BlockPlasma;
 import nuclearscience.common.block.BlockQuantumCapacitor;
-import nuclearscience.common.block.BlockRadioactiveSoil;
 import nuclearscience.common.block.BlockRadioactiveProcessor;
+import nuclearscience.common.block.BlockRadioactiveSoil;
 import nuclearscience.common.block.BlockRadioisotopeGenerator;
 import nuclearscience.common.block.BlockReactorCore;
 import nuclearscience.common.block.BlockTeleporter;
@@ -82,6 +83,7 @@ import nuclearscience.common.tile.TileGasCentrifuge;
 import nuclearscience.common.tile.TileHeatExchanger;
 import nuclearscience.common.tile.TileMSRFuelPreProcessor;
 import nuclearscience.common.tile.TileMSRReactorCore;
+import nuclearscience.common.tile.TileMeltedReactor;
 import nuclearscience.common.tile.TileMoltenSaltSupplier;
 import nuclearscience.common.tile.TileNuclearBoiler;
 import nuclearscience.common.tile.TileParticleInjector;
@@ -123,6 +125,7 @@ public class DeferredRegisters {
     public static BlockElectromagneticSwitch blockElectromagneticSwitch;
     public static BlockFusionReactorCore blockFusionReactorCore;
     public static BlockPlasma blockPlasma;
+    public static BlockMeltedReactor blockMeltedReactor;
     public static BlockParticleInjector blockParticleInjector;
     public static BlockQuantumCapacitor blockQuantumCapacitor;
     public static BlockTeleporter blockTeleporter;
@@ -167,6 +170,7 @@ public class DeferredRegisters {
 	for (SubtypeMoltenSaltPipe subtype : SubtypeMoltenSaltPipe.values()) {
 	    SUBTYPEBLOCKREGISTER_MAPPINGS.put(subtype, BLOCKS.register(subtype.tag(), supplier(new BlockMoltenSaltPipe(subtype), subtype)));
 	}
+	BLOCKS.register("meltedreactor", supplier(blockMeltedReactor = new BlockMeltedReactor()));
 	BLOCKS.register("radioactivesoil", supplier(blockRadioactiveSoil = new BlockRadioactiveSoil()));
 	ITEMS.register("gascentrifuge", supplier(new BlockItemDescriptable(blockGasCentrifuge, new Item.Properties().group(References.NUCLEARTAB))));
 	ITEMS.register("nuclearboiler", supplier(new BlockItemDescriptable(blockNuclearBoiler, new Item.Properties().group(References.NUCLEARTAB))));
@@ -212,6 +216,7 @@ public class DeferredRegisters {
 	}
 	ITEMS.register("radioactivesoil",
 		supplier(new BlockItemDescriptable(blockRadioactiveSoil, new Item.Properties().group(References.NUCLEARTAB))));
+	ITEMS.register("meltedreactor", supplier(new BlockItemDescriptable(blockMeltedReactor, new Item.Properties().group(References.NUCLEARTAB))));
 	FLUIDS.register("fluiduraniumhexafluoride", supplier(fluidUraniumHexafluoride = new FluidUraniumHexafluoride()));
 
 	FLUIDS.register("fluidironsulfamate", supplier(fluidIronSulfamate = new FluidIronSulfamate()));
@@ -315,6 +320,8 @@ public class DeferredRegisters {
 	    () -> new TileEntityType<>(TileElectromagneticSwitch::new, Sets.newHashSet(blockElectromagneticSwitch), null));
     public static final RegistryObject<TileEntityType<TilePlasma>> TILE_PLASMA = TILES.register("plasma",
 	    () -> new TileEntityType<>(TilePlasma::new, Sets.newHashSet(blockPlasma), null));
+    public static final RegistryObject<TileEntityType<TileMeltedReactor>> TILE_MELTEDREACTOR = TILES.register("meltedreactor",
+	    () -> new TileEntityType<>(TileMeltedReactor::new, Sets.newHashSet(blockMeltedReactor), null));
     public static final RegistryObject<TileEntityType<TileQuantumCapacitor>> TILE_QUANTUMCAPACITOR = TILES.register("quantumcapacitor",
 	    () -> new TileEntityType<>(TileQuantumCapacitor::new, Sets.newHashSet(blockQuantumCapacitor), null));
 
