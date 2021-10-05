@@ -162,7 +162,6 @@ public class TileReactorCore extends GenericTileTicking {
 		}
 	    }
 	    world.setBlockState(pos, Blocks.AIR.getDefaultState());
-
 	    Explosion actual = new Explosion(world, null, pos.getX(), pos.getY(), pos.getZ(), 20, new ArrayList<>());
 	    radius = 3 * fuelCount;
 	    for (int i = -radius; i <= radius; i++) {
@@ -181,6 +180,7 @@ public class TileReactorCore extends GenericTileTicking {
 		}
 	    }
 	    world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), 20, Mode.DESTROY);
+	    world.setBlockState(pos, DeferredRegisters.blockMeltedReactor.getDefaultState());
 	}
     }
 
