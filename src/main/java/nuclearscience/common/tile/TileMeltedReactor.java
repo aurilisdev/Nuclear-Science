@@ -95,7 +95,7 @@ public class TileMeltedReactor extends GenericTileTicking {
 	}
 	if (world.getWorldInfo().getGameTime() % 10 == 0) {
 	    Location source = new Location(pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f);
-	    double totstrength = temperature * 10;
+	    double totstrength = 120000 * (radiation / START_RADIATION);
 	    double range = Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 2;
 	    AxisAlignedBB bb = AxisAlignedBB.withSizeAtOrigin(range, range, range);
 	    bb = bb.offset(new Vector3d(source.x(), source.y(), source.z()));
