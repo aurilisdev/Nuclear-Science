@@ -3,7 +3,7 @@
     "pattern": [
         "SVS",
         "VRV",
-        "SVS"
+        "SPS"
     ],
     "key": {
         "S": {
@@ -14,6 +14,9 @@
         },
         "V": {
             "tag": "forge:plates/vanadiumsteel"
+        },
+        "P": {
+            "item": "nuclearscience:plutonium239"
         }
     },
     "result": {

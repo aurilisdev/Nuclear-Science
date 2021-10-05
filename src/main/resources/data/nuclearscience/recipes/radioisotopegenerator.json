@@ -1,13 +1,13 @@
 {
 	"type": "minecraft:crafting_shaped",
 	"pattern": [
-		"iai",
+		"vav",
 		"lcl",
-		"iai"
+		"vav"
 	],
 	"key": {
-		"i": {
-			"tag": "forge:plates/iron"
+		"v": {
+			"tag": "forge:plates/vanadiumsteel"
 		},
 		"l": {
 			"tag": "forge:plates/lead"

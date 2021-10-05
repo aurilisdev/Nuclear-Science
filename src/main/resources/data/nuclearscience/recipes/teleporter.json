@@ -7,13 +7,13 @@
     ],
     "key": {
         "_": {
-            "tag": "forge:plates/iron"
+            "tag": "forge:plates/titaniumcarbide"
         },
         "D": {
             "item": "electrodynamics:ceramicfuse"
         },
         "#": {
-            "tag": "forge:plates/steel"
+            "tag": "forge:plates/hslasteel"
         },
         "B": {
             "tag": "forge:circuits/elite"

@@ -2,8 +2,8 @@
 	"type": "minecraft:crafting_shaped",
 	"pattern": [
 		"sus",
-		"ece",
-		"srs"
+		"mcm",
+		"ses"
 	],
 	"key": {
 		"s": {
@@ -18,8 +18,8 @@
 		"c": {
 			"item": "nuclearscience:cellempty"
 		},
-		"r": {
-			"item": "nuclearscience:radioisotopegenerator"
+		"m": {
+			"item": "electrodynamics:motor"
 		}
 	},
 	"result": {
