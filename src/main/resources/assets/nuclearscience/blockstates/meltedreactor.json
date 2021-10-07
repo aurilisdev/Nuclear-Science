@@ -1,20 +1,7 @@
 {
-	"variants": {
-		"facing=east": {
-			"model": "nuclearscience:block/meltedreactor",
-			"y": 0
-		},
-		"facing=north": {
-			"model": "nuclearscience:block/meltedreactor",
-			"y": 270
-		},
-		"facing=south": {
-			"model": "nuclearscience:block/meltedreactor",
-			"y": 90
-		},
-		"facing=west": {
-			"model": "nuclearscience:block/meltedreactor",
-			"y": 180
-		}
-	}
+  "variants": {
+    "": {
+      "model": "nuclearscience:block/meltedreactor"
+    }
+  }
 }
