@@ -83,7 +83,7 @@ public class TileMSRReactorCore extends GenericTileTicking {
 	if (change != 0) {
 	    temperature -= change < 0.001 && change > 0 ? 0.001 : change > -0.001 && change < 0 ? -0.001 : change;
 	}
-	if (plugCache.valid() && plugCache.getSafe() instanceof TileFreezePlug) {
+	if (plugCache.valid() && plugCache.getSafe() instanceof TileFreezePlug && ((TileFreezePlug)plugCache.getSafe()).isFrozen()) {
 	    if (currentFuel > FUEL_USAGE_RATE) {
 		int insertion = 0;
 		for (Direction dir : Direction.values()) {
@@ -99,8 +99,8 @@ public class TileMSRReactorCore extends GenericTileTicking {
 		}
 		if (world.getWorldInfo().getGameTime() % 10 == 0) {
 		    Location source = new Location(pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f);
-		    double totstrength = temperature * 7
-			    * Math.pow(2, Math.pow(temperature / MELTDOWN_TEMPERATURE, temperature > MELTDOWN_TEMPERATURE ? 5 : 4));
+		    double totstrength = temperature
+			    * Math.pow(3, Math.pow(temperature / MELTDOWN_TEMPERATURE, 9));
 		    double range = Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 2;
 		    AxisAlignedBB bb = AxisAlignedBB.withSizeAtOrigin(range, range, range);
 		    bb = bb.offset(new Vector3d(source.x(), source.y(), source.z()));

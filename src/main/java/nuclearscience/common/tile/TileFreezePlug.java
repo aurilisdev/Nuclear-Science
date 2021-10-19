@@ -37,6 +37,8 @@ public class TileFreezePlug extends GenericTileTicking {
 	    if (isFrozen) {
 		el.extractPower(TransferPack.joulesVoltage(Constants.FREEZEPLUG_USAGE_PER_TICK, 120), false);
 	    }
+	} else {
+	    isFrozen = false;
 	}
     }
 
