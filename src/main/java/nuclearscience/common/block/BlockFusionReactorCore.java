@@ -8,7 +8,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -19,9 +18,10 @@ import nuclearscience.common.settings.Constants;
 import nuclearscience.common.tile.TileFusionReactorCore;
 
 public class BlockFusionReactorCore extends BlockGenericMachine {
+
     @Override
-    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-	return new TileFusionReactorCore();
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+	return new TileFusionReactorCore(pos, state);
     }
 
     @Override

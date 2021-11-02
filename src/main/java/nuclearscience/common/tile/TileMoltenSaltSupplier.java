@@ -10,9 +10,11 @@ import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import electrodynamics.prefab.utilities.object.CachedTileOutput;
 import electrodynamics.prefab.utilities.object.TransferPack;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerMoltenSaltSupplier;
 import nuclearscience.common.settings.Constants;
@@ -21,8 +23,8 @@ public class TileMoltenSaltSupplier extends GenericTileTicking {
 
     protected CachedTileOutput output;
 
-    public TileMoltenSaltSupplier() {
-	super(DeferredRegisters.TILE_MOLTENSALTSUPPLIER.get());
+    public TileMoltenSaltSupplier(BlockPos pos, BlockState state) {
+	super(DeferredRegisters.TILE_MOLTENSALTSUPPLIER.get(), pos, state);
 	addComponent(new ComponentDirection());
 	addComponent(new ComponentTickable().tickServer(this::tickServer));
 	addComponent(new ComponentPacketHandler());

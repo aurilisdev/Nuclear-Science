@@ -9,6 +9,7 @@ import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -26,8 +27,8 @@ public class TileTeleporter extends GenericTileTicking {
     public int cooldown = 0;
     public String world;
 
-    public TileTeleporter() {
-	super(DeferredRegisters.TILE_TELEPORTER.get());
+    public TileTeleporter(BlockPos pos, BlockState state) {
+	super(DeferredRegisters.TILE_TELEPORTER.get(), pos, state);
 	addComponent(new ComponentDirection());
 	addComponent(new ComponentTickable().tickServer(this::tickServer));
 	addComponent(new ComponentPacketHandler());
@@ -78,8 +79,8 @@ public class TileTeleporter extends GenericTileTicking {
     }
 
     @Override
-    public void load(BlockState state, CompoundTag compound) {
-	super.load(state, compound);
+    public void load(CompoundTag compound) {
+	super.load(compound);
 	if (compound.contains("world")) {
 	    xCoord = compound.getInt("xCoord");
 	    yCoord = compound.getInt("yCoord");

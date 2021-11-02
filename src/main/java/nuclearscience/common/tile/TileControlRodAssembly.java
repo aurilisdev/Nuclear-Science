@@ -4,6 +4,7 @@ import electrodynamics.prefab.tile.GenericTileTicking;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -16,8 +17,8 @@ public class TileControlRodAssembly extends GenericTileTicking {
     public boolean isMSR = false;
     public Direction dir = Direction.DOWN;
 
-    public TileControlRodAssembly() {
-	super(DeferredRegisters.TILE_CONTROLRODASSEMBLY.get());
+    public TileControlRodAssembly(BlockPos pos, BlockState state) {
+	super(DeferredRegisters.TILE_CONTROLRODASSEMBLY.get(), pos, state);
 	addComponent(new ComponentTickable().tickServer(this::tickServer));
 	addComponent(new ComponentPacketHandler().customPacketWriter(this::writePacket).customPacketReader(this::readPacket));
     }
@@ -57,8 +58,8 @@ public class TileControlRodAssembly extends GenericTileTicking {
     }
 
     @Override
-    public void load(BlockState state, CompoundTag compound) {
-	super.load(state, compound);
+    public void load(CompoundTag compound) {
+	super.load(compound);
 	insertion = compound.getInt("insertion");
     }
 }

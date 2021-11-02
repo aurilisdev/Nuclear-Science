@@ -11,9 +11,12 @@ import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import electrodynamics.prefab.utilities.object.Location;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.entity.Entity.RemovalReason;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.entity.EntityParticle;
@@ -24,8 +27,8 @@ public class TileParticleInjector extends GenericTileTicking {
     private EntityParticle[] particles = new EntityParticle[2];
     private long timeSinceSpawn = 0;
 
-    public TileParticleInjector() {
-	super(DeferredRegisters.TILE_PARTICLEINJECTOR.get());
+    public TileParticleInjector(BlockPos pos, BlockState state) {
+	super(DeferredRegisters.TILE_PARTICLEINJECTOR.get(), pos, state);
 	addComponent(new ComponentTickable());
 	addComponent(new ComponentDirection());
 	addComponent(new ComponentPacketHandler());
@@ -75,8 +78,8 @@ public class TileParticleInjector extends GenericTileTicking {
 	    EntityParticle two = particles[1];
 	    if (one.distanceTo(two) < 1) {
 		double speedOfMax = Math.pow((one.speed + two.speed) / 4.0, 2);
-		one.remove();
-		two.remove();
+		one.remove(RemovalReason.KILLED);
+		two.remove(RemovalReason.KILLED);
 		particles[0] = particles[1] = null;
 		cellStack.shrink(1);
 		double mod = level.random.nextDouble();

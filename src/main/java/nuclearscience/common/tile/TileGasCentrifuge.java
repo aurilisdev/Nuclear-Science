@@ -13,6 +13,7 @@ import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundSource;
@@ -30,8 +31,8 @@ public class TileGasCentrifuge extends GenericTileTicking {
     public int stored238 = 0;
     public int spinSpeed;
 
-    public TileGasCentrifuge() {
-	super(DeferredRegisters.TILE_GASCENTRIFUGE.get());
+    public TileGasCentrifuge(BlockPos pos, BlockState state) {
+	super(DeferredRegisters.TILE_GASCENTRIFUGE.get(), pos, state);
 	addComponent(new ComponentTickable().tickClient(this::tickClient));
 	addComponent(new ComponentDirection());
 	addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket));
@@ -104,8 +105,8 @@ public class TileGasCentrifuge extends GenericTileTicking {
     }
 
     @Override
-    public void load(BlockState state, CompoundTag compound) {
-	super.load(state, compound);
+    public void load(CompoundTag compound) {
+	super.load(compound);
 	stored235 = compound.getInt("stored235");
 	stored238 = compound.getInt("stored238");
     }

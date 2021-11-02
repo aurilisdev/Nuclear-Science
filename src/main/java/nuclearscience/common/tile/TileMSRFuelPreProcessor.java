@@ -13,8 +13,10 @@ import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
 import electrodynamics.prefab.tile.components.type.ComponentProcessorType;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerMSRFuelPreProcessor;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
@@ -25,8 +27,8 @@ public class TileMSRFuelPreProcessor extends GenericTileTicking {
     public static final int MAX_TANK_CAPACITY = 5000;
     public long clientTicks = 0;
 
-    public TileMSRFuelPreProcessor() {
-	super(DeferredRegisters.TILE_MSRFUELPREPROCESSOR.get());
+    public TileMSRFuelPreProcessor(BlockPos pos, BlockState state) {
+	super(DeferredRegisters.TILE_MSRFUELPREPROCESSOR.get(), pos, state);
 	addComponent(new ComponentTickable().tickClient(this::tickClient));
 	addComponent(new ComponentDirection());
 	addComponent(new ComponentPacketHandler());

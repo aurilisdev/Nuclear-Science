@@ -37,8 +37,8 @@ public class TileTurbine extends GenericTileTicking {
 	return isCore ? super.getRenderBoundingBox().inflate(1, 0, 1) : super.getRenderBoundingBox();
     }
 
-    public TileTurbine() {
-	super(DeferredRegisters.TILE_TURBINE.get());
+    public TileTurbine(BlockPos pos, BlockState state) {
+	super(DeferredRegisters.TILE_TURBINE.get(), pos, state);
 	addComponent(new ComponentTickable().tickServer(this::tickServer).tickClient(this::tickClient));
 	addComponent(new ComponentPacketHandler().customPacketWriter(this::writeCustomPacket).customPacketReader(this::readCustomPacket));
 	addComponent(new ComponentElectrodynamic(this).output(Direction.UP).setCapabilityTest(() -> (!hasCore || isCore)));
@@ -193,8 +193,8 @@ public class TileTurbine extends GenericTileTicking {
     }
 
     @Override
-    public void load(BlockState state, CompoundTag compound) {
-	super.load(state, compound);
+    public void load(CompoundTag compound) {
+	super.load(compound);
 	hasCore = compound.getBoolean("hasCore");
 	isCore = compound.getBoolean("isCore");
 	coreLocation = new BlockPos(compound.getInt("coreX"), compound.getInt("coreY"), compound.getInt("coreZ"));

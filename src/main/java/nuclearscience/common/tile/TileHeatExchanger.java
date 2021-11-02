@@ -10,6 +10,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.settings.Constants;
@@ -20,8 +21,8 @@ public class TileHeatExchanger extends GenericTileTicking {
     private TileTurbine[][][] cachedTurbines = new TileTurbine[STEAM_GEN_DIAMETER][STEAM_GEN_HEIGHT][STEAM_GEN_DIAMETER];
     private double temperature;
 
-    public TileHeatExchanger() {
-	super(DeferredRegisters.TILE_HEATEXCHANGER.get());
+    public TileHeatExchanger(BlockPos pos, BlockState state) {
+	super(DeferredRegisters.TILE_HEATEXCHANGER.get(), pos, state);
 	addComponent(new ComponentTickable().tickCommon(this::tickCommon).tickServer(this::tickServer));
 	addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket)
 		.guiPacketReader(this::readCustomPacket).guiPacketWriter(this::writeCustomPacket));
@@ -83,10 +84,10 @@ public class TileHeatExchanger extends GenericTileTicking {
 				    level.setBlockAndUpdate(offpos, Blocks.AIR.defaultBlockState());
 				    continue;
 				}
-				if (turbine == null || level.blockEntityList.contains(turbine)) {
+				if (turbine == null || turbine.isRemoved()) {
 				    BlockEntity above = level.getBlockEntity(new BlockPos(offsetX, offsetY + 1, offsetZ));
-				    if (above instanceof TileTurbine) {
-					cachedTurbines[i][j][k] = (TileTurbine) above;
+				    if (above instanceof TileTurbine ab) {
+					cachedTurbines[i][j][k] = ab;
 				    } else {
 					cachedTurbines[i][j][k] = null;
 				    }

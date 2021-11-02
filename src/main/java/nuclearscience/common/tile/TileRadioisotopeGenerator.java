@@ -10,8 +10,10 @@ import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import electrodynamics.prefab.utilities.object.CachedTileOutput;
 import electrodynamics.prefab.utilities.object.TransferPack;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.api.radiation.IRadioactiveObject;
 import nuclearscience.api.radiation.RadiationRegister;
@@ -23,8 +25,8 @@ public class TileRadioisotopeGenerator extends GenericTileTicking {
     protected CachedTileOutput output1;
     protected CachedTileOutput output2;
 
-    public TileRadioisotopeGenerator() {
-	super(DeferredRegisters.TILE_RADIOISOTOPEGENERATOR.get());
+    public TileRadioisotopeGenerator(BlockPos pos, BlockState state) {
+	super(DeferredRegisters.TILE_RADIOISOTOPEGENERATOR.get(), pos, state);
 	addComponent(new ComponentTickable().tickServer(this::tickServer));
 	addComponent(new ComponentPacketHandler());
 	addComponent(new ComponentElectrodynamic(this).voltage(Constants.RADIOISOTOPEGENERATOR_VOLTAGE).extractPower((x, y) -> TransferPack.EMPTY)

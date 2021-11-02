@@ -9,7 +9,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -19,8 +18,8 @@ import nuclearscience.common.tile.TileQuantumCapacitor;
 
 public class BlockQuantumCapacitor extends BlockGenericMachine {
     @Override
-    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-	return new TileQuantumCapacitor();
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+	return new TileQuantumCapacitor(pos, state);
     }
 
     @Override
@@ -28,15 +27,15 @@ public class BlockQuantumCapacitor extends BlockGenericMachine {
     public List<ItemStack> getDrops(BlockState state, Builder builder) {
 	ItemStack addstack = new ItemStack(this);
 	BlockEntity tile = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
-	if (tile instanceof IElectrodynamic) {
-	    double joules = ((IElectrodynamic) tile).getJoulesStored();
+	if (tile instanceof IElectrodynamic electro) {
+	    double joules = electro.getJoulesStored();
 	    if (joules > 0) {
 		addstack.getOrCreateTag().putDouble("joules", joules);
 	    }
 	}
-	if (tile instanceof TileQuantumCapacitor) {
-	    addstack.getOrCreateTag().putInt("frequency", ((TileQuantumCapacitor) tile).frequency);
-	    addstack.getOrCreateTag().putUUID("uuid", ((TileQuantumCapacitor) tile).uuid);
+	if (tile instanceof TileQuantumCapacitor cap) {
+	    addstack.getOrCreateTag().putInt("frequency", cap.frequency);
+	    addstack.getOrCreateTag().putUUID("uuid", cap.uuid);
 	}
 	return Arrays.asList(addstack);
     }
@@ -45,12 +44,12 @@ public class BlockQuantumCapacitor extends BlockGenericMachine {
     @Deprecated
     public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
 	BlockEntity tile = worldIn.getBlockEntity(pos);
-	if (tile instanceof TileQuantumCapacitor) {
-	    ((TileQuantumCapacitor) tile).frequency = stack.getOrCreateTag().getInt("frequency");
+	if (tile instanceof TileQuantumCapacitor cap) {
+	    cap.frequency = stack.getOrCreateTag().getInt("frequency");
 	    if (stack.getOrCreateTag().contains("uuid")) {
-		((TileQuantumCapacitor) tile).uuid = stack.getOrCreateTag().getUUID("uuid");
-	    } else if (placer instanceof Player) {
-		((TileQuantumCapacitor) tile).uuid = ((Player) placer).getGameProfile().getId();
+		cap.uuid = stack.getOrCreateTag().getUUID("uuid");
+	    } else if (placer instanceof Player pl) {
+		pl.getGameProfile().getId();
 	    }
 	} else {
 	    super.setPlacedBy(worldIn, pos, state, placer, stack);

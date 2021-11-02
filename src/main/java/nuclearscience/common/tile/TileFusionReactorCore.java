@@ -20,8 +20,8 @@ public class TileFusionReactorCore extends GenericTileTicking {
     public int tritium;
     private int timeLeft = 0;
 
-    public TileFusionReactorCore() {
-	super(DeferredRegisters.TILE_FUSIONREACTORCORE.get());
+    public TileFusionReactorCore(BlockPos pos, BlockState state) {
+	super(DeferredRegisters.TILE_FUSIONREACTORCORE.get(), pos, state);
 	addComponent(new ComponentTickable().tickServer(this::tickServer));
 	addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket));
 	addComponent(new ComponentElectrodynamic(this).input(Direction.DOWN).input(Direction.UP)
@@ -65,8 +65,8 @@ public class TileFusionReactorCore extends GenericTileTicking {
     }
 
     @Override
-    public void load(BlockState state, CompoundTag compound) {
-	super.load(state, compound);
+    public void load(CompoundTag compound) {
+	super.load(compound);
 	readCustomPacket(compound);
     }
 

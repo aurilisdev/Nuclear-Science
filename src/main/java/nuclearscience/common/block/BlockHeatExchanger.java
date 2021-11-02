@@ -6,7 +6,6 @@ import electrodynamics.common.block.BlockGenericMachine;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
@@ -53,8 +52,8 @@ public class BlockHeatExchanger extends BlockGenericMachine implements SimpleWat
     }
 
     @Override
-    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-	return new TileHeatExchanger();
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+	return new TileHeatExchanger(pos, state);
     }
 
 }

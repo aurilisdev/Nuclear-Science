@@ -36,8 +36,8 @@ public class TileQuantumCapacitor extends GenericTileTicking implements IEnergyS
     private CachedTileOutput outputCache;
     private CachedTileOutput outputCache2;
 
-    public TileQuantumCapacitor() {
-	super(DeferredRegisters.TILE_QUANTUMCAPACITOR.get());
+    public TileQuantumCapacitor(BlockPos pos, BlockState state) {
+	super(DeferredRegisters.TILE_QUANTUMCAPACITOR.get(), pos, state);
 	addComponent(new ComponentTickable().tickServer(this::tickServer));
 	addComponent(new ComponentPacketHandler().guiPacketReader(this::readGUIPacket).guiPacketWriter(this::writeGUIPacket));
 	addComponent(new ComponentElectrodynamic(this).voltage(16 * CapabilityElectrodynamic.DEFAULT_VOLTAGE).output(Direction.DOWN)
@@ -107,8 +107,8 @@ public class TileQuantumCapacitor extends GenericTileTicking implements IEnergyS
     }
 
     @Override
-    public void load(BlockState state, CompoundTag compound) {
-	super.load(state, compound);
+    public void load(CompoundTag compound) {
+	super.load(compound);
 	outputJoules = compound.getDouble("outputJoules");
 	frequency = compound.getInt("frequency");
 	if (compound.hasUUID("uuid")) {

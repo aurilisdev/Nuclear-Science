@@ -36,8 +36,8 @@ public class TileMSRReactorCore extends GenericTileTicking {
     private CachedTileOutput outputCache;
     public CachedTileOutput plugCache;
 
-    public TileMSRReactorCore() {
-	super(DeferredRegisters.TILE_MSRREACTORCORE.get());
+    public TileMSRReactorCore(BlockPos pos, BlockState state) {
+	super(DeferredRegisters.TILE_MSRREACTORCORE.get(), pos, state);
 	addComponent(new ComponentDirection());
 	addComponent(new ComponentTickable().tickServer(this::tickServer).tickClient(this::tickClient));
 	addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket)
@@ -63,9 +63,9 @@ public class TileMSRReactorCore extends GenericTileTicking {
     }
 
     @Override
-    public void load(BlockState state, CompoundTag compound) {
+    public void load(CompoundTag compound) {
 	readCustomPacket(compound);
-	super.load(state, compound);
+	super.load(compound);
     }
 
     protected void tickServer(ComponentTickable tick) {
@@ -83,14 +83,14 @@ public class TileMSRReactorCore extends GenericTileTicking {
 	if (change != 0) {
 	    temperature -= change < 0.001 && change > 0 ? 0.001 : change > -0.001 && change < 0 ? -0.001 : change;
 	}
-	if (plugCache.valid() && plugCache.getSafe() instanceof TileFreezePlug && ((TileFreezePlug) plugCache.getSafe()).isFrozen()) {
+	if (plugCache.valid() && plugCache.getSafe()instanceof TileFreezePlug freeze && freeze.isFrozen()) {
 	    if (currentFuel > FUEL_USAGE_RATE) {
 		int insertion = 0;
 		for (Direction dir : Direction.values()) {
 		    if (dir != Direction.UP && dir != Direction.DOWN) {
 			BlockEntity tile = level.getBlockEntity(getBlockPos().relative(dir));
-			if (tile instanceof TileControlRodAssembly) {
-			    TileControlRodAssembly control = (TileControlRodAssembly) tile;
+			if (tile instanceof TileControlRodAssembly cr) {
+			    TileControlRodAssembly control = cr;
 			    if (control.dir == dir.getOpposite()) {
 				insertion += control.insertion;
 			    }
@@ -101,8 +101,7 @@ public class TileMSRReactorCore extends GenericTileTicking {
 		    Location source = new Location(worldPosition.getX() + 0.5f, worldPosition.getY() + 0.5f, worldPosition.getZ() + 0.5f);
 		    double totstrength = temperature * Math.pow(3, Math.pow(temperature / MELTDOWN_TEMPERATURE, 9));
 		    double range = Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 2;
-		    AABB bb = AABB.ofSize(range, range, range);
-		    bb = bb.move(new Vec3(source.x(), source.y(), source.z()));
+		    AABB bb = AABB.ofSize(new Vec3(source.x(), source.y(), source.z()), range, range, range);
 		    List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, bb);
 		    for (LivingEntity living : list) {
 			RadiationSystem.applyRadiation(living, source, totstrength);

@@ -24,8 +24,8 @@ public class TileMeltedReactor extends GenericTileTicking {
     public int radiation = (int) START_RADIATION;
     public int temperature = 6000;
 
-    public TileMeltedReactor() {
-	super(DeferredRegisters.TILE_MELTEDREACTOR.get());
+    public TileMeltedReactor(BlockPos pos, BlockState state) {
+	super(DeferredRegisters.TILE_MELTEDREACTOR.get(), pos, state);
 	addComponent(new ComponentTickable().tickServer(this::tickServer));
     }
 
@@ -97,8 +97,7 @@ public class TileMeltedReactor extends GenericTileTicking {
 	    Location source = new Location(worldPosition.getX() + 0.5f, worldPosition.getY() + 0.5f, worldPosition.getZ() + 0.5f);
 	    double totstrength = 120000 * (radiation / START_RADIATION);
 	    double range = Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 2;
-	    AABB bb = AABB.ofSize(range, range, range);
-	    bb = bb.move(new Vec3(source.x(), source.y(), source.z()));
+	    AABB bb = AABB.ofSize(new Vec3(source.x(), source.y(), source.z()), range, range, range);
 	    List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, bb);
 	    for (LivingEntity living : list) {
 		RadiationSystem.applyRadiation(living, source, totstrength);

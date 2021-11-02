@@ -56,8 +56,8 @@ public class TileReactorCore extends GenericTileTicking {
     public int fuelCount = 0;
     public int ticks = 0;
 
-    public TileReactorCore() {
-	super(DeferredRegisters.TILE_REACTORCORE.get());
+    public TileReactorCore(BlockPos pos, BlockState state) {
+	super(DeferredRegisters.TILE_REACTORCORE.get(), pos, state);
 	addComponent(new ComponentTickable().tickCommon(this::tickCommon).tickServer(this::tickServer));
 	addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket)
 		.guiPacketReader(this::readCustomPacket).guiPacketWriter(this::writeCustomPacket));

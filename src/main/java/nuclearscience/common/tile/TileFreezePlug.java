@@ -9,7 +9,9 @@ import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import electrodynamics.prefab.utilities.object.TransferPack;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerFreezePlug;
 import nuclearscience.common.settings.Constants;
@@ -17,8 +19,8 @@ import nuclearscience.common.settings.Constants;
 public class TileFreezePlug extends GenericTileTicking {
     private boolean isFrozen = false;
 
-    public TileFreezePlug() {
-	super(DeferredRegisters.TILE_FREEZEPLUG.get());
+    public TileFreezePlug(BlockPos pos, BlockState state) {
+	super(DeferredRegisters.TILE_FREEZEPLUG.get(), pos, state);
 	addComponent(new ComponentTickable().tickServer(this::tickServer));
 	addComponent(new ComponentPacketHandler());
 	addComponent(new ComponentElectrodynamic(this).voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE).extractPower((x, y) -> TransferPack.EMPTY)

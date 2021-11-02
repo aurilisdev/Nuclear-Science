@@ -8,6 +8,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SnowyDirtBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import nuclearscience.api.radiation.EffectRadiation;
@@ -19,9 +20,8 @@ public class BlockRadioactiveSoil extends SnowyDirtBlock {
     }
 
     @Override
-    public void stepOn(Level worldIn, BlockPos pos, Entity entityIn) {
-	if (entityIn instanceof LivingEntity) {
-	    LivingEntity living = (LivingEntity) entityIn;
+    public void stepOn(Level worldIn, BlockPos pos, BlockState state, Entity entityIn) {
+	if (entityIn instanceof LivingEntity living) {
 	    living.addEffect(new MobEffectInstance(EffectRadiation.INSTANCE, (int) (20 * 40 * worldIn.random.nextFloat())));
 	}
     }

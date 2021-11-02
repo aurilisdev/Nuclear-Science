@@ -17,8 +17,8 @@ public class TilePlasma extends GenericTileTicking {
     public int spread = 6;
     private CachedTileOutput output;
 
-    public TilePlasma() {
-	super(DeferredRegisters.TILE_PLASMA.get());
+    public TilePlasma(BlockPos pos, BlockState state) {
+	super(DeferredRegisters.TILE_PLASMA.get(), pos, state);
 	addComponent(new ComponentTickable().tickServer(this::tickServer));
     }
 
@@ -40,8 +40,7 @@ public class TilePlasma extends GenericTileTicking {
 		    }
 		}
 		BlockEntity tile = level.getBlockEntity(offset);
-		if (tile instanceof TilePlasma) {
-		    TilePlasma plasma = (TilePlasma) tile;
+		if (tile instanceof TilePlasma plasma) {
 		    if (plasma.ticksExisted > 1 && plasma.spread < spread) {
 			plasma.ticksExisted = ticksExisted - 1;
 		    }

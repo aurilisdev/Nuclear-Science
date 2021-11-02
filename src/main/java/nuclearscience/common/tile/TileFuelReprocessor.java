@@ -14,8 +14,10 @@ import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
 import electrodynamics.prefab.tile.components.type.ComponentProcessorType;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 import nuclearscience.common.recipe.categories.o2o.specificmachines.FuelReprocessorRecipe;
@@ -23,8 +25,8 @@ import nuclearscience.common.settings.Constants;
 
 public class TileFuelReprocessor extends GenericTileTicking {
 
-    public TileFuelReprocessor() {
-	super(DeferredRegisters.TILE_FUELREPROCESSOR.get());
+    public TileFuelReprocessor(BlockPos pos, BlockState state) {
+	super(DeferredRegisters.TILE_FUELREPROCESSOR.get(), pos, state);
 	addComponent(new ComponentDirection());
 	addComponent(new ComponentPacketHandler());
 	addComponent(new ComponentTickable().tickClient(this::tickClient));
