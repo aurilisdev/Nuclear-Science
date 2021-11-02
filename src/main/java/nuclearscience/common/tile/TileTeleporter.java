@@ -9,13 +9,13 @@ import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.Direction;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.server.level.ServerLevel;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.item.ItemFrequencyCard;
 
@@ -37,8 +37,8 @@ public class TileTeleporter extends GenericTileTicking {
     }
 
     @Override
-    public AxisAlignedBB getRenderBoundingBox() {
-	return super.getRenderBoundingBox().grow(3);
+    public AABB getRenderBoundingBox() {
+	return super.getRenderBoundingBox().inflate(3);
     }
 
     protected void tickServer(ComponentTickable tickable) {
@@ -50,12 +50,12 @@ public class TileTeleporter extends GenericTileTicking {
 	    cooldown = 20;
 	    System.out.println(electro.getJoulesStored());
 	    if (electro.getJoulesStored() == electro.getMaxJoulesStored()) {
-		AxisAlignedBB BB = new AxisAlignedBB(getPos(), getPos().add(1, 2, 1));
-		List<PlayerEntity> player = getWorld().getEntitiesWithinAABB(EntityType.PLAYER, BB, en -> true);
+		AABB BB = new AABB(getBlockPos(), getBlockPos().offset(1, 2, 1));
+		List<Player> player = getLevel().getEntities(EntityType.PLAYER, BB, en -> true);
 		if (!player.isEmpty()) {
-		    ServerWorld serverWorld = ItemFrequencyCard.getFromNBT((ServerWorld) getWorld(), world);
-		    if (serverWorld == player.get(0).getEntityWorld()) {
-			player.get(0).teleportKeepLoaded(xCoord, yCoord + 1, zCoord);
+		    ServerLevel serverWorld = ItemFrequencyCard.getFromNBT((ServerLevel) getLevel(), world);
+		    if (serverWorld == player.get(0).getCommandSenderWorld()) {
+			player.get(0).teleportToWithTicket(xCoord, yCoord + 1, zCoord);
 			cooldown = 80;
 			electro.joules(0);
 		    }
@@ -67,19 +67,19 @@ public class TileTeleporter extends GenericTileTicking {
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
 	if (world != null) {
 	    compound.putInt("xCoord", xCoord);
 	    compound.putInt("yCoord", yCoord);
 	    compound.putInt("zCoord", zCoord);
 	    compound.putString("world", world);
 	}
-	return super.write(compound);
+	return super.save(compound);
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
-	super.read(state, compound);
+    public void load(BlockState state, CompoundTag compound) {
+	super.load(state, compound);
 	if (compound.contains("world")) {
 	    xCoord = compound.getInt("xCoord");
 	    yCoord = compound.getInt("yCoord");

@@ -7,13 +7,13 @@ import java.util.Set;
 
 import electrodynamics.common.network.NetworkRegistry;
 import electrodynamics.prefab.network.AbstractNetwork;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
 import nuclearscience.api.network.moltensalt.IMoltenSaltPipe;
 import nuclearscience.common.block.subtype.SubtypeMoltenSaltPipe;
 import nuclearscience.common.tile.TileHeatExchanger;
 
-public class MoltenSaltNetwork extends AbstractNetwork<IMoltenSaltPipe, SubtypeMoltenSaltPipe, TileEntity, Double> {
+public class MoltenSaltNetwork extends AbstractNetwork<IMoltenSaltPipe, SubtypeMoltenSaltPipe, BlockEntity, Double> {
     public MoltenSaltNetwork() {
 	this(new HashSet<IMoltenSaltPipe>());
     }
@@ -23,8 +23,8 @@ public class MoltenSaltNetwork extends AbstractNetwork<IMoltenSaltPipe, SubtypeM
 	NetworkRegistry.register(this);
     }
 
-    public MoltenSaltNetwork(Set<AbstractNetwork<IMoltenSaltPipe, SubtypeMoltenSaltPipe, TileEntity, Double>> networks) {
-	for (AbstractNetwork<IMoltenSaltPipe, SubtypeMoltenSaltPipe, TileEntity, Double> net : networks) {
+    public MoltenSaltNetwork(Set<AbstractNetwork<IMoltenSaltPipe, SubtypeMoltenSaltPipe, BlockEntity, Double>> networks) {
+	for (AbstractNetwork<IMoltenSaltPipe, SubtypeMoltenSaltPipe, BlockEntity, Double> net : networks) {
 	    if (net != null) {
 		conductorSet.addAll(net.conductorSet);
 		net.deregister();
@@ -46,14 +46,14 @@ public class MoltenSaltNetwork extends AbstractNetwork<IMoltenSaltPipe, SubtypeM
     }
 
     @Override
-    public Double emit(Double transfer, ArrayList<TileEntity> ignored, boolean debug) {
+    public Double emit(Double transfer, ArrayList<BlockEntity> ignored, boolean debug) {
 	if (transfer > 0) {
-	    Set<TileEntity> availableAcceptors = getFluidAcceptors(transfer);
+	    Set<BlockEntity> availableAcceptors = getFluidAcceptors(transfer);
 	    double heat = 0.0;
 	    availableAcceptors.removeAll(ignored);
 	    if (!availableAcceptors.isEmpty()) {
 		double perReceiver = transfer / availableAcceptors.size();
-		for (TileEntity receiver : availableAcceptors) {
+		for (BlockEntity receiver : availableAcceptors) {
 		    if (acceptorInputMap.containsKey(receiver)) {
 			Double rec = ((TileHeatExchanger) receiver).receiveHeat(perReceiver - getSize() * 5);
 			heat += rec;
@@ -67,8 +67,8 @@ public class MoltenSaltNetwork extends AbstractNetwork<IMoltenSaltPipe, SubtypeM
 	return 0.0;
     }
 
-    public Set<TileEntity> getFluidAcceptors(Double compare) {
-	Set<TileEntity> toReturn = new HashSet<>();
+    public Set<BlockEntity> getFluidAcceptors(Double compare) {
+	Set<BlockEntity> toReturn = new HashSet<>();
 	toReturn.addAll(acceptorSet);
 	return toReturn;
     }
@@ -92,28 +92,28 @@ public class MoltenSaltNetwork extends AbstractNetwork<IMoltenSaltPipe, SubtypeM
     }
 
     @Override
-    public boolean isConductor(TileEntity tile) {
+    public boolean isConductor(BlockEntity tile) {
 	return tile instanceof IMoltenSaltPipe;
     }
 
     @Override
-    public boolean isAcceptor(TileEntity acceptor, Direction orientation) {
+    public boolean isAcceptor(BlockEntity acceptor, Direction orientation) {
 	return acceptor instanceof TileHeatExchanger || isConductor(acceptor);
     }
 
     @Override
-    public AbstractNetwork<IMoltenSaltPipe, SubtypeMoltenSaltPipe, TileEntity, Double> createInstance() {
+    public AbstractNetwork<IMoltenSaltPipe, SubtypeMoltenSaltPipe, BlockEntity, Double> createInstance() {
 	return new MoltenSaltNetwork();
     }
 
     @Override
-    public AbstractNetwork<IMoltenSaltPipe, SubtypeMoltenSaltPipe, TileEntity, Double> createInstanceConductor(Set<IMoltenSaltPipe> conductors) {
+    public AbstractNetwork<IMoltenSaltPipe, SubtypeMoltenSaltPipe, BlockEntity, Double> createInstanceConductor(Set<IMoltenSaltPipe> conductors) {
 	return new MoltenSaltNetwork(conductors);
     }
 
     @Override
-    public AbstractNetwork<IMoltenSaltPipe, SubtypeMoltenSaltPipe, TileEntity, Double> createInstance(
-	    Set<AbstractNetwork<IMoltenSaltPipe, SubtypeMoltenSaltPipe, TileEntity, Double>> networks) {
+    public AbstractNetwork<IMoltenSaltPipe, SubtypeMoltenSaltPipe, BlockEntity, Double> createInstance(
+	    Set<AbstractNetwork<IMoltenSaltPipe, SubtypeMoltenSaltPipe, BlockEntity, Double>> networks) {
 	return new MoltenSaltNetwork(networks);
 
     }
@@ -124,7 +124,7 @@ public class MoltenSaltNetwork extends AbstractNetwork<IMoltenSaltPipe, SubtypeM
     }
 
     @Override
-    public boolean canConnect(TileEntity acceptor, Direction orientation) {
+    public boolean canConnect(BlockEntity acceptor, Direction orientation) {
 	return acceptor instanceof TileHeatExchanger && orientation == Direction.UP || isConductor(acceptor);
     }
 }

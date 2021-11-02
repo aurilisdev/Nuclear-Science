@@ -6,7 +6,7 @@ import java.util.List;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import electrodynamics.api.capability.CapabilityUtils;
 import electrodynamics.common.recipe.categories.fluid3items2item.Fluid3Items2ItemRecipe;
@@ -22,12 +22,12 @@ import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.Font;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.fluids.FluidStack;
 import nuclearscience.References;
 
@@ -78,7 +78,7 @@ public class MSRProcessorRecipeCategory extends ElectrodynamicsRecipeCategory<Fl
     public void setIngredients(Fluid3Items2ItemRecipe recipe, IIngredients ingredients) {
 	ingredients.setInputLists(VanillaTypes.ITEM, getItemIngredients(recipe));
 	ingredients.setInputs(VanillaTypes.FLUID, getFluids(recipe));
-	ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
+	ingredients.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
     }
 
     @Override
@@ -105,7 +105,7 @@ public class MSRProcessorRecipeCategory extends ElectrodynamicsRecipeCategory<Fl
     }
 
     @Override
-    public void draw(Fluid3Items2ItemRecipe recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
+    public void draw(Fluid3Items2ItemRecipe recipe, PoseStack matrixStack, double mouseX, double mouseY) {
 	IDrawableAnimated arrow = getArrow();
 	arrow.draw(matrixStack, 32, 17);
 
@@ -117,12 +117,12 @@ public class MSRProcessorRecipeCategory extends ElectrodynamicsRecipeCategory<Fl
     }
 
     @SuppressWarnings({ "java:S1066", "java:S2184" })
-    protected void drawSmeltTime(Fluid3Items2ItemRecipe recipe, MatrixStack matrixStack, int y) {
+    protected void drawSmeltTime(Fluid3Items2ItemRecipe recipe, PoseStack matrixStack, int y) {
 	int smeltTimeSeconds = getArrowSmeltTime() / 20;
-	TranslationTextComponent timeString = new TranslationTextComponent("gui.jei.category." + getRecipeGroup() + ".info.power", smeltTimeSeconds);
+	TranslatableComponent timeString = new TranslatableComponent("gui.jei.category." + getRecipeGroup() + ".info.power", smeltTimeSeconds);
 	Minecraft minecraft = Minecraft.getInstance();
-	FontRenderer fontRenderer = minecraft.fontRenderer;
-	fontRenderer.func_243248_b(matrixStack, timeString, getBackground().getWidth() - fontRenderer.getStringPropertyWidth(timeString), y,
+	Font fontRenderer = minecraft.font;
+	fontRenderer.draw(matrixStack, timeString, getBackground().getWidth() - fontRenderer.width(timeString), y,
 		0xFF808080);
     }
 
@@ -133,7 +133,7 @@ public class MSRProcessorRecipeCategory extends ElectrodynamicsRecipeCategory<Fl
 	stacks.add(((CountableIngredient) recipeIngredients.get(1)).fetchCountedStacks());
 	stacks.add(((CountableIngredient) recipeIngredients.get(2)).fetchCountedStacks());
 	FluidStack fluid = ((FluidIngredient) recipeIngredients.get(3)).getFluidStack();
-	ItemStack filledBucket = new ItemStack(fluid.getFluid().getFilledBucket());
+	ItemStack filledBucket = new ItemStack(fluid.getFluid().getBucket());
 	CapabilityUtils.fill(filledBucket, fluid);
 	List<ItemStack> bucketList = new ArrayList<>();
 	bucketList.add(filledBucket);

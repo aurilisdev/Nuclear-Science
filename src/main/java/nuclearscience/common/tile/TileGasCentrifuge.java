@@ -13,11 +13,11 @@ import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundSource;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.SoundRegister;
 import nuclearscience.common.inventory.container.ContainerGasCentrifuge;
@@ -53,8 +53,8 @@ public class TileGasCentrifuge extends GenericTileTicking {
 	ComponentFluidHandlerMulti tank = getComponent(ComponentType.FluidHandler);
 	boolean val = electro.getJoulesStored() >= processor.getUsage()
 		&& tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride, false).getAmount() >= REQUIRED / 60.0
-		&& inv.getStackInSlot(0).getCount() < inv.getStackInSlot(0).getMaxStackSize()
-		&& inv.getStackInSlot(1).getCount() < inv.getStackInSlot(1).getMaxStackSize();
+		&& inv.getItem(0).getCount() < inv.getItem(0).getMaxStackSize()
+		&& inv.getItem(1).getCount() < inv.getItem(1).getMaxStackSize();
 	if (!val && spinSpeed > 0) {
 	    spinSpeed = 0;
 	    this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();
@@ -72,20 +72,20 @@ public class TileGasCentrifuge extends GenericTileTicking {
 	stored235 += processed * 0.172;
 	stored238 += processed * (1 - 0.172);
 	if (stored235 > REQUIRED) {
-	    ItemStack stack = inv.getStackInSlot(0);
+	    ItemStack stack = inv.getItem(0);
 	    if (!stack.isEmpty()) {
 		stack.setCount(stack.getCount() + 1);
 	    } else {
-		inv.setInventorySlotContents(0, new ItemStack(DeferredRegisters.ITEM_URANIUM235.get()));
+		inv.setItem(0, new ItemStack(DeferredRegisters.ITEM_URANIUM235.get()));
 	    }
 	    stored235 -= 2500;
 	}
 	if (stored238 > REQUIRED) {
-	    ItemStack stack = inv.getStackInSlot(1);
+	    ItemStack stack = inv.getItem(1);
 	    if (!stack.isEmpty()) {
 		stack.setCount(stack.getCount() + 1);
 	    } else {
-		inv.setInventorySlotContents(1, new ItemStack(DeferredRegisters.ITEM_URANIUM238.get()));
+		inv.setItem(1, new ItemStack(DeferredRegisters.ITEM_URANIUM238.get()));
 	    }
 	    stored238 -= 2500;
 	}
@@ -93,31 +93,31 @@ public class TileGasCentrifuge extends GenericTileTicking {
 
     protected void tickClient(ComponentTickable tickable) {
 	if (spinSpeed > 0 && tickable.getTicks() % 80 == 0) {
-	    SoundAPI.playSound(SoundRegister.SOUND_GASCENTRIFUGE.get(), SoundCategory.BLOCKS, 1, 1, pos);
+	    SoundAPI.playSound(SoundRegister.SOUND_GASCENTRIFUGE.get(), SoundSource.BLOCKS, 1, 1, worldPosition);
 	}
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
 	compound.putInt("stored235", stored235);
 	compound.putInt("stored238", stored238);
-	return super.write(compound);
+	return super.save(compound);
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
-	super.read(state, compound);
+    public void load(BlockState state, CompoundTag compound) {
+	super.load(state, compound);
 	stored235 = compound.getInt("stored235");
 	stored238 = compound.getInt("stored238");
     }
 
-    public void writeCustomPacket(CompoundNBT tag) {
+    public void writeCustomPacket(CompoundTag tag) {
 	tag.putInt("spinSpeed", spinSpeed);
 	tag.putInt("stored235", stored235);
 	tag.putInt("stored238", stored238);
     }
 
-    public void readCustomPacket(CompoundNBT nbt) {
+    public void readCustomPacket(CompoundTag nbt) {
 	spinSpeed = nbt.getInt("spinSpeed");
 	stored235 = nbt.getInt("stored235");
 	stored238 = nbt.getInt("stored238");

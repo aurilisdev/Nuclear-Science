@@ -1,57 +1,59 @@
 package nuclearscience.common.item;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import nuclearscience.References;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class ItemHazmatArmor extends ArmorItem {
 
-    public ItemHazmatArmor(IArmorMaterial materialIn, EquipmentSlotType slot, Properties builderIn) {
+    public ItemHazmatArmor(ArmorMaterial materialIn, EquipmentSlot slot, Properties builderIn) {
 	super(materialIn, slot, builderIn);
     }
 
-    public ItemHazmatArmor(EquipmentSlotType slot, Properties builderIn) {
+    public ItemHazmatArmor(EquipmentSlot slot, Properties builderIn) {
 	this(ArmorMaterialHazmat.hazmat, slot, builderIn);
     }
 
     @Override
-    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
+    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
 	return References.ID + ":textures/model/hazmatarmor.png";
     }
 
-    public enum ArmorMaterialHazmat implements IArmorMaterial {
+    public enum ArmorMaterialHazmat implements ArmorMaterial {
 	hazmat;
 
 	@Override
-	public int getDurability(EquipmentSlotType slotIn) {
+	public int getDurabilityForSlot(EquipmentSlot slotIn) {
 	    return 37500;
 	}
 
 	@Override
-	public int getDamageReductionAmount(EquipmentSlotType slotIn) {
+	public int getDefenseForSlot(EquipmentSlot slotIn) {
 	    return 2;
 	}
 
 	@Override
-	public int getEnchantability() {
+	public int getEnchantmentValue() {
 	    return 0;
 	}
 
 	@Override
-	public SoundEvent getSoundEvent() {
-	    return SoundEvents.ITEM_ARMOR_EQUIP_LEATHER;
+	public SoundEvent getEquipSound() {
+	    return SoundEvents.ARMOR_EQUIP_LEATHER;
 	}
 
 	@Override
-	public Ingredient getRepairMaterial() {
-	    return Ingredient.fromItems(Items.LEATHER);
+	public Ingredient getRepairIngredient() {
+	    return Ingredient.of(Items.LEATHER);
 	}
 
 	@Override

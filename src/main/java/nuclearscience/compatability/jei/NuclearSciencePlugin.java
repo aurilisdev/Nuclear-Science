@@ -22,10 +22,10 @@ import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.RecipeManager;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.resources.ResourceLocation;
 import nuclearscience.client.screen.ScreenChemicalExtractor;
 import nuclearscience.client.screen.ScreenGasCentrifuge;
 import nuclearscience.client.screen.ScreenMSRFuelPreProcessor;
@@ -85,7 +85,7 @@ public class NuclearSciencePlugin implements IModPlugin {
 	NuclearSciencePsuedoRecipes.addNuclearScienceRecipes();
 	PsuedoRecipes.addElectrodynamicsRecipes();
 	Minecraft mc = Minecraft.getInstance();
-	ClientWorld world = Objects.requireNonNull(mc.world);
+	ClientLevel world = Objects.requireNonNull(mc.level);
 	RecipeManager recipeManager = world.getRecipeManager();
 
 	// Gas Centrifuge
@@ -94,15 +94,15 @@ public class NuclearSciencePlugin implements IModPlugin {
 
 	// Nuclear Boiler
 	Set<FluidItem2FluidRecipe> nuclearBoilerRecipes = ImmutableSet
-		.copyOf(recipeManager.getRecipesForType(NuclearScienceRecipeInit.NUCLEAR_BOILER_TYPE));
+		.copyOf(recipeManager.getAllRecipesFor(NuclearScienceRecipeInit.NUCLEAR_BOILER_TYPE));
 	registration.addRecipes(nuclearBoilerRecipes, NuclearBoilerRecipeCategory.UID);
 
 	// Chemical Extractor
 	Set<FluidItem2ItemRecipe> chemicalExtractorRecipes = ImmutableSet
-		.copyOf(recipeManager.getRecipesForType(NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE));
+		.copyOf(recipeManager.getAllRecipesFor(NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE));
 	registration.addRecipes(chemicalExtractorRecipes, ChemicalExtractorRecipeCategory.UID);
 
-	Set<O2ORecipe> fissionReactorRecipes = ImmutableSet.copyOf(recipeManager.getRecipesForType(NuclearScienceRecipeInit.FISSION_REACTOR_TYPE));
+	Set<O2ORecipe> fissionReactorRecipes = ImmutableSet.copyOf(recipeManager.getAllRecipesFor(NuclearScienceRecipeInit.FISSION_REACTOR_TYPE));
 	registration.addRecipes(fissionReactorRecipes, FissionReactorRecipeCategory.UID);
 
 	Set<PsuedoO2ORecipe> antiMatterRecipes = new HashSet<>(NuclearSciencePsuedoRecipes.ANTI_MATTER_RECIPES);
@@ -111,15 +111,15 @@ public class NuclearSciencePlugin implements IModPlugin {
 	Set<PsuedoO2ORecipe> darkMatterRecipes = new HashSet<>(NuclearSciencePsuedoRecipes.DARK_MATTER_RECIPES);
 	registration.addRecipes(darkMatterRecipes, ParticleAcceleratorDarkMatterRecipeCategory.UID);
 
-	Set<O2ORecipe> fuelReprocessorRecipes = ImmutableSet.copyOf(recipeManager.getRecipesForType(NuclearScienceRecipeInit.FUEL_REPROCESSOR_TYPE));
+	Set<O2ORecipe> fuelReprocessorRecipes = ImmutableSet.copyOf(recipeManager.getAllRecipesFor(NuclearScienceRecipeInit.FUEL_REPROCESSOR_TYPE));
 	registration.addRecipes(fuelReprocessorRecipes, FuelReprocessorRecipeCategory.UID);
 
 	Set<FluidItem2ItemRecipe> radioactiveProcessorRecipes = ImmutableSet
-		.copyOf(recipeManager.getRecipesForType(NuclearScienceRecipeInit.RADIOACTIVE_PROCESSOR_TYPE));
+		.copyOf(recipeManager.getAllRecipesFor(NuclearScienceRecipeInit.RADIOACTIVE_PROCESSOR_TYPE));
 	registration.addRecipes(radioactiveProcessorRecipes, RadioactiveProcessorRecipeCategory.UID);
 
 	Set<Fluid3Items2ItemRecipe> msrProcessorRecipes = ImmutableSet
-		.copyOf(recipeManager.getRecipesForType(NuclearScienceRecipeInit.MSR_FUEL_PREPROCESSOR_TYPE));
+		.copyOf(recipeManager.getAllRecipesFor(NuclearScienceRecipeInit.MSR_FUEL_PREPROCESSOR_TYPE));
 	registration.addRecipes(msrProcessorRecipes, MSRProcessorRecipeCategory.UID);
 
 	nuclearScienceInfoTabs(registration);

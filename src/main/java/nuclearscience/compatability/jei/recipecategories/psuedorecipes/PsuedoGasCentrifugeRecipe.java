@@ -1,9 +1,9 @@
 package nuclearscience.compatability.jei.recipecategories.psuedorecipes;
 
 import electrodynamics.common.recipe.categories.o2o.O2ORecipe;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.fluids.FluidStack;
 
 public class PsuedoGasCentrifugeRecipe extends O2ORecipe {
@@ -20,12 +20,12 @@ public class PsuedoGasCentrifugeRecipe extends O2ORecipe {
     }
 
     @Override
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
 	return null;
     }
 
     @Override
-    public IRecipeType<?> getType() {
+    public RecipeType<?> getType() {
 	return null;
     }
 

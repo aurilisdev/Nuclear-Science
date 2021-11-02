@@ -11,12 +11,12 @@ import electrodynamics.prefab.screen.component.ScreenComponentInfo;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.ITextProperties;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import nuclearscience.common.inventory.container.ContainerMoltenSaltSupplier;
@@ -25,23 +25,23 @@ import nuclearscience.common.settings.Constants;
 @OnlyIn(Dist.CLIENT)
 public class ScreenMoltenSaltSupplier extends GenericScreen<ContainerMoltenSaltSupplier> {
 
-    public ScreenMoltenSaltSupplier(ContainerMoltenSaltSupplier container, PlayerInventory playerInventory, ITextComponent title) {
+    public ScreenMoltenSaltSupplier(ContainerMoltenSaltSupplier container, Inventory playerInventory, Component title) {
 	super(container, playerInventory, title);
 	components.add(new ScreenComponentElectricInfo(this::getEnergyInformation, this, -ScreenComponentInfo.SIZE + 1, 2));
     }
 
-    private List<? extends ITextProperties> getEnergyInformation() {
-	ArrayList<ITextProperties> list = new ArrayList<>();
-	GenericTile box = container.getHostFromIntArray();
+    private List<? extends FormattedText> getEnergyInformation() {
+	ArrayList<FormattedText> list = new ArrayList<>();
+	GenericTile box = menu.getHostFromIntArray();
 	if (box != null) {
 	    ComponentElectrodynamic electro = box.getComponent(ComponentType.Electrodynamic);
-	    list.add(new TranslationTextComponent("gui.moltensaltsupplier.usage",
-		    new StringTextComponent(
+	    list.add(new TranslatableComponent("gui.moltensaltsupplier.usage",
+		    new TextComponent(
 			    ChatFormatter.getElectricDisplayShort(Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK * 20, ElectricUnit.WATT))
-				    .mergeStyle(TextFormatting.GRAY)).mergeStyle(TextFormatting.DARK_GRAY));
-	    list.add(new TranslationTextComponent("gui.moltensaltsupplier.voltage",
-		    new StringTextComponent(ChatFormatter.getElectricDisplayShort(electro.getVoltage(), ElectricUnit.VOLTAGE))
-			    .mergeStyle(TextFormatting.GRAY)).mergeStyle(TextFormatting.DARK_GRAY));
+				    .withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
+	    list.add(new TranslatableComponent("gui.moltensaltsupplier.voltage",
+		    new TextComponent(ChatFormatter.getElectricDisplayShort(electro.getVoltage(), ElectricUnit.VOLTAGE))
+			    .withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
 	}
 	return list;
     }

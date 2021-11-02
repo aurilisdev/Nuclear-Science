@@ -1,7 +1,7 @@
 package nuclearscience;
 
 import electrodynamics.prefab.configuration.ConfigurationHandler;
-import net.minecraft.potion.Effect;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.RegistryEvent;
@@ -66,7 +66,7 @@ public class NuclearScience {
     }
 
     @SubscribeEvent
-    public static void registerEffects(RegistryEvent.Register<Effect> event) {
+    public static void registerEffects(RegistryEvent.Register<MobEffect> event) {
 	event.getRegistry().registerAll(EffectRadiation.INSTANCE);
     }
 }

@@ -1,7 +1,7 @@
 package nuclearscience.common.tile.network;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.block.connect.BlockMoltenSaltPipe;
 import nuclearscience.common.block.subtype.SubtypeMoltenSaltPipe;
@@ -25,24 +25,24 @@ public class TileMoltenSaltPipe extends GenericTileMoltenSaltPipe {
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
 	compound.putInt("ord", getPipeType().ordinal());
-	return super.write(compound);
+	return super.save(compound);
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
-	super.read(state, compound);
+    public void load(BlockState state, CompoundTag compound) {
+	super.load(state, compound);
 	pipe = SubtypeMoltenSaltPipe.values()[compound.getInt("ord")];
     }
 
     @Override
-    protected void writeCustomPacket(CompoundNBT nbt) {
+    protected void writeCustomPacket(CompoundTag nbt) {
 	nbt.putDouble("transmit", transmit);
     }
 
     @Override
-    protected void readCustomPacket(CompoundNBT nbt) {
+    protected void readCustomPacket(CompoundTag nbt) {
 	transmit = nbt.getDouble("transmit");
     }
 }

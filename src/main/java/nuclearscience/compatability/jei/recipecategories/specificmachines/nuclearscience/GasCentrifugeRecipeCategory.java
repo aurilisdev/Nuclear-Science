@@ -7,7 +7,7 @@ import java.util.List;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import electrodynamics.compatability.jei.recipecategories.ElectrodynamicsRecipeCategory;
 import mezz.jei.api.constants.VanillaTypes;
@@ -19,11 +19,11 @@ import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.Font;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.fluids.FluidStack;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.References;
@@ -125,7 +125,7 @@ public class GasCentrifugeRecipeCategory extends ElectrodynamicsRecipeCategory<P
     }
 
     @Override
-    public void draw(PsuedoGasCentrifugeRecipe recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
+    public void draw(PsuedoGasCentrifugeRecipe recipe, PoseStack matrixStack, double mouseX, double mouseY) {
 
 	ArrayList<IDrawableStatic> fluidBars = getFluidBars();
 	fluidBars.get(0).draw(matrixStack, 3, 5);
@@ -150,34 +150,34 @@ public class GasCentrifugeRecipeCategory extends ElectrodynamicsRecipeCategory<P
     }
 
     @SuppressWarnings("java:S2184")
-    protected void drawSmeltTime(MatrixStack matrixStack, int y) {
+    protected void drawSmeltTime(PoseStack matrixStack, int y) {
 
 	int smeltTimeSeconds = getArrowSmeltTime() / 20;
 
-	TranslationTextComponent indivU235String = new TranslationTextComponent("gui.jei.category." + getRecipeGroup() + ".info.indiv_u235",
+	TranslatableComponent indivU235String = new TranslatableComponent("gui.jei.category." + getRecipeGroup() + ".info.indiv_u235",
 		smeltTimeSeconds);
 
-	TranslationTextComponent indivU238String = new TranslationTextComponent("gui.jei.category." + getRecipeGroup() + ".info.indiv_u238",
+	TranslatableComponent indivU238String = new TranslatableComponent("gui.jei.category." + getRecipeGroup() + ".info.indiv_u238",
 		smeltTimeSeconds);
 
-	TranslationTextComponent percentU235String = new TranslationTextComponent("gui.jei.category." + getRecipeGroup() + ".info.percent_u235",
+	TranslatableComponent percentU235String = new TranslatableComponent("gui.jei.category." + getRecipeGroup() + ".info.percent_u235",
 		smeltTimeSeconds);
 
-	TranslationTextComponent percentU238String = new TranslationTextComponent("gui.jei.category." + getRecipeGroup() + ".info.percent_u238",
+	TranslatableComponent percentU238String = new TranslatableComponent("gui.jei.category." + getRecipeGroup() + ".info.percent_u238",
 		smeltTimeSeconds);
 
 	Minecraft minecraft = Minecraft.getInstance();
-	FontRenderer fontRenderer = minecraft.fontRenderer;
+	Font fontRenderer = minecraft.font;
 
-	int indivU235StringWidth = fontRenderer.getStringPropertyWidth(indivU235String);
-	int indivU238StringWidth = fontRenderer.getStringPropertyWidth(indivU238String);
-	int percentU238StringWidth = fontRenderer.getStringPropertyWidth(percentU238String);
-	int percentU235StringWidth = fontRenderer.getStringPropertyWidth(percentU235String);
+	int indivU235StringWidth = fontRenderer.width(indivU235String);
+	int indivU238StringWidth = fontRenderer.width(indivU238String);
+	int percentU238StringWidth = fontRenderer.width(percentU238String);
+	int percentU235StringWidth = fontRenderer.width(percentU235String);
 
-	fontRenderer.func_243248_b(matrixStack, indivU238String, getBackground().getWidth() - indivU238StringWidth - 27, y - 27 - 30, 0xFF616161);
-	fontRenderer.func_243248_b(matrixStack, percentU238String, getBackground().getWidth() - percentU238StringWidth - 27, y - 37 - 30, 0xFF616161);
-	fontRenderer.func_243248_b(matrixStack, indivU235String, getBackground().getWidth() - indivU235StringWidth - 27, y - 59 - 30, 0xFF616161);
-	fontRenderer.func_243248_b(matrixStack, percentU235String, getBackground().getWidth() - percentU235StringWidth - 27, y - 49 - 30, 0xFF616161);
+	fontRenderer.draw(matrixStack, indivU238String, getBackground().getWidth() - indivU238StringWidth - 27, y - 27 - 30, 0xFF616161);
+	fontRenderer.draw(matrixStack, percentU238String, getBackground().getWidth() - percentU238StringWidth - 27, y - 37 - 30, 0xFF616161);
+	fontRenderer.draw(matrixStack, indivU235String, getBackground().getWidth() - indivU235StringWidth - 27, y - 59 - 30, 0xFF616161);
+	fontRenderer.draw(matrixStack, percentU235String, getBackground().getWidth() - percentU235StringWidth - 27, y - 49 - 30, 0xFF616161);
 
     }
 

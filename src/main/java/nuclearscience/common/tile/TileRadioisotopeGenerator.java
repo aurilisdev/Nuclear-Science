@@ -10,8 +10,8 @@ import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import electrodynamics.prefab.utilities.object.CachedTileOutput;
 import electrodynamics.prefab.utilities.object.TransferPack;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Direction;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.Direction;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.api.radiation.IRadioactiveObject;
 import nuclearscience.api.radiation.RadiationRegister;
@@ -37,16 +37,16 @@ public class TileRadioisotopeGenerator extends GenericTileTicking {
 
     public void tickServer(ComponentTickable tickable) {
 	if (output1 == null) {
-	    output1 = new CachedTileOutput(world, pos.offset(Direction.UP));
+	    output1 = new CachedTileOutput(level, worldPosition.relative(Direction.UP));
 	}
 	if (output2 == null) {
-	    output2 = new CachedTileOutput(world, pos.offset(Direction.DOWN));
+	    output2 = new CachedTileOutput(level, worldPosition.relative(Direction.DOWN));
 	}
 	if (tickable.getTicks() % 40 == 0) {
 	    output1.update();
 	    output2.update();
 	}
-	ItemStack in = this.<ComponentInventory>getComponent(ComponentType.Inventory).getStackInSlot(0);
+	ItemStack in = this.<ComponentInventory>getComponent(ComponentType.Inventory).getItem(0);
 	IRadioactiveObject rad = RadiationRegister.get(in.getItem());
 	double currentOutput = in.getCount() * Constants.RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER * rad.getRadiationStrength();
 	if (currentOutput > 0) {

@@ -10,9 +10,9 @@ import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import electrodynamics.prefab.utilities.object.CachedTileOutput;
 import electrodynamics.prefab.utilities.object.TransferPack;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerMoltenSaltSupplier;
 import nuclearscience.common.settings.Constants;
@@ -37,7 +37,7 @@ public class TileMoltenSaltSupplier extends GenericTileTicking {
     public void tickServer(ComponentTickable tickable) {
 	Direction dir = this.<ComponentDirection>getComponent(ComponentType.Direction).getDirection();
 	if (output == null) {
-	    output = new CachedTileOutput(world, pos.offset(dir.getOpposite()));
+	    output = new CachedTileOutput(level, worldPosition.relative(dir.getOpposite()));
 	}
 	if (tickable.getTicks() % 50 == 0) {
 	    this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendGuiPacketToTracking();
@@ -48,8 +48,8 @@ public class TileMoltenSaltSupplier extends GenericTileTicking {
 		    false);
 	    if (tickable.getTicks() % 40 == 0) {
 		output.update();
-		ItemStack in = this.<ComponentInventory>getComponent(ComponentType.Inventory).getStackInSlot(0);
-		if (in.getCount() > 0 && output.valid() && output.<TileEntity>getSafe() instanceof TileMSRReactorCore) {
+		ItemStack in = this.<ComponentInventory>getComponent(ComponentType.Inventory).getItem(0);
+		if (in.getCount() > 0 && output.valid() && output.<BlockEntity>getSafe() instanceof TileMSRReactorCore) {
 		    TileMSRReactorCore core = output.getSafe();
 		    if (core.<ComponentDirection>getComponent(ComponentType.Direction).getDirection() == dir) {
 			if (TileMSRReactorCore.FUEL_CAPACITY - core.currentFuel >= 250) {

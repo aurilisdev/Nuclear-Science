@@ -5,21 +5,21 @@ import java.util.List;
 
 import electrodynamics.api.electricity.IElectrodynamic;
 import electrodynamics.common.block.BlockGenericMachine;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext.Builder;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext.Builder;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import nuclearscience.common.tile.TileQuantumCapacitor;
 
 public class BlockQuantumCapacitor extends BlockGenericMachine {
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
 	return new TileQuantumCapacitor();
     }
 
@@ -27,7 +27,7 @@ public class BlockQuantumCapacitor extends BlockGenericMachine {
     @Deprecated
     public List<ItemStack> getDrops(BlockState state, Builder builder) {
 	ItemStack addstack = new ItemStack(this);
-	TileEntity tile = builder.get(LootParameters.BLOCK_ENTITY);
+	BlockEntity tile = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
 	if (tile instanceof IElectrodynamic) {
 	    double joules = ((IElectrodynamic) tile).getJoulesStored();
 	    if (joules > 0) {
@@ -36,24 +36,24 @@ public class BlockQuantumCapacitor extends BlockGenericMachine {
 	}
 	if (tile instanceof TileQuantumCapacitor) {
 	    addstack.getOrCreateTag().putInt("frequency", ((TileQuantumCapacitor) tile).frequency);
-	    addstack.getOrCreateTag().putUniqueId("uuid", ((TileQuantumCapacitor) tile).uuid);
+	    addstack.getOrCreateTag().putUUID("uuid", ((TileQuantumCapacitor) tile).uuid);
 	}
 	return Arrays.asList(addstack);
     }
 
     @Override
     @Deprecated
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-	TileEntity tile = worldIn.getTileEntity(pos);
+    public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+	BlockEntity tile = worldIn.getBlockEntity(pos);
 	if (tile instanceof TileQuantumCapacitor) {
 	    ((TileQuantumCapacitor) tile).frequency = stack.getOrCreateTag().getInt("frequency");
 	    if (stack.getOrCreateTag().contains("uuid")) {
-		((TileQuantumCapacitor) tile).uuid = stack.getOrCreateTag().getUniqueId("uuid");
-	    } else if (placer instanceof PlayerEntity) {
-		((TileQuantumCapacitor) tile).uuid = ((PlayerEntity) placer).getGameProfile().getId();
+		((TileQuantumCapacitor) tile).uuid = stack.getOrCreateTag().getUUID("uuid");
+	    } else if (placer instanceof Player) {
+		((TileQuantumCapacitor) tile).uuid = ((Player) placer).getGameProfile().getId();
 	    }
 	} else {
-	    super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
+	    super.setPlacedBy(worldIn, pos, state, placer, stack);
 	}
     }
 }

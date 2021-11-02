@@ -7,8 +7,8 @@ import electrodynamics.api.References;
 import electrodynamics.compatability.jei.recipecategories.O2ORecipeCategory;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import mezz.jei.api.helpers.IGuiHelper;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
 
 public class FuelReprocessorRecipeCategory extends O2ORecipeCategory {
 

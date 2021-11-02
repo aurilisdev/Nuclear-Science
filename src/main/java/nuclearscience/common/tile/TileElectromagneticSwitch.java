@@ -1,9 +1,9 @@
 package nuclearscience.common.tile;
 
 import electrodynamics.prefab.tile.GenericTile;
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.Direction;
 import nuclearscience.DeferredRegisters;
 
 public class TileElectromagneticSwitch extends GenericTile {
@@ -14,18 +14,18 @@ public class TileElectromagneticSwitch extends GenericTile {
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
 	if (lastDirection != null) {
 	    compound.putInt("lastDirectionOrdinal", lastDirection.ordinal());
 	}
-	return super.write(compound);
+	return super.save(compound);
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
-	super.read(state, compound);
+    public void load(BlockState state, CompoundTag compound) {
+	super.load(state, compound);
 	if (compound.contains("lastDirectionOrdinal")) {
-	    lastDirection = Direction.byIndex(compound.getInt("lastDirectionOrdinal"));
+	    lastDirection = Direction.from3DDataValue(compound.getInt("lastDirectionOrdinal"));
 	}
     }
 }

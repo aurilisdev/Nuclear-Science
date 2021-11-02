@@ -11,14 +11,14 @@ import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import electrodynamics.prefab.utilities.object.CachedTileOutput;
 import electrodynamics.prefab.utilities.object.Location;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.api.network.moltensalt.IMoltenSaltPipe;
 import nuclearscience.api.radiation.RadiationSystem;
@@ -46,34 +46,34 @@ public class TileMSRReactorCore extends GenericTileTicking {
 		.createMenu((id, player) -> new ContainerMSRReactorCore(id, player, null, getCoordsArray())));
     }
 
-    protected void writeCustomPacket(CompoundNBT tag) {
+    protected void writeCustomPacket(CompoundTag tag) {
 	tag.putDouble("temperature", temperature);
 	tag.putDouble("currentFuel", currentFuel);
     }
 
-    protected void readCustomPacket(CompoundNBT nbt) {
+    protected void readCustomPacket(CompoundTag nbt) {
 	temperature = nbt.getDouble("temperature");
 	currentFuel = nbt.getDouble("currentFuel");
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
 	writeCustomPacket(compound);
-	return super.write(compound);
+	return super.save(compound);
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
+    public void load(BlockState state, CompoundTag compound) {
 	readCustomPacket(compound);
-	super.read(state, compound);
+	super.load(state, compound);
     }
 
     protected void tickServer(ComponentTickable tick) {
 	if (outputCache == null) {
-	    outputCache = new CachedTileOutput(world, new BlockPos(pos).offset(Direction.UP));
+	    outputCache = new CachedTileOutput(level, new BlockPos(worldPosition).relative(Direction.UP));
 	}
 	if (plugCache == null) {
-	    plugCache = new CachedTileOutput(world, new BlockPos(pos).offset(Direction.DOWN));
+	    plugCache = new CachedTileOutput(level, new BlockPos(worldPosition).relative(Direction.DOWN));
 	}
 	if (tick.getTicks() % 40 == 0) {
 	    outputCache.update();
@@ -88,7 +88,7 @@ public class TileMSRReactorCore extends GenericTileTicking {
 		int insertion = 0;
 		for (Direction dir : Direction.values()) {
 		    if (dir != Direction.UP && dir != Direction.DOWN) {
-			TileEntity tile = world.getTileEntity(getPos().offset(dir));
+			BlockEntity tile = level.getBlockEntity(getBlockPos().relative(dir));
 			if (tile instanceof TileControlRodAssembly) {
 			    TileControlRodAssembly control = (TileControlRodAssembly) tile;
 			    if (control.dir == dir.getOpposite()) {
@@ -97,13 +97,13 @@ public class TileMSRReactorCore extends GenericTileTicking {
 			}
 		    }
 		}
-		if (world.getWorldInfo().getGameTime() % 10 == 0) {
-		    Location source = new Location(pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f);
+		if (level.getLevelData().getGameTime() % 10 == 0) {
+		    Location source = new Location(worldPosition.getX() + 0.5f, worldPosition.getY() + 0.5f, worldPosition.getZ() + 0.5f);
 		    double totstrength = temperature * Math.pow(3, Math.pow(temperature / MELTDOWN_TEMPERATURE, 9));
 		    double range = Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 2;
-		    AxisAlignedBB bb = AxisAlignedBB.withSizeAtOrigin(range, range, range);
-		    bb = bb.offset(new Vector3d(source.x(), source.y(), source.z()));
-		    List<LivingEntity> list = world.getEntitiesWithinAABB(LivingEntity.class, bb);
+		    AABB bb = AABB.ofSize(range, range, range);
+		    bb = bb.move(new Vec3(source.x(), source.y(), source.z()));
+		    List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, bb);
 		    for (LivingEntity living : list) {
 			RadiationSystem.applyRadiation(living, source, totstrength);
 		    }
@@ -111,7 +111,7 @@ public class TileMSRReactorCore extends GenericTileTicking {
 		double insertDecimal = (100 - insertion) / 100.0;
 		currentFuel -= Math.min(currentFuel,
 			FUEL_USAGE_RATE * insertDecimal * Math.pow(2, Math.pow(temperature / (MELTDOWN_TEMPERATURE - 100), 4)));
-		temperature += (MELTDOWN_TEMPERATURE * insertDecimal * (1.2 + world.rand.nextDouble() / 5.0) - temperature) / 200;
+		temperature += (MELTDOWN_TEMPERATURE * insertDecimal * (1.2 + level.random.nextDouble() / 5.0) - temperature) / 200;
 		if (outputCache.valid() && outputCache.getSafe() instanceof IMoltenSaltPipe) {
 		    MoltenSaltNetwork net = (MoltenSaltNetwork) outputCache.<IMoltenSaltPipe>getSafe().getNetwork();
 		    net.emit(temperature, new ArrayList<>(), false);
@@ -125,7 +125,7 @@ public class TileMSRReactorCore extends GenericTileTicking {
 
     protected void tickClient(ComponentTickable tick) {
 	if (plugCache == null) {
-	    plugCache = new CachedTileOutput(world, new BlockPos(pos).offset(Direction.DOWN));
+	    plugCache = new CachedTileOutput(level, new BlockPos(worldPosition).relative(Direction.DOWN));
 	}
     }
 }

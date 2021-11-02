@@ -15,10 +15,10 @@ import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
 import electrodynamics.prefab.tile.components.type.ComponentProcessorType;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.phys.AABB;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.SoundRegister;
 import nuclearscience.common.inventory.container.ContainerNuclearBoiler;
@@ -52,18 +52,18 @@ public class TileNuclearBoiler extends GenericTileTicking {
     }
 
     @Override
-    public AxisAlignedBB getRenderBoundingBox() {
-	return super.getRenderBoundingBox().grow(1);
+    public AABB getRenderBoundingBox() {
+	return super.getRenderBoundingBox().inflate(1);
     }
 
     protected void tickClient(ComponentTickable tickable) {
 	boolean running = this.<ComponentProcessor>getComponent(ComponentType.Processor).operatingTicks > 0;
-	if (running && world.rand.nextDouble() < 0.15) {
-	    world.addParticle(ParticleTypes.SMOKE, pos.getX() + world.rand.nextDouble(), pos.getY() + world.rand.nextDouble() * 0.4 + 0.5,
-		    pos.getZ() + world.rand.nextDouble(), 0.0D, 0.0D, 0.0D);
+	if (running && level.random.nextDouble() < 0.15) {
+	    level.addParticle(ParticleTypes.SMOKE, worldPosition.getX() + level.random.nextDouble(), worldPosition.getY() + level.random.nextDouble() * 0.4 + 0.5,
+		    worldPosition.getZ() + level.random.nextDouble(), 0.0D, 0.0D, 0.0D);
 	}
 	if (running && tickable.getTicks() % 100 == 0) {
-	    SoundAPI.playSound(SoundRegister.SOUND_NUCLEARBOILER.get(), SoundCategory.BLOCKS, 1, 1, pos);
+	    SoundAPI.playSound(SoundRegister.SOUND_NUCLEARBOILER.get(), SoundSource.BLOCKS, 1, 1, worldPosition);
 	}
     }
 

@@ -1,41 +1,41 @@
 package nuclearscience.client.render.tile;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import electrodynamics.prefab.utilities.UtilitiesRendering;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.vector.Quaternion;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.core.Direction;
+import com.mojang.math.Quaternion;
 import nuclearscience.client.ClientRegister;
 import nuclearscience.common.tile.TileControlRodAssembly;
 
-public class RenderRodAssembly extends TileEntityRenderer<TileControlRodAssembly> {
+public class RenderRodAssembly extends BlockEntityRenderer<TileControlRodAssembly> {
 
-    public RenderRodAssembly(TileEntityRendererDispatcher rendererDispatcherIn) {
+    public RenderRodAssembly(BlockEntityRenderDispatcher rendererDispatcherIn) {
 	super(rendererDispatcherIn);
     }
 
     @Override
     @Deprecated
-    public void render(TileControlRodAssembly tileEntityIn, float partialTicks, MatrixStack stack, IRenderTypeBuffer bufferIn, int combinedLightIn,
+    public void render(TileControlRodAssembly tileEntityIn, float partialTicks, PoseStack stack, MultiBufferSource bufferIn, int combinedLightIn,
 	    int combinedOverlayIn) {
-	stack.push();
-	IBakedModel ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_CONTROLRODASSEMBLYSTRUCTURE);
+	stack.pushPose();
+	BakedModel ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_CONTROLRODASSEMBLYSTRUCTURE);
 	stack.translate(0.5, 0.5, 0.5);
 	if (tileEntityIn.isMSR) {
 	    Direction dir = tileEntityIn.dir;
-	    stack.rotate(new Quaternion(90, 0, dir.getHorizontalAngle(), true));
+	    stack.mulPose(new Quaternion(90, 0, dir.toYRot(), true));
 	}
-	UtilitiesRendering.renderModel(ibakedmodel, tileEntityIn, RenderType.getSolid(), stack, bufferIn, combinedLightIn, combinedOverlayIn);
+	UtilitiesRendering.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), stack, bufferIn, combinedLightIn, combinedOverlayIn);
 	int insertion = tileEntityIn.insertion - 100;
 	stack.translate(0, 12 / 16.0 * insertion / 100.0 + .5 / 16.0, 0);
 	ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_CONTROLRODASSEMBLYSROD);
-	UtilitiesRendering.renderModel(ibakedmodel, tileEntityIn, RenderType.getSolid(), stack, bufferIn, combinedLightIn, combinedOverlayIn);
-	stack.pop();
+	UtilitiesRendering.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), stack, bufferIn, combinedLightIn, combinedOverlayIn);
+	stack.popPose();
     }
 }

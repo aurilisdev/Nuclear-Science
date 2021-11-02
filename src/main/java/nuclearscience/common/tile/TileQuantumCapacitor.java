@@ -13,12 +13,12 @@ import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import electrodynamics.prefab.utilities.object.CachedTileOutput;
 import electrodynamics.prefab.utilities.object.TransferPack;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.Explosion.Mode;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Explosion.BlockInteraction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -55,10 +55,10 @@ public class TileQuantumCapacitor extends GenericTileTicking implements IEnergyS
 
     public void tickServer(ComponentTickable tickable) {
 	if (outputCache == null) {
-	    outputCache = new CachedTileOutput(world, new BlockPos(pos).offset(Direction.UP));
+	    outputCache = new CachedTileOutput(level, new BlockPos(worldPosition).relative(Direction.UP));
 	}
 	if (outputCache2 == null) {
-	    outputCache2 = new CachedTileOutput(world, new BlockPos(pos).offset(Direction.DOWN));
+	    outputCache2 = new CachedTileOutput(level, new BlockPos(worldPosition).relative(Direction.DOWN));
 	}
 	if (tickable.getTicks() % 40 == 0) {
 	    outputCache.update();
@@ -68,13 +68,13 @@ public class TileQuantumCapacitor extends GenericTileTicking implements IEnergyS
 	if (joules > 0 && outputCache.valid()) {
 	    double sent = ElectricityUtilities.receivePower(outputCache.getSafe(), Direction.DOWN,
 		    TransferPack.joulesVoltage(Math.min(joules, outputJoules), DEFAULT_VOLTAGE), false).getJoules();
-	    QuantumCapacitorData.get(world).setJoules(uuid, frequency, getJoulesStored() - sent);
+	    QuantumCapacitorData.get(level).setJoules(uuid, frequency, getJoulesStored() - sent);
 	}
 	joules = getJoulesStored();
 	if (joules > 0 && outputCache2.valid()) {
 	    double sent = ElectricityUtilities.receivePower(outputCache2.getSafe(), Direction.UP,
 		    TransferPack.joulesVoltage(Math.min(joules, outputJoules), DEFAULT_VOLTAGE), false).getJoules();
-	    QuantumCapacitorData.get(world).setJoules(uuid, frequency, getJoulesStored() - sent);
+	    QuantumCapacitorData.get(level).setJoules(uuid, frequency, getJoulesStored() - sent);
 	}
 	if (tickable.getTicks() % 50 == 0) {
 	    this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendGuiPacketToTracking();
@@ -83,36 +83,36 @@ public class TileQuantumCapacitor extends GenericTileTicking implements IEnergyS
 
     public double joulesClient = 0;
 
-    public void writeGUIPacket(CompoundNBT nbt) {
+    public void writeGUIPacket(CompoundTag nbt) {
 	nbt.putDouble("joulesClient", getJoulesStored());
 	nbt.putInt("frequency", frequency);
-	nbt.putUniqueId("uuid", uuid);
+	nbt.putUUID("uuid", uuid);
 	nbt.putDouble("outputJoules", outputJoules);
     }
 
-    public void readGUIPacket(CompoundNBT nbt) {
+    public void readGUIPacket(CompoundTag nbt) {
 	joulesClient = nbt.getDouble("joulesClient");
 	frequency = nbt.getInt("frequency");
-	uuid = nbt.getUniqueId("uuid");
+	uuid = nbt.getUUID("uuid");
 	outputJoules = nbt.getDouble("outputJoules");
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
-	super.write(compound);
+    public CompoundTag save(CompoundTag compound) {
+	super.save(compound);
 	compound.putInt("frequency", frequency);
 	compound.putDouble("outputJoules", outputJoules);
-	compound.putUniqueId("uuid", uuid);
+	compound.putUUID("uuid", uuid);
 	return compound;
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
-	super.read(state, compound);
+    public void load(BlockState state, CompoundTag compound) {
+	super.load(state, compound);
 	outputJoules = compound.getDouble("outputJoules");
 	frequency = compound.getInt("frequency");
-	if (compound.hasUniqueId("uuid")) {
-	    uuid = compound.getUniqueId("uuid");
+	if (compound.hasUUID("uuid")) {
+	    uuid = compound.getUUID("uuid");
 	}
     }
 
@@ -135,11 +135,11 @@ public class TileQuantumCapacitor extends GenericTileTicking implements IEnergyS
 		if (transfer.getVoltage() == DEFAULT_VOLTAGE) {
 		    joules += received;
 		}
-		QuantumCapacitorData.get(world).setJoules(uuid, frequency, joules);
+		QuantumCapacitorData.get(level).setJoules(uuid, frequency, joules);
 		if (transfer.getVoltage() > DEFAULT_VOLTAGE) {
-		    world.setBlockState(pos, Blocks.AIR.getDefaultState());
-		    world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), (float) Math.log10(10 + transfer.getVoltage() / DEFAULT_VOLTAGE),
-			    Mode.DESTROY);
+		    level.setBlockAndUpdate(worldPosition, Blocks.AIR.defaultBlockState());
+		    level.explode(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), (float) Math.log10(10 + transfer.getVoltage() / DEFAULT_VOLTAGE),
+			    BlockInteraction.DESTROY);
 		    return TransferPack.EMPTY;
 		}
 	    }
@@ -190,14 +190,14 @@ public class TileQuantumCapacitor extends GenericTileTicking implements IEnergyS
     }
 
     public void setJoulesStored(double joules) {
-	QuantumCapacitorData data = QuantumCapacitorData.get(world);
+	QuantumCapacitorData data = QuantumCapacitorData.get(level);
 	if (data != null) {
 	    data.setJoules(uuid, frequency, joules);
 	}
     }
 
     public double getJoulesStored() {
-	QuantumCapacitorData data = QuantumCapacitorData.get(world);
+	QuantumCapacitorData data = QuantumCapacitorData.get(level);
 	return data == null ? 0 : data.getJoules(uuid, frequency);
     }
 

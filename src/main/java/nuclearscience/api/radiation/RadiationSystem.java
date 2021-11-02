@@ -3,15 +3,15 @@ package nuclearscience.api.radiation;
 import java.util.HashMap;
 
 import electrodynamics.prefab.utilities.object.Location;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.TickEvent.ServerTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -26,9 +26,9 @@ import nuclearscience.common.item.ItemHazmatArmor;
 @EventBusSubscriber(modid = References.ID, bus = Bus.FORGE)
 public class RadiationSystem {
 
-    public static HashMap<PlayerEntity, Double> radiationMap = new HashMap<>();
+    public static HashMap<Player, Double> radiationMap = new HashMap<>();
 
-    public static double getRadiationModifier(World world, Location source, Location end) {
+    public static double getRadiationModifier(Level world, Location source, Location end) {
 	double distance = 1 + source.distance(end);
 	Location clone = new Location(end);
 	double modifier = 1;
@@ -44,7 +44,7 @@ public class RadiationSystem {
 	    if (!curr.equals(next)) {
 		curr = next;
 		BlockState state = world.getBlockState(curr);
-		lastHard = hard = (state.getBlock() == DeferredRegisters.blocklead ? 20000 : state.getBlockHardness(world, curr))
+		lastHard = hard = (state.getBlock() == DeferredRegisters.blocklead ? 20000 : state.getDestroySpeed(world, curr))
 			/ (world.getFluidState(curr).isEmpty() ? 1 : 50.0);
 	    }
 	    modifier += hard / 4.5f;
@@ -53,47 +53,47 @@ public class RadiationSystem {
 	return modifier;
     }
 
-    public static double getRadiation(World world, Location source, Location end, double strength) {
+    public static double getRadiation(Level world, Location source, Location end, double strength) {
 	double distance = 1 + source.distance(end);
 	return strength / (getRadiationModifier(world, source, end) * distance * distance);
     }
 
     public static void applyRadiation(LivingEntity entity, Location source, double strength) {
 	int protection = 1;
-	if (!entity.world.isRemote) {
-	    boolean isPlayer = entity instanceof PlayerEntity;
+	if (!entity.level.isClientSide) {
+	    boolean isPlayer = entity instanceof Player;
 	    if (isPlayer) {
-		PlayerEntity player = (PlayerEntity) entity;
+		Player player = (Player) entity;
 		if (!player.isCreative()) {
-		    for (int i = 0; i < player.inventory.armorInventory.size(); i++) {
-			ItemStack next = player.inventory.armorInventory.get(i);
+		    for (int i = 0; i < player.inventory.armor.size(); i++) {
+			ItemStack next = player.inventory.armor.get(i);
 			if (next.getItem() instanceof ItemHazmatArmor) {
 			    protection++;
 			    float damage = (float) (strength * 2.15f) / 2169.9975f;
 			    if (Math.random() < damage) {
 				int integerDamage = (int) Math.max(1, damage);
-				if (next.getDamage() > next.getMaxDamage()
-					|| next.attemptDamageItem(integerDamage, entity.world.rand, (ServerPlayerEntity) player)) {
-				    player.inventory.armorInventory.set(i, ItemStack.EMPTY);
+				if (next.getDamageValue() > next.getMaxDamage()
+					|| next.hurt(integerDamage, entity.level.random, (ServerPlayer) player)) {
+				    player.inventory.armor.set(i, ItemStack.EMPTY);
 				}
 			    }
 			}
 		    }
 		}
 	    }
-	    Location end = new Location(entity.getPositionVec());
+	    Location end = new Location(entity.position());
 	    double radiation = 0;
-	    if (entity instanceof PlayerEntity
-		    && (((PlayerEntity) entity).getItemStackFromSlot(EquipmentSlotType.MAINHAND).getItem() instanceof ItemGeigerCounter
-			    || ((PlayerEntity) entity).getItemStackFromSlot(EquipmentSlotType.OFFHAND).getItem() instanceof ItemGeigerCounter)) {
+	    if (entity instanceof Player
+		    && (((Player) entity).getItemBySlot(EquipmentSlot.MAINHAND).getItem() instanceof ItemGeigerCounter
+			    || ((Player) entity).getItemBySlot(EquipmentSlot.OFFHAND).getItem() instanceof ItemGeigerCounter)) {
 		double already = radiationMap.containsKey(entity) ? radiationMap.get(entity) : 0;
-		radiation = getRadiation(entity.world, source, end, strength);
-		radiationMap.put((PlayerEntity) entity, already + radiation);
+		radiation = getRadiation(entity.level, source, end, strength);
+		radiationMap.put((Player) entity, already + radiation);
 	    }
-	    if (!(entity instanceof PlayerEntity && ((PlayerEntity) entity).isCreative()) && protection < 5
+	    if (!(entity instanceof Player && ((Player) entity).isCreative()) && protection < 5
 		    && radiationMap.getOrDefault(entity, 11.0) > 4) {
 		if (radiation == 0) {
-		    radiation = getRadiation(entity.world, source, end, strength);
+		    radiation = getRadiation(entity.level, source, end, strength);
 		}
 		double distance = 1 + source.distance(end);
 		double modifier = strength / (radiation * distance * distance);
@@ -102,7 +102,7 @@ public class RadiationSystem {
 		if (amplitude == 0 && time <= 40) {
 		    return;
 		}
-		entity.addPotionEffect(new EffectInstance(EffectRadiation.INSTANCE, time, Math.min(40, amplitude), false, true));
+		entity.addEffect(new MobEffectInstance(EffectRadiation.INSTANCE, time, Math.min(40, amplitude), false, true));
 	    }
 	}
     }

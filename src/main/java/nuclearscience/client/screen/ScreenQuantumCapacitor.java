@@ -1,16 +1,16 @@
 package nuclearscience.client.screen;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import electrodynamics.api.electricity.formatting.ChatFormatter;
 import electrodynamics.api.electricity.formatting.ElectricUnit;
 import electrodynamics.prefab.screen.GenericScreen;
 import electrodynamics.prefab.screen.component.ScreenComponentTextInputBar;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import nuclearscience.common.inventory.container.ContainerQuantumCapacitor;
@@ -20,14 +20,14 @@ import nuclearscience.common.tile.TileQuantumCapacitor;
 
 @OnlyIn(Dist.CLIENT)
 public class ScreenQuantumCapacitor extends GenericScreen<ContainerQuantumCapacitor> {
-    public ScreenQuantumCapacitor(ContainerQuantumCapacitor container, PlayerInventory playerInventory, ITextComponent title) {
+    public ScreenQuantumCapacitor(ContainerQuantumCapacitor container, Inventory playerInventory, Component title) {
 	super(container, playerInventory, title);
 	components.add(new ScreenComponentTextInputBar(this, 115, 14));
 	components.add(new ScreenComponentTextInputBar(this, 115, 34));
     }
 
-    private TextFieldWidget outputField;
-    private TextFieldWidget frequencyField;
+    private EditBox outputField;
+    private EditBox frequencyField;
 
     @Override
     public void tick() {
@@ -43,22 +43,22 @@ public class ScreenQuantumCapacitor extends GenericScreen<ContainerQuantumCapaci
     }
 
     protected void initFields() {
-	minecraft.keyboardListener.enableRepeatEvents(true);
-	int i = (width - xSize) / 2;
-	int j = (height - ySize) / 2;
-	outputField = new TextFieldWidget(font, i + 120, j + 18, 46, 13, new TranslationTextComponent("container.quantumcapacitor.joulesoutput"));
+	minecraft.keyboardHandler.setSendRepeatsToGui(true);
+	int i = (width - imageWidth) / 2;
+	int j = (height - imageHeight) / 2;
+	outputField = new EditBox(font, i + 120, j + 18, 46, 13, new TranslatableComponent("container.quantumcapacitor.joulesoutput"));
 	outputField.setTextColor(-1);
-	outputField.setDisabledTextColour(-1);
-	outputField.setEnableBackgroundDrawing(false);
-	outputField.setMaxStringLength(6);
+	outputField.setTextColorUneditable(-1);
+	outputField.setBordered(false);
+	outputField.setMaxLength(6);
 	outputField.setResponder(this::updateOutput);
 
-	frequencyField = new TextFieldWidget(font, i + 120, j + 18 + 20, 46, 13,
-		new TranslationTextComponent("container.quantumcapacitor.frequency"));
+	frequencyField = new EditBox(font, i + 120, j + 18 + 20, 46, 13,
+		new TranslatableComponent("container.quantumcapacitor.frequency"));
 	frequencyField.setTextColor(-1);
-	frequencyField.setDisabledTextColour(-1);
-	frequencyField.setEnableBackgroundDrawing(false);
-	frequencyField.setMaxStringLength(6);
+	frequencyField.setTextColorUneditable(-1);
+	frequencyField.setBordered(false);
+	frequencyField.setMaxLength(6);
 	frequencyField.setResponder(this::updateFreq);
 
 	children.add(outputField);
@@ -71,84 +71,84 @@ public class ScreenQuantumCapacitor extends GenericScreen<ContainerQuantumCapaci
 	if (!coord.isEmpty()) {
 	    Double triedOutput = 0.0;
 	    try {
-		triedOutput = Double.parseDouble(outputField.getText());
+		triedOutput = Double.parseDouble(outputField.getValue());
 	    } catch (Exception e) {
 		// Not required
 	    }
 	    Integer frequency = 0;
 	    try {
-		frequency = Integer.parseInt(frequencyField.getText());
+		frequency = Integer.parseInt(frequencyField.getValue());
 	    } catch (Exception e) {
 		// Not required
 	    }
-	    if (container.getHostFromIntArray() != null) {
+	    if (menu.getHostFromIntArray() != null) {
 		NetworkHandler.CHANNEL
-			.sendToServer(new PacketSetQuantumCapacitorData(container.getHostFromIntArray().getPos(), triedOutput, frequency));
+			.sendToServer(new PacketSetQuantumCapacitorData(menu.getHostFromIntArray().getBlockPos(), triedOutput, frequency));
 	    }
 	}
     }
 
     private void updateFreq(String val) {
-	frequencyField.setFocused2(true);
-	outputField.setFocused2(false);
+	frequencyField.setFocus(true);
+	outputField.setFocus(false);
 	updateValues(val);
     }
 
     private void updateOutput(String val) {
-	frequencyField.setFocused2(false);
-	outputField.setFocused2(true);
+	frequencyField.setFocus(false);
+	outputField.setFocus(true);
 	updateValues(val);
     }
 
     @Override
     public void resize(Minecraft minecraft, int width, int height) {
-	String s = outputField.getText();
-	String s1 = frequencyField.getText();
+	String s = outputField.getValue();
+	String s1 = frequencyField.getValue();
 	init(minecraft, width, height);
-	outputField.setText(s);
-	frequencyField.setText(s1);
+	outputField.setValue(s);
+	frequencyField.setValue(s1);
     }
 
     @Override
-    public void onClose() {
-	super.onClose();
-	minecraft.keyboardListener.enableRepeatEvents(false);
+    public void removed() {
+	super.removed();
+	minecraft.keyboardHandler.setSendRepeatsToGui(false);
     }
 
     @Override
-    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
 	super.render(matrixStack, mouseX, mouseY, partialTicks);
-	if (needsUpdate && container.getHostFromIntArray() != null) {
+	if (needsUpdate && menu.getHostFromIntArray() != null) {
 	    needsUpdate = false;
-	    outputField.setText("" + container.getHostFromIntArray().outputJoules);
-	    frequencyField.setText("" + container.getHostFromIntArray().frequency);
+	    outputField.setValue("" + menu.getHostFromIntArray().outputJoules);
+	    frequencyField.setValue("" + menu.getHostFromIntArray().frequency);
 	}
 	outputField.render(matrixStack, mouseX, mouseY, partialTicks);
 	frequencyField.render(matrixStack, mouseX, mouseY, partialTicks);
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
-	super.drawGuiContainerForegroundLayer(matrixStack, mouseX, mouseY);
-	TileQuantumCapacitor box = container.getHostFromIntArray();
+    protected void renderLabels(PoseStack matrixStack, int mouseX, int mouseY) {
+	super.renderLabels(matrixStack, mouseX, mouseY);
+	TileQuantumCapacitor box = menu.getHostFromIntArray();
 	if (box != null) {
-	    font.func_243248_b(matrixStack,
-		    new TranslationTextComponent("gui.quantumcapacitor.current", ChatFormatter
+	    font.draw(matrixStack,
+		    new TranslatableComponent("gui.quantumcapacitor.current", ChatFormatter
 			    .getElectricDisplayShort(box.getOutputJoules() * 20.0 / TileQuantumCapacitor.DEFAULT_VOLTAGE, ElectricUnit.AMPERE)),
-		    playerInventoryTitleX, (float) playerInventoryTitleY - 55, 4210752);
-	    font.func_243248_b(matrixStack,
-		    new TranslationTextComponent("gui.quantumcapacitor.transfer",
+		    inventoryLabelX, (float) inventoryLabelY - 55, 4210752);
+	    font.draw(matrixStack,
+		    new TranslatableComponent("gui.quantumcapacitor.transfer",
 			    ChatFormatter.getElectricDisplayShort(box.getOutputJoules() * 20.0, ElectricUnit.WATT)),
-		    playerInventoryTitleX, (float) playerInventoryTitleY - 42, 4210752);
-	    font.func_243248_b(matrixStack,
-		    new TranslationTextComponent("gui.quantumcapacitor.voltage",
+		    inventoryLabelX, (float) inventoryLabelY - 42, 4210752);
+	    font.draw(matrixStack,
+		    new TranslatableComponent("gui.quantumcapacitor.voltage",
 			    ChatFormatter.getElectricDisplayShort(TileQuantumCapacitor.DEFAULT_VOLTAGE, ElectricUnit.VOLTAGE)),
-		    playerInventoryTitleX, (float) playerInventoryTitleY - 29, 4210752);
-	    font.func_243248_b(matrixStack,
-		    new TranslationTextComponent("gui.quantumcapacitor.stored",
+		    inventoryLabelX, (float) inventoryLabelY - 29, 4210752);
+	    font.draw(matrixStack,
+		    new TranslatableComponent("gui.quantumcapacitor.stored",
 			    ChatFormatter.getElectricDisplayShort(box.joulesClient, ElectricUnit.JOULES) + " / "
 				    + ChatFormatter.getElectricDisplayShort(TileQuantumCapacitor.DEFAULT_MAX_JOULES, ElectricUnit.JOULES)),
-		    playerInventoryTitleX, (float) playerInventoryTitleY - 16, 4210752);
+		    inventoryLabelX, (float) inventoryLabelY - 16, 4210752);
 	}
     }
 }

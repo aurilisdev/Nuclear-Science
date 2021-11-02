@@ -6,7 +6,7 @@ import java.util.List;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import electrodynamics.compatability.jei.recipecategories.ElectrodynamicsRecipeCategory;
 import electrodynamics.compatability.jei.recipecategories.psuedorecipes.PsuedoO2ORecipe;
@@ -18,13 +18,13 @@ import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.item.AirItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.Font;
+import net.minecraft.world.item.AirItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.registries.ForgeRegistries;
 import nuclearscience.References;
 
@@ -92,7 +92,7 @@ public class ParticleAcceleratorAntiMatterRecipeCategory extends Electrodynamics
     }
 
     @Override
-    public void draw(PsuedoO2ORecipe recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
+    public void draw(PsuedoO2ORecipe recipe, PoseStack matrixStack, double mouseX, double mouseY) {
 	IDrawableAnimated arrow = getArrow(recipe);
 	arrow.draw(matrixStack, PROCESSING_ARROW_OFFSET[0], PROCESSING_ARROW_OFFSET[1]);
 
@@ -103,32 +103,32 @@ public class ParticleAcceleratorAntiMatterRecipeCategory extends Electrodynamics
 	return CACHED_ARROWS.getUnchecked(getArrowSmeltTime());
     }
 
-    protected void drawSmeltTime(PsuedoO2ORecipe recipe, MatrixStack matrixStack, int y) {
+    protected void drawSmeltTime(PsuedoO2ORecipe recipe, PoseStack matrixStack, int y) {
 
 	int smeltTimeSeconds = getArrowSmeltTime() / 20;
-	TranslationTextComponent timeString = new TranslationTextComponent("gui.jei.category." + getRecipeGroup() + ".info.power", smeltTimeSeconds);
+	TranslatableComponent timeString = new TranslatableComponent("gui.jei.category." + getRecipeGroup() + ".info.power", smeltTimeSeconds);
 	Minecraft minecraft = Minecraft.getInstance();
-	FontRenderer fontRenderer = minecraft.fontRenderer;
-	int stringWidth = fontRenderer.getStringPropertyWidth(timeString);
-	fontRenderer.func_243248_b(matrixStack, timeString, getBackground().getWidth() - stringWidth, y, 0xFF808080);
+	Font fontRenderer = minecraft.font;
+	int stringWidth = fontRenderer.width(timeString);
+	fontRenderer.draw(matrixStack, timeString, getBackground().getWidth() - stringWidth, y, 0xFF808080);
 
     }
 
     private static List<List<ItemStack>> recipeInput(PsuedoO2ORecipe recipe) {
 
 	List<ItemStack> emagCell = new ArrayList<>();
-	emagCell.add(recipe.INPUT.getMatchingStacks()[0]);
+	emagCell.add(recipe.INPUT.getItems()[0]);
 
 	/* Gets a list of all Vanilla items */
 
 	int i = 0;
 	List<Item> allItems = new ArrayList<>(ForgeRegistries.ITEMS.getValues());
 	List<Item> vanillaItems = new ArrayList<>();
-	ItemGroup[] vanillaItemGroups = { ItemGroup.BREWING, ItemGroup.BUILDING_BLOCKS, ItemGroup.COMBAT, ItemGroup.DECORATIONS, ItemGroup.FOOD,
-		ItemGroup.MISC, ItemGroup.REDSTONE, ItemGroup.TOOLS, ItemGroup.TRANSPORTATION };
+	CreativeModeTab[] vanillaItemGroups = { CreativeModeTab.TAB_BREWING, CreativeModeTab.TAB_BUILDING_BLOCKS, CreativeModeTab.TAB_COMBAT, CreativeModeTab.TAB_DECORATIONS, CreativeModeTab.TAB_FOOD,
+		CreativeModeTab.TAB_MISC, CreativeModeTab.TAB_REDSTONE, CreativeModeTab.TAB_TOOLS, CreativeModeTab.TAB_TRANSPORTATION };
 	for (Item item : allItems) {
 	    for (i = 0; i < vanillaItemGroups.length; i++) {
-		if (item.getGroup() == vanillaItemGroups[i]) {
+		if (item.getItemCategory() == vanillaItemGroups[i]) {
 		    vanillaItems.add(item);
 		    break;
 		}

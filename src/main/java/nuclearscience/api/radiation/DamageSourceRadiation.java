@@ -1,7 +1,7 @@
 package nuclearscience.api.radiation;
 
-import net.minecraft.util.DamageSource;
+import net.minecraft.world.damagesource.DamageSource;
 
 public class DamageSourceRadiation {
-    public static DamageSource INSTANCE = new DamageSource("radiation").setDamageBypassesArmor().setDamageIsAbsolute();
+    public static DamageSource INSTANCE = new DamageSource("radiation").bypassArmor().bypassMagic();
 }

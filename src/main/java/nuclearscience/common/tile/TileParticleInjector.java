@@ -11,10 +11,10 @@ import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import electrodynamics.prefab.utilities.object.Location;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.core.Direction;
+import net.minecraft.world.phys.AABB;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.entity.EntityParticle;
 import nuclearscience.common.inventory.container.ContainerParticleInjector;
@@ -48,7 +48,7 @@ public class TileParticleInjector extends GenericTileTicking {
 	    particles[1] = null;
 	}
 	ComponentInventory inv = getComponent(ComponentType.Inventory);
-	ItemStack resultStack = inv.getStackInSlot(2);
+	ItemStack resultStack = inv.getItem(2);
 	timeSinceSpawn--;
 
 	/**
@@ -56,41 +56,41 @@ public class TileParticleInjector extends GenericTileTicking {
 	 * to do is check if the thing in the input slot is an item and is not air.
 	 */
 	boolean isItem = false;
-	ItemStack inputItem = inv.getStackInSlot(0);
+	ItemStack inputItem = inv.getItem(0);
 
 	if (inputItem != null && !inputItem.equals(new ItemStack(Items.AIR), true)) {
 	    isItem = true;
 	}
 
-	return timeSinceSpawn < 0 && isItem && (particles[0] == null || particles[1] == null) && inv.getStackInSlot(0).getCount() > 0
+	return timeSinceSpawn < 0 && isItem && (particles[0] == null || particles[1] == null) && inv.getItem(0).getCount() > 0
 		&& resultStack.getCount() < resultStack.getMaxStackSize();
     }
 
     public void checkCollision() {
 	ComponentInventory inv = getComponent(ComponentType.Inventory);
-	ItemStack resultStack = inv.getStackInSlot(2);
-	ItemStack cellStack = inv.getStackInSlot(1);
+	ItemStack resultStack = inv.getItem(2);
+	ItemStack cellStack = inv.getItem(1);
 	if (resultStack.getCount() < resultStack.getMaxStackSize() && cellStack.getCount() > 0 && particles[0] != null && particles[1] != null) {
 	    EntityParticle one = particles[0];
 	    EntityParticle two = particles[1];
-	    if (one.getDistance(two) < 1) {
+	    if (one.distanceTo(two) < 1) {
 		double speedOfMax = Math.pow((one.speed + two.speed) / 4.0, 2);
 		one.remove();
 		two.remove();
 		particles[0] = particles[1] = null;
 		cellStack.shrink(1);
-		double mod = world.rand.nextDouble();
+		double mod = level.random.nextDouble();
 		if (speedOfMax > 0.999) {
 		    if (resultStack.getItem() == DeferredRegisters.ITEM_CELLDARKMATTER.get()) {
 			resultStack.setCount(resultStack.getCount() + 1);
 		    } else if (resultStack.isEmpty()) {
-			inv.setInventorySlotContents(2, new ItemStack(DeferredRegisters.ITEM_CELLDARKMATTER.get()));
+			inv.setItem(2, new ItemStack(DeferredRegisters.ITEM_CELLDARKMATTER.get()));
 		    }
 		} else if (speedOfMax > mod) {
 		    if (resultStack.getItem() == DeferredRegisters.ITEM_CELLANTIMATTERSMALL.get()) {
 			resultStack.setCount(resultStack.getCount() + 1);
 		    } else if (resultStack.isEmpty()) {
-			inv.setInventorySlotContents(2, new ItemStack(DeferredRegisters.ITEM_CELLANTIMATTERSMALL.get()));
+			inv.setItem(2, new ItemStack(DeferredRegisters.ITEM_CELLANTIMATTERSMALL.get()));
 		    }
 		}
 	    }
@@ -102,15 +102,15 @@ public class TileParticleInjector extends GenericTileTicking {
 	Direction dir = this.<ComponentDirection>getComponent(ComponentType.Direction).getDirection();
 	ItemStack stack = processor.getInput();
 	stack.setCount(stack.getCount() - 1);
-	EntityParticle particle = new EntityParticle(dir, world, new Location(pos.getX() + 0.5f + dir.getXOffset() * 1.5f,
-		pos.getY() + 0.5f + dir.getYOffset() * 1.5f, pos.getZ() + 0.5f + dir.getZOffset() * 1.5f));
+	EntityParticle particle = new EntityParticle(dir, level, new Location(worldPosition.getX() + 0.5f + dir.getStepX() * 1.5f,
+		worldPosition.getY() + 0.5f + dir.getStepY() * 1.5f, worldPosition.getZ() + 0.5f + dir.getStepZ() * 1.5f));
 	addParticle(particle);
-	world.addEntity(particle);
+	level.addFreshEntity(particle);
     }
 
     public void addParticle(EntityParticle particle) {
 	if (particles[0] != particle && particles[1] != particle) {
-	    particle.source = getPos();
+	    particle.source = getBlockPos();
 	    if (particles[0] == null) {
 		particles[0] = particle;
 	    } else if (particles[1] == null) {
@@ -120,7 +120,7 @@ public class TileParticleInjector extends GenericTileTicking {
     }
 
     @Override
-    public AxisAlignedBB getRenderBoundingBox() {
+    public AABB getRenderBoundingBox() {
 	return INFINITE_EXTENT_AABB;
     }
 }

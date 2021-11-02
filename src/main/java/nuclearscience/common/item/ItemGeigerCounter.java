@@ -1,13 +1,15 @@
 package nuclearscience.common.item;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import nuclearscience.api.radiation.RadiationSystem;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class ItemGeigerCounter extends Item {
 
@@ -16,13 +18,13 @@ public class ItemGeigerCounter extends Item {
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+    public void inventoryTick(ItemStack stack, Level worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 	super.inventoryTick(stack, worldIn, entityIn, itemSlot, isSelected);
-	if (!worldIn.isRemote && entityIn instanceof PlayerEntity) {
-	    PlayerEntity player = (PlayerEntity) entityIn;
-	    if ((isSelected || player.getItemStackFromSlot(EquipmentSlotType.OFFHAND).getItem() instanceof ItemGeigerCounter)
+	if (!worldIn.isClientSide && entityIn instanceof Player) {
+	    Player player = (Player) entityIn;
+	    if ((isSelected || player.getItemBySlot(EquipmentSlot.OFFHAND).getItem() instanceof ItemGeigerCounter)
 		    && RadiationSystem.radiationMap.containsKey(entityIn)) {
-		player.sendStatusMessage(new TranslationTextComponent("message.geigercounter.text", RadiationSystem.radiationMap.get(entityIn)),
+		player.displayClientMessage(new TranslatableComponent("message.geigercounter.text", RadiationSystem.radiationMap.get(entityIn)),
 			true);
 	    }
 	}

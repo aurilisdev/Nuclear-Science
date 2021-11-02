@@ -13,7 +13,7 @@ import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
 import electrodynamics.prefab.tile.components.type.ComponentProcessorType;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import net.minecraft.util.Direction;
+import net.minecraft.core.Direction;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerRadioactiveProcessor;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;

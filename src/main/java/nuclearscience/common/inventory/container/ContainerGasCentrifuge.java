@@ -3,32 +3,32 @@ package nuclearscience.common.inventory.container;
 import electrodynamics.common.item.subtype.SubtypeProcessorUpgrade;
 import electrodynamics.prefab.inventory.container.GenericContainer;
 import electrodynamics.prefab.inventory.container.slot.SlotRestricted;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.FurnaceResultSlot;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.IntArray;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.FurnaceResultSlot;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.tile.TileGasCentrifuge;
 
 public class ContainerGasCentrifuge extends GenericContainer<TileGasCentrifuge> {
 
-    public ContainerGasCentrifuge(int id, PlayerInventory playerinv) {
-	this(id, playerinv, new Inventory(5), new IntArray(3));
+    public ContainerGasCentrifuge(int id, Inventory playerinv) {
+	this(id, playerinv, new SimpleContainer(5), new SimpleContainerData(3));
     }
 
-    public ContainerGasCentrifuge(int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {
+    public ContainerGasCentrifuge(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
 	super(DeferredRegisters.CONTAINER_GASCENTRIFUGE.get(), id, playerinv, inventory, inventorydata);
     }
 
-    public ContainerGasCentrifuge(ContainerType<?> type, int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {
+    public ContainerGasCentrifuge(MenuType<?> type, int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
 	super(type, id, playerinv, inventory, inventorydata);
     }
 
     @Override
-    public void addInventorySlots(IInventory inv, PlayerInventory playerinv) {
+    public void addInventorySlots(Container inv, Inventory playerinv) {
 	addSlot(new FurnaceResultSlot(playerinv.player, inv, nextIndex(), 126, 21));
 	addSlot(new FurnaceResultSlot(playerinv.player, inv, nextIndex(), 126, 48));
 	addSlot(new SlotRestricted(inv, nextIndex(), 186, 14,

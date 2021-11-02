@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.Lists;
 
-import net.minecraft.state.EnumProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 
 public class FacingDirectionProperty extends EnumProperty<FacingDirection> {
     protected FacingDirectionProperty(String name, Collection<FacingDirection> values) {

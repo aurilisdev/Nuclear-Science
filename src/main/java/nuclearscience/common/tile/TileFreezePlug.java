@@ -9,7 +9,7 @@ import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import electrodynamics.prefab.utilities.object.TransferPack;
-import net.minecraft.util.Direction;
+import net.minecraft.core.Direction;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerFreezePlug;
 import nuclearscience.common.settings.Constants;
@@ -32,7 +32,7 @@ public class TileFreezePlug extends GenericTileTicking {
     public void tickServer(ComponentTickable tickable) {
 	ComponentElectrodynamic el = getComponent(ComponentType.Electrodynamic);
 	ComponentInventory inv = getComponent(ComponentType.Inventory);
-	if (!inv.getStackInSlot(0).isEmpty()) {
+	if (!inv.getItem(0).isEmpty()) {
 	    isFrozen = el.getJoulesStored() >= Constants.FREEZEPLUG_USAGE_PER_TICK;
 	    if (isFrozen) {
 		el.extractPower(TransferPack.joulesVoltage(Constants.FREEZEPLUG_USAGE_PER_TICK, 120), false);

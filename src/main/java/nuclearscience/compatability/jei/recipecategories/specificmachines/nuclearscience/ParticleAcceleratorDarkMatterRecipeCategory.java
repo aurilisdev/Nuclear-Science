@@ -6,7 +6,7 @@ import java.util.Arrays;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import electrodynamics.compatability.jei.recipecategories.ElectrodynamicsRecipeCategory;
 import electrodynamics.compatability.jei.recipecategories.psuedorecipes.PsuedoO2ORecipe;
@@ -17,12 +17,12 @@ import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.Font;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.TranslatableComponent;
 import nuclearscience.References;
 
 public class ParticleAcceleratorDarkMatterRecipeCategory extends ElectrodynamicsRecipeCategory<PsuedoO2ORecipe> {
@@ -92,7 +92,7 @@ public class ParticleAcceleratorDarkMatterRecipeCategory extends Electrodynamics
     }
 
     @Override
-    public void draw(PsuedoO2ORecipe recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
+    public void draw(PsuedoO2ORecipe recipe, PoseStack matrixStack, double mouseX, double mouseY) {
 	ArrayList<IDrawableAnimated> arrow = getArrow(recipe);
 	arrow.get(0).draw(matrixStack, 70, 38);
 	arrow.get(1).draw(matrixStack, 23, 21);
@@ -104,13 +104,13 @@ public class ParticleAcceleratorDarkMatterRecipeCategory extends Electrodynamics
 	return CACHED_ARROWS.getUnchecked(getArrowSmeltTime());
     }
 
-    protected void drawSmeltTime(PsuedoO2ORecipe recipe, MatrixStack matrixStack, int y) {
+    protected void drawSmeltTime(PsuedoO2ORecipe recipe, PoseStack matrixStack, int y) {
 	int smeltTimeSeconds = getArrowSmeltTime() / 20;
-	TranslationTextComponent timeString = new TranslationTextComponent("gui.jei.category." + getRecipeGroup() + ".info.power", smeltTimeSeconds);
+	TranslatableComponent timeString = new TranslatableComponent("gui.jei.category." + getRecipeGroup() + ".info.power", smeltTimeSeconds);
 	Minecraft minecraft = Minecraft.getInstance();
-	FontRenderer fontRenderer = minecraft.fontRenderer;
-	int stringWidth = fontRenderer.getStringPropertyWidth(timeString);
-	fontRenderer.func_243248_b(matrixStack, timeString, getBackground().getWidth() - stringWidth, y, 0xFF808080);
+	Font fontRenderer = minecraft.font;
+	int stringWidth = fontRenderer.width(timeString);
+	fontRenderer.draw(matrixStack, timeString, getBackground().getWidth() - stringWidth, y, 0xFF808080);
     }
 
     public NonNullList<Ingredient> getIngredients(PsuedoO2ORecipe recipe) {

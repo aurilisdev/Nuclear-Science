@@ -13,8 +13,8 @@ import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
 import electrodynamics.prefab.tile.components.type.ComponentProcessorType;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.Direction;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerMSRFuelPreProcessor;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
@@ -51,9 +51,9 @@ public class TileMSRFuelPreProcessor extends GenericTileTicking {
     protected void tickClient(ComponentTickable tickable) {
 	boolean running = this.<ComponentProcessor>getComponent(ComponentType.Processor).operatingTicks > 0;
 	if (running) {
-	    if (world.rand.nextDouble() < 0.15) {
-		world.addParticle(ParticleTypes.SMOKE, pos.getX() + world.rand.nextDouble(), pos.getY() + world.rand.nextDouble() * 0.4 + 0.5,
-			pos.getZ() + world.rand.nextDouble(), 0.0D, 0.0D, 0.0D);
+	    if (level.random.nextDouble() < 0.15) {
+		level.addParticle(ParticleTypes.SMOKE, worldPosition.getX() + level.random.nextDouble(), worldPosition.getY() + level.random.nextDouble() * 0.4 + 0.5,
+			worldPosition.getZ() + level.random.nextDouble(), 0.0D, 0.0D, 0.0D);
 	    }
 	    clientTicks++;
 	}

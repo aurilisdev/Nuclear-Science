@@ -1,29 +1,29 @@
 package nuclearscience.common.block;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.SnowyDirtBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.SnowyDirtBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import nuclearscience.api.radiation.EffectRadiation;
 
 public class BlockRadioactiveSoil extends SnowyDirtBlock {
 
     public BlockRadioactiveSoil() {
-	super(AbstractBlock.Properties.create(Material.ORGANIC, MaterialColor.GREEN).tickRandomly().hardnessAndResistance(0.6F)
-		.sound(SoundType.PLANT));
+	super(BlockBehaviour.Properties.of(Material.GRASS, MaterialColor.COLOR_GREEN).randomTicks().strength(0.6F)
+		.sound(SoundType.GRASS));
     }
 
     @Override
-    public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn) {
+    public void stepOn(Level worldIn, BlockPos pos, Entity entityIn) {
 	if (entityIn instanceof LivingEntity) {
 	    LivingEntity living = (LivingEntity) entityIn;
-	    living.addPotionEffect(new EffectInstance(EffectRadiation.INSTANCE, (int) (20 * 40 * worldIn.rand.nextFloat())));
+	    living.addEffect(new MobEffectInstance(EffectRadiation.INSTANCE, (int) (20 * 40 * worldIn.random.nextFloat())));
 	}
     }
 }

@@ -1,35 +1,35 @@
 package nuclearscience.client.render.tile;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import electrodynamics.common.block.BlockGenericMachine;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
 import electrodynamics.prefab.utilities.UtilitiesRendering;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.util.Direction;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.core.Direction;
 import nuclearscience.client.ClientRegister;
 import nuclearscience.common.tile.TileChemicalExtractor;
 
-public class RenderChemicalExtractor extends TileEntityRenderer<TileChemicalExtractor> {
+public class RenderChemicalExtractor extends BlockEntityRenderer<TileChemicalExtractor> {
 
-    public RenderChemicalExtractor(TileEntityRendererDispatcher rendererDispatcherIn) {
+    public RenderChemicalExtractor(BlockEntityRenderDispatcher rendererDispatcherIn) {
 	super(rendererDispatcherIn);
     }
 
     @Override
     @Deprecated
-    public void render(TileChemicalExtractor tileEntityIn, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn,
+    public void render(TileChemicalExtractor tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn,
 	    int combinedLightIn, int combinedOverlayIn) {
-	IBakedModel ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_CHEMICALEXTRACTORWATER);
-	Direction face = tileEntityIn.getBlockState().get(BlockGenericMachine.FACING);
-	matrixStackIn.translate(face.getXOffset(), face.getYOffset(), face.getZOffset());
+	BakedModel ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_CHEMICALEXTRACTORWATER);
+	Direction face = tileEntityIn.getBlockState().getValue(BlockGenericMachine.FACING);
+	matrixStackIn.translate(face.getStepX(), face.getStepY(), face.getStepZ());
 	UtilitiesRendering.prepareRotationalTileModel(tileEntityIn, matrixStackIn);
 	matrixStackIn.translate(-0.5, 0, 0.5);
 	float prog = tileEntityIn.<ComponentFluidHandlerMulti>getComponent(ComponentType.FluidHandler).getStackFromFluid(Fluids.WATER, true)
@@ -37,7 +37,7 @@ public class RenderChemicalExtractor extends TileEntityRenderer<TileChemicalExtr
 	if (prog > 0) {
 	    matrixStackIn.scale(1, prog / 16.0f * 5.8f * 2, 1);
 	    matrixStackIn.translate(0, prog / 16.0f * 5.8f, 0);
-	    UtilitiesRendering.renderModel(ibakedmodel, tileEntityIn, RenderType.getCutout(), matrixStackIn, bufferIn, combinedLightIn,
+	    UtilitiesRendering.renderModel(ibakedmodel, tileEntityIn, RenderType.cutout(), matrixStackIn, bufferIn, combinedLightIn,
 		    combinedOverlayIn);
 	}
     }

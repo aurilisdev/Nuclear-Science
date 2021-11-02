@@ -9,13 +9,13 @@ import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import electrodynamics.prefab.utilities.object.CachedTileOutput;
 import electrodynamics.prefab.utilities.object.TransferPack;
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.SoundRegister;
 import nuclearscience.common.block.BlockTurbine;
@@ -33,8 +33,8 @@ public class TileTurbine extends GenericTileTicking {
     protected BlockPos coreLocation = BlockPos.ZERO;
 
     @Override
-    public AxisAlignedBB getRenderBoundingBox() {
-	return isCore ? super.getRenderBoundingBox().grow(1, 0, 1) : super.getRenderBoundingBox();
+    public AABB getRenderBoundingBox() {
+	return isCore ? super.getRenderBoundingBox().inflate(1, 0, 1) : super.getRenderBoundingBox();
     }
 
     public TileTurbine() {
@@ -49,7 +49,7 @@ public class TileTurbine extends GenericTileTicking {
 	for (int i = -radius; i <= radius; i++) {
 	    for (int j = -radius; j <= radius; j++) {
 		if (i != 0 || j != 0) {
-		    TileEntity tile = world.getTileEntity(new BlockPos(pos.getX() + i, pos.getY(), pos.getZ() + j));
+		    BlockEntity tile = level.getBlockEntity(new BlockPos(worldPosition.getX() + i, worldPosition.getY(), worldPosition.getZ() + j));
 		    if (!(tile instanceof TileTurbine)) {
 			return;
 		    }
@@ -63,10 +63,10 @@ public class TileTurbine extends GenericTileTicking {
 	isCore = true;
 	for (int i = -radius; i <= radius; i++) {
 	    for (int j = -radius; j <= radius; j++) {
-		BlockPos offset = new BlockPos(pos.getX() + i, pos.getY(), pos.getZ() + j);
-		((TileTurbine) world.getTileEntity(offset)).addToStructure(this);
-		BlockState state = world.getBlockState(offset);
-		world.setBlockState(offset, state.with(BlockTurbine.RENDER, false));
+		BlockPos offset = new BlockPos(worldPosition.getX() + i, worldPosition.getY(), worldPosition.getZ() + j);
+		((TileTurbine) level.getBlockEntity(offset)).addToStructure(this);
+		BlockState state = level.getBlockState(offset);
+		level.setBlockAndUpdate(offset, state.setValue(BlockTurbine.RENDER, false));
 	    }
 	}
     }
@@ -77,15 +77,15 @@ public class TileTurbine extends GenericTileTicking {
 	    for (int i = -radius; i <= radius; i++) {
 		for (int j = -radius; j <= radius; j++) {
 		    if (i != 0 || j != 0) {
-			BlockPos offset = new BlockPos(pos.getX() + i, pos.getY(), pos.getZ() + j);
-			TileEntity tile = world.getTileEntity(offset);
+			BlockPos offset = new BlockPos(worldPosition.getX() + i, worldPosition.getY(), worldPosition.getZ() + j);
+			BlockEntity tile = level.getBlockEntity(offset);
 			if (tile instanceof TileTurbine) {
 			    TileTurbine turbine = (TileTurbine) tile;
 			    turbine.hasCore = false;
 			    turbine.coreLocation = new BlockPos(0, 0, 0);
-			    BlockState state = world.getBlockState(offset);
+			    BlockState state = level.getBlockState(offset);
 			    if (state.hasProperty(BlockTurbine.RENDER)) {
-				world.setBlockState(offset, state.with(BlockTurbine.RENDER, true));
+				level.setBlockAndUpdate(offset, state.setValue(BlockTurbine.RENDER, true));
 			    }
 			}
 		    }
@@ -96,10 +96,10 @@ public class TileTurbine extends GenericTileTicking {
 	    coreLocation = new BlockPos(0, 0, 0);
 	    BlockState state = getBlockState();
 	    if (state.hasProperty(BlockTurbine.RENDER)) {
-		world.setBlockState(pos, getBlockState().with(BlockTurbine.RENDER, true));
+		level.setBlockAndUpdate(worldPosition, getBlockState().setValue(BlockTurbine.RENDER, true));
 	    }
 	} else if (hasCore) {
-	    TileTurbine core = (TileTurbine) world.getTileEntity(coreLocation);
+	    TileTurbine core = (TileTurbine) level.getBlockEntity(coreLocation);
 	    if (core != null) {
 		core.deconstructStructure();
 	    }
@@ -109,7 +109,7 @@ public class TileTurbine extends GenericTileTicking {
     }
 
     protected void addToStructure(TileTurbine core) {
-	coreLocation = core.pos;
+	coreLocation = core.worldPosition;
 	hasCore = true;
 	this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();
     }
@@ -124,7 +124,7 @@ public class TileTurbine extends GenericTileTicking {
 	    currentVoltage = 480;
 	}
 	if (!isCore && hasCore) {
-	    TileEntity core = world.getTileEntity(coreLocation);
+	    BlockEntity core = level.getBlockEntity(coreLocation);
 	    if (core instanceof TileTurbine && ((TileTurbine) core).isCore) {
 		TileTurbine turbine = (TileTurbine) core;
 		turbine.addSteam(this.steam, temp);
@@ -136,7 +136,7 @@ public class TileTurbine extends GenericTileTicking {
     public void tickServer(ComponentTickable tickable) {
 	this.<ComponentElectrodynamic>getComponent(ComponentType.Electrodynamic).voltage(currentVoltage);
 	if (output == null) {
-	    output = new CachedTileOutput(world, pos.offset(Direction.UP));
+	    output = new CachedTileOutput(level, worldPosition.relative(Direction.UP));
 	}
 	if (tickable.getTicks() % 30 == 0) {
 	    this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();
@@ -166,35 +166,35 @@ public class TileTurbine extends GenericTileTicking {
 
     public void tickClient(ComponentTickable tickable) {
 	if (spinSpeed > 0 && tickable.getTicks() % 200 == 0) {
-	    SoundAPI.playSound(SoundRegister.SOUND_TURBINE.get(), SoundCategory.BLOCKS, 1, 1, pos);
+	    SoundAPI.playSound(SoundRegister.SOUND_TURBINE.get(), SoundSource.BLOCKS, 1, 1, worldPosition);
 	}
     }
 
-    public void writeCustomPacket(CompoundNBT tag) {
+    public void writeCustomPacket(CompoundTag tag) {
 	tag.putInt("spinSpeed", spinSpeed);
 	tag.putBoolean("hasCore", hasCore);
 	tag.putBoolean("isCore", isCore);
     }
 
-    public void readCustomPacket(CompoundNBT nbt) {
+    public void readCustomPacket(CompoundTag nbt) {
 	spinSpeed = nbt.getInt("spinSpeed");
 	hasCore = nbt.getBoolean("hasCore");
 	isCore = nbt.getBoolean("isCore");
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
 	compound.putBoolean("hasCore", hasCore);
 	compound.putBoolean("isCore", isCore);
 	compound.putInt("coreX", coreLocation.getX());
 	compound.putInt("coreY", coreLocation.getY());
 	compound.putInt("coreZ", coreLocation.getZ());
-	return super.write(compound);
+	return super.save(compound);
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
-	super.read(state, compound);
+    public void load(BlockState state, CompoundTag compound) {
+	super.load(state, compound);
 	hasCore = compound.getBoolean("hasCore");
 	isCore = compound.getBoolean("isCore");
 	coreLocation = new BlockPos(compound.getInt("coreX"), compound.getInt("coreY"), compound.getInt("coreZ"));

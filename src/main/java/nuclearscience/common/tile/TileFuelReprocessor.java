@@ -14,8 +14,8 @@ import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
 import electrodynamics.prefab.tile.components.type.ComponentProcessorType;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundSource;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 import nuclearscience.common.recipe.categories.o2o.specificmachines.FuelReprocessorRecipe;
@@ -45,7 +45,7 @@ public class TileFuelReprocessor extends GenericTileTicking {
     public void tickClient(ComponentTickable tickable) {
 	boolean running = getProcessor(0).operatingTicks > 0;
 	if (running && tickable.getTicks() % 100 == 0) {
-	    SoundAPI.playSound(electrodynamics.SoundRegister.SOUND_MINERALCRUSHER.get(), SoundCategory.BLOCKS, 1, 1, pos);
+	    SoundAPI.playSound(electrodynamics.SoundRegister.SOUND_MINERALCRUSHER.get(), SoundSource.BLOCKS, 1, 1, worldPosition);
 	}
     }
 

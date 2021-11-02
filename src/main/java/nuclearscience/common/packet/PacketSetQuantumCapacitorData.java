@@ -2,9 +2,9 @@ package nuclearscience.common.packet;
 
 import java.util.function.Supplier;
 
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.fml.network.NetworkEvent.Context;
 import nuclearscience.common.tile.TileQuantumCapacitor;
 
@@ -23,9 +23,9 @@ public class PacketSetQuantumCapacitorData {
     public static void handle(PacketSetQuantumCapacitorData message, Supplier<Context> context) {
 	Context ctx = context.get();
 	ctx.enqueueWork(() -> {
-	    ServerWorld world = context.get().getSender().getServerWorld();
+	    ServerLevel world = context.get().getSender().getLevel();
 	    if (world != null) {
-		TileQuantumCapacitor tile = (TileQuantumCapacitor) world.getTileEntity(message.pos);
+		TileQuantumCapacitor tile = (TileQuantumCapacitor) world.getBlockEntity(message.pos);
 		if (tile != null) {
 		    tile.outputJoules = message.outputJoules;
 		    tile.frequency = message.frequency;
@@ -35,13 +35,13 @@ public class PacketSetQuantumCapacitorData {
 	ctx.setPacketHandled(true);
     }
 
-    public static void encode(PacketSetQuantumCapacitorData pkt, PacketBuffer buf) {
+    public static void encode(PacketSetQuantumCapacitorData pkt, FriendlyByteBuf buf) {
 	buf.writeBlockPos(pkt.pos);
 	buf.writeDouble(pkt.outputJoules);
 	buf.writeInt(pkt.frequency);
     }
 
-    public static PacketSetQuantumCapacitorData decode(PacketBuffer buf) {
+    public static PacketSetQuantumCapacitorData decode(FriendlyByteBuf buf) {
 	return new PacketSetQuantumCapacitorData(buf.readBlockPos(), buf.readDouble(), buf.readInt());
     }
 }

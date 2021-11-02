@@ -1,42 +1,42 @@
 package nuclearscience.common.block;
 
 import electrodynamics.common.block.BlockGenericMachine;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.settings.Constants;
 import nuclearscience.common.tile.TileFusionReactorCore;
 
 public class BlockFusionReactorCore extends BlockGenericMachine {
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
 	return new TileFusionReactorCore();
     }
 
     @Override
-    public BlockRenderType getRenderType(BlockState state) {
-	return BlockRenderType.MODEL;
+    public RenderShape getRenderShape(BlockState state) {
+	return RenderShape.MODEL;
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn,
-	    BlockRayTraceResult hit) {
-	if (!worldIn.isRemote) {
-	    ItemStack inHand = player.getItemStackFromSlot(handIn == Hand.MAIN_HAND ? EquipmentSlotType.MAINHAND : EquipmentSlotType.OFFHAND);
+    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn,
+	    BlockHitResult hit) {
+	if (!worldIn.isClientSide) {
+	    ItemStack inHand = player.getItemBySlot(handIn == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
 	    Item itemInHand = inHand.getItem();
 	    if (itemInHand == DeferredRegisters.ITEM_CELLDEUTERIUM.get() || itemInHand == DeferredRegisters.ITEM_CELLTRITIUM.get()) {
-		TileEntity tile = worldIn.getTileEntity(pos);
+		BlockEntity tile = worldIn.getBlockEntity(pos);
 		if (tile instanceof TileFusionReactorCore) {
 		    TileFusionReactorCore core = (TileFusionReactorCore) tile;
 		    boolean tritium = itemInHand == DeferredRegisters.ITEM_CELLTRITIUM.get();
@@ -49,9 +49,9 @@ public class BlockFusionReactorCore extends BlockGenericMachine {
 			core.deuterium += added;
 		    }
 		}
-		return ActionResultType.CONSUME;
+		return InteractionResult.CONSUME;
 	    }
 	}
-	return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
+	return super.use(state, worldIn, pos, player, handIn, hit);
     }
 }

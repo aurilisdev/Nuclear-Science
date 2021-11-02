@@ -4,15 +4,15 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.UUID;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.DimensionSavedDataManager;
-import net.minecraft.world.storage.WorldSavedData;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.storage.DimensionDataStorage;
+import net.minecraft.world.level.saveddata.SavedData;
 
-public class QuantumCapacitorData extends WorldSavedData {
+public class QuantumCapacitorData extends SavedData {
     public static final String DATANAME = "quantumcapacitordata";
     public HashMap<UUID, HashMap<Integer, Double>> powermapping = new HashMap<>();
 
@@ -21,16 +21,16 @@ public class QuantumCapacitorData extends WorldSavedData {
     }
 
     @Override
-    public void read(CompoundNBT source) {
+    public void load(CompoundTag source) {
 	powermapping.clear();
-	ListNBT list = source.getList("list", 10);
-	for (INBT en : list) {
-	    CompoundNBT compound = (CompoundNBT) en;
-	    UUID id = compound.getUniqueId("uuid");
-	    ListNBT entryList = compound.getList("entrylist", 10);
+	ListTag list = source.getList("list", 10);
+	for (Tag en : list) {
+	    CompoundTag compound = (CompoundTag) en;
+	    UUID id = compound.getUUID("uuid");
+	    ListTag entryList = compound.getList("entrylist", 10);
 	    HashMap<Integer, Double> info = new HashMap<>();
-	    for (INBT entryInside : entryList) {
-		CompoundNBT inside = (CompoundNBT) entryInside;
+	    for (Tag entryInside : entryList) {
+		CompoundTag inside = (CompoundTag) entryInside;
 		int frequency = inside.getInt("frequency");
 		double joules = inside.getDouble("joules");
 		info.put(frequency, joules);
@@ -40,16 +40,16 @@ public class QuantumCapacitorData extends WorldSavedData {
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT source) {
-	ListNBT list = new ListNBT();
+    public CompoundTag save(CompoundTag source) {
+	ListTag list = new ListTag();
 	source.put("list", list);
 	for (Entry<UUID, HashMap<Integer, Double>> en : powermapping.entrySet()) {
-	    CompoundNBT compound = new CompoundNBT();
-	    compound.putUniqueId("uuid", en.getKey());
-	    ListNBT entrylist = new ListNBT();
+	    CompoundTag compound = new CompoundTag();
+	    compound.putUUID("uuid", en.getKey());
+	    ListTag entrylist = new ListTag();
 	    compound.put("entrylist", entrylist);
 	    for (Entry<Integer, Double> entryInside : en.getValue().entrySet()) {
-		CompoundNBT inside = new CompoundNBT();
+		CompoundTag inside = new CompoundTag();
 		inside.putInt("frequency", entryInside.getKey());
 		inside.putDouble("joules", entryInside.getValue());
 		entrylist.add(inside);
@@ -59,10 +59,10 @@ public class QuantumCapacitorData extends WorldSavedData {
 	return source;
     }
 
-    public static QuantumCapacitorData get(World world) {
-	if (world instanceof ServerWorld) {
-	    DimensionSavedDataManager storage = ((ServerWorld) world).getSavedData();
-	    QuantumCapacitorData instance = storage.getOrCreate(QuantumCapacitorData::new, DATANAME);
+    public static QuantumCapacitorData get(Level world) {
+	if (world instanceof ServerLevel) {
+	    DimensionDataStorage storage = ((ServerLevel) world).getDataStorage();
+	    QuantumCapacitorData instance = storage.computeIfAbsent(QuantumCapacitorData::new, DATANAME);
 	    if (instance == null) {
 		instance = new QuantumCapacitorData();
 		storage.set(instance);

@@ -2,26 +2,26 @@ package nuclearscience.common.inventory.container;
 
 import electrodynamics.prefab.inventory.container.GenericContainer;
 import electrodynamics.prefab.inventory.container.slot.SlotRestricted;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.IntArray;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.tile.TileMoltenSaltSupplier;
 
 public class ContainerMoltenSaltSupplier extends GenericContainer<TileMoltenSaltSupplier> {
 
-    public ContainerMoltenSaltSupplier(int id, PlayerInventory playerinv) {
-	this(id, playerinv, new Inventory(1), new IntArray(3));
+    public ContainerMoltenSaltSupplier(int id, Inventory playerinv) {
+	this(id, playerinv, new SimpleContainer(1), new SimpleContainerData(3));
     }
 
-    public ContainerMoltenSaltSupplier(int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {
+    public ContainerMoltenSaltSupplier(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
 	super(DeferredRegisters.CONTAINER_MOLTENSALTSUPPLIER.get(), id, playerinv, inventory, inventorydata);
     }
 
     @Override
-    public void addInventorySlots(IInventory inv, PlayerInventory playerinv) {
+    public void addInventorySlots(Container inv, Inventory playerinv) {
 	addSlot(new SlotRestricted(inv, nextIndex(), 25, 42, DeferredRegisters.ITEM_LIFHT4PUF3.get()));
     }
 }

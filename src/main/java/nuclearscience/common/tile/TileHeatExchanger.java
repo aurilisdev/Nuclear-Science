@@ -4,13 +4,13 @@ import electrodynamics.prefab.tile.GenericTileTicking;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.settings.Constants;
 
@@ -50,24 +50,24 @@ public class TileHeatExchanger extends GenericTileTicking {
 		for (int k = 0; k < STEAM_GEN_DIAMETER; k++) {
 		    boolean isReactor2d = i - STEAM_GEN_DIAMETER / 2 == 0 && k - STEAM_GEN_DIAMETER / 2 == 0;
 		    if (isReactor2d && j == 0) {
-			if (!world.isRemote && world.rand.nextFloat() < temperature
+			if (!level.isClientSide && level.random.nextFloat() < temperature
 				/ (TileMSRReactorCore.MELTDOWN_TEMPERATURE * 20.0 * STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * STEAM_GEN_HEIGHT)) {
-			    if (world.getBlockState(pos).hasProperty(BlockStateProperties.WATERLOGGED)) {
-				world.setBlockState(pos, getBlockState().with(BlockStateProperties.WATERLOGGED, false));
+			    if (level.getBlockState(worldPosition).hasProperty(BlockStateProperties.WATERLOGGED)) {
+				level.setBlockAndUpdate(worldPosition, getBlockState().setValue(BlockStateProperties.WATERLOGGED, false));
 			    }
 			}
 			continue;
 		    }
-		    int offsetX = pos.getX() + i - STEAM_GEN_DIAMETER / 2;
-		    int offsetY = pos.getY() + j;
-		    int offsetZ = pos.getZ() + k - STEAM_GEN_DIAMETER / 2;
+		    int offsetX = worldPosition.getX() + i - STEAM_GEN_DIAMETER / 2;
+		    int offsetY = worldPosition.getY() + j;
+		    int offsetZ = worldPosition.getZ() + k - STEAM_GEN_DIAMETER / 2;
 		    BlockPos offpos = new BlockPos(offsetX, offsetY, offsetZ);
-		    Block offset = world.getBlockState(offpos).getBlock();
+		    Block offset = level.getBlockState(offpos).getBlock();
 		    if (offset == Blocks.WATER) {
-			boolean isFaceWater = world.getBlockState(new BlockPos(offsetX, pos.getY(), pos.getZ())).getBlock() == Blocks.WATER
-				|| world.getBlockState(new BlockPos(pos.getX(), pos.getY(), offsetZ)).getBlock() == Blocks.WATER || isReactor2d;
+			boolean isFaceWater = level.getBlockState(new BlockPos(offsetX, worldPosition.getY(), worldPosition.getZ())).getBlock() == Blocks.WATER
+				|| level.getBlockState(new BlockPos(worldPosition.getX(), worldPosition.getY(), offsetZ)).getBlock() == Blocks.WATER || isReactor2d;
 			if (isFaceWater) {
-			    if (!world.isRemote) {
+			    if (!level.isClientSide) {
 				TileTurbine turbine = cachedTurbines[i][j][k];
 				if (turbine != null) {
 				    if (turbine.isRemoved()) {
@@ -76,27 +76,27 @@ public class TileHeatExchanger extends GenericTileTicking {
 				    turbine.addSteam((int) (Constants.MSRREACTOR_MAXENERGYTARGET / (STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * 20.0
 					    * (TileMSRReactorCore.MELTDOWN_TEMPERATURE / temperature))), (int) temperature);
 				}
-				if (world.rand.nextFloat() < temperature / (TileMSRReactorCore.MELTDOWN_TEMPERATURE * 20.0 * STEAM_GEN_DIAMETER
+				if (level.random.nextFloat() < temperature / (TileMSRReactorCore.MELTDOWN_TEMPERATURE * 20.0 * STEAM_GEN_DIAMETER
 					* STEAM_GEN_DIAMETER * STEAM_GEN_HEIGHT)) {
-				    world.setBlockState(offpos, Blocks.AIR.getDefaultState());
+				    level.setBlockAndUpdate(offpos, Blocks.AIR.defaultBlockState());
 				    continue;
 				}
-				if (turbine == null || world.loadedTileEntityList.contains(turbine)) {
-				    TileEntity above = world.getTileEntity(new BlockPos(offsetX, offsetY + 1, offsetZ));
+				if (turbine == null || level.blockEntityList.contains(turbine)) {
+				    BlockEntity above = level.getBlockEntity(new BlockPos(offsetX, offsetY + 1, offsetZ));
 				    if (above instanceof TileTurbine) {
 					cachedTurbines[i][j][k] = (TileTurbine) above;
 				    } else {
 					cachedTurbines[i][j][k] = null;
 				    }
 				}
-			    } else if (world.isRemote && world.rand.nextFloat() < temperature / (TileMSRReactorCore.MELTDOWN_TEMPERATURE * 3)) {
-				double offsetFX = offsetX + world.rand.nextDouble() / 2.0 * (world.rand.nextBoolean() ? -1 : 1);
-				double offsetFY = offsetY + world.rand.nextDouble() / 2.0 * (world.rand.nextBoolean() ? -1 : 1);
-				double offsetFZ = offsetZ + world.rand.nextDouble() / 2.0 * (world.rand.nextBoolean() ? -1 : 1);
-				world.addParticle(ParticleTypes.BUBBLE, offsetFX + 0.5D, offsetFY + 0.20000000298023224D, offsetFZ + 0.5D, 0.0D, 0.0D,
+			    } else if (level.isClientSide && level.random.nextFloat() < temperature / (TileMSRReactorCore.MELTDOWN_TEMPERATURE * 3)) {
+				double offsetFX = offsetX + level.random.nextDouble() / 2.0 * (level.random.nextBoolean() ? -1 : 1);
+				double offsetFY = offsetY + level.random.nextDouble() / 2.0 * (level.random.nextBoolean() ? -1 : 1);
+				double offsetFZ = offsetZ + level.random.nextDouble() / 2.0 * (level.random.nextBoolean() ? -1 : 1);
+				level.addParticle(ParticleTypes.BUBBLE, offsetFX + 0.5D, offsetFY + 0.20000000298023224D, offsetFZ + 0.5D, 0.0D, 0.0D,
 					0.0D);
-				if (world.rand.nextInt(3) == 0) {
-				    world.addParticle(ParticleTypes.SMOKE, offsetFX + 0.5D, offsetFY + 0.5D, offsetFZ + 0.5D, 0.0D, 0.0D, 0.0D);
+				if (level.random.nextInt(3) == 0) {
+				    level.addParticle(ParticleTypes.SMOKE, offsetFX + 0.5D, offsetFY + 0.5D, offsetFZ + 0.5D, 0.0D, 0.0D, 0.0D);
 				}
 			    }
 			}
@@ -106,11 +106,11 @@ public class TileHeatExchanger extends GenericTileTicking {
 	}
     }
 
-    protected void writeCustomPacket(CompoundNBT tag) {
+    protected void writeCustomPacket(CompoundTag tag) {
 	tag.putDouble("temperature", temperature);
     }
 
-    protected void readCustomPacket(CompoundNBT nbt) {
+    protected void readCustomPacket(CompoundTag nbt) {
 	temperature = nbt.getDouble("temperature");
     }
 

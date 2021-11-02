@@ -2,11 +2,11 @@ package nuclearscience.common.recipe.categories.o2o.specificmachines;
 
 import electrodynamics.common.recipe.categories.o2o.O2ORecipe;
 import electrodynamics.common.recipe.recipeutils.CountableIngredient;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.Registry;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 
 public class FuelReprocessorRecipe extends O2ORecipe {
@@ -20,13 +20,13 @@ public class FuelReprocessorRecipe extends O2ORecipe {
     }
 
     @Override
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
 	return NuclearScienceRecipeInit.FUEL_REPROCESSOR_SERIALIZER.get();
     }
 
     @Override
-    public IRecipeType<?> getType() {
-	return Registry.RECIPE_TYPE.getOrDefault(RECIPE_ID);
+    public RecipeType<?> getType() {
+	return Registry.RECIPE_TYPE.get(RECIPE_ID);
     }
 
 }

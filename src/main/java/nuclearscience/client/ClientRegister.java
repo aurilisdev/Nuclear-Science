@@ -1,9 +1,9 @@
 package nuclearscience.client;
 
-import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -111,29 +111,29 @@ public class ClientRegister {
 
 	RenderingRegistry.registerEntityRenderingHandler(DeferredRegisters.ENTITY_PARTICLE.get(), RenderParticle::new);
 
-	ScreenManager.registerFactory(DeferredRegisters.CONTAINER_GASCENTRIFUGE.get(), ScreenGasCentrifuge::new);
-	ScreenManager.registerFactory(DeferredRegisters.CONTAINER_NUCLEARBOILER.get(), ScreenNuclearBoiler::new);
-	ScreenManager.registerFactory(DeferredRegisters.CONTAINER_CHEMICALEXTRACTOR.get(), ScreenChemicalExtractor::new);
-	ScreenManager.registerFactory(DeferredRegisters.CONTAINER_RADIOISOTOPEGENERATOR.get(), ScreenRadioisotopeGenerator::new);
-	ScreenManager.registerFactory(DeferredRegisters.CONTAINER_FREEZEPLUG.get(), ScreenFreezePlug::new);
-	ScreenManager.registerFactory(DeferredRegisters.CONTAINER_REACTORCORE.get(), ScreenReactorCore::new);
-	ScreenManager.registerFactory(DeferredRegisters.CONTAINER_PARTICLEINJECTOR.get(), ScreenParticleInjector::new);
-	ScreenManager.registerFactory(DeferredRegisters.CONTAINER_QUANTUMCAPACITOR.get(), ScreenQuantumCapacitor::new);
-	ScreenManager.registerFactory(DeferredRegisters.CONTAINER_MSRFUELPREPROCESSOR.get(), ScreenMSRFuelPreProcessor::new);
-	ScreenManager.registerFactory(DeferredRegisters.CONTAINER_RADIOACTIVEPROCESSOR.get(), ScreenRadioactiveProcessor::new);
-	ScreenManager.registerFactory(DeferredRegisters.CONTAINER_MSRREACTORCORE.get(), ScreenMSRReactorCore::new);
-	ScreenManager.registerFactory(DeferredRegisters.CONTAINER_MOLTENSALTSUPPLIER.get(), ScreenMoltenSaltSupplier::new);
+	MenuScreens.register(DeferredRegisters.CONTAINER_GASCENTRIFUGE.get(), ScreenGasCentrifuge::new);
+	MenuScreens.register(DeferredRegisters.CONTAINER_NUCLEARBOILER.get(), ScreenNuclearBoiler::new);
+	MenuScreens.register(DeferredRegisters.CONTAINER_CHEMICALEXTRACTOR.get(), ScreenChemicalExtractor::new);
+	MenuScreens.register(DeferredRegisters.CONTAINER_RADIOISOTOPEGENERATOR.get(), ScreenRadioisotopeGenerator::new);
+	MenuScreens.register(DeferredRegisters.CONTAINER_FREEZEPLUG.get(), ScreenFreezePlug::new);
+	MenuScreens.register(DeferredRegisters.CONTAINER_REACTORCORE.get(), ScreenReactorCore::new);
+	MenuScreens.register(DeferredRegisters.CONTAINER_PARTICLEINJECTOR.get(), ScreenParticleInjector::new);
+	MenuScreens.register(DeferredRegisters.CONTAINER_QUANTUMCAPACITOR.get(), ScreenQuantumCapacitor::new);
+	MenuScreens.register(DeferredRegisters.CONTAINER_MSRFUELPREPROCESSOR.get(), ScreenMSRFuelPreProcessor::new);
+	MenuScreens.register(DeferredRegisters.CONTAINER_RADIOACTIVEPROCESSOR.get(), ScreenRadioactiveProcessor::new);
+	MenuScreens.register(DeferredRegisters.CONTAINER_MSRREACTORCORE.get(), ScreenMSRReactorCore::new);
+	MenuScreens.register(DeferredRegisters.CONTAINER_MOLTENSALTSUPPLIER.get(), ScreenMoltenSaltSupplier::new);
 
-	RenderTypeLookup.setRenderLayer(DeferredRegisters.blockChemicalExtractor, ClientRegister::shouldMultilayerRender);
-	RenderTypeLookup.setRenderLayer(DeferredRegisters.blockNuclearBoiler, ClientRegister::shouldMultilayerRender);
-	RenderTypeLookup.setRenderLayer(DeferredRegisters.blockReactorCore, ClientRegister::shouldMultilayerRender);
-	RenderTypeLookup.setRenderLayer(DeferredRegisters.blockElectromagneticGlass.getBlock(), RenderType.getCutout());
-	RenderTypeLookup.setRenderLayer(DeferredRegisters.blockElectromagneticBooster.getBlock(), RenderType.getTranslucent());
-	RenderTypeLookup.setRenderLayer(DeferredRegisters.blockPlasma, RenderType.getTranslucent());
+	ItemBlockRenderTypes.setRenderLayer(DeferredRegisters.blockChemicalExtractor, ClientRegister::shouldMultilayerRender);
+	ItemBlockRenderTypes.setRenderLayer(DeferredRegisters.blockNuclearBoiler, ClientRegister::shouldMultilayerRender);
+	ItemBlockRenderTypes.setRenderLayer(DeferredRegisters.blockReactorCore, ClientRegister::shouldMultilayerRender);
+	ItemBlockRenderTypes.setRenderLayer(DeferredRegisters.blockElectromagneticGlass.getBlock(), RenderType.cutout());
+	ItemBlockRenderTypes.setRenderLayer(DeferredRegisters.blockElectromagneticBooster.getBlock(), RenderType.translucent());
+	ItemBlockRenderTypes.setRenderLayer(DeferredRegisters.blockPlasma, RenderType.translucent());
     }
 
     public static boolean shouldMultilayerRender(RenderType type) {
-	return type == RenderType.getTranslucent() || type == RenderType.getSolid();
+	return type == RenderType.translucent() || type == RenderType.solid();
     }
 
 }

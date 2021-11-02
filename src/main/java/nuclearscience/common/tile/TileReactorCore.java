@@ -14,23 +14,23 @@ import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import electrodynamics.prefab.utilities.object.Location;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.Explosion;
-import net.minecraft.world.Explosion.Mode;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.Explosion.BlockInteraction;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.api.radiation.RadiationSystem;
 import nuclearscience.common.inventory.container.ContainerReactorCore;
@@ -73,12 +73,12 @@ public class TileReactorCore extends GenericTileTicking {
 	}
 	fuelCount = 0;
 	for (int i = 0; i < 4; i++) {
-	    ItemStack stack = inv.getStackInSlot(i);
+	    ItemStack stack = inv.getItem(i);
 	    fuelCount += stack.getItem() == DeferredRegisters.ITEM_FUELLEUO2.get() ? 2
 		    : stack.getItem() == DeferredRegisters.ITEM_FUELHEUO2.get() ? 3
 			    : stack.getItem() == DeferredRegisters.ITEM_FUELPLUTONIUM.get() ? 2 : 0;
 	}
-	hasDeuterium = !inv.getStackInSlot(4).isEmpty();
+	hasDeuterium = !inv.getItem(4).isEmpty();
 
 	double decrease = (temperature - AIR_TEMPERATURE) / 3000.0;
 	if (fuelCount == 0) {
@@ -92,38 +92,38 @@ public class TileReactorCore extends GenericTileTicking {
 	    temperature -= decrease < 0.001 && decrease > 0 ? 0.001 : decrease > -0.001 && decrease < 0 ? -0.001 : decrease;
 	}
 	if (fuelCount > 0 && ticks > 50) {
-	    TileEntity tile = world.getTileEntity(pos.down());
+	    BlockEntity tile = level.getBlockEntity(worldPosition.below());
 	    int insertion = 0;
 	    if (tile instanceof TileControlRodAssembly) {
 		TileControlRodAssembly assembly = (TileControlRodAssembly) tile;
 		insertion = assembly.isMSR ? 0 : assembly.insertion;
 	    }
 	    double insertDecimal = (100 - insertion) / 100.0;
-	    if (world.rand.nextFloat() < insertDecimal) {
+	    if (level.random.nextFloat() < insertDecimal) {
 		for (int slot = 0; slot < 4; slot++) {
-		    ItemStack fuelRod = inv.getStackInSlot(slot);
-		    if (fuelRod != ItemStack.EMPTY && fuelRod.getDamage() >= fuelRod.getMaxDamage()) {
-			inv.setInventorySlotContents(slot, new ItemStack(DeferredRegisters.ITEM_FUELSPENT.get()));
+		    ItemStack fuelRod = inv.getItem(slot);
+		    if (fuelRod != ItemStack.EMPTY && fuelRod.getDamageValue() >= fuelRod.getMaxDamage()) {
+			inv.setItem(slot, new ItemStack(DeferredRegisters.ITEM_FUELSPENT.get()));
 		    }
-		    fuelRod.setDamage((int) (fuelRod.getDamage() + 1 + Math.round(temperature) / MELTDOWN_TEMPERATURE_CALC));
+		    fuelRod.setDamageValue((int) (fuelRod.getDamageValue() + 1 + Math.round(temperature) / MELTDOWN_TEMPERATURE_CALC));
 		}
 	    }
-	    temperature += (MELTDOWN_TEMPERATURE_CALC * insertDecimal * (0.25 * (fuelCount / 2.0) + world.rand.nextDouble() / 5.0) - temperature)
+	    temperature += (MELTDOWN_TEMPERATURE_CALC * insertDecimal * (0.25 * (fuelCount / 2.0) + level.random.nextDouble() / 5.0) - temperature)
 		    / (200 + 20 * (hasWater ? 4.0 : 1));
-	    if (temperature > MELTDOWN_TEMPERATURE_ACTUAL + world.rand.nextInt(50) && fuelCount > 0) {
+	    if (temperature > MELTDOWN_TEMPERATURE_ACTUAL + level.random.nextInt(50) && fuelCount > 0) {
 		ticksOverheating++;
 		// Implement some alarm sounds at this time
 		if (ticksOverheating > 10 * 20) {
 		    meltdown();
 		}
 	    }
-	    if (world.getWorldInfo().getGameTime() % 10 == 0) {
-		Location source = new Location(pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f);
+	    if (level.getLevelData().getGameTime() % 10 == 0) {
+		Location source = new Location(worldPosition.getX() + 0.5f, worldPosition.getY() + 0.5f, worldPosition.getZ() + 0.5f);
 		double totstrength = temperature * 10;
 		double range = Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 2;
-		AxisAlignedBB bb = AxisAlignedBB.withSizeAtOrigin(range, range, range);
-		bb = bb.offset(new Vector3d(source.x(), source.y(), source.z()));
-		List<LivingEntity> list = world.getEntitiesWithinAABB(LivingEntity.class, bb);
+		AABB bb = AABB.ofSize(range, range, range);
+		bb = bb.move(new Vec3(source.x(), source.y(), source.z()));
+		List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, bb);
 		for (LivingEntity living : list) {
 		    RadiationSystem.applyRadiation(living, source, totstrength);
 		}
@@ -132,7 +132,7 @@ public class TileReactorCore extends GenericTileTicking {
 	    ticksOverheating = 0;
 	}
 	temperature = Math.max(AIR_TEMPERATURE, temperature);
-	if (fuelCount > 0 && world.rand.nextFloat() < 1 / (1200.0 * MELTDOWN_TEMPERATURE_CALC / temperature)) {
+	if (fuelCount > 0 && level.random.nextFloat() < 1 / (1200.0 * MELTDOWN_TEMPERATURE_CALC / temperature)) {
 	    processFissReact(inv);
 	}
     }
@@ -140,48 +140,48 @@ public class TileReactorCore extends GenericTileTicking {
     protected void tickCommon(ComponentTickable tickable) {
 	ticks = ticks > Integer.MAX_VALUE - 2 ? 0 : ticks + 1;
 	if (ticks % 20 == 0) {
-	    world.getLightManager().checkBlock(pos);
+	    level.getLightEngine().checkBlock(worldPosition);
 	}
 	produceSteam();
     }
 
     @SuppressWarnings("java:S2184")
     public void meltdown() {
-	if (!world.isRemote) {
+	if (!level.isClientSide) {
 	    int radius = STEAM_GEN_DIAMETER / 2;
-	    world.setBlockState(pos, getBlockState().with(BlockStateProperties.WATERLOGGED, false));
+	    level.setBlockAndUpdate(worldPosition, getBlockState().setValue(BlockStateProperties.WATERLOGGED, false));
 	    for (int i = -radius; i <= radius; i++) {
 		for (int j = -radius; j <= radius; j++) {
 		    for (int k = -radius; k <= radius; k++) {
-			BlockPos ppos = new BlockPos(pos.getX() + i, pos.getY() + j, pos.getZ() + k);
-			BlockState state = world.getBlockState(ppos);
+			BlockPos ppos = new BlockPos(worldPosition.getX() + i, worldPosition.getY() + j, worldPosition.getZ() + k);
+			BlockState state = level.getBlockState(ppos);
 			if (state.getBlock() == Blocks.WATER) {
-			    world.setBlockState(ppos, Blocks.AIR.getDefaultState());
+			    level.setBlockAndUpdate(ppos, Blocks.AIR.defaultBlockState());
 			}
 		    }
 		}
 	    }
-	    world.setBlockState(pos, Blocks.AIR.getDefaultState());
-	    Explosion actual = new Explosion(world, null, pos.getX(), pos.getY(), pos.getZ(), 20, new ArrayList<>());
+	    level.setBlockAndUpdate(worldPosition, Blocks.AIR.defaultBlockState());
+	    Explosion actual = new Explosion(level, null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), 20, new ArrayList<>());
 	    // TODO: FIX THIS! THE LINE ABOVE IS CLIENT SIDE ONLY!
 	    radius = 3 * fuelCount;
 	    for (int i = -radius; i <= radius; i++) {
 		for (int j = -radius; j <= radius; j++) {
 		    for (int k = -radius; k <= radius; k++) {
-			BlockPos ppos = new BlockPos(pos.getX() + i, pos.getY() + j, pos.getZ() + k);
-			BlockState state = world.getBlockState(ppos);
-			if (state.getBlock().getExplosionResistance(state, world, ppos, actual) < radius) {
+			BlockPos ppos = new BlockPos(worldPosition.getX() + i, worldPosition.getY() + j, worldPosition.getZ() + k);
+			BlockState state = level.getBlockState(ppos);
+			if (state.getBlock().getExplosionResistance(state, level, ppos, actual) < radius) {
 			    double distance = Math.sqrt(i * i + j * j + k * k);
-			    if (distance < radius && world.rand.nextFloat() < 1 - 0.0001 * distance * distance * distance
-				    && world.rand.nextFloat() < 0.9) {
-				world.getBlockState(ppos).onBlockExploded(world, ppos, actual);
+			    if (distance < radius && level.random.nextFloat() < 1 - 0.0001 * distance * distance * distance
+				    && level.random.nextFloat() < 0.9) {
+				level.getBlockState(ppos).onBlockExploded(level, ppos, actual);
 			    }
 			}
 		    }
 		}
 	    }
-	    world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), 20, Mode.DESTROY);
-	    world.setBlockState(pos, DeferredRegisters.blockMeltedReactor.getDefaultState());
+	    level.explode(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), 20, BlockInteraction.DESTROY);
+	    level.setBlockAndUpdate(worldPosition, DeferredRegisters.blockMeltedReactor.defaultBlockState());
 	}
     }
 
@@ -194,24 +194,24 @@ public class TileReactorCore extends GenericTileTicking {
 		for (int k = 0; k < STEAM_GEN_DIAMETER; k++) {
 		    boolean isReactor2d = i - STEAM_GEN_DIAMETER / 2 == 0 && k - STEAM_GEN_DIAMETER / 2 == 0;
 		    if (isReactor2d && j == 0) {
-			if (!world.isRemote && world.rand.nextFloat() < temperature
+			if (!level.isClientSide && level.random.nextFloat() < temperature
 				/ (MELTDOWN_TEMPERATURE_CALC * 20.0 * STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * STEAM_GEN_HEIGHT)) {
-			    if (world.getBlockState(pos).hasProperty(BlockStateProperties.WATERLOGGED)) {
-				world.setBlockState(pos, getBlockState().with(BlockStateProperties.WATERLOGGED, false));
+			    if (level.getBlockState(worldPosition).hasProperty(BlockStateProperties.WATERLOGGED)) {
+				level.setBlockAndUpdate(worldPosition, getBlockState().setValue(BlockStateProperties.WATERLOGGED, false));
 			    }
 			}
 			continue;
 		    }
-		    int offsetX = pos.getX() + i - STEAM_GEN_DIAMETER / 2;
-		    int offsetY = pos.getY() + j;
-		    int offsetZ = pos.getZ() + k - STEAM_GEN_DIAMETER / 2;
+		    int offsetX = worldPosition.getX() + i - STEAM_GEN_DIAMETER / 2;
+		    int offsetY = worldPosition.getY() + j;
+		    int offsetZ = worldPosition.getZ() + k - STEAM_GEN_DIAMETER / 2;
 		    BlockPos offpos = new BlockPos(offsetX, offsetY, offsetZ);
-		    Block offset = world.getBlockState(offpos).getBlock();
+		    Block offset = level.getBlockState(offpos).getBlock();
 		    if (offset == Blocks.WATER) {
-			boolean isFaceWater = world.getBlockState(new BlockPos(offsetX, pos.getY(), pos.getZ())).getBlock() == Blocks.WATER
-				|| world.getBlockState(new BlockPos(pos.getX(), pos.getY(), offsetZ)).getBlock() == Blocks.WATER || isReactor2d;
+			boolean isFaceWater = level.getBlockState(new BlockPos(offsetX, worldPosition.getY(), worldPosition.getZ())).getBlock() == Blocks.WATER
+				|| level.getBlockState(new BlockPos(worldPosition.getX(), worldPosition.getY(), offsetZ)).getBlock() == Blocks.WATER || isReactor2d;
 			if (isFaceWater) {
-			    if (!world.isRemote) {
+			    if (!level.isClientSide) {
 				TileTurbine turbine = cachedTurbines[i][j][k];
 				if (turbine != null) {
 				    if (turbine.isRemoved()) {
@@ -222,27 +222,27 @@ public class TileReactorCore extends GenericTileTicking {
 						    / (STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * 20.0 * (MELTDOWN_TEMPERATURE_ACTUAL / temperature))),
 					    (int) temperature);
 				}
-				if (world.rand.nextFloat() < temperature
+				if (level.random.nextFloat() < temperature
 					/ (MELTDOWN_TEMPERATURE_CALC * 20.0 * STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * STEAM_GEN_HEIGHT)) {
-				    world.setBlockState(offpos, Blocks.AIR.getDefaultState());
+				    level.setBlockAndUpdate(offpos, Blocks.AIR.defaultBlockState());
 				    continue;
 				}
-				if (turbine == null || world.loadedTileEntityList.contains(turbine)) {
-				    TileEntity above = world.getTileEntity(new BlockPos(offsetX, offsetY + 1, offsetZ));
+				if (turbine == null || level.blockEntityList.contains(turbine)) {
+				    BlockEntity above = level.getBlockEntity(new BlockPos(offsetX, offsetY + 1, offsetZ));
 				    if (above instanceof TileTurbine) {
 					cachedTurbines[i][j][k] = (TileTurbine) above;
 				    } else {
 					cachedTurbines[i][j][k] = null;
 				    }
 				}
-			    } else if (world.isRemote && world.rand.nextFloat() < temperature / (MELTDOWN_TEMPERATURE_ACTUAL * 3)) {
-				double offsetFX = offsetX + world.rand.nextDouble() / 2.0 * (world.rand.nextBoolean() ? -1 : 1);
-				double offsetFY = offsetY + world.rand.nextDouble() / 2.0 * (world.rand.nextBoolean() ? -1 : 1);
-				double offsetFZ = offsetZ + world.rand.nextDouble() / 2.0 * (world.rand.nextBoolean() ? -1 : 1);
-				world.addParticle(ParticleTypes.BUBBLE, offsetFX + 0.5D, offsetFY + 0.20000000298023224D, offsetFZ + 0.5D, 0.0D, 0.0D,
+			    } else if (level.isClientSide && level.random.nextFloat() < temperature / (MELTDOWN_TEMPERATURE_ACTUAL * 3)) {
+				double offsetFX = offsetX + level.random.nextDouble() / 2.0 * (level.random.nextBoolean() ? -1 : 1);
+				double offsetFY = offsetY + level.random.nextDouble() / 2.0 * (level.random.nextBoolean() ? -1 : 1);
+				double offsetFZ = offsetZ + level.random.nextDouble() / 2.0 * (level.random.nextBoolean() ? -1 : 1);
+				level.addParticle(ParticleTypes.BUBBLE, offsetFX + 0.5D, offsetFY + 0.20000000298023224D, offsetFZ + 0.5D, 0.0D, 0.0D,
 					0.0D);
-				if (world.rand.nextInt(3) == 0) {
-				    world.addParticle(ParticleTypes.SMOKE, offsetFX + 0.5D, offsetFY + 0.5D, offsetFZ + 0.5D, 0.0D, 0.0D, 0.0D);
+				if (level.random.nextInt(3) == 0) {
+				    level.addParticle(ParticleTypes.SMOKE, offsetFX + 0.5D, offsetFY + 0.5D, offsetFZ + 0.5D, 0.0D, 0.0D, 0.0D);
 				}
 			    }
 			}
@@ -252,14 +252,14 @@ public class TileReactorCore extends GenericTileTicking {
 	}
     }
 
-    protected void writeCustomPacket(CompoundNBT tag) {
+    protected void writeCustomPacket(CompoundTag tag) {
 	ComponentInventory inv = getComponent(ComponentType.Inventory);
 	tag.putBoolean("hasDeuterium", hasDeuterium);
 	tag.putDouble("temperature", temperature);
-	tag.putInt("fuelCount", inv.count(DeferredRegisters.ITEM_FUELHEUO2.get()) + inv.count(DeferredRegisters.ITEM_FUELLEUO2.get()));
+	tag.putInt("fuelCount", inv.countItem(DeferredRegisters.ITEM_FUELHEUO2.get()) + inv.countItem(DeferredRegisters.ITEM_FUELLEUO2.get()));
     }
 
-    protected void readCustomPacket(CompoundNBT nbt) {
+    protected void readCustomPacket(CompoundTag nbt) {
 	hasDeuterium = nbt.getBoolean("hasDeuterium");
 	temperature = nbt.getDouble("temperature");
 	fuelCount = nbt.getInt("fuelCount");
@@ -270,19 +270,19 @@ public class TileReactorCore extends GenericTileTicking {
 	int inputSlot = 4;
 	int outputSlot = 5;
 
-	ItemStack input = inv.getStackInSlot(inputSlot);
-	ItemStack output = inv.getStackInSlot(outputSlot);
+	ItemStack input = inv.getItem(inputSlot);
+	ItemStack output = inv.getItem(outputSlot);
 
 	if (input != null && !input.equals(new ItemStack(Items.AIR), true)) {
-	    Set<IRecipe<?>> recipes = ElectrodynamicsRecipe.findRecipesbyType(NuclearScienceRecipeInit.FISSION_REACTOR_TYPE, world);
-	    for (IRecipe<?> iRecipe : recipes) {
+	    Set<Recipe<?>> recipes = ElectrodynamicsRecipe.findRecipesbyType(NuclearScienceRecipeInit.FISSION_REACTOR_TYPE, level);
+	    for (Recipe<?> iRecipe : recipes) {
 		O2ORecipe recipe = (O2ORecipe) iRecipe;
 		if (recipe.matchesRecipe(input)) {
 		    if (output.isEmpty()) {
-			inv.setInventorySlotContents(outputSlot, recipe.getRecipeOutput().copy());
+			inv.setItem(outputSlot, recipe.getResultItem().copy());
 			input.shrink(((CountableIngredient) recipe.getIngredients().get(0)).getStackSize());
-		    } else if (output.getCount() <= output.getMaxStackSize() + recipe.getRecipeOutput().getCount()) {
-			output.grow(recipe.getRecipeOutput().getCount());
+		    } else if (output.getCount() <= output.getMaxStackSize() + recipe.getResultItem().getCount()) {
+			output.grow(recipe.getResultItem().getCount());
 			input.shrink(((CountableIngredient) recipe.getIngredients().get(0)).getStackSize());
 		    }
 		}

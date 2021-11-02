@@ -3,32 +3,32 @@ package nuclearscience.api.radiation;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.References;
 
-public class EffectRadiation extends Effect {
+public class EffectRadiation extends MobEffect {
 
     public static final EffectRadiation INSTANCE = (EffectRadiation) new EffectRadiation().setRegistryName(References.ID, "radiation");
 
-    protected EffectRadiation(EffectType typeIn, int liquidColorIn) {
+    protected EffectRadiation(MobEffectCategory typeIn, int liquidColorIn) {
 	super(typeIn, liquidColorIn);
     }
 
     public EffectRadiation() {
-	this(EffectType.HARMFUL, 5149489);
+	this(MobEffectCategory.HARMFUL, 5149489);
     }
 
     @Override
-    public void performEffect(LivingEntity entityLivingBaseIn, int amplifier) {
-	if (entityLivingBaseIn.world.rand.nextFloat() < 0.033) {
-	    entityLivingBaseIn.attackEntityFrom(DamageSourceRadiation.INSTANCE, (float) (Math.pow(amplifier, 1.3) + 1));
-	    if (entityLivingBaseIn instanceof PlayerEntity) {
-		((PlayerEntity) entityLivingBaseIn).addExhaustion(0.05F * (amplifier + 1));
+    public void applyEffectTick(LivingEntity entityLivingBaseIn, int amplifier) {
+	if (entityLivingBaseIn.level.random.nextFloat() < 0.033) {
+	    entityLivingBaseIn.hurt(DamageSourceRadiation.INSTANCE, (float) (Math.pow(amplifier, 1.3) + 1));
+	    if (entityLivingBaseIn instanceof Player) {
+		((Player) entityLivingBaseIn).causeFoodExhaustion(0.05F * (amplifier + 1));
 	    }
 	}
     }
@@ -41,7 +41,7 @@ public class EffectRadiation extends Effect {
     }
 
     @Override
-    public boolean isReady(int duration, int amplifier) {
+    public boolean isDurationEffectTick(int duration, int amplifier) {
 	return true;
     }
 }

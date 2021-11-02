@@ -5,25 +5,25 @@ import java.util.List;
 
 import electrodynamics.common.block.BlockGenericMachine;
 import electrodynamics.prefab.utilities.object.Location;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.Explosion.Mode;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.level.Explosion.BlockInteraction;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.network.NetworkHooks;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.api.fusion.IElectromagnet;
@@ -34,30 +34,30 @@ import nuclearscience.common.tile.TileElectromagneticSwitch;
 import nuclearscience.common.tile.TileParticleInjector;
 
 public class EntityParticle extends Entity {
-    private static final DataParameter<Direction> DIRECTION = EntityDataManager.createKey(EntityParticle.class, DataSerializers.DIRECTION);
-    private static final DataParameter<Float> SPEED = EntityDataManager.createKey(EntityParticle.class, DataSerializers.FLOAT);
+    private static final EntityDataAccessor<Direction> DIRECTION = SynchedEntityData.defineId(EntityParticle.class, EntityDataSerializers.DIRECTION);
+    private static final EntityDataAccessor<Float> SPEED = SynchedEntityData.defineId(EntityParticle.class, EntityDataSerializers.FLOAT);
     private Direction direction = Direction.UP;
     public float speed = 0.02f;
     public BlockPos source = BlockPos.ZERO;
 
-    public EntityParticle(EntityType<?> entityTypeIn, World worldIn) {
+    public EntityParticle(EntityType<?> entityTypeIn, Level worldIn) {
 	super(DeferredRegisters.ENTITY_PARTICLE.get(), worldIn);
     }
 
-    public EntityParticle(Direction direction, World worldIn, Location pos) {
+    public EntityParticle(Direction direction, Level worldIn, Location pos) {
 	this(DeferredRegisters.ENTITY_PARTICLE.get(), worldIn);
-	forceSetPosition(pos.x(), pos.y(), pos.z());
+	setPosAndOldPos(pos.x(), pos.y(), pos.z());
 	this.direction = direction;
-	ignoreFrustumCheck = true;
-	if (worldIn.isRemote) {
-	    setRenderDistanceWeight(4);
+	noCulling = true;
+	if (worldIn.isClientSide) {
+	    setViewScale(4);
 	}
     }
 
     @Override
     public void tick() {
-	TileEntity tile = world.getTileEntity(source);
-	if (!world.isRemote) {
+	BlockEntity tile = level.getBlockEntity(source);
+	if (!level.isClientSide) {
 	    if (!(tile instanceof TileParticleInjector)) {
 		remove();
 		return;
@@ -66,21 +66,21 @@ public class EntityParticle extends Entity {
 	    if (direction == null) {
 		direction = Direction.UP;
 	    }
-	    dataManager.set(DIRECTION, direction);
+	    entityData.set(DIRECTION, direction);
 
-	    dataManager.set(SPEED, speed);
+	    entityData.set(SPEED, speed);
 	} else {
-	    if (!dataManager.isEmpty()) {
-		direction = dataManager.get(DIRECTION);
-		speed = dataManager.get(SPEED);
+	    if (!entityData.isEmpty()) {
+		direction = entityData.get(DIRECTION);
+		speed = entityData.get(SPEED);
 	    }
 	}
-	Location source = new Location(getPosition());
+	Location source = new Location(blockPosition());
 	double totstrength = 1000;
 	double range = 1;
-	AxisAlignedBB bb = AxisAlignedBB.withSizeAtOrigin(range, range, range);
-	bb = bb.offset(new Vector3d(source.x(), source.y(), source.z()));
-	List<LivingEntity> list = world.getEntitiesWithinAABB(LivingEntity.class, bb);
+	AABB bb = AABB.ofSize(range, range, range);
+	bb = bb.move(new Vec3(source.x(), source.y(), source.z()));
+	List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, bb);
 	for (LivingEntity living : list) {
 	    RadiationSystem.applyRadiation(living, source, totstrength);
 	}
@@ -88,20 +88,20 @@ public class EntityParticle extends Entity {
 	    int checks = (int) (Math.ceil(speed) * 2);
 	    float localSpeed = speed / checks;
 	    for (int i = 0; i < checks; i++) {
-		if (!world.isRemote) {
+		if (!level.isClientSide) {
 		    TileParticleInjector injector = (TileParticleInjector) tile;
 		    injector.checkCollision();
 		}
-		BlockPos next = getPosition();
-		BlockState oldState = world.getBlockState(next);
+		BlockPos next = blockPosition();
+		BlockState oldState = level.getBlockState(next);
 		boolean isBooster = false;
 		if (oldState.getBlock() == DeferredRegisters.blockElectromagneticBooster) {
-		    Direction dir = oldState.get(BlockGenericMachine.FACING).getOpposite();
-		    FacingDirection face = oldState.get(BlockElectromagneticBooster.FACINGDIRECTION);
+		    Direction dir = oldState.getValue(BlockGenericMachine.FACING).getOpposite();
+		    FacingDirection face = oldState.getValue(BlockElectromagneticBooster.FACINGDIRECTION);
 		    if (face == FacingDirection.RIGHT) {
-			dir = dir.rotateY();
+			dir = dir.getClockWise();
 		    } else if (face == FacingDirection.LEFT) {
-			dir = dir.rotateYCCW();
+			dir = dir.getCounterClockWise();
 		    }
 		    if (dir == direction) {
 			speed += 0.01 / 3;
@@ -110,8 +110,8 @@ public class EntityParticle extends Entity {
 		    } else {
 			speed += 0.01 / 6;
 			direction = dir;
-			BlockPos floor = getPosition();
-			setPosition(floor.getX() + 0.5, floor.getY() + 0.5, floor.getZ() + 0.5);
+			BlockPos floor = blockPosition();
+			setPos(floor.getX() + 0.5, floor.getY() + 0.5, floor.getZ() + 0.5);
 		    }
 		    isBooster = true;
 		}
@@ -119,69 +119,69 @@ public class EntityParticle extends Entity {
 		    speed *= -1;
 		    direction = direction.getOpposite();
 		}
-		setPosition(getPosX() + direction.getXOffset() * localSpeed, getPosY(), getPosZ() + direction.getZOffset() * localSpeed);
+		setPos(getX() + direction.getStepX() * localSpeed, getY(), getZ() + direction.getStepZ() * localSpeed);
 		if (isBooster) {
-		    BlockPos positionNow = getPosition();
-		    if (world.getBlockState(positionNow).getBlock() == DeferredRegisters.blockElectromagneticSwitch) {
+		    BlockPos positionNow = blockPosition();
+		    if (level.getBlockState(positionNow).getBlock() == DeferredRegisters.blockElectromagneticSwitch) {
 			HashSet<Direction> directions = new HashSet<>();
 			for (Direction dir : Direction.values()) {
 			    if (dir != Direction.UP && dir != Direction.DOWN && dir != direction.getOpposite()
-				    && world.getBlockState(positionNow.offset(dir)).getBlock() == Blocks.AIR) {
+				    && level.getBlockState(positionNow.relative(dir)).getBlock() == Blocks.AIR) {
 				directions.add(dir);
 			    }
 			}
-			TileEntity te = world.getTileEntity(positionNow);
+			BlockEntity te = level.getBlockEntity(positionNow);
 			if (te instanceof TileElectromagneticSwitch) {
 			    TileElectromagneticSwitch switchte = (TileElectromagneticSwitch) te;
 			    directions.remove(switchte.lastDirection);
 			    if (directions.size() > (switchte.lastDirection == null ? 2 : 1)) {
-				world.createExplosion(this, getPosX(), getPosY(), getPosZ(), speed, Mode.DESTROY);
-				setDead();
+				level.explode(this, getX(), getY(), getZ(), speed, BlockInteraction.DESTROY);
+				removeAfterChangingDimensions();
 				break;
 			    }
 			    for (Direction dir : directions) {
 				switchte.lastDirection = dir;
 				direction = dir;
-				setPosition(positionNow.getX() + 0.5, positionNow.getY() + 0.5, positionNow.getZ() + 0.5);
+				setPos(positionNow.getX() + 0.5, positionNow.getY() + 0.5, positionNow.getZ() + 0.5);
 			    }
 			}
 		    }
 		}
-		if (!world.isRemote) {
-		    BlockPos getPos = getPosition();
-		    BlockState nextState = world.getBlockState(getPos);
+		if (!level.isClientSide) {
+		    BlockPos getPos = blockPosition();
+		    BlockState nextState = level.getBlockState(getPos);
 		    if (nextState.getBlock() == Blocks.AIR || nextState.getBlock() == DeferredRegisters.blockElectromagneticSwitch) {
 			int amount = 0;
 			for (Direction of : Direction.values()) {
-			    if (world.getBlockState(getPosition().offset(of)).getBlock() instanceof IElectromagnet) {
+			    if (level.getBlockState(blockPosition().relative(of)).getBlock() instanceof IElectromagnet) {
 				amount++;
 			    }
 			}
 			if (amount < 4) {
-			    world.createExplosion(this, getPosX(), getPosY(), getPosZ(), speed, Mode.DESTROY);
-			    setDead();
+			    level.explode(this, getX(), getY(), getZ(), speed, BlockInteraction.DESTROY);
+			    removeAfterChangingDimensions();
 			    break;
 			}
-			BlockState testNextBlock = world.getBlockState(getPos.offset(direction));
+			BlockState testNextBlock = level.getBlockState(getPos.relative(direction));
 			if (testNextBlock.getBlock() instanceof IElectromagnet
 				&& testNextBlock.getBlock() != DeferredRegisters.blockElectromagneticSwitch) {
-			    Direction checkRot = direction.rotateY();
-			    testNextBlock = world.getBlockState(getPos.offset(checkRot));
+			    Direction checkRot = direction.getClockWise();
+			    testNextBlock = level.getBlockState(getPos.relative(checkRot));
 			    if (testNextBlock.getBlock() == Blocks.AIR || testNextBlock.getBlock() == DeferredRegisters.blockElectromagneticSwitch) {
-				BlockPos floor = getPosition();
+				BlockPos floor = blockPosition();
 				direction = checkRot;
-				setPosition(floor.getX() + 0.5, floor.getY() + 0.5, floor.getZ() + 0.5);
+				setPos(floor.getX() + 0.5, floor.getY() + 0.5, floor.getZ() + 0.5);
 			    } else {
-				checkRot = direction.rotateY().getOpposite();
-				testNextBlock = world.getBlockState(getPos.offset(checkRot));
+				checkRot = direction.getClockWise().getOpposite();
+				testNextBlock = level.getBlockState(getPos.relative(checkRot));
 				if (testNextBlock.getBlock() == Blocks.AIR
 					|| testNextBlock.getBlock() == DeferredRegisters.blockElectromagneticSwitch) {
-				    BlockPos floor = getPosition();
+				    BlockPos floor = blockPosition();
 				    direction = checkRot;
-				    setPosition(floor.getX() + 0.5, floor.getY() + 0.5, floor.getZ() + 0.5);
+				    setPos(floor.getX() + 0.5, floor.getY() + 0.5, floor.getZ() + 0.5);
 				} else {
-				    world.createExplosion(this, getPosX(), getPosY(), getPosZ(), speed, Mode.DESTROY);
-				    setDead();
+				    level.explode(this, getX(), getY(), getZ(), speed, BlockInteraction.DESTROY);
+				    removeAfterChangingDimensions();
 				    break;
 				}
 			    }
@@ -191,14 +191,14 @@ public class EntityParticle extends Entity {
 				&& oldState.getBlock() == DeferredRegisters.blockElectromagneticBooster;
 			boolean explode = false;
 			if (checkIsBooster) {
-			    Direction oldDir = oldState.get(BlockGenericMachine.FACING);
-			    Direction nextDir = nextState.get(BlockGenericMachine.FACING);
+			    Direction oldDir = oldState.getValue(BlockGenericMachine.FACING);
+			    Direction nextDir = nextState.getValue(BlockGenericMachine.FACING);
 			    if (oldDir != nextDir) {
-				FacingDirection face = oldState.get(BlockElectromagneticBooster.FACINGDIRECTION);
+				FacingDirection face = oldState.getValue(BlockElectromagneticBooster.FACINGDIRECTION);
 				if (face == FacingDirection.RIGHT) {
-				    oldDir = oldDir.rotateY();
+				    oldDir = oldDir.getClockWise();
 				} else if (face == FacingDirection.LEFT) {
-				    oldDir = oldDir.rotateYCCW();
+				    oldDir = oldDir.getCounterClockWise();
 				}
 				if (oldDir != nextDir) {
 				    explode = true;
@@ -208,8 +208,8 @@ public class EntityParticle extends Entity {
 			    explode = true;
 			}
 			if (explode) {
-			    world.createExplosion(this, getPosX(), getPosY(), getPosZ(), speed, Mode.DESTROY);
-			    setDead();
+			    level.explode(this, getX(), getY(), getZ(), speed, BlockInteraction.DESTROY);
+			    removeAfterChangingDimensions();
 			    break;
 			}
 		    }
@@ -217,45 +217,45 @@ public class EntityParticle extends Entity {
 	    }
 	    speed = Math.min(speed, 1.999f);
 	} else {
-	    if (ticksExisted > 100) {
-		setDead();
+	    if (tickCount > 100) {
+		removeAfterChangingDimensions();
 	    }
 	}
     }
 
     @Override
-    protected void registerData() {
+    protected void defineSynchedData() {
 	if (direction == null) {
 	    direction = Direction.UP;
 	}
-	dataManager.register(DIRECTION, direction);
-	dataManager.register(SPEED, speed);
+	entityData.define(DIRECTION, direction);
+	entityData.define(SPEED, speed);
     }
 
     @Override
-    public boolean hasNoGravity() {
+    public boolean isNoGravity() {
 	return true;
     }
 
     @Override
-    protected void readAdditional(CompoundNBT compound) {
+    protected void readAdditionalSaveData(CompoundTag compound) {
 	source = new BlockPos(compound.getInt("sourceX"), compound.getInt("sourceY"), compound.getInt("sourceZ"));
     }
 
     @Override
-    public ITextComponent getName() {
-	return new StringTextComponent("entity.particle");
+    public Component getName() {
+	return new TextComponent("entity.particle");
     }
 
     @Override
-    protected void writeAdditional(CompoundNBT compound) {
+    protected void addAdditionalSaveData(CompoundTag compound) {
 	compound.putInt("sourceX", source.getX());
 	compound.putInt("sourceY", source.getY());
 	compound.putInt("sourceZ", source.getZ());
     }
 
     @Override
-    public IPacket<?> createSpawnPacket() {
+    public Packet<?> getAddEntityPacket() {
 	return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

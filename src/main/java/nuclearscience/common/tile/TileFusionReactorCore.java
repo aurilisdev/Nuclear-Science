@@ -6,12 +6,12 @@ import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.settings.Constants;
 
@@ -30,7 +30,7 @@ public class TileFusionReactorCore extends GenericTileTicking {
 
     public void tickServer(ComponentTickable tick) {
 	ComponentElectrodynamic electro = getComponent(ComponentType.Electrodynamic);
-	if (world.getWorldInfo().getDayTime() % 20 == 0) {
+	if (level.getLevelData().getDayTime() % 20 == 0) {
 	    this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();
 	}
 	if (tritium > 0 && deuterium > 0 && timeLeft <= 0 && electro.getJoulesStored() > Constants.FUSIONREACTOR_USAGE_PER_TICK) {
@@ -41,15 +41,15 @@ public class TileFusionReactorCore extends GenericTileTicking {
 	if (timeLeft > 0 && electro.getJoulesStored() > Constants.FUSIONREACTOR_USAGE_PER_TICK) {
 	    for (Direction dir : Direction.values()) {
 		if (dir != Direction.UP && dir != Direction.DOWN) {
-		    BlockPos offset = pos.offset(dir);
-		    BlockState state = world.getBlockState(offset);
+		    BlockPos offset = worldPosition.relative(dir);
+		    BlockState state = level.getBlockState(offset);
 		    if (state.getBlock() == DeferredRegisters.blockPlasma) {
-			TileEntity tile = world.getTileEntity(offset);
+			BlockEntity tile = level.getBlockEntity(offset);
 			if (tile instanceof TilePlasma && ((TilePlasma) tile).ticksExisted > 30) {
 			    ((TilePlasma) tile).ticksExisted = 0;
 			}
 		    } else if (state.getBlock() == Blocks.AIR) {
-			world.setBlockState(offset, DeferredRegisters.blockPlasma.getDefaultState());
+			level.setBlockAndUpdate(offset, DeferredRegisters.blockPlasma.defaultBlockState());
 		    }
 		}
 	    }
@@ -59,23 +59,23 @@ public class TileFusionReactorCore extends GenericTileTicking {
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
 	writeCustomPacket(compound);
-	return super.write(compound);
+	return super.save(compound);
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
-	super.read(state, compound);
+    public void load(BlockState state, CompoundTag compound) {
+	super.load(state, compound);
 	readCustomPacket(compound);
     }
 
-    public void writeCustomPacket(CompoundNBT nbt) {
+    public void writeCustomPacket(CompoundTag nbt) {
 	nbt.putInt("deuterium", deuterium);
 	nbt.putInt("tritium", tritium);
     }
 
-    public void readCustomPacket(CompoundNBT nbt) {
+    public void readCustomPacket(CompoundTag nbt) {
 	deuterium = nbt.getInt("deuterium");
 	tritium = nbt.getInt("tritium");
     }

@@ -3,10 +3,10 @@ package nuclearscience.common.recipe.categories.fluiditem2fluid.specificmachines
 import electrodynamics.common.recipe.categories.fluiditem2fluid.FluidItem2FluidRecipe;
 import electrodynamics.common.recipe.recipeutils.CountableIngredient;
 import electrodynamics.common.recipe.recipeutils.FluidIngredient;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.Registry;
 import net.minecraftforge.fluids.FluidStack;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 
@@ -21,13 +21,13 @@ public class NuclearBoilerRecipe extends FluidItem2FluidRecipe {
     }
 
     @Override
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
 	return NuclearScienceRecipeInit.NUCLEAR_BOILER_SERIALIZER.get();
     }
 
     @Override
-    public IRecipeType<?> getType() {
-	return Registry.RECIPE_TYPE.getOrDefault(RECIPE_ID);
+    public RecipeType<?> getType() {
+	return Registry.RECIPE_TYPE.get(RECIPE_ID);
     }
 
 }

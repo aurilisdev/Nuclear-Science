@@ -5,45 +5,47 @@ import java.util.List;
 
 import electrodynamics.api.IWrenchItem;
 import electrodynamics.prefab.tile.IWrenchable;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext.Builder;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext.Builder;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ToolType;
 import nuclearscience.common.tile.TileTurbine;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockTurbine extends Block implements IWrenchable {
     public static final BooleanProperty RENDER = BooleanProperty.create("render");
 
     public BlockTurbine() {
-	super(Properties.create(Material.IRON).hardnessAndResistance(3.5F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).notSolid());
-	setDefaultState(stateContainer.getBaseState().with(RENDER, true));
+	super(Properties.of(Material.METAL).strength(3.5F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).noOcclusion());
+	registerDefaultState(stateDefinition.any().setValue(RENDER, true));
     }
 
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
 	return new TileTurbine();
     }
 
     @Override
-    public void onRotate(ItemStack stack, BlockPos pos, PlayerEntity player) {
-	TileTurbine turbine = (TileTurbine) player.world.getTileEntity(pos);
+    public void onRotate(ItemStack stack, BlockPos pos, Player player) {
+	TileTurbine turbine = (TileTurbine) player.level.getBlockEntity(pos);
 	if (turbine != null) {
 	    if (turbine.isCore) {
 		turbine.deconstructStructure();
@@ -61,22 +63,22 @@ public class BlockTurbine extends Block implements IWrenchable {
 
     @Override
     @Deprecated
-    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
 	if (state.getBlock() != newState.getBlock()) {
-	    TileTurbine turbine = (TileTurbine) worldIn.getTileEntity(pos);
+	    TileTurbine turbine = (TileTurbine) worldIn.getBlockEntity(pos);
 	    if (turbine != null) {
 		turbine.deconstructStructure();
 	    }
-	    super.onReplaced(state, worldIn, pos, newState, isMoving);
+	    super.onRemove(state, worldIn, pos, newState, isMoving);
 	}
     }
 
     @Override
     @Deprecated
-    public BlockRenderType getRenderType(BlockState state) {
-	BlockRenderType type = super.getRenderType(state);
-	if (state.get(RENDER) != Boolean.TRUE) {
-	    type = BlockRenderType.INVISIBLE;
+    public RenderShape getRenderShape(BlockState state) {
+	RenderShape type = super.getRenderShape(state);
+	if (state.getValue(RENDER) != Boolean.TRUE) {
+	    type = RenderShape.INVISIBLE;
 	}
 	return type;
     }
@@ -87,42 +89,42 @@ public class BlockTurbine extends Block implements IWrenchable {
     }
 
     @Override
-    public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
+    public int getLightValue(BlockState state, BlockGetter world, BlockPos pos) {
 	return 0;
     }
 
     @Override
     @Deprecated
-    public float getAmbientOcclusionLightValue(BlockState state, IBlockReader worldIn, BlockPos pos) {
+    public float getShadeBrightness(BlockState state, BlockGetter worldIn, BlockPos pos) {
 	return 1;
     }
 
     @Override
     @Deprecated
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn,
-	    BlockRayTraceResult hit) {
-	if (worldIn.isRemote) {
-	    return ActionResultType.SUCCESS;
-	} else if (!(player.getHeldItem(handIn).getItem() instanceof IWrenchItem)) {
-	    return ActionResultType.CONSUME;
+    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn,
+	    BlockHitResult hit) {
+	if (worldIn.isClientSide) {
+	    return InteractionResult.SUCCESS;
+	} else if (!(player.getItemInHand(handIn).getItem() instanceof IWrenchItem)) {
+	    return InteractionResult.CONSUME;
 	}
-	return ActionResultType.FAIL;
+	return InteractionResult.FAIL;
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-	return getDefaultState().with(RENDER, true);
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+	return defaultBlockState().setValue(RENDER, true);
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 	builder.add(RENDER);
     }
 
     @Override
-    public void onPickup(ItemStack stack, BlockPos pos, PlayerEntity player) {
-	World world = player.world;
-	world.setBlockState(pos, Blocks.AIR.getDefaultState());
-	world.addEntity(new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, new ItemStack(getSelf())));
+    public void onPickup(ItemStack stack, BlockPos pos, Player player) {
+	Level world = player.level;
+	world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+	world.addFreshEntity(new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, new ItemStack(asBlock())));
     }
 }

@@ -1,37 +1,37 @@
 package nuclearscience.client.render.tile;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import electrodynamics.common.block.BlockGenericMachine;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
 import electrodynamics.prefab.utilities.UtilitiesRendering;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.util.Direction;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.core.Direction;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.client.ClientRegister;
 import nuclearscience.common.tile.TileNuclearBoiler;
 
-public class RenderNuclearBoiler extends TileEntityRenderer<TileNuclearBoiler> {
+public class RenderNuclearBoiler extends BlockEntityRenderer<TileNuclearBoiler> {
 
-    public RenderNuclearBoiler(TileEntityRendererDispatcher rendererDispatcherIn) {
+    public RenderNuclearBoiler(BlockEntityRenderDispatcher rendererDispatcherIn) {
 	super(rendererDispatcherIn);
     }
 
     @Override
     @Deprecated
-    public void render(TileNuclearBoiler tileEntityIn, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn,
+    public void render(TileNuclearBoiler tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn,
 	    int combinedOverlayIn) {
-	matrixStackIn.push();
-	IBakedModel ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_CHEMICALBOILERWATER);
-	Direction face = tileEntityIn.getBlockState().get(BlockGenericMachine.FACING);
-	matrixStackIn.translate(face.getXOffset(), face.getYOffset(), face.getZOffset());
+	matrixStackIn.pushPose();
+	BakedModel ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_CHEMICALBOILERWATER);
+	Direction face = tileEntityIn.getBlockState().getValue(BlockGenericMachine.FACING);
+	matrixStackIn.translate(face.getStepX(), face.getStepY(), face.getStepZ());
 	UtilitiesRendering.prepareRotationalTileModel(tileEntityIn, matrixStackIn);
 	matrixStackIn.translate(-0.5, 0, 0.5);
 	float prog = tileEntityIn.<ComponentFluidHandlerMulti>getComponent(ComponentType.FluidHandler).getStackFromFluid(Fluids.WATER, true)
@@ -40,14 +40,14 @@ public class RenderNuclearBoiler extends TileEntityRenderer<TileNuclearBoiler> {
 	    matrixStackIn.translate(0, 4.5 / 16.0, 2.0 / 16.0);
 	    matrixStackIn.scale(1, prog / 16.0f * 12f, 1);
 	    matrixStackIn.translate(0, prog / 16.0f * 6f, 0);
-	    UtilitiesRendering.renderModel(ibakedmodel, tileEntityIn, RenderType.getCutout(), matrixStackIn, bufferIn, combinedLightIn,
+	    UtilitiesRendering.renderModel(ibakedmodel, tileEntityIn, RenderType.cutout(), matrixStackIn, bufferIn, combinedLightIn,
 		    combinedOverlayIn);
 	}
-	matrixStackIn.pop();
-	matrixStackIn.push();
+	matrixStackIn.popPose();
+	matrixStackIn.pushPose();
 	ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_CHEMICALBOILERHEXAFLUORIDE);
-	face = tileEntityIn.getBlockState().get(BlockGenericMachine.FACING);
-	matrixStackIn.translate(face.getXOffset(), face.getYOffset(), face.getZOffset());
+	face = tileEntityIn.getBlockState().getValue(BlockGenericMachine.FACING);
+	matrixStackIn.translate(face.getStepX(), face.getStepY(), face.getStepZ());
 	UtilitiesRendering.prepareRotationalTileModel(tileEntityIn, matrixStackIn);
 	matrixStackIn.translate(-0.5, 0, 0.5);
 	prog = tileEntityIn.<ComponentFluidHandlerMulti>getComponent(ComponentType.FluidHandler)
@@ -56,10 +56,10 @@ public class RenderNuclearBoiler extends TileEntityRenderer<TileNuclearBoiler> {
 	    matrixStackIn.translate(0, 4.5 / 16.0, -2.0 / 16.0);
 	    matrixStackIn.scale(1, prog / 16.0f * 12f, 1);
 	    matrixStackIn.translate(0, prog / 16.0f * 6f, 0);
-	    UtilitiesRendering.renderModel(ibakedmodel, tileEntityIn, RenderType.getCutout(), matrixStackIn, bufferIn, combinedLightIn,
+	    UtilitiesRendering.renderModel(ibakedmodel, tileEntityIn, RenderType.cutout(), matrixStackIn, bufferIn, combinedLightIn,
 		    combinedOverlayIn);
 	}
-	matrixStackIn.pop();
+	matrixStackIn.popPose();
     }
 
 }

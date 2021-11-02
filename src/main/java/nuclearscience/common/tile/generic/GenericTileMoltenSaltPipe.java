@@ -9,11 +9,11 @@ import electrodynamics.prefab.network.AbstractNetwork;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.utilities.Scheduler;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
 import nuclearscience.api.network.moltensalt.IMoltenSaltPipe;
 import nuclearscience.common.network.MoltenSaltNetwork;
 import nuclearscience.common.tile.TileHeatExchanger;
@@ -27,7 +27,7 @@ public abstract class GenericTileMoltenSaltPipe extends GenericTile implements I
 	return moltenSaltNetwork;
     }
 
-    protected GenericTileMoltenSaltPipe(TileEntityType<?> tileEntityTypeIn) {
+    protected GenericTileMoltenSaltPipe(BlockEntityType<?> tileEntityTypeIn) {
 	super(tileEntityTypeIn);
 	addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket));
     }
@@ -35,7 +35,7 @@ public abstract class GenericTileMoltenSaltPipe extends GenericTile implements I
     private HashSet<IMoltenSaltPipe> getConnectedConductors() {
 	HashSet<IMoltenSaltPipe> set = new HashSet<>();
 	for (Direction dir : Direction.values()) {
-	    TileEntity facing = world.getTileEntity(new BlockPos(pos).offset(dir));
+	    BlockEntity facing = level.getBlockEntity(new BlockPos(worldPosition).relative(dir));
 	    if (facing instanceof IMoltenSaltPipe) {
 		set.add((IMoltenSaltPipe) facing);
 	    }
@@ -81,11 +81,11 @@ public abstract class GenericTileMoltenSaltPipe extends GenericTile implements I
 
     @Override
     public void refreshNetwork() {
-	if (!world.isRemote) {
+	if (!level.isClientSide) {
 	    updateAdjacent();
 	    ArrayList<MoltenSaltNetwork> foundNetworks = new ArrayList<>();
 	    for (Direction dir : Direction.values()) {
-		TileEntity facing = world.getTileEntity(new BlockPos(pos).offset(dir));
+		BlockEntity facing = level.getBlockEntity(new BlockPos(worldPosition).relative(dir));
 		if (facing instanceof IMoltenSaltPipe && ((IMoltenSaltPipe) facing).getNetwork() instanceof MoltenSaltNetwork) {
 		    foundNetworks.add((MoltenSaltNetwork) ((IMoltenSaltPipe) facing).getNetwork());
 		}
@@ -112,12 +112,12 @@ public abstract class GenericTileMoltenSaltPipe extends GenericTile implements I
     }
 
     private boolean[] connections = new boolean[6];
-    private TileEntity[] tileConnections = new TileEntity[6];
+    private BlockEntity[] tileConnections = new BlockEntity[6];
 
     public boolean updateAdjacent() {
 	boolean flag = false;
 	for (Direction dir : Direction.values()) {
-	    TileEntity tile = world.getTileEntity(pos.offset(dir));
+	    BlockEntity tile = level.getBlockEntity(worldPosition.relative(dir));
 	    boolean is = tile instanceof IMoltenSaltPipe || tile instanceof TileHeatExchanger;
 	    if (connections[dir.ordinal()] != is) {
 		connections[dir.ordinal()] = is;
@@ -129,7 +129,7 @@ public abstract class GenericTileMoltenSaltPipe extends GenericTile implements I
     }
 
     @Override
-    public TileEntity[] getAdjacentConnections() {
+    public BlockEntity[] getAdjacentConnections() {
 	return tileConnections;
     }
 
@@ -145,16 +145,16 @@ public abstract class GenericTileMoltenSaltPipe extends GenericTile implements I
     }
 
     @Override
-    public void remove() {
-	if (!world.isRemote && moltenSaltNetwork != null) {
+    public void setRemoved() {
+	if (!level.isClientSide && moltenSaltNetwork != null) {
 	    getNetwork().split(this);
 	}
-	super.remove();
+	super.setRemoved();
     }
 
     @Override
     public void onChunkUnloaded() {
-	if (!world.isRemote && moltenSaltNetwork != null) {
+	if (!level.isClientSide && moltenSaltNetwork != null) {
 	    getNetwork().split(this);
 	}
     }
@@ -165,8 +165,8 @@ public abstract class GenericTileMoltenSaltPipe extends GenericTile implements I
 	Scheduler.schedule(1, this::refreshNetwork);
     }
 
-    protected abstract void writeCustomPacket(CompoundNBT nbt);
+    protected abstract void writeCustomPacket(CompoundTag nbt);
 
-    protected abstract void readCustomPacket(CompoundNBT nbt);
+    protected abstract void readCustomPacket(CompoundTag nbt);
 
 }

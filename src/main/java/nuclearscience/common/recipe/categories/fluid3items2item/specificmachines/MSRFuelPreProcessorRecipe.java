@@ -3,11 +3,11 @@ package nuclearscience.common.recipe.categories.fluid3items2item.specificmachine
 import electrodynamics.common.recipe.categories.fluid3items2item.Fluid3Items2ItemRecipe;
 import electrodynamics.common.recipe.recipeutils.CountableIngredient;
 import electrodynamics.common.recipe.recipeutils.FluidIngredient;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.Registry;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 
 public class MSRFuelPreProcessorRecipe extends Fluid3Items2ItemRecipe {
@@ -22,12 +22,12 @@ public class MSRFuelPreProcessorRecipe extends Fluid3Items2ItemRecipe {
     }
 
     @Override
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
 	return NuclearScienceRecipeInit.MSR_FUEL_PREPROCESSOR_SERIALIZER.get();
     }
 
     @Override
-    public IRecipeType<?> getType() {
-	return Registry.RECIPE_TYPE.getOrDefault(RECIPE_ID);
+    public RecipeType<?> getType() {
+	return Registry.RECIPE_TYPE.get(RECIPE_ID);
     }
 }

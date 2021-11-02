@@ -4,10 +4,10 @@ import electrodynamics.prefab.tile.GenericTileTicking;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
 import nuclearscience.DeferredRegisters;
 
 public class TileControlRodAssembly extends GenericTileTicking {
@@ -27,7 +27,7 @@ public class TileControlRodAssembly extends GenericTileTicking {
 	    isMSR = false;
 	    for (Direction dir : Direction.values()) {
 		if (dir != Direction.UP && dir != Direction.DOWN) {
-		    TileEntity tile = world.getTileEntity(getPos().offset(dir));
+		    BlockEntity tile = level.getBlockEntity(getBlockPos().relative(dir));
 		    if (tile instanceof TileMSRReactorCore) {
 			isMSR = true;
 			this.dir = dir;
@@ -38,27 +38,27 @@ public class TileControlRodAssembly extends GenericTileTicking {
 	}
     }
 
-    public void writePacket(CompoundNBT compound) {
+    public void writePacket(CompoundTag compound) {
 	compound.putInt("insertion", insertion);
 	compound.putBoolean("isMSR", isMSR);
 	compound.putInt("dir", dir.ordinal());
     }
 
-    public void readPacket(CompoundNBT compound) {
+    public void readPacket(CompoundTag compound) {
 	insertion = compound.getInt("insertion");
 	isMSR = compound.getBoolean("isMSR");
-	dir = Direction.byIndex(compound.getInt("dir"));
+	dir = Direction.from3DDataValue(compound.getInt("dir"));
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
 	compound.putInt("insertion", insertion);
-	return super.write(compound);
+	return super.save(compound);
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
-	super.read(state, compound);
+    public void load(BlockState state, CompoundTag compound) {
+	super.load(state, compound);
 	insertion = compound.getInt("insertion");
     }
 }
