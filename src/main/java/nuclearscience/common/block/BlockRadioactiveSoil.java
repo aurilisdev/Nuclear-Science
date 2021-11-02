@@ -1,22 +1,21 @@
 package nuclearscience.common.block;
 
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.SnowyDirtBlock;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.SnowyDirtBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 import nuclearscience.api.radiation.EffectRadiation;
 
 public class BlockRadioactiveSoil extends SnowyDirtBlock {
 
     public BlockRadioactiveSoil() {
-	super(BlockBehaviour.Properties.of(Material.GRASS, MaterialColor.COLOR_GREEN).randomTicks().strength(0.6F)
-		.sound(SoundType.GRASS));
+	super(BlockBehaviour.Properties.of(Material.GRASS, MaterialColor.COLOR_GREEN).randomTicks().strength(0.6F).sound(SoundType.GRASS));
     }
 
     @Override

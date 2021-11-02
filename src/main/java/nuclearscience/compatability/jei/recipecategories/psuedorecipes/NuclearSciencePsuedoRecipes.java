@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import electrodynamics.compatability.jei.recipecategories.psuedorecipes.PsuedoO2ORecipe;
 import electrodynamics.compatability.jei.recipecategories.psuedorecipes.PsuedoRecipes;
-import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
 public class NuclearSciencePsuedoRecipes {

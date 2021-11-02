@@ -7,21 +7,21 @@ import com.google.common.collect.Sets;
 
 import electrodynamics.api.ISubtype;
 import electrodynamics.common.blockitem.BlockItemDescriptable;
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
-import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.common.ToolType;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistryEntry;
@@ -162,8 +162,8 @@ public class DeferredRegisters {
 	BLOCKS.register("fuelreprocessor", supplier(blockFuelReprocessor = new BlockFuelReprocessor()));
 	BLOCKS.register("radioactiveprocessor", supplier(blockRadioactiveProcessor = new BlockRadioactiveProcessor()));
 	BLOCKS.register("msrfuelpreprocessor", supplier(blockMSRFuelPreProcessor = new BlockMSRFuelPreProcessor()));
-	BLOCKS.register("blocklead", supplier(blocklead = new Block(Properties.of(Material.METAL, MaterialColor.COLOR_BLACK)
-		.strength(5.0f, 3.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).harvestLevel(1))));
+	BLOCKS.register("blocklead", supplier(blocklead = new Block(Properties.of(Material.METAL, MaterialColor.COLOR_BLACK).strength(5.0f, 3.0f)
+		.sound(SoundType.METAL).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).harvestLevel(1))));
 	BLOCKS.register("msrreactorcore", supplier(blockMsrReactorCore = new BlockMSRReactorCore()));
 	BLOCKS.register("heatexchanger", supplier(blockHeatExchanger = new BlockHeatExchanger()));
 	BLOCKS.register("moltensaltsupplier", supplier(blockMoltenSaltSupplier = new BlockMoltenSaltSupplier()));
@@ -205,8 +205,7 @@ public class DeferredRegisters {
 	ITEMS.register("teleporter", supplier(new BlockItemDescriptable(blockTeleporter, new Item.Properties().tab(References.NUCLEARTAB))));
 	ITEMS.register("controlrodassembly",
 		supplier(new BlockItemDescriptable(blockControlRodAssembly, new Item.Properties().tab(References.NUCLEARTAB))));
-	ITEMS.register("msrreactorcore",
-		supplier(new BlockItemDescriptable(blockMsrReactorCore, new Item.Properties().tab(References.NUCLEARTAB))));
+	ITEMS.register("msrreactorcore", supplier(new BlockItemDescriptable(blockMsrReactorCore, new Item.Properties().tab(References.NUCLEARTAB))));
 	ITEMS.register("heatexchanger", supplier(new BlockItemDescriptable(blockHeatExchanger, new Item.Properties().tab(References.NUCLEARTAB))));
 	ITEMS.register("moltensaltsupplier",
 		supplier(new BlockItemDescriptable(blockMoltenSaltSupplier, new Item.Properties().tab(References.NUCLEARTAB))));
@@ -281,14 +280,14 @@ public class DeferredRegisters {
 
     public static final RegistryObject<Item> ITEM_GEIGERCOUNTER = ITEMS.register("geigercounter",
 	    supplier(new ItemGeigerCounter(new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(26000))));
-    public static final RegistryObject<Item> ITEM_HAZMATBOOTS = ITEMS.register("hazmatboots", supplier(
-	    new ItemHazmatArmor(EquipmentSlot.FEET, new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(26000))));
-    public static final RegistryObject<Item> ITEM_HAZMATHELMET = ITEMS.register("hazmathelmet", supplier(
-	    new ItemHazmatArmor(EquipmentSlot.HEAD, new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(26000))));
-    public static final RegistryObject<Item> ITEM_HAZMATLEGS = ITEMS.register("hazmatlegs", supplier(
-	    new ItemHazmatArmor(EquipmentSlot.LEGS, new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(26000))));
-    public static final RegistryObject<Item> ITEM_HAZMATPLATE = ITEMS.register("hazmatplate", supplier(new ItemHazmatArmor(EquipmentSlot.CHEST,
-	    new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(26000))));
+    public static final RegistryObject<Item> ITEM_HAZMATBOOTS = ITEMS.register("hazmatboots",
+	    supplier(new ItemHazmatArmor(EquipmentSlot.FEET, new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(26000))));
+    public static final RegistryObject<Item> ITEM_HAZMATHELMET = ITEMS.register("hazmathelmet",
+	    supplier(new ItemHazmatArmor(EquipmentSlot.HEAD, new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(26000))));
+    public static final RegistryObject<Item> ITEM_HAZMATLEGS = ITEMS.register("hazmatlegs",
+	    supplier(new ItemHazmatArmor(EquipmentSlot.LEGS, new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(26000))));
+    public static final RegistryObject<Item> ITEM_HAZMATPLATE = ITEMS.register("hazmatplate", supplier(
+	    new ItemHazmatArmor(EquipmentSlot.CHEST, new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(26000))));
     public static final RegistryObject<Item> ITEM_ANTIDOTE = ITEMS.register("antidote",
 	    supplier(new ItemAntidote(new Item.Properties().tab(References.NUCLEARTAB))));
     public static final RegistryObject<Item> ITEM_FREQUENCYCARD = ITEMS.register("frequencycard",
@@ -302,8 +301,8 @@ public class DeferredRegisters {
 	    () -> new BlockEntityType<>(TileNuclearBoiler::new, Sets.newHashSet(blockNuclearBoiler), null));
     public static final RegistryObject<BlockEntityType<TileChemicalExtractor>> TILE_CHEMICALEXTRACTOR = TILES.register("chemicalextractor",
 	    () -> new BlockEntityType<>(TileChemicalExtractor::new, Sets.newHashSet(blockChemicalExtractor), null));
-    public static final RegistryObject<BlockEntityType<TileRadioisotopeGenerator>> TILE_RADIOISOTOPEGENERATOR = TILES.register("radioisotopegenerator",
-	    () -> new BlockEntityType<>(TileRadioisotopeGenerator::new, Sets.newHashSet(blockRadioisotopeGenerator), null));
+    public static final RegistryObject<BlockEntityType<TileRadioisotopeGenerator>> TILE_RADIOISOTOPEGENERATOR = TILES.register(
+	    "radioisotopegenerator", () -> new BlockEntityType<>(TileRadioisotopeGenerator::new, Sets.newHashSet(blockRadioisotopeGenerator), null));
     public static final RegistryObject<BlockEntityType<TileMoltenSaltSupplier>> TILE_MOLTENSALTSUPPLIER = TILES.register("moltensaltsupplier",
 	    () -> new BlockEntityType<>(TileMoltenSaltSupplier::new, Sets.newHashSet(blockMoltenSaltSupplier), null));
     public static final RegistryObject<BlockEntityType<TileFreezePlug>> TILE_FREEZEPLUG = TILES.register("freezeplug",
@@ -316,8 +315,8 @@ public class DeferredRegisters {
 	    () -> new BlockEntityType<>(TileFusionReactorCore::new, Sets.newHashSet(blockFusionReactorCore), null));
     public static final RegistryObject<BlockEntityType<TileParticleInjector>> TILE_PARTICLEINJECTOR = TILES.register("particleinjector",
 	    () -> new BlockEntityType<>(TileParticleInjector::new, Sets.newHashSet(blockParticleInjector), null));
-    public static final RegistryObject<BlockEntityType<TileElectromagneticSwitch>> TILE_ELECTROMAGNETICSWITCH = TILES.register("electromagneticswitch",
-	    () -> new BlockEntityType<>(TileElectromagneticSwitch::new, Sets.newHashSet(blockElectromagneticSwitch), null));
+    public static final RegistryObject<BlockEntityType<TileElectromagneticSwitch>> TILE_ELECTROMAGNETICSWITCH = TILES.register(
+	    "electromagneticswitch", () -> new BlockEntityType<>(TileElectromagneticSwitch::new, Sets.newHashSet(blockElectromagneticSwitch), null));
     public static final RegistryObject<BlockEntityType<TilePlasma>> TILE_PLASMA = TILES.register("plasma",
 	    () -> new BlockEntityType<>(TilePlasma::new, Sets.newHashSet(blockPlasma), null));
     public static final RegistryObject<BlockEntityType<TileMeltedReactor>> TILE_MELTEDREACTOR = TILES.register("meltedreactor",
@@ -349,8 +348,8 @@ public class DeferredRegisters {
 	    () -> new MenuType<>(ContainerGasCentrifuge::new));
     public static final RegistryObject<MenuType<ContainerNuclearBoiler>> CONTAINER_NUCLEARBOILER = CONTAINERS.register("nuclearboiler",
 	    () -> new MenuType<>(ContainerNuclearBoiler::new));
-    public static final RegistryObject<MenuType<ContainerChemicalExtractor>> CONTAINER_CHEMICALEXTRACTOR = CONTAINERS
-	    .register("chemicalextractor", () -> new MenuType<>(ContainerChemicalExtractor::new));
+    public static final RegistryObject<MenuType<ContainerChemicalExtractor>> CONTAINER_CHEMICALEXTRACTOR = CONTAINERS.register("chemicalextractor",
+	    () -> new MenuType<>(ContainerChemicalExtractor::new));
     public static final RegistryObject<MenuType<ContainerRadioisotopeGenerator>> CONTAINER_RADIOISOTOPEGENERATOR = CONTAINERS
 	    .register("radioisotopegenerator", () -> new MenuType<>(ContainerRadioisotopeGenerator::new));
     public static final RegistryObject<MenuType<ContainerFreezePlug>> CONTAINER_FREEZEPLUG = CONTAINERS.register("freezeplug",
@@ -367,8 +366,8 @@ public class DeferredRegisters {
 	    .register("msrfuelpreprocessor", () -> new MenuType<>(ContainerMSRFuelPreProcessor::new));
     public static final RegistryObject<MenuType<ContainerMSRReactorCore>> CONTAINER_MSRREACTORCORE = CONTAINERS.register("msrreactorcore",
 	    () -> new MenuType<>(ContainerMSRReactorCore::new));
-    public static final RegistryObject<MenuType<ContainerMoltenSaltSupplier>> CONTAINER_MOLTENSALTSUPPLIER = CONTAINERS
-	    .register("moltensaltsupplier", () -> new MenuType<>(ContainerMoltenSaltSupplier::new));
+    public static final RegistryObject<MenuType<ContainerMoltenSaltSupplier>> CONTAINER_MOLTENSALTSUPPLIER = CONTAINERS.register("moltensaltsupplier",
+	    () -> new MenuType<>(ContainerMoltenSaltSupplier::new));
 
     public static final RegistryObject<EntityType<EntityParticle>> ENTITY_PARTICLE = ENTITIES.register("particle", () -> EntityType.Builder
 	    .<EntityParticle>of(EntityParticle::new, MobCategory.MISC).clientTrackingRange(8).build(References.ID + ".particle"));

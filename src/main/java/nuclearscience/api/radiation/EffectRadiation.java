@@ -3,11 +3,11 @@ package nuclearscience.api.radiation;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectCategory;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.References;
 

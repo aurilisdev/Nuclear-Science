@@ -5,12 +5,12 @@ import java.util.Map.Entry;
 import java.util.UUID;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.world.level.Level;
+import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.storage.DimensionDataStorage;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
+import net.minecraft.world.level.storage.DimensionDataStorage;
 
 public class QuantumCapacitorData extends SavedData {
     public static final String DATANAME = "quantumcapacitordata";

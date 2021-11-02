@@ -8,8 +8,8 @@ import electrodynamics.compatability.jei.recipecategories.FluidItem2ItemRecipeCa
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import mezz.jei.api.gui.drawable.IDrawableAnimated.StartDirection;
 import mezz.jei.api.helpers.IGuiHelper;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import nuclearscience.DeferredRegisters;
 
 public class RadioactiveProcessorRecipeCategory extends FluidItem2ItemRecipeCategory {

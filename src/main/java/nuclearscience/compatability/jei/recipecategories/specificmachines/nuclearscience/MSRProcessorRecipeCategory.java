@@ -23,11 +23,11 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.core.NonNullList;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.fluids.FluidStack;
 import nuclearscience.References;
 
@@ -122,8 +122,7 @@ public class MSRProcessorRecipeCategory extends ElectrodynamicsRecipeCategory<Fl
 	TranslatableComponent timeString = new TranslatableComponent("gui.jei.category." + getRecipeGroup() + ".info.power", smeltTimeSeconds);
 	Minecraft minecraft = Minecraft.getInstance();
 	Font fontRenderer = minecraft.font;
-	fontRenderer.draw(matrixStack, timeString, getBackground().getWidth() - fontRenderer.width(timeString), y,
-		0xFF808080);
+	fontRenderer.draw(matrixStack, timeString, getBackground().getWidth() - fontRenderer.width(timeString), y, 0xFF808080);
     }
 
     public List<List<ItemStack>> getItemIngredients(Fluid3Items2ItemRecipe recipe) {

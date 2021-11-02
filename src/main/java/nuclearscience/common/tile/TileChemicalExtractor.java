@@ -13,8 +13,8 @@ import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
 import electrodynamics.prefab.tile.components.type.ComponentProcessorType;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerChemicalExtractor;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
@@ -47,8 +47,8 @@ public class TileChemicalExtractor extends GenericTileTicking {
 
     protected void tickClient(ComponentTickable tickable) {
 	if (this.<ComponentProcessor>getComponent(ComponentType.Processor).operatingTicks > 0 && level.random.nextDouble() < 0.15) {
-	    level.addParticle(ParticleTypes.SMOKE, worldPosition.getX() + level.random.nextDouble(), worldPosition.getY() + level.random.nextDouble() * 0.8 + 0.5,
-		    worldPosition.getZ() + level.random.nextDouble(), 0.0D, 0.0D, 0.0D);
+	    level.addParticle(ParticleTypes.SMOKE, worldPosition.getX() + level.random.nextDouble(),
+		    worldPosition.getY() + level.random.nextDouble() * 0.8 + 0.5, worldPosition.getZ() + level.random.nextDouble(), 0.0D, 0.0D, 0.0D);
 	}
     }
 

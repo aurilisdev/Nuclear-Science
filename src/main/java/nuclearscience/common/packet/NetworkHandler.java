@@ -3,9 +3,8 @@ package nuclearscience.common.packet;
 import java.util.Optional;
 
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.fml.network.NetworkDirection;
-import net.minecraftforge.fml.network.NetworkRegistry;
-import net.minecraftforge.fml.network.simple.SimpleChannel;
+import net.minecraftforge.fmllegacy.network.NetworkDirection;
+import net.minecraftforge.fmllegacy.network.simple.SimpleChannel;
 import nuclearscience.References;
 
 public class NetworkHandler {

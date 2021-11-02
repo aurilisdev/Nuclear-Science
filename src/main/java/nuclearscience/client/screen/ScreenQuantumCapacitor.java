@@ -8,9 +8,9 @@ import electrodynamics.prefab.screen.GenericScreen;
 import electrodynamics.prefab.screen.component.ScreenComponentTextInputBar;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.EditBox;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import nuclearscience.common.inventory.container.ContainerQuantumCapacitor;
@@ -53,8 +53,7 @@ public class ScreenQuantumCapacitor extends GenericScreen<ContainerQuantumCapaci
 	outputField.setMaxLength(6);
 	outputField.setResponder(this::updateOutput);
 
-	frequencyField = new EditBox(font, i + 120, j + 18 + 20, 46, 13,
-		new TranslatableComponent("container.quantumcapacitor.frequency"));
+	frequencyField = new EditBox(font, i + 120, j + 18 + 20, 46, 13, new TranslatableComponent("container.quantumcapacitor.frequency"));
 	frequencyField.setTextColor(-1);
 	frequencyField.setTextColorUneditable(-1);
 	frequencyField.setBordered(false);

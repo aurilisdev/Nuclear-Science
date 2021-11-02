@@ -13,12 +13,12 @@ import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import electrodynamics.prefab.utilities.object.CachedTileOutput;
 import electrodynamics.prefab.utilities.object.TransferPack;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Explosion.BlockInteraction;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -138,8 +138,8 @@ public class TileQuantumCapacitor extends GenericTileTicking implements IEnergyS
 		QuantumCapacitorData.get(level).setJoules(uuid, frequency, joules);
 		if (transfer.getVoltage() > DEFAULT_VOLTAGE) {
 		    level.setBlockAndUpdate(worldPosition, Blocks.AIR.defaultBlockState());
-		    level.explode(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), (float) Math.log10(10 + transfer.getVoltage() / DEFAULT_VOLTAGE),
-			    BlockInteraction.DESTROY);
+		    level.explode(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(),
+			    (float) Math.log10(10 + transfer.getVoltage() / DEFAULT_VOLTAGE), BlockInteraction.DESTROY);
 		    return TransferPack.EMPTY;
 		}
 	    }

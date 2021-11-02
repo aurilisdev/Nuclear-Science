@@ -19,12 +19,12 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.world.item.AirItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.AirItem;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 import nuclearscience.References;
 
@@ -124,8 +124,9 @@ public class ParticleAcceleratorAntiMatterRecipeCategory extends Electrodynamics
 	int i = 0;
 	List<Item> allItems = new ArrayList<>(ForgeRegistries.ITEMS.getValues());
 	List<Item> vanillaItems = new ArrayList<>();
-	CreativeModeTab[] vanillaItemGroups = { CreativeModeTab.TAB_BREWING, CreativeModeTab.TAB_BUILDING_BLOCKS, CreativeModeTab.TAB_COMBAT, CreativeModeTab.TAB_DECORATIONS, CreativeModeTab.TAB_FOOD,
-		CreativeModeTab.TAB_MISC, CreativeModeTab.TAB_REDSTONE, CreativeModeTab.TAB_TOOLS, CreativeModeTab.TAB_TRANSPORTATION };
+	CreativeModeTab[] vanillaItemGroups = { CreativeModeTab.TAB_BREWING, CreativeModeTab.TAB_BUILDING_BLOCKS, CreativeModeTab.TAB_COMBAT,
+		CreativeModeTab.TAB_DECORATIONS, CreativeModeTab.TAB_FOOD, CreativeModeTab.TAB_MISC, CreativeModeTab.TAB_REDSTONE,
+		CreativeModeTab.TAB_TOOLS, CreativeModeTab.TAB_TRANSPORTATION };
 	for (Item item : allItems) {
 	    for (i = 0; i < vanillaItemGroups.length; i++) {
 		if (item.getItemCategory() == vanillaItemGroups[i]) {

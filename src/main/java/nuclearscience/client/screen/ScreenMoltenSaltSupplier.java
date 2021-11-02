@@ -11,12 +11,12 @@ import electrodynamics.prefab.screen.component.ScreenComponentInfo;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
-import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.TextComponent;
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import nuclearscience.common.inventory.container.ContainerMoltenSaltSupplier;
@@ -36,9 +36,8 @@ public class ScreenMoltenSaltSupplier extends GenericScreen<ContainerMoltenSaltS
 	if (box != null) {
 	    ComponentElectrodynamic electro = box.getComponent(ComponentType.Electrodynamic);
 	    list.add(new TranslatableComponent("gui.moltensaltsupplier.usage",
-		    new TextComponent(
-			    ChatFormatter.getElectricDisplayShort(Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK * 20, ElectricUnit.WATT))
-				    .withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
+		    new TextComponent(ChatFormatter.getElectricDisplayShort(Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK * 20, ElectricUnit.WATT))
+			    .withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
 	    list.add(new TranslatableComponent("gui.moltensaltsupplier.voltage",
 		    new TextComponent(ChatFormatter.getElectricDisplayShort(electro.getVoltage(), ElectricUnit.VOLTAGE))
 			    .withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));

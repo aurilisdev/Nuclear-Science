@@ -1,15 +1,13 @@
 package nuclearscience.common.item;
 
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 import nuclearscience.api.radiation.RadiationSystem;
-
-import net.minecraft.world.item.Item.Properties;
 
 public class ItemGeigerCounter extends Item {
 

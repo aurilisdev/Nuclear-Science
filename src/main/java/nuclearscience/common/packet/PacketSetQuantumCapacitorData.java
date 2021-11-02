@@ -2,10 +2,9 @@ package nuclearscience.common.packet;
 
 import java.util.function.Supplier;
 
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
 import nuclearscience.common.tile.TileQuantumCapacitor;
 
 public class PacketSetQuantumCapacitorData {

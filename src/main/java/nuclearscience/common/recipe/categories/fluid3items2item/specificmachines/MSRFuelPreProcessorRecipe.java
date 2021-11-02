@@ -3,11 +3,11 @@ package nuclearscience.common.recipe.categories.fluid3items2item.specificmachine
 import electrodynamics.common.recipe.categories.fluid3items2item.Fluid3Items2ItemRecipe;
 import electrodynamics.common.recipe.recipeutils.CountableIngredient;
 import electrodynamics.common.recipe.recipeutils.FluidIngredient;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.core.Registry;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 
 public class MSRFuelPreProcessorRecipe extends Fluid3Items2ItemRecipe {

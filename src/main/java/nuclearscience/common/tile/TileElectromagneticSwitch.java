@@ -1,9 +1,9 @@
 package nuclearscience.common.tile;
 
 import electrodynamics.prefab.tile.GenericTile;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.DeferredRegisters;
 
 public class TileElectromagneticSwitch extends GenericTile {

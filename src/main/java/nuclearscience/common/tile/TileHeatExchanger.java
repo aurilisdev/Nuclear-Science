@@ -4,13 +4,13 @@ import electrodynamics.prefab.tile.GenericTileTicking;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.settings.Constants;
 
@@ -64,8 +64,10 @@ public class TileHeatExchanger extends GenericTileTicking {
 		    BlockPos offpos = new BlockPos(offsetX, offsetY, offsetZ);
 		    Block offset = level.getBlockState(offpos).getBlock();
 		    if (offset == Blocks.WATER) {
-			boolean isFaceWater = level.getBlockState(new BlockPos(offsetX, worldPosition.getY(), worldPosition.getZ())).getBlock() == Blocks.WATER
-				|| level.getBlockState(new BlockPos(worldPosition.getX(), worldPosition.getY(), offsetZ)).getBlock() == Blocks.WATER || isReactor2d;
+			boolean isFaceWater = level.getBlockState(new BlockPos(offsetX, worldPosition.getY(), worldPosition.getZ()))
+				.getBlock() == Blocks.WATER
+				|| level.getBlockState(new BlockPos(worldPosition.getX(), worldPosition.getY(), offsetZ)).getBlock() == Blocks.WATER
+				|| isReactor2d;
 			if (isFaceWater) {
 			    if (!level.isClientSide) {
 				TileTurbine turbine = cachedTurbines[i][j][k];

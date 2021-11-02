@@ -1,6 +1,8 @@
 package nuclearscience.client.render.tile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Quaternion;
+import com.mojang.math.Vector3f;
 
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentDirection;
@@ -10,12 +12,10 @@ import electrodynamics.prefab.utilities.object.TransferPack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
-import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
 import nuclearscience.client.ClientRegister;
 import nuclearscience.common.settings.Constants;
 import nuclearscience.common.tile.TileMoltenSaltSupplier;

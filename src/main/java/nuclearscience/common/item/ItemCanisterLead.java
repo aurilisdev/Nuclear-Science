@@ -7,8 +7,6 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.registries.ForgeRegistries;
 import nuclearscience.DeferredRegisters;
 
-import net.minecraft.world.item.Item.Properties;
-
 public class ItemCanisterLead extends ItemCanister {
 
     public ItemCanisterLead(Properties itemProperty) {

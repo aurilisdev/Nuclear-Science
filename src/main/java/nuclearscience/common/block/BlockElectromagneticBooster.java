@@ -5,23 +5,23 @@ import java.util.List;
 
 import electrodynamics.common.block.BlockGenericMachine;
 import electrodynamics.prefab.tile.IWrenchable;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.storage.loot.LootContext.Builder;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.core.Direction;
-import net.minecraft.world.level.block.Mirror;
-import net.minecraft.world.level.block.Rotation;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.core.Direction;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.storage.loot.LootContext.Builder;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
@@ -29,15 +29,14 @@ import nuclearscience.api.fusion.IElectromagnet;
 import nuclearscience.common.block.facing.FacingDirection;
 import nuclearscience.common.block.facing.FacingDirectionProperty;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-
 public class BlockElectromagneticBooster extends Block implements IElectromagnet, IWrenchable {
     public static final FacingDirectionProperty FACINGDIRECTION = FacingDirectionProperty.create("side", FacingDirection.values());
 
     public BlockElectromagneticBooster() {
 	super(Properties.of(Material.GLASS).strength(3.5f, 20).harvestLevel(2).harvestTool(ToolType.PICKAXE).noOcclusion()
 		.isRedstoneConductor(BlockElectromagneticBooster::isntSolid));
-	registerDefaultState(stateDefinition.any().setValue(BlockGenericMachine.FACING, Direction.NORTH).setValue(FACINGDIRECTION, FacingDirection.NONE));
+	registerDefaultState(
+		stateDefinition.any().setValue(BlockGenericMachine.FACING, Direction.NORTH).setValue(FACINGDIRECTION, FacingDirection.NONE));
     }
 
     @Override
@@ -101,10 +100,6 @@ public class BlockElectromagneticBooster extends Block implements IElectromagnet
 	    current = rotate(current, Rotation.CLOCKWISE_180);
 	}
 	world.setBlockAndUpdate(pos, current);
-    }
-
-    private static boolean isntSolid(BlockState state, BlockGetter reader, BlockPos pos) {
-	return false;
     }
 
     @Override

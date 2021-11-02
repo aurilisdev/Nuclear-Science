@@ -5,13 +5,13 @@ import electrodynamics.common.item.subtype.SubtypeProcessorUpgrade;
 import electrodynamics.prefab.inventory.container.GenericContainer;
 import electrodynamics.prefab.inventory.container.slot.GenericSlot;
 import electrodynamics.prefab.inventory.container.slot.SlotRestricted;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.item.BucketItem;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.tile.TileNuclearBoiler;
 

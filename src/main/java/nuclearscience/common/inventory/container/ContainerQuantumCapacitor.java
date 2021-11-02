@@ -1,9 +1,9 @@
 package nuclearscience.common.inventory.container;
 
 import electrodynamics.prefab.inventory.container.GenericContainer;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import nuclearscience.DeferredRegisters;

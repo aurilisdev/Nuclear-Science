@@ -12,13 +12,13 @@ import electrodynamics.prefab.screen.component.ScreenComponentElectricInfo;
 import electrodynamics.prefab.screen.component.ScreenComponentInfo;
 import electrodynamics.prefab.screen.component.ScreenComponentProgress;
 import electrodynamics.prefab.utilities.object.TransferPack;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.TextComponent;
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import nuclearscience.api.radiation.IRadioactiveObject;
@@ -51,14 +51,14 @@ public class ScreenRadioisotopeGenerator extends GenericScreen<ContainerRadioiso
 	TransferPack transfer = TransferPack.ampsVoltage(currentOutput / Constants.RADIOISOTOPEGENERATOR_VOLTAGE,
 		Constants.RADIOISOTOPEGENERATOR_VOLTAGE);
 	list.add(new TranslatableComponent("gui.radioisotopegenerator.current",
-		new TextComponent(ChatFormatter.getElectricDisplayShort(transfer.getAmps(), ElectricUnit.AMPERE))
-			.withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
+		new TextComponent(ChatFormatter.getElectricDisplayShort(transfer.getAmps(), ElectricUnit.AMPERE)).withStyle(ChatFormatting.GRAY))
+			.withStyle(ChatFormatting.DARK_GRAY));
 	list.add(new TranslatableComponent("gui.radioisotopegenerator.output",
-		new TextComponent(ChatFormatter.getElectricDisplayShort(transfer.getWatts(), ElectricUnit.WATT))
-			.withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
+		new TextComponent(ChatFormatter.getElectricDisplayShort(transfer.getWatts(), ElectricUnit.WATT)).withStyle(ChatFormatting.GRAY))
+			.withStyle(ChatFormatting.DARK_GRAY));
 	list.add(new TranslatableComponent("gui.radioisotopegenerator.voltage",
-		new TextComponent(ChatFormatter.getElectricDisplayShort(transfer.getVoltage(), ElectricUnit.VOLTAGE))
-			.withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
+		new TextComponent(ChatFormatter.getElectricDisplayShort(transfer.getVoltage(), ElectricUnit.VOLTAGE)).withStyle(ChatFormatting.GRAY))
+			.withStyle(ChatFormatting.DARK_GRAY));
 	return list;
     }
 

@@ -3,15 +3,15 @@ package nuclearscience.api.radiation;
 import java.util.HashMap;
 
 import electrodynamics.prefab.utilities.object.Location;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.TickEvent.ServerTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -83,15 +83,13 @@ public class RadiationSystem {
 	    }
 	    Location end = new Location(entity.position());
 	    double radiation = 0;
-	    if (entity instanceof Player
-		    && (((Player) entity).getItemBySlot(EquipmentSlot.MAINHAND).getItem() instanceof ItemGeigerCounter
-			    || ((Player) entity).getItemBySlot(EquipmentSlot.OFFHAND).getItem() instanceof ItemGeigerCounter)) {
+	    if (entity instanceof Player && (((Player) entity).getItemBySlot(EquipmentSlot.MAINHAND).getItem() instanceof ItemGeigerCounter
+		    || ((Player) entity).getItemBySlot(EquipmentSlot.OFFHAND).getItem() instanceof ItemGeigerCounter)) {
 		double already = radiationMap.containsKey(entity) ? radiationMap.get(entity) : 0;
 		radiation = getRadiation(entity.level, source, end, strength);
 		radiationMap.put((Player) entity, already + radiation);
 	    }
-	    if (!(entity instanceof Player && ((Player) entity).isCreative()) && protection < 5
-		    && radiationMap.getOrDefault(entity, 11.0) > 4) {
+	    if (!(entity instanceof Player && ((Player) entity).isCreative()) && protection < 5 && radiationMap.getOrDefault(entity, 11.0) > 4) {
 		if (radiation == 0) {
 		    radiation = getRadiation(entity.level, source, end, strength);
 		}

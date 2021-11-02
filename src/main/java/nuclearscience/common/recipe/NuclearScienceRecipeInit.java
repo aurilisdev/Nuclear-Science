@@ -3,7 +3,7 @@ package nuclearscience.common.recipe;
 import electrodynamics.common.recipe.ElectrodynamicsRecipeInit;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import nuclearscience.common.recipe.categories.fluid3items2item.Fluid3Items2ItemRecipeTypes;
@@ -47,8 +47,8 @@ public class NuclearScienceRecipeInit {
     /* RECIPE SERIALIZERS */
 
     // O2O
-    public static final RegistryObject<RecipeSerializer<?>> FISSION_REACTOR_SERIALIZER = RECIPE_SERIALIZER
-	    .register(FissionReactorRecipe.RECIPE_GROUP, () -> O2ORecipeTypes.FISSION_REACTOR_JSON_SERIALIZER);
+    public static final RegistryObject<RecipeSerializer<?>> FISSION_REACTOR_SERIALIZER = RECIPE_SERIALIZER.register(FissionReactorRecipe.RECIPE_GROUP,
+	    () -> O2ORecipeTypes.FISSION_REACTOR_JSON_SERIALIZER);
     public static final RegistryObject<RecipeSerializer<?>> FUEL_REPROCESSOR_SERIALIZER = RECIPE_SERIALIZER
 	    .register(FuelReprocessorRecipe.RECIPE_GROUP, () -> O2ORecipeTypes.FUEL_REPROCESSOR_JSON_SERIALIZER);
 

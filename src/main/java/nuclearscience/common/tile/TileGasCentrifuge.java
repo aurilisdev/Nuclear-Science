@@ -13,11 +13,11 @@ import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.SoundRegister;
 import nuclearscience.common.inventory.container.ContainerGasCentrifuge;
@@ -53,8 +53,7 @@ public class TileGasCentrifuge extends GenericTileTicking {
 	ComponentFluidHandlerMulti tank = getComponent(ComponentType.FluidHandler);
 	boolean val = electro.getJoulesStored() >= processor.getUsage()
 		&& tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride, false).getAmount() >= REQUIRED / 60.0
-		&& inv.getItem(0).getCount() < inv.getItem(0).getMaxStackSize()
-		&& inv.getItem(1).getCount() < inv.getItem(1).getMaxStackSize();
+		&& inv.getItem(0).getCount() < inv.getItem(0).getMaxStackSize() && inv.getItem(1).getCount() < inv.getItem(1).getMaxStackSize();
 	if (!val && spinSpeed > 0) {
 	    spinSpeed = 0;
 	    this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();

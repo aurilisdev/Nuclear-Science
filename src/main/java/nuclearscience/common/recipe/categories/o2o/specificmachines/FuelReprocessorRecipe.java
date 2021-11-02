@@ -2,11 +2,11 @@ package nuclearscience.common.recipe.categories.o2o.specificmachines;
 
 import electrodynamics.common.recipe.categories.o2o.O2ORecipe;
 import electrodynamics.common.recipe.recipeutils.CountableIngredient;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.core.Registry;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 
 public class FuelReprocessorRecipe extends O2ORecipe {

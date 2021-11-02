@@ -7,8 +7,8 @@ import java.util.Set;
 
 import electrodynamics.common.network.NetworkRegistry;
 import electrodynamics.prefab.network.AbstractNetwork;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import nuclearscience.api.network.moltensalt.IMoltenSaltPipe;
 import nuclearscience.common.block.subtype.SubtypeMoltenSaltPipe;
 import nuclearscience.common.tile.TileHeatExchanger;

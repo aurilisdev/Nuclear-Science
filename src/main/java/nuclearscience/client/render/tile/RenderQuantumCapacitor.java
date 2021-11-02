@@ -1,15 +1,15 @@
 package nuclearscience.client.render.tile;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
 
 import electrodynamics.prefab.utilities.UtilitiesRendering;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
-import com.mojang.math.Vector3f;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import nuclearscience.common.tile.TileQuantumCapacitor;
 
 public class RenderQuantumCapacitor extends BlockEntityRenderer<TileQuantumCapacitor> {
