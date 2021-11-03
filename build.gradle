@@ -92,7 +92,7 @@ minecraft {
 }
 
 dependencies {
-    compile fileTree("C:/AmpzLibz")
+    implementation fileTree("C:/AmpzLibz")
     minecraft 'net.minecraftforge:forge:1.17.1-37.0.103'
 
   	compileOnly fg.deobf("mezz.jei:jei-1.17.1:8.1.0.26:api")
