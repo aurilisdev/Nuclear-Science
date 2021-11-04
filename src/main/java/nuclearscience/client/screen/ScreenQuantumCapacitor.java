@@ -30,8 +30,8 @@ public class ScreenQuantumCapacitor extends GenericScreen<ContainerQuantumCapaci
     private EditBox frequencyField;
 
     @Override
-    public void tick() {
-	super.tick();
+    protected void containerTick() {
+	super.containerTick();
 	outputField.tick();
 	frequencyField.tick();
     }
@@ -60,8 +60,8 @@ public class ScreenQuantumCapacitor extends GenericScreen<ContainerQuantumCapaci
 	frequencyField.setMaxLength(6);
 	frequencyField.setResponder(this::updateFreq);
 
-	children.add(outputField);
-	children.add(frequencyField);
+	addWidget(outputField);
+	addWidget(frequencyField);
     }
 
     private boolean needsUpdate = true;

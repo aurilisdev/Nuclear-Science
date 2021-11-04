@@ -21,9 +21,9 @@ import electrodynamics.prefab.tile.components.type.ComponentProcessor;
 import electrodynamics.prefab.tile.components.utils.AbstractFluidHandler;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -75,15 +75,15 @@ public class ScreenRadioactiveProcessor extends GenericScreen<ContainerRadioacti
 
     @Override
     protected ScreenComponentSlot createScreenSlot(Slot slot) {
-	return new ScreenComponentSlot(slot instanceof SlotRestricted && ((SlotRestricted) slot)
-		.mayPlace(new ItemStack(electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.basicspeed)))
+	return new ScreenComponentSlot(slot instanceof SlotRestricted res
+		&& res.mayPlace(new ItemStack(electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.basicspeed)))
 			? EnumSlotType.SPEED
 			: slot instanceof SlotRestricted ? EnumSlotType.LIQUID : EnumSlotType.NORMAL,
 		this, slot.x - 1, slot.y - 1);
     }
 
-    private List<? extends FormattedText> getEnergyInformation() {
-	ArrayList<FormattedText> list = new ArrayList<>();
+    private List<? extends FormattedCharSequence> getEnergyInformation() {
+	ArrayList<FormattedCharSequence> list = new ArrayList<>();
 	GenericTile box = menu.getHostFromIntArray();
 	if (box != null) {
 	    ComponentElectrodynamic electro = box.getComponent(ComponentType.Electrodynamic);
@@ -91,10 +91,10 @@ public class ScreenRadioactiveProcessor extends GenericScreen<ContainerRadioacti
 
 	    list.add(new TranslatableComponent("gui.radioactiveprocessor.usage",
 		    new TextComponent(ChatFormatter.getElectricDisplayShort(processor.getUsage() * 20, ElectricUnit.WATT))
-			    .withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
+			    .withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
 	    list.add(new TranslatableComponent("gui.radioactiveprocessor.voltage",
 		    new TextComponent(ChatFormatter.getElectricDisplayShort(electro.getVoltage(), ElectricUnit.VOLTAGE))
-			    .withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
+			    .withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
 	}
 	return list;
     }

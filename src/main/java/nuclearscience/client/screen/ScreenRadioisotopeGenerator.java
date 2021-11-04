@@ -14,9 +14,9 @@ import electrodynamics.prefab.screen.component.ScreenComponentProgress;
 import electrodynamics.prefab.utilities.object.TransferPack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
@@ -43,8 +43,8 @@ public class ScreenRadioisotopeGenerator extends GenericScreen<ContainerRadioiso
 	components.add(new ScreenComponentElectricInfo(this::getEnergyInformation, this, -ScreenComponentInfo.SIZE + 1, 2));
     }
 
-    private List<? extends FormattedText> getEnergyInformation() {
-	ArrayList<FormattedText> list = new ArrayList<>();
+    private List<? extends FormattedCharSequence> getEnergyInformation() {
+	ArrayList<FormattedCharSequence> list = new ArrayList<>();
 	ItemStack in = menu.getSlot(0).getItem();
 	IRadioactiveObject rad = RadiationRegister.get(in.getItem());
 	double currentOutput = in.getCount() * Constants.RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER * rad.getRadiationStrength();
@@ -52,13 +52,13 @@ public class ScreenRadioisotopeGenerator extends GenericScreen<ContainerRadioiso
 		Constants.RADIOISOTOPEGENERATOR_VOLTAGE);
 	list.add(new TranslatableComponent("gui.radioisotopegenerator.current",
 		new TextComponent(ChatFormatter.getElectricDisplayShort(transfer.getAmps(), ElectricUnit.AMPERE)).withStyle(ChatFormatting.GRAY))
-			.withStyle(ChatFormatting.DARK_GRAY));
+			.withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
 	list.add(new TranslatableComponent("gui.radioisotopegenerator.output",
 		new TextComponent(ChatFormatter.getElectricDisplayShort(transfer.getWatts(), ElectricUnit.WATT)).withStyle(ChatFormatting.GRAY))
-			.withStyle(ChatFormatting.DARK_GRAY));
+			.withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
 	list.add(new TranslatableComponent("gui.radioisotopegenerator.voltage",
 		new TextComponent(ChatFormatter.getElectricDisplayShort(transfer.getVoltage(), ElectricUnit.VOLTAGE)).withStyle(ChatFormatting.GRAY))
-			.withStyle(ChatFormatting.DARK_GRAY));
+			.withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
 	return list;
     }
 
