@@ -7,21 +7,15 @@ import electrodynamics.prefab.utilities.UtilitiesRendering;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.world.level.block.RenderShape;
 import nuclearscience.client.ClientRegister;
 import nuclearscience.common.tile.TileTurbine;
 
-public class RenderTurbine extends BlockEntityRenderer<TileTurbine> {
-
-    public RenderTurbine(BlockEntityRenderDispatcher rendererDispatcherIn) {
-	super(rendererDispatcherIn);
-    }
+public class RenderTurbine implements BlockEntityRenderer<TileTurbine> {
 
     @Override
-    @Deprecated
     public void render(TileTurbine tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn,
 	    int combinedOverlayIn) {
 	boolean isCore = tileEntityIn.isCore;
