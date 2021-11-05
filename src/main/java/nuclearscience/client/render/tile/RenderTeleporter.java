@@ -11,6 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
@@ -19,9 +20,10 @@ import nuclearscience.client.ClientRegister;
 import nuclearscience.common.tile.TileTeleporter;
 
 public class RenderTeleporter implements BlockEntityRenderer<TileTeleporter> {
+    public RenderTeleporter(BlockEntityRendererProvider.Context context) {
+    }
 
     @Override
-    @Deprecated
     public void render(TileTeleporter tileEntityIn, float partialTicks, PoseStack stack, MultiBufferSource bufferIn, int combinedLightIn,
 	    int combinedOverlayIn) {
 	stack.pushPose();

@@ -7,11 +7,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TextComponent;
 import nuclearscience.common.tile.TileFusionReactorCore;
 
 public class RenderFusionReactorCore implements BlockEntityRenderer<TileFusionReactorCore> {
+    public RenderFusionReactorCore(BlockEntityRendererProvider.Context context) {
+    }
 
     @Override
     public void render(TileFusionReactorCore tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn,

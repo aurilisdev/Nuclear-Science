@@ -6,9 +6,12 @@ import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import nuclearscience.common.tile.TileQuantumCapacitor;
 
 public class RenderQuantumCapacitor implements BlockEntityRenderer<TileQuantumCapacitor> {
+    public RenderQuantumCapacitor(BlockEntityRendererProvider.Context context) {
+    }
 
     @Override
     public void render(TileQuantumCapacitor tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn,

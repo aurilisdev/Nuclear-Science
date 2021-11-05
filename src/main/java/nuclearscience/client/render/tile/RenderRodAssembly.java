@@ -8,12 +8,15 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
 import nuclearscience.client.ClientRegister;
 import nuclearscience.common.tile.TileControlRodAssembly;
 
 public class RenderRodAssembly implements BlockEntityRenderer<TileControlRodAssembly> {
+    public RenderRodAssembly(BlockEntityRendererProvider.Context context) {
+    }
 
     @Override
     public void render(TileControlRodAssembly tileEntityIn, float partialTicks, PoseStack stack, MultiBufferSource bufferIn, int combinedLightIn,
