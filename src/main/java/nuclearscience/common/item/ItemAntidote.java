@@ -24,12 +24,11 @@ public class ItemAntidote extends Item {
 	if (!worldIn.isClientSide) {
 	    entityLiving.curePotionEffects(stack);
 	}
-	if (entityLiving instanceof ServerPlayer) {
-	    ServerPlayer serverplayerentity = (ServerPlayer) entityLiving;
+	if (entityLiving instanceof ServerPlayer serverplayerentity) {
 	    CriteriaTriggers.CONSUME_ITEM.trigger(serverplayerentity, stack);
 	    serverplayerentity.awardStat(Stats.ITEM_USED.get(this));
 	}
-	if (entityLiving instanceof Player && !((Player) entityLiving).abilities.instabuild) {
+	if (entityLiving instanceof Player pl && !pl.getAbilities().instabuild) {
 	    stack.shrink(1);
 	}
 	return stack;
@@ -47,7 +46,7 @@ public class ItemAntidote extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
-	return ItemUtils.useDrink(worldIn, playerIn, handIn);
+	return ItemUtils.startUsingInstantly(worldIn, playerIn, handIn);
     }
 
 }
