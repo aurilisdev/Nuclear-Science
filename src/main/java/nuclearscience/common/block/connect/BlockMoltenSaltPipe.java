@@ -243,7 +243,7 @@ public class BlockMoltenSaltPipe extends Block implements SimpleWaterloggedBlock
     public boolean hasTileEntity(BlockState state) {
 	return true;
     }
-
+    
     @Override
     public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
 	return new TileMoltenSaltPipe();

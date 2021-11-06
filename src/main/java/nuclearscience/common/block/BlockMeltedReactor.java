@@ -10,13 +10,12 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
-import net.minecraftforge.common.ToolType;
 import nuclearscience.common.tile.TileMeltedReactor;
 
 public class BlockMeltedReactor extends BaseEntityBlock {
 
     public BlockMeltedReactor() {
-	super(Properties.of(Material.METAL).strength(250.0f, 999.0f).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).noOcclusion());
+	super(Properties.of(Material.METAL).strength(250.0f, 999.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion());
     }
 
     @Override

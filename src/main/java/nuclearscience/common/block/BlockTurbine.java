@@ -29,14 +29,13 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.loot.LootContext.Builder;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.common.ToolType;
 import nuclearscience.common.tile.TileTurbine;
 
 public class BlockTurbine extends BaseEntityBlock implements IWrenchable {
     public static final BooleanProperty RENDER = BooleanProperty.create("render");
 
     public BlockTurbine() {
-	super(Properties.of(Material.METAL).strength(3.5F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).noOcclusion());
+	super(Properties.of(Material.METAL).strength(3.5F).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion());
 	registerDefaultState(stateDefinition.any().setValue(RENDER, true));
     }
 
