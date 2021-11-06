@@ -46,6 +46,7 @@ public class EntityParticle extends Entity {
 
     public EntityParticle(Direction direction, Level worldIn, Location pos) {
 	this(DeferredRegisters.ENTITY_PARTICLE.get(), worldIn);
+	//TODO don't know what this one used to be
 	setPosAndOldPos(pos.x(), pos.y(), pos.z());
 	this.direction = direction;
 	noCulling = true;
@@ -59,7 +60,7 @@ public class EntityParticle extends Entity {
 	BlockEntity tile = level.getBlockEntity(source);
 	if (!level.isClientSide) {
 	    if (!(tile instanceof TileParticleInjector)) {
-		remove();
+		remove(RemovalReason.DISCARDED);
 		return;
 	    }
 	    ((TileParticleInjector) tile).addParticle(this);
@@ -78,7 +79,7 @@ public class EntityParticle extends Entity {
 	Location source = new Location(blockPosition());
 	double totstrength = 1000;
 	double range = 1;
-	AABB bb = AABB.ofSize(range, range, range);
+	AABB bb = AABB.ofSize(new Vec3(0, 0, 0), range, range, range);
 	bb = bb.move(new Vec3(source.x(), source.y(), source.z()));
 	List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, bb);
 	for (LivingEntity living : list) {

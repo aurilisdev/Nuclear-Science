@@ -24,7 +24,6 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ToolType;
 import nuclearscience.api.fusion.IElectromagnet;
 import nuclearscience.common.block.facing.FacingDirection;
 import nuclearscience.common.block.facing.FacingDirectionProperty;
@@ -33,8 +32,10 @@ public class BlockElectromagneticBooster extends Block implements IElectromagnet
     public static final FacingDirectionProperty FACINGDIRECTION = FacingDirectionProperty.create("side", FacingDirection.values());
 
     public BlockElectromagneticBooster() {
-	super(Properties.of(Material.GLASS).strength(3.5f, 20).harvestLevel(2).harvestTool(ToolType.PICKAXE).noOcclusion()
-		.isRedstoneConductor(BlockElectromagneticBooster::isntSolid));
+	super(Properties.of(Material.GLASS).strength(3.5f, 20).requiresCorrectToolForDrops().noOcclusion()
+		.isRedstoneConductor((p_152653_, p_152654_, p_152655_) -> {
+		    return false;
+		}));
 	registerDefaultState(
 		stateDefinition.any().setValue(BlockGenericMachine.FACING, Direction.NORTH).setValue(FACINGDIRECTION, FacingDirection.NONE));
     }

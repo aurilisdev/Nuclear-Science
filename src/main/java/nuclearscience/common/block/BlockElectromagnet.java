@@ -18,7 +18,6 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ToolType;
 import nuclearscience.api.fusion.IElectromagnet;
 
 public class BlockElectromagnet extends Block implements IElectromagnet {
@@ -33,8 +32,10 @@ public class BlockElectromagnet extends Block implements IElectromagnet {
     }
 
     public BlockElectromagnet(boolean isGlass) {
-	super(Properties.of(isGlass ? Material.GLASS : Material.METAL).strength(3.5f, 20).harvestLevel(2).harvestTool(ToolType.PICKAXE).noOcclusion()
-		.isRedstoneConductor(BlockElectromagnet::isntSolid));
+	super(Properties.of(isGlass ? Material.GLASS : Material.METAL).strength(3.5f, 20).requiresCorrectToolForDrops().noOcclusion()
+		.isRedstoneConductor((p_152653_, p_152654_, p_152655_) -> {
+		    return false;
+		}));
 	this.isGlass = isGlass;
     }
 

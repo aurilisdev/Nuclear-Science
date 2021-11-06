@@ -23,6 +23,7 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -195,7 +196,7 @@ public class NuclearSciencePlugin implements IModPlugin {
 
 	for (ItemStack itemStack : nsMachines) {
 	    temp = itemStack.getItem().toString();
-	    registration.addIngredientInfo(itemStack, VanillaTypes.ITEM, "info.jei.block." + temp);
+	    registration.addIngredientInfo(itemStack, VanillaTypes.ITEM, new TranslatableComponent("info.jei.block." + temp));
 	}
 
     }

@@ -20,7 +20,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
-import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -99,7 +98,7 @@ import nuclearscience.common.tile.network.TileMoltenSaltPipe;
 public class DeferredRegisters {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, References.ID);
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, References.ID);
-    public static final DeferredRegister<BlockEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, References.ID);
+    public static final DeferredRegister<BlockEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, References.ID);
     public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, References.ID);
     public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, References.ID);
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, References.ID);
@@ -163,7 +162,7 @@ public class DeferredRegisters {
 	BLOCKS.register("radioactiveprocessor", supplier(blockRadioactiveProcessor = new BlockRadioactiveProcessor()));
 	BLOCKS.register("msrfuelpreprocessor", supplier(blockMSRFuelPreProcessor = new BlockMSRFuelPreProcessor()));
 	BLOCKS.register("blocklead", supplier(blocklead = new Block(Properties.of(Material.METAL, MaterialColor.COLOR_BLACK).strength(5.0f, 3.0f)
-		.sound(SoundType.METAL).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).harvestLevel(1))));
+		.sound(SoundType.METAL).requiresCorrectToolForDrops())));
 	BLOCKS.register("msrreactorcore", supplier(blockMsrReactorCore = new BlockMSRReactorCore()));
 	BLOCKS.register("heatexchanger", supplier(blockHeatExchanger = new BlockHeatExchanger()));
 	BLOCKS.register("moltensaltsupplier", supplier(blockMoltenSaltSupplier = new BlockMoltenSaltSupplier()));

@@ -22,8 +22,8 @@ public class BlockElectromagneticSwitch extends BlockElectromagnet {
     }
 
     @Override
-    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-	return new TileElectromagneticSwitch();
+    public BlockEntity createBlockEntity(BlockState state, BlockGetter world) {
+    	return new TileElectromagneticSwitch();
     }
 
     @Override

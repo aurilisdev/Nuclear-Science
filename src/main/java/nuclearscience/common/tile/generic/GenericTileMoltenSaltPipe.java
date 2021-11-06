@@ -14,6 +14,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.api.network.moltensalt.IMoltenSaltPipe;
 import nuclearscience.common.network.MoltenSaltNetwork;
 import nuclearscience.common.tile.TileHeatExchanger;
@@ -27,8 +28,8 @@ public abstract class GenericTileMoltenSaltPipe extends GenericTile implements I
 	return moltenSaltNetwork;
     }
 
-    protected GenericTileMoltenSaltPipe(BlockEntityType<?> tileEntityTypeIn) {
-	super(tileEntityTypeIn);
+    protected GenericTileMoltenSaltPipe(BlockEntityType<?> tileEntityTypeIn, BlockPos pos, BlockState state) {
+    	super(tileEntityTypeIn, pos, state);
 	addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket));
     }
 
