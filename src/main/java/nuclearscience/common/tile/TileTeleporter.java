@@ -49,7 +49,6 @@ public class TileTeleporter extends GenericTileTicking {
 	}
 	if (cooldown <= 0) {
 	    cooldown = 20;
-	    System.out.println(electro.getJoulesStored());
 	    if (electro.getJoulesStored() == electro.getMaxJoulesStored()) {
 		AABB BB = new AABB(getBlockPos(), getBlockPos().offset(1, 2, 1));
 		List<Player> player = getLevel().getEntities(EntityType.PLAYER, BB, en -> true);

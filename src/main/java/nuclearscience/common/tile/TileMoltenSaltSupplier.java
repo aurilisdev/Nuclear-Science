@@ -13,7 +13,6 @@ import electrodynamics.prefab.utilities.object.TransferPack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerMoltenSaltSupplier;
@@ -51,8 +50,7 @@ public class TileMoltenSaltSupplier extends GenericTileTicking {
 	    if (tickable.getTicks() % 40 == 0) {
 		output.update();
 		ItemStack in = this.<ComponentInventory>getComponent(ComponentType.Inventory).getItem(0);
-		if (in.getCount() > 0 && output.valid() && output.<BlockEntity>getSafe() instanceof TileMSRReactorCore) {
-		    TileMSRReactorCore core = output.getSafe();
+		if (in.getCount() > 0 && output.valid() && output.getSafe() instanceof TileMSRReactorCore core) {
 		    if (core.<ComponentDirection>getComponent(ComponentType.Direction).getDirection() == dir) {
 			if (TileMSRReactorCore.FUEL_CAPACITY - core.currentFuel >= 250) {
 			    in.shrink(1);
