@@ -22,6 +22,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.SoundType;
@@ -44,7 +45,7 @@ import nuclearscience.common.tile.TileHeatExchanger;
 import nuclearscience.common.tile.TileMSRReactorCore;
 import nuclearscience.common.tile.network.TileMoltenSaltPipe;
 
-public class BlockMoltenSaltPipe extends Block implements SimpleWaterloggedBlock {
+public class BlockMoltenSaltPipe extends BaseEntityBlock implements SimpleWaterloggedBlock {
 
     public static final Map<Direction, EnumProperty<EnumConnectType>> FACING_TO_PROPERTY_MAP = Util.make(Maps.newEnumMap(Direction.class), p -> {
 	p.put(Direction.NORTH, EnumConnectType.NORTH);
@@ -203,8 +204,8 @@ public class BlockMoltenSaltPipe extends Block implements SimpleWaterloggedBlock
 	super.onPlace(state, worldIn, pos, oldState, isMoving);
 	if (!worldIn.isClientSide) {
 	    BlockEntity tile = worldIn.getBlockEntity(pos);
-	    if (tile instanceof IMoltenSaltPipe) {
-		((IMoltenSaltPipe) tile).refreshNetwork();
+	    if (tile instanceof IMoltenSaltPipe s) {
+		s.refreshNetwork();
 	    }
 	}
     }
@@ -214,8 +215,8 @@ public class BlockMoltenSaltPipe extends Block implements SimpleWaterloggedBlock
 	super.onNeighborChange(state, world, pos, neighbor);
 	if (!world.isClientSide()) {
 	    BlockEntity tile = world.getBlockEntity(pos);
-	    if (tile instanceof IMoltenSaltPipe) {
-		((IMoltenSaltPipe) tile).refreshNetworkIfChange();
+	    if (tile instanceof IMoltenSaltPipe s) {
+		s.refreshNetworkIfChange();
 	    }
 	}
     }
@@ -240,12 +241,8 @@ public class BlockMoltenSaltPipe extends Block implements SimpleWaterloggedBlock
     }
 
     @Override
-    public boolean hasTileEntity(BlockState state) {
-	return true;
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+	return new TileMoltenSaltPipe(pos, state);
     }
-    
-    @Override
-    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-	return new TileMoltenSaltPipe();
-    }
+
 }

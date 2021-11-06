@@ -12,7 +12,7 @@ public class TileMoltenSaltPipe extends GenericTileMoltenSaltPipe {
     public double transmit = 0;
 
     public TileMoltenSaltPipe(BlockPos pos, BlockState state) {
-    	super(DeferredRegisters.TILE_MOLTENSALTPIPE.get(), pos, state);
+	super(DeferredRegisters.TILE_MOLTENSALTPIPE.get(), pos, state);
     }
 
     public SubtypeMoltenSaltPipe pipe = null;
@@ -32,8 +32,8 @@ public class TileMoltenSaltPipe extends GenericTileMoltenSaltPipe {
     }
 
     @Override
-    public void load(BlockState state, CompoundTag compound) {
-	super.load(state, compound);
+    public void load(CompoundTag compound) {
+	super.load(compound);
 	pipe = SubtypeMoltenSaltPipe.values()[compound.getInt("ord")];
     }
 

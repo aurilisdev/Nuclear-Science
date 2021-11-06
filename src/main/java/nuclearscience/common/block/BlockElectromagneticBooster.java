@@ -41,19 +41,19 @@ public class BlockElectromagneticBooster extends Block implements IElectromagnet
     }
 
     @Override
-    @Deprecated
+    @Deprecated(since = "since overriden method is", forRemoval = false)
     public List<ItemStack> getDrops(BlockState state, Builder builder) {
 	return Arrays.asList(new ItemStack(this));
     }
 
     @Override
-    @Deprecated
+    @Deprecated(since = "since overriden method is", forRemoval = false)
     public BlockState rotate(BlockState state, Rotation rot) {
 	return state.setValue(BlockGenericMachine.FACING, rot.rotate(state.getValue(BlockGenericMachine.FACING)));
     }
 
-    @Deprecated
     @Override
+    @Deprecated(since = "since overriden method is", forRemoval = false)
     public BlockState mirror(BlockState state, Mirror mirrorIn) {
 	return state.rotate(mirrorIn.getRotation(state.getValue(BlockGenericMachine.FACING)));
     }
@@ -104,14 +104,14 @@ public class BlockElectromagneticBooster extends Block implements IElectromagnet
     }
 
     @Override
-    @Deprecated
+    @Deprecated(since = "since overriden method is", forRemoval = false)
     public VoxelShape getVisualShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext context) {
 	return Shapes.empty();
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    @Deprecated
+    @Deprecated(since = "since overriden method is", forRemoval = false)
     public float getShadeBrightness(BlockState state, BlockGetter worldIn, BlockPos pos) {
 	return 1.0F;
     }

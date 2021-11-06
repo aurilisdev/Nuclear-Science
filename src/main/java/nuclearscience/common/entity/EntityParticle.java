@@ -46,8 +46,7 @@ public class EntityParticle extends Entity {
 
     public EntityParticle(Direction direction, Level worldIn, Location pos) {
 	this(DeferredRegisters.ENTITY_PARTICLE.get(), worldIn);
-	//TODO don't know what this one used to be
-	setPosAndOldPos(pos.x(), pos.y(), pos.z());
+	setPos(new Vec3(pos.x(), pos.y(), pos.z()));
 	this.direction = direction;
 	noCulling = true;
 	if (worldIn.isClientSide) {

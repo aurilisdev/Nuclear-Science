@@ -20,9 +20,9 @@ public class QuantumCapacitorData extends SavedData {
 	super();
     }
 
-    @Override
-    public void load(CompoundTag source) {
-	powermapping.clear();
+    public static QuantumCapacitorData load(CompoundTag source) {
+	QuantumCapacitorData data = new QuantumCapacitorData();
+	data.powermapping.clear();
 	ListTag list = source.getList("list", 10);
 	for (Tag en : list) {
 	    CompoundTag compound = (CompoundTag) en;
@@ -35,8 +35,9 @@ public class QuantumCapacitorData extends SavedData {
 		double joules = inside.getDouble("joules");
 		info.put(frequency, joules);
 	    }
-	    powermapping.put(id, info);
+	    data.powermapping.put(id, info);
 	}
+	return data;
     }
 
     @Override
@@ -62,7 +63,7 @@ public class QuantumCapacitorData extends SavedData {
     public static QuantumCapacitorData get(Level world) {
 	if (world instanceof ServerLevel sl) {
 	    DimensionDataStorage storage = sl.getDataStorage();
-	    QuantumCapacitorData instance = storage.computeIfAbsent(QuantumCapacitorData::new, DATANAME);
+	    QuantumCapacitorData instance = storage.computeIfAbsent(QuantumCapacitorData::load, QuantumCapacitorData::new, DATANAME);
 	    if (instance == null) {
 		instance = new QuantumCapacitorData();
 		storage.set(DATANAME, instance);

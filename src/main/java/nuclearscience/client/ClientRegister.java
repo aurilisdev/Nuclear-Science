@@ -111,8 +111,8 @@ public class ClientRegister {
 	ItemBlockRenderTypes.setRenderLayer(DeferredRegisters.blockChemicalExtractor, ClientRegister::shouldMultilayerRender);
 	ItemBlockRenderTypes.setRenderLayer(DeferredRegisters.blockNuclearBoiler, ClientRegister::shouldMultilayerRender);
 	ItemBlockRenderTypes.setRenderLayer(DeferredRegisters.blockReactorCore, ClientRegister::shouldMultilayerRender);
-	ItemBlockRenderTypes.setRenderLayer(DeferredRegisters.blockElectromagneticGlass.getBlock(), RenderType.cutout());
-	ItemBlockRenderTypes.setRenderLayer(DeferredRegisters.blockElectromagneticBooster.getBlock(), RenderType.translucent());
+	ItemBlockRenderTypes.setRenderLayer(DeferredRegisters.blockElectromagneticGlass, RenderType.cutout());
+	ItemBlockRenderTypes.setRenderLayer(DeferredRegisters.blockElectromagneticBooster, RenderType.translucent());
 	ItemBlockRenderTypes.setRenderLayer(DeferredRegisters.blockPlasma, RenderType.translucent());
     }
 
