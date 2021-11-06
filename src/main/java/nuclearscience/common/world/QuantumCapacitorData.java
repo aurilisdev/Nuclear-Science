@@ -17,7 +17,7 @@ public class QuantumCapacitorData extends SavedData {
     public HashMap<UUID, HashMap<Integer, Double>> powermapping = new HashMap<>();
 
     public QuantumCapacitorData() {
-	super(DATANAME);
+	super();
     }
 
     @Override
@@ -60,12 +60,12 @@ public class QuantumCapacitorData extends SavedData {
     }
 
     public static QuantumCapacitorData get(Level world) {
-	if (world instanceof ServerLevel) {
-	    DimensionDataStorage storage = ((ServerLevel) world).getDataStorage();
+	if (world instanceof ServerLevel sl) {
+	    DimensionDataStorage storage = sl.getDataStorage();
 	    QuantumCapacitorData instance = storage.computeIfAbsent(QuantumCapacitorData::new, DATANAME);
 	    if (instance == null) {
 		instance = new QuantumCapacitorData();
-		storage.set(instance);
+		storage.set(DATANAME, instance);
 	    }
 	    return instance;
 	}

@@ -9,8 +9,8 @@ import electrodynamics.prefab.utilities.UtilitiesRendering;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.material.Fluids;
@@ -18,14 +18,11 @@ import nuclearscience.DeferredRegisters;
 import nuclearscience.client.ClientRegister;
 import nuclearscience.common.tile.TileNuclearBoiler;
 
-public class RenderNuclearBoiler extends BlockEntityRenderer<TileNuclearBoiler> {
-
-    public RenderNuclearBoiler(BlockEntityRenderDispatcher rendererDispatcherIn) {
-	super(rendererDispatcherIn);
+public class RenderNuclearBoiler implements BlockEntityRenderer<TileNuclearBoiler> {
+    public RenderNuclearBoiler(BlockEntityRendererProvider.Context context) {
     }
 
     @Override
-    @Deprecated
     public void render(TileNuclearBoiler tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn,
 	    int combinedOverlayIn) {
 	matrixStackIn.pushPose();

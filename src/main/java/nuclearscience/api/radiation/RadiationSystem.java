@@ -65,8 +65,8 @@ public class RadiationSystem {
 	    if (isPlayer) {
 		Player player = (Player) entity;
 		if (!player.isCreative()) {
-		    for (int i = 0; i < player.inventory.armor.size(); i++) {
-			ItemStack next = player.inventory.armor.get(i);
+		    for (int i = 0; i < player.getInventory().armor.size(); i++) {
+			ItemStack next = player.getInventory().armor.get(i);
 			if (next.getItem() instanceof ItemHazmatArmor) {
 			    protection++;
 			    float damage = (float) (strength * 2.15f) / 2169.9975f;
@@ -74,7 +74,7 @@ public class RadiationSystem {
 				int integerDamage = (int) Math.max(1, damage);
 				if (next.getDamageValue() > next.getMaxDamage()
 					|| next.hurt(integerDamage, entity.level.random, (ServerPlayer) player)) {
-				    player.inventory.armor.set(i, ItemStack.EMPTY);
+				    player.getInventory().armor.set(i, ItemStack.EMPTY);
 				}
 			    }
 			}
@@ -83,13 +83,13 @@ public class RadiationSystem {
 	    }
 	    Location end = new Location(entity.position());
 	    double radiation = 0;
-	    if (entity instanceof Player && (((Player) entity).getItemBySlot(EquipmentSlot.MAINHAND).getItem() instanceof ItemGeigerCounter
-		    || ((Player) entity).getItemBySlot(EquipmentSlot.OFFHAND).getItem() instanceof ItemGeigerCounter)) {
+	    if (entity instanceof Player pl && (pl.getItemBySlot(EquipmentSlot.MAINHAND).getItem() instanceof ItemGeigerCounter
+		    || pl.getItemBySlot(EquipmentSlot.OFFHAND).getItem() instanceof ItemGeigerCounter)) {
 		double already = radiationMap.containsKey(entity) ? radiationMap.get(entity) : 0;
 		radiation = getRadiation(entity.level, source, end, strength);
 		radiationMap.put((Player) entity, already + radiation);
 	    }
-	    if (!(entity instanceof Player && ((Player) entity).isCreative()) && protection < 5 && radiationMap.getOrDefault(entity, 11.0) > 4) {
+	    if (!(entity instanceof Player pl && pl.isCreative()) && protection < 5 && radiationMap.getOrDefault(entity, 11.0) > 4) {
 		if (radiation == 0) {
 		    radiation = getRadiation(entity.level, source, end, strength);
 		}

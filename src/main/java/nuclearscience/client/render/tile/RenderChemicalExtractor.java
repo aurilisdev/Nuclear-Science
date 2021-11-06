@@ -9,22 +9,19 @@ import electrodynamics.prefab.utilities.UtilitiesRendering;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.material.Fluids;
 import nuclearscience.client.ClientRegister;
 import nuclearscience.common.tile.TileChemicalExtractor;
 
-public class RenderChemicalExtractor extends BlockEntityRenderer<TileChemicalExtractor> {
-
-    public RenderChemicalExtractor(BlockEntityRenderDispatcher rendererDispatcherIn) {
-	super(rendererDispatcherIn);
+public class RenderChemicalExtractor implements BlockEntityRenderer<TileChemicalExtractor> {
+    public RenderChemicalExtractor(BlockEntityRendererProvider.Context context) {
     }
 
     @Override
-    @Deprecated
     public void render(TileChemicalExtractor tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn,
 	    int combinedLightIn, int combinedOverlayIn) {
 	BakedModel ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_CHEMICALEXTRACTORWATER);

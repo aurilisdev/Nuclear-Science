@@ -8,20 +8,17 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.ModelBlockRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.BakedModel;
 import nuclearscience.client.ClientRegister;
 import nuclearscience.common.tile.TileReactorCore;
 
-public class RenderReactorCore extends BlockEntityRenderer<TileReactorCore> {
-
-    public RenderReactorCore(BlockEntityRenderDispatcher rendererDispatcherIn) {
-	super(rendererDispatcherIn);
+public class RenderReactorCore implements BlockEntityRenderer<TileReactorCore> {
+    public RenderReactorCore(BlockEntityRendererProvider.Context context) {
     }
 
     @Override
-    @Deprecated
     public void render(TileReactorCore tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn,
 	    int combinedOverlayIn) {
 	ModelBlockRenderer.enableCaching();

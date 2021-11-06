@@ -12,21 +12,20 @@ import electrodynamics.prefab.utilities.object.TransferPack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
 import nuclearscience.client.ClientRegister;
 import nuclearscience.common.settings.Constants;
 import nuclearscience.common.tile.TileMoltenSaltSupplier;
 
-public class RenderMoltenSaltSupplier extends BlockEntityRenderer<TileMoltenSaltSupplier> {
+public class RenderMoltenSaltSupplier implements BlockEntityRenderer<TileMoltenSaltSupplier> {
 
     private static final TransferPack PACK = TransferPack.joulesVoltage(Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK,
 	    Constants.MOLTENSALTSUPPLIER_VOLTAGE);
 
-    public RenderMoltenSaltSupplier(BlockEntityRenderDispatcher rendererDispatcherIn) {
-	super(rendererDispatcherIn);
+    public RenderMoltenSaltSupplier(BlockEntityRendererProvider.Context context) {
     }
 
     @Override

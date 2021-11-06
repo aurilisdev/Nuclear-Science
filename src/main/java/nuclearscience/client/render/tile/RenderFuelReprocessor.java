@@ -10,17 +10,15 @@ import electrodynamics.prefab.utilities.UtilitiesRendering;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
 import nuclearscience.client.ClientRegister;
 import nuclearscience.common.tile.TileFuelReprocessor;
 
-public class RenderFuelReprocessor extends BlockEntityRenderer<TileFuelReprocessor> {
-
-    public RenderFuelReprocessor(BlockEntityRenderDispatcher rendererDispatcherIn) {
-	super(rendererDispatcherIn);
+public class RenderFuelReprocessor implements BlockEntityRenderer<TileFuelReprocessor> {
+    public RenderFuelReprocessor(BlockEntityRendererProvider.Context context) {
     }
 
     @Override
