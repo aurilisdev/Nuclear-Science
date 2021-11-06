@@ -24,6 +24,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -219,6 +220,11 @@ public class BlockMoltenSaltPipe extends BaseEntityBlock implements SimpleWaterl
 		s.refreshNetworkIfChange();
 	    }
 	}
+    }
+
+    @Override
+    public RenderShape getRenderShape(BlockState state) {
+	return RenderShape.MODEL;
     }
 
     @Override

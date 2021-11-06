@@ -88,11 +88,10 @@ public class BlockTurbine extends BaseEntityBlock implements IWrenchable {
     @Override
     @Deprecated
     public RenderShape getRenderShape(BlockState state) {
-	RenderShape type = super.getRenderShape(state);
+	super.getRenderShape(state);
 	if (state.getValue(RENDER) != Boolean.TRUE) {
-	    type = RenderShape.INVISIBLE;
 	}
-	return type;
+	return RenderShape.MODEL;
     }
 
     @Override

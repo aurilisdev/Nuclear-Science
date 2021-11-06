@@ -9,7 +9,7 @@ import nuclearscience.References;
 
 public class ToolTypeConverter {
 
-	private static String BLOCK_DIRECTORY = "src/main/resources/assets/nuclearscience/blockstates";
+    private static String BLOCK_DIRECTORY = "src/main/resources/assets/nuclearscience/blockstates";
     private static String DATA_LOC = "src/main/resources/data/minecraft/tags/blocks/minable/blocknames.txt";
 
     public static void main(String[] args) {

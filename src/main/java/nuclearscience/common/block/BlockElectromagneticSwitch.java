@@ -36,7 +36,7 @@ public class BlockElectromagneticSwitch extends BaseEntityBlock implements IElec
     }
 
     public BlockElectromagneticSwitch() {
-	super(Properties.of( Material.METAL).strength(3.5f, 20).requiresCorrectToolForDrops().noOcclusion()
+	super(Properties.of(Material.METAL).strength(3.5f, 20).requiresCorrectToolForDrops().noOcclusion()
 		.isRedstoneConductor((p1, p2, p3) -> false));
     }
 

@@ -29,7 +29,7 @@ public abstract class GenericTileMoltenSaltPipe extends GenericTile implements I
     }
 
     protected GenericTileMoltenSaltPipe(BlockEntityType<?> tileEntityTypeIn, BlockPos pos, BlockState state) {
-    	super(tileEntityTypeIn, pos, state);
+	super(tileEntityTypeIn, pos, state);
 	addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket));
     }
 
