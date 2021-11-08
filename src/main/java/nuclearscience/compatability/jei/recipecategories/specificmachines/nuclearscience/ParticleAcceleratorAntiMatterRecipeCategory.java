@@ -75,7 +75,7 @@ public class ParticleAcceleratorAntiMatterRecipeCategory extends Electrodynamics
     @Override
     public void setIngredients(PsuedoO2ORecipe recipe, IIngredients ingredients) {
 	ingredients.setInputLists(VanillaTypes.ITEM, recipeInput(recipe));
-	ingredients.setOutput(VanillaTypes.ITEM, recipe.OUTPUT);
+	ingredients.setOutput(VanillaTypes.ITEM, recipe.outputItemStack);
     }
 
     @Override
@@ -117,7 +117,7 @@ public class ParticleAcceleratorAntiMatterRecipeCategory extends Electrodynamics
     private static List<List<ItemStack>> recipeInput(PsuedoO2ORecipe recipe) {
 
 	List<ItemStack> emagCell = new ArrayList<>();
-	emagCell.add(recipe.INPUT.getItems()[0]);
+	emagCell.add(recipe.ingredient.getItems()[0]);
 
 	/* Gets a list of all Vanilla items */
 

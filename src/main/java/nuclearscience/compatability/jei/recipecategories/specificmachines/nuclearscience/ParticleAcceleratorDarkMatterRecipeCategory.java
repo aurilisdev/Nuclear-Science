@@ -78,7 +78,7 @@ public class ParticleAcceleratorDarkMatterRecipeCategory extends Electrodynamics
 	inputs.addAll(getIngredients(recipe));
 
 	ingredients.setInputIngredients(inputs);
-	ingredients.setOutput(VanillaTypes.ITEM, recipe.OUTPUT);
+	ingredients.setOutput(VanillaTypes.ITEM, recipe.outputItemStack);
     }
 
     @Override
@@ -114,7 +114,7 @@ public class ParticleAcceleratorDarkMatterRecipeCategory extends Electrodynamics
     }
 
     public NonNullList<Ingredient> getIngredients(PsuedoO2ORecipe recipe) {
-	Ingredient ingredient1 = recipe.INPUT;
+	Ingredient ingredient1 = recipe.ingredient;
 	NonNullList<Ingredient> ingredients = NonNullList.create();
 	ingredients.add(ingredient1);
 	return ingredients;
