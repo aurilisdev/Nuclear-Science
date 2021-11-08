@@ -37,8 +37,7 @@ public class TileMeltedReactor extends GenericTileTicking {
 		level.setBlockAndUpdate(worldPosition.below(), getBlockState());
 		level.setBlockAndUpdate(worldPosition, Blocks.AIR.defaultBlockState());
 		BlockEntity tile = level.getBlockEntity(worldPosition.below());
-		if (tile instanceof TileMeltedReactor) {
-		    TileMeltedReactor newTile = (TileMeltedReactor) tile;
+		if (tile instanceof TileMeltedReactor newTile) {
 		    newTile.radiation = radiation;
 		    newTile.radiation = radiation;
 		}

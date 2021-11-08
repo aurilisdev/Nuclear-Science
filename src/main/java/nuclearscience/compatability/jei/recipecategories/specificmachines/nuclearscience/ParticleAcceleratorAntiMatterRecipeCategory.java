@@ -50,7 +50,7 @@ public class ParticleAcceleratorAntiMatterRecipeCategory extends Electrodynamics
     private static String GUI_TEXTURE = "textures/gui/jei/particle_accelerator_antimatter_gui.png";
 
     public static ItemStack INPUT_MACHINE = new ItemStack(nuclearscience.DeferredRegisters.blockParticleInjector);
-    private LoadingCache<Integer, IDrawableAnimated> CACHED_ARROWS;
+    private LoadingCache<Integer, IDrawableAnimated> cachedArrows;
     private static StartDirection ARROW_START_DIRECTION = IDrawableAnimated.StartDirection.LEFT;
 
     public static ResourceLocation UID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
@@ -58,7 +58,7 @@ public class ParticleAcceleratorAntiMatterRecipeCategory extends Electrodynamics
     public ParticleAcceleratorAntiMatterRecipeCategory(IGuiHelper guiHelper) {
 
 	super(guiHelper, MOD_ID, RECIPE_GROUP, GUI_TEXTURE, INPUT_MACHINE, GUI_BACKGROUND, PsuedoO2ORecipe.class, TEXT_Y_HEIGHT, SMELT_TIME);
-	CACHED_ARROWS = CacheBuilder.newBuilder().maximumSize(25).build(new CacheLoader<Integer, IDrawableAnimated>() {
+	cachedArrows = CacheBuilder.newBuilder().maximumSize(25).build(new CacheLoader<Integer, IDrawableAnimated>() {
 	    @Override
 	    public IDrawableAnimated load(Integer cookTime) {
 		return guiHelper.drawableBuilder(getGuiTexture(), PROCESSING_ARROW_COORDS[0], PROCESSING_ARROW_COORDS[1], PROCESSING_ARROW_COORDS[2],
@@ -75,7 +75,7 @@ public class ParticleAcceleratorAntiMatterRecipeCategory extends Electrodynamics
     @Override
     public void setIngredients(PsuedoO2ORecipe recipe, IIngredients ingredients) {
 	ingredients.setInputLists(VanillaTypes.ITEM, recipeInput(recipe));
-	ingredients.setOutput(VanillaTypes.ITEM, recipe.OUTPUT);
+	ingredients.setOutput(VanillaTypes.ITEM, recipe.outputItemStack);
     }
 
     @Override
@@ -93,23 +93,23 @@ public class ParticleAcceleratorAntiMatterRecipeCategory extends Electrodynamics
 
     @Override
     public void draw(PsuedoO2ORecipe recipe, PoseStack matrixStack, double mouseX, double mouseY) {
-	IDrawableAnimated arrow = getArrow(recipe);
+	IDrawableAnimated arrow = getArrow();
 	arrow.draw(matrixStack, PROCESSING_ARROW_OFFSET[0], PROCESSING_ARROW_OFFSET[1]);
 
-	drawSmeltTime(recipe, matrixStack, getYHeight());
+	drawSmeltTime(matrixStack, getYHeight());
     }
 
-    protected IDrawableAnimated getArrow(PsuedoO2ORecipe recipe) {
-	return CACHED_ARROWS.getUnchecked(getArrowSmeltTime());
+    protected IDrawableAnimated getArrow() {
+	return cachedArrows.getUnchecked(getArrowSmeltTime());
     }
 
-    protected void drawSmeltTime(PsuedoO2ORecipe recipe, PoseStack matrixStack, int y) {
+    protected void drawSmeltTime(PoseStack matrixStack, int y) {
 
 	int smeltTimeSeconds = getArrowSmeltTime() / 20;
 	TranslatableComponent timeString = new TranslatableComponent("gui.jei.category." + getRecipeGroup() + ".info.power", smeltTimeSeconds);
 	Minecraft minecraft = Minecraft.getInstance();
 	Font fontRenderer = minecraft.font;
-	int stringWidth = fontRenderer.width(timeString);
+	float stringWidth = fontRenderer.width(timeString);
 	fontRenderer.draw(matrixStack, timeString, getBackground().getWidth() - stringWidth, y, 0xFF808080);
 
     }
@@ -117,7 +117,7 @@ public class ParticleAcceleratorAntiMatterRecipeCategory extends Electrodynamics
     private static List<List<ItemStack>> recipeInput(PsuedoO2ORecipe recipe) {
 
 	List<ItemStack> emagCell = new ArrayList<>();
-	emagCell.add(recipe.INPUT.getItems()[0]);
+	emagCell.add(recipe.ingredient.getItems()[0]);
 
 	/* Gets a list of all Vanilla items */
 

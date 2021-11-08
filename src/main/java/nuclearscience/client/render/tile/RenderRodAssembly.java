@@ -25,7 +25,7 @@ public class RenderRodAssembly implements BlockEntityRenderer<TileControlRodAsse
 	BakedModel ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_CONTROLRODASSEMBLYSTRUCTURE);
 	stack.translate(0.5, 0.5, 0.5);
 	if (tileEntityIn.isMSR) {
-	    Direction dir = tileEntityIn.dir;
+	    Direction dir = tileEntityIn.direction;
 	    stack.mulPose(new Quaternion(90, 0, dir.toYRot(), true));
 	}
 	UtilitiesRendering.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), stack, bufferIn, combinedLightIn, combinedOverlayIn);

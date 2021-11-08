@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.google.common.collect.Sets;
+
 import electrodynamics.common.network.NetworkRegistry;
 import electrodynamics.prefab.network.AbstractNetwork;
 import net.minecraft.core.Direction;
@@ -48,7 +50,7 @@ public class MoltenSaltNetwork extends AbstractNetwork<IMoltenSaltPipe, SubtypeM
     @Override
     public Double emit(Double transfer, ArrayList<BlockEntity> ignored, boolean debug) {
 	if (transfer > 0) {
-	    Set<BlockEntity> availableAcceptors = getFluidAcceptors(transfer);
+	    Set<BlockEntity> availableAcceptors = Sets.newHashSet(acceptorSet);
 	    double heat = 0.0;
 	    availableAcceptors.removeAll(ignored);
 	    if (!availableAcceptors.isEmpty()) {
@@ -65,12 +67,6 @@ public class MoltenSaltNetwork extends AbstractNetwork<IMoltenSaltPipe, SubtypeM
 	    return heat;
 	}
 	return 0.0;
-    }
-
-    public Set<BlockEntity> getFluidAcceptors(Double compare) {
-	Set<BlockEntity> toReturn = new HashSet<>();
-	toReturn.addAll(acceptorSet);
-	return toReturn;
     }
 
     private boolean checkForOverload(int attemptSend) {

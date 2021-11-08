@@ -8,15 +8,15 @@ import net.minecraftforge.fluids.FluidStack;
 
 public class PsuedoGasCentrifugeRecipe extends O2ORecipe {
 
-    public FluidStack INPUT_FLUID_STACK;
-    public ItemStack OUTPUT_1_ITEM;
-    public ItemStack OUTPUT_2_ITEM;
+    public FluidStack inputFluidStack;
+    public ItemStack output1;
+    public ItemStack output2;
 
     public PsuedoGasCentrifugeRecipe(FluidStack inputFluid, ItemStack output1, ItemStack output2) {
 	super(null, null, null);
-	INPUT_FLUID_STACK = inputFluid;
-	OUTPUT_1_ITEM = output1;
-	OUTPUT_2_ITEM = output2;
+	inputFluidStack = inputFluid;
+	this.output1 = output1;
+	this.output2 = output2;
     }
 
     @Override

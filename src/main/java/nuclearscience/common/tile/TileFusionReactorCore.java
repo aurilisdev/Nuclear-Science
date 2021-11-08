@@ -45,8 +45,8 @@ public class TileFusionReactorCore extends GenericTileTicking {
 		    BlockState state = level.getBlockState(offset);
 		    if (state.getBlock() == DeferredRegisters.blockPlasma) {
 			BlockEntity tile = level.getBlockEntity(offset);
-			if (tile instanceof TilePlasma && ((TilePlasma) tile).ticksExisted > 30) {
-			    ((TilePlasma) tile).ticksExisted = 0;
+			if (tile instanceof TilePlasma plasma && plasma.ticksExisted > 30) {
+			    plasma.ticksExisted = 0;
 			}
 		    } else if (state.getBlock() == Blocks.AIR) {
 			level.setBlockAndUpdate(offset, DeferredRegisters.blockPlasma.defaultBlockState());

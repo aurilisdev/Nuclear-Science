@@ -91,7 +91,7 @@ public class TileMSRReactorCore extends GenericTileTicking {
 			BlockEntity tile = level.getBlockEntity(getBlockPos().relative(dir));
 			if (tile instanceof TileControlRodAssembly cr) {
 			    TileControlRodAssembly control = cr;
-			    if (control.dir == dir.getOpposite()) {
+			    if (control.direction == dir.getOpposite()) {
 				insertion += control.insertion;
 			    }
 			}

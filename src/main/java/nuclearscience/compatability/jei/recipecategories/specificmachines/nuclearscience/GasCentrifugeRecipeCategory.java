@@ -183,14 +183,14 @@ public class GasCentrifugeRecipeCategory extends ElectrodynamicsRecipeCategory<P
 
     public NonNullList<FluidStack> getFluids(PsuedoGasCentrifugeRecipe recipe) {
 	NonNullList<FluidStack> fluids = NonNullList.create();
-	fluids.add(recipe.INPUT_FLUID_STACK);
+	fluids.add(recipe.inputFluidStack);
 	return fluids;
     }
 
     public List<ItemStack> getOutputs(PsuedoGasCentrifugeRecipe recipe) {
 	List<ItemStack> outputs = new ArrayList<>();
-	outputs.add(recipe.OUTPUT_1_ITEM);
-	outputs.add(recipe.OUTPUT_2_ITEM);
+	outputs.add(recipe.output1);
+	outputs.add(recipe.output2);
 	return outputs;
     }
 

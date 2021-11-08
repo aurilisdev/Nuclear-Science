@@ -15,7 +15,7 @@ public class TileControlRodAssembly extends GenericTileTicking {
 
     public int insertion = 0;
     public boolean isMSR = false;
-    public Direction dir = Direction.DOWN;
+    public Direction direction = Direction.DOWN;
 
     public TileControlRodAssembly(BlockPos pos, BlockState state) {
 	super(DeferredRegisters.TILE_CONTROLRODASSEMBLY.get(), pos, state);
@@ -31,7 +31,7 @@ public class TileControlRodAssembly extends GenericTileTicking {
 		    BlockEntity tile = level.getBlockEntity(getBlockPos().relative(dir));
 		    if (tile instanceof TileMSRReactorCore) {
 			isMSR = true;
-			this.dir = dir;
+			direction = dir;
 		    }
 		}
 	    }
@@ -42,13 +42,13 @@ public class TileControlRodAssembly extends GenericTileTicking {
     public void writePacket(CompoundTag compound) {
 	compound.putInt("insertion", insertion);
 	compound.putBoolean("isMSR", isMSR);
-	compound.putInt("dir", dir.ordinal());
+	compound.putInt("dir", direction.ordinal());
     }
 
     public void readPacket(CompoundTag compound) {
 	insertion = compound.getInt("insertion");
 	isMSR = compound.getBoolean("isMSR");
-	dir = Direction.from3DDataValue(compound.getInt("dir"));
+	direction = Direction.from3DDataValue(compound.getInt("dir"));
     }
 
     @Override

@@ -25,10 +25,9 @@ public class ItemFrequencyCard extends Item {
     @Override
     public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
 	BlockEntity ent = context.getLevel().getBlockEntity(context.getClickedPos());
-	if (ent instanceof TileTeleporter && !ent.getLevel().isClientSide) {
+	if (ent instanceof TileTeleporter tel && !ent.getLevel().isClientSide) {
 	    CompoundTag nbt = stack.getOrCreateTag();
 	    if (nbt.contains("world")) {
-		TileTeleporter tel = (TileTeleporter) ent;
 		tel.xCoord = nbt.getInt("xCoord");
 		tel.yCoord = nbt.getInt("yCoord");
 		tel.zCoord = nbt.getInt("zCoord");

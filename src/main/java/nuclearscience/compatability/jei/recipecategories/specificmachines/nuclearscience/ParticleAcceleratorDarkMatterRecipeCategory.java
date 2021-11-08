@@ -41,7 +41,7 @@ public class ParticleAcceleratorDarkMatterRecipeCategory extends Electrodynamics
 
     public static ItemStack INPUT_MACHINE = new ItemStack(nuclearscience.DeferredRegisters.blockParticleInjector);
 
-    private LoadingCache<Integer, ArrayList<IDrawableAnimated>> CACHED_ARROWS;
+    private LoadingCache<Integer, ArrayList<IDrawableAnimated>> cachedArrows;
 
     public static ResourceLocation UID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
 
@@ -50,7 +50,7 @@ public class ParticleAcceleratorDarkMatterRecipeCategory extends Electrodynamics
 	super(guiHelper, MOD_ID, RECIPE_GROUP, GUI_TEXTURE_STRING, INPUT_MACHINE, GUI_BACKGROUND_COORDS, PsuedoO2ORecipe.class, TEXT_Y_HEIGHT,
 		SMELT_TIME);
 
-	CACHED_ARROWS = CacheBuilder.newBuilder().maximumSize(25).build(new CacheLoader<Integer, ArrayList<IDrawableAnimated>>() {
+	cachedArrows = CacheBuilder.newBuilder().maximumSize(25).build(new CacheLoader<Integer, ArrayList<IDrawableAnimated>>() {
 	    @Override
 	    public ArrayList<IDrawableAnimated> load(Integer cookTime) {
 
@@ -78,7 +78,7 @@ public class ParticleAcceleratorDarkMatterRecipeCategory extends Electrodynamics
 	inputs.addAll(getIngredients(recipe));
 
 	ingredients.setInputIngredients(inputs);
-	ingredients.setOutput(VanillaTypes.ITEM, recipe.OUTPUT);
+	ingredients.setOutput(VanillaTypes.ITEM, recipe.outputItemStack);
     }
 
     @Override
@@ -93,28 +93,28 @@ public class ParticleAcceleratorDarkMatterRecipeCategory extends Electrodynamics
 
     @Override
     public void draw(PsuedoO2ORecipe recipe, PoseStack matrixStack, double mouseX, double mouseY) {
-	ArrayList<IDrawableAnimated> arrow = getArrow(recipe);
+	ArrayList<IDrawableAnimated> arrow = getArrow();
 	arrow.get(0).draw(matrixStack, 70, 38);
 	arrow.get(1).draw(matrixStack, 23, 21);
 
-	drawSmeltTime(recipe, matrixStack, getYHeight());
+	drawSmeltTime(matrixStack, getYHeight());
     }
 
-    protected ArrayList<IDrawableAnimated> getArrow(PsuedoO2ORecipe recipe) {
-	return CACHED_ARROWS.getUnchecked(getArrowSmeltTime());
+    protected ArrayList<IDrawableAnimated> getArrow() {
+	return cachedArrows.getUnchecked(getArrowSmeltTime());
     }
 
-    protected void drawSmeltTime(PsuedoO2ORecipe recipe, PoseStack matrixStack, int y) {
+    protected void drawSmeltTime(PoseStack matrixStack, int y) {
 	int smeltTimeSeconds = getArrowSmeltTime() / 20;
 	TranslatableComponent timeString = new TranslatableComponent("gui.jei.category." + getRecipeGroup() + ".info.power", smeltTimeSeconds);
 	Minecraft minecraft = Minecraft.getInstance();
 	Font fontRenderer = minecraft.font;
-	int stringWidth = fontRenderer.width(timeString);
+	float stringWidth = fontRenderer.width(timeString);
 	fontRenderer.draw(matrixStack, timeString, getBackground().getWidth() - stringWidth, y, 0xFF808080);
     }
 
     public NonNullList<Ingredient> getIngredients(PsuedoO2ORecipe recipe) {
-	Ingredient ingredient1 = recipe.INPUT;
+	Ingredient ingredient1 = recipe.ingredient;
 	NonNullList<Ingredient> ingredients = NonNullList.create();
 	ingredients.add(ingredient1);
 	return ingredients;
