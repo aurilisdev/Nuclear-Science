@@ -50,26 +50,22 @@ public class BlockPlasma extends BaseEntityBlock {
     }
 
     @Override
-    @Deprecated
     public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
 	entityIn.hurt(DamageSourcePlasma.INSTANCE, 99999);
     }
 
     @Override
-    @Deprecated
     public VoxelShape getVisualShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext context) {
 	return Shapes.empty();
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    @Deprecated
     public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
 	return adjacentBlockState.is(this) || super.skipRendering(state, adjacentBlockState, side);
     }
 
     @Override
-    @Deprecated
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
 	if (state.getBlock() != newState.getBlock()) {
 	    super.onRemove(state, worldIn, pos, newState, isMoving);

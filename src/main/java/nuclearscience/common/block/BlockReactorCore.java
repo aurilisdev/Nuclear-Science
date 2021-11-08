@@ -44,7 +44,6 @@ public class BlockReactorCore extends BlockGenericMachine implements SimpleWater
     }
 
     @Override
-    @Deprecated
     public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos,
 	    BlockPos facingPos) {
 	if (stateIn.getValue(BlockStateProperties.WATERLOGGED) == Boolean.TRUE) {
@@ -54,7 +53,6 @@ public class BlockReactorCore extends BlockGenericMachine implements SimpleWater
     }
 
     @Override
-    @Deprecated
     public FluidState getFluidState(BlockState state) {
 	return state.getValue(BlockStateProperties.WATERLOGGED) == Boolean.TRUE ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
@@ -65,18 +63,15 @@ public class BlockReactorCore extends BlockGenericMachine implements SimpleWater
     }
 
     @Override
-    @Deprecated
     public RenderShape getRenderShape(BlockState state) {
 	return RenderShape.MODEL;
     }
 
     @Override
-    @Deprecated
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
 	return Shapes.box(0.5 / 16, 0, 0.5 / 16, 15.5 / 16.0, 15.0 / 16.0, 15.5 / 16.0);
     }
 
-    @Deprecated
     @Override
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
 	if (state.getBlock() == newState.getBlock()) {

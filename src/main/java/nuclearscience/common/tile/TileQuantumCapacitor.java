@@ -149,7 +149,6 @@ public class TileQuantumCapacitor extends GenericTileTicking implements IEnergyS
     }
 
     @Override
-    @Deprecated
     public int receiveEnergy(int maxReceive, boolean simulate) {
 	int calVoltage = 120;
 	TransferPack pack = receivePower(TransferPack.joulesVoltage(maxReceive, calVoltage), simulate);
@@ -157,7 +156,6 @@ public class TileQuantumCapacitor extends GenericTileTicking implements IEnergyS
     }
 
     @Override
-    @Deprecated
     public int extractEnergy(int maxExtract, boolean simulate) {
 	int calVoltage = 120;
 	TransferPack pack = this.<ComponentElectrodynamic>getComponent(ComponentType.Electrodynamic)
@@ -166,25 +164,21 @@ public class TileQuantumCapacitor extends GenericTileTicking implements IEnergyS
     }
 
     @Override
-    @Deprecated
     public int getEnergyStored() {
 	return (int) Math.min(Integer.MAX_VALUE, getJoulesStored());
     }
 
     @Override
-    @Deprecated
     public int getMaxEnergyStored() {
 	return (int) Math.min(Integer.MAX_VALUE, DEFAULT_MAX_JOULES);
     }
 
     @Override
-    @Deprecated
     public boolean canExtract() {
 	return true;
     }
 
     @Override
-    @Deprecated
     public boolean canReceive() {
 	return true;
     }

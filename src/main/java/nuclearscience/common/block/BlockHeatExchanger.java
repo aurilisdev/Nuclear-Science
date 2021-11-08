@@ -36,7 +36,6 @@ public class BlockHeatExchanger extends BlockGenericMachine implements SimpleWat
     }
 
     @Override
-    @Deprecated
     public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos,
 	    BlockPos facingPos) {
 	if (stateIn.getValue(BlockStateProperties.WATERLOGGED) == Boolean.TRUE) {
@@ -46,7 +45,6 @@ public class BlockHeatExchanger extends BlockGenericMachine implements SimpleWat
     }
 
     @Override
-    @Deprecated
     public FluidState getFluidState(BlockState state) {
 	return state.getValue(BlockStateProperties.WATERLOGGED) == Boolean.TRUE ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }

@@ -10,7 +10,6 @@ import nuclearscience.common.tile.TileFuelReprocessor;
 public class BlockFuelReprocessor extends BlockGenericMachine {
 
     @Override
-    @Deprecated
     public RenderShape getRenderShape(BlockState state) {
 	return RenderShape.ENTITYBLOCK_ANIMATED;
     }

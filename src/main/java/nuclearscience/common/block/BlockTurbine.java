@@ -68,13 +68,11 @@ public class BlockTurbine extends BaseEntityBlock implements IWrenchable {
     }
 
     @Override
-    @Deprecated
     public List<ItemStack> getDrops(BlockState state, Builder builder) {
 	return Arrays.asList(new ItemStack(this));
     }
 
     @Override
-    @Deprecated
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
 	if (state.getBlock() != newState.getBlock()) {
 	    TileTurbine turbine = (TileTurbine) worldIn.getBlockEntity(pos);
@@ -86,22 +84,20 @@ public class BlockTurbine extends BaseEntityBlock implements IWrenchable {
     }
 
     @Override
-    @Deprecated
     public RenderShape getRenderShape(BlockState state) {
 	super.getRenderShape(state);
 	if (state.getValue(RENDER) != Boolean.TRUE) {
+	    return RenderShape.INVISIBLE;
 	}
 	return RenderShape.MODEL;
     }
 
     @Override
-    @Deprecated
     public float getShadeBrightness(BlockState state, BlockGetter worldIn, BlockPos pos) {
 	return 1;
     }
 
     @Override
-    @Deprecated
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
 	if (worldIn.isClientSide) {
 	    return InteractionResult.SUCCESS;

@@ -97,13 +97,11 @@ public class BlockMoltenSaltPipe extends BaseEntityBlock implements SimpleWaterl
     }
 
     @Override
-    @Deprecated
     public FluidState getFluidState(BlockState state) {
 	return state.getValue(BlockStateProperties.WATERLOGGED) == Boolean.TRUE ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
     @Override
-    @Deprecated
     public List<ItemStack> getDrops(BlockState state, Builder builder) {
 	return Arrays.asList(new ItemStack(DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(pipe)));
     }
@@ -122,7 +120,6 @@ public class BlockMoltenSaltPipe extends BaseEntityBlock implements SimpleWaterl
     }
 
     @Override
-    @Deprecated
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
 	VoxelShape shape = cube;
 	HashSet<Direction> checked = new HashSet<>();
@@ -199,7 +196,6 @@ public class BlockMoltenSaltPipe extends BaseEntityBlock implements SimpleWaterl
 	worldIn.setBlockAndUpdate(pos, acc);
     }
 
-    @Deprecated
     @Override
     public void onPlace(BlockState state, Level worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
 	super.onPlace(state, worldIn, pos, oldState, isMoving);
@@ -228,7 +224,6 @@ public class BlockMoltenSaltPipe extends BaseEntityBlock implements SimpleWaterl
     }
 
     @Override
-    @Deprecated
     public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos,
 	    BlockPos facingPos) {
 	if (stateIn.getValue(BlockStateProperties.WATERLOGGED) == Boolean.TRUE) {

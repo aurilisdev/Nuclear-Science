@@ -23,7 +23,6 @@ public class BlockQuantumCapacitor extends BlockGenericMachine {
     }
 
     @Override
-    @Deprecated
     public List<ItemStack> getDrops(BlockState state, Builder builder) {
 	ItemStack addstack = new ItemStack(this);
 	BlockEntity tile = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
@@ -41,7 +40,6 @@ public class BlockQuantumCapacitor extends BlockGenericMachine {
     }
 
     @Override
-    @Deprecated
     public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
 	BlockEntity tile = worldIn.getBlockEntity(pos);
 	if (tile instanceof TileQuantumCapacitor cap) {

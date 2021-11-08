@@ -20,7 +20,7 @@ import nuclearscience.api.fusion.IElectromagnet;
 import nuclearscience.common.tile.TileElectromagneticSwitch;
 
 public class BlockElectromagneticSwitch extends BaseEntityBlock implements IElectromagnet {
-    private static final VoxelShape shape = Shapes.box(0, 0, 0, 16.0 / 16.0, 2.0 / 16.0, 16.0 / 16.0);
+    private static final VoxelShape shape = Shapes.box(0, 0, 0, 1.0, 2.0 / 16.0, 1.0);
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
@@ -30,7 +30,6 @@ public class BlockElectromagneticSwitch extends BaseEntityBlock implements IElec
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
     @Override
-    @Deprecated
     public List<ItemStack> getDrops(BlockState state, Builder builder) {
 	return Arrays.asList(new ItemStack(this));
     }

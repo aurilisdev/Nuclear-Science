@@ -33,17 +33,14 @@ public class BlockControlRodAssembly extends BlockGenericMachine implements Simp
     }
 
     @Override
-    @Deprecated
     public RenderShape getRenderShape(BlockState state) {
 	return RenderShape.ENTITYBLOCK_ANIMATED;
     }
 
     @Override
-    @Deprecated
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
 	BlockEntity tile = worldIn.getBlockEntity(pos);
-	if (tile instanceof TileControlRodAssembly) {
-	    TileControlRodAssembly assembly = (TileControlRodAssembly) tile;
+	if (tile instanceof TileControlRodAssembly assembly) {
 	    assembly.insertion = assembly.insertion + 10;
 	    if (assembly.insertion > 100) {
 		assembly.insertion = 0;
@@ -67,7 +64,6 @@ public class BlockControlRodAssembly extends BlockGenericMachine implements Simp
     }
 
     @Override
-    @Deprecated
     public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos,
 	    BlockPos facingPos) {
 	if (stateIn.getValue(BlockStateProperties.WATERLOGGED) == Boolean.TRUE) {
@@ -77,7 +73,6 @@ public class BlockControlRodAssembly extends BlockGenericMachine implements Simp
     }
 
     @Override
-    @Deprecated
     public FluidState getFluidState(BlockState state) {
 	return state.getValue(BlockStateProperties.WATERLOGGED) == Boolean.TRUE ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }

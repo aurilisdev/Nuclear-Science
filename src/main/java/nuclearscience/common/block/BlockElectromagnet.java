@@ -26,42 +26,36 @@ public class BlockElectromagnet extends Block implements IElectromagnet {
     private final boolean isGlass;
 
     @Override
-    @Deprecated
     public List<ItemStack> getDrops(BlockState state, Builder builder) {
 	return Arrays.asList(new ItemStack(this));
     }
 
     public BlockElectromagnet(boolean isGlass) {
 	super(Properties.of(isGlass ? Material.GLASS : Material.METAL).strength(3.5f, 20).requiresCorrectToolForDrops().noOcclusion()
-		.isRedstoneConductor((p_152653_, p_152654_, p_152655_) -> {
-		    return false;
-		}));
+		.isRedstoneConductor((x, y, z) -> false));
 	this.isGlass = isGlass;
     }
 
     @Override
-    @Deprecated
     public VoxelShape getVisualShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext context) {
 	return isGlass ? Shapes.empty() : super.getVisualShape(state, reader, pos, context);
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    @Deprecated
     public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
 	return !isGlass ? super.skipRendering(state, adjacentBlockState, side)
-		: adjacentBlockState.is(this) ? true : super.skipRendering(state, adjacentBlockState, side);
+		: adjacentBlockState.is(this) || super.skipRendering(state, adjacentBlockState, side);
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    @Deprecated
     public float getShadeBrightness(BlockState state, BlockGetter worldIn, BlockPos pos) {
 	return isGlass ? 1.0F : super.getShadeBrightness(state, worldIn, pos);
     }
 
     @Override
     public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
-	return isGlass ? true : super.propagatesSkylightDown(state, reader, pos);
+	return isGlass || super.propagatesSkylightDown(state, reader, pos);
     }
 }
