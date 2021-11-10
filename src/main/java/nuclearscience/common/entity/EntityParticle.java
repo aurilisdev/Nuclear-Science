@@ -3,10 +3,13 @@ package nuclearscience.common.entity;
 import java.util.HashSet;
 import java.util.List;
 
+import com.mojang.math.Vector3f;
+
 import electrodynamics.common.block.BlockGenericMachine;
 import electrodynamics.prefab.utilities.object.Location;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -91,6 +94,8 @@ public class EntityParticle extends Entity {
 		if (!level.isClientSide) {
 		    TileParticleInjector injector = (TileParticleInjector) tile;
 		    injector.checkCollision();
+		} else {
+		    level.addParticle(new DustParticleOptions(new Vector3f(1, 1, 1), 5), getX(), getY(), getZ(), 0, 0, 0);
 		}
 		BlockPos next = blockPosition();
 		BlockState oldState = level.getBlockState(next);
