@@ -1,0 +1,31 @@
+{
+	"replace": false,
+	"values": [
+		"nuclearscience:blocklead",
+		"nuclearscience:chemicalextractor",
+		"nuclearscience:controlrodassembly",
+		"nuclearscience:electromagnet",
+		"nuclearscience:electromagneticbooster",
+		"nuclearscience:electromagneticglass",
+		"nuclearscience:electromagneticswitch",
+		"nuclearscience:freezeplug",
+		"nuclearscience:fuelreprocessor",
+		"nuclearscience:fusionreactorcore",
+		"nuclearscience:gascentrifuge",
+		"nuclearscience:heatexchanger",
+		"nuclearscience:meltedreactor",
+		"nuclearscience:moltensaltpipevanadiumsteelceramic",
+		"nuclearscience:moltensaltsupplier",
+		"nuclearscience:msrfuelpreprocessor",
+		"nuclearscience:msrreactorcore",
+		"nuclearscience:nuclearboiler",
+		"nuclearscience:particleinjector",
+		"nuclearscience:quantumcapacitor",
+		"nuclearscience:radioactiveprocessor",
+		"nuclearscience:radioisotopegenerator",
+		"nuclearscience:reactorcore",
+		"nuclearscience:teleporter",
+		"nuclearscience:turbine",
+		"nuclearscience:radioactivesoil"
+	]
+}
