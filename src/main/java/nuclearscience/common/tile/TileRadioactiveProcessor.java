@@ -12,6 +12,7 @@ import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
 import electrodynamics.prefab.tile.components.type.ComponentProcessorType;
+import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
@@ -27,6 +28,7 @@ public class TileRadioactiveProcessor extends GenericTileTicking {
     public TileRadioactiveProcessor(BlockPos pos, BlockState state) {
 	super(DeferredRegisters.TILE_RADIOACTIVEPROCESSOR.get(), pos, state);
 	addComponent(new ComponentDirection());
+	addComponent(new ComponentTickable());
 	addComponent(new ComponentPacketHandler());
 	addComponent(new ComponentElectrodynamic(this).voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 4)
 		.maxJoules(Constants.RADIOACTIVEPROCESSOR_USAGE_PER_TICK * 10.0).relativeInput(Direction.NORTH));
