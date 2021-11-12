@@ -27,6 +27,7 @@ public class TileRadioactiveProcessor extends GenericTileTicking {
 
     public TileRadioactiveProcessor(BlockPos pos, BlockState state) {
 	super(DeferredRegisters.TILE_RADIOACTIVEPROCESSOR.get(), pos, state);
+	addComponent(new ComponentTickable());
 	addComponent(new ComponentDirection());
 	addComponent(new ComponentTickable());
 	addComponent(new ComponentPacketHandler());
