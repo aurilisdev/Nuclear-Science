@@ -17,7 +17,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -146,47 +145,50 @@ public class TileReactorCore extends GenericTileTicking {
     }
 
     public void meltdown() {
-		if (!level.isClientSide) {
-		    int radius = STEAM_GEN_DIAMETER / 2;
-		    level.setBlockAndUpdate(worldPosition, getBlockState().setValue(BlockStateProperties.WATERLOGGED, false));
-		    for (int i = -radius; i <= radius; i++) {
-				for (int j = -radius; j <= radius; j++) {
-				    for (int k = -radius; k <= radius; k++) {
-						BlockPos ppos = new BlockPos(worldPosition.getX() + i, worldPosition.getY() + j, worldPosition.getZ() + k);
-						BlockState state = level.getBlockState(ppos);
-						if (state.getBlock() == Blocks.WATER) {
-						    level.setBlockAndUpdate(ppos, Blocks.AIR.defaultBlockState());
-						}
-				    }
-				}
+	if (!level.isClientSide) {
+	    int radius = STEAM_GEN_DIAMETER / 2;
+	    level.setBlockAndUpdate(worldPosition, getBlockState().setValue(BlockStateProperties.WATERLOGGED, false));
+	    for (int i = -radius; i <= radius; i++) {
+		for (int j = -radius; j <= radius; j++) {
+		    for (int k = -radius; k <= radius; k++) {
+			BlockPos ppos = new BlockPos(worldPosition.getX() + i, worldPosition.getY() + j, worldPosition.getZ() + k);
+			BlockState state = level.getBlockState(ppos);
+			if (state.getBlock() == Blocks.WATER) {
+			    level.setBlockAndUpdate(ppos, Blocks.AIR.defaultBlockState());
+			}
 		    }
-		    level.setBlockAndUpdate(worldPosition, Blocks.AIR.defaultBlockState());
-		    //Feel free to switch to a different damage source; I figured radiation fitted the best
-		    //switch  to false if you don't want fire
-		    //for the final null, you can pass in a ExplosionCalculator if you want to do a custom explosion
-		    Explosion actual = new Explosion(level, null, DamageSourceRadiation.INSTANCE, null, worldPosition.getX(), worldPosition.getY(), 
-		    		worldPosition.getZ(), 20, true, BlockInteraction.BREAK);
-		    //Explosion actual = new Explosion(level, null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), 20, new ArrayList<>());
-		    // TODO: FIX THIS! THE LINE ABOVE IS CLIENT SIDE ONLY!
-		    radius = 3 * fuelCount;
-		    for (int i = -radius; i <= radius; i++) {
-				for (int j = -radius; j <= radius; j++) {
-				    for (int k = -radius; k <= radius; k++) {
-						BlockPos ppos = new BlockPos(worldPosition.getX() + i, worldPosition.getY() + j, worldPosition.getZ() + k);
-						BlockState state = level.getBlockState(ppos);
-						if (state.getBlock().getExplosionResistance(state, level, ppos, actual) < radius) {
-						    double distance = Math.sqrt(i * i + j * j + k * k);
-						    if (distance < radius && level.random.nextFloat() < 1 - 0.0001 * distance * distance * distance
-							    && level.random.nextFloat() < 0.9) {
-							level.getBlockState(ppos).onBlockExploded(level, ppos, actual);
-						    }
-						}
-				    }
-				}
-		    }
-		    level.explode(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), 20, BlockInteraction.DESTROY);
-		    level.setBlockAndUpdate(worldPosition, DeferredRegisters.blockMeltedReactor.defaultBlockState());
 		}
+	    }
+	    level.setBlockAndUpdate(worldPosition, Blocks.AIR.defaultBlockState());
+	    // Feel free to switch to a different damage source; I figured radiation fitted
+	    // the best
+	    // switch to false if you don't want fire
+	    // for the final null, you can pass in a ExplosionCalculator if you want to do a
+	    // custom explosion
+	    Explosion actual = new Explosion(level, null, DamageSourceRadiation.INSTANCE, null, worldPosition.getX(), worldPosition.getY(),
+		    worldPosition.getZ(), 20, true, BlockInteraction.BREAK);
+	    // Explosion actual = new Explosion(level, null, worldPosition.getX(),
+	    // worldPosition.getY(), worldPosition.getZ(), 20, new ArrayList<>());
+	    // TODO: FIX THIS! THE LINE ABOVE IS CLIENT SIDE ONLY!
+	    radius = 3 * fuelCount;
+	    for (int i = -radius; i <= radius; i++) {
+		for (int j = -radius; j <= radius; j++) {
+		    for (int k = -radius; k <= radius; k++) {
+			BlockPos ppos = new BlockPos(worldPosition.getX() + i, worldPosition.getY() + j, worldPosition.getZ() + k);
+			BlockState state = level.getBlockState(ppos);
+			if (state.getBlock().getExplosionResistance(state, level, ppos, actual) < radius) {
+			    double distance = Math.sqrt(i * i + j * j + k * k);
+			    if (distance < radius && level.random.nextFloat() < 1 - 0.0001 * distance * distance * distance
+				    && level.random.nextFloat() < 0.9) {
+				level.getBlockState(ppos).onBlockExploded(level, ppos, actual);
+			    }
+			}
+		    }
+		}
+	    }
+	    level.explode(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), 20, BlockInteraction.DESTROY);
+	    level.setBlockAndUpdate(worldPosition, DeferredRegisters.blockMeltedReactor.defaultBlockState());
+	}
     }
 
     protected void produceSteam() {
