@@ -178,9 +178,11 @@ curseforge {
     changelog = 'You can find changelog at: https://aurilis.dev/'
     releaseType = 'release'
     addGameVersion minecraft_version
-    requiredDependency 'electrodynamics'
     
     mainArtifact(jar) {
+      relations {
+        requiredDependency 'electrodynamics'
+      }
       displayName=project.name+' ' + project.version
     }
   }
