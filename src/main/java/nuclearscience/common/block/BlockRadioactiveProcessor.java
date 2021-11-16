@@ -1,17 +1,14 @@
 package nuclearscience.common.block;
 
-import electrodynamics.common.block.BlockGenericMachine;
-import net.minecraft.core.BlockPos;
+import electrodynamics.prefab.block.GenericMachineBlock;
 import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.common.tile.TileRadioactiveProcessor;
 
-public class BlockRadioactiveProcessor extends BlockGenericMachine {
+public class BlockRadioactiveProcessor extends GenericMachineBlock {
 
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-	return new TileRadioactiveProcessor(pos, state);
+    public BlockRadioactiveProcessor() {
+	super(TileRadioactiveProcessor::new);
     }
 
     @Override

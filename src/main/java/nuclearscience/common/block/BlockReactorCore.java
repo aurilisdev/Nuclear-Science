@@ -1,27 +1,20 @@
 package nuclearscience.common.block;
 
-import electrodynamics.common.block.BlockGenericMachine;
+import electrodynamics.prefab.block.GenericMachineBlock;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import nuclearscience.common.tile.TileReactorCore;
 
-public class BlockReactorCore extends BlockGenericMachine {
+public class BlockReactorCore extends GenericMachineBlock {
     public BlockReactorCore() {
-	registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(BlockStateProperties.WATERLOGGED, false));
-    }
-
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-	return new TileReactorCore(pos, state);
+	super(TileReactorCore::new);
     }
 
     @Override

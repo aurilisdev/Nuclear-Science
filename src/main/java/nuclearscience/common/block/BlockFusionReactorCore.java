@@ -1,6 +1,6 @@
 package nuclearscience.common.block;
 
-import electrodynamics.common.block.BlockGenericMachine;
+import electrodynamics.prefab.block.GenericMachineBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -17,11 +17,10 @@ import nuclearscience.DeferredRegisters;
 import nuclearscience.common.settings.Constants;
 import nuclearscience.common.tile.TileFusionReactorCore;
 
-public class BlockFusionReactorCore extends BlockGenericMachine {
+public class BlockFusionReactorCore extends GenericMachineBlock {
 
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-	return new TileFusionReactorCore(pos, state);
+    public BlockFusionReactorCore() {
+	super(TileFusionReactorCore::new);
     }
 
     @Override

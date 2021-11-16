@@ -6,8 +6,8 @@ import com.google.common.base.Supplier;
 import com.google.common.collect.Sets;
 
 import electrodynamics.api.ISubtype;
-import electrodynamics.common.block.BlockSimpleGenericMachine;
 import electrodynamics.common.blockitem.BlockItemDescriptable;
+import electrodynamics.prefab.block.GenericMachineBlock;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobCategory;
@@ -104,10 +104,10 @@ public class DeferredRegisters {
     public static FluidIronSulfamate fluidIronSulfamate;
     public static FluidAmmonia fluidAmmonia;
 
-    public static BlockSimpleGenericMachine blockGasCentrifuge;
-    public static BlockSimpleGenericMachine blockNuclearBoiler;
-    public static BlockSimpleGenericMachine blockChemicalExtractor;
-    public static BlockSimpleGenericMachine blockRadioisotopeGenerator;
+    public static GenericMachineBlock blockGasCentrifuge;
+    public static GenericMachineBlock blockNuclearBoiler;
+    public static GenericMachineBlock blockChemicalExtractor;
+    public static GenericMachineBlock blockRadioisotopeGenerator;
     public static BlockTurbine blockTurbine;
     public static BlockReactorCore blockReactorCore;
     public static BlockElectromagnet blockElectromagnet;
@@ -117,28 +117,27 @@ public class DeferredRegisters {
     public static BlockFusionReactorCore blockFusionReactorCore;
     public static BlockPlasma blockPlasma;
     public static BlockMeltedReactor blockMeltedReactor;
-    public static BlockSimpleGenericMachine blockParticleInjector;
+    public static GenericMachineBlock blockParticleInjector;
     public static BlockQuantumCapacitor blockQuantumCapacitor;
     public static BlockTeleporter blockTeleporter;
     public static BlockControlRodAssembly blockControlRodAssembly;
     public static BlockFuelReprocessor blockFuelReprocessor;
     public static BlockRadioactiveProcessor blockRadioactiveProcessor;
-    public static BlockSimpleGenericMachine blockMSRFuelPreProcessor;
-    public static BlockSimpleGenericMachine blockFreezePlug;
-    public static BlockSimpleGenericMachine blockMsrReactorCore;
-    public static BlockSimpleGenericMachine blockHeatExchanger;
+    public static GenericMachineBlock blockMSRFuelPreProcessor;
+    public static GenericMachineBlock blockFreezePlug;
+    public static GenericMachineBlock blockMsrReactorCore;
+    public static GenericMachineBlock blockHeatExchanger;
     public static BlockMoltenSaltSupplier blockMoltenSaltSupplier;
     public static BlockRadioactiveSoil blockRadioactiveSoil;
 
     public static Block blocklead;
 
     static {
-	BLOCKS.register("gascentrifuge", supplier(blockGasCentrifuge = new BlockSimpleGenericMachine(TileGasCentrifuge::new)));
-	BLOCKS.register("nuclearboiler", supplier(blockNuclearBoiler = new BlockSimpleGenericMachine(TileNuclearBoiler::new)));
-	BLOCKS.register("chemicalextractor", supplier(blockChemicalExtractor = new BlockSimpleGenericMachine(TileChemicalExtractor::new)));
-	BLOCKS.register("radioisotopegenerator",
-		supplier(blockRadioisotopeGenerator = new BlockSimpleGenericMachine(TileRadioisotopeGenerator::new)));
-	BLOCKS.register("freezeplug", supplier(blockFreezePlug = new BlockSimpleGenericMachine(TileFreezePlug::new)));
+	BLOCKS.register("gascentrifuge", supplier(blockGasCentrifuge = new GenericMachineBlock(TileGasCentrifuge::new)));
+	BLOCKS.register("nuclearboiler", supplier(blockNuclearBoiler = new GenericMachineBlock(TileNuclearBoiler::new)));
+	BLOCKS.register("chemicalextractor", supplier(blockChemicalExtractor = new GenericMachineBlock(TileChemicalExtractor::new)));
+	BLOCKS.register("radioisotopegenerator", supplier(blockRadioisotopeGenerator = new GenericMachineBlock(TileRadioisotopeGenerator::new)));
+	BLOCKS.register("freezeplug", supplier(blockFreezePlug = new GenericMachineBlock(TileFreezePlug::new)));
 	BLOCKS.register("turbine", supplier(blockTurbine = new BlockTurbine()));
 	BLOCKS.register("reactorcore", supplier(blockReactorCore = new BlockReactorCore()));
 	BLOCKS.register("electromagnet", supplier(blockElectromagnet = new BlockElectromagnet(false)));
@@ -147,17 +146,17 @@ public class DeferredRegisters {
 	BLOCKS.register("electromagneticswitch", supplier(blockElectromagneticSwitch = new BlockElectromagneticSwitch()));
 	BLOCKS.register("fusionreactorcore", supplier(blockFusionReactorCore = new BlockFusionReactorCore()));
 	BLOCKS.register("plasma", supplier(blockPlasma = new BlockPlasma()));
-	BLOCKS.register("particleinjector", supplier(blockParticleInjector = new BlockSimpleGenericMachine(TileParticleInjector::new)));
+	BLOCKS.register("particleinjector", supplier(blockParticleInjector = new GenericMachineBlock(TileParticleInjector::new)));
 	BLOCKS.register("quantumcapacitor", supplier(blockQuantumCapacitor = new BlockQuantumCapacitor()));
 	BLOCKS.register("teleporter", supplier(blockTeleporter = new BlockTeleporter()));
 	BLOCKS.register("controlrodassembly", supplier(blockControlRodAssembly = new BlockControlRodAssembly()));
 	BLOCKS.register("fuelreprocessor", supplier(blockFuelReprocessor = new BlockFuelReprocessor()));
 	BLOCKS.register("radioactiveprocessor", supplier(blockRadioactiveProcessor = new BlockRadioactiveProcessor()));
-	BLOCKS.register("msrfuelpreprocessor", supplier(blockMSRFuelPreProcessor = new BlockSimpleGenericMachine(TileMSRFuelPreProcessor::new)));
+	BLOCKS.register("msrfuelpreprocessor", supplier(blockMSRFuelPreProcessor = new GenericMachineBlock(TileMSRFuelPreProcessor::new)));
 	BLOCKS.register("blocklead", supplier(blocklead = new Block(
 		Properties.of(Material.METAL, MaterialColor.COLOR_BLACK).strength(5.0f, 3.0f).sound(SoundType.METAL).requiresCorrectToolForDrops())));
-	BLOCKS.register("msrreactorcore", supplier(blockMsrReactorCore = new BlockSimpleGenericMachine(TileMSRReactorCore::new)));
-	BLOCKS.register("heatexchanger", supplier(blockHeatExchanger = new BlockSimpleGenericMachine(TileHeatExchanger::new)));
+	BLOCKS.register("msrreactorcore", supplier(blockMsrReactorCore = new GenericMachineBlock(TileMSRReactorCore::new)));
+	BLOCKS.register("heatexchanger", supplier(blockHeatExchanger = new GenericMachineBlock(TileHeatExchanger::new)));
 	BLOCKS.register("moltensaltsupplier", supplier(blockMoltenSaltSupplier = new BlockMoltenSaltSupplier()));
 	for (SubtypeMoltenSaltPipe subtype : SubtypeMoltenSaltPipe.values()) {
 	    SUBTYPEBLOCKREGISTER_MAPPINGS.put(subtype, BLOCKS.register(subtype.tag(), supplier(new BlockMoltenSaltPipe(subtype), subtype)));
@@ -369,11 +368,11 @@ public class DeferredRegisters {
     }
 
     private static <T extends IForgeRegistryEntry<T>> Supplier<? extends T> supplier(T entry, ISubtype en) {
-	if (entry instanceof Block) {
-	    SUBTYPEBLOCK_MAPPINGS.put(en, (Block) entry);
-	} else if (entry instanceof Item) {
-	    SUBTYPEITEM_MAPPINGS.put(en, (Item) entry);
-	    ITEMSUBTYPE_MAPPINGS.put((Item) entry, en);
+	if (entry instanceof Block block) {
+	    SUBTYPEBLOCK_MAPPINGS.put(en, block);
+	} else if (entry instanceof Item item) {
+	    SUBTYPEITEM_MAPPINGS.put(en, item);
+	    ITEMSUBTYPE_MAPPINGS.put(item, en);
 	}
 	return supplier(entry);
     }

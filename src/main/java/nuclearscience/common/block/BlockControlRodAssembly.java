@@ -1,6 +1,6 @@
 package nuclearscience.common.block;
 
-import electrodynamics.common.block.BlockGenericMachine;
+import electrodynamics.prefab.block.GenericMachineBlock;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import net.minecraft.core.BlockPos;
@@ -14,11 +14,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import nuclearscience.common.tile.TileControlRodAssembly;
 
-public class BlockControlRodAssembly extends BlockGenericMachine {
+public class BlockControlRodAssembly extends GenericMachineBlock {
 
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-	return new TileControlRodAssembly(pos, state);
+    public BlockControlRodAssembly() {
+	super(TileControlRodAssembly::new);
     }
 
     @Override

@@ -1,16 +1,13 @@
 package nuclearscience.common.block;
 
-import electrodynamics.common.block.BlockGenericMachine;
-import net.minecraft.core.BlockPos;
+import electrodynamics.prefab.block.GenericMachineBlock;
 import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.common.tile.TileTeleporter;
 
-public class BlockTeleporter extends BlockGenericMachine {
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-	return new TileTeleporter(pos, state);
+public class BlockTeleporter extends GenericMachineBlock {
+    public BlockTeleporter() {
+	super(TileTeleporter::new);
     }
 
     @Override

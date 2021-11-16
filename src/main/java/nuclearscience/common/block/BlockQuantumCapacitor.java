@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import electrodynamics.api.electricity.IElectrodynamic;
-import electrodynamics.common.block.BlockGenericMachine;
+import electrodynamics.prefab.block.GenericMachineBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -16,10 +16,10 @@ import net.minecraft.world.level.storage.loot.LootContext.Builder;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import nuclearscience.common.tile.TileQuantumCapacitor;
 
-public class BlockQuantumCapacitor extends BlockGenericMachine {
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-	return new TileQuantumCapacitor(pos, state);
+public class BlockQuantumCapacitor extends GenericMachineBlock {
+
+    public BlockQuantumCapacitor() {
+	super(TileQuantumCapacitor::new);
     }
 
     @Override
