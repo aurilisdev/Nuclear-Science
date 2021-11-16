@@ -94,8 +94,7 @@ public class TileReactorCore extends GenericTile {
 	if (fuelCount > 0 && ticks > 50) {
 	    BlockEntity tile = level.getBlockEntity(worldPosition.below());
 	    int insertion = 0;
-	    if (tile instanceof TileControlRodAssembly) {
-		TileControlRodAssembly assembly = (TileControlRodAssembly) tile;
+	    if (tile instanceof TileControlRodAssembly assembly) {
 		insertion = assembly.isMSR ? 0 : assembly.insertion;
 	    }
 	    double insertDecimal = (100 - insertion) / 100.0;

@@ -17,7 +17,6 @@ public class QuantumCapacitorData extends SavedData {
     public HashMap<UUID, HashMap<Integer, Double>> powermapping = new HashMap<>();
 
     public QuantumCapacitorData() {
-	super();
     }
 
     public static QuantumCapacitorData load(CompoundTag source) {

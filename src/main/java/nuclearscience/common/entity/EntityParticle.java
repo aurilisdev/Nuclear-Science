@@ -72,11 +72,9 @@ public class EntityParticle extends Entity {
 	    entityData.set(DIRECTION, direction);
 
 	    entityData.set(SPEED, speed);
-	} else {
-	    if (!entityData.isEmpty()) {
-		direction = entityData.get(DIRECTION);
-		speed = entityData.get(SPEED);
-	    }
+	} else if (!entityData.isEmpty()) {
+	    direction = entityData.get(DIRECTION);
+	    speed = entityData.get(SPEED);
 	}
 	Location source = new Location(blockPosition());
 	double totstrength = 1000;
@@ -136,8 +134,7 @@ public class EntityParticle extends Entity {
 			    }
 			}
 			BlockEntity te = level.getBlockEntity(positionNow);
-			if (te instanceof TileElectromagneticSwitch) {
-			    TileElectromagneticSwitch switchte = (TileElectromagneticSwitch) te;
+			if (te instanceof TileElectromagneticSwitch switchte) {
 			    directions.remove(switchte.lastDirection);
 			    if (directions.size() > (switchte.lastDirection == null ? 2 : 1)) {
 				level.explode(this, getX(), getY(), getZ(), speed, BlockInteraction.DESTROY);
@@ -221,10 +218,8 @@ public class EntityParticle extends Entity {
 		}
 	    }
 	    speed = Math.min(speed, 1.999f);
-	} else {
-	    if (tickCount > 100) {
-		removeAfterChangingDimensions();
-	    }
+	} else if (tickCount > 100) {
+	    removeAfterChangingDimensions();
 	}
     }
 

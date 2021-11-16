@@ -61,11 +61,12 @@ public abstract class GenericTileMoltenSaltPipe extends GenericTile implements I
 	    }
 	    if (connectedNets.isEmpty()) {
 		moltenSaltNetwork = new MoltenSaltNetwork(Sets.newHashSet(this));
-	    } else if (connectedNets.size() == 1) {
-		moltenSaltNetwork = (MoltenSaltNetwork) connectedNets.toArray()[0];
-		moltenSaltNetwork.conductorSet.add(this);
 	    } else {
-		moltenSaltNetwork = new MoltenSaltNetwork(connectedNets, false);
+		if (connectedNets.size() == 1) {
+		    moltenSaltNetwork = (MoltenSaltNetwork) connectedNets.toArray()[0];
+		} else {
+		    moltenSaltNetwork = new MoltenSaltNetwork(connectedNets, false);
+		}
 		moltenSaltNetwork.conductorSet.add(this);
 	    }
 	}

@@ -3,7 +3,9 @@ package nuclearscience.common.block.facing;
 import net.minecraft.util.StringRepresentable;
 
 public enum FacingDirection implements StringRepresentable {
-    NONE, LEFT, RIGHT;
+    NONE,
+    LEFT,
+    RIGHT;
 
     @Override
     public String getSerializedName() {

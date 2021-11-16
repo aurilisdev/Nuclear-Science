@@ -50,11 +50,7 @@ public class TileTurbine extends GenericTile {
 	    for (int j = -radius; j <= radius; j++) {
 		if (i != 0 || j != 0) {
 		    BlockEntity tile = level.getBlockEntity(new BlockPos(worldPosition.getX() + i, worldPosition.getY(), worldPosition.getZ() + j));
-		    if (!(tile instanceof TileTurbine)) {
-			return;
-		    }
-		    TileTurbine turbine = (TileTurbine) tile;
-		    if (turbine.hasCore) {
+		    if (!(tile instanceof TileTurbine turbine) || turbine.hasCore) {
 			return;
 		    }
 		}
@@ -79,8 +75,7 @@ public class TileTurbine extends GenericTile {
 		    if (i != 0 || j != 0) {
 			BlockPos offset = new BlockPos(worldPosition.getX() + i, worldPosition.getY(), worldPosition.getZ() + j);
 			BlockEntity tile = level.getBlockEntity(offset);
-			if (tile instanceof TileTurbine) {
-			    TileTurbine turbine = (TileTurbine) tile;
+			if (tile instanceof TileTurbine turbine) {
 			    turbine.hasCore = false;
 			    turbine.coreLocation = new BlockPos(0, 0, 0);
 			    BlockState state = level.getBlockState(offset);
@@ -125,8 +120,7 @@ public class TileTurbine extends GenericTile {
 	}
 	if (!isCore && hasCore) {
 	    BlockEntity core = level.getBlockEntity(coreLocation);
-	    if (core instanceof TileTurbine && ((TileTurbine) core).isCore) {
-		TileTurbine turbine = (TileTurbine) core;
+	    if (core instanceof TileTurbine turbine && ((TileTurbine) core).isCore) {
 		turbine.addSteam(this.steam, temp);
 		this.steam = 0;
 	    }

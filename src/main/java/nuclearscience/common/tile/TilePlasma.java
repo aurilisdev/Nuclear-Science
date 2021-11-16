@@ -54,11 +54,9 @@ public class TilePlasma extends GenericTile {
 		&& level.getBlockState(getBlockPos().relative(Direction.UP, 2)).getBlock() == Blocks.WATER) {
 	    if (output == null) {
 		output = new CachedTileOutput(level, getBlockPos().relative(Direction.UP, 3));
-	    } else {
-		if (output.getSafe() instanceof TileTurbine) {
-		    TileTurbine turbine = output.getSafe();
-		    turbine.addSteam((int) (Constants.FUSIONREACTOR_MAXENERGYTARGET / (113.0 * 20.0)), Integer.MAX_VALUE);
-		}
+	    } else if (output.getSafe() instanceof TileTurbine) {
+		TileTurbine turbine = output.getSafe();
+		turbine.addSteam((int) (Constants.FUSIONREACTOR_MAXENERGYTARGET / (113.0 * 20.0)), Integer.MAX_VALUE);
 	    }
 	}
     }
