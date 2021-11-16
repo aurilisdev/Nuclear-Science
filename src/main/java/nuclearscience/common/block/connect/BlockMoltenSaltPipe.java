@@ -1,41 +1,33 @@
 package nuclearscience.common.block.connect;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nullable;
 
 import com.google.common.collect.Maps;
 
-import electrodynamics.DeferredRegisters;
 import electrodynamics.common.block.connect.EnumConnectType;
+import electrodynamics.prefab.block.GenericEntityBlockWaterloggable;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.storage.loot.LootContext.Builder;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -46,7 +38,7 @@ import nuclearscience.common.tile.TileHeatExchanger;
 import nuclearscience.common.tile.TileMSRReactorCore;
 import nuclearscience.common.tile.network.TileMoltenSaltPipe;
 
-public class BlockMoltenSaltPipe extends BaseEntityBlock implements SimpleWaterloggedBlock {
+public class BlockMoltenSaltPipe extends GenericEntityBlockWaterloggable {
 
     public static final Map<Direction, EnumProperty<EnumConnectType>> FACING_TO_PROPERTY_MAP = Util.make(Maps.newEnumMap(Direction.class), p -> {
 	p.put(Direction.NORTH, EnumConnectType.NORTH);
@@ -86,24 +78,6 @@ public class BlockMoltenSaltPipe extends BaseEntityBlock implements SimpleWaterl
 	cubewest = Block.box(0, sm, sm, lg, lg, lg);
 	cubeeast = Block.box(sm, sm, sm, 16, lg, lg);
 	PIPESET.add(this);
-	registerDefaultState(stateDefinition.any().setValue(BlockStateProperties.WATERLOGGED, false));
-    }
-
-    @Nullable
-    @Override
-    public BlockState getStateForPlacement(BlockPlaceContext context) {
-	FluidState fluidstate = context.getLevel().getFluidState(context.getClickedPos());
-	return super.getStateForPlacement(context).setValue(BlockStateProperties.WATERLOGGED, Boolean.valueOf(fluidstate.getType() == Fluids.WATER));
-    }
-
-    @Override
-    public FluidState getFluidState(BlockState state) {
-	return state.getValue(BlockStateProperties.WATERLOGGED) == Boolean.TRUE ? Fluids.WATER.getSource(false) : super.getFluidState(state);
-    }
-
-    @Override
-    public List<ItemStack> getDrops(BlockState state, Builder builder) {
-	return Arrays.asList(new ItemStack(DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(pipe)));
     }
 
     @Override
@@ -111,7 +85,6 @@ public class BlockMoltenSaltPipe extends BaseEntityBlock implements SimpleWaterl
 	super.createBlockStateDefinition(builder);
 	builder.add(EnumConnectType.UP, EnumConnectType.DOWN, EnumConnectType.NORTH, EnumConnectType.EAST, EnumConnectType.SOUTH,
 		EnumConnectType.WEST);
-	builder.add(BlockStateProperties.WATERLOGGED);
     }
 
     @Override
@@ -216,11 +189,6 @@ public class BlockMoltenSaltPipe extends BaseEntityBlock implements SimpleWaterl
 		s.refreshNetworkIfChange();
 	    }
 	}
-    }
-
-    @Override
-    public RenderShape getRenderShape(BlockState state) {
-	return RenderShape.MODEL;
     }
 
     @Override

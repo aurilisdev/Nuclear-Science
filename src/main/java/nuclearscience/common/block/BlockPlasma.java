@@ -1,16 +1,13 @@
 package nuclearscience.common.block;
 
-import electrodynamics.prefab.tile.GenericTileTicking;
+import electrodynamics.prefab.block.GenericEntityBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
@@ -22,7 +19,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import nuclearscience.api.plasma.DamageSourcePlasma;
 import nuclearscience.common.tile.TilePlasma;
 
-public class BlockPlasma extends BaseEntityBlock {
+public class BlockPlasma extends GenericEntityBlock {
 
     public BlockPlasma() {
 	super(BlockBehaviour.Properties.of(Material.PORTAL).noCollission().randomTicks().strength(-1.0F).sound(SoundType.GLASS));
@@ -31,17 +28,6 @@ public class BlockPlasma extends BaseEntityBlock {
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
 	return new TilePlasma(pos, state);
-    }
-
-    @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level lvl, BlockState state, BlockEntityType<T> type) {
-	return this::tick;
-    }
-
-    public <T extends BlockEntity> void tick(Level lvl, BlockPos pos, BlockState state, T t) {
-	if (t instanceof GenericTileTicking tick) {
-	    tick.tick();
-	}
     }
 
     @Override
