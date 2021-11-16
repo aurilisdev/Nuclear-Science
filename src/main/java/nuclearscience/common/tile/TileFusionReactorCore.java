@@ -1,7 +1,7 @@
 package nuclearscience.common.tile;
 
 import electrodynamics.api.electricity.CapabilityElectrodynamic;
-import electrodynamics.prefab.tile.GenericTileTicking;
+import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.settings.Constants;
 
-public class TileFusionReactorCore extends GenericTileTicking {
+public class TileFusionReactorCore extends GenericTile {
     public int deuterium;
     public int tritium;
     private int timeLeft = 0;

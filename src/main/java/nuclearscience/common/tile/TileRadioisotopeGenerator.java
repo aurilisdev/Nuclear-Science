@@ -1,7 +1,7 @@
 package nuclearscience.common.tile;
 
 import electrodynamics.common.network.ElectricityUtilities;
-import electrodynamics.prefab.tile.GenericTileTicking;
+import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
@@ -20,7 +20,7 @@ import nuclearscience.api.radiation.RadiationRegister;
 import nuclearscience.common.inventory.container.ContainerRadioisotopeGenerator;
 import nuclearscience.common.settings.Constants;
 
-public class TileRadioisotopeGenerator extends GenericTileTicking {
+public class TileRadioisotopeGenerator extends GenericTile {
 
     protected CachedTileOutput output1;
     protected CachedTileOutput output2;

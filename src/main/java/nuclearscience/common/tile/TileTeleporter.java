@@ -3,7 +3,7 @@ package nuclearscience.common.tile;
 import java.util.List;
 
 import electrodynamics.api.electricity.CapabilityElectrodynamic;
-import electrodynamics.prefab.tile.GenericTileTicking;
+import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
@@ -20,7 +20,7 @@ import net.minecraft.world.phys.AABB;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.item.ItemFrequencyCard;
 
-public class TileTeleporter extends GenericTileTicking {
+public class TileTeleporter extends GenericTile {
     public int xCoord;
     public int yCoord;
     public int zCoord;

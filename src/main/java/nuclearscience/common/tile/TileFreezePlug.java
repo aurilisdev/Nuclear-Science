@@ -1,7 +1,7 @@
 package nuclearscience.common.tile;
 
 import electrodynamics.api.electricity.CapabilityElectrodynamic;
-import electrodynamics.prefab.tile.GenericTileTicking;
+import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
@@ -16,7 +16,7 @@ import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerFreezePlug;
 import nuclearscience.common.settings.Constants;
 
-public class TileFreezePlug extends GenericTileTicking {
+public class TileFreezePlug extends GenericTile {
     private boolean isFrozen = false;
 
     public TileFreezePlug(BlockPos pos, BlockState state) {

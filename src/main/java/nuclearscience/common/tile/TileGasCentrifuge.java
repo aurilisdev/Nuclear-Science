@@ -3,7 +3,7 @@ package nuclearscience.common.tile;
 import electrodynamics.api.electricity.CapabilityElectrodynamic;
 import electrodynamics.api.sound.SoundAPI;
 import electrodynamics.common.item.ItemProcessorUpgrade;
-import electrodynamics.prefab.tile.GenericTileTicking;
+import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
 import electrodynamics.prefab.tile.components.type.ComponentDirection;
@@ -24,7 +24,7 @@ import nuclearscience.SoundRegister;
 import nuclearscience.common.inventory.container.ContainerGasCentrifuge;
 import nuclearscience.common.settings.Constants;
 
-public class TileGasCentrifuge extends GenericTileTicking {
+public class TileGasCentrifuge extends GenericTile {
     public static final int TANKCAPACITY = 5000;
     public static final float REQUIRED = 2500;
     public int stored235 = 0;

@@ -1,6 +1,6 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.prefab.tile.GenericTileTicking;
+import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import electrodynamics.prefab.utilities.object.CachedTileOutput;
 import net.minecraft.core.BlockPos;
@@ -12,7 +12,7 @@ import nuclearscience.DeferredRegisters;
 import nuclearscience.api.fusion.IElectromagnet;
 import nuclearscience.common.settings.Constants;
 
-public class TilePlasma extends GenericTileTicking {
+public class TilePlasma extends GenericTile {
     public int ticksExisted;
     public int spread = 6;
     private CachedTileOutput output;

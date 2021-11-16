@@ -2,7 +2,7 @@ package nuclearscience.common.tile;
 
 import electrodynamics.api.electricity.CapabilityElectrodynamic;
 import electrodynamics.common.recipe.categories.fluiditem2item.FluidItem2ItemRecipe;
-import electrodynamics.prefab.tile.GenericTileTicking;
+import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
 import electrodynamics.prefab.tile.components.type.ComponentDirection;
@@ -21,7 +21,7 @@ import nuclearscience.common.inventory.container.ContainerRadioactiveProcessor;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 import nuclearscience.common.settings.Constants;
 
-public class TileRadioactiveProcessor extends GenericTileTicking {
+public class TileRadioactiveProcessor extends GenericTile {
 
     public static final int MAX_TANK_CAPACITY = 5000;
 

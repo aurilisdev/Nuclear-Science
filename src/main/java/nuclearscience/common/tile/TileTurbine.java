@@ -2,7 +2,7 @@ package nuclearscience.common.tile;
 
 import electrodynamics.api.sound.SoundAPI;
 import electrodynamics.common.network.ElectricityUtilities;
-import electrodynamics.prefab.tile.GenericTileTicking;
+import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
@@ -20,7 +20,7 @@ import nuclearscience.DeferredRegisters;
 import nuclearscience.SoundRegister;
 import nuclearscience.common.block.BlockTurbine;
 
-public class TileTurbine extends GenericTileTicking {
+public class TileTurbine extends GenericTile {
 
     public static final int MAX_STEAM = 3000000;
     public int spinSpeed = 0;

@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import electrodynamics.api.electricity.CapabilityElectrodynamic;
 import electrodynamics.common.network.ElectricityUtilities;
-import electrodynamics.prefab.tile.GenericTileTicking;
+import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
@@ -27,7 +27,7 @@ import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerQuantumCapacitor;
 import nuclearscience.common.world.QuantumCapacitorData;
 
-public class TileQuantumCapacitor extends GenericTileTicking implements IEnergyStorage {
+public class TileQuantumCapacitor extends GenericTile implements IEnergyStorage {
     public static final double DEFAULT_MAX_JOULES = Double.MAX_VALUE;
     public static final double DEFAULT_VOLTAGE = 1920.0;
     public double outputJoules = 359.0;

@@ -1,7 +1,7 @@
 package nuclearscience.common.tile;
 
 import electrodynamics.api.electricity.CapabilityElectrodynamic;
-import electrodynamics.prefab.tile.GenericTileTicking;
+import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
 import electrodynamics.prefab.tile.components.type.ComponentDirection;
@@ -23,7 +23,7 @@ import nuclearscience.common.entity.EntityParticle;
 import nuclearscience.common.inventory.container.ContainerParticleInjector;
 import nuclearscience.common.settings.Constants;
 
-public class TileParticleInjector extends GenericTileTicking {
+public class TileParticleInjector extends GenericTile {
     private EntityParticle[] particles = new EntityParticle[2];
     private long timeSinceSpawn = 0;
 

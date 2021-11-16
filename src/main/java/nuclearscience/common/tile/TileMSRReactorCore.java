@@ -3,7 +3,7 @@ package nuclearscience.common.tile;
 import java.util.ArrayList;
 import java.util.List;
 
-import electrodynamics.prefab.tile.GenericTileTicking;
+import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
 import electrodynamics.prefab.tile.components.type.ComponentDirection;
@@ -26,7 +26,7 @@ import nuclearscience.common.inventory.container.ContainerMSRReactorCore;
 import nuclearscience.common.network.MoltenSaltNetwork;
 
 //TODO: Rename from bloody MSRReactor everywhere to MSReactor as MSRReactor now means Molten-Salt-ReactorReactor
-public class TileMSRReactorCore extends GenericTileTicking {
+public class TileMSRReactorCore extends GenericTile {
     public static final int MELTDOWN_TEMPERATURE = 900;
     public static final double FUEL_CAPACITY = 1000;
     public static final double FUEL_USAGE_RATE = 0.01;

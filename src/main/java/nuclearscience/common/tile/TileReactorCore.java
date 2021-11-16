@@ -6,7 +6,7 @@ import java.util.Set;
 import electrodynamics.common.recipe.ElectrodynamicsRecipe;
 import electrodynamics.common.recipe.categories.o2o.O2ORecipe;
 import electrodynamics.common.recipe.recipeutils.CountableIngredient;
-import electrodynamics.prefab.tile.GenericTileTicking;
+import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
 import electrodynamics.prefab.tile.components.type.ComponentInventory;
@@ -37,7 +37,7 @@ import nuclearscience.common.inventory.container.ContainerReactorCore;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 import nuclearscience.common.settings.Constants;
 
-public class TileReactorCore extends GenericTileTicking {
+public class TileReactorCore extends GenericTile {
     public static final int MELTDOWN_TEMPERATURE_ACTUAL = 5611;
     public static final int MELTDOWN_TEMPERATURE_CALC = 4407;
     // NB! THE VALUES ABOVE ARE USED FROM THE VERY OLD CALCULATION CODE I MADE BACK

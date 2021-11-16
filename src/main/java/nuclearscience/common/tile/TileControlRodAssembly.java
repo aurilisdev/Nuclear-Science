@@ -1,6 +1,6 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.prefab.tile.GenericTileTicking;
+import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.DeferredRegisters;
 
-public class TileControlRodAssembly extends GenericTileTicking {
+public class TileControlRodAssembly extends GenericTile {
 
     public int insertion = 0;
     public boolean isMSR = false;

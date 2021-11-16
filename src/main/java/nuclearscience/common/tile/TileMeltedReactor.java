@@ -2,7 +2,7 @@ package nuclearscience.common.tile;
 
 import java.util.List;
 
-import electrodynamics.prefab.tile.GenericTileTicking;
+import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import electrodynamics.prefab.utilities.object.Location;
 import net.minecraft.core.BlockPos;
@@ -18,7 +18,7 @@ import net.minecraft.world.phys.Vec3;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.api.radiation.RadiationSystem;
 
-public class TileMeltedReactor extends GenericTileTicking {
+public class TileMeltedReactor extends GenericTile {
     public static final float RADIATION_RADIUS = 30;
     public static final float START_RADIATION = 8766000f * 5f;
     public int radiation = (int) START_RADIATION;

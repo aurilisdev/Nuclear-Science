@@ -4,7 +4,7 @@ import electrodynamics.api.electricity.CapabilityElectrodynamic;
 import electrodynamics.api.sound.SoundAPI;
 import electrodynamics.common.item.ItemProcessorUpgrade;
 import electrodynamics.common.recipe.categories.fluiditem2fluid.FluidItem2FluidRecipe;
-import electrodynamics.prefab.tile.GenericTileTicking;
+import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
 import electrodynamics.prefab.tile.components.type.ComponentDirection;
@@ -27,7 +27,7 @@ import nuclearscience.common.inventory.container.ContainerNuclearBoiler;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 import nuclearscience.common.settings.Constants;
 
-public class TileNuclearBoiler extends GenericTileTicking {
+public class TileNuclearBoiler extends GenericTile {
 
     public static final int MAX_TANK_CAPACITY = 5000;
 

@@ -4,7 +4,7 @@ import electrodynamics.api.electricity.CapabilityElectrodynamic;
 import electrodynamics.api.sound.SoundAPI;
 import electrodynamics.common.inventory.container.ContainerO2OProcessor;
 import electrodynamics.common.item.ItemProcessorUpgrade;
-import electrodynamics.prefab.tile.GenericTileTicking;
+import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
 import electrodynamics.prefab.tile.components.type.ComponentDirection;
@@ -23,7 +23,7 @@ import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 import nuclearscience.common.recipe.categories.o2o.specificmachines.FuelReprocessorRecipe;
 import nuclearscience.common.settings.Constants;
 
-public class TileFuelReprocessor extends GenericTileTicking {
+public class TileFuelReprocessor extends GenericTile {
 
     public TileFuelReprocessor(BlockPos pos, BlockState state) {
 	super(DeferredRegisters.TILE_FUELREPROCESSOR.get(), pos, state);

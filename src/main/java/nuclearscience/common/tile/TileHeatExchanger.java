@@ -1,6 +1,6 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.prefab.tile.GenericTileTicking;
+import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.settings.Constants;
 
-public class TileHeatExchanger extends GenericTileTicking {
+public class TileHeatExchanger extends GenericTile {
     public static final int STEAM_GEN_DIAMETER = 5;
     public static final int STEAM_GEN_HEIGHT = 2;
     private TileTurbine[][][] cachedTurbines = new TileTurbine[STEAM_GEN_DIAMETER][STEAM_GEN_HEIGHT][STEAM_GEN_DIAMETER];

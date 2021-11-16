@@ -1,6 +1,6 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.prefab.tile.GenericTileTicking;
+import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
 import electrodynamics.prefab.tile.components.type.ComponentDirection;
@@ -18,7 +18,7 @@ import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerMoltenSaltSupplier;
 import nuclearscience.common.settings.Constants;
 
-public class TileMoltenSaltSupplier extends GenericTileTicking {
+public class TileMoltenSaltSupplier extends GenericTile {
 
     protected CachedTileOutput output;
 
