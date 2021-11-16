@@ -1,29 +1,38 @@
 package nuclearscience.common.item;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import com.mojang.datafixers.util.Pair;
 
 import electrodynamics.common.item.gear.tools.ItemCanister;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.ForgeRegistries;
 import nuclearscience.DeferredRegisters;
 
 public class ItemCanisterLead extends ItemCanister {
+	
+	public static List<ResourceLocation> TAG_NAMES = new ArrayList<>();
 
     public ItemCanisterLead(Properties itemProperty) {
-	super(itemProperty);
+    	super(itemProperty);
     }
 
-    // TODO handle container item crafting
-
     @Override
-    public ArrayList<Fluid> getWhitelistedFluids() {
-	ArrayList<Fluid> whitelist = new ArrayList<>();
-	for (Fluid fluid : ForgeRegistries.FLUIDS.getValues()) {
-	    if (fluid.getBucket().getRegistryName().equals(DeferredRegisters.ITEM_CANISTERLEAD.get().getRegistryName())) {
-		whitelist.add(fluid);
-	    }
-	}
-	return whitelist;
+    public Pair<List<ResourceLocation>, List<Fluid>> getWhitelistedFluids() {
+		ArrayList<Fluid> whitelist = new ArrayList<>();
+		for (Fluid fluid : ForgeRegistries.FLUIDS.getValues()) {
+		    if (fluid.getBucket().getRegistryName().equals(DeferredRegisters.ITEM_CANISTERLEAD.get().getRegistryName())) {
+			whitelist.add(fluid);
+		    }
+		}
+		return Pair.of(TAG_NAMES, whitelist);
+    }
+    
+    public static void addTag(Tags.IOptionalNamedTag<Fluid> tag) {
+    	TAG_NAMES.add(tag.getName());
     }
 
 }

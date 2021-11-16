@@ -6,7 +6,7 @@
 		"count":10
 	},
 	"fluid_input":{
-		"fluid":"nuclearscience:fluidironsulfamate",
+		"tag":"forge:iron_sulfamate",
 		"amount": 3000
 	},
 	"item_output":{
