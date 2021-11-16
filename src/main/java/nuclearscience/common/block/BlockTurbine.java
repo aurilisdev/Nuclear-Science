@@ -83,7 +83,7 @@ public class BlockTurbine extends GenericEntityBlockWaterloggable {
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-	return defaultBlockState().setValue(RENDER, true);
+	return super.getStateForPlacement(context).setValue(RENDER, true);
     }
 
     @Override

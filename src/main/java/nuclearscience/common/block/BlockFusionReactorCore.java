@@ -36,8 +36,7 @@ public class BlockFusionReactorCore extends BlockGenericMachine {
 	    Item itemInHand = inHand.getItem();
 	    if (itemInHand == DeferredRegisters.ITEM_CELLDEUTERIUM.get() || itemInHand == DeferredRegisters.ITEM_CELLTRITIUM.get()) {
 		BlockEntity tile = worldIn.getBlockEntity(pos);
-		if (tile instanceof TileFusionReactorCore) {
-		    TileFusionReactorCore core = (TileFusionReactorCore) tile;
+		if (tile instanceof TileFusionReactorCore core) {
 		    boolean tritium = itemInHand == DeferredRegisters.ITEM_CELLTRITIUM.get();
 		    int type = tritium ? core.tritium : core.deuterium;
 		    int added = Math.min(inHand.getCount(), Constants.FUSIONREACTOR_MAXSTORAGE - type);

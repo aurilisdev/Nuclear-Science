@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.mojang.math.Vector3f;
 
-import electrodynamics.common.block.BlockGenericMachine;
+import electrodynamics.prefab.block.GenericEntityBlock;
 import electrodynamics.prefab.utilities.object.Location;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -101,7 +101,7 @@ public class EntityParticle extends Entity {
 		BlockState oldState = level.getBlockState(next);
 		boolean isBooster = false;
 		if (oldState.getBlock() == DeferredRegisters.blockElectromagneticBooster) {
-		    Direction dir = oldState.getValue(BlockGenericMachine.FACING).getOpposite();
+		    Direction dir = oldState.getValue(GenericEntityBlock.FACING).getOpposite();
 		    FacingDirection face = oldState.getValue(BlockElectromagneticBooster.FACINGDIRECTION);
 		    if (face == FacingDirection.RIGHT) {
 			dir = dir.getClockWise();
@@ -196,8 +196,8 @@ public class EntityParticle extends Entity {
 				&& oldState.getBlock() == DeferredRegisters.blockElectromagneticBooster;
 			boolean explode = false;
 			if (checkIsBooster) {
-			    Direction oldDir = oldState.getValue(BlockGenericMachine.FACING);
-			    Direction nextDir = nextState.getValue(BlockGenericMachine.FACING);
+			    Direction oldDir = oldState.getValue(GenericEntityBlock.FACING);
+			    Direction nextDir = nextState.getValue(GenericEntityBlock.FACING);
 			    if (oldDir != nextDir) {
 				FacingDirection face = oldState.getValue(BlockElectromagneticBooster.FACINGDIRECTION);
 				if (face == FacingDirection.RIGHT) {

@@ -3,7 +3,7 @@ package nuclearscience.common.block;
 import java.util.Arrays;
 import java.util.List;
 
-import electrodynamics.common.block.BlockGenericMachine;
+import electrodynamics.prefab.block.GenericEntityBlock;
 import electrodynamics.prefab.tile.IWrenchable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -34,7 +34,7 @@ public class BlockElectromagneticBooster extends Block implements IElectromagnet
     public BlockElectromagneticBooster() {
 	super(Properties.of(Material.GLASS).strength(3.5f, 20).requiresCorrectToolForDrops().noOcclusion().isRedstoneConductor((x, y, z) -> false));
 	registerDefaultState(
-		stateDefinition.any().setValue(BlockGenericMachine.FACING, Direction.NORTH).setValue(FACINGDIRECTION, FacingDirection.NONE));
+		stateDefinition.any().setValue(GenericEntityBlock.FACING, Direction.NORTH).setValue(FACINGDIRECTION, FacingDirection.NONE));
     }
 
     @Override
@@ -44,25 +44,25 @@ public class BlockElectromagneticBooster extends Block implements IElectromagnet
 
     @Override
     public BlockState rotate(BlockState state, Rotation rot) {
-	return state.setValue(BlockGenericMachine.FACING, rot.rotate(state.getValue(BlockGenericMachine.FACING)));
+	return state.setValue(GenericEntityBlock.FACING, rot.rotate(state.getValue(GenericEntityBlock.FACING)));
     }
 
     @Override
     public BlockState mirror(BlockState state, Mirror mirrorIn) {
-	return state.rotate(mirrorIn.getRotation(state.getValue(BlockGenericMachine.FACING)));
+	return state.rotate(mirrorIn.getRotation(state.getValue(GenericEntityBlock.FACING)));
     }
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
 	Direction movingdirection = context.getHorizontalDirection();
-	BlockState state = defaultBlockState().setValue(BlockGenericMachine.FACING, context.getHorizontalDirection().getOpposite());
+	BlockState state = super.getStateForPlacement(context).setValue(GenericEntityBlock.FACING, context.getHorizontalDirection().getOpposite());
 	// left check first in front
 	BlockState check = context.getLevel().getBlockState(context.getClickedPos().relative(movingdirection.getClockWise().getOpposite()));
-	if (check.getBlock() == this && check.getValue(BlockGenericMachine.FACING).getOpposite() == movingdirection.getClockWise().getOpposite()) {
+	if (check.getBlock() == this && check.getValue(GenericEntityBlock.FACING).getOpposite() == movingdirection.getClockWise().getOpposite()) {
 	    state = state.setValue(FACINGDIRECTION, FacingDirection.LEFT);
 	} else {
 	    check = context.getLevel().getBlockState(context.getClickedPos().relative(movingdirection.getClockWise()));
-	    if (check.getBlock() == this && check.getValue(BlockGenericMachine.FACING).getOpposite() == movingdirection.getClockWise()) {
+	    if (check.getBlock() == this && check.getValue(GenericEntityBlock.FACING).getOpposite() == movingdirection.getClockWise()) {
 		state = state.setValue(FACINGDIRECTION, FacingDirection.RIGHT);
 	    }
 	}
@@ -71,7 +71,7 @@ public class BlockElectromagneticBooster extends Block implements IElectromagnet
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-	builder.add(BlockGenericMachine.FACING);
+	builder.add(GenericEntityBlock.FACING);
 	builder.add(FACINGDIRECTION);
     }
 

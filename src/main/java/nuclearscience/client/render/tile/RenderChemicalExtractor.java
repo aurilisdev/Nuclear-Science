@@ -2,7 +2,7 @@ package nuclearscience.client.render.tile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import electrodynamics.common.block.BlockGenericMachine;
+import electrodynamics.prefab.block.GenericEntityBlock;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
 import electrodynamics.prefab.utilities.UtilitiesRendering;
@@ -25,7 +25,7 @@ public class RenderChemicalExtractor implements BlockEntityRenderer<TileChemical
     public void render(TileChemicalExtractor tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn,
 	    int combinedLightIn, int combinedOverlayIn) {
 	BakedModel ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_CHEMICALEXTRACTORWATER);
-	Direction face = tileEntityIn.getBlockState().getValue(BlockGenericMachine.FACING);
+	Direction face = tileEntityIn.getBlockState().getValue(GenericEntityBlock.FACING);
 	matrixStackIn.translate(face.getStepX(), face.getStepY(), face.getStepZ());
 	UtilitiesRendering.prepareRotationalTileModel(tileEntityIn, matrixStackIn);
 	matrixStackIn.translate(-0.5, 0, 0.5);

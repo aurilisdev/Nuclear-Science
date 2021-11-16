@@ -2,7 +2,7 @@ package nuclearscience.client.render.tile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import electrodynamics.common.block.BlockGenericMachine;
+import electrodynamics.prefab.block.GenericEntityBlock;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
 import electrodynamics.prefab.utilities.UtilitiesRendering;
@@ -27,7 +27,7 @@ public class RenderNuclearBoiler implements BlockEntityRenderer<TileNuclearBoile
 	    int combinedOverlayIn) {
 	matrixStackIn.pushPose();
 	BakedModel ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_CHEMICALBOILERWATER);
-	Direction face = tileEntityIn.getBlockState().getValue(BlockGenericMachine.FACING);
+	Direction face = tileEntityIn.getBlockState().getValue(GenericEntityBlock.FACING);
 	matrixStackIn.translate(face.getStepX(), face.getStepY(), face.getStepZ());
 	UtilitiesRendering.prepareRotationalTileModel(tileEntityIn, matrixStackIn);
 	matrixStackIn.translate(-0.5, 0, 0.5);
@@ -43,7 +43,7 @@ public class RenderNuclearBoiler implements BlockEntityRenderer<TileNuclearBoile
 	matrixStackIn.popPose();
 	matrixStackIn.pushPose();
 	ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_CHEMICALBOILERHEXAFLUORIDE);
-	face = tileEntityIn.getBlockState().getValue(BlockGenericMachine.FACING);
+	face = tileEntityIn.getBlockState().getValue(GenericEntityBlock.FACING);
 	matrixStackIn.translate(face.getStepX(), face.getStepY(), face.getStepZ());
 	UtilitiesRendering.prepareRotationalTileModel(tileEntityIn, matrixStackIn);
 	matrixStackIn.translate(-0.5, 0, 0.5);
