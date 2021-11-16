@@ -56,15 +56,15 @@ public class TileGasCentrifuge extends GenericTile {
 	ComponentInventory inv = getComponent(ComponentType.Inventory);
 	ComponentFluidHandlerMulti tank = getComponent(ComponentType.FluidHandler);
 	boolean hasFluid = false;
-	for(Fluid fluid : NuclearScienceTags.Fluids.URANIUM_HEXAFLUORIDE.getValues()) {
-		FluidTank fTank = tank.getTankFromFluid(fluid, true); 
-		if(fTank.getFluidAmount() >= REQUIRED / 60.0) {
-			hasFluid = true;
-			break;
-		}
+	for (Fluid fluid : NuclearScienceTags.Fluids.URANIUM_HEXAFLUORIDE.getValues()) {
+	    FluidTank fTank = tank.getTankFromFluid(fluid, true);
+	    if (fTank.getFluidAmount() >= REQUIRED / 60.0) {
+		hasFluid = true;
+		break;
+	    }
 	}
-	boolean val = electro.getJoulesStored() >= processor.getUsage() && hasFluid
-		&& inv.getItem(0).getCount() < inv.getItem(0).getMaxStackSize() && inv.getItem(1).getCount() < inv.getItem(1).getMaxStackSize();
+	boolean val = electro.getJoulesStored() >= processor.getUsage() && hasFluid && inv.getItem(0).getCount() < inv.getItem(0).getMaxStackSize()
+		&& inv.getItem(1).getCount() < inv.getItem(1).getMaxStackSize();
 	if (!val && spinSpeed > 0) {
 	    spinSpeed = 0;
 	    this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();
@@ -78,15 +78,16 @@ public class TileGasCentrifuge extends GenericTile {
 	spinSpeed = (int) processor.operatingSpeed;
 	this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();
 	int processed = (int) (REQUIRED / 60.0);
-	for(Fluid fluid : NuclearScienceTags.Fluids.URANIUM_HEXAFLUORIDE.getValues()) {
-		FluidTank fTank = tank.getTankFromFluid(fluid, true); 
-		if(fTank.getFluidAmount() >= processed) {
-			fTank.getFluid().shrink(processed);
-			break;
-		}
+	for (Fluid fluid : NuclearScienceTags.Fluids.URANIUM_HEXAFLUORIDE.getValues()) {
+	    FluidTank fTank = tank.getTankFromFluid(fluid, true);
+	    if (fTank.getFluidAmount() >= processed) {
+		fTank.getFluid().shrink(processed);
+		break;
+	    }
 	}
-	
-	//tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride, false).shrink(processed);
+
+	// tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride,
+	// false).shrink(processed);
 	stored235 += processed * 0.172;
 	stored238 += processed * (1 - 0.172);
 	if (stored235 > REQUIRED) {
