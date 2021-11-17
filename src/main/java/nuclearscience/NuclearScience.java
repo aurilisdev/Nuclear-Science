@@ -21,6 +21,7 @@ import nuclearscience.client.ClientRegister;
 import nuclearscience.common.packet.NetworkHandler;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 import nuclearscience.common.settings.Constants;
+import nuclearscience.common.tags.NuclearScienceTags;
 
 @Mod(References.ID)
 @EventBusSubscriber(modid = References.ID, bus = Bus.MOD)
@@ -48,6 +49,7 @@ public class NuclearScience {
     @SubscribeEvent
     public static void onCommonSetup(FMLCommonSetupEvent event) {
 	NetworkHandler.init();
+	NuclearScienceTags.init();
     }
 
     @SubscribeEvent

@@ -13,7 +13,7 @@
 		"count": 2
 	},
 	"fluid_input": {
-		"fluid": "electrodynamics:fluidhydrogenfluoride",
+		"tag":"forge:hydrofluoric_acid",
 		"amount": 2500
 	},
 	"item_output": {

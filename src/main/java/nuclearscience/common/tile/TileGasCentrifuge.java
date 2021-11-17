@@ -14,14 +14,17 @@ import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import net.minecraft.block.BlockState;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.SoundRegister;
 import nuclearscience.common.inventory.container.ContainerGasCentrifuge;
 import nuclearscience.common.settings.Constants;
+import nuclearscience.common.tags.NuclearScienceTags;
 
 public class TileGasCentrifuge extends GenericTileTicking {
     public static final int TANKCAPACITY = 5000;
@@ -35,7 +38,7 @@ public class TileGasCentrifuge extends GenericTileTicking {
 	addComponent(new ComponentTickable().tickClient(this::tickClient));
 	addComponent(new ComponentDirection());
 	addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket));
-	addComponent(new ComponentFluidHandlerMulti(this).addFluidTank(DeferredRegisters.fluidUraniumHexafluoride, TANKCAPACITY, false)
+	addComponent(new ComponentFluidHandlerMulti(this).addFluidTank(NuclearScienceTags.Fluids.URANIUM_HEXAFLUORIDE, TANKCAPACITY, true)
 		.relativeInput(Direction.NORTH));
 	addComponent(new ComponentElectrodynamic(this).voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 2).input(Direction.DOWN)
 		.maxJoules(Constants.GASCENTRIFUGE_USAGE_PER_TICK * 10));
@@ -51,8 +54,15 @@ public class TileGasCentrifuge extends GenericTileTicking {
 	ComponentElectrodynamic electro = getComponent(ComponentType.Electrodynamic);
 	ComponentInventory inv = getComponent(ComponentType.Inventory);
 	ComponentFluidHandlerMulti tank = getComponent(ComponentType.FluidHandler);
-	boolean val = electro.getJoulesStored() >= processor.getUsage()
-		&& tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride, false).getAmount() >= REQUIRED / 60.0
+	boolean hasFluid = false;
+	for(Fluid fluid : NuclearScienceTags.Fluids.URANIUM_HEXAFLUORIDE.getAllElements()) {
+		FluidTank fTank = tank.getTankFromFluid(fluid, true); 
+		if(fTank.getFluidAmount() >= REQUIRED / 60.0) {
+			hasFluid = true;
+			break;
+		}
+	}
+	boolean val = electro.getJoulesStored() >= processor.getUsage() && hasFluid
 		&& inv.getStackInSlot(0).getCount() < inv.getStackInSlot(0).getMaxStackSize()
 		&& inv.getStackInSlot(1).getCount() < inv.getStackInSlot(1).getMaxStackSize();
 	if (!val && spinSpeed > 0) {
@@ -68,7 +78,13 @@ public class TileGasCentrifuge extends GenericTileTicking {
 	spinSpeed = (int) processor.operatingSpeed;
 	this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();
 	int processed = (int) (REQUIRED / 60.0);
-	tank.getStackFromFluid(DeferredRegisters.fluidUraniumHexafluoride, false).shrink(processed);
+	for(Fluid fluid : NuclearScienceTags.Fluids.URANIUM_HEXAFLUORIDE.getAllElements()) {
+		FluidTank fTank = tank.getTankFromFluid(fluid, true); 
+		if(fTank.getFluidAmount() >= processed) {
+			fTank.getFluid().shrink(processed);
+			break;
+		}
+	}
 	stored235 += processed * 0.172;
 	stored238 += processed * (1 - 0.172);
 	if (stored235 > REQUIRED) {
