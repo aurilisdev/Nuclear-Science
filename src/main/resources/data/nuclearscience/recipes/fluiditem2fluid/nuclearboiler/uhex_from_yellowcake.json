@@ -1,7 +1,7 @@
 {
 	"type": "nuclearscience:nuclear_boiler_recipe",
 	"item_input": {
-		"item": "nuclearscience:yellowcake",
+		"tag": "forge:yellow_cake_uranium",
 		"count": 1
 	},
 	"fluid_input": {
