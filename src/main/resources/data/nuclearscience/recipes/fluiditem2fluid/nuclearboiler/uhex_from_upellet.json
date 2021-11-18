@@ -1,7 +1,7 @@
 {
 	"type": "nuclearscience:nuclear_boiler_recipe",
 	"item_input": {
-		"item": "nuclearscience:uranium238",
+		"tag": "forge:pellets/uranium238",
 		"count": 1
 	},
 	"fluid_input": {
