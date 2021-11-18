@@ -5,11 +5,11 @@
 		"count": 1
 	},
 	"item_input2": {
-		"item": "nuclearscience:thorianitedust",
+		"tag": "forge:dusts/thorium",
 		"count": 2
 	},
 	"item_input3": {
-		"item": "nuclearscience:yellowcake",
+		"tag": "forge:yellow_cake_uranium",
 		"count": 2
 	},
 	"fluid_input": {

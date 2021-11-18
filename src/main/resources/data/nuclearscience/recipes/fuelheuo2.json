@@ -10,10 +10,10 @@
 			"item": "minecraft:glass"
 		},
 		"u": {
-			"item": "nuclearscience:uranium235"
+			"tag": "forge:pellets/uranium235"
 		},
 		"y": {
-			"item": "nuclearscience:uranium238"
+			"tag": "forge:pellets/uranium238"
 		}
 	},
 	"result": {
