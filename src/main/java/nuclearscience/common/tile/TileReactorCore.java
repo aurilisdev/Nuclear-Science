@@ -168,7 +168,6 @@ public class TileReactorCore extends GenericTile {
 		    worldPosition.getZ(), 20, true, BlockInteraction.BREAK);
 	    // Explosion actual = new Explosion(level, null, worldPosition.getX(),
 	    // worldPosition.getY(), worldPosition.getZ(), 20, new ArrayList<>());
-	    // TODO: FIX THIS! THE LINE ABOVE IS CLIENT SIDE ONLY!
 	    radius = 3 * fuelCount;
 	    for (int i = -radius; i <= radius; i++) {
 		for (int j = -radius; j <= radius; j++) {
