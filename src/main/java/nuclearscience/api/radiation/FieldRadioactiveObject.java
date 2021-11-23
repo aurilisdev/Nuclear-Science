@@ -8,8 +8,7 @@ public class FieldRadioactiveObject implements IRadioactiveObject {
     }
 
     @Override
-    public double getRadiationStrength() {
-	return strength;
+    public double getRadiationStrength() {	return strength;
     }
 
 }
