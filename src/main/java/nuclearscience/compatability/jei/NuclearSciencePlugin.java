@@ -102,7 +102,8 @@ public class NuclearSciencePlugin implements IModPlugin {
 		.copyOf(recipeManager.getAllRecipesFor(NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE));
 	registration.addRecipes(chemicalExtractorRecipes, ChemicalExtractorRecipeCategory.UID);
 
-	Set<Item2ItemRecipe> fissionReactorRecipes = ImmutableSet.copyOf(recipeManager.getAllRecipesFor(NuclearScienceRecipeInit.FISSION_REACTOR_TYPE));
+	Set<Item2ItemRecipe> fissionReactorRecipes = ImmutableSet
+		.copyOf(recipeManager.getAllRecipesFor(NuclearScienceRecipeInit.FISSION_REACTOR_TYPE));
 	registration.addRecipes(fissionReactorRecipes, FissionReactorRecipeCategory.UID);
 
 	Set<PsuedoItem2ItemRecipe> antiMatterRecipes = new HashSet<>(NuclearSciencePsuedoRecipes.ANTI_MATTER_RECIPES);
@@ -111,7 +112,8 @@ public class NuclearSciencePlugin implements IModPlugin {
 	Set<PsuedoItem2ItemRecipe> darkMatterRecipes = new HashSet<>(NuclearSciencePsuedoRecipes.DARK_MATTER_RECIPES);
 	registration.addRecipes(darkMatterRecipes, ParticleAcceleratorDarkMatterRecipeCategory.UID);
 
-	Set<Item2ItemRecipe> fuelReprocessorRecipes = ImmutableSet.copyOf(recipeManager.getAllRecipesFor(NuclearScienceRecipeInit.FUEL_REPROCESSOR_TYPE));
+	Set<Item2ItemRecipe> fuelReprocessorRecipes = ImmutableSet
+		.copyOf(recipeManager.getAllRecipesFor(NuclearScienceRecipeInit.FUEL_REPROCESSOR_TYPE));
 	registration.addRecipes(fuelReprocessorRecipes, FuelReprocessorRecipeCategory.UID);
 
 	Set<FluidItem2ItemRecipe> radioactiveProcessorRecipes = ImmutableSet
@@ -156,28 +158,28 @@ public class NuclearSciencePlugin implements IModPlugin {
 
     @Override
     public void registerGuiHandlers(IGuiHandlerRegistration registry) {
-    	registry.addRecipeClickArea(ScreenO2OProcessor.class, 85, 35, 22, 15, 
-        		ElectrodynamicsJEIPlugin.O2O_CLICK_AREAS.toArray(new ResourceLocation[ElectrodynamicsJEIPlugin.O2O_CLICK_AREAS.size()]));
-		
-    	// Nuclear Boiler
-		registry.addRecipeClickArea(ScreenNuclearBoiler.class, 97, 31, 22, 15, NuclearBoilerRecipeCategory.UID);
-		
-		registry.addRecipeClickArea(ScreenRadioactiveProcessor.class, 97, 31, 22, 15, RadioactiveProcessorRecipeCategory.UID);
-		
-		// Chemical Extractor
-		registry.addRecipeClickArea(ScreenChemicalExtractor.class, 97, 31, 22, 15, ChemicalExtractorRecipeCategory.UID);
-	
-		// Gas Centrifuge
-		registry.addRecipeClickArea(ScreenGasCentrifuge.class, 91, 22, 32, 41, GasCentrifugeRecipeCategory.UID);
-	
-		// Fission Reactor
-		registry.addRecipeClickArea(ScreenReactorCore.class, 117, 43, 14, 13, FissionReactorRecipeCategory.UID);
-	
-		// Particle Accelerator
-		registry.addRecipeClickArea(ScreenParticleInjector.class, 102, 33, 28, 14, ParticleAcceleratorAntiMatterRecipeCategory.UID,
-			ParticleAcceleratorDarkMatterRecipeCategory.UID);
-	
-		registry.addRecipeClickArea(ScreenMSRFuelPreProcessor.class, 98, 40, 16, 16, MSRProcessorRecipeCategory.UID);
+	registry.addRecipeClickArea(ScreenO2OProcessor.class, 85, 35, 22, 15,
+		ElectrodynamicsJEIPlugin.O2O_CLICK_AREAS.toArray(new ResourceLocation[ElectrodynamicsJEIPlugin.O2O_CLICK_AREAS.size()]));
+
+	// Nuclear Boiler
+	registry.addRecipeClickArea(ScreenNuclearBoiler.class, 97, 31, 22, 15, NuclearBoilerRecipeCategory.UID);
+
+	registry.addRecipeClickArea(ScreenRadioactiveProcessor.class, 97, 31, 22, 15, RadioactiveProcessorRecipeCategory.UID);
+
+	// Chemical Extractor
+	registry.addRecipeClickArea(ScreenChemicalExtractor.class, 97, 31, 22, 15, ChemicalExtractorRecipeCategory.UID);
+
+	// Gas Centrifuge
+	registry.addRecipeClickArea(ScreenGasCentrifuge.class, 91, 22, 32, 41, GasCentrifugeRecipeCategory.UID);
+
+	// Fission Reactor
+	registry.addRecipeClickArea(ScreenReactorCore.class, 117, 43, 14, 13, FissionReactorRecipeCategory.UID);
+
+	// Particle Accelerator
+	registry.addRecipeClickArea(ScreenParticleInjector.class, 102, 33, 28, 14, ParticleAcceleratorAntiMatterRecipeCategory.UID,
+		ParticleAcceleratorDarkMatterRecipeCategory.UID);
+
+	registry.addRecipeClickArea(ScreenMSRFuelPreProcessor.class, 98, 40, 16, 16, MSRProcessorRecipeCategory.UID);
     }
 
     private static void nuclearScienceInfoTabs(IRecipeRegistration registration) {

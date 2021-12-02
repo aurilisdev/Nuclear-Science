@@ -283,18 +283,18 @@ public class TileReactorCore extends GenericTile {
 	    Set<Recipe<?>> recipes = ElectrodynamicsRecipe.findRecipesbyType(NuclearScienceRecipeInit.FISSION_REACTOR_TYPE, level);
 	    for (Recipe<?> iRecipe : recipes) {
 		Item2ItemRecipe recipe = (Item2ItemRecipe) iRecipe;
-		for(CountableIngredient ing : recipe.getCountedIngredients()) {
-			if (ing.testStack(input)) {
-			    if (output.isEmpty()) {
-					inv.setItem(outputSlot, recipe.getResultItem().copy());
-					input.shrink(recipe.getCountedIngredients().get(0).getStackSize());
-			    } else if (output.getCount() <= output.getMaxStackSize() + recipe.getResultItem().getCount()) {
-					output.grow(recipe.getResultItem().getCount());
-					input.shrink(recipe.getCountedIngredients().get(0).getStackSize());
-			    }
+		for (CountableIngredient ing : recipe.getCountedIngredients()) {
+		    if (ing.testStack(input)) {
+			if (output.isEmpty()) {
+			    inv.setItem(outputSlot, recipe.getResultItem().copy());
+			    input.shrink(recipe.getCountedIngredients().get(0).getStackSize());
+			} else if (output.getCount() <= output.getMaxStackSize() + recipe.getResultItem().getCount()) {
+			    output.grow(recipe.getResultItem().getCount());
+			    input.shrink(recipe.getCountedIngredients().get(0).getStackSize());
 			}
+		    }
 		}
-		
+
 	    }
 	}
     }

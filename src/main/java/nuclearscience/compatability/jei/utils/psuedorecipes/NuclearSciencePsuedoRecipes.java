@@ -32,9 +32,11 @@ public class NuclearSciencePsuedoRecipes {
 
 	/* Anit Matter Production */
 
-	ANTI_MATTER_RECIPES.add(new PsuedoItem2ItemRecipe(Arrays.asList(new ItemStack[] {NUCLEAR_SCIENCE_ITEMS.get(1).get(4)}), NUCLEAR_SCIENCE_ITEMS.get(1).get(5)));
+	ANTI_MATTER_RECIPES.add(new PsuedoItem2ItemRecipe(Arrays.asList(new ItemStack[] { NUCLEAR_SCIENCE_ITEMS.get(1).get(4) }),
+		NUCLEAR_SCIENCE_ITEMS.get(1).get(5)));
 
-	DARK_MATTER_RECIPES.add(new PsuedoItem2ItemRecipe(Arrays.asList(new ItemStack[] {NUCLEAR_SCIENCE_ITEMS.get(1).get(4)}), NUCLEAR_SCIENCE_ITEMS.get(1).get(7)));
+	DARK_MATTER_RECIPES.add(new PsuedoItem2ItemRecipe(Arrays.asList(new ItemStack[] { NUCLEAR_SCIENCE_ITEMS.get(1).get(4) }),
+		NUCLEAR_SCIENCE_ITEMS.get(1).get(7)));
     }
 
     private static void addNuclearScienceMachines() {

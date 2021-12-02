@@ -31,13 +31,12 @@ public class TileChemicalExtractor extends GenericTile {
     private static int inputBucketSlots = 1;
     private static int outputBucketSlots = 0;
     private static int upgradeSlots = 3;
-    
+
     private static int processorCount = 1;
     private static int inputPerProc = 1;
-    
-    private static int invSize = 
-    	inputSlots + outputSize + inputBucketSlots + outputBucketSlots + upgradeSlots + itemBiSize;
-    
+
+    private static int invSize = inputSlots + outputSize + inputBucketSlots + outputBucketSlots + upgradeSlots + itemBiSize;
+
     public TileChemicalExtractor(BlockPos pos, BlockState state) {
 	super(DeferredRegisters.TILE_CHEMICALEXTRACTOR.get(), pos, state);
 	addComponent(new ComponentTickable().tickClient(this::tickClient));
@@ -46,14 +45,13 @@ public class TileChemicalExtractor extends GenericTile {
 	addComponent(new ComponentElectrodynamic(this).enableUniversalInput().voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 2)
 		.maxJoules(Constants.CHEMICALEXTRACTOR_USAGE_PER_TICK * 10));
 	addComponent(new ComponentFluidHandlerMulti(this)
-		.setAddFluidsValues(NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE, MAX_TANK_CAPACITY, true, false)
-		.universalInput());
-	addComponent(new ComponentInventory(this).size(invSize).faceSlots(Direction.UP, 0).faceSlots(Direction.DOWN, 1).slotFaces(2, Direction.SOUTH,
-		Direction.NORTH, Direction.EAST, Direction.WEST)
-			.valid(getPredicate(inputSlots, outputSize, itemBiSize, inputBucketSlots + outputBucketSlots, upgradeSlots, invSize))
-			.slotSizes(inputSlots, outputSize , itemBiSize, upgradeSlots, inputBucketSlots, outputBucketSlots, processorCount, inputPerProc));
-	addComponent(new ComponentProcessor(this).setProcessorNumber(0)
-		.usage(Constants.CHEMICALEXTRACTOR_USAGE_PER_TICK).requiredTicks(Constants.CHEMICALEXTRACTOR_REQUIRED_TICKS)
+		.setAddFluidsValues(NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE, MAX_TANK_CAPACITY, true, false).universalInput());
+	addComponent(new ComponentInventory(this).size(invSize).faceSlots(Direction.UP, 0).faceSlots(Direction.DOWN, 1)
+		.slotFaces(2, Direction.SOUTH, Direction.NORTH, Direction.EAST, Direction.WEST)
+		.valid(getPredicate(inputSlots, outputSize, itemBiSize, inputBucketSlots + outputBucketSlots, upgradeSlots, invSize))
+		.slotSizes(inputSlots, outputSize, itemBiSize, upgradeSlots, inputBucketSlots, outputBucketSlots, processorCount, inputPerProc));
+	addComponent(new ComponentProcessor(this).setProcessorNumber(0).usage(Constants.CHEMICALEXTRACTOR_USAGE_PER_TICK)
+		.requiredTicks(Constants.CHEMICALEXTRACTOR_REQUIRED_TICKS)
 		.canProcess(component -> component.consumeBucket().canProcessFluidItem2ItemRecipe(component, FluidItem2ItemRecipe.class,
 			NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE))
 		.process(component -> component.processFluidItem2ItemRecipe(component, FluidItem2ItemRecipe.class)));

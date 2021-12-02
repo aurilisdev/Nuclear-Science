@@ -31,13 +31,12 @@ public class TileMSRFuelPreProcessor extends GenericTile {
     private static int inputBucketSlots = 1;
     private static int outputBucketSlots = 0;
     private static int upgradeSlots = 3;
-    
+
     private static int processorCount = 1;
     private static int inputPerProc = 3;
-    
-    private static int invSize = 
-        	inputSlots + outputSize + inputBucketSlots + outputBucketSlots + upgradeSlots + itemBiSize;
-    
+
+    private static int invSize = inputSlots + outputSize + inputBucketSlots + outputBucketSlots + upgradeSlots + itemBiSize;
+
     public TileMSRFuelPreProcessor(BlockPos pos, BlockState state) {
 	super(DeferredRegisters.TILE_MSRFUELPREPROCESSOR.get(), pos, state);
 	addComponent(new ComponentTickable().tickClient(this::tickClient));
@@ -50,7 +49,7 @@ public class TileMSRFuelPreProcessor extends GenericTile {
 	addComponent(new ComponentInventory(this).size(invSize).relativeFaceSlots(Direction.EAST, 0, 1, 2).relativeFaceSlots(Direction.UP, 0, 1, 2)
 		.relativeSlotFaces(3, Direction.DOWN)
 		.valid(getPredicate(inputSlots, outputSize, itemBiSize, inputBucketSlots + outputBucketSlots, upgradeSlots, invSize))
-		.slotSizes(inputSlots, outputSize , itemBiSize, upgradeSlots, inputBucketSlots, outputBucketSlots, processorCount, inputPerProc));
+		.slotSizes(inputSlots, outputSize, itemBiSize, upgradeSlots, inputBucketSlots, outputBucketSlots, processorCount, inputPerProc));
 	addComponent(new ComponentProcessor(this).setProcessorNumber(0)
 		.canProcess(component -> component.outputToPipe(component).consumeBucket().canProcessFluidItem2ItemRecipe(component,
 			MSRFuelPreProcessorRecipe.class, NuclearScienceRecipeInit.MSR_FUEL_PREPROCESSOR_TYPE))

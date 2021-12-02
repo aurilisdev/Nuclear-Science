@@ -39,10 +39,9 @@ public class TileGasCentrifuge extends GenericTile {
     private static int inputBucketSlots = 0;
     private static int outputBucketSlots = 0;
     private static int upgradeSlots = 3;
-    
-    private static int invSize = 
-    	inputSlots + outputSize + inputBucketSlots + outputBucketSlots + upgradeSlots + itemBiSize;
-    
+
+    private static int invSize = inputSlots + outputSize + inputBucketSlots + outputBucketSlots + upgradeSlots + itemBiSize;
+
     public TileGasCentrifuge(BlockPos pos, BlockState state) {
 	super(DeferredRegisters.TILE_GASCENTRIFUGE.get(), pos, state);
 	addComponent(new ComponentTickable().tickClient(this::tickClient));
@@ -53,7 +52,7 @@ public class TileGasCentrifuge extends GenericTile {
 	addComponent(new ComponentElectrodynamic(this).voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 2).input(Direction.DOWN)
 		.maxJoules(Constants.GASCENTRIFUGE_USAGE_PER_TICK * 10));
 	addComponent(new ComponentInventory(this).size(invSize).faceSlots(Direction.DOWN, 0, 1).relativeFaceSlots(Direction.WEST, 0, 1)
-			.valid(getPredicate(inputSlots, outputSize, itemBiSize, inputBucketSlots + outputBucketSlots, upgradeSlots, invSize)));
+		.valid(getPredicate(inputSlots, outputSize, itemBiSize, inputBucketSlots + outputBucketSlots, upgradeSlots, invSize)));
 	addComponent(new ComponentProcessor(this).usage(Constants.GASCENTRIFUGE_USAGE_PER_TICK)
 		.requiredTicks(Constants.GASCENTRIFUGE_REQUIRED_TICKS_PER_PROCESSING).canProcess(this::canProcess).process(this::process));
 	addComponent(new ComponentContainerProvider("container.gascentrifuge")

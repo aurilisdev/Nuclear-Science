@@ -59,76 +59,77 @@ public class ParticleAcceleratorAntiMatterRecipeCategory implements IRecipeCateg
 
     private IDrawable BACKGROUND;
     private IDrawable ICON;
-    
+
     public ParticleAcceleratorAntiMatterRecipeCategory(IGuiHelper guiHelper) {
 
-    	ICON = guiHelper.createDrawableIngredient(INPUT_MACHINE);
-		BACKGROUND = guiHelper.createDrawable(new ResourceLocation(MOD_ID, GUI_TEXTURE), GUI_BACKGROUND[0], GUI_BACKGROUND[1], GUI_BACKGROUND[2], GUI_BACKGROUND[3]);
-    	
-		cachedArrows = CacheBuilder.newBuilder().maximumSize(25).build(new CacheLoader<Integer, IDrawableAnimated>() {
-		    @Override
-		    public IDrawableAnimated load(Integer cookTime) {
-			return guiHelper.drawableBuilder(new ResourceLocation(MOD_ID, GUI_TEXTURE), PROCESSING_ARROW_COORDS[0], PROCESSING_ARROW_COORDS[1], PROCESSING_ARROW_COORDS[2],
-				PROCESSING_ARROW_COORDS[3]).buildAnimated(cookTime, ARROW_START_DIRECTION, false);
-		    }
-		});
-	}
+	ICON = guiHelper.createDrawableIngredient(INPUT_MACHINE);
+	BACKGROUND = guiHelper.createDrawable(new ResourceLocation(MOD_ID, GUI_TEXTURE), GUI_BACKGROUND[0], GUI_BACKGROUND[1], GUI_BACKGROUND[2],
+		GUI_BACKGROUND[3]);
+
+	cachedArrows = CacheBuilder.newBuilder().maximumSize(25).build(new CacheLoader<Integer, IDrawableAnimated>() {
+	    @Override
+	    public IDrawableAnimated load(Integer cookTime) {
+		return guiHelper.drawableBuilder(new ResourceLocation(MOD_ID, GUI_TEXTURE), PROCESSING_ARROW_COORDS[0], PROCESSING_ARROW_COORDS[1],
+			PROCESSING_ARROW_COORDS[2], PROCESSING_ARROW_COORDS[3]).buildAnimated(cookTime, ARROW_START_DIRECTION, false);
+	    }
+	});
+    }
 
     @Override
     public ResourceLocation getUid() {
-    	return UID;
+	return UID;
     }
-    
-    @Override
-	public Class<? extends PsuedoItem2ItemRecipe> getRecipeClass() {
-		return PsuedoItem2ItemRecipe.class;
-	}
 
     @Override
-	public Component getTitle() {
-		return new TranslatableComponent("gui.jei.category." + RECIPE_GROUP);
-	}
+    public Class<? extends PsuedoItem2ItemRecipe> getRecipeClass() {
+	return PsuedoItem2ItemRecipe.class;
+    }
 
-	@Override
-	public IDrawable getBackground() {
-		return BACKGROUND;
-	}
+    @Override
+    public Component getTitle() {
+	return new TranslatableComponent("gui.jei.category." + RECIPE_GROUP);
+    }
 
-	@Override
-	public IDrawable getIcon() {
-		return ICON;
-	}
+    @Override
+    public IDrawable getBackground() {
+	return BACKGROUND;
+    }
+
+    @Override
+    public IDrawable getIcon() {
+	return ICON;
+    }
 
     @Override
     public void setIngredients(PsuedoItem2ItemRecipe recipe, IIngredients ingredients) {
-		ingredients.setInputLists(VanillaTypes.ITEM, recipeInput(recipe));
-		ingredients.setOutput(VanillaTypes.ITEM, recipe.OUTPUT);
+	ingredients.setInputLists(VanillaTypes.ITEM, recipeInput(recipe));
+	ingredients.setOutput(VanillaTypes.ITEM, recipe.OUTPUT);
     }
 
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, PsuedoItem2ItemRecipe recipe, IIngredients ingredients) {
 
-		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-	
-		guiItemStacks.init(INPUT_SLOT, true, INPUT_OFFSET[0], INPUT_OFFSET[1]);
-		guiItemStacks.init(ANY_ITEM_INPUT_SLOT, true, 12, 2);
-		guiItemStacks.init(OUTPUT_SLOT, false, OUTPUT_OFFSET[0], OUTPUT_OFFSET[1]);
-	
-		guiItemStacks.set(ingredients);
+	IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
+
+	guiItemStacks.init(INPUT_SLOT, true, INPUT_OFFSET[0], INPUT_OFFSET[1]);
+	guiItemStacks.init(ANY_ITEM_INPUT_SLOT, true, 12, 2);
+	guiItemStacks.init(OUTPUT_SLOT, false, OUTPUT_OFFSET[0], OUTPUT_OFFSET[1]);
+
+	guiItemStacks.set(ingredients);
 
     }
 
     @Override
     public void draw(PsuedoItem2ItemRecipe recipe, PoseStack matrixStack, double mouseX, double mouseY) {
-		IDrawableAnimated arrow = cachedArrows.getUnchecked(ANIM_TIME);
-		arrow.draw(matrixStack, PROCESSING_ARROW_OFFSET[0], PROCESSING_ARROW_OFFSET[1]);
-	
-		int animTimeSeconds = ANIM_TIME / 20;
-		TranslatableComponent timeString = new TranslatableComponent("gui.jei.category." + RECIPE_GROUP + ".info.power", animTimeSeconds);
-		Minecraft minecraft = Minecraft.getInstance();
-		Font fontRenderer = minecraft.font;
-		float stringWidth = fontRenderer.width(timeString);
-		fontRenderer.draw(matrixStack, timeString, getBackground().getWidth() - stringWidth, DESC_Y_HEIGHT, 0xFF808080);
+	IDrawableAnimated arrow = cachedArrows.getUnchecked(ANIM_TIME);
+	arrow.draw(matrixStack, PROCESSING_ARROW_OFFSET[0], PROCESSING_ARROW_OFFSET[1]);
+
+	int animTimeSeconds = ANIM_TIME / 20;
+	TranslatableComponent timeString = new TranslatableComponent("gui.jei.category." + RECIPE_GROUP + ".info.power", animTimeSeconds);
+	Minecraft minecraft = Minecraft.getInstance();
+	Font fontRenderer = minecraft.font;
+	float stringWidth = fontRenderer.width(timeString);
+	fontRenderer.draw(matrixStack, timeString, getBackground().getWidth() - stringWidth, DESC_Y_HEIGHT, 0xFF808080);
     }
 
     private static List<List<ItemStack>> recipeInput(PsuedoItem2ItemRecipe recipe) {

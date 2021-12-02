@@ -15,21 +15,21 @@ import nuclearscience.DeferredRegisters;
 
 public class MSRProcessorRecipeCategory extends FluidItem2ItemRecipeCategory {
 
-	// JEI Window Parameters
-	private static BackgroundWrapper BACK_WRAP = new BackgroundWrapper(132,64);
-	
-	private static DefaultItemSlotWrapper INPUT_SLOT_1 = new DefaultItemSlotWrapper(58, 2);
-	private static DefaultItemSlotWrapper INPUT_SLOT_2 = new DefaultItemSlotWrapper(58, 23);
-	private static DefaultItemSlotWrapper INPUT_SLOT_3 = new DefaultItemSlotWrapper(58, 44);
-	private static DefaultItemSlotWrapper OUTPUT_SLOT = new DefaultItemSlotWrapper(107, 23);
-	private static BucketSlotWrapper INPUT_BUCKET_SLOT = new BucketSlotWrapper(27, 36);
-	
-	private static ArrowRightAnimatedWrapper ANIM_RIGHT_ARROW_1 = new ArrowRightAnimatedWrapper(30, 17);
-	private static ArrowRightAnimatedWrapper ANIM_RIGHT_ARROW_2 = new ArrowRightAnimatedWrapper(80, 24);
-	
-	private static DefaultFluidGaugeWrapper IN_GAUGE = new DefaultFluidGaugeWrapper(10, 5, 5000);
-	
-	private static PowerLabelWrapper POWER_LABEL = new PowerLabelWrapper(56, BACK_WRAP);
+    // JEI Window Parameters
+    private static BackgroundWrapper BACK_WRAP = new BackgroundWrapper(132, 64);
+
+    private static DefaultItemSlotWrapper INPUT_SLOT_1 = new DefaultItemSlotWrapper(58, 2);
+    private static DefaultItemSlotWrapper INPUT_SLOT_2 = new DefaultItemSlotWrapper(58, 23);
+    private static DefaultItemSlotWrapper INPUT_SLOT_3 = new DefaultItemSlotWrapper(58, 44);
+    private static DefaultItemSlotWrapper OUTPUT_SLOT = new DefaultItemSlotWrapper(107, 23);
+    private static BucketSlotWrapper INPUT_BUCKET_SLOT = new BucketSlotWrapper(27, 36);
+
+    private static ArrowRightAnimatedWrapper ANIM_RIGHT_ARROW_1 = new ArrowRightAnimatedWrapper(30, 17);
+    private static ArrowRightAnimatedWrapper ANIM_RIGHT_ARROW_2 = new ArrowRightAnimatedWrapper(80, 24);
+
+    private static DefaultFluidGaugeWrapper IN_GAUGE = new DefaultFluidGaugeWrapper(10, 5, 5000);
+
+    private static PowerLabelWrapper POWER_LABEL = new PowerLabelWrapper(56, BACK_WRAP);
 
     private static int ANIM_TIME = 50;
 
@@ -39,20 +39,19 @@ public class MSRProcessorRecipeCategory extends FluidItem2ItemRecipeCategory {
     public static ItemStack INPUT_MACHINE = new ItemStack(DeferredRegisters.blockMSRFuelPreProcessor);
 
     public static ResourceLocation UID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
-	
-	public MSRProcessorRecipeCategory(IGuiHelper guiHelper) {
-		super(guiHelper, MOD_ID, RECIPE_GROUP, INPUT_MACHINE, BACK_WRAP, ANIM_TIME);
-    	setInputSlots(guiHelper, INPUT_SLOT_1, INPUT_SLOT_2, INPUT_SLOT_3, INPUT_BUCKET_SLOT);
-    	setOutputSlots(guiHelper, OUTPUT_SLOT);
-    	setFluidInputs(guiHelper, IN_GAUGE);
-    	setAnimatedArrows(guiHelper, ANIM_RIGHT_ARROW_1, ANIM_RIGHT_ARROW_2);
-    	setLabels(POWER_LABEL);
-	}
 
-	@Override
-	public ResourceLocation getUid() {
-		return UID;
-	}
+    public MSRProcessorRecipeCategory(IGuiHelper guiHelper) {
+	super(guiHelper, MOD_ID, RECIPE_GROUP, INPUT_MACHINE, BACK_WRAP, ANIM_TIME);
+	setInputSlots(guiHelper, INPUT_SLOT_1, INPUT_SLOT_2, INPUT_SLOT_3, INPUT_BUCKET_SLOT);
+	setOutputSlots(guiHelper, OUTPUT_SLOT);
+	setFluidInputs(guiHelper, IN_GAUGE);
+	setAnimatedArrows(guiHelper, ANIM_RIGHT_ARROW_1, ANIM_RIGHT_ARROW_2);
+	setLabels(POWER_LABEL);
+    }
 
+    @Override
+    public ResourceLocation getUid() {
+	return UID;
+    }
 
 }
