@@ -1,14 +1,20 @@
 {
 	"type": "electrodynamics:chemical_mixer_recipe",
-	"item_input": {
-		"tag": "forge:dusts/saltpeter",
-		"count": 1
+	"iteminputs": {
+		"count" : 1,
+		"0" : {
+			"tag": "forge:dusts/saltpeter",
+			"count": 1
+		}
 	},
-	"fluid_input": {
-		"fluid": "minecraft:water",
-		"amount": 1000
+	"fluidinputs": {
+		"count" : 1,
+		"0" : {
+			"fluid": "minecraft:water",
+			"amount": 1000
+		}
 	},
-	"fluid_output": {
+	"output": {
 		"fluid": "nuclearscience:fluidammonia",
 		"amount": 1000
 	}

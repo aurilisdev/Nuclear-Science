@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import electrodynamics.common.recipe.ElectrodynamicsRecipe;
-import electrodynamics.common.recipe.categories.o2o.O2ORecipe;
+import electrodynamics.common.recipe.categories.item2item.Item2ItemRecipe;
 import electrodynamics.common.recipe.recipeutils.CountableIngredient;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
@@ -282,16 +282,19 @@ public class TileReactorCore extends GenericTile {
 	if (input != null && !input.equals(new ItemStack(Items.AIR), true)) {
 	    Set<Recipe<?>> recipes = ElectrodynamicsRecipe.findRecipesbyType(NuclearScienceRecipeInit.FISSION_REACTOR_TYPE, level);
 	    for (Recipe<?> iRecipe : recipes) {
-		O2ORecipe recipe = (O2ORecipe) iRecipe;
-		if (recipe.matchesRecipe(input)) {
-		    if (output.isEmpty()) {
-			inv.setItem(outputSlot, recipe.getResultItem().copy());
-			input.shrink(((CountableIngredient) recipe.getIngredients().get(0)).getStackSize());
-		    } else if (output.getCount() <= output.getMaxStackSize() + recipe.getResultItem().getCount()) {
-			output.grow(recipe.getResultItem().getCount());
-			input.shrink(((CountableIngredient) recipe.getIngredients().get(0)).getStackSize());
-		    }
+		Item2ItemRecipe recipe = (Item2ItemRecipe) iRecipe;
+		for(CountableIngredient ing : recipe.getCountedIngredients()) {
+			if (ing.testStack(input)) {
+			    if (output.isEmpty()) {
+					inv.setItem(outputSlot, recipe.getResultItem().copy());
+					input.shrink(recipe.getCountedIngredients().get(0).getStackSize());
+			    } else if (output.getCount() <= output.getMaxStackSize() + recipe.getResultItem().getCount()) {
+					output.grow(recipe.getResultItem().getCount());
+					input.shrink(recipe.getCountedIngredients().get(0).getStackSize());
+			    }
+			}
 		}
+		
 	    }
 	}
     }

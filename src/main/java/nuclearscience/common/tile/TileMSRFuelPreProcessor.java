@@ -1,7 +1,6 @@
 package nuclearscience.common.tile;
 
 import electrodynamics.api.electricity.CapabilityElectrodynamic;
-import electrodynamics.common.item.ItemProcessorUpgrade;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
@@ -11,7 +10,6 @@ import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
 import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
-import electrodynamics.prefab.tile.components.type.ComponentProcessorType;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -20,13 +18,26 @@ import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerMSRFuelPreProcessor;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
-import nuclearscience.common.recipe.categories.fluid3items2item.specificmachines.MSRFuelPreProcessorRecipe;
+import nuclearscience.common.recipe.categories.fluiditem2item.specificmachines.MSRFuelPreProcessorRecipe;
 import nuclearscience.common.settings.Constants;
 
 public class TileMSRFuelPreProcessor extends GenericTile {
     public static final int MAX_TANK_CAPACITY = 5000;
     public long clientTicks = 0;
 
+    private static int inputSlots = 3;
+    private static int outputSize = 1;
+    private static int itemBiSize = 0;
+    private static int inputBucketSlots = 1;
+    private static int outputBucketSlots = 0;
+    private static int upgradeSlots = 3;
+    
+    private static int processorCount = 1;
+    private static int inputPerProc = 3;
+    
+    private static int invSize = 
+        	inputSlots + outputSize + inputBucketSlots + outputBucketSlots + upgradeSlots + itemBiSize;
+    
     public TileMSRFuelPreProcessor(BlockPos pos, BlockState state) {
 	super(DeferredRegisters.TILE_MSRFUELPREPROCESSOR.get(), pos, state);
 	addComponent(new ComponentTickable().tickClient(this::tickClient));
@@ -35,16 +46,16 @@ public class TileMSRFuelPreProcessor extends GenericTile {
 	addComponent(new ComponentElectrodynamic(this).relativeInput(Direction.NORTH).voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 2)
 		.maxJoules(Constants.MSRFUELPREPROCESSOR_USAGE_PER_TICK * 10));
 	addComponent(((ComponentFluidHandlerMulti) new ComponentFluidHandlerMulti(this).relativeInput(Direction.EAST).relativeOutput(Direction.WEST))
-		.setAddFluidsValues(MSRFuelPreProcessorRecipe.class, NuclearScienceRecipeInit.MSR_FUEL_PREPROCESSOR_TYPE, MAX_TANK_CAPACITY, true,
-			true));
-	addComponent(new ComponentInventory(this).size(8).relativeFaceSlots(Direction.EAST, 0, 1, 2).relativeFaceSlots(Direction.UP, 0, 1, 2)
-		.relativeSlotFaces(3, Direction.DOWN).valid((slot, stack) -> slot < 5 || stack.getItem() instanceof ItemProcessorUpgrade));
-	addComponent(new ComponentProcessor(this).upgradeSlots(5, 6, 7)
-		.canProcess(component -> component.outputToPipe(component).consumeBucket(4).canProcessFluid3Items2ItemRecipe(component,
+		.setAddFluidsValues(NuclearScienceRecipeInit.MSR_FUEL_PREPROCESSOR_TYPE, MAX_TANK_CAPACITY, true, true));
+	addComponent(new ComponentInventory(this).size(invSize).relativeFaceSlots(Direction.EAST, 0, 1, 2).relativeFaceSlots(Direction.UP, 0, 1, 2)
+		.relativeSlotFaces(3, Direction.DOWN)
+		.valid(getPredicate(inputSlots, outputSize, itemBiSize, inputBucketSlots + outputBucketSlots, upgradeSlots, invSize))
+		.slotSizes(inputSlots, outputSize , itemBiSize, upgradeSlots, inputBucketSlots, outputBucketSlots, processorCount, inputPerProc));
+	addComponent(new ComponentProcessor(this).setProcessorNumber(0)
+		.canProcess(component -> component.outputToPipe(component).consumeBucket().canProcessFluidItem2ItemRecipe(component,
 			MSRFuelPreProcessorRecipe.class, NuclearScienceRecipeInit.MSR_FUEL_PREPROCESSOR_TYPE))
-		.process(component -> component.processFluid3Items2ItemRecipe(component, MSRFuelPreProcessorRecipe.class))
-		.usage(Constants.MSRFUELPREPROCESSOR_USAGE_PER_TICK).type(ComponentProcessorType.TripleObjectToObject)
-		.requiredTicks(Constants.MSRFUELPREPROCESSOR_REQUIRED_TICKS));
+		.process(component -> component.processFluidItem2ItemRecipe(component, MSRFuelPreProcessorRecipe.class))
+		.usage(Constants.MSRFUELPREPROCESSOR_USAGE_PER_TICK).requiredTicks(Constants.MSRFUELPREPROCESSOR_REQUIRED_TICKS));
 	addComponent(new ComponentContainerProvider("container.msrfuelpreprocessor")
 		.createMenu((id, player) -> new ContainerMSRFuelPreProcessor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 

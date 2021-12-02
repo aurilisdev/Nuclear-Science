@@ -11,7 +11,6 @@ import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
 import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
-import electrodynamics.prefab.tile.components.type.ComponentProcessorType;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -26,6 +25,19 @@ public class TileChemicalExtractor extends GenericTile {
 
     public static final int MAX_TANK_CAPACITY = 5000;
 
+    private static int inputSlots = 1;
+    private static int outputSize = 1;
+    private static int itemBiSize = 0;
+    private static int inputBucketSlots = 1;
+    private static int outputBucketSlots = 0;
+    private static int upgradeSlots = 3;
+    
+    private static int processorCount = 1;
+    private static int inputPerProc = 1;
+    
+    private static int invSize = 
+    	inputSlots + outputSize + inputBucketSlots + outputBucketSlots + upgradeSlots + itemBiSize;
+    
     public TileChemicalExtractor(BlockPos pos, BlockState state) {
 	super(DeferredRegisters.TILE_CHEMICALEXTRACTOR.get(), pos, state);
 	addComponent(new ComponentTickable().tickClient(this::tickClient));
@@ -34,13 +46,15 @@ public class TileChemicalExtractor extends GenericTile {
 	addComponent(new ComponentElectrodynamic(this).enableUniversalInput().voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 2)
 		.maxJoules(Constants.CHEMICALEXTRACTOR_USAGE_PER_TICK * 10));
 	addComponent(new ComponentFluidHandlerMulti(this)
-		.setAddFluidsValues(FluidItem2ItemRecipe.class, NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE, MAX_TANK_CAPACITY, true, false)
+		.setAddFluidsValues(NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE, MAX_TANK_CAPACITY, true, false)
 		.universalInput());
-	addComponent(new ComponentInventory(this).size(6).faceSlots(Direction.UP, 0).faceSlots(Direction.DOWN, 1).slotFaces(2, Direction.SOUTH,
-		Direction.NORTH, Direction.EAST, Direction.WEST));
-	addComponent(new ComponentProcessor(this).upgradeSlots(3, 4, 5).type(ComponentProcessorType.ObjectToObject)
+	addComponent(new ComponentInventory(this).size(invSize).faceSlots(Direction.UP, 0).faceSlots(Direction.DOWN, 1).slotFaces(2, Direction.SOUTH,
+		Direction.NORTH, Direction.EAST, Direction.WEST)
+			.valid(getPredicate(inputSlots, outputSize, itemBiSize, inputBucketSlots + outputBucketSlots, upgradeSlots, invSize))
+			.slotSizes(inputSlots, outputSize , itemBiSize, upgradeSlots, inputBucketSlots, outputBucketSlots, processorCount, inputPerProc));
+	addComponent(new ComponentProcessor(this).setProcessorNumber(0)
 		.usage(Constants.CHEMICALEXTRACTOR_USAGE_PER_TICK).requiredTicks(Constants.CHEMICALEXTRACTOR_REQUIRED_TICKS)
-		.canProcess(component -> component.consumeBucket(2).canProcessFluidItem2ItemRecipe(component, FluidItem2ItemRecipe.class,
+		.canProcess(component -> component.consumeBucket().canProcessFluidItem2ItemRecipe(component, FluidItem2ItemRecipe.class,
 			NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE))
 		.process(component -> component.processFluidItem2ItemRecipe(component, FluidItem2ItemRecipe.class)));
 	addComponent(new ComponentContainerProvider("container.chemicalextractor")

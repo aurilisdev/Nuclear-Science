@@ -6,16 +6,15 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import nuclearscience.common.recipe.categories.fluid3items2item.Fluid3Items2ItemRecipeTypes;
-import nuclearscience.common.recipe.categories.fluid3items2item.specificmachines.MSRFuelPreProcessorRecipe;
 import nuclearscience.common.recipe.categories.fluiditem2fluid.FluidItem2FluidRecipeTypes;
 import nuclearscience.common.recipe.categories.fluiditem2fluid.specificmachines.NuclearBoilerRecipe;
 import nuclearscience.common.recipe.categories.fluiditem2item.FluidItem2ItemRecipeTypes;
 import nuclearscience.common.recipe.categories.fluiditem2item.specificmachines.ChemicalExtractorRecipe;
+import nuclearscience.common.recipe.categories.fluiditem2item.specificmachines.MSRFuelPreProcessorRecipe;
 import nuclearscience.common.recipe.categories.fluiditem2item.specificmachines.RadioactiveProcessorRecipe;
-import nuclearscience.common.recipe.categories.o2o.O2ORecipeTypes;
-import nuclearscience.common.recipe.categories.o2o.specificmachines.FissionReactorRecipe;
-import nuclearscience.common.recipe.categories.o2o.specificmachines.FuelReprocessorRecipe;
+import nuclearscience.common.recipe.categories.item2item.Item2ItemRecipeTypes;
+import nuclearscience.common.recipe.categories.item2item.specificmachines.FissionReactorRecipe;
+import nuclearscience.common.recipe.categories.item2item.specificmachines.FuelReprocessorRecipe;
 
 public class NuclearScienceRecipeInit {
 
@@ -25,7 +24,7 @@ public class NuclearScienceRecipeInit {
 
     /* RECIPE TYPES */
 
-    // O2O
+    // ITEM2ITEM
     public static final RecipeType<FissionReactorRecipe> FISSION_REACTOR_TYPE = ElectrodynamicsRecipeInit
 	    .registerType(FissionReactorRecipe.RECIPE_ID);
     public static final RecipeType<FuelReprocessorRecipe> FUEL_REPROCESSOR_TYPE = ElectrodynamicsRecipeInit
@@ -48,9 +47,9 @@ public class NuclearScienceRecipeInit {
 
     // O2O
     public static final RegistryObject<RecipeSerializer<?>> FISSION_REACTOR_SERIALIZER = RECIPE_SERIALIZER.register(FissionReactorRecipe.RECIPE_GROUP,
-	    () -> O2ORecipeTypes.FISSION_REACTOR_JSON_SERIALIZER);
+	    () -> Item2ItemRecipeTypes.FISSION_REACTOR_JSON_SERIALIZER);
     public static final RegistryObject<RecipeSerializer<?>> FUEL_REPROCESSOR_SERIALIZER = RECIPE_SERIALIZER
-	    .register(FuelReprocessorRecipe.RECIPE_GROUP, () -> O2ORecipeTypes.FUEL_REPROCESSOR_JSON_SERIALIZER);
+	    .register(FuelReprocessorRecipe.RECIPE_GROUP, () -> Item2ItemRecipeTypes.FUEL_REPROCESSOR_JSON_SERIALIZER);
 
     // FLUIDITEM2FLUID
     public static final RegistryObject<RecipeSerializer<?>> NUCLEAR_BOILER_SERIALIZER = RECIPE_SERIALIZER.register(NuclearBoilerRecipe.RECIPE_GROUP,
@@ -61,9 +60,7 @@ public class NuclearScienceRecipeInit {
 	    .register(ChemicalExtractorRecipe.RECIPE_GROUP, () -> FluidItem2ItemRecipeTypes.CHEMICAL_EXTRACTOR_JSON_SERIALIZER);
     public static final RegistryObject<RecipeSerializer<?>> RADIOACTIVE_PROCESSOR_SERIALIZER = RECIPE_SERIALIZER
 	    .register(RadioactiveProcessorRecipe.RECIPE_GROUP, () -> FluidItem2ItemRecipeTypes.RADIOACTIVE_PROCESSOR_JSON_SERIALIZER);
-
-    // FLUID3ITEMS2ITEM
     public static final RegistryObject<RecipeSerializer<?>> MSR_FUEL_PREPROCESSOR_SERIALIZER = RECIPE_SERIALIZER
-	    .register(MSRFuelPreProcessorRecipe.RECIPE_GROUP, () -> Fluid3Items2ItemRecipeTypes.MSR_FUEL_PREPROCESSOR_JSON_SERIALIZER);
+	    .register(MSRFuelPreProcessorRecipe.RECIPE_GROUP, () -> FluidItem2ItemRecipeTypes.MSR_FUEL_PREPROCESSOR_JSON_SERIALIZER);
 
 }

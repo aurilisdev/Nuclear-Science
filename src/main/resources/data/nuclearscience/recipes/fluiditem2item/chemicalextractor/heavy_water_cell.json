@@ -1,15 +1,21 @@
 {
 	"type" : "nuclearscience:chemical_extractor_recipe",
 	
-	"item_input":{
-		"item":"nuclearscience:cellempty",
-		"count":1
+	"iteminputs":{
+		"count" : 1,
+		"0" : {
+			"item":"nuclearscience:cellempty",
+			"count":1
+		}
 	},
-	"fluid_input":{
-		"fluid":"minecraft:water",
-		"amount": 4800
+	"fluidinputs":{
+		"count" :  1,
+		"0": { 
+			"fluid":"minecraft:water",
+			"amount": 4800
+		}
 	},
-	"item_output":{
+	"output":{
 		"item":"nuclearscience:cellheavywater",
 		"count": 1
 	}

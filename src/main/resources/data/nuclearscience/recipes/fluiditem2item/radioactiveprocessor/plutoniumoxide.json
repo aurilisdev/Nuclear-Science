@@ -1,15 +1,21 @@
 {
 	"type" : "nuclearscience:radioactive_processor_recipe",
 	
-	"item_input":{
-		"item":"nuclearscience:fissiledust",
-		"count":10
+	"iteminputs":{
+		"count" : 1,
+		"0" : {
+			"item":"nuclearscience:fissiledust",
+			"count":10
+		}
 	},
-	"fluid_input":{
-		"tag":"forge:iron_sulfamate",
-		"amount": 3000
+	"fluidinputs":{
+		"count" : 1,
+		"0" : {
+			"tag":"forge:iron_sulfamate",
+			"amount": 3000
+		}
 	},
-	"item_output":{
+	"output":{
 		"item":"nuclearscience:plutoniumoxide",
 		"count": 1
 	}

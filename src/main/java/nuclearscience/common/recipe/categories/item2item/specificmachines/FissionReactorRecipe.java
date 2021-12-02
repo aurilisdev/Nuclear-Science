@@ -1,8 +1,7 @@
-package nuclearscience.common.recipe.categories.fluiditem2item.specificmachines;
+package nuclearscience.common.recipe.categories.item2item.specificmachines;
 
-import electrodynamics.common.recipe.categories.fluiditem2item.FluidItem2ItemRecipe;
+import electrodynamics.common.recipe.categories.item2item.Item2ItemRecipe;
 import electrodynamics.common.recipe.recipeutils.CountableIngredient;
-import electrodynamics.common.recipe.recipeutils.FluidIngredient;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -10,19 +9,19 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 
-public class RadioactiveProcessorRecipe extends FluidItem2ItemRecipe {
+public class FissionReactorRecipe extends Item2ItemRecipe {
 
-    public static final String RECIPE_GROUP = "radioactive_processor_recipe";
+    public static final String RECIPE_GROUP = "fission_reactor_recipe";
     public static final String MOD_ID = nuclearscience.References.ID;
     public static final ResourceLocation RECIPE_ID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
 
-    public RadioactiveProcessorRecipe(ResourceLocation recipeID, CountableIngredient[] itemInputs, FluidIngredient[] fluidInputs, ItemStack itemOutput) {
-	super(recipeID, itemInputs, fluidInputs, itemOutput);
+    public FissionReactorRecipe(ResourceLocation id, CountableIngredient[] inputs, ItemStack output) {
+	super(id, inputs, output);
     }
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-	return NuclearScienceRecipeInit.RADIOACTIVE_PROCESSOR_SERIALIZER.get();
+	return NuclearScienceRecipeInit.FISSION_REACTOR_SERIALIZER.get();
     }
 
     @Override

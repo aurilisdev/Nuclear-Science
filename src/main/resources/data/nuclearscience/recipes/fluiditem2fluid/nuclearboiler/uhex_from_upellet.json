@@ -1,14 +1,20 @@
 {
 	"type": "nuclearscience:nuclear_boiler_recipe",
-	"item_input": {
-		"tag": "forge:pellets/uranium238",
-		"count": 1
+	"iteminputs": {
+		"count" : 1,
+		"0" : {
+			"tag": "forge:pellets/uranium238",
+			"count": 1
+		}
 	},
-	"fluid_input": {
-		"tag":"forge:hydrofluoric_acid",
-		"amount": 1600
+	"fluidinputs": {
+		"count" : 1,
+		"0" : {
+			"tag":"forge:hydrofluoric_acid",
+			"amount": 1600
+		}
 	},
-	"fluid_output": {
+	"output": {
 		"fluid": "nuclearscience:fluiduraniumhexafluoride",
 		"amount": 2000
 	}
