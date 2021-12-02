@@ -267,7 +267,7 @@ public class DeferredRegisters {
 	    supplier(new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1))));
     // Incredibly long life-span, but hard to get
     public static final RegistryObject<Item> ITEM_FUELPLUTONIUM = ITEMS.register("fuelplutonium",
-	    supplier(new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(96000))));
+	    supplier(new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(120000))));
 
     public static final RegistryObject<Item> ITEM_GEIGERCOUNTER = ITEMS.register("geigercounter",
 	    supplier(new ItemGeigerCounter(new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(26000))));
