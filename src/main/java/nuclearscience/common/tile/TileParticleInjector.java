@@ -15,7 +15,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity.RemovalReason;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import nuclearscience.DeferredRegisters;
@@ -61,7 +60,7 @@ public class TileParticleInjector extends GenericTile {
 	boolean isItem = false;
 	ItemStack inputItem = inv.getItem(0);
 
-	if (inputItem != null && !inputItem.equals(new ItemStack(Items.AIR), true)) {
+	if (inputItem != null && !inputItem.isEmpty()) {
 	    isItem = true;
 	}
 
@@ -103,8 +102,8 @@ public class TileParticleInjector extends GenericTile {
     public void process(ComponentProcessor processor) {
 	timeSinceSpawn = 100;
 	Direction dir = this.<ComponentDirection>getComponent(ComponentType.Direction).getDirection();
-	ItemStack stack = processor.getInput();
-	stack.setCount(stack.getCount() - 1);
+	ItemStack stack = this.<ComponentInventory>getComponent(ComponentType.Inventory).getItem(0);
+	stack.shrink(1);
 	EntityParticle particle = new EntityParticle(dir, level, new Location(worldPosition.getX() + 0.5f + dir.getStepX() * 1.5f,
 		worldPosition.getY() + 0.5f + dir.getStepY() * 1.5f, worldPosition.getZ() + 0.5f + dir.getStepZ() * 1.5f));
 	addParticle(particle);

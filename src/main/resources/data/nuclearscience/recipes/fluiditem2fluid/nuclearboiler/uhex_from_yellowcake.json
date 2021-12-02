@@ -1,14 +1,20 @@
 {
 	"type": "nuclearscience:nuclear_boiler_recipe",
-	"item_input": {
-		"tag": "forge:yellow_cake_uranium",
-		"count": 1
+	"iteminputs": {
+		"count" : 1,
+		"0" : {
+			"tag": "forge:yellow_cake_uranium",
+			"count": 1
+		}
 	},
-	"fluid_input": {
-		"tag":"forge:hydrofluoric_acid",
-		"amount": 800
+	"fluidinputs": {
+		"count" : 1,
+		"0" : {
+			"tag":"forge:hydrofluoric_acid",
+			"amount": 800
+		}
 	},
-	"fluid_output": {
+	"output": {
 		"fluid": "nuclearscience:fluiduraniumhexafluoride",
 		"amount": 2500
 	}

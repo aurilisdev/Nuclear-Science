@@ -10,24 +10,24 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 
-public class RadioactiveProcessorRecipe extends FluidItem2ItemRecipe {
+public class MSRFuelPreProcessorRecipe extends FluidItem2ItemRecipe {
 
-    public static final String RECIPE_GROUP = "radioactive_processor_recipe";
+    public static final String RECIPE_GROUP = "msrfuel_preprocessor_recipe";
     public static final String MOD_ID = nuclearscience.References.ID;
     public static final ResourceLocation RECIPE_ID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
 
-    public RadioactiveProcessorRecipe(ResourceLocation recipeID, CountableIngredient[] itemInputs, FluidIngredient[] fluidInputs, ItemStack itemOutput) {
-	super(recipeID, itemInputs, fluidInputs, itemOutput);
+    public MSRFuelPreProcessorRecipe(ResourceLocation location, CountableIngredient[] inputItems, 
+    	FluidIngredient[] inputFluids, ItemStack outputItem) {
+    	super(location, inputItems, inputFluids, outputItem);
     }
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-	return NuclearScienceRecipeInit.RADIOACTIVE_PROCESSOR_SERIALIZER.get();
+	return NuclearScienceRecipeInit.MSR_FUEL_PREPROCESSOR_SERIALIZER.get();
     }
 
     @Override
     public RecipeType<?> getType() {
 	return Registry.RECIPE_TYPE.get(RECIPE_ID);
     }
-
 }

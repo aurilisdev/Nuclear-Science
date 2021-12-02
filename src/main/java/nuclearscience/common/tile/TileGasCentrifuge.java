@@ -2,7 +2,6 @@ package nuclearscience.common.tile;
 
 import electrodynamics.api.electricity.CapabilityElectrodynamic;
 import electrodynamics.api.sound.SoundAPI;
-import electrodynamics.common.item.ItemProcessorUpgrade;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
@@ -34,18 +33,28 @@ public class TileGasCentrifuge extends GenericTile {
     public int stored238 = 0;
     public int spinSpeed;
 
+    private static int inputSlots = 0;
+    private static int outputSize = 2;
+    private static int itemBiSize = 0;
+    private static int inputBucketSlots = 0;
+    private static int outputBucketSlots = 0;
+    private static int upgradeSlots = 3;
+    
+    private static int invSize = 
+    	inputSlots + outputSize + inputBucketSlots + outputBucketSlots + upgradeSlots + itemBiSize;
+    
     public TileGasCentrifuge(BlockPos pos, BlockState state) {
 	super(DeferredRegisters.TILE_GASCENTRIFUGE.get(), pos, state);
 	addComponent(new ComponentTickable().tickClient(this::tickClient));
 	addComponent(new ComponentDirection());
 	addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket));
-	addComponent(new ComponentFluidHandlerMulti(this).addFluidTank(NuclearScienceTags.Fluids.URANIUM_HEXAFLUORIDE, TANKCAPACITY, true)
+	addComponent(new ComponentFluidHandlerMulti(this).setManualFluidTags(1, true, TANKCAPACITY, NuclearScienceTags.Fluids.URANIUM_HEXAFLUORIDE)
 		.relativeInput(Direction.NORTH));
 	addComponent(new ComponentElectrodynamic(this).voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 2).input(Direction.DOWN)
 		.maxJoules(Constants.GASCENTRIFUGE_USAGE_PER_TICK * 10));
-	addComponent(new ComponentInventory(this).size(5).faceSlots(Direction.DOWN, 0, 1).relativeFaceSlots(Direction.WEST, 0, 1)
-		.valid((slot, stack) -> slot < 2 || stack.getItem() instanceof ItemProcessorUpgrade));
-	addComponent(new ComponentProcessor(this).upgradeSlots(2, 3, 4).usage(Constants.GASCENTRIFUGE_USAGE_PER_TICK)
+	addComponent(new ComponentInventory(this).size(invSize).faceSlots(Direction.DOWN, 0, 1).relativeFaceSlots(Direction.WEST, 0, 1)
+			.valid(getPredicate(inputSlots, outputSize, itemBiSize, inputBucketSlots + outputBucketSlots, upgradeSlots, invSize)));
+	addComponent(new ComponentProcessor(this).usage(Constants.GASCENTRIFUGE_USAGE_PER_TICK)
 		.requiredTicks(Constants.GASCENTRIFUGE_REQUIRED_TICKS_PER_PROCESSING).canProcess(this::canProcess).process(this::process));
 	addComponent(new ComponentContainerProvider("container.gascentrifuge")
 		.createMenu((id, player) -> new ContainerGasCentrifuge(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));

@@ -1,14 +1,20 @@
 {
 	"type": "electrodynamics:chemical_mixer_recipe",
-	"item_input": {
-		"tag": "forge:dusts/iron",
-		"count": 1
+	"iteminputs": {
+		"count" : 1,
+		"0" : {
+			"tag": "forge:dusts/iron",
+			"count": 1
+		}
 	},
-	"fluid_input": {
-		"tag":"forge:sulfuric_acid",
-		"amount": 1000
+	"fluidinputs": {
+		"count" : 1,
+		"0" : {
+			"tag":"forge:sulfuric_acid",
+			"amount": 1000
+		}
 	},
-	"fluid_output": {
+	"output": {
 		"fluid": "nuclearscience:fluidironsulfamate",
 		"amount": 1000
 	}

@@ -1,0 +1,15 @@
+{
+	"type" : "nuclearscience:fuel_reprocessor_recipe",
+	
+	"iteminputs":{
+		"count" : 1,
+		"0" : {
+			"item":"nuclearscience:fuelspent",
+			"count":1
+		}
+	},
+	"output":{
+		"item":"nuclearscience:fissiledust",
+		"count":1
+	}
+}
