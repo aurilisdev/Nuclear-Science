@@ -2,7 +2,6 @@ package nuclearscience.common.tile;
 
 import electrodynamics.api.electricity.CapabilityElectrodynamic;
 import electrodynamics.api.sound.SoundAPI;
-import electrodynamics.common.recipe.categories.fluiditem2fluid.FluidItem2FluidRecipe;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
@@ -56,9 +55,9 @@ public class TileNuclearBoiler extends GenericTile {
 		.slotSizes(inputSlots, outputSize, itemBiSize, upgradeSlots, inputBucketSlots, outputBucketSlots, processorCount, inputPerProc));
 	addComponent(new ComponentProcessor(this).setProcessorNumber(0)
 		.canProcess(component -> component.outputToPipe(component).consumeBucket().dispenseBucket().canProcessFluidItem2FluidRecipe(component,
-			FluidItem2FluidRecipe.class, NuclearScienceRecipeInit.NUCLEAR_BOILER_TYPE))
-		.process(component -> component.processFluidItem2FluidRecipe(component, FluidItem2FluidRecipe.class))
-		.usage(Constants.CHEMICALBOILER_USAGE_PER_TICK).requiredTicks(Constants.CHEMICALBOILER_REQUIRED_TICKS));
+			NuclearScienceRecipeInit.NUCLEAR_BOILER_TYPE))
+		.process(component -> component.processFluidItem2FluidRecipe(component)).usage(Constants.CHEMICALBOILER_USAGE_PER_TICK)
+		.requiredTicks(Constants.CHEMICALBOILER_REQUIRED_TICKS));
 	addComponent(new ComponentContainerProvider("container.nuclearboiler")
 		.createMenu((id, player) -> new ContainerNuclearBoiler(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
     }

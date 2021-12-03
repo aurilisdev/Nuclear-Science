@@ -1,7 +1,6 @@
 package nuclearscience.common.tile;
 
 import electrodynamics.api.electricity.CapabilityElectrodynamic;
-import electrodynamics.common.recipe.categories.fluiditem2item.FluidItem2ItemRecipe;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
@@ -51,10 +50,9 @@ public class TileChemicalExtractor extends GenericTile {
 		.valid(getPredicate(inputSlots, outputSize, itemBiSize, inputBucketSlots + outputBucketSlots, upgradeSlots, invSize))
 		.slotSizes(inputSlots, outputSize, itemBiSize, upgradeSlots, inputBucketSlots, outputBucketSlots, processorCount, inputPerProc));
 	addComponent(new ComponentProcessor(this).setProcessorNumber(0).usage(Constants.CHEMICALEXTRACTOR_USAGE_PER_TICK)
-		.requiredTicks(Constants.CHEMICALEXTRACTOR_REQUIRED_TICKS)
-		.canProcess(component -> component.consumeBucket().canProcessFluidItem2ItemRecipe(component, FluidItem2ItemRecipe.class,
-			NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE))
-		.process(component -> component.processFluidItem2ItemRecipe(component, FluidItem2ItemRecipe.class)));
+		.requiredTicks(Constants.CHEMICALEXTRACTOR_REQUIRED_TICKS).canProcess(component -> component.consumeBucket()
+			.canProcessFluidItem2ItemRecipe(component, NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE))
+		.process(component -> component.processFluidItem2ItemRecipe(component)));
 	addComponent(new ComponentContainerProvider("container.chemicalextractor")
 		.createMenu((id, player) -> new ContainerChemicalExtractor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
     }

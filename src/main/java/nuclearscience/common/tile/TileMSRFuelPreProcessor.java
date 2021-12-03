@@ -18,7 +18,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerMSRFuelPreProcessor;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
-import nuclearscience.common.recipe.categories.fluiditem2item.specificmachines.MSRFuelPreProcessorRecipe;
 import nuclearscience.common.settings.Constants;
 
 public class TileMSRFuelPreProcessor extends GenericTile {
@@ -52,9 +51,9 @@ public class TileMSRFuelPreProcessor extends GenericTile {
 		.slotSizes(inputSlots, outputSize, itemBiSize, upgradeSlots, inputBucketSlots, outputBucketSlots, processorCount, inputPerProc));
 	addComponent(new ComponentProcessor(this).setProcessorNumber(0)
 		.canProcess(component -> component.outputToPipe(component).consumeBucket().canProcessFluidItem2ItemRecipe(component,
-			MSRFuelPreProcessorRecipe.class, NuclearScienceRecipeInit.MSR_FUEL_PREPROCESSOR_TYPE))
-		.process(component -> component.processFluidItem2ItemRecipe(component, MSRFuelPreProcessorRecipe.class))
-		.usage(Constants.MSRFUELPREPROCESSOR_USAGE_PER_TICK).requiredTicks(Constants.MSRFUELPREPROCESSOR_REQUIRED_TICKS));
+			NuclearScienceRecipeInit.MSR_FUEL_PREPROCESSOR_TYPE))
+		.process(component -> component.processFluidItem2ItemRecipe(component)).usage(Constants.MSRFUELPREPROCESSOR_USAGE_PER_TICK)
+		.requiredTicks(Constants.MSRFUELPREPROCESSOR_REQUIRED_TICKS));
 	addComponent(new ComponentContainerProvider("container.msrfuelpreprocessor")
 		.createMenu((id, player) -> new ContainerMSRFuelPreProcessor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 

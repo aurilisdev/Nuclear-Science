@@ -18,7 +18,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
-import nuclearscience.common.recipe.categories.item2item.specificmachines.FuelReprocessorRecipe;
 import nuclearscience.common.settings.Constants;
 
 public class TileFuelReprocessor extends GenericTile {
@@ -46,10 +45,9 @@ public class TileFuelReprocessor extends GenericTile {
 		.valid(getPredicate(inputSlots, outputSize, itemBiSize, inputBucketSlots + outputBucketSlots, upgradeSlots, invSize))
 		.slotSizes(inputSlots, outputSize, itemBiSize, upgradeSlots, inputBucketSlots, outputBucketSlots, processorCount, inputPerProc));
 	addProcessor(new ComponentProcessor(this).setProcessorNumber(0)
-		.canProcess(component -> component.canProcessItem2ItemRecipe(component, FuelReprocessorRecipe.class,
-			NuclearScienceRecipeInit.FUEL_REPROCESSOR_TYPE))
-		.process(component -> component.processItem2ItemRecipe(component, FuelReprocessorRecipe.class))
-		.requiredTicks((long) Constants.FUELREPROCESSOR_REQUIRED_TICKS).usage(Constants.FUELREPROCESSOR_USAGE_PER_TICK));
+		.canProcess(component -> component.canProcessItem2ItemRecipe(component, NuclearScienceRecipeInit.FUEL_REPROCESSOR_TYPE))
+		.process(component -> component.processItem2ItemRecipe(component)).requiredTicks((long) Constants.FUELREPROCESSOR_REQUIRED_TICKS)
+		.usage(Constants.FUELREPROCESSOR_USAGE_PER_TICK));
 	addComponent(new ComponentContainerProvider("container.fuelreprocessor")
 		.createMenu((id, player) -> new ContainerO2OProcessor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
     }

@@ -1,7 +1,6 @@
 package nuclearscience.common.tile;
 
 import electrodynamics.api.electricity.CapabilityElectrodynamic;
-import electrodynamics.common.recipe.categories.fluiditem2item.FluidItem2ItemRecipe;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
@@ -51,10 +50,9 @@ public class TileRadioactiveProcessor extends GenericTile {
 		.faceSlots(Direction.UP, 0).faceSlots(Direction.DOWN, 1)
 		.slotFaces(2, Direction.SOUTH, Direction.NORTH, Direction.EAST, Direction.WEST));
 	addComponent(new ComponentProcessor(this).setProcessorNumber(0).usage(Constants.RADIOACTIVEPROCESSOR_USAGE_PER_TICK)
-		.requiredTicks((long) Constants.RADIOACTIVEPROCESSOR_REQUIRED_TICKS)
-		.canProcess(component -> component.consumeBucket().canProcessFluidItem2ItemRecipe(component, FluidItem2ItemRecipe.class,
-			NuclearScienceRecipeInit.RADIOACTIVE_PROCESSOR_TYPE))
-		.process(component -> component.processFluidItem2ItemRecipe(component, FluidItem2ItemRecipe.class)));
+		.requiredTicks((long) Constants.RADIOACTIVEPROCESSOR_REQUIRED_TICKS).canProcess(component -> component.consumeBucket()
+			.canProcessFluidItem2ItemRecipe(component, NuclearScienceRecipeInit.RADIOACTIVE_PROCESSOR_TYPE))
+		.process(component -> component.processFluidItem2ItemRecipe(component)));
 	addComponent(new ComponentContainerProvider("container.radioactiveprocessor")
 		.createMenu((id, player) -> new ContainerRadioactiveProcessor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
     }
