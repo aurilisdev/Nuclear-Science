@@ -50,12 +50,12 @@ public class TileTeleporter extends GenericTile {
 	if (cooldown <= 0) {
 	    cooldown = 20;
 	    if (electro.getJoulesStored() == electro.getMaxJoulesStored()) {
-		AABB BB = new AABB(getBlockPos(), getBlockPos().offset(1, 2, 1));
-		List<Player> player = getLevel().getEntities(EntityType.PLAYER, BB, en -> true);
+		AABB aabb = new AABB(getBlockPos(), getBlockPos().offset(1, 2, 1));
+		List<Player> player = getLevel().getEntities(EntityType.PLAYER, aabb, en -> true);
 		if (!player.isEmpty()) {
 		    ServerLevel serverWorld = ItemFrequencyCard.getFromNBT((ServerLevel) getLevel(), world);
 		    if (serverWorld == player.get(0).getCommandSenderWorld()) {
-			player.get(0).teleportToWithTicket(xCoord, yCoord + 1, zCoord);
+			player.get(0).teleportToWithTicket(xCoord, yCoord + 1.0, zCoord);
 			cooldown = 80;
 			electro.joules(0);
 		    }
