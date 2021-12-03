@@ -16,7 +16,7 @@
             "tag": "forge:plates/vanadiumsteel"
         },
         "P": {
-            "item": "nuclearscience:plutonium239"
+            "tag": "forge:pellets/plutonium"
         }
     },
     "result": {
