@@ -26,9 +26,9 @@ public class TileMoltenSaltPipe extends GenericTileMoltenSaltPipe {
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound) {
+    public void saveAdditional(CompoundTag compound) {
 	compound.putInt("ord", getPipeType().ordinal());
-	return super.save(compound);
+	super.saveAdditional(compound);
     }
 
     @Override

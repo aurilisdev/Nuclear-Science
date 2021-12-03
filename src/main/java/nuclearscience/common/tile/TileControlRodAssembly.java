@@ -52,9 +52,9 @@ public class TileControlRodAssembly extends GenericTile {
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound) {
+    public void saveAdditional(CompoundTag compound) {
 	compound.putInt("insertion", insertion);
-	return super.save(compound);
+	super.saveAdditional(compound);
     }
 
     @Override

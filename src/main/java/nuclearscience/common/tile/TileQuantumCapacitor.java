@@ -98,12 +98,11 @@ public class TileQuantumCapacitor extends GenericTile implements IEnergyStorage 
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound) {
-	super.save(compound);
+    public void saveAdditional(CompoundTag compound) {
+	super.saveAdditional(compound);
 	compound.putInt("frequency", frequency);
 	compound.putDouble("outputJoules", outputJoules);
 	compound.putUUID("uuid", uuid);
-	return compound;
     }
 
     @Override

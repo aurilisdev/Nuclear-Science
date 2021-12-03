@@ -59,9 +59,9 @@ public class TileFusionReactorCore extends GenericTile {
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound) {
+    public void saveAdditional(CompoundTag compound) {
 	writeCustomPacket(compound);
-	return super.save(compound);
+	super.saveAdditional(compound);
     }
 
     @Override

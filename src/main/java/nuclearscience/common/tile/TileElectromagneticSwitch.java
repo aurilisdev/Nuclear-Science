@@ -15,11 +15,11 @@ public class TileElectromagneticSwitch extends GenericTile {
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound) {
+    public void saveAdditional(CompoundTag compound) {
 	if (lastDirection != null) {
 	    compound.putInt("lastDirectionOrdinal", lastDirection.ordinal());
 	}
-	return super.save(compound);
+	super.saveAdditional(compound);
     }
 
     @Override

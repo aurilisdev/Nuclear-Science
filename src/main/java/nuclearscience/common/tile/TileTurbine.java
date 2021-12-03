@@ -50,7 +50,7 @@ public class TileTurbine extends GenericTile {
 	    for (int j = -radius; j <= radius; j++) {
 		if (i != 0 || j != 0) {
 		    BlockEntity tile = level.getBlockEntity(new BlockPos(worldPosition.getX() + i, worldPosition.getY(), worldPosition.getZ() + j));
-		    if (!(tile instanceof TileTurbine turbine) || turbine.hasCore) {
+		    if (tile instanceof TileTurbine turbine ? turbine.hasCore : true) {
 			return;
 		    }
 		}
@@ -177,13 +177,13 @@ public class TileTurbine extends GenericTile {
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound) {
+    public void saveAdditional(CompoundTag compound) {
 	compound.putBoolean("hasCore", hasCore);
 	compound.putBoolean("isCore", isCore);
 	compound.putInt("coreX", coreLocation.getX());
 	compound.putInt("coreY", coreLocation.getY());
 	compound.putInt("coreZ", coreLocation.getZ());
-	return super.save(compound);
+	super.saveAdditional(compound);
     }
 
     @Override

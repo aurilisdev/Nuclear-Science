@@ -125,10 +125,10 @@ public class TileGasCentrifuge extends GenericTile {
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound) {
+    public void saveAdditional(CompoundTag compound) {
 	compound.putInt("stored235", stored235);
 	compound.putInt("stored238", stored238);
-	return super.save(compound);
+	super.saveAdditional(compound);
     }
 
     @Override

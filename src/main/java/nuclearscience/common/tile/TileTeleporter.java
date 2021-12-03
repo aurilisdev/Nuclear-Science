@@ -67,14 +67,14 @@ public class TileTeleporter extends GenericTile {
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound) {
+    public void saveAdditional(CompoundTag compound) {
 	if (world != null) {
 	    compound.putInt("xCoord", xCoord);
 	    compound.putInt("yCoord", yCoord);
 	    compound.putInt("zCoord", zCoord);
 	    compound.putString("world", world);
 	}
-	return super.save(compound);
+	super.saveAdditional(compound);
     }
 
     @Override
