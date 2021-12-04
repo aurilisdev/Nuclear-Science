@@ -49,7 +49,7 @@ public class TileNuclearBoiler extends GenericTile {
 	addComponent(new ComponentElectrodynamic(this).input(Direction.DOWN).voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 2)
 		.maxJoules(Constants.CHEMICALBOILER_USAGE_PER_TICK * 10));
 	addComponent(new ComponentFluidHandlerMulti(this)
-		.setAddFluidsValues(NuclearScienceRecipeInit.NUCLEAR_BOILER_TYPE, MAX_TANK_CAPACITY, true, true).relativeInput(Direction.EAST));
+		.setAddFluidsValues(NuclearScienceRecipeInit.NUCLEAR_BOILER_TYPE, MAX_TANK_CAPACITY, true, true).relativeInput(Direction.EAST).relativeOutput(Direction.WEST));
 	addComponent(new ComponentInventory(this).size(invSize).relativeSlotFaces(0, Direction.EAST, Direction.UP)
 		.relativeSlotFaces(1, Direction.DOWN)
 		.valid(getPredicate(inputSlots, outputSize, itemBiSize, inputBucketSlots + outputBucketSlots, upgradeSlots, invSize))
