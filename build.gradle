@@ -34,7 +34,7 @@ version = minecraft_version+'-'+version_major+'.'+version_minor+'.'+version_revi
 group = 'nuclearscience' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'Nuclear Science'
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(16)
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {

@@ -24,10 +24,10 @@ public class TileRadioactiveProcessor extends GenericTile {
     public static final int MAX_TANK_CAPACITY = 5000;
 
     private static int inputSlots = 1;
-    private static int outputSize = 0;
+    private static int outputSize = 1;
     private static int itemBiSize = 0;
     private static int inputBucketSlots = 1;
-    private static int outputBucketSlots = 1;
+    private static int outputBucketSlots = 0;
     private static int upgradeSlots = 3;
 
     private static int processorCount = 1;
