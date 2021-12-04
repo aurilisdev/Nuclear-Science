@@ -50,7 +50,7 @@ public class TileTurbine extends GenericTile {
 	    for (int j = -radius; j <= radius; j++) {
 		if (i != 0 || j != 0) {
 		    BlockEntity tile = level.getBlockEntity(new BlockPos(worldPosition.getX() + i, worldPosition.getY(), worldPosition.getZ() + j));
-		    if (!tile instanceof TileTurbine turbine || turbine.hasCore) {
+		    if (!(tile instanceof TileTurbine turbine) || turbine.hasCore) {
 			return;
 		    }
 		}
