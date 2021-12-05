@@ -17,6 +17,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -28,6 +29,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import nuclearscience.DeferredRegisters;
@@ -124,6 +127,16 @@ public class TileReactorCore extends GenericTile {
 		List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, bb);
 		for (LivingEntity living : list) {
 		    RadiationSystem.applyRadiation(living, source, totstrength);
+		}
+		if (temperature > 100) {
+		    bb = AABB.ofSize(new Vec3(source.x(), source.y(), source.z()), 4, 4, 4);
+		    list = level.getEntitiesOfClass(LivingEntity.class, bb);
+		    for (LivingEntity living : list) {
+			FluidState state = level.getBlockState(living.getOnPos()).getFluidState();
+			if (state.is(Fluids.WATER) || state.is(Fluids.FLOWING_WATER)) {
+			    living.hurt(DamageSource.DROWN, 3);
+			}
+		    }
 		}
 	    }
 	} else {

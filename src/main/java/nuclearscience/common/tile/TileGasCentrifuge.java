@@ -63,7 +63,7 @@ public class TileGasCentrifuge extends GenericTile {
 	ComponentElectrodynamic electro = getComponent(ComponentType.Electrodynamic);
 	ComponentInventory inv = getComponent(ComponentType.Inventory);
 	ComponentFluidHandlerMulti tank = getComponent(ComponentType.FluidHandler);
-	boolean hasFluid = tank.getInputTanks()[0].getFluidAmount() >= REQUIRED / 60.0 == true;
+	boolean hasFluid = tank.getInputTanks()[0].getFluidAmount() >= REQUIRED / 60.0;
 	boolean val = electro.getJoulesStored() >= processor.getUsage() && hasFluid && inv.getItem(0).getCount() < inv.getItem(0).getMaxStackSize()
 		&& inv.getItem(1).getCount() < inv.getItem(1).getMaxStackSize();
 	if (!val && spinSpeed > 0) {

@@ -1,17 +1,26 @@
 package nuclearscience.common.tile;
 
+import java.util.List;
+
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
+import electrodynamics.prefab.utilities.object.Location;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.settings.Constants;
 
@@ -46,6 +55,17 @@ public class TileHeatExchanger extends GenericTile {
      * to fit the exchanger
      */
     protected void produceSteam() {
+	if (temperature > 100) {
+	    Location source = new Location(worldPosition.getX() + 0.5f, worldPosition.getY() + 0.5f, worldPosition.getZ() + 0.5f);
+	    AABB bb = AABB.ofSize(new Vec3(source.x(), source.y(), source.z()), 4, 4, 4);
+	    List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, bb);
+	    for (LivingEntity living : list) {
+		FluidState state = level.getBlockState(living.getOnPos()).getFluidState();
+		if (state.is(Fluids.WATER) || state.is(Fluids.FLOWING_WATER)) {
+		    living.hurt(DamageSource.DROWN, 3);
+		}
+	    }
+	}
 	for (int i = 0; i < STEAM_GEN_DIAMETER; i++) {
 	    for (int j = 0; j < STEAM_GEN_HEIGHT; j++) {
 		for (int k = 0; k < STEAM_GEN_DIAMETER; k++) {
