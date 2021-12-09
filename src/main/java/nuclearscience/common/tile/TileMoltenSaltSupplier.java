@@ -28,7 +28,7 @@ public class TileMoltenSaltSupplier extends GenericTile {
 	addComponent(new ComponentTickable().tickServer(this::tickServer));
 	addComponent(new ComponentPacketHandler());
 	addComponent(new ComponentElectrodynamic(this).voltage(Constants.MOLTENSALTSUPPLIER_VOLTAGE).extractPower((x, y) -> TransferPack.EMPTY)
-		.output(Direction.UP).output(Direction.DOWN).maxJoules(Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK * 20));
+		.input(Direction.UP).input(Direction.DOWN).maxJoules(Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK * 20));
 	addComponent(new ComponentInventory(this).size(1).slotFaces(0, Direction.values())
 		.valid((slot, stack) -> stack.getItem() == DeferredRegisters.ITEM_LIFHT4PUF3.get()));
 	addComponent(new ComponentContainerProvider("container.moltensaltsupplier")
