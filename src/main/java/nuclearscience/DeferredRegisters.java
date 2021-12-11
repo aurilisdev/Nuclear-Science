@@ -257,6 +257,8 @@ public class DeferredRegisters {
 	    supplier(new Item(new Item.Properties().tab(References.NUCLEARTAB))));
     public static final RegistryObject<Item> ITEM_CELLANTIMATTERLARGE = ITEMS.register("cellantimatterlarge",
 	    supplier(new Item(new Item.Properties().tab(References.NUCLEARTAB))));
+    public static final RegistryObject<Item> ITEM_CELLANTIMATTERVERYLARGE = ITEMS.register("cellantimatterverylarge",
+	    supplier(new Item(new Item.Properties().tab(References.NUCLEARTAB))));
     public static final RegistryObject<Item> ITEM_CELLDARKMATTER = ITEMS.register("celldarkmatter",
 	    supplier(new Item(new Item.Properties().tab(References.NUCLEARTAB))));
     public static final RegistryObject<Item> ITEM_FUELHEUO2 = ITEMS.register("fuelheuo2",
