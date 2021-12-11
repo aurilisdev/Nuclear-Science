@@ -32,7 +32,7 @@ public class TileRadioisotopeGenerator extends GenericTile {
 	addComponent(new ComponentElectrodynamic(this).voltage(Constants.RADIOISOTOPEGENERATOR_VOLTAGE).extractPower((x, y) -> TransferPack.EMPTY)
 		.output(Direction.UP).output(Direction.DOWN));
 	addComponent(new ComponentInventory(this).size(1).slotFaces(0, Direction.values())
-		.valid((slot, stack) -> RadiationRegister.get(stack.getItem()) != RadiationRegister.NULL));
+		.valid((slot, stack, i) -> RadiationRegister.get(stack.getItem()) != RadiationRegister.NULL));
 	addComponent(new ComponentContainerProvider("container.radioisotopegenerator")
 		.createMenu((id, player) -> new ContainerRadioisotopeGenerator(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
     }

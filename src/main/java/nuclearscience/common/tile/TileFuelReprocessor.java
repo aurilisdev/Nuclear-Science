@@ -22,28 +22,14 @@ import nuclearscience.common.settings.Constants;
 
 public class TileFuelReprocessor extends GenericTile {
 
-    private static int inputSlots = 1;
-    private static int outputSize = 1;
-    private static int itemBiSize = 0;
-    private static int inputBucketSlots = 0;
-    private static int outputBucketSlots = 0;
-    private static int upgradeSlots = 3;
-
-    private static int processorCount = 1;
-    private static int inputPerProc = 1;
-
-    private static int invSize = inputSlots + outputSize + inputBucketSlots + outputBucketSlots + upgradeSlots + itemBiSize;
-
     public TileFuelReprocessor(BlockPos pos, BlockState state) {
 	super(DeferredRegisters.TILE_FUELREPROCESSOR.get(), pos, state);
 	addComponent(new ComponentDirection());
 	addComponent(new ComponentPacketHandler());
 	addComponent(new ComponentTickable().tickClient(this::tickClient));
 	addComponent(new ComponentElectrodynamic(this).voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 4).relativeInput(Direction.NORTH));
-	addComponent(new ComponentInventory(this).size(invSize).faceSlots(Direction.UP, 0).faceSlots(Direction.DOWN, 1)
-		.relativeFaceSlots(Direction.EAST, 1).relativeFaceSlots(Direction.WEST, 2)
-		.valid(getPredicate(inputSlots, outputSize, itemBiSize, inputBucketSlots + outputBucketSlots, upgradeSlots, invSize))
-		.slotSizes(inputSlots, outputSize, itemBiSize, upgradeSlots, inputBucketSlots, outputBucketSlots, processorCount, inputPerProc));
+	addComponent(new ComponentInventory(this).size(5).faceSlots(Direction.UP, 0).faceSlots(Direction.DOWN, 1).relativeFaceSlots(Direction.EAST, 1)
+		.relativeFaceSlots(Direction.WEST, 2).inputs(1).outputs(1).upgrades(3).processors(1).processorInputs(1).valid(machineValidator()));
 	addProcessor(new ComponentProcessor(this).setProcessorNumber(0)
 		.canProcess(component -> component.canProcessItem2ItemRecipe(component, NuclearScienceRecipeInit.FUEL_REPROCESSOR_TYPE))
 		.process(component -> component.processItem2ItemRecipe(component)).requiredTicks((long) Constants.FUELREPROCESSOR_REQUIRED_TICKS)

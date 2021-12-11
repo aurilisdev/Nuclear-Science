@@ -32,7 +32,7 @@ public class TileParticleInjector extends GenericTile {
 	addComponent(new ComponentDirection());
 	addComponent(new ComponentPacketHandler());
 	addComponent(new ComponentInventory(this).size(3)
-		.valid((index, stack) -> index != 1 || stack.getItem() == DeferredRegisters.ITEM_CELLELECTROMAGNETIC.get())
+		.valid((index, stack, i) -> index != 1 || stack.getItem() == DeferredRegisters.ITEM_CELLELECTROMAGNETIC.get())
 		.relativeFaceSlots(Direction.UP, 0, 1).relativeFaceSlots(Direction.WEST, 0, 1).relativeSlotFaces(2, Direction.DOWN, Direction.EAST));
 	addComponent(new ComponentElectrodynamic(this).voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 8).relativeInput(Direction.NORTH)
 		.maxJoules(Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE * 10));

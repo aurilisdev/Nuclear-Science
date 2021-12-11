@@ -28,18 +28,6 @@ public class TileNuclearBoiler extends GenericTile {
 
     public static final int MAX_TANK_CAPACITY = 5000;
 
-    private static int inputSlots = 1;
-    private static int outputSize = 0;
-    private static int itemBiSize = 0;
-    private static int inputBucketSlots = 1;
-    private static int outputBucketSlots = 1;
-    private static int upgradeSlots = 3;
-
-    private static int processorCount = 1;
-    private static int inputPerProc = 1;
-
-    private static int invSize = inputSlots + outputSize + inputBucketSlots + outputBucketSlots + upgradeSlots + itemBiSize;
-
     public TileNuclearBoiler(BlockPos pos, BlockState state) {
 	super(DeferredRegisters.TILE_CHEMICALBOILER.get(), pos, state);
 	addComponent(new ComponentTickable().tickClient(this::tickClient));
@@ -50,10 +38,8 @@ public class TileNuclearBoiler extends GenericTile {
 	addComponent(
 		new ComponentFluidHandlerMulti(this).setAddFluidsValues(NuclearScienceRecipeInit.NUCLEAR_BOILER_TYPE, MAX_TANK_CAPACITY, true, true)
 			.relativeInput(Direction.EAST).relativeOutput(Direction.WEST));
-	addComponent(new ComponentInventory(this).size(invSize).relativeSlotFaces(0, Direction.EAST, Direction.UP)
-		.relativeSlotFaces(1, Direction.DOWN)
-		.valid(getPredicate(inputSlots, outputSize, itemBiSize, inputBucketSlots + outputBucketSlots, upgradeSlots, invSize))
-		.slotSizes(inputSlots, outputSize, itemBiSize, upgradeSlots, inputBucketSlots, outputBucketSlots, processorCount, inputPerProc));
+	addComponent(new ComponentInventory(this).size(6).relativeSlotFaces(0, Direction.EAST, Direction.UP).relativeSlotFaces(1, Direction.DOWN)
+		.inputs(1).bucketInputs(1).bucketOutputs(1).upgrades(3).processors(1).processorInputs(1).valid(machineValidator()));
 	addComponent(new ComponentProcessor(this).setProcessorNumber(0)
 		.canProcess(component -> component.outputToPipe(component).consumeBucket().dispenseBucket().canProcessFluidItem2FluidRecipe(component,
 			NuclearScienceRecipeInit.NUCLEAR_BOILER_TYPE))

@@ -24,18 +24,6 @@ public class TileMSRFuelPreProcessor extends GenericTile {
     public static final int MAX_TANK_CAPACITY = 5000;
     public long clientTicks = 0;
 
-    private static int inputSlots = 3;
-    private static int outputSize = 1;
-    private static int itemBiSize = 0;
-    private static int inputBucketSlots = 1;
-    private static int outputBucketSlots = 0;
-    private static int upgradeSlots = 3;
-
-    private static int processorCount = 1;
-    private static int inputPerProc = 3;
-
-    private static int invSize = inputSlots + outputSize + inputBucketSlots + outputBucketSlots + upgradeSlots + itemBiSize;
-
     public TileMSRFuelPreProcessor(BlockPos pos, BlockState state) {
 	super(DeferredRegisters.TILE_MSRFUELPREPROCESSOR.get(), pos, state);
 	addComponent(new ComponentTickable().tickClient(this::tickClient));
@@ -45,10 +33,9 @@ public class TileMSRFuelPreProcessor extends GenericTile {
 		.maxJoules(Constants.MSRFUELPREPROCESSOR_USAGE_PER_TICK * 10));
 	addComponent(((ComponentFluidHandlerMulti) new ComponentFluidHandlerMulti(this).relativeInput(Direction.EAST).relativeOutput(Direction.WEST))
 		.setAddFluidsValues(NuclearScienceRecipeInit.MSR_FUEL_PREPROCESSOR_TYPE, MAX_TANK_CAPACITY, true, true));
-	addComponent(new ComponentInventory(this).size(invSize).relativeFaceSlots(Direction.EAST, 0, 1, 2).relativeFaceSlots(Direction.UP, 0, 1, 2)
-		.relativeSlotFaces(3, Direction.DOWN)
-		.valid(getPredicate(inputSlots, outputSize, itemBiSize, inputBucketSlots + outputBucketSlots, upgradeSlots, invSize))
-		.slotSizes(inputSlots, outputSize, itemBiSize, upgradeSlots, inputBucketSlots, outputBucketSlots, processorCount, inputPerProc));
+	addComponent(new ComponentInventory(this).size(8).relativeFaceSlots(Direction.EAST, 0, 1, 2).relativeFaceSlots(Direction.UP, 0, 1, 2)
+		.relativeSlotFaces(3, Direction.DOWN).inputs(3).outputs(1).bucketInputs(1).upgrades(3).processors(1).processorInputs(3)
+		.valid(machineValidator()));
 	addComponent(new ComponentProcessor(this).setProcessorNumber(0)
 		.canProcess(component -> component.outputToPipe(component).consumeBucket().canProcessFluidItem2ItemRecipe(component,
 			NuclearScienceRecipeInit.MSR_FUEL_PREPROCESSOR_TYPE))
