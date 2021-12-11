@@ -1,6 +1,6 @@
 package nuclearscience.common.inventory.container;
 
-import electrodynamics.common.item.subtype.SubtypeProcessorUpgrade;
+import electrodynamics.common.item.subtype.SubtypeItemUpgrade;
 import electrodynamics.prefab.inventory.container.GenericContainer;
 import electrodynamics.prefab.inventory.container.slot.GenericSlot;
 import electrodynamics.prefab.inventory.container.slot.SlotRestricted;
@@ -37,13 +37,13 @@ public class ContainerMSRFuelPreProcessor extends GenericContainer<TileMSRFuelPr
 	addSlot(new FurnaceResultSlot(playerinv.player, inv, nextIndex(), 128, 40));
 	addSlot(new SlotRestricted(inv, nextIndex(), 45, 50, 0, CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY));
 	addSlot(new SlotRestricted(inv, nextIndex(), 153, 14,
-		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.basicspeed),
-		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.advancedspeed)));
+		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.basicspeed),
+		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.advancedspeed)));
 	addSlot(new SlotRestricted(inv, nextIndex(), 153, 34,
-		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.basicspeed),
-		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.advancedspeed)));
+		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.basicspeed),
+		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.advancedspeed)));
 	addSlot(new SlotRestricted(inv, nextIndex(), 153, 54,
-		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.basicspeed),
-		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.advancedspeed)));
+		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.basicspeed),
+		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.advancedspeed)));
     }
 }
