@@ -3,7 +3,7 @@ package nuclearscience.common.block;
 import java.util.Arrays;
 import java.util.List;
 
-import electrodynamics.api.electricity.IElectrodynamic;
+import electrodynamics.api.capability.electrodynamic.ICapabilityElectrodynamic;
 import electrodynamics.prefab.block.GenericMachineBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
@@ -26,7 +26,7 @@ public class BlockQuantumCapacitor extends GenericMachineBlock {
     public List<ItemStack> getDrops(BlockState state, Builder builder) {
 	ItemStack addstack = new ItemStack(this);
 	BlockEntity tile = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
-	if (tile instanceof IElectrodynamic electro) {
+	if (tile instanceof ICapabilityElectrodynamic electro) {
 	    double joules = electro.getJoulesStored();
 	    if (joules > 0) {
 		addstack.getOrCreateTag().putDouble("joules", joules);
