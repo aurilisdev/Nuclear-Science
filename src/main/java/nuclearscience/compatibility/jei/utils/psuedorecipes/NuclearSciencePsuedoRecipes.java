@@ -1,9 +1,9 @@
-package nuclearscience.compatability.jei.utils.psuedorecipes;
+package nuclearscience.compatibility.jei.utils.psuedorecipes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import electrodynamics.compatability.jei.recipecategories.psuedo.PsuedoItem2ItemRecipe;
+import electrodynamics.compatibility.jei.recipecategories.psuedo.PsuedoItem2ItemRecipe;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;

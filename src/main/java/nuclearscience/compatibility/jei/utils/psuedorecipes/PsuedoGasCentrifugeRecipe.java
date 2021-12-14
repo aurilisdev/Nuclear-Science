@@ -1,4 +1,4 @@
-package nuclearscience.compatability.jei.utils.psuedorecipes;
+package nuclearscience.compatibility.jei.utils.psuedorecipes;
 
 import electrodynamics.common.recipe.categories.item2item.Item2ItemRecipe;
 import net.minecraft.world.item.ItemStack;

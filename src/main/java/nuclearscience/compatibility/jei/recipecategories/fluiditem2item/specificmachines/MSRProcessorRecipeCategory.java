@@ -1,13 +1,13 @@
-package nuclearscience.compatability.jei.recipecategories.fluiditem2item.specificmachines;
+package nuclearscience.compatibility.jei.recipecategories.fluiditem2item.specificmachines;
 
 import electrodynamics.api.References;
-import electrodynamics.compatability.jei.recipecategories.fluiditem2item.FluidItem2ItemRecipeCategory;
-import electrodynamics.compatability.jei.utils.gui.arrows.animated.ArrowRightAnimatedWrapper;
-import electrodynamics.compatability.jei.utils.gui.backgroud.BackgroundWrapper;
-import electrodynamics.compatability.jei.utils.gui.fluid.DefaultFluidGaugeWrapper;
-import electrodynamics.compatability.jei.utils.gui.item.BucketSlotWrapper;
-import electrodynamics.compatability.jei.utils.gui.item.DefaultItemSlotWrapper;
-import electrodynamics.compatability.jei.utils.label.PowerLabelWrapper;
+import electrodynamics.compatibility.jei.recipecategories.fluiditem2item.FluidItem2ItemRecipeCategory;
+import electrodynamics.compatibility.jei.utils.gui.arrows.animated.ArrowRightAnimatedWrapper;
+import electrodynamics.compatibility.jei.utils.gui.backgroud.BackgroundWrapper;
+import electrodynamics.compatibility.jei.utils.gui.fluid.DefaultFluidGaugeWrapper;
+import electrodynamics.compatibility.jei.utils.gui.item.BucketSlotWrapper;
+import electrodynamics.compatibility.jei.utils.gui.item.DefaultItemSlotWrapper;
+import electrodynamics.compatibility.jei.utils.label.PowerLabelWrapper;
 import mezz.jei.api.helpers.IGuiHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;

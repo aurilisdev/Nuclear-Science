@@ -1,4 +1,4 @@
-package nuclearscience.compatability.jei;
+package nuclearscience.compatibility.jei;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -10,8 +10,8 @@ import electrodynamics.client.screen.ScreenO2OProcessor;
 import electrodynamics.common.recipe.categories.fluiditem2fluid.FluidItem2FluidRecipe;
 import electrodynamics.common.recipe.categories.fluiditem2item.FluidItem2ItemRecipe;
 import electrodynamics.common.recipe.categories.item2item.Item2ItemRecipe;
-import electrodynamics.compatability.jei.ElectrodynamicsJEIPlugin;
-import electrodynamics.compatability.jei.recipecategories.psuedo.PsuedoItem2ItemRecipe;
+import electrodynamics.compatibility.jei.ElectrodynamicsJEIPlugin;
+import electrodynamics.compatibility.jei.recipecategories.psuedo.PsuedoItem2ItemRecipe;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
@@ -34,17 +34,17 @@ import nuclearscience.client.screen.ScreenParticleInjector;
 import nuclearscience.client.screen.ScreenRadioactiveProcessor;
 import nuclearscience.client.screen.ScreenReactorCore;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
-import nuclearscience.compatability.jei.recipecategories.fluiditem2fluid.specificmachines.NuclearBoilerRecipeCategory;
-import nuclearscience.compatability.jei.recipecategories.fluiditem2item.specificmachines.ChemicalExtractorRecipeCategory;
-import nuclearscience.compatability.jei.recipecategories.fluiditem2item.specificmachines.MSRProcessorRecipeCategory;
-import nuclearscience.compatability.jei.recipecategories.fluiditem2item.specificmachines.RadioactiveProcessorRecipeCategory;
-import nuclearscience.compatability.jei.recipecategories.item2item.FissionReactorRecipeCategory;
-import nuclearscience.compatability.jei.recipecategories.item2item.FuelReprocessorRecipeCategory;
-import nuclearscience.compatability.jei.recipecategories.psuedo.specificmachines.GasCentrifugeRecipeCategory;
-import nuclearscience.compatability.jei.recipecategories.psuedo.specificmachines.ParticleAcceleratorAntiMatterRecipeCategory;
-import nuclearscience.compatability.jei.recipecategories.psuedo.specificmachines.ParticleAcceleratorDarkMatterRecipeCategory;
-import nuclearscience.compatability.jei.utils.psuedorecipes.NuclearSciencePsuedoRecipes;
-import nuclearscience.compatability.jei.utils.psuedorecipes.PsuedoGasCentrifugeRecipe;
+import nuclearscience.compatibility.jei.recipecategories.fluiditem2fluid.specificmachines.NuclearBoilerRecipeCategory;
+import nuclearscience.compatibility.jei.recipecategories.fluiditem2item.specificmachines.ChemicalExtractorRecipeCategory;
+import nuclearscience.compatibility.jei.recipecategories.fluiditem2item.specificmachines.MSRProcessorRecipeCategory;
+import nuclearscience.compatibility.jei.recipecategories.fluiditem2item.specificmachines.RadioactiveProcessorRecipeCategory;
+import nuclearscience.compatibility.jei.recipecategories.item2item.FissionReactorRecipeCategory;
+import nuclearscience.compatibility.jei.recipecategories.item2item.FuelReprocessorRecipeCategory;
+import nuclearscience.compatibility.jei.recipecategories.psuedo.specificmachines.GasCentrifugeRecipeCategory;
+import nuclearscience.compatibility.jei.recipecategories.psuedo.specificmachines.ParticleAcceleratorAntiMatterRecipeCategory;
+import nuclearscience.compatibility.jei.recipecategories.psuedo.specificmachines.ParticleAcceleratorDarkMatterRecipeCategory;
+import nuclearscience.compatibility.jei.utils.psuedorecipes.NuclearSciencePsuedoRecipes;
+import nuclearscience.compatibility.jei.utils.psuedorecipes.PsuedoGasCentrifugeRecipe;
 
 @JeiPlugin
 public class NuclearSciencePlugin implements IModPlugin {

@@ -1,4 +1,4 @@
-package nuclearscience.compatability.jei.recipecategories.item2item;
+package nuclearscience.compatibility.jei.recipecategories.item2item;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,11 +7,11 @@ import java.util.List;
 import electrodynamics.api.References;
 import electrodynamics.common.recipe.categories.item2item.Item2ItemRecipe;
 import electrodynamics.common.recipe.recipeutils.CountableIngredient;
-import electrodynamics.compatability.jei.recipecategories.item2item.Item2ItemRecipeCategory;
-import electrodynamics.compatability.jei.utils.gui.arrows.animated.FeynmanDiagramAnimatedWrapper;
-import electrodynamics.compatability.jei.utils.gui.backgroud.BackgroundWrapper;
-import electrodynamics.compatability.jei.utils.gui.item.DefaultItemSlotWrapper;
-import electrodynamics.compatability.jei.utils.label.PowerLabelWrapper;
+import electrodynamics.compatibility.jei.recipecategories.item2item.Item2ItemRecipeCategory;
+import electrodynamics.compatibility.jei.utils.gui.arrows.animated.FeynmanDiagramAnimatedWrapper;
+import electrodynamics.compatibility.jei.utils.gui.backgroud.BackgroundWrapper;
+import electrodynamics.compatibility.jei.utils.gui.item.DefaultItemSlotWrapper;
+import electrodynamics.compatibility.jei.utils.label.PowerLabelWrapper;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;

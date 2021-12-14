@@ -1,4 +1,4 @@
-package nuclearscience.compatability.jei.recipecategories.psuedo.specificmachines;
+package nuclearscience.compatibility.jei.recipecategories.psuedo.specificmachines;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,7 +29,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.References;
-import nuclearscience.compatability.jei.utils.psuedorecipes.PsuedoGasCentrifugeRecipe;
+import nuclearscience.compatibility.jei.utils.psuedorecipes.PsuedoGasCentrifugeRecipe;
 
 public class GasCentrifugeRecipeCategory implements IRecipeCategory<PsuedoGasCentrifugeRecipe> {
 
