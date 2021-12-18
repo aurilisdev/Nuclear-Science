@@ -35,6 +35,7 @@ import nuclearscience.common.block.BlockMeltedReactor;
 import nuclearscience.common.block.BlockMoltenSaltSupplier;
 import nuclearscience.common.block.BlockPlasma;
 import nuclearscience.common.block.BlockQuantumCapacitor;
+import nuclearscience.common.block.BlockRadioactiveAir;
 import nuclearscience.common.block.BlockRadioactiveProcessor;
 import nuclearscience.common.block.BlockRadioactiveSoil;
 import nuclearscience.common.block.BlockReactorCore;
@@ -129,6 +130,7 @@ public class DeferredRegisters {
 	public static GenericMachineBlock blockHeatExchanger;
 	public static BlockMoltenSaltSupplier blockMoltenSaltSupplier;
 	public static BlockRadioactiveSoil blockRadioactiveSoil;
+	public static BlockRadioactiveAir blockRadioactiveAir;
 
 	public static Block blocklead;
 
@@ -162,6 +164,7 @@ public class DeferredRegisters {
 			SUBTYPEBLOCKREGISTER_MAPPINGS.put(subtype, BLOCKS.register(subtype.tag(), supplier(new BlockMoltenSaltPipe(subtype), subtype)));
 		}
 		BLOCKS.register("meltedreactor", supplier(blockMeltedReactor = new BlockMeltedReactor()));
+		BLOCKS.register("radioactiveair", supplier(blockRadioactiveAir = new BlockRadioactiveAir()));
 		BLOCKS.register("radioactivesoil", supplier(blockRadioactiveSoil = new BlockRadioactiveSoil()));
 		ITEMS.register("gascentrifuge", supplier(new BlockItemDescriptable(blockGasCentrifuge, new Item.Properties().tab(References.NUCLEARTAB))));
 		ITEMS.register("nuclearboiler", supplier(new BlockItemDescriptable(blockNuclearBoiler, new Item.Properties().tab(References.NUCLEARTAB))));
