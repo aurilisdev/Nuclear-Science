@@ -22,73 +22,73 @@ import net.minecraft.world.phys.BlockHitResult;
 import nuclearscience.common.tile.TileTurbine;
 
 public class BlockTurbine extends GenericEntityBlockWaterloggable {
-    public static final BooleanProperty RENDER = BooleanProperty.create("render");
+	public static final BooleanProperty RENDER = BooleanProperty.create("render");
 
-    public BlockTurbine() {
-	super(Properties.of(Material.METAL).strength(3.5F).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion());
-	registerDefaultState(stateDefinition.any().setValue(RENDER, true));
-    }
-
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-	return new TileTurbine(pos, state);
-    }
-
-    @Override
-    public void onRotate(ItemStack stack, BlockPos pos, Player player) {
-	TileTurbine turbine = (TileTurbine) player.level.getBlockEntity(pos);
-	if (turbine != null) {
-	    if (turbine.isCore) {
-		turbine.deconstructStructure();
-	    } else {
-		turbine.constructStructure();
-	    }
+	public BlockTurbine() {
+		super(Properties.of(Material.METAL).strength(3.5F).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion());
+		registerDefaultState(stateDefinition.any().setValue(RENDER, true));
 	}
-    }
 
-    @Override
-    public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-	if (state.getBlock() != newState.getBlock()) {
-	    TileTurbine turbine = (TileTurbine) worldIn.getBlockEntity(pos);
-	    if (turbine != null) {
-		turbine.deconstructStructure();
-	    }
-	    super.onRemove(state, worldIn, pos, newState, isMoving);
+	@Override
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+		return new TileTurbine(pos, state);
 	}
-    }
 
-    @Override
-    public RenderShape getRenderShape(BlockState state) {
-	super.getRenderShape(state);
-	if (state.getValue(RENDER) != Boolean.TRUE) {
-	    return RenderShape.INVISIBLE;
+	@Override
+	public void onRotate(ItemStack stack, BlockPos pos, Player player) {
+		TileTurbine turbine = (TileTurbine) player.level.getBlockEntity(pos);
+		if (turbine != null) {
+			if (turbine.isCore) {
+				turbine.deconstructStructure();
+			} else {
+				turbine.constructStructure();
+			}
+		}
 	}
-	return super.getRenderShape(state);
-    }
 
-    @Override
-    public float getShadeBrightness(BlockState state, BlockGetter worldIn, BlockPos pos) {
-	return 1;
-    }
-
-    @Override
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-	if (worldIn.isClientSide) {
-	    return InteractionResult.SUCCESS;
-	} else if (!(player.getItemInHand(handIn).getItem() instanceof IWrenchItem)) {
-	    return InteractionResult.CONSUME;
+	@Override
+	public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+		if (state.getBlock() != newState.getBlock()) {
+			TileTurbine turbine = (TileTurbine) worldIn.getBlockEntity(pos);
+			if (turbine != null) {
+				turbine.deconstructStructure();
+			}
+			super.onRemove(state, worldIn, pos, newState, isMoving);
+		}
 	}
-	return InteractionResult.FAIL;
-    }
 
-    @Override
-    public BlockState getStateForPlacement(BlockPlaceContext context) {
-	return super.getStateForPlacement(context).setValue(RENDER, true);
-    }
+	@Override
+	public RenderShape getRenderShape(BlockState state) {
+		super.getRenderShape(state);
+		if (state.getValue(RENDER) != Boolean.TRUE) {
+			return RenderShape.INVISIBLE;
+		}
+		return super.getRenderShape(state);
+	}
 
-    @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-	super.createBlockStateDefinition(builder);
-	builder.add(RENDER);
-    }
+	@Override
+	public float getShadeBrightness(BlockState state, BlockGetter worldIn, BlockPos pos) {
+		return 1;
+	}
+
+	@Override
+	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+		if (worldIn.isClientSide) {
+			return InteractionResult.SUCCESS;
+		} else if (!(player.getItemInHand(handIn).getItem() instanceof IWrenchItem)) {
+			return InteractionResult.CONSUME;
+		}
+		return InteractionResult.FAIL;
+	}
+
+	@Override
+	public BlockState getStateForPlacement(BlockPlaceContext context) {
+		return super.getStateForPlacement(context).setValue(RENDER, true);
+	}
+
+	@Override
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+		super.createBlockStateDefinition(builder);
+		builder.add(RENDER);
+	}
 }

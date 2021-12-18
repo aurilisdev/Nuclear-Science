@@ -12,23 +12,23 @@ import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 
 public class RadioactiveProcessorRecipe extends FluidItem2ItemRecipe {
 
-    public static final String RECIPE_GROUP = "radioactive_processor_recipe";
-    public static final String MOD_ID = nuclearscience.References.ID;
-    public static final ResourceLocation RECIPE_ID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
+	public static final String RECIPE_GROUP = "radioactive_processor_recipe";
+	public static final String MOD_ID = nuclearscience.References.ID;
+	public static final ResourceLocation RECIPE_ID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
 
-    public RadioactiveProcessorRecipe(ResourceLocation recipeID, CountableIngredient[] itemInputs, FluidIngredient[] fluidInputs,
-	    ItemStack itemOutput) {
-	super(recipeID, itemInputs, fluidInputs, itemOutput);
-    }
+	public RadioactiveProcessorRecipe(ResourceLocation recipeID, CountableIngredient[] itemInputs, FluidIngredient[] fluidInputs,
+			ItemStack itemOutput) {
+		super(recipeID, itemInputs, fluidInputs, itemOutput);
+	}
 
-    @Override
-    public RecipeSerializer<?> getSerializer() {
-	return NuclearScienceRecipeInit.RADIOACTIVE_PROCESSOR_SERIALIZER.get();
-    }
+	@Override
+	public RecipeSerializer<?> getSerializer() {
+		return NuclearScienceRecipeInit.RADIOACTIVE_PROCESSOR_SERIALIZER.get();
+	}
 
-    @Override
-    public RecipeType<?> getType() {
-	return Registry.RECIPE_TYPE.get(RECIPE_ID);
-    }
+	@Override
+	public RecipeType<?> getType() {
+		return Registry.RECIPE_TYPE.get(RECIPE_ID);
+	}
 
 }

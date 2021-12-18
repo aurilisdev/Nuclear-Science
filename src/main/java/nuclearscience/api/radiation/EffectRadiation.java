@@ -13,35 +13,35 @@ import nuclearscience.References;
 
 public class EffectRadiation extends MobEffect {
 
-    public static final EffectRadiation INSTANCE = (EffectRadiation) new EffectRadiation().setRegistryName(References.ID, "radiation");
+	public static final EffectRadiation INSTANCE = (EffectRadiation) new EffectRadiation().setRegistryName(References.ID, "radiation");
 
-    protected EffectRadiation(MobEffectCategory typeIn, int liquidColorIn) {
-	super(typeIn, liquidColorIn);
-    }
-
-    public EffectRadiation() {
-	this(MobEffectCategory.HARMFUL, 5149489);
-    }
-
-    @Override
-    public void applyEffectTick(LivingEntity entityLivingBaseIn, int amplifier) {
-	if (entityLivingBaseIn.level.random.nextFloat() < 0.033) {
-	    entityLivingBaseIn.hurt(DamageSourceRadiation.INSTANCE, (float) (Math.pow(amplifier, 1.3) + 1));
-	    if (entityLivingBaseIn instanceof Player pl) {
-		pl.causeFoodExhaustion(0.05F * (amplifier + 1));
-	    }
+	protected EffectRadiation(MobEffectCategory typeIn, int liquidColorIn) {
+		super(typeIn, liquidColorIn);
 	}
-    }
 
-    @Override
-    public List<ItemStack> getCurativeItems() {
-	ArrayList<ItemStack> ret = new ArrayList<>();
-	ret.add(new ItemStack(DeferredRegisters.ITEM_ANTIDOTE.get()));
-	return ret;
-    }
+	public EffectRadiation() {
+		this(MobEffectCategory.HARMFUL, 5149489);
+	}
 
-    @Override
-    public boolean isDurationEffectTick(int duration, int amplifier) {
-	return true;
-    }
+	@Override
+	public void applyEffectTick(LivingEntity entityLivingBaseIn, int amplifier) {
+		if (entityLivingBaseIn.level.random.nextFloat() < 0.033) {
+			entityLivingBaseIn.hurt(DamageSourceRadiation.INSTANCE, (float) (Math.pow(amplifier, 1.3) + 1));
+			if (entityLivingBaseIn instanceof Player pl) {
+				pl.causeFoodExhaustion(0.05F * (amplifier + 1));
+			}
+		}
+	}
+
+	@Override
+	public List<ItemStack> getCurativeItems() {
+		ArrayList<ItemStack> ret = new ArrayList<>();
+		ret.add(new ItemStack(DeferredRegisters.ITEM_ANTIDOTE.get()));
+		return ret;
+	}
+
+	@Override
+	public boolean isDurationEffectTick(int duration, int amplifier) {
+		return true;
+	}
 }

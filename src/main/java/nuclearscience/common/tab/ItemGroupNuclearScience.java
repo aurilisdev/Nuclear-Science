@@ -6,12 +6,12 @@ import nuclearscience.DeferredRegisters;
 
 public class ItemGroupNuclearScience extends CreativeModeTab {
 
-    public ItemGroupNuclearScience(String label) {
-	super(label);
-    }
+	public ItemGroupNuclearScience(String label) {
+		super(label);
+	}
 
-    @Override
-    public ItemStack makeIcon() {
-	return new ItemStack(DeferredRegisters.blockGasCentrifuge);
-    }
+	@Override
+	public ItemStack makeIcon() {
+		return new ItemStack(DeferredRegisters.blockGasCentrifuge);
+	}
 }

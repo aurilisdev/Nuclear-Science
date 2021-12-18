@@ -19,36 +19,36 @@ import nuclearscience.common.tile.TileFusionReactorCore;
 
 public class BlockFusionReactorCore extends GenericMachineBlock {
 
-    public BlockFusionReactorCore() {
-	super(TileFusionReactorCore::new);
-    }
-
-    @Override
-    public RenderShape getRenderShape(BlockState state) {
-	return RenderShape.MODEL;
-    }
-
-    @Override
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-	if (!worldIn.isClientSide) {
-	    ItemStack inHand = player.getItemBySlot(handIn == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
-	    Item itemInHand = inHand.getItem();
-	    if (itemInHand == DeferredRegisters.ITEM_CELLDEUTERIUM.get() || itemInHand == DeferredRegisters.ITEM_CELLTRITIUM.get()) {
-		BlockEntity tile = worldIn.getBlockEntity(pos);
-		if (tile instanceof TileFusionReactorCore core) {
-		    boolean tritium = itemInHand == DeferredRegisters.ITEM_CELLTRITIUM.get();
-		    int type = tritium ? core.tritium : core.deuterium;
-		    int added = Math.min(inHand.getCount(), Constants.FUSIONREACTOR_MAXSTORAGE - type);
-		    inHand.setCount(inHand.getCount() - added);
-		    if (tritium) {
-			core.tritium += added;
-		    } else {
-			core.deuterium += added;
-		    }
-		}
-		return InteractionResult.CONSUME;
-	    }
+	public BlockFusionReactorCore() {
+		super(TileFusionReactorCore::new);
 	}
-	return super.use(state, worldIn, pos, player, handIn, hit);
-    }
+
+	@Override
+	public RenderShape getRenderShape(BlockState state) {
+		return RenderShape.MODEL;
+	}
+
+	@Override
+	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+		if (!worldIn.isClientSide) {
+			ItemStack inHand = player.getItemBySlot(handIn == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
+			Item itemInHand = inHand.getItem();
+			if (itemInHand == DeferredRegisters.ITEM_CELLDEUTERIUM.get() || itemInHand == DeferredRegisters.ITEM_CELLTRITIUM.get()) {
+				BlockEntity tile = worldIn.getBlockEntity(pos);
+				if (tile instanceof TileFusionReactorCore core) {
+					boolean tritium = itemInHand == DeferredRegisters.ITEM_CELLTRITIUM.get();
+					int type = tritium ? core.tritium : core.deuterium;
+					int added = Math.min(inHand.getCount(), Constants.FUSIONREACTOR_MAXSTORAGE - type);
+					inHand.setCount(inHand.getCount() - added);
+					if (tritium) {
+						core.tritium += added;
+					} else {
+						core.deuterium += added;
+					}
+				}
+				return InteractionResult.CONSUME;
+			}
+		}
+		return super.use(state, worldIn, pos, player, handIn, hit);
+	}
 }

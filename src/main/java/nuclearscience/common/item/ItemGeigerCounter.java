@@ -11,19 +11,19 @@ import nuclearscience.api.radiation.RadiationSystem;
 
 public class ItemGeigerCounter extends Item {
 
-    public ItemGeigerCounter(Properties properties) {
-	super(properties);
-    }
-
-    @Override
-    public void inventoryTick(ItemStack stack, Level worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-	super.inventoryTick(stack, worldIn, entityIn, itemSlot, isSelected);
-	if (!worldIn.isClientSide && entityIn instanceof Player player) {
-	    if ((isSelected || player.getItemBySlot(EquipmentSlot.OFFHAND).getItem() instanceof ItemGeigerCounter)
-		    && RadiationSystem.radiationMap.containsKey(entityIn)) {
-		player.displayClientMessage(new TranslatableComponent("message.geigercounter.text", RadiationSystem.radiationMap.get(entityIn)),
-			true);
-	    }
+	public ItemGeigerCounter(Properties properties) {
+		super(properties);
 	}
-    }
+
+	@Override
+	public void inventoryTick(ItemStack stack, Level worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+		super.inventoryTick(stack, worldIn, entityIn, itemSlot, isSelected);
+		if (!worldIn.isClientSide && entityIn instanceof Player player) {
+			if ((isSelected || player.getItemBySlot(EquipmentSlot.OFFHAND).getItem() instanceof ItemGeigerCounter)
+					&& RadiationSystem.radiationMap.containsKey(entityIn)) {
+				player.displayClientMessage(new TranslatableComponent("message.geigercounter.text", RadiationSystem.radiationMap.get(entityIn)),
+						true);
+			}
+		}
+	}
 }

@@ -22,27 +22,27 @@ import nuclearscience.common.settings.Constants;
 
 public class TileFuelReprocessor extends GenericTile {
 
-    public TileFuelReprocessor(BlockPos pos, BlockState state) {
-	super(DeferredRegisters.TILE_FUELREPROCESSOR.get(), pos, state);
-	addComponent(new ComponentDirection());
-	addComponent(new ComponentPacketHandler());
-	addComponent(new ComponentTickable().tickClient(this::tickClient));
-	addComponent(new ComponentElectrodynamic(this).voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 4).relativeInput(Direction.NORTH));
-	addComponent(new ComponentInventory(this).size(5).faceSlots(Direction.UP, 0).faceSlots(Direction.DOWN, 1).relativeFaceSlots(Direction.EAST, 1)
-		.relativeFaceSlots(Direction.WEST, 2).inputs(1).outputs(1).upgrades(3).processors(1).processorInputs(1).valid(machineValidator()));
-	addProcessor(new ComponentProcessor(this).setProcessorNumber(0)
-		.canProcess(component -> component.canProcessItem2ItemRecipe(component, NuclearScienceRecipeInit.FUEL_REPROCESSOR_TYPE))
-		.process(component -> component.processItem2ItemRecipe(component)).requiredTicks((long) Constants.FUELREPROCESSOR_REQUIRED_TICKS)
-		.usage(Constants.FUELREPROCESSOR_USAGE_PER_TICK));
-	addComponent(new ComponentContainerProvider("container.fuelreprocessor")
-		.createMenu((id, player) -> new ContainerO2OProcessor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
-    }
-
-    public void tickClient(ComponentTickable tickable) {
-	boolean running = getProcessor(0).operatingTicks > 0;
-	if (running && tickable.getTicks() % 100 == 0) {
-	    SoundAPI.playSound(electrodynamics.SoundRegister.SOUND_MINERALCRUSHER.get(), SoundSource.BLOCKS, 1, 1, worldPosition);
+	public TileFuelReprocessor(BlockPos pos, BlockState state) {
+		super(DeferredRegisters.TILE_FUELREPROCESSOR.get(), pos, state);
+		addComponent(new ComponentDirection());
+		addComponent(new ComponentPacketHandler());
+		addComponent(new ComponentTickable().tickClient(this::tickClient));
+		addComponent(new ComponentElectrodynamic(this).voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 4).relativeInput(Direction.NORTH));
+		addComponent(new ComponentInventory(this).size(5).faceSlots(Direction.UP, 0).faceSlots(Direction.DOWN, 1).relativeFaceSlots(Direction.EAST, 1)
+				.relativeFaceSlots(Direction.WEST, 2).inputs(1).outputs(1).upgrades(3).processors(1).processorInputs(1).valid(machineValidator()));
+		addProcessor(new ComponentProcessor(this).setProcessorNumber(0)
+				.canProcess(component -> component.canProcessItem2ItemRecipe(component, NuclearScienceRecipeInit.FUEL_REPROCESSOR_TYPE))
+				.process(component -> component.processItem2ItemRecipe(component)).requiredTicks((long) Constants.FUELREPROCESSOR_REQUIRED_TICKS)
+				.usage(Constants.FUELREPROCESSOR_USAGE_PER_TICK));
+		addComponent(new ComponentContainerProvider("container.fuelreprocessor")
+				.createMenu((id, player) -> new ContainerO2OProcessor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 	}
-    }
+
+	public void tickClient(ComponentTickable tickable) {
+		boolean running = getProcessor(0).operatingTicks > 0;
+		if (running && tickable.getTicks() % 100 == 0) {
+			SoundAPI.playSound(electrodynamics.SoundRegister.SOUND_MINERALCRUSHER.get(), SoundSource.BLOCKS, 1, 1, worldPosition);
+		}
+	}
 
 }

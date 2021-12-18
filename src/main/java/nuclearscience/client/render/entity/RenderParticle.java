@@ -11,13 +11,13 @@ import nuclearscience.common.entity.EntityParticle;
 
 public class RenderParticle extends EntityRenderer<EntityParticle> {
 
-    public RenderParticle(EntityRendererProvider.Context context) {
-	super(context);
-    }
+	public RenderParticle(EntityRendererProvider.Context context) {
+		super(context);
+	}
 
-    @Override
-    public void render(EntityParticle entityIn, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn,
-	    int packedLightIn) {
+	@Override
+	public void render(EntityParticle entityIn, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn,
+			int packedLightIn) {
 //	Tesselator tessellator = Tesselator.getInstance();
 //	BufferBuilder bufferBuilder = tessellator.getBuilder();
 //
@@ -75,12 +75,12 @@ public class RenderParticle extends EntityRenderer<EntityParticle> {
 //	GlStateManager._enableAlphaTest();
 //
 //	GlStateManager._popMatrix();
-	// TODO: FIX RENDER
-    }
+		// TODO: FIX RENDER
+	}
 
-    @Override
-    public ResourceLocation getTextureLocation(EntityParticle entity) {
-	return InventoryMenu.BLOCK_ATLAS;
-    }
+	@Override
+	public ResourceLocation getTextureLocation(EntityParticle entity) {
+		return InventoryMenu.BLOCK_ATLAS;
+	}
 
 }

@@ -18,39 +18,39 @@ import nuclearscience.common.tile.TileQuantumCapacitor;
 
 public class BlockQuantumCapacitor extends GenericMachineBlock {
 
-    public BlockQuantumCapacitor() {
-	super(TileQuantumCapacitor::new);
-    }
+	public BlockQuantumCapacitor() {
+		super(TileQuantumCapacitor::new);
+	}
 
-    @Override
-    public List<ItemStack> getDrops(BlockState state, Builder builder) {
-	ItemStack addstack = new ItemStack(this);
-	BlockEntity tile = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
-	if (tile instanceof ICapabilityElectrodynamic electro) {
-	    double joules = electro.getJoulesStored();
-	    if (joules > 0) {
-		addstack.getOrCreateTag().putDouble("joules", joules);
-	    }
+	@Override
+	public List<ItemStack> getDrops(BlockState state, Builder builder) {
+		ItemStack addstack = new ItemStack(this);
+		BlockEntity tile = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
+		if (tile instanceof ICapabilityElectrodynamic electro) {
+			double joules = electro.getJoulesStored();
+			if (joules > 0) {
+				addstack.getOrCreateTag().putDouble("joules", joules);
+			}
+		}
+		if (tile instanceof TileQuantumCapacitor cap) {
+			addstack.getOrCreateTag().putInt("frequency", cap.frequency);
+			addstack.getOrCreateTag().putUUID("uuid", cap.uuid);
+		}
+		return Arrays.asList(addstack);
 	}
-	if (tile instanceof TileQuantumCapacitor cap) {
-	    addstack.getOrCreateTag().putInt("frequency", cap.frequency);
-	    addstack.getOrCreateTag().putUUID("uuid", cap.uuid);
-	}
-	return Arrays.asList(addstack);
-    }
 
-    @Override
-    public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-	BlockEntity tile = worldIn.getBlockEntity(pos);
-	if (tile instanceof TileQuantumCapacitor cap) {
-	    cap.frequency = stack.getOrCreateTag().getInt("frequency");
-	    if (stack.getOrCreateTag().contains("uuid")) {
-		cap.uuid = stack.getOrCreateTag().getUUID("uuid");
-	    } else if (placer instanceof Player pl) {
-		pl.getGameProfile().getId();
-	    }
-	} else {
-	    super.setPlacedBy(worldIn, pos, state, placer, stack);
+	@Override
+	public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+		BlockEntity tile = worldIn.getBlockEntity(pos);
+		if (tile instanceof TileQuantumCapacitor cap) {
+			cap.frequency = stack.getOrCreateTag().getInt("frequency");
+			if (stack.getOrCreateTag().contains("uuid")) {
+				cap.uuid = stack.getOrCreateTag().getUUID("uuid");
+			} else if (placer instanceof Player pl) {
+				pl.getGameProfile().getId();
+			}
+		} else {
+			super.setPlacedBy(worldIn, pos, state, placer, stack);
+		}
 	}
-    }
 }

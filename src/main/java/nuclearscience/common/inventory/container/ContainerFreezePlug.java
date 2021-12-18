@@ -12,16 +12,16 @@ import nuclearscience.common.tile.TileFreezePlug;
 
 public class ContainerFreezePlug extends GenericContainer<TileFreezePlug> {
 
-    public ContainerFreezePlug(int id, Inventory playerinv) {
-	this(id, playerinv, new SimpleContainer(1), new SimpleContainerData(3));
-    }
+	public ContainerFreezePlug(int id, Inventory playerinv) {
+		this(id, playerinv, new SimpleContainer(1), new SimpleContainerData(3));
+	}
 
-    public ContainerFreezePlug(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
-	super(DeferredRegisters.CONTAINER_FREEZEPLUG.get(), id, playerinv, inventory, inventorydata);
-    }
+	public ContainerFreezePlug(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
+		super(DeferredRegisters.CONTAINER_FREEZEPLUG.get(), id, playerinv, inventory, inventorydata);
+	}
 
-    @Override
-    public void addInventorySlots(Container inv, Inventory playerinv) {
-	addSlot(new SlotRestricted(inv, nextIndex(), 25, 42, DeferredRegisters.ITEM_FLINAK.get()));
-    }
+	@Override
+	public void addInventorySlots(Container inv, Inventory playerinv) {
+		addSlot(new SlotRestricted(inv, nextIndex(), 25, 42, DeferredRegisters.ITEM_FLINAK.get()));
+	}
 }

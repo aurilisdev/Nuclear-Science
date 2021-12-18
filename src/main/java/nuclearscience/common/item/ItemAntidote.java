@@ -15,38 +15,38 @@ import net.minecraft.world.level.Level;
 
 public class ItemAntidote extends Item {
 
-    public ItemAntidote(Properties properties) {
-	super(properties);
-    }
-
-    @Override
-    public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
-	if (!worldIn.isClientSide) {
-	    entityLiving.curePotionEffects(stack);
+	public ItemAntidote(Properties properties) {
+		super(properties);
 	}
-	if (entityLiving instanceof ServerPlayer serverplayerentity) {
-	    CriteriaTriggers.CONSUME_ITEM.trigger(serverplayerentity, stack);
-	    serverplayerentity.awardStat(Stats.ITEM_USED.get(this));
+
+	@Override
+	public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
+		if (!worldIn.isClientSide) {
+			entityLiving.curePotionEffects(stack);
+		}
+		if (entityLiving instanceof ServerPlayer serverplayerentity) {
+			CriteriaTriggers.CONSUME_ITEM.trigger(serverplayerentity, stack);
+			serverplayerentity.awardStat(Stats.ITEM_USED.get(this));
+		}
+		if (entityLiving instanceof Player pl && !pl.getAbilities().instabuild) {
+			stack.shrink(1);
+		}
+		return stack;
 	}
-	if (entityLiving instanceof Player pl && !pl.getAbilities().instabuild) {
-	    stack.shrink(1);
+
+	@Override
+	public int getUseDuration(ItemStack stack) {
+		return 32;
 	}
-	return stack;
-    }
 
-    @Override
-    public int getUseDuration(ItemStack stack) {
-	return 32;
-    }
+	@Override
+	public UseAnim getUseAnimation(ItemStack stack) {
+		return UseAnim.DRINK;
+	}
 
-    @Override
-    public UseAnim getUseAnimation(ItemStack stack) {
-	return UseAnim.DRINK;
-    }
-
-    @Override
-    public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
-	return ItemUtils.startUsingInstantly(worldIn, playerIn, handIn);
-    }
+	@Override
+	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+		return ItemUtils.startUsingInstantly(worldIn, playerIn, handIn);
+	}
 
 }

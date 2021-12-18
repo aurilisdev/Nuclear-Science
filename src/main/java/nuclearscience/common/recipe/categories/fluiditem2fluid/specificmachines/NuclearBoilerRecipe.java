@@ -12,22 +12,22 @@ import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 
 public class NuclearBoilerRecipe extends FluidItem2FluidRecipe {
 
-    public static final String RECIPE_GROUP = "nuclear_boiler_recipe";
-    public static final String MOD_ID = electrodynamics.api.References.ID;
-    public static final ResourceLocation RECIPE_ID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
+	public static final String RECIPE_GROUP = "nuclear_boiler_recipe";
+	public static final String MOD_ID = electrodynamics.api.References.ID;
+	public static final ResourceLocation RECIPE_ID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
 
-    public NuclearBoilerRecipe(ResourceLocation recipeID, CountableIngredient[] inputItems, FluidIngredient[] inputFluids, FluidStack outputFluid) {
-	super(recipeID, inputItems, inputFluids, outputFluid);
-    }
+	public NuclearBoilerRecipe(ResourceLocation recipeID, CountableIngredient[] inputItems, FluidIngredient[] inputFluids, FluidStack outputFluid) {
+		super(recipeID, inputItems, inputFluids, outputFluid);
+	}
 
-    @Override
-    public RecipeSerializer<?> getSerializer() {
-	return NuclearScienceRecipeInit.NUCLEAR_BOILER_SERIALIZER.get();
-    }
+	@Override
+	public RecipeSerializer<?> getSerializer() {
+		return NuclearScienceRecipeInit.NUCLEAR_BOILER_SERIALIZER.get();
+	}
 
-    @Override
-    public RecipeType<?> getType() {
-	return Registry.RECIPE_TYPE.get(RECIPE_ID);
-    }
+	@Override
+	public RecipeType<?> getType() {
+		return Registry.RECIPE_TYPE.get(RECIPE_ID);
+	}
 
 }

@@ -18,36 +18,36 @@ import nuclearscience.client.ClientRegister;
 import nuclearscience.common.tile.TileFuelReprocessor;
 
 public class RenderFuelReprocessor implements BlockEntityRenderer<TileFuelReprocessor> {
-    public RenderFuelReprocessor(BlockEntityRendererProvider.Context context) {
-    }
+	public RenderFuelReprocessor(BlockEntityRendererProvider.Context context) {
+	}
 
-    @Override
-    public void render(TileFuelReprocessor tile, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLightIn,
-	    int combinedOverlayIn) {
-	matrixStack.pushPose();
-	matrixStack.translate(0.5, 0.5, 0.5);
-	Direction dir = tile.<ComponentDirection>getComponent(ComponentType.Direction).getDirection();
-	switch (dir) {
-	case EAST:
-	    matrixStack.mulPose(new Quaternion(new Vector3f(0.0F, 1.0F, 0.0F), 180, true));
-	    break;
-	case NORTH:
-	    matrixStack.mulPose(new Quaternion(new Vector3f(0.0F, 1.0F, 0.0F), -90, true));
-	    break;
-	case SOUTH:
-	    matrixStack.mulPose(new Quaternion(new Vector3f(0.0F, 1.0F, 0.0F), 90, true));
-	    break;
-	default:
-	    break;
+	@Override
+	public void render(TileFuelReprocessor tile, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLightIn,
+			int combinedOverlayIn) {
+		matrixStack.pushPose();
+		matrixStack.translate(0.5, 0.5, 0.5);
+		Direction dir = tile.<ComponentDirection>getComponent(ComponentType.Direction).getDirection();
+		switch (dir) {
+		case EAST:
+			matrixStack.mulPose(new Quaternion(new Vector3f(0.0F, 1.0F, 0.0F), 180, true));
+			break;
+		case NORTH:
+			matrixStack.mulPose(new Quaternion(new Vector3f(0.0F, 1.0F, 0.0F), -90, true));
+			break;
+		case SOUTH:
+			matrixStack.mulPose(new Quaternion(new Vector3f(0.0F, 1.0F, 0.0F), 90, true));
+			break;
+		default:
+			break;
+		}
+		if (tile.getProcessor(0).operatingTicks > 0) {
+			BakedModel on = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_FUELREPROCESSOR_ON);
+			UtilitiesRendering.renderModel(on, tile, RenderType.solid(), matrixStack, buffer, combinedLightIn, combinedOverlayIn);
+		} else {
+			BakedModel off = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_FUELREPROCESSOR);
+			UtilitiesRendering.renderModel(off, tile, RenderType.solid(), matrixStack, buffer, combinedLightIn, combinedOverlayIn);
+		}
+		matrixStack.popPose();
 	}
-	if (tile.getProcessor(0).operatingTicks > 0) {
-	    BakedModel on = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_FUELREPROCESSOR_ON);
-	    UtilitiesRendering.renderModel(on, tile, RenderType.solid(), matrixStack, buffer, combinedLightIn, combinedOverlayIn);
-	} else {
-	    BakedModel off = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_FUELREPROCESSOR);
-	    UtilitiesRendering.renderModel(off, tile, RenderType.solid(), matrixStack, buffer, combinedLightIn, combinedOverlayIn);
-	}
-	matrixStack.popPose();
-    }
 
 }

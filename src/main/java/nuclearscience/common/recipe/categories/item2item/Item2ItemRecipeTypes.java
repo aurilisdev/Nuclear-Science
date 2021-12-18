@@ -7,8 +7,8 @@ import nuclearscience.common.recipe.categories.item2item.specificmachines.FuelRe
 
 public class Item2ItemRecipeTypes {
 
-    public static final RecipeSerializer<FissionReactorRecipe> FISSION_REACTOR_JSON_SERIALIZER = new Item2ItemRecipeSerializer<>(
-	    FissionReactorRecipe.class);
-    public static final RecipeSerializer<FuelReprocessorRecipe> FUEL_REPROCESSOR_JSON_SERIALIZER = new Item2ItemRecipeSerializer<>(
-	    FuelReprocessorRecipe.class);
+	public static final RecipeSerializer<FissionReactorRecipe> FISSION_REACTOR_JSON_SERIALIZER = new Item2ItemRecipeSerializer<>(
+			FissionReactorRecipe.class);
+	public static final RecipeSerializer<FuelReprocessorRecipe> FUEL_REPROCESSOR_JSON_SERIALIZER = new Item2ItemRecipeSerializer<>(
+			FuelReprocessorRecipe.class);
 }

@@ -7,13 +7,13 @@ import nuclearscience.common.tile.TileRadioactiveProcessor;
 
 public class BlockRadioactiveProcessor extends GenericMachineBlock {
 
-    public BlockRadioactiveProcessor() {
-	super(TileRadioactiveProcessor::new);
-    }
+	public BlockRadioactiveProcessor() {
+		super(TileRadioactiveProcessor::new);
+	}
 
-    @Override
-    public RenderShape getRenderShape(BlockState state) {
-	return RenderShape.ENTITYBLOCK_ANIMATED;
-    }
+	@Override
+	public RenderShape getRenderShape(BlockState state) {
+		return RenderShape.ENTITYBLOCK_ANIMATED;
+	}
 
 }

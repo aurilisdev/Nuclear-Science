@@ -15,22 +15,22 @@ import nuclearscience.common.tile.TileParticleInjector;
 
 public class ContainerParticleInjector extends GenericContainer<TileParticleInjector> {
 
-    public ContainerParticleInjector(int id, Inventory playerinv) {
-	this(id, playerinv, new SimpleContainer(3), new SimpleContainerData(3));
-    }
+	public ContainerParticleInjector(int id, Inventory playerinv) {
+		this(id, playerinv, new SimpleContainer(3), new SimpleContainerData(3));
+	}
 
-    public ContainerParticleInjector(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
-	super(DeferredRegisters.CONTAINER_PARTICLEINJECTOR.get(), id, playerinv, inventory, inventorydata);
-    }
+	public ContainerParticleInjector(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
+		super(DeferredRegisters.CONTAINER_PARTICLEINJECTOR.get(), id, playerinv, inventory, inventorydata);
+	}
 
-    public ContainerParticleInjector(MenuType<?> type, int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
-	super(type, id, playerinv, inventory, inventorydata);
-    }
+	public ContainerParticleInjector(MenuType<?> type, int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
+		super(type, id, playerinv, inventory, inventorydata);
+	}
 
-    @Override
-    public void addInventorySlots(Container inv, Inventory playerinv) {
-	addSlot(new GenericSlot(inv, nextIndex(), 98, 14));
-	addSlot(new SlotRestricted(inv, nextIndex(), 98, 50, DeferredRegisters.ITEM_CELLELECTROMAGNETIC.get()));
-	addSlot(new FurnaceResultSlot(playerinv.player, inv, nextIndex(), 133, 32));
-    }
+	@Override
+	public void addInventorySlots(Container inv, Inventory playerinv) {
+		addSlot(new GenericSlot(inv, nextIndex(), 98, 14));
+		addSlot(new SlotRestricted(inv, nextIndex(), 98, 50, DeferredRegisters.ITEM_CELLELECTROMAGNETIC.get()));
+		addSlot(new FurnaceResultSlot(playerinv.player, inv, nextIndex(), 133, 32));
+	}
 }

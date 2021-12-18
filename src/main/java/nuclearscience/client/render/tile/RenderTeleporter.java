@@ -20,26 +20,26 @@ import nuclearscience.client.ClientRegister;
 import nuclearscience.common.tile.TileTeleporter;
 
 public class RenderTeleporter implements BlockEntityRenderer<TileTeleporter> {
-    public RenderTeleporter(BlockEntityRendererProvider.Context context) {
-    }
-
-    @Override
-    public void render(TileTeleporter tileEntityIn, float partialTicks, PoseStack stack, MultiBufferSource bufferIn, int combinedLightIn,
-	    int combinedOverlayIn) {
-	stack.pushPose();
-	BakedModel ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_TELEPORTER);
-	stack.translate(0.5, 0.5, 0.5);
-	ComponentElectrodynamic electro = tileEntityIn.getComponent(ComponentType.Electrodynamic);
-	if (electro.getJoulesStored() > 0) {
-	    ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_TELEPORTERON);
+	public RenderTeleporter(BlockEntityRendererProvider.Context context) {
 	}
-	UtilitiesRendering.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), stack, bufferIn, combinedLightIn, combinedOverlayIn);
-	if (electro.getJoulesStored() > 0) {
-	    AABB bb = new AABB(tileEntityIn.getBlockPos(), tileEntityIn.getBlockPos().offset(1, 2, 1));
-	    List<Player> player = tileEntityIn.getLevel().getEntities(EntityType.PLAYER, bb, en -> true);
-	    if (!player.isEmpty()) {
 
+	@Override
+	public void render(TileTeleporter tileEntityIn, float partialTicks, PoseStack stack, MultiBufferSource bufferIn, int combinedLightIn,
+			int combinedOverlayIn) {
 		stack.pushPose();
+		BakedModel ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_TELEPORTER);
+		stack.translate(0.5, 0.5, 0.5);
+		ComponentElectrodynamic electro = tileEntityIn.getComponent(ComponentType.Electrodynamic);
+		if (electro.getJoulesStored() > 0) {
+			ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_TELEPORTERON);
+		}
+		UtilitiesRendering.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), stack, bufferIn, combinedLightIn, combinedOverlayIn);
+		if (electro.getJoulesStored() > 0) {
+			AABB bb = new AABB(tileEntityIn.getBlockPos(), tileEntityIn.getBlockPos().offset(1, 2, 1));
+			List<Player> player = tileEntityIn.getLevel().getEntities(EntityType.PLAYER, bb, en -> true);
+			if (!player.isEmpty()) {
+
+				stack.pushPose();
 //		stack.scale(0.5f, 0.5f, 0.5f);
 //
 //		GlStateManager._pushMatrix();
@@ -135,10 +135,10 @@ public class RenderTeleporter implements BlockEntityRenderer<TileTeleporter> {
 //		GlStateManager._enableAlphaTest();
 //		GlStateManager._popMatrix();
 //		GlStateManager._popMatrix();
-		// TODO: Fix this
+				// TODO: Fix this
+				stack.popPose();
+			}
+		}
 		stack.popPose();
-	    }
 	}
-	stack.popPose();
-    }
 }

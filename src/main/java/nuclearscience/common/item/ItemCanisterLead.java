@@ -14,25 +14,25 @@ import nuclearscience.DeferredRegisters;
 
 public class ItemCanisterLead extends ItemCanister {
 
-    public static List<ResourceLocation> TAG_NAMES = new ArrayList<>();
+	public static List<ResourceLocation> TAG_NAMES = new ArrayList<>();
 
-    public ItemCanisterLead(Properties itemProperty) {
-	super(itemProperty);
-    }
-
-    @Override
-    public Pair<List<ResourceLocation>, List<Fluid>> getWhitelistedFluids() {
-	ArrayList<Fluid> whitelist = new ArrayList<>();
-	for (Fluid fluid : ForgeRegistries.FLUIDS.getValues()) {
-	    if (fluid.getBucket().getRegistryName().equals(DeferredRegisters.ITEM_CANISTERLEAD.get().getRegistryName())) {
-		whitelist.add(fluid);
-	    }
+	public ItemCanisterLead(Properties itemProperty) {
+		super(itemProperty);
 	}
-	return Pair.of(TAG_NAMES, whitelist);
-    }
 
-    public static void addTag(Tags.IOptionalNamedTag<Fluid> tag) {
-	TAG_NAMES.add(tag.getName());
-    }
+	@Override
+	public Pair<List<ResourceLocation>, List<Fluid>> getWhitelistedFluids() {
+		ArrayList<Fluid> whitelist = new ArrayList<>();
+		for (Fluid fluid : ForgeRegistries.FLUIDS.getValues()) {
+			if (fluid.getBucket().getRegistryName().equals(DeferredRegisters.ITEM_CANISTERLEAD.get().getRegistryName())) {
+				whitelist.add(fluid);
+			}
+		}
+		return Pair.of(TAG_NAMES, whitelist);
+	}
+
+	public static void addTag(Tags.IOptionalNamedTag<Fluid> tag) {
+		TAG_NAMES.add(tag.getName());
+	}
 
 }

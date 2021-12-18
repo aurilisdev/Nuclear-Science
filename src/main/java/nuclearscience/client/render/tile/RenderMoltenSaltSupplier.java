@@ -22,41 +22,41 @@ import nuclearscience.common.tile.TileMoltenSaltSupplier;
 
 public class RenderMoltenSaltSupplier implements BlockEntityRenderer<TileMoltenSaltSupplier> {
 
-    private static final TransferPack PACK = TransferPack.joulesVoltage(Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK,
-	    Constants.MOLTENSALTSUPPLIER_VOLTAGE);
+	private static final TransferPack PACK = TransferPack.joulesVoltage(Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK,
+			Constants.MOLTENSALTSUPPLIER_VOLTAGE);
 
-    public RenderMoltenSaltSupplier(BlockEntityRendererProvider.Context context) {
-    }
-
-    @Override
-    public void render(TileMoltenSaltSupplier tile, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLightIn,
-	    int combinedOverlayIn) {
-	matrixStack.pushPose();
-	matrixStack.translate(0.5, 0.5, 0.5);
-	Direction dir = tile.<ComponentDirection>getComponent(ComponentType.Direction).getDirection();
-	switch (dir) {
-	case WEST:
-	    matrixStack.mulPose(new Quaternion(new Vector3f(0.0F, 1.0F, 0.0F), 180, true));
-	    break;
-	case NORTH:
-	    matrixStack.mulPose(new Quaternion(new Vector3f(0.0F, 1.0F, 0.0F), 90, true));
-	    break;
-	case SOUTH:
-	    matrixStack.mulPose(new Quaternion(new Vector3f(0.0F, 1.0F, 0.0F), -90, true));
-	    break;
-	default:
-	    break;
+	public RenderMoltenSaltSupplier(BlockEntityRendererProvider.Context context) {
 	}
-	ComponentElectrodynamic electro = tile.getComponent(ComponentType.Electrodynamic);
-	if (electro != null && electro.getJoulesStored() >= PACK.getJoules()) {
-	    BakedModel on = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_MOLTENSALTSUPPLIER_ON);
-	    UtilitiesRendering.renderModel(on, tile, RenderType.solid(), matrixStack, buffer, combinedLightIn, combinedOverlayIn);
-	} else {
-	    BakedModel off = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_MOLTENSALTSUPPLIER);
-	    UtilitiesRendering.renderModel(off, tile, RenderType.solid(), matrixStack, buffer, combinedLightIn, combinedOverlayIn);
-	}
-	matrixStack.popPose();
 
-    }
+	@Override
+	public void render(TileMoltenSaltSupplier tile, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLightIn,
+			int combinedOverlayIn) {
+		matrixStack.pushPose();
+		matrixStack.translate(0.5, 0.5, 0.5);
+		Direction dir = tile.<ComponentDirection>getComponent(ComponentType.Direction).getDirection();
+		switch (dir) {
+		case WEST:
+			matrixStack.mulPose(new Quaternion(new Vector3f(0.0F, 1.0F, 0.0F), 180, true));
+			break;
+		case NORTH:
+			matrixStack.mulPose(new Quaternion(new Vector3f(0.0F, 1.0F, 0.0F), 90, true));
+			break;
+		case SOUTH:
+			matrixStack.mulPose(new Quaternion(new Vector3f(0.0F, 1.0F, 0.0F), -90, true));
+			break;
+		default:
+			break;
+		}
+		ComponentElectrodynamic electro = tile.getComponent(ComponentType.Electrodynamic);
+		if (electro != null && electro.getJoulesStored() >= PACK.getJoules()) {
+			BakedModel on = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_MOLTENSALTSUPPLIER_ON);
+			UtilitiesRendering.renderModel(on, tile, RenderType.solid(), matrixStack, buffer, combinedLightIn, combinedOverlayIn);
+		} else {
+			BakedModel off = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_MOLTENSALTSUPPLIER);
+			UtilitiesRendering.renderModel(off, tile, RenderType.solid(), matrixStack, buffer, combinedLightIn, combinedOverlayIn);
+		}
+		matrixStack.popPose();
+
+	}
 
 }

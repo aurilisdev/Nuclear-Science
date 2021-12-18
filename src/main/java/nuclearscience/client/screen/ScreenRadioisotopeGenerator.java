@@ -29,58 +29,58 @@ import nuclearscience.common.settings.Constants;
 @OnlyIn(Dist.CLIENT)
 public class ScreenRadioisotopeGenerator extends GenericScreen<ContainerRadioisotopeGenerator> {
 
-    public ScreenRadioisotopeGenerator(ContainerRadioisotopeGenerator container, Inventory playerInventory, Component title) {
-	super(container, playerInventory, title);
-	components.add(new ScreenComponentProgress(() -> {
-	    ItemStack in = container.getSlot(0).getItem();
-	    IRadioactiveObject rad = RadiationRegister.get(in.getItem());
-	    double currentOutput = in.getCount() * Constants.RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER * rad.getRadiationStrength();
-	    if (currentOutput > 0) {
-		return 1;
-	    }
-	    return 0;
-	}, this, 25, 24).flame());
-	components.add(new ScreenComponentElectricInfo(this::getEnergyInformation, this, -ScreenComponentInfo.SIZE + 1, 2));
-    }
+	public ScreenRadioisotopeGenerator(ContainerRadioisotopeGenerator container, Inventory playerInventory, Component title) {
+		super(container, playerInventory, title);
+		components.add(new ScreenComponentProgress(() -> {
+			ItemStack in = container.getSlot(0).getItem();
+			IRadioactiveObject rad = RadiationRegister.get(in.getItem());
+			double currentOutput = in.getCount() * Constants.RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER * rad.getRadiationStrength();
+			if (currentOutput > 0) {
+				return 1;
+			}
+			return 0;
+		}, this, 25, 24).flame());
+		components.add(new ScreenComponentElectricInfo(this::getEnergyInformation, this, -ScreenComponentInfo.SIZE + 1, 2));
+	}
 
-    private List<? extends FormattedCharSequence> getEnergyInformation() {
-	ArrayList<FormattedCharSequence> list = new ArrayList<>();
-	ItemStack in = menu.getSlot(0).getItem();
-	IRadioactiveObject rad = RadiationRegister.get(in.getItem());
-	double currentOutput = in.getCount() * Constants.RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER * rad.getRadiationStrength();
-	TransferPack transfer = TransferPack.ampsVoltage(currentOutput / Constants.RADIOISOTOPEGENERATOR_VOLTAGE,
-		Constants.RADIOISOTOPEGENERATOR_VOLTAGE);
-	list.add(new TranslatableComponent("gui.radioisotopegenerator.current",
-		new TextComponent(ChatFormatter.getElectricDisplayShort(transfer.getAmps(), ElectricUnit.AMPERE)).withStyle(ChatFormatting.GRAY))
-			.withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
-	list.add(new TranslatableComponent("gui.radioisotopegenerator.output",
-		new TextComponent(ChatFormatter.getElectricDisplayShort(transfer.getWatts(), ElectricUnit.WATT)).withStyle(ChatFormatting.GRAY))
-			.withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
-	list.add(new TranslatableComponent("gui.radioisotopegenerator.voltage",
-		new TextComponent(ChatFormatter.getElectricDisplayShort(transfer.getVoltage(), ElectricUnit.VOLTAGE)).withStyle(ChatFormatting.GRAY))
-			.withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
-	return list;
-    }
+	private List<? extends FormattedCharSequence> getEnergyInformation() {
+		ArrayList<FormattedCharSequence> list = new ArrayList<>();
+		ItemStack in = menu.getSlot(0).getItem();
+		IRadioactiveObject rad = RadiationRegister.get(in.getItem());
+		double currentOutput = in.getCount() * Constants.RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER * rad.getRadiationStrength();
+		TransferPack transfer = TransferPack.ampsVoltage(currentOutput / Constants.RADIOISOTOPEGENERATOR_VOLTAGE,
+				Constants.RADIOISOTOPEGENERATOR_VOLTAGE);
+		list.add(new TranslatableComponent("gui.radioisotopegenerator.current",
+				new TextComponent(ChatFormatter.getElectricDisplayShort(transfer.getAmps(), ElectricUnit.AMPERE)).withStyle(ChatFormatting.GRAY))
+						.withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
+		list.add(new TranslatableComponent("gui.radioisotopegenerator.output",
+				new TextComponent(ChatFormatter.getElectricDisplayShort(transfer.getWatts(), ElectricUnit.WATT)).withStyle(ChatFormatting.GRAY))
+						.withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
+		list.add(new TranslatableComponent("gui.radioisotopegenerator.voltage",
+				new TextComponent(ChatFormatter.getElectricDisplayShort(transfer.getVoltage(), ElectricUnit.VOLTAGE)).withStyle(ChatFormatting.GRAY))
+						.withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
+		return list;
+	}
 
-    @Override
-    protected void renderLabels(PoseStack matrixStack, int mouseX, int mouseY) {
-	super.renderLabels(matrixStack, mouseX, mouseY);
-	ItemStack in = menu.getSlot(0).getItem();
-	IRadioactiveObject rad = RadiationRegister.get(in.getItem());
-	double currentOutput = in.getCount() * Constants.RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER * rad.getRadiationStrength();
-	TransferPack transfer = TransferPack.ampsVoltage(currentOutput / Constants.RADIOISOTOPEGENERATOR_VOLTAGE,
-		Constants.RADIOISOTOPEGENERATOR_VOLTAGE);
-	font.draw(matrixStack,
-		new TranslatableComponent("gui.radioisotopegenerator.current",
-			ChatFormatter.getElectricDisplayShort(transfer.getAmps(), ElectricUnit.AMPERE)),
-		(float) inventoryLabelX + 60, (float) inventoryLabelY - 48, 4210752);
-	font.draw(matrixStack,
-		new TranslatableComponent("gui.radioisotopegenerator.output",
-			ChatFormatter.getElectricDisplayShort(transfer.getWatts(), ElectricUnit.WATT)),
-		(float) inventoryLabelX + 60, (float) inventoryLabelY - 35, 4210752);
-	font.draw(matrixStack,
-		new TranslatableComponent("gui.radioisotopegenerator.voltage",
-			ChatFormatter.getElectricDisplayShort(transfer.getVoltage(), ElectricUnit.VOLTAGE)),
-		(float) inventoryLabelX + 60, (float) inventoryLabelY - 22, 4210752);
-    }
+	@Override
+	protected void renderLabels(PoseStack matrixStack, int mouseX, int mouseY) {
+		super.renderLabels(matrixStack, mouseX, mouseY);
+		ItemStack in = menu.getSlot(0).getItem();
+		IRadioactiveObject rad = RadiationRegister.get(in.getItem());
+		double currentOutput = in.getCount() * Constants.RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER * rad.getRadiationStrength();
+		TransferPack transfer = TransferPack.ampsVoltage(currentOutput / Constants.RADIOISOTOPEGENERATOR_VOLTAGE,
+				Constants.RADIOISOTOPEGENERATOR_VOLTAGE);
+		font.draw(matrixStack,
+				new TranslatableComponent("gui.radioisotopegenerator.current",
+						ChatFormatter.getElectricDisplayShort(transfer.getAmps(), ElectricUnit.AMPERE)),
+				(float) inventoryLabelX + 60, (float) inventoryLabelY - 48, 4210752);
+		font.draw(matrixStack,
+				new TranslatableComponent("gui.radioisotopegenerator.output",
+						ChatFormatter.getElectricDisplayShort(transfer.getWatts(), ElectricUnit.WATT)),
+				(float) inventoryLabelX + 60, (float) inventoryLabelY - 35, 4210752);
+		font.draw(matrixStack,
+				new TranslatableComponent("gui.radioisotopegenerator.voltage",
+						ChatFormatter.getElectricDisplayShort(transfer.getVoltage(), ElectricUnit.VOLTAGE)),
+				(float) inventoryLabelX + 60, (float) inventoryLabelY - 22, 4210752);
+	}
 }

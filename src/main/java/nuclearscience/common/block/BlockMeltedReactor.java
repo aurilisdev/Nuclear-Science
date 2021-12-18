@@ -10,12 +10,12 @@ import nuclearscience.common.tile.TileMeltedReactor;
 
 public class BlockMeltedReactor extends GenericEntityBlockWaterloggable {
 
-    public BlockMeltedReactor() {
-	super(Properties.of(Material.METAL).strength(250.0f, 999.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion());
-    }
+	public BlockMeltedReactor() {
+		super(Properties.of(Material.METAL).strength(250.0f, 999.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion());
+	}
 
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-	return new TileMeltedReactor(pos, state);
-    }
+	@Override
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+		return new TileMeltedReactor(pos, state);
+	}
 }

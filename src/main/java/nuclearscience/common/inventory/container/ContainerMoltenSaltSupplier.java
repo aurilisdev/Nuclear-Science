@@ -12,16 +12,16 @@ import nuclearscience.common.tile.TileMoltenSaltSupplier;
 
 public class ContainerMoltenSaltSupplier extends GenericContainer<TileMoltenSaltSupplier> {
 
-    public ContainerMoltenSaltSupplier(int id, Inventory playerinv) {
-	this(id, playerinv, new SimpleContainer(1), new SimpleContainerData(3));
-    }
+	public ContainerMoltenSaltSupplier(int id, Inventory playerinv) {
+		this(id, playerinv, new SimpleContainer(1), new SimpleContainerData(3));
+	}
 
-    public ContainerMoltenSaltSupplier(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
-	super(DeferredRegisters.CONTAINER_MOLTENSALTSUPPLIER.get(), id, playerinv, inventory, inventorydata);
-    }
+	public ContainerMoltenSaltSupplier(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
+		super(DeferredRegisters.CONTAINER_MOLTENSALTSUPPLIER.get(), id, playerinv, inventory, inventorydata);
+	}
 
-    @Override
-    public void addInventorySlots(Container inv, Inventory playerinv) {
-	addSlot(new SlotRestricted(inv, nextIndex(), 25, 42, DeferredRegisters.ITEM_LIFHT4PUF3.get()));
-    }
+	@Override
+	public void addInventorySlots(Container inv, Inventory playerinv) {
+		addSlot(new SlotRestricted(inv, nextIndex(), 25, 42, DeferredRegisters.ITEM_LIFHT4PUF3.get()));
+	}
 }

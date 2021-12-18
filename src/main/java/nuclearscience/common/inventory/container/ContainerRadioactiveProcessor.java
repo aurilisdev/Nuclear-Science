@@ -18,31 +18,31 @@ import nuclearscience.common.tile.TileRadioactiveProcessor;
 
 public class ContainerRadioactiveProcessor extends GenericContainer<TileRadioactiveProcessor> {
 
-    public ContainerRadioactiveProcessor(int id, Inventory playerinv) {
-	this(id, playerinv, new SimpleContainer(6), new SimpleContainerData(3));
-    }
+	public ContainerRadioactiveProcessor(int id, Inventory playerinv) {
+		this(id, playerinv, new SimpleContainer(6), new SimpleContainerData(3));
+	}
 
-    public ContainerRadioactiveProcessor(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
-	super(DeferredRegisters.CONTAINER_RADIOACTIVEPROCESSOR.get(), id, playerinv, inventory, inventorydata);
-    }
+	public ContainerRadioactiveProcessor(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
+		super(DeferredRegisters.CONTAINER_RADIOACTIVEPROCESSOR.get(), id, playerinv, inventory, inventorydata);
+	}
 
-    public ContainerRadioactiveProcessor(MenuType<?> type, int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
-	super(type, id, playerinv, inventory, inventorydata);
-    }
+	public ContainerRadioactiveProcessor(MenuType<?> type, int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
+		super(type, id, playerinv, inventory, inventorydata);
+	}
 
-    @Override
-    public void addInventorySlots(Container inv, Inventory playerinv) {
-	addSlot(new GenericSlot(inv, nextIndex(), 74, 31));
-	addSlot(new FurnaceResultSlot(playerinv.player, inv, nextIndex(), 128, 31));
-	addSlot(new SlotRestricted(inv, nextIndex(), 74, 51, false, ItemCanister.class, BucketItem.class));
-	addSlot(new SlotRestricted(inv, nextIndex(), 153, 14,
-		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.basicspeed),
-		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.advancedspeed)));
-	addSlot(new SlotRestricted(inv, nextIndex(), 153, 34,
-		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.basicspeed),
-		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.advancedspeed)));
-	addSlot(new SlotRestricted(inv, nextIndex(), 153, 54,
-		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.basicspeed),
-		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.advancedspeed)));
-    }
+	@Override
+	public void addInventorySlots(Container inv, Inventory playerinv) {
+		addSlot(new GenericSlot(inv, nextIndex(), 74, 31));
+		addSlot(new FurnaceResultSlot(playerinv.player, inv, nextIndex(), 128, 31));
+		addSlot(new SlotRestricted(inv, nextIndex(), 74, 51, false, ItemCanister.class, BucketItem.class));
+		addSlot(new SlotRestricted(inv, nextIndex(), 153, 14,
+				electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.basicspeed),
+				electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.advancedspeed)));
+		addSlot(new SlotRestricted(inv, nextIndex(), 153, 34,
+				electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.basicspeed),
+				electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.advancedspeed)));
+		addSlot(new SlotRestricted(inv, nextIndex(), 153, 54,
+				electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.basicspeed),
+				electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.advancedspeed)));
+	}
 }

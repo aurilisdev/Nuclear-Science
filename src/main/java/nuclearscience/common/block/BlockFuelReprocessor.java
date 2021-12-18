@@ -7,13 +7,13 @@ import nuclearscience.common.tile.TileFuelReprocessor;
 
 public class BlockFuelReprocessor extends GenericMachineBlock {
 
-    public BlockFuelReprocessor() {
-	super(TileFuelReprocessor::new);
-    }
+	public BlockFuelReprocessor() {
+		super(TileFuelReprocessor::new);
+	}
 
-    @Override
-    public RenderShape getRenderShape(BlockState state) {
-	return RenderShape.ENTITYBLOCK_ANIMATED;
-    }
+	@Override
+	public RenderShape getRenderShape(BlockState state) {
+		return RenderShape.ENTITYBLOCK_ANIMATED;
+	}
 
 }

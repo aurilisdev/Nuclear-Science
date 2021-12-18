@@ -15,24 +15,24 @@ import nuclearscience.client.ClientRegister;
 import nuclearscience.common.tile.TileControlRodAssembly;
 
 public class RenderRodAssembly implements BlockEntityRenderer<TileControlRodAssembly> {
-    public RenderRodAssembly(BlockEntityRendererProvider.Context context) {
-    }
-
-    @Override
-    public void render(TileControlRodAssembly tileEntityIn, float partialTicks, PoseStack stack, MultiBufferSource bufferIn, int combinedLightIn,
-	    int combinedOverlayIn) {
-	stack.pushPose();
-	BakedModel ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_CONTROLRODASSEMBLYSTRUCTURE);
-	stack.translate(0.5, 0.5, 0.5);
-	if (tileEntityIn.isMSR) {
-	    Direction dir = tileEntityIn.direction;
-	    stack.mulPose(new Quaternion(90, 0, dir.toYRot(), true));
+	public RenderRodAssembly(BlockEntityRendererProvider.Context context) {
 	}
-	UtilitiesRendering.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), stack, bufferIn, combinedLightIn, combinedOverlayIn);
-	int insertion = tileEntityIn.insertion - 100;
-	stack.translate(0, 12 / 16.0 * insertion / 100.0 + .5 / 16.0, 0);
-	ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_CONTROLRODASSEMBLYSROD);
-	UtilitiesRendering.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), stack, bufferIn, combinedLightIn, combinedOverlayIn);
-	stack.popPose();
-    }
+
+	@Override
+	public void render(TileControlRodAssembly tileEntityIn, float partialTicks, PoseStack stack, MultiBufferSource bufferIn, int combinedLightIn,
+			int combinedOverlayIn) {
+		stack.pushPose();
+		BakedModel ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_CONTROLRODASSEMBLYSTRUCTURE);
+		stack.translate(0.5, 0.5, 0.5);
+		if (tileEntityIn.isMSR) {
+			Direction dir = tileEntityIn.direction;
+			stack.mulPose(new Quaternion(90, 0, dir.toYRot(), true));
+		}
+		UtilitiesRendering.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), stack, bufferIn, combinedLightIn, combinedOverlayIn);
+		int insertion = tileEntityIn.insertion - 100;
+		stack.translate(0, 12 / 16.0 * insertion / 100.0 + .5 / 16.0, 0);
+		ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_CONTROLRODASSEMBLYSROD);
+		UtilitiesRendering.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), stack, bufferIn, combinedLightIn, combinedOverlayIn);
+		stack.popPose();
+	}
 }

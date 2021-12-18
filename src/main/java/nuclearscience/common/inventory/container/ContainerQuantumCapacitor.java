@@ -11,17 +11,17 @@ import nuclearscience.common.tile.TileQuantumCapacitor;
 
 public class ContainerQuantumCapacitor extends GenericContainer<TileQuantumCapacitor> {
 
-    public ContainerQuantumCapacitor(int id, Inventory playerinv) {
-	this(id, playerinv, new SimpleContainer(0), new SimpleContainerData(3));
-    }
+	public ContainerQuantumCapacitor(int id, Inventory playerinv) {
+		this(id, playerinv, new SimpleContainer(0), new SimpleContainerData(3));
+	}
 
-    public ContainerQuantumCapacitor(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
-	super(DeferredRegisters.CONTAINER_QUANTUMCAPACITOR.get(), id, playerinv, inventory, inventorydata);
-    }
+	public ContainerQuantumCapacitor(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
+		super(DeferredRegisters.CONTAINER_QUANTUMCAPACITOR.get(), id, playerinv, inventory, inventorydata);
+	}
 
-    @Override
-    public void addInventorySlots(Container inv, Inventory playerinv) {
-	// Filler
-    }
+	@Override
+	public void addInventorySlots(Container inv, Inventory playerinv) {
+		// Filler
+	}
 
 }

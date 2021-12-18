@@ -8,10 +8,10 @@ import nuclearscience.common.recipe.categories.fluiditem2item.specificmachines.R
 
 public class FluidItem2ItemRecipeTypes {
 
-    public static final RecipeSerializer<ChemicalExtractorRecipe> CHEMICAL_EXTRACTOR_JSON_SERIALIZER = new FluidItem2ItemRecipeSerializer<>(
-	    ChemicalExtractorRecipe.class);
-    public static final RecipeSerializer<RadioactiveProcessorRecipe> RADIOACTIVE_PROCESSOR_JSON_SERIALIZER = new FluidItem2ItemRecipeSerializer<>(
-	    RadioactiveProcessorRecipe.class);
-    public static final RecipeSerializer<MSRFuelPreProcessorRecipe> MSR_FUEL_PREPROCESSOR_JSON_SERIALIZER = new FluidItem2ItemRecipeSerializer<>(
-	    MSRFuelPreProcessorRecipe.class);
+	public static final RecipeSerializer<ChemicalExtractorRecipe> CHEMICAL_EXTRACTOR_JSON_SERIALIZER = new FluidItem2ItemRecipeSerializer<>(
+			ChemicalExtractorRecipe.class);
+	public static final RecipeSerializer<RadioactiveProcessorRecipe> RADIOACTIVE_PROCESSOR_JSON_SERIALIZER = new FluidItem2ItemRecipeSerializer<>(
+			RadioactiveProcessorRecipe.class);
+	public static final RecipeSerializer<MSRFuelPreProcessorRecipe> MSR_FUEL_PREPROCESSOR_JSON_SERIALIZER = new FluidItem2ItemRecipeSerializer<>(
+			MSRFuelPreProcessorRecipe.class);
 }

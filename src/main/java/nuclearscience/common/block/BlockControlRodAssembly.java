@@ -16,25 +16,25 @@ import nuclearscience.common.tile.TileControlRodAssembly;
 
 public class BlockControlRodAssembly extends GenericMachineBlock {
 
-    public BlockControlRodAssembly() {
-	super(TileControlRodAssembly::new);
-    }
-
-    @Override
-    public RenderShape getRenderShape(BlockState state) {
-	return RenderShape.ENTITYBLOCK_ANIMATED;
-    }
-
-    @Override
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-	BlockEntity tile = worldIn.getBlockEntity(pos);
-	if (tile instanceof TileControlRodAssembly assembly) {
-	    assembly.insertion = assembly.insertion + 10;
-	    if (assembly.insertion > 100) {
-		assembly.insertion = 0;
-	    }
-	    assembly.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();
+	public BlockControlRodAssembly() {
+		super(TileControlRodAssembly::new);
 	}
-	return super.use(state, worldIn, pos, player, handIn, hit);
-    }
+
+	@Override
+	public RenderShape getRenderShape(BlockState state) {
+		return RenderShape.ENTITYBLOCK_ANIMATED;
+	}
+
+	@Override
+	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+		BlockEntity tile = worldIn.getBlockEntity(pos);
+		if (tile instanceof TileControlRodAssembly assembly) {
+			assembly.insertion = assembly.insertion + 10;
+			if (assembly.insertion > 100) {
+				assembly.insertion = 0;
+			}
+			assembly.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();
+		}
+		return super.use(state, worldIn, pos, player, handIn, hit);
+	}
 }

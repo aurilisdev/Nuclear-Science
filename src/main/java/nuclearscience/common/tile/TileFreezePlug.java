@@ -17,34 +17,34 @@ import nuclearscience.common.inventory.container.ContainerFreezePlug;
 import nuclearscience.common.settings.Constants;
 
 public class TileFreezePlug extends GenericTile {
-    private boolean isFrozen = false;
+	private boolean isFrozen = false;
 
-    public TileFreezePlug(BlockPos pos, BlockState state) {
-	super(DeferredRegisters.TILE_FREEZEPLUG.get(), pos, state);
-	addComponent(new ComponentTickable().tickServer(this::tickServer));
-	addComponent(new ComponentPacketHandler());
-	addComponent(new ComponentElectrodynamic(this).voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE).extractPower((x, y) -> TransferPack.EMPTY)
-		.input(Direction.UP).input(Direction.DOWN).maxJoules(Constants.FREEZEPLUG_USAGE_PER_TICK * 20));
-	addComponent(new ComponentInventory(this).size(1).slotFaces(0, Direction.values())
-		.valid((slot, stack, i) -> stack.getItem() == DeferredRegisters.ITEM_FLINAK.get()));
-	addComponent(new ComponentContainerProvider("container.freezeplug")
-		.createMenu((id, player) -> new ContainerFreezePlug(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
-    }
-
-    public void tickServer(ComponentTickable tickable) {
-	ComponentElectrodynamic el = getComponent(ComponentType.Electrodynamic);
-	ComponentInventory inv = getComponent(ComponentType.Inventory);
-	if (!inv.getItem(0).isEmpty()) {
-	    isFrozen = el.getJoulesStored() >= Constants.FREEZEPLUG_USAGE_PER_TICK;
-	    if (isFrozen) {
-		el.extractPower(TransferPack.joulesVoltage(Constants.FREEZEPLUG_USAGE_PER_TICK, 120), false);
-	    }
-	} else {
-	    isFrozen = false;
+	public TileFreezePlug(BlockPos pos, BlockState state) {
+		super(DeferredRegisters.TILE_FREEZEPLUG.get(), pos, state);
+		addComponent(new ComponentTickable().tickServer(this::tickServer));
+		addComponent(new ComponentPacketHandler());
+		addComponent(new ComponentElectrodynamic(this).voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE).extractPower((x, y) -> TransferPack.EMPTY)
+				.input(Direction.UP).input(Direction.DOWN).maxJoules(Constants.FREEZEPLUG_USAGE_PER_TICK * 20));
+		addComponent(new ComponentInventory(this).size(1).slotFaces(0, Direction.values())
+				.valid((slot, stack, i) -> stack.getItem() == DeferredRegisters.ITEM_FLINAK.get()));
+		addComponent(new ComponentContainerProvider("container.freezeplug")
+				.createMenu((id, player) -> new ContainerFreezePlug(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 	}
-    }
 
-    public boolean isFrozen() {
-	return isFrozen;
-    }
+	public void tickServer(ComponentTickable tickable) {
+		ComponentElectrodynamic el = getComponent(ComponentType.Electrodynamic);
+		ComponentInventory inv = getComponent(ComponentType.Inventory);
+		if (!inv.getItem(0).isEmpty()) {
+			isFrozen = el.getJoulesStored() >= Constants.FREEZEPLUG_USAGE_PER_TICK;
+			if (isFrozen) {
+				el.extractPower(TransferPack.joulesVoltage(Constants.FREEZEPLUG_USAGE_PER_TICK, 120), false);
+			}
+		} else {
+			isFrozen = false;
+		}
+	}
+
+	public boolean isFrozen() {
+		return isFrozen;
+	}
 }

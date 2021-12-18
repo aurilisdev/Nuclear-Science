@@ -23,106 +23,105 @@ import nuclearscience.common.inventory.container.ContainerParticleInjector;
 import nuclearscience.common.settings.Constants;
 
 public class TileParticleInjector extends GenericTile {
-    private EntityParticle[] particles = new EntityParticle[2];
-    private long timeSinceSpawn = 0;
+	private EntityParticle[] particles = new EntityParticle[2];
+	private long timeSinceSpawn = 0;
 
-    public TileParticleInjector(BlockPos pos, BlockState state) {
-	super(DeferredRegisters.TILE_PARTICLEINJECTOR.get(), pos, state);
-	addComponent(new ComponentTickable());
-	addComponent(new ComponentDirection());
-	addComponent(new ComponentPacketHandler());
-	addComponent(new ComponentInventory(this).size(3)
-		.valid((index, stack, i) -> index != 1 || stack.getItem() == DeferredRegisters.ITEM_CELLELECTROMAGNETIC.get())
-		.relativeFaceSlots(Direction.UP, 0, 1).relativeFaceSlots(Direction.WEST, 0, 1).relativeSlotFaces(2, Direction.DOWN, Direction.EAST));
-	addComponent(new ComponentElectrodynamic(this).voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 8).relativeInput(Direction.NORTH)
-		.maxJoules(Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE * 10));
-	addComponent(new ComponentProcessor(this).canProcess(this::canProcess).usage(Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE)
-		.process(this::process));
-	addComponent(new ComponentContainerProvider("container.particleinjector")
-		.createMenu((id, player) -> new ContainerParticleInjector(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
-    }
-
-    protected boolean canProcess(ComponentProcessor processor) {
-	if (particles[0] != null && !particles[0].isAlive()) {
-	    particles[0] = null;
-	}
-	if (particles[1] != null && !particles[1].isAlive()) {
-	    particles[1] = null;
-	}
-	ComponentInventory inv = getComponent(ComponentType.Inventory);
-	ItemStack resultStack = inv.getItem(2);
-	timeSinceSpawn--;
-
-	/**
-	 * This is a far simpler check to perform. It can use any item, so all you have
-	 * to do is check if the thing in the input slot is an item and is not air.
-	 */
-	boolean isItem = false;
-	ItemStack inputItem = inv.getItem(0);
-
-	if (inputItem != null && !inputItem.isEmpty()) {
-	    isItem = true;
+	public TileParticleInjector(BlockPos pos, BlockState state) {
+		super(DeferredRegisters.TILE_PARTICLEINJECTOR.get(), pos, state);
+		addComponent(new ComponentTickable());
+		addComponent(new ComponentDirection());
+		addComponent(new ComponentPacketHandler());
+		addComponent(new ComponentInventory(this).size(3)
+				.valid((index, stack, i) -> index != 1 || stack.getItem() == DeferredRegisters.ITEM_CELLELECTROMAGNETIC.get())
+				.relativeFaceSlots(Direction.UP, 0, 1).relativeFaceSlots(Direction.WEST, 0, 1).relativeSlotFaces(2, Direction.DOWN, Direction.EAST));
+		addComponent(new ComponentElectrodynamic(this).voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 8).relativeInput(Direction.NORTH)
+				.maxJoules(Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE * 10));
+		addComponent(new ComponentProcessor(this).canProcess(this::canProcess).usage(Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE)
+				.process(this::process));
+		addComponent(new ComponentContainerProvider("container.particleinjector")
+				.createMenu((id, player) -> new ContainerParticleInjector(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 	}
 
-	return timeSinceSpawn < 0 && isItem && (particles[0] == null || particles[1] == null) && inv.getItem(0).getCount() > 0
-		&& resultStack.getCount() < resultStack.getMaxStackSize();
-    }
-
-    public void checkCollision() {
-	ComponentInventory inv = getComponent(ComponentType.Inventory);
-	ItemStack resultStack = inv.getItem(2);
-	ItemStack cellStack = inv.getItem(1);
-	if (resultStack.getCount() < resultStack.getMaxStackSize() && cellStack.getCount() > 0 && particles[0] != null && particles[1] != null) {
-	    EntityParticle one = particles[0];
-	    EntityParticle two = particles[1];
-	    if (one.distanceTo(two) < 1) {
-		double speedOfMax = Math.pow((one.speed + two.speed) / 4.0, 2);
-		one.remove(RemovalReason.KILLED);
-		two.remove(RemovalReason.KILLED);
-		particles[0] = particles[1] = null;
-		cellStack.shrink(1);
-		double mod = level.random.nextDouble();
-		if (speedOfMax > 0.999) {
-		    if (resultStack.getItem() == DeferredRegisters.ITEM_CELLDARKMATTER.get()) {
-			resultStack.setCount(resultStack.getCount() + 1);
-		    } else if (resultStack.isEmpty()) {
-			inv.setItem(2, new ItemStack(DeferredRegisters.ITEM_CELLDARKMATTER.get()));
-		    }
-		} else if (speedOfMax > mod) {
-		    if (resultStack.getItem() == DeferredRegisters.ITEM_CELLANTIMATTERSMALL.get()) {
-			resultStack.setCount(resultStack.getCount() + 1);
-		    } else if (resultStack.isEmpty()) {
-			inv.setItem(2, new ItemStack(DeferredRegisters.ITEM_CELLANTIMATTERSMALL.get()));
-		    }
+	protected boolean canProcess(ComponentProcessor processor) {
+		if (particles[0] != null && !particles[0].isAlive()) {
+			particles[0] = null;
 		}
-	    }
+		if (particles[1] != null && !particles[1].isAlive()) {
+			particles[1] = null;
+		}
+		ComponentInventory inv = getComponent(ComponentType.Inventory);
+		ItemStack resultStack = inv.getItem(2);
+		timeSinceSpawn--;
+
+		/**
+		 * This is a far simpler check to perform. It can use any item, so all you have to do is check if the thing in the input slot is an item and is not air.
+		 */
+		boolean isItem = false;
+		ItemStack inputItem = inv.getItem(0);
+
+		if (inputItem != null && !inputItem.isEmpty()) {
+			isItem = true;
+		}
+
+		return timeSinceSpawn < 0 && isItem && (particles[0] == null || particles[1] == null) && inv.getItem(0).getCount() > 0
+				&& resultStack.getCount() < resultStack.getMaxStackSize();
 	}
-    }
 
-    public void process(ComponentProcessor processor) {
-	timeSinceSpawn = 100;
-	Direction dir = this.<ComponentDirection>getComponent(ComponentType.Direction).getDirection();
-	ItemStack stack = this.<ComponentInventory>getComponent(ComponentType.Inventory).getItem(0);
-	stack.shrink(1);
-	EntityParticle particle = new EntityParticle(dir, level, new Location(worldPosition.getX() + 0.5f + dir.getStepX() * 1.5f,
-		worldPosition.getY() + 0.5f + dir.getStepY() * 1.5f, worldPosition.getZ() + 0.5f + dir.getStepZ() * 1.5f));
-	addParticle(particle);
-	level.addFreshEntity(particle);
-    }
-
-    public void addParticle(EntityParticle particle) {
-	if (particles[0] != particle && particles[1] != particle) {
-	    particle.source = getBlockPos();
-	    if (particles[0] == null) {
-		particles[0] = particle;
-	    } else if (particles[1] == null) {
-		particles[1] = particle;
-	    }
+	public void checkCollision() {
+		ComponentInventory inv = getComponent(ComponentType.Inventory);
+		ItemStack resultStack = inv.getItem(2);
+		ItemStack cellStack = inv.getItem(1);
+		if (resultStack.getCount() < resultStack.getMaxStackSize() && cellStack.getCount() > 0 && particles[0] != null && particles[1] != null) {
+			EntityParticle one = particles[0];
+			EntityParticle two = particles[1];
+			if (one.distanceTo(two) < 1) {
+				double speedOfMax = Math.pow((one.speed + two.speed) / 4.0, 2);
+				one.remove(RemovalReason.KILLED);
+				two.remove(RemovalReason.KILLED);
+				particles[0] = particles[1] = null;
+				cellStack.shrink(1);
+				double mod = level.random.nextDouble();
+				if (speedOfMax > 0.999) {
+					if (resultStack.getItem() == DeferredRegisters.ITEM_CELLDARKMATTER.get()) {
+						resultStack.setCount(resultStack.getCount() + 1);
+					} else if (resultStack.isEmpty()) {
+						inv.setItem(2, new ItemStack(DeferredRegisters.ITEM_CELLDARKMATTER.get()));
+					}
+				} else if (speedOfMax > mod) {
+					if (resultStack.getItem() == DeferredRegisters.ITEM_CELLANTIMATTERSMALL.get()) {
+						resultStack.setCount(resultStack.getCount() + 1);
+					} else if (resultStack.isEmpty()) {
+						inv.setItem(2, new ItemStack(DeferredRegisters.ITEM_CELLANTIMATTERSMALL.get()));
+					}
+				}
+			}
+		}
 	}
-    }
 
-    @Override
-    public AABB getRenderBoundingBox() {
-	return INFINITE_EXTENT_AABB;
-    }
+	public void process(ComponentProcessor processor) {
+		timeSinceSpawn = 100;
+		Direction dir = this.<ComponentDirection>getComponent(ComponentType.Direction).getDirection();
+		ItemStack stack = this.<ComponentInventory>getComponent(ComponentType.Inventory).getItem(0);
+		stack.shrink(1);
+		EntityParticle particle = new EntityParticle(dir, level, new Location(worldPosition.getX() + 0.5f + dir.getStepX() * 1.5f,
+				worldPosition.getY() + 0.5f + dir.getStepY() * 1.5f, worldPosition.getZ() + 0.5f + dir.getStepZ() * 1.5f));
+		addParticle(particle);
+		level.addFreshEntity(particle);
+	}
+
+	public void addParticle(EntityParticle particle) {
+		if (particles[0] != particle && particles[1] != particle) {
+			particle.source = getBlockPos();
+			if (particles[0] == null) {
+				particles[0] = particle;
+			} else if (particles[1] == null) {
+				particles[1] = particle;
+			}
+		}
+	}
+
+	@Override
+	public AABB getRenderBoundingBox() {
+		return INFINITE_EXTENT_AABB;
+	}
 }
