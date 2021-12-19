@@ -32,7 +32,7 @@ public class FissionReactorRecipeCategory extends Item2ItemRecipeCategory {
 
 	private static FeynmanDiagramAnimatedWrapper ARROW = new FeynmanDiagramAnimatedWrapper(35, 40);
 
-	private static PowerLabelWrapper POWER_LABEL = new PowerLabelWrapper(122, BACK_WRAP);
+	private static PowerLabelWrapper POWER_LABEL = new PowerLabelWrapper(2, 122);
 
 	private static int ANIM_TIME = 50;
 

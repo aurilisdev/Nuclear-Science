@@ -11,5 +11,13 @@
 	"output":{
 		"item":"nuclearscience:fissiledust",
 		"count":1
+	},
+	"itembi" : {
+		"count" : 1, 
+		"0" : {
+			"item" : "electrodynamics:duststeel", 
+			"count" : 1,
+			"chance" : 1
+		}
 	}
 }
