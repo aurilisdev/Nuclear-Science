@@ -45,7 +45,6 @@ import nuclearscience.common.block.connect.BlockMoltenSaltPipe;
 import nuclearscience.common.block.subtype.SubtypeMoltenSaltPipe;
 import nuclearscience.common.entity.EntityParticle;
 import nuclearscience.common.fluid.types.FluidAmmonia;
-import nuclearscience.common.fluid.types.FluidIronSulfamate;
 import nuclearscience.common.fluid.types.FluidUraniumHexafluoride;
 import nuclearscience.common.inventory.container.ContainerChemicalExtractor;
 import nuclearscience.common.inventory.container.ContainerFreezePlug;
@@ -102,7 +101,6 @@ public class DeferredRegisters {
 	public static final HashMap<ISubtype, Block> SUBTYPEBLOCK_MAPPINGS = new HashMap<>();
 
 	public static FluidUraniumHexafluoride fluidUraniumHexafluoride;
-	public static FluidIronSulfamate fluidIronSulfamate;
 	public static FluidAmmonia fluidAmmonia;
 
 	public static GenericMachineBlock blockGasCentrifuge;
@@ -212,7 +210,6 @@ public class DeferredRegisters {
 		ITEMS.register("meltedreactor", supplier(new BlockItemDescriptable(blockMeltedReactor, new Item.Properties().tab(References.NUCLEARTAB))));
 		FLUIDS.register("fluiduraniumhexafluoride", supplier(fluidUraniumHexafluoride = new FluidUraniumHexafluoride()));
 
-		FLUIDS.register("fluidironsulfamate", supplier(fluidIronSulfamate = new FluidIronSulfamate()));
 		FLUIDS.register("fluidammonia", supplier(fluidAmmonia = new FluidAmmonia()));
 
 		BlockItemDescriptable.addDescription(blockGasCentrifuge, "|translate|tooltip.gascentrifuge.voltage");

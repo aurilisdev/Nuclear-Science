@@ -2,6 +2,7 @@ package nuclearscience.common.recipe.categories.item2item.specificmachines;
 
 import electrodynamics.common.recipe.categories.item2item.Item2ItemRecipe;
 import electrodynamics.common.recipe.recipeutils.CountableIngredient;
+import electrodynamics.common.recipe.recipeutils.ProbableItem;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -18,6 +19,10 @@ public class FuelReprocessorRecipe extends Item2ItemRecipe {
 	public FuelReprocessorRecipe(ResourceLocation id, CountableIngredient[] inputs, ItemStack output) {
 		super(id, inputs, output);
 	}
+	
+	public FuelReprocessorRecipe(ResourceLocation id, CountableIngredient[] input, ItemStack output, ProbableItem[] itemBiproducts) {
+    	super(id, input, output, itemBiproducts);
+    }
 
 	@Override
 	public RecipeSerializer<?> getSerializer() {

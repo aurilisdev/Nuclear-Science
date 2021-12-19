@@ -29,7 +29,7 @@ public class MSRProcessorRecipeCategory extends FluidItem2ItemRecipeCategory {
 
 	private static DefaultFluidGaugeWrapper IN_GAUGE = new DefaultFluidGaugeWrapper(10, 5, 5000);
 
-	private static PowerLabelWrapper POWER_LABEL = new PowerLabelWrapper(56, BACK_WRAP);
+	private static PowerLabelWrapper POWER_LABEL = new PowerLabelWrapper(2, 55);
 
 	private static int ANIM_TIME = 50;
 
