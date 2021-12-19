@@ -19,10 +19,10 @@ public class FuelReprocessorRecipe extends Item2ItemRecipe {
 	public FuelReprocessorRecipe(ResourceLocation id, CountableIngredient[] inputs, ItemStack output) {
 		super(id, inputs, output);
 	}
-	
+
 	public FuelReprocessorRecipe(ResourceLocation id, CountableIngredient[] input, ItemStack output, ProbableItem[] itemBiproducts) {
-    	super(id, input, output, itemBiproducts);
-    }
+		super(id, input, output, itemBiproducts);
+	}
 
 	@Override
 	public RecipeSerializer<?> getSerializer() {

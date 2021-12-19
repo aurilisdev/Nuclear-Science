@@ -19,10 +19,10 @@ public class FuelReprocessorRecipeCategory extends Item2ItemRecipeCategory {
 	private static BackgroundWrapper BACK_WRAP = new BackgroundWrapper(132, 58);
 
 	private static DefaultItemSlotWrapper INPUT_SLOT = new DefaultItemSlotWrapper(17, 20);
-    private static BigItemSlotWrapper OUTPUT_SLOT = new BigItemSlotWrapper(69, 16);
-    private static DefaultItemSlotWrapper BIPRODUCT_SLOT = new DefaultItemSlotWrapper(100, 20);
+	private static BigItemSlotWrapper OUTPUT_SLOT = new BigItemSlotWrapper(69, 16);
+	private static DefaultItemSlotWrapper BIPRODUCT_SLOT = new DefaultItemSlotWrapper(100, 20);
 
-    private static ArrowRightAnimatedWrapper ANIM_ARROW = new ArrowRightAnimatedWrapper(41, 23);
+	private static ArrowRightAnimatedWrapper ANIM_ARROW = new ArrowRightAnimatedWrapper(41, 23);
 
 	private static PowerLabelWrapper POWER_LABEL = new PowerLabelWrapper(2, 48);
 	private static BiproductPercentWrapper ITEM_LABEL = new BiproductPercentWrapper(100, 40, false);
