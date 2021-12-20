@@ -229,11 +229,14 @@ public class DeferredRegisters {
 			supplier(new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
 	public static final RegistryObject<Item> ITEM_PLUTONIUM239 = ITEMS.register("plutonium239",
 			supplier(new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
+	public static final RegistryObject<Item> ITEM_POLONIUM210 = ITEMS.register("polonium210",
+			supplier(new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
+	public static final RegistryObject<Item> ITEM_POLONIUM210_CHUNK = ITEMS.register("polonium210chunk",
+			supplier(new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
 	public static final RegistryObject<Item> ITEM_LIFHT4PUF3 = ITEMS.register("lifthf4uf4",
 			supplier(new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
 	public static final RegistryObject<Item> ITEM_FLINAK = ITEMS.register("flinak",
 			supplier(new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
-
 	public static final RegistryObject<Item> ITEM_YELLOWCAKE = ITEMS.register("yellowcake",
 			supplier(new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
 	public static final RegistryObject<Item> ITEM_FISSILEDUST = ITEMS.register("fissiledust",

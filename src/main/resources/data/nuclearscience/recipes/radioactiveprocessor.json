@@ -1,7 +1,7 @@
 {
 	"type": "minecraft:crafting_shaped",
 	"pattern": [
-		"vav",
+		"vtv",
 		"vmv",
 		"vcv"
 	],
@@ -9,14 +9,14 @@
 		"v": {
 			"tag": "forge:plates/vanadiumsteel"
 		},
-		"a": {
-			"item": "electrodynamics:glassaluminum"
-		},
 		"c": {
 			"tag": "forge:circuits/ultimate"
 		},
 		"m": {
 			"item": "electrodynamics:chemicalmixer"
+		},
+		"t": {
+			"item": "electrodynamics:titaniumheatcoil"
 		}
 	},
 	"result": {
