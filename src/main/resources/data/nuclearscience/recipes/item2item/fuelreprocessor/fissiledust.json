@@ -15,9 +15,9 @@
 	"itembi" : {
 		"count" : 1, 
 		"0" : {
-			"item" : "electrodynamics:duststeel", 
+			"item" : "nuclearscience:polonium210chunk", 
 			"count" : 1,
-			"chance" : 1
+			"chance" : 0.5
 		}
 	}
 }

@@ -8,6 +8,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+import nuclearscience.DeferredRegisters;
 
 public class NuclearSciencePsuedoRecipes {
 
@@ -27,8 +28,8 @@ public class NuclearSciencePsuedoRecipes {
 
 		/* Gas Centrifuge */
 
-		GAS_CENTRIFUGE_RECIPES.add(new PsuedoGasCentrifugeRecipe(new FluidStack(NUCLEAR_SCIENCE_FLUIDS.get(0), 1000),
-				NUCLEAR_SCIENCE_ITEMS.get(0).get(2), NUCLEAR_SCIENCE_ITEMS.get(0).get(1)));
+		GAS_CENTRIFUGE_RECIPES.add(new PsuedoGasCentrifugeRecipe(new FluidStack(NUCLEAR_SCIENCE_FLUIDS.get(0), 5000),
+				NUCLEAR_SCIENCE_ITEMS.get(0).get(2), NUCLEAR_SCIENCE_ITEMS.get(0).get(1), new ItemStack(DeferredRegisters.ITEM_FISSILEDUST.get())));
 
 		/* Anit Matter Production */
 

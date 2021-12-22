@@ -29,8 +29,10 @@ import nuclearscience.common.tags.NuclearScienceTags;
 public class TileGasCentrifuge extends GenericTile {
 	public static final int TANKCAPACITY = 5000;
 	public static final float REQUIRED = 2500;
+	private static final double WASTE_MULTIPLIER = 0.1;
 	public int stored235 = 0;
 	public int stored238 = 0;
+	public int storedWaste = 0;
 	public int spinSpeed;
 
 	public TileGasCentrifuge(BlockPos pos, BlockState state) {
@@ -42,7 +44,7 @@ public class TileGasCentrifuge extends GenericTile {
 				.relativeInput(Direction.NORTH));
 		addComponent(new ComponentElectrodynamic(this).voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 2).input(Direction.DOWN)
 				.maxJoules(Constants.GASCENTRIFUGE_USAGE_PER_TICK * 10));
-		addComponent(new ComponentInventory(this).size(5).faceSlots(Direction.DOWN, 0, 1).relativeFaceSlots(Direction.WEST, 0, 1).outputs(2)
+		addComponent(new ComponentInventory(this).size(6).faceSlots(Direction.DOWN, 0, 1).relativeFaceSlots(Direction.WEST, 0, 1).outputs(3)
 				.upgrades(3).valid(machineValidator()));
 		addComponent(new ComponentProcessor(this).usage(Constants.GASCENTRIFUGE_USAGE_PER_TICK)
 				.requiredTicks(Constants.GASCENTRIFUGE_REQUIRED_TICKS_PER_PROCESSING).canProcess(this::canProcess).process(this::process));
@@ -56,7 +58,7 @@ public class TileGasCentrifuge extends GenericTile {
 		ComponentFluidHandlerMulti tank = getComponent(ComponentType.FluidHandler);
 		boolean hasFluid = tank.getInputTanks()[0].getFluidAmount() >= REQUIRED / 60.0;
 		boolean val = electro.getJoulesStored() >= processor.getUsage() && hasFluid && inv.getItem(0).getCount() < inv.getItem(0).getMaxStackSize()
-				&& inv.getItem(1).getCount() < inv.getItem(1).getMaxStackSize();
+				&& inv.getItem(1).getCount() < inv.getItem(1).getMaxStackSize() && inv.getItem(2).getCount() < inv.getItem(2).getMaxStackSize();
 		if (!val && spinSpeed > 0) {
 			spinSpeed = 0;
 			this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();
@@ -80,6 +82,7 @@ public class TileGasCentrifuge extends GenericTile {
 
 		stored235 += processed * 0.172;
 		stored238 += processed * (1 - 0.172);
+		storedWaste += processed * WASTE_MULTIPLIER;
 		if (stored235 > REQUIRED) {
 			ItemStack stack = inv.getItem(0);
 			if (!stack.isEmpty()) {
@@ -87,7 +90,7 @@ public class TileGasCentrifuge extends GenericTile {
 			} else {
 				inv.setItem(0, new ItemStack(DeferredRegisters.ITEM_URANIUM235.get()));
 			}
-			stored235 -= 2500;
+			stored235 -= REQUIRED;
 		}
 		if (stored238 > REQUIRED) {
 			ItemStack stack = inv.getItem(1);
@@ -96,7 +99,16 @@ public class TileGasCentrifuge extends GenericTile {
 			} else {
 				inv.setItem(1, new ItemStack(DeferredRegisters.ITEM_URANIUM238.get()));
 			}
-			stored238 -= 2500;
+			stored238 -= REQUIRED;
+		}
+		if(storedWaste > REQUIRED) {
+			ItemStack stack = inv.getItem(2);
+			if(!stack.isEmpty()) {
+				stack.grow(1);
+			} else {
+				inv.setItem(2, new ItemStack(DeferredRegisters.ITEM_FISSILEDUST.get(), 1));
+			}
+			storedWaste -= REQUIRED;
 		}
 	}
 
@@ -110,6 +122,7 @@ public class TileGasCentrifuge extends GenericTile {
 	public void saveAdditional(CompoundTag compound) {
 		compound.putInt("stored235", stored235);
 		compound.putInt("stored238", stored238);
+		compound.putInt("storedWaste", storedWaste);
 		super.saveAdditional(compound);
 	}
 
@@ -118,18 +131,21 @@ public class TileGasCentrifuge extends GenericTile {
 		super.load(compound);
 		stored235 = compound.getInt("stored235");
 		stored238 = compound.getInt("stored238");
+		storedWaste = compound.getInt("storedWaste");
 	}
 
 	public void writeCustomPacket(CompoundTag tag) {
 		tag.putInt("spinSpeed", spinSpeed);
 		tag.putInt("stored235", stored235);
 		tag.putInt("stored238", stored238);
+		tag.putInt("storedWaste", storedWaste);
 	}
 
 	public void readCustomPacket(CompoundTag nbt) {
 		spinSpeed = nbt.getInt("spinSpeed");
 		stored235 = nbt.getInt("stored235");
 		stored238 = nbt.getInt("stored238");
+		storedWaste = nbt.getInt("storedWaste");
 	}
 
 }

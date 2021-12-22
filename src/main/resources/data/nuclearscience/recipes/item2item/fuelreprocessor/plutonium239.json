@@ -11,5 +11,13 @@
 	"output":{
 		"item":"nuclearscience:plutonium239",
 		"count":1
+	},
+	"itembi" : {
+		"count" : 1, 
+		"0" : {
+			"item" : "nuclearscience:polonium210chunk", 
+			"count" : 3,
+			"chance" : 1
+		}
 	}
 }

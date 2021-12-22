@@ -65,6 +65,8 @@ public class NuclearScience {
 		RadiationRegister.register(DeferredRegisters.ITEM_PLUTONIUMOXIDE.get(), new FieldRadioactiveObject(4000));
 		RadiationRegister.register(DeferredRegisters.ITEM_PLUTONIUM239.get(), new FieldRadioactiveObject(4500));
 		RadiationRegister.register(DeferredRegisters.ITEM_THORIANITEDUST.get(), new FieldRadioactiveObject(2000));
+		RadiationRegister.register(DeferredRegisters.ITEM_POLONIUM210.get(), new FieldRadioactiveObject(2500));
+		RadiationRegister.register(DeferredRegisters.ITEM_POLONIUM210_CHUNK.get(), new FieldRadioactiveObject(1500));
 	}
 
 	@SubscribeEvent
