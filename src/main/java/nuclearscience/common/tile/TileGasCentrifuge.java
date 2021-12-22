@@ -22,6 +22,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.SoundRegister;
+import nuclearscience.api.radiation.RadiationUtilities;
 import nuclearscience.common.inventory.container.ContainerGasCentrifuge;
 import nuclearscience.common.settings.Constants;
 import nuclearscience.common.tags.NuclearScienceTags;
@@ -29,15 +30,20 @@ import nuclearscience.common.tags.NuclearScienceTags;
 public class TileGasCentrifuge extends GenericTile {
 	public static final int TANKCAPACITY = 5000;
 	public static final float REQUIRED = 2500;
+	private static final double PERCENT_U235 = 0.172;
 	private static final double WASTE_MULTIPLIER = 0.1;
+	private boolean isRunning = false;
 	public int stored235 = 0;
 	public int stored238 = 0;
 	public int storedWaste = 0;
 	public int spinSpeed;
+	
+	private static final int RADATION_RADIUS_BLOCKS = 5; 
+	private static final int RADIATION_STRENGTH = 5000;
 
 	public TileGasCentrifuge(BlockPos pos, BlockState state) {
 		super(DeferredRegisters.TILE_GASCENTRIFUGE.get(), pos, state);
-		addComponent(new ComponentTickable().tickClient(this::tickClient));
+		addComponent(new ComponentTickable().tickClient(this::tickClient).tickServer(this::tickServer));
 		addComponent(new ComponentDirection());
 		addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket));
 		addComponent(new ComponentFluidHandlerMulti(this).setManualFluidTags(1, true, TANKCAPACITY, NuclearScienceTags.Fluids.URANIUM_HEXAFLUORIDE)
@@ -63,6 +69,10 @@ public class TileGasCentrifuge extends GenericTile {
 			spinSpeed = 0;
 			this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();
 		}
+		
+		if(val) {
+			isRunning = true;
+		}
 		return val;
 	}
 
@@ -80,8 +90,8 @@ public class TileGasCentrifuge extends GenericTile {
 			}
 		}
 
-		stored235 += processed * 0.172;
-		stored238 += processed * (1 - 0.172);
+		stored235 += processed * PERCENT_U235;
+		stored238 += processed * (1 - PERCENT_U235);
 		storedWaste += processed * WASTE_MULTIPLIER;
 		if (stored235 > REQUIRED) {
 			ItemStack stack = inv.getItem(0);
@@ -115,6 +125,13 @@ public class TileGasCentrifuge extends GenericTile {
 	protected void tickClient(ComponentTickable tickable) {
 		if (spinSpeed > 0 && tickable.getTicks() % 80 == 0) {
 			SoundAPI.playSound(SoundRegister.SOUND_GASCENTRIFUGE.get(), SoundSource.BLOCKS, 1, 1, worldPosition);
+		}
+	}
+	
+	protected void tickServer(ComponentTickable tickable) {
+		boolean emitRadiation = false;
+		if (level.getLevelData().getGameTime() % 10 == 0 && isRunning) {
+			RadiationUtilities.emitRadiationFromTile(this, RADATION_RADIUS_BLOCKS, RADIATION_STRENGTH);
 		}
 	}
 
