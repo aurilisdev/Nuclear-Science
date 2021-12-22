@@ -111,9 +111,9 @@ public class TileGasCentrifuge extends GenericTile {
 			}
 			stored238 -= REQUIRED;
 		}
-		if(storedWaste > REQUIRED) {
+		if (storedWaste > REQUIRED) {
 			ItemStack stack = inv.getItem(2);
-			if(!stack.isEmpty()) {
+			if (!stack.isEmpty()) {
 				stack.grow(1);
 			} else {
 				inv.setItem(2, new ItemStack(DeferredRegisters.ITEM_FISSILEDUST.get(), 1));

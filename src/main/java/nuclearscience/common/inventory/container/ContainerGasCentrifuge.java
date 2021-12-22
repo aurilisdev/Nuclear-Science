@@ -2,7 +2,6 @@ package nuclearscience.common.inventory.container;
 
 import electrodynamics.common.item.subtype.SubtypeItemUpgrade;
 import electrodynamics.prefab.inventory.container.GenericContainer;
-import electrodynamics.prefab.inventory.container.slot.SlotRestricted;
 import electrodynamics.prefab.inventory.container.slot.UpgradeSlot;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;

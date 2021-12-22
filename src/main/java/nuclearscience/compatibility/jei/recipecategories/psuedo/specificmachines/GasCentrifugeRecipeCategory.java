@@ -58,7 +58,7 @@ public class GasCentrifugeRecipeCategory implements IRecipeCategory<PsuedoGasCen
 	public ResourceLocation getUid() {
 		return UID;
 	}
-	
+
 	@Override
 	public Class<? extends PsuedoGasCentrifugeRecipe> getRecipeClass() {
 		return PsuedoGasCentrifugeRecipe.class;
@@ -110,13 +110,13 @@ public class GasCentrifugeRecipeCategory implements IRecipeCategory<PsuedoGasCen
 
 		TranslatableComponent percentU238String = new TranslatableComponent("gui.jei.category." + RECIPE_GROUP + ".info.percent_u238",
 				animTimeSeconds);
-		
+
 		TranslatableComponent percentBiproductString = new TranslatableComponent("gui.jei.category." + RECIPE_GROUP + ".info.percent_biproduct",
 				animTimeSeconds);
 
 		Minecraft minecraft = Minecraft.getInstance();
 		Font fontRenderer = minecraft.font;
-		
+
 		fontRenderer.draw(matrixStack, percentU235String, 85, 7, 0xFF616161);
 		fontRenderer.draw(matrixStack, percentU238String, 85, 30, 0xFF616161);
 		fontRenderer.draw(matrixStack, percentBiproductString, 59, 48, 0xFF616161);

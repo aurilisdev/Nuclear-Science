@@ -32,10 +32,10 @@ import nuclearscience.prefab.screen.component.ScreenComponentGasCentrifugeArrow;
 
 @OnlyIn(Dist.CLIENT)
 public class ScreenGasCentrifuge extends GenericScreen<ContainerGasCentrifuge> {
-	
+
 	public ScreenGasCentrifuge(ContainerGasCentrifuge container, Inventory playerInventory, Component title) {
 		super(container, playerInventory, title);
-		
+
 		components.add(new ScreenComponentFluid(() -> {
 			TileGasCentrifuge boiler = container.getHostFromIntArray();
 			if (boiler != null) {
@@ -52,7 +52,7 @@ public class ScreenGasCentrifuge extends GenericScreen<ContainerGasCentrifuge> {
 		components.add(new ScreenComponentGasCentrifugeArrow(this, 34, 14));
 		components.add(new ScreenComponentElectricInfo(this::getEnergyInformation, this, -ScreenComponentInfo.SIZE + 1, 2));
 	}
-	
+
 	private List<? extends FormattedCharSequence> getEnergyInformation() {
 		ArrayList<FormattedCharSequence> list = new ArrayList<>();
 		GenericTile box = menu.getHostFromIntArray();
@@ -70,7 +70,6 @@ public class ScreenGasCentrifuge extends GenericScreen<ContainerGasCentrifuge> {
 		return list;
 	}
 
-	
 	@Override
 	protected void renderLabels(PoseStack matrixStack, int mouseX, int mouseY) {
 		super.renderLabels(matrixStack, mouseX, mouseY);
@@ -84,10 +83,10 @@ public class ScreenGasCentrifuge extends GenericScreen<ContainerGasCentrifuge> {
 			font.draw(matrixStack, new TextComponent(wasteString + "%"), 72, 58, 4210752);
 		}
 	}
-	
-	private String getIntString(int value) {
-		int perc = (int) ((value / TileGasCentrifuge.REQUIRED) * 100);
-		if(perc < 10) {
+
+	private static String getIntString(int value) {
+		int perc = (int) (value / TileGasCentrifuge.REQUIRED * 100);
+		if (perc < 10) {
 			return "00" + perc;
 		} else if (perc < 100) {
 			return "0" + perc;
@@ -95,6 +94,5 @@ public class ScreenGasCentrifuge extends GenericScreen<ContainerGasCentrifuge> {
 			return "" + perc;
 		}
 	}
-	
 
 }
