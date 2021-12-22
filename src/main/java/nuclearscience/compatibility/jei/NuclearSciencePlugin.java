@@ -170,7 +170,7 @@ public class NuclearSciencePlugin implements IModPlugin {
 		registry.addRecipeClickArea(ScreenChemicalExtractor.class, 97, 31, 22, 15, ChemicalExtractorRecipeCategory.UID);
 
 		// Gas Centrifuge
-		registry.addRecipeClickArea(ScreenGasCentrifuge.class, 91, 22, 32, 41, GasCentrifugeRecipeCategory.UID);
+		registry.addRecipeClickArea(ScreenGasCentrifuge.class, 44, 19, 50, 36, GasCentrifugeRecipeCategory.UID);
 
 		// Fission Reactor
 		registry.addRecipeClickArea(ScreenReactorCore.class, 117, 43, 14, 13, FissionReactorRecipeCategory.UID);
