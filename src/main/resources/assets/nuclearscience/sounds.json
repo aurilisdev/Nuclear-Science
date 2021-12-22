@@ -1,23 +1,30 @@
 {
 	"gascentrifuge": {
 		"category": "blocks",
-		"subtitle": "Machine Gas Centrifuge",
+		"subtitle": "subtitles.nuclearscience.gascentrifuge",
 		"sounds": [
 			"nuclearscience:gascentrifuge"
 		]
 	},
 	"nuclearboiler": {
 		"category": "blocks",
-		"subtitle": "Machine Nuclear Boiler",
+		"subtitle": "subtitles.nuclearscience.nuclearboiler",
 		"sounds": [
 			"nuclearscience:nuclearboiler"
 		]
 	},
 	"turbine": {
 		"category": "blocks",
-		"subtitle": "Machine Turbine",
+		"subtitle": "subtitles.nuclearscience.turbine",
 		"sounds": [
 			"nuclearscience:turbine"
+		]
+	},
+	"siren": {
+		"category": "blocks",
+		"subtitle": "subtitles.nuclearscience.siren",
+		"sounds": [
+			"nuclearscience:siren"
 		]
 	}
 }
