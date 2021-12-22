@@ -14,7 +14,7 @@ public class ScreenComponentGasCentrifugeArrow extends ScreenComponent {
 
 	public static int WIDTH = 90;
 	public static int HEIGHT = 54;
-	
+
 	public ScreenComponentGasCentrifugeArrow(IScreenWrapper gui, int x, int y) {
 		super(new ResourceLocation(References.ID + ":textures/screen/component/nsprocessingarrows.png"), gui, x, y);
 	}
@@ -23,13 +23,11 @@ public class ScreenComponentGasCentrifugeArrow extends ScreenComponent {
 	public Rectangle getBounds(final int guiWidth, final int guiHeight) {
 		return new Rectangle(guiWidth + xLocation, guiHeight + yLocation, WIDTH, HEIGHT);
 	}
-	
+
 	@Override
 	public void renderBackground(PoseStack stack, final int xAxis, final int yAxis, final int guiWidth, final int guiHeight) {
 		UtilitiesRendering.bindTexture(resource);
 		gui.drawTexturedRect(stack, guiWidth + xLocation, guiHeight + yLocation, 0, 0, WIDTH, HEIGHT);
 	}
-	
-	
 
 }
