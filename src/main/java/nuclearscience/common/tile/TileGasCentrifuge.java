@@ -1,6 +1,5 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.Electrodynamics;
 import electrodynamics.api.capability.electrodynamic.CapabilityElectrodynamic;
 import electrodynamics.api.sound.SoundAPI;
 import electrodynamics.prefab.tile.GenericTile;

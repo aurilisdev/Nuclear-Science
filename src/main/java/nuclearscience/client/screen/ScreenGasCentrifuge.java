@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import electrodynamics.Electrodynamics;
 import electrodynamics.api.electricity.formatting.ChatFormatter;
 import electrodynamics.api.electricity.formatting.ElectricUnit;
 import electrodynamics.prefab.screen.GenericScreen;
@@ -86,7 +87,7 @@ public class ScreenGasCentrifuge extends GenericScreen<ContainerGasCentrifuge> {
 	}
 	
 	private String getIntString(int value) {
-		int perc = (int) (value / TileGasCentrifuge.REQUIRED) * 100;
+		int perc = (int) ((value / TileGasCentrifuge.REQUIRED) * 100);
 		if(perc < 10) {
 			return "00" + perc;
 		} else if (perc < 100) {
