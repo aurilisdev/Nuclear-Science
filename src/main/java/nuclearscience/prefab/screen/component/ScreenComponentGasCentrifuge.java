@@ -54,9 +54,9 @@ public class ScreenComponentGasCentrifuge extends ScreenComponent {
 		int middleProgress = (int)(progressInfoHandlerProgressMiddle.getAsDouble() * ARROW_WIDTH);
 		int bottomProgress = (int)(progressInfoHandlerProgressBottom.getAsDouble() * ARROW_WIDTH);
 		gui.drawTexturedRect(stack, guiWidth + xLocation, guiHeight + yLocation + 3, 0, BULB_Y_OFFSET, progressBulbs, BULB_HEIGHT);
-		gui.drawTexturedRect(stack, guiWidth + xLocation + 70 + 2, guiHeight + yLocation, 0, ARROW_Y_OFFSET, topProgress, ARROW_HEIGHT);
-		gui.drawTexturedRect(stack, guiWidth + xLocation + 70 + 2, guiHeight + yLocation + 20, 0, ARROW_Y_OFFSET, middleProgress, ARROW_HEIGHT);
-		gui.drawTexturedRect(stack, guiWidth + xLocation + 70 + 2, guiHeight + yLocation + 41, 0, ARROW_Y_OFFSET, bottomProgress, ARROW_HEIGHT);
+		gui.drawTexturedRect(stack, guiWidth + xLocation + 72, guiHeight + yLocation, 0, ARROW_Y_OFFSET, topProgress, ARROW_HEIGHT);
+		gui.drawTexturedRect(stack, guiWidth + xLocation + 72, guiHeight + yLocation + 20, 0, ARROW_Y_OFFSET, middleProgress, ARROW_HEIGHT);
+		gui.drawTexturedRect(stack, guiWidth + xLocation + 72, guiHeight + yLocation + 41, 0, ARROW_Y_OFFSET, bottomProgress, ARROW_HEIGHT);
 	}
 
 }
