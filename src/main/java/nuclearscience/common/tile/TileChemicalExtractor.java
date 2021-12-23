@@ -59,9 +59,9 @@ public class TileChemicalExtractor extends GenericTile implements ITileRadioacti
 	@Override
 	public double getStrength() {
 		ComponentInventory inv = getComponent(ComponentType.Inventory);
-		for(ItemStack stack : inv.getOutputContents()) {
-			if(stack.getItem() instanceof ItemRadioactive item) {
-				
+		for (ItemStack stack : inv.getOutputContents()) {
+			if (stack.getItem() instanceof ItemRadioactive item) {
+
 			}
 		}
 		return 0;

@@ -51,7 +51,7 @@ public class GasCentrifugeRecipeCategory implements IRecipeCategory<PsuedoGasCen
 
 	private IDrawable BACKGROUND;
 	private IDrawable ICON;
-	
+
 	private LoadingCache<Integer, IDrawableAnimated> cachedArrows;
 	private static StartDirection ARROW_START_DIRECTION = IDrawableAnimated.StartDirection.LEFT;
 
@@ -60,11 +60,12 @@ public class GasCentrifugeRecipeCategory implements IRecipeCategory<PsuedoGasCen
 		ICON = guiHelper.createDrawableIngredient(INPUT_MACHINE);
 		BACKGROUND = guiHelper.createDrawable(new ResourceLocation(MOD_ID, GUI_TEXTURE), GUI_BACKGROUND[0], GUI_BACKGROUND[1], GUI_BACKGROUND[2],
 				GUI_BACKGROUND[3]);
-		
+
 		cachedArrows = CacheBuilder.newBuilder().maximumSize(1).build(new CacheLoader<Integer, IDrawableAnimated>() {
 			@Override
 			public IDrawableAnimated load(Integer cookTime) {
-				return guiHelper.drawableBuilder(new ResourceLocation(MOD_ID, GUI_TEXTURE), 0, 68, 47, 54).buildAnimated(cookTime, ARROW_START_DIRECTION, false);
+				return guiHelper.drawableBuilder(new ResourceLocation(MOD_ID, GUI_TEXTURE), 0, 68, 47, 54).buildAnimated(cookTime,
+						ARROW_START_DIRECTION, false);
 			}
 		});
 	}
@@ -120,7 +121,7 @@ public class GasCentrifugeRecipeCategory implements IRecipeCategory<PsuedoGasCen
 
 		IDrawableAnimated arrow = cachedArrows.getUnchecked(ANIMATION_TIME);
 		arrow.draw(matrixStack, 64, 4);
-		
+
 		int animTimeSeconds = ANIMATION_TIME / 20;
 
 		TranslatableComponent percentU235String = new TranslatableComponent("gui.jei.category." + RECIPE_GROUP + ".info.percent_u235",

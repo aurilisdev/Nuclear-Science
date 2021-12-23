@@ -9,7 +9,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 public class RadiationUtilities {
-	
+
 	public static void emitRadiationFromTile(GenericTile tile, double radiusBlocks, int strength) {
 		Location source = new Location(tile.getBlockPos().getX() + 0.5f, tile.getBlockPos().getY() + 0.5f, tile.getBlockPos().getZ() + 0.5f);
 		AABB bb = AABB.ofSize(new Vec3(source.x(), source.y(), source.z()), radiusBlocks * 2, radiusBlocks * 2, radiusBlocks * 2);

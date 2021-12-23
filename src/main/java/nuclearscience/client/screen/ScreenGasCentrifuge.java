@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import electrodynamics.Electrodynamics;
 import electrodynamics.api.electricity.formatting.ChatFormatter;
 import electrodynamics.api.electricity.formatting.ElectricUnit;
 import electrodynamics.prefab.screen.GenericScreen;
@@ -16,7 +15,6 @@ import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
-import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import electrodynamics.prefab.tile.components.utils.AbstractFluidHandler;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -54,29 +52,29 @@ public class ScreenGasCentrifuge extends GenericScreen<ContainerGasCentrifuge> {
 		components.add(new ScreenComponentGasCentrifuge(() -> {
 			TileGasCentrifuge box = menu.getHostFromIntArray();
 			if (box != null && box.isRunning) {
-				//return (box.ticks % 100) / 100.0;
+				// return (box.ticks % 100) / 100.0;
 				return 13;
 			}
 			return 0;
-		},() -> {
+		}, () -> {
 			TileGasCentrifuge boiler = container.getHostFromIntArray();
 			if (boiler != null) {
 				return boiler.stored235 / TileGasCentrifuge.REQUIRED;
 			}
 			return 0;
-		},() -> {
+		}, () -> {
 			TileGasCentrifuge boiler = container.getHostFromIntArray();
 			if (boiler != null) {
 				return boiler.stored238 / TileGasCentrifuge.REQUIRED;
 			}
 			return 0;
-		},() -> {
+		}, () -> {
 			TileGasCentrifuge boiler = container.getHostFromIntArray();
 			if (boiler != null) {
 				return boiler.storedWaste / TileGasCentrifuge.REQUIRED;
 			}
 			return 0;
-		},this, 34, 14));
+		}, this, 34, 14));
 		components.add(new ScreenComponentElectricInfo(this::getEnergyInformation, this, -ScreenComponentInfo.SIZE + 1, 2));
 	}
 
@@ -115,11 +113,8 @@ public class ScreenGasCentrifuge extends GenericScreen<ContainerGasCentrifuge> {
 		int perc = (int) (value / TileGasCentrifuge.REQUIRED * 100);
 		if (perc < 10) {
 			return "0" + perc;
-		} else if (perc < 100) {
-			return "" + perc;
-		} else {
-			return "" + perc;
 		}
+		return "" + perc;
 	}
 
 }

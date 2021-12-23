@@ -33,13 +33,13 @@ public class TileGasCentrifuge extends GenericTile {
 	private static final double PERCENT_U235 = 0.172;
 	private static final double WASTE_MULTIPLIER = 0.1;
 	public boolean isRunning = false;
-	//public long ticks = 0;
+	// public long ticks = 0;
 	public int stored235 = 0;
 	public int stored238 = 0;
 	public int storedWaste = 0;
 	public int spinSpeed;
-	
-	private static final int RADATION_RADIUS_BLOCKS = 5; 
+
+	private static final int RADATION_RADIUS_BLOCKS = 5;
 	private static final int RADIATION_STRENGTH = 5000;
 
 	public TileGasCentrifuge(BlockPos pos, BlockState state) {
@@ -70,8 +70,8 @@ public class TileGasCentrifuge extends GenericTile {
 			spinSpeed = 0;
 			this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();
 		}
-		
-		this.isRunning = val ? true : false;
+
+		isRunning = val == true;
 
 		return val;
 	}
@@ -127,10 +127,8 @@ public class TileGasCentrifuge extends GenericTile {
 			SoundAPI.playSound(SoundRegister.SOUND_GASCENTRIFUGE.get(), SoundSource.BLOCKS, 1, 1, worldPosition);
 		}
 	}
-	
+
 	protected void tickServer(ComponentTickable tickable) {
-		//this.ticks = tickable.getTicks();
-		boolean emitRadiation = false;
 		if (level.getLevelData().getGameTime() % 10 == 0 && isRunning) {
 			RadiationUtilities.emitRadiationFromTile(this, RADATION_RADIUS_BLOCKS, RADIATION_STRENGTH);
 		}
@@ -142,7 +140,7 @@ public class TileGasCentrifuge extends GenericTile {
 		compound.putInt("stored238", stored238);
 		compound.putInt("storedWaste", storedWaste);
 		compound.putBoolean("isRunning", isRunning);
-		//compound.putLong("ticks", ticks);
+		// compound.putLong("ticks", ticks);
 		super.saveAdditional(compound);
 	}
 
@@ -153,7 +151,7 @@ public class TileGasCentrifuge extends GenericTile {
 		stored238 = compound.getInt("stored238");
 		storedWaste = compound.getInt("storedWaste");
 		isRunning = compound.getBoolean("isRunning");
-		//ticks = compound.getLong("ticks");
+		// ticks = compound.getLong("ticks");
 	}
 
 	public void writeCustomPacket(CompoundTag tag) {
@@ -162,7 +160,7 @@ public class TileGasCentrifuge extends GenericTile {
 		tag.putInt("stored238", stored238);
 		tag.putInt("storedWaste", storedWaste);
 		tag.putBoolean("isRunning", isRunning);
-		//tag.putLong("ticks", ticks);
+		// tag.putLong("ticks", ticks);
 	}
 
 	public void readCustomPacket(CompoundTag nbt) {
@@ -171,7 +169,7 @@ public class TileGasCentrifuge extends GenericTile {
 		stored238 = nbt.getInt("stored238");
 		storedWaste = nbt.getInt("storedWaste");
 		isRunning = nbt.getBoolean("isRunning");
-		//ticks = nbt.getLong("ticks");
+		// ticks = nbt.getLong("ticks");
 	}
 
 }

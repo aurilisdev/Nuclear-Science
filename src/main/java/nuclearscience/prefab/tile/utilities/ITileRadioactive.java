@@ -6,9 +6,9 @@ package nuclearscience.prefab.tile.utilities;
  * in the outputs of the methods
  */
 public interface ITileRadioactive {
-	
+
 	double getStrength();
-	
+
 	double getBlocksRadius();
-	
+
 }
