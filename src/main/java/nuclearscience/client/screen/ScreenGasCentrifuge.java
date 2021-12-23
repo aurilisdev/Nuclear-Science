@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import electrodynamics.Electrodynamics;
 import electrodynamics.api.electricity.formatting.ChatFormatter;
 import electrodynamics.api.electricity.formatting.ElectricUnit;
 import electrodynamics.prefab.screen.GenericScreen;
@@ -15,6 +16,7 @@ import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
+import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import electrodynamics.prefab.tile.components.utils.AbstractFluidHandler;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -28,7 +30,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import nuclearscience.common.inventory.container.ContainerGasCentrifuge;
 import nuclearscience.common.tile.TileGasCentrifuge;
-import nuclearscience.prefab.screen.component.ScreenComponentGasCentrifugeArrow;
+import nuclearscience.prefab.screen.component.ScreenComponentGasCentrifuge;
 
 @OnlyIn(Dist.CLIENT)
 public class ScreenGasCentrifuge extends GenericScreen<ContainerGasCentrifuge> {
@@ -48,8 +50,33 @@ public class ScreenGasCentrifuge extends GenericScreen<ContainerGasCentrifuge> {
 				}
 			}
 			return null;
-		}, this, 18, 18));
-		components.add(new ScreenComponentGasCentrifugeArrow(this, 34, 14));
+		}, this, 18, 19));
+		components.add(new ScreenComponentGasCentrifuge(() -> {
+			TileGasCentrifuge box = menu.getHostFromIntArray();
+			if (box != null && box.isRunning) {
+				//return (box.ticks % 100) / 100.0;
+				return 13;
+			}
+			return 0;
+		},() -> {
+			TileGasCentrifuge boiler = container.getHostFromIntArray();
+			if (boiler != null) {
+				return boiler.stored235 / TileGasCentrifuge.REQUIRED;
+			}
+			return 0;
+		},() -> {
+			TileGasCentrifuge boiler = container.getHostFromIntArray();
+			if (boiler != null) {
+				return boiler.stored238 / TileGasCentrifuge.REQUIRED;
+			}
+			return 0;
+		},() -> {
+			TileGasCentrifuge boiler = container.getHostFromIntArray();
+			if (boiler != null) {
+				return boiler.storedWaste / TileGasCentrifuge.REQUIRED;
+			}
+			return 0;
+		},this, 34, 14));
 		components.add(new ScreenComponentElectricInfo(this::getEnergyInformation, this, -ScreenComponentInfo.SIZE + 1, 2));
 	}
 
@@ -78,18 +105,18 @@ public class ScreenGasCentrifuge extends GenericScreen<ContainerGasCentrifuge> {
 			String u235String = getIntString(centrifuge.stored235);
 			String u238String = getIntString(centrifuge.stored238);
 			String wasteString = getIntString(centrifuge.storedWaste);
-			font.draw(matrixStack, new TextComponent(u235String + "%"), 98, 17, 4210752);
-			font.draw(matrixStack, new TextComponent(u238String + "%"), 98, 40, 4210752);
-			font.draw(matrixStack, new TextComponent(wasteString + "%"), 72, 58, 4210752);
+			font.draw(matrixStack, new TextComponent("U235 " + u235String + "%"), 54, 17, 4210752);
+			font.draw(matrixStack, new TextComponent("U238 " + u238String + "%"), 54, 37, 4210752);
+			font.draw(matrixStack, new TextComponent("DUST " + wasteString + "%"), 54, 58, 4210752);
 		}
 	}
 
 	private static String getIntString(int value) {
 		int perc = (int) (value / TileGasCentrifuge.REQUIRED * 100);
 		if (perc < 10) {
-			return "00" + perc;
-		} else if (perc < 100) {
 			return "0" + perc;
+		} else if (perc < 100) {
+			return "" + perc;
 		} else {
 			return "" + perc;
 		}

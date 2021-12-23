@@ -3,11 +3,16 @@ package nuclearscience.compatibility.jei.recipecategories.psuedo.specificmachine
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.drawable.IDrawableAnimated;
+import mezz.jei.api.gui.drawable.IDrawableAnimated.StartDirection;
 import mezz.jei.api.gui.ingredient.IGuiFluidStackGroup;
 import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -46,12 +51,22 @@ public class GasCentrifugeRecipeCategory implements IRecipeCategory<PsuedoGasCen
 
 	private IDrawable BACKGROUND;
 	private IDrawable ICON;
+	
+	private LoadingCache<Integer, IDrawableAnimated> cachedArrows;
+	private static StartDirection ARROW_START_DIRECTION = IDrawableAnimated.StartDirection.LEFT;
 
 	public GasCentrifugeRecipeCategory(IGuiHelper guiHelper) {
 
 		ICON = guiHelper.createDrawableIngredient(INPUT_MACHINE);
 		BACKGROUND = guiHelper.createDrawable(new ResourceLocation(MOD_ID, GUI_TEXTURE), GUI_BACKGROUND[0], GUI_BACKGROUND[1], GUI_BACKGROUND[2],
 				GUI_BACKGROUND[3]);
+		
+		cachedArrows = CacheBuilder.newBuilder().maximumSize(1).build(new CacheLoader<Integer, IDrawableAnimated>() {
+			@Override
+			public IDrawableAnimated load(Integer cookTime) {
+				return guiHelper.drawableBuilder(new ResourceLocation(MOD_ID, GUI_TEXTURE), 0, 68, 47, 54).buildAnimated(cookTime, ARROW_START_DIRECTION, false);
+			}
+		});
 	}
 
 	@Override
@@ -91,10 +106,10 @@ public class GasCentrifugeRecipeCategory implements IRecipeCategory<PsuedoGasCen
 		IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
 
 		guiItemStacks.init(OUTPUT_1_ITEM_SLOT, false, 113, 2);
-		guiItemStacks.init(OUTPUT_2_ITEM_SLOT, false, 113, 25);
-		guiItemStacks.init(BIPRODUCT_ITEM_SLOT, false, 87, 42);
+		guiItemStacks.init(OUTPUT_2_ITEM_SLOT, false, 113, 22);
+		guiItemStacks.init(BIPRODUCT_ITEM_SLOT, false, 113, 42);
 
-		guiFluidStacks.init(INPUT_FLUID_STACK_SLOT, true, 5, 7, 12, 47, 5000, false, null);
+		guiFluidStacks.init(INPUT_FLUID_STACK_SLOT, true, 3, 7, 12, 47, 5000, false, null);
 
 		guiItemStacks.set(ingredients);
 		guiFluidStacks.set(ingredients);
@@ -103,23 +118,24 @@ public class GasCentrifugeRecipeCategory implements IRecipeCategory<PsuedoGasCen
 	@Override
 	public void draw(PsuedoGasCentrifugeRecipe recipe, PoseStack matrixStack, double mouseX, double mouseY) {
 
+		IDrawableAnimated arrow = cachedArrows.getUnchecked(ANIMATION_TIME);
+		arrow.draw(matrixStack, 64, 4);
+		
 		int animTimeSeconds = ANIMATION_TIME / 20;
 
 		TranslatableComponent percentU235String = new TranslatableComponent("gui.jei.category." + RECIPE_GROUP + ".info.percent_u235",
 				animTimeSeconds);
-
 		TranslatableComponent percentU238String = new TranslatableComponent("gui.jei.category." + RECIPE_GROUP + ".info.percent_u238",
 				animTimeSeconds);
-
 		TranslatableComponent percentBiproductString = new TranslatableComponent("gui.jei.category." + RECIPE_GROUP + ".info.percent_biproduct",
 				animTimeSeconds);
 
 		Minecraft minecraft = Minecraft.getInstance();
 		Font fontRenderer = minecraft.font;
 
-		fontRenderer.draw(matrixStack, percentU235String, 85, 7, 0xFF616161);
-		fontRenderer.draw(matrixStack, percentU238String, 85, 30, 0xFF616161);
-		fontRenderer.draw(matrixStack, percentBiproductString, 59, 48, 0xFF616161);
+		fontRenderer.draw(matrixStack, percentU235String, 36, 7, 0xFF616161);
+		fontRenderer.draw(matrixStack, percentU238String, 36, 28, 0xFF616161);
+		fontRenderer.draw(matrixStack, percentBiproductString, 36, 49, 0xFF616161);
 	}
 
 	public NonNullList<FluidStack> getFluids(PsuedoGasCentrifugeRecipe recipe) {
