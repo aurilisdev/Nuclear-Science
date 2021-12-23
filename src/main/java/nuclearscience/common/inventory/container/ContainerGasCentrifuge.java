@@ -29,11 +29,11 @@ public class ContainerGasCentrifuge extends GenericContainer<TileGasCentrifuge> 
 
 	@Override
 	public void addInventorySlots(Container inv, Inventory playerinv) {
-		addSlot(new FurnaceResultSlot(playerinv.player, inv, nextIndex(), 127, 13));
-		addSlot(new FurnaceResultSlot(playerinv.player, inv, nextIndex(), 127, 36));
-		addSlot(new FurnaceResultSlot(playerinv.player, inv, nextIndex(), 101, 54));
+		addSlot(new FurnaceResultSlot(playerinv.player, inv, nextIndex(), 129, 14));
+		addSlot(new FurnaceResultSlot(playerinv.player, inv, nextIndex(), 129, 34));
+		addSlot(new FurnaceResultSlot(playerinv.player, inv, nextIndex(), 129, 55));
 		addSlot(new UpgradeSlot(inv, nextIndex(), 153, 14, SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.basicspeed));
 		addSlot(new UpgradeSlot(inv, nextIndex(), 153, 34, SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.basicspeed));
-		addSlot(new UpgradeSlot(inv, nextIndex(), 153, 54, SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.basicspeed));
+		addSlot(new UpgradeSlot(inv, nextIndex(), 153, 55, SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.basicspeed));
 	}
 }
