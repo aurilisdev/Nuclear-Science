@@ -107,6 +107,8 @@
   "gui.quantumassembler.voltage" : "Voltage: %s",
   "gui.msrreactorcore.fuel" : "Fuel amount (mb): %s",
   "gui.msrreactorcore.nofreezeplug" : "Can't find freeze-plug!",
+  "gui.msrfuelpreprocessor.usage" : "Usage: %s",
+  "gui.msrfuelpreprocessor.voltage" : "Voltage: %s",
   "itemGroup.itemgroupnuclearscience" : "Nuclear Science",
   "death.attack.radiation" : "%s just did a speedrun of evolution!",
   "death.attack.plasma" : "%s was ionized!",
