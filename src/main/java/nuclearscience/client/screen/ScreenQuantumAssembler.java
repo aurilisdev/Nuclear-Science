@@ -17,5 +17,6 @@ public class ScreenQuantumAssembler extends GenericScreen<ContainerQuantumAssemb
 		super(container, playerInventory, title);
 		components.add(new ScreenComponentElectricInfo(this, -ScreenComponentInfo.SIZE + 1, 2).tag("quantumassembler")
 				.wattage(Constants.QUANTUMASSEMBLER_USAGE_PER_TICK * 20));
+		imageHeight += 64;
 	}
 }
