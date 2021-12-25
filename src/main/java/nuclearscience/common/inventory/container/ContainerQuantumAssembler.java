@@ -1,6 +1,6 @@
 package nuclearscience.common.inventory.container;
 
-import electrodynamics.prefab.inventory.container.GenericContainer;
+import electrodynamics.prefab.inventory.container.GenericContainerBlockEntity;
 import electrodynamics.prefab.inventory.container.slot.GenericSlot;
 import electrodynamics.prefab.inventory.container.slot.SlotRestricted;
 import net.minecraft.world.Container;
@@ -11,7 +11,7 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.tile.TileQuantumAssembler;
 
-public class ContainerQuantumAssembler extends GenericContainer<TileQuantumAssembler> {
+public class ContainerQuantumAssembler extends GenericContainerBlockEntity<TileQuantumAssembler> {
 
 	public ContainerQuantumAssembler(int id, Inventory playerinv) {
 		this(id, playerinv, new SimpleContainer(8), new SimpleContainerData(3));

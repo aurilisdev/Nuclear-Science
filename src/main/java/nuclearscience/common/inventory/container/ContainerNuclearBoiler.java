@@ -2,7 +2,7 @@ package nuclearscience.common.inventory.container;
 
 import electrodynamics.common.item.gear.tools.ItemCanister;
 import electrodynamics.common.item.subtype.SubtypeItemUpgrade;
-import electrodynamics.prefab.inventory.container.GenericContainer;
+import electrodynamics.prefab.inventory.container.GenericContainerBlockEntity;
 import electrodynamics.prefab.inventory.container.slot.GenericSlot;
 import electrodynamics.prefab.inventory.container.slot.SlotRestricted;
 import net.minecraft.world.Container;
@@ -15,7 +15,7 @@ import net.minecraft.world.item.BucketItem;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.tile.TileNuclearBoiler;
 
-public class ContainerNuclearBoiler extends GenericContainer<TileNuclearBoiler> {
+public class ContainerNuclearBoiler extends GenericContainerBlockEntity<TileNuclearBoiler> {
 
 	public ContainerNuclearBoiler(int id, Inventory playerinv) {
 		this(id, playerinv, new SimpleContainer(6), new SimpleContainerData(3));

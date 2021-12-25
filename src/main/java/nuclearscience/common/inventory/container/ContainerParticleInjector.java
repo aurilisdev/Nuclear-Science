@@ -1,6 +1,6 @@
 package nuclearscience.common.inventory.container;
 
-import electrodynamics.prefab.inventory.container.GenericContainer;
+import electrodynamics.prefab.inventory.container.GenericContainerBlockEntity;
 import electrodynamics.prefab.inventory.container.slot.GenericSlot;
 import electrodynamics.prefab.inventory.container.slot.SlotRestricted;
 import net.minecraft.world.Container;
@@ -13,7 +13,7 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.tile.TileParticleInjector;
 
-public class ContainerParticleInjector extends GenericContainer<TileParticleInjector> {
+public class ContainerParticleInjector extends GenericContainerBlockEntity<TileParticleInjector> {
 
 	public ContainerParticleInjector(int id, Inventory playerinv) {
 		this(id, playerinv, new SimpleContainer(3), new SimpleContainerData(3));

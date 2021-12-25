@@ -1,7 +1,7 @@
 package nuclearscience.common.inventory.container;
 
 import electrodynamics.common.item.subtype.SubtypeItemUpgrade;
-import electrodynamics.prefab.inventory.container.GenericContainer;
+import electrodynamics.prefab.inventory.container.GenericContainerBlockEntity;
 import electrodynamics.prefab.inventory.container.slot.GenericSlot;
 import electrodynamics.prefab.inventory.container.slot.SlotRestricted;
 import net.minecraft.world.Container;
@@ -15,7 +15,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.tile.TileMSRFuelPreProcessor;
 
-public class ContainerMSRFuelPreProcessor extends GenericContainer<TileMSRFuelPreProcessor> {
+public class ContainerMSRFuelPreProcessor extends GenericContainerBlockEntity<TileMSRFuelPreProcessor> {
 
 	public ContainerMSRFuelPreProcessor(int id, Inventory playerinv) {
 		this(id, playerinv, new SimpleContainer(8), new SimpleContainerData(3));

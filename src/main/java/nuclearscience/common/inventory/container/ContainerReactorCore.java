@@ -1,6 +1,6 @@
 package nuclearscience.common.inventory.container;
 
-import electrodynamics.prefab.inventory.container.GenericContainer;
+import electrodynamics.prefab.inventory.container.GenericContainerBlockEntity;
 import electrodynamics.prefab.inventory.container.slot.SlotRestricted;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -10,7 +10,7 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.tile.TileReactorCore;
 
-public class ContainerReactorCore extends GenericContainer<TileReactorCore> {
+public class ContainerReactorCore extends GenericContainerBlockEntity<TileReactorCore> {
 
 	public ContainerReactorCore(int id, Inventory playerinv) {
 		this(id, playerinv, new SimpleContainer(6), new SimpleContainerData(3));

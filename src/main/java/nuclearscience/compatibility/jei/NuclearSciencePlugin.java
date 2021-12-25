@@ -6,7 +6,7 @@ import java.util.Set;
 
 import com.google.common.collect.ImmutableSet;
 
-import electrodynamics.client.screen.ScreenO2OProcessor;
+import electrodynamics.client.screen.tile.ScreenO2OProcessor;
 import electrodynamics.common.recipe.categories.fluiditem2fluid.FluidItem2FluidRecipe;
 import electrodynamics.common.recipe.categories.fluiditem2item.FluidItem2ItemRecipe;
 import electrodynamics.common.recipe.categories.item2item.Item2ItemRecipe;
