@@ -23,14 +23,15 @@ public class ContainerQuantumAssembler extends GenericContainer<TileQuantumAssem
 
 	@Override
 	public void addInventorySlots(Container inv, Inventory playerinv) {
-		addSlot(new SlotRestricted(inv, nextIndex(), 80, 40, DeferredRegisters.ITEM_CELLDARKMATTER.get()));
-		addSlot(new SlotRestricted(inv, nextIndex(), 53, 56, DeferredRegisters.ITEM_CELLDARKMATTER.get()));
-		addSlot(new SlotRestricted(inv, nextIndex(), 107, 56, DeferredRegisters.ITEM_CELLDARKMATTER.get()));
-		addSlot(new SlotRestricted(inv, nextIndex(), 53, 88, DeferredRegisters.ITEM_CELLDARKMATTER.get()));
-		addSlot(new SlotRestricted(inv, nextIndex(), 107, 88, DeferredRegisters.ITEM_CELLDARKMATTER.get()));
-		addSlot(new SlotRestricted(inv, nextIndex(), 80, 103, DeferredRegisters.ITEM_CELLDARKMATTER.get()));
+		playerInvOffset = 64;
+		addSlot(new SlotRestricted(inv, nextIndex(), 60 + 18 * 3 / 2, 40, DeferredRegisters.ITEM_CELLDARKMATTER.get()));
+		addSlot(new SlotRestricted(inv, nextIndex(), 33, 56, DeferredRegisters.ITEM_CELLDARKMATTER.get()));
+		addSlot(new SlotRestricted(inv, nextIndex(), 114 + 27, 56, DeferredRegisters.ITEM_CELLDARKMATTER.get()));
+		addSlot(new SlotRestricted(inv, nextIndex(), 33, 88, DeferredRegisters.ITEM_CELLDARKMATTER.get()));
+		addSlot(new SlotRestricted(inv, nextIndex(), 114 + 27, 88, DeferredRegisters.ITEM_CELLDARKMATTER.get()));
+		addSlot(new SlotRestricted(inv, nextIndex(), 60 + 18 * 3 / 2, 103, DeferredRegisters.ITEM_CELLDARKMATTER.get()));
 
-		addSlot(new GenericSlot(inv, nextIndex(), 80, 72));
-		addSlot(new GenericSlot(inv, nextIndex(), 20, 72));
+		addSlot(new GenericSlot(inv, nextIndex(), 60, 72));
+		addSlot(new GenericSlot(inv, nextIndex(), 114, 72));
 	}
 }
