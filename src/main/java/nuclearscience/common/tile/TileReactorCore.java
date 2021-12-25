@@ -120,17 +120,13 @@ public class TileReactorCore extends GenericTile {
 				}
 			}
 			if (level.getLevelData().getGameTime() % 10 == 0) {
-				Location source = new Location(worldPosition.getX() + 0.5f, worldPosition.getY() + 0.5f, worldPosition.getZ() + 0.5f);
+				Location source = new Location(worldPosition);
 				double totstrength = temperature * 10;
 				double range = Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 2;
-				AABB bb = AABB.ofSize(new Vec3(source.x(), source.y(), source.z()), range, range, range);
-				List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, bb);
-				for (LivingEntity living : list) {
-					RadiationSystem.applyRadiation(living, source, totstrength);
-				}
+				RadiationSystem.emitRadiationFromLocation(level, source, range, totstrength);
 				if (temperature > 100) {
-					bb = AABB.ofSize(new Vec3(source.x(), source.y(), source.z()), 4, 4, 4);
-					list = level.getEntitiesOfClass(LivingEntity.class, bb);
+					AABB bb = AABB.ofSize(new Vec3(source.x(), source.y(), source.z()), 4, 4, 4);
+					List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, bb);
 					for (LivingEntity living : list) {
 						FluidState state = level.getBlockState(living.getOnPos()).getFluidState();
 						if (state.is(Fluids.WATER) || state.is(Fluids.FLOWING_WATER)) {

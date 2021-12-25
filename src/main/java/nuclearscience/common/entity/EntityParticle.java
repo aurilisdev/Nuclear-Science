@@ -1,7 +1,6 @@
 package nuclearscience.common.entity;
 
 import java.util.HashSet;
-import java.util.List;
 
 import com.mojang.math.Vector3f;
 
@@ -19,13 +18,11 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Explosion.BlockInteraction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 import nuclearscience.DeferredRegisters;
@@ -76,15 +73,7 @@ public class EntityParticle extends Entity {
 			direction = entityData.get(DIRECTION);
 			speed = entityData.get(SPEED);
 		}
-		Location source = new Location(blockPosition());
-		double totstrength = 1000;
-		double range = 1;
-		AABB bb = AABB.ofSize(new Vec3(0, 0, 0), range, range, range);
-		bb = bb.move(new Vec3(source.x(), source.y(), source.z()));
-		List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, bb);
-		for (LivingEntity living : list) {
-			RadiationSystem.applyRadiation(living, source, totstrength);
-		}
+		RadiationSystem.emitRadiationFromLocation(level, new Location(blockPosition()), 1.5, 1000);
 		if (direction != null && direction != Direction.UP) {
 			int checks = (int) (Math.ceil(speed) * 2);
 			float localSpeed = speed / checks;

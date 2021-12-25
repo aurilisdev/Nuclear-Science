@@ -1,20 +1,15 @@
 package nuclearscience.common.tile;
 
-import java.util.List;
-
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import electrodynamics.prefab.utilities.object.Location;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.api.radiation.RadiationSystem;
 
@@ -93,14 +88,9 @@ public class TileMeltedReactor extends GenericTile {
 			}
 		}
 		if (level.getLevelData().getGameTime() % 10 == 0) {
-			Location source = new Location(worldPosition.getX() + 0.5f, worldPosition.getY() + 0.5f, worldPosition.getZ() + 0.5f);
 			double totstrength = 120000 * (radiation / START_RADIATION);
 			double range = Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 2;
-			AABB bb = AABB.ofSize(new Vec3(source.x(), source.y(), source.z()), range, range, range);
-			List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, bb);
-			for (LivingEntity living : list) {
-				RadiationSystem.applyRadiation(living, source, totstrength);
-			}
+			RadiationSystem.emitRadiationFromLocation(level, new Location(worldPosition), range, totstrength);
 		}
 	}
 }

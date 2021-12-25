@@ -12,6 +12,7 @@ import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
+import electrodynamics.prefab.utilities.object.Location;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -22,7 +23,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.SoundRegister;
-import nuclearscience.api.radiation.RadiationUtilities;
+import nuclearscience.api.radiation.RadiationSystem;
 import nuclearscience.common.inventory.container.ContainerGasCentrifuge;
 import nuclearscience.common.settings.Constants;
 import nuclearscience.common.tags.NuclearScienceTags;
@@ -71,7 +72,7 @@ public class TileGasCentrifuge extends GenericTile {
 			this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();
 		}
 
-		isRunning = val == true;
+		isRunning = val;
 
 		return val;
 	}
@@ -130,7 +131,7 @@ public class TileGasCentrifuge extends GenericTile {
 
 	protected void tickServer(ComponentTickable tickable) {
 		if (level.getLevelData().getGameTime() % 10 == 0 && isRunning) {
-			RadiationUtilities.emitRadiationFromTile(this, RADATION_RADIUS_BLOCKS, RADIATION_STRENGTH);
+			RadiationSystem.emitRadiationFromLocation(level, new Location(worldPosition), RADATION_RADIUS_BLOCKS, RADIATION_STRENGTH);
 		}
 	}
 

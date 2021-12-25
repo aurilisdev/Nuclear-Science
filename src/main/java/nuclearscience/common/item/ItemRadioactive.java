@@ -1,16 +1,11 @@
 package nuclearscience.common.item;
 
-import java.util.List;
-
 import electrodynamics.prefab.utilities.object.Location;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
 import nuclearscience.api.radiation.RadiationRegister;
 import nuclearscience.api.radiation.RadiationSystem;
 
@@ -24,25 +19,20 @@ public class ItemRadioactive extends Item {
 	public boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity) {
 		Level world = entity.getCommandSenderWorld();
 		if (world.getLevelData().getGameTime() % 10 == 0) {
-			Location source = new Location(entity.getX(), entity.getY(), entity.getZ());
 			double totstrength = stack.getCount() * RadiationRegister.get(stack.getItem()).getRadiationStrength();
 			double range = Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 1.25;
-			AABB bb = AABB.ofSize(new Vec3(source.x(), source.y(), source.z()), range, range, range);
-			List<LivingEntity> list = world.getEntitiesOfClass(LivingEntity.class, bb);
-			for (LivingEntity living : list) {
-				RadiationSystem.applyRadiation(living, source, totstrength);
-			}
+			RadiationSystem.emitRadiationFromLocation(world, new Location(entity), range, totstrength);
 		}
 		return super.onEntityItemUpdate(stack, entity);
 	}
 
 	@Override
-	public void inventoryTick(ItemStack stack, Level world, Entity entityIn, int itemSlot, boolean isSelected) {
-		super.inventoryTick(stack, world, entityIn, itemSlot, isSelected);
-		if (entityIn instanceof LivingEntity le && world.getLevelData().getGameTime() % 10 == 0) {
-			Location source = new Location(entityIn.getX(), entityIn.getY(), entityIn.getZ());
+	public void inventoryTick(ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {
+		super.inventoryTick(stack, world, entity, itemSlot, isSelected);
+		if (world.getLevelData().getGameTime() % 10 == 0) {
 			double totstrength = stack.getCount() * RadiationRegister.get(stack.getItem()).getRadiationStrength();
-			RadiationSystem.applyRadiation(le, source, totstrength);
+			double range = Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 1.25;
+			RadiationSystem.emitRadiationFromLocation(world, new Location(entity), range, totstrength);
 		}
 	}
 }

@@ -1,6 +1,7 @@
 package nuclearscience.api.radiation;
 
 import java.util.HashMap;
+import java.util.List;
 
 import electrodynamics.prefab.utilities.object.Location;
 import net.minecraft.core.BlockPos;
@@ -12,6 +13,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.TickEvent.ServerTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -28,7 +31,7 @@ public class RadiationSystem {
 
 	public static HashMap<Player, Double> radiationMap = new HashMap<>();
 
-	public static double getRadiationModifier(Level world, Location source, Location end) {
+	private static double getRadiationModifier(Level world, Location source, Location end) {
 		double distance = 1 + source.distance(end);
 		Location clone = new Location(end);
 		double modifier = 1;
@@ -58,7 +61,7 @@ public class RadiationSystem {
 		return strength / (getRadiationModifier(world, source, end) * distance * distance);
 	}
 
-	public static void applyRadiation(LivingEntity entity, Location source, double strength) {
+	private static void applyRadiation(LivingEntity entity, Location source, double strength) {
 		int protection = 1;
 		if (!entity.level.isClientSide) {
 			boolean isPlayer = entity instanceof Player;
@@ -102,6 +105,14 @@ public class RadiationSystem {
 				}
 				entity.addEffect(new MobEffectInstance(EffectRadiation.INSTANCE, time, Math.min(40, amplitude), false, true));
 			}
+		}
+	}
+
+	public static void emitRadiationFromLocation(Level level, Location source, double radius, double strength) {
+		AABB bb = AABB.ofSize(new Vec3(source.x(), source.y(), source.z()), radius * 2, radius * 2, radius * 2);
+		List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, bb);
+		for (LivingEntity living : list) {
+			RadiationSystem.applyRadiation(living, source, strength);
 		}
 	}
 

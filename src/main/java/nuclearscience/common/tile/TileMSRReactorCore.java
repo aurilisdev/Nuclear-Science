@@ -1,7 +1,6 @@
 package nuclearscience.common.tile;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
@@ -14,11 +13,8 @@ import electrodynamics.prefab.utilities.object.Location;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.api.network.moltensalt.IMoltenSaltPipe;
 import nuclearscience.api.radiation.RadiationSystem;
@@ -98,14 +94,9 @@ public class TileMSRReactorCore extends GenericTile {
 					}
 				}
 				if (level.getLevelData().getGameTime() % 10 == 0) {
-					Location source = new Location(worldPosition.getX() + 0.5f, worldPosition.getY() + 0.5f, worldPosition.getZ() + 0.5f);
 					double totstrength = temperature * Math.pow(3, Math.pow(temperature / MELTDOWN_TEMPERATURE, 9));
 					double range = Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 2;
-					AABB bb = AABB.ofSize(new Vec3(source.x(), source.y(), source.z()), range, range, range);
-					List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, bb);
-					for (LivingEntity living : list) {
-						RadiationSystem.applyRadiation(living, source, totstrength);
-					}
+					RadiationSystem.emitRadiationFromLocation(level, new Location(worldPosition), range, totstrength);
 				}
 				double insertDecimal = (100 - insertion) / 100.0;
 				currentFuel -= Math.min(currentFuel,
