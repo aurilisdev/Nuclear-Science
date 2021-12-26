@@ -7,27 +7,92 @@ import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
+import electrodynamics.prefab.utilities.object.TransferPack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.items.CapabilityItemHandler;
 import nuclearscience.DeferredRegisters;
-import nuclearscience.api.radiation.RadiationRegister;
 import nuclearscience.common.inventory.container.ContainerQuantumAssembler;
 import nuclearscience.common.settings.Constants;
 
 public class TileQuantumAssembler extends GenericTile {
+	public int progress = 0;
 
 	public TileQuantumAssembler(BlockPos pos, BlockState state) {
 		super(DeferredRegisters.TILE_QUANTUMASSEMBLER.get(), pos, state);
-		addComponent(new ComponentTickable().tickServer(this::tickServer));
-		addComponent(new ComponentPacketHandler());
+		addComponent(new ComponentTickable().tickServer(this::tickServer).tickCommon(this::tickCommon));
+		addComponent(new ComponentPacketHandler().guiPacketWriter(this::writeGuiPacket).guiPacketReader(this::readGuiPacket));
 		addComponent(new ComponentElectrodynamic(this).voltage(Constants.QUANTUMASSEMBLER_VOLTAGE).input(Direction.DOWN));
 		addComponent(new ComponentInventory(this).size(8).slotFaces(0, Direction.values())
-				.valid((slot, stack, i) -> RadiationRegister.get(stack.getItem()) != RadiationRegister.NULL));
+				.valid((slot, stack, i) -> slot == 6 || slot < 6 && stack.is(DeferredRegisters.ITEM_CELLDARKMATTER.get())).shouldSendInfo());
 		addComponent(new ComponentContainerProvider("container.quantumassembler")
 				.createMenu((id, player) -> new ContainerQuantumAssembler(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 	}
 
-	public void tickServer(ComponentTickable tickable) {
+	private void tickCommon(ComponentTickable tickable) {
+		ComponentInventory inv = getComponent(ComponentType.Inventory);
+		ComponentElectrodynamic electro = getComponent(ComponentType.Electrodynamic);
+		ItemStack input = inv.getItem(6);
+		ItemStack output = inv.getItem(7);
+		boolean canProcess = electro.getJoulesStored() < Constants.QUANTUMASSEMBLER_USAGE_PER_TICK
+				&& !input.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).isPresent()
+				&& (ItemStack.isSame(input, output) && output.getCount() + 1 <= output.getMaxStackSize() || output.isEmpty()) && !input.isEmpty();
+		if (canProcess) {
+			for (int index = 0; index < 6; index++) {
+				ItemStack dmSlot = inv.getItem(index);
+				if (dmSlot.is(DeferredRegisters.ITEM_CELLDARKMATTER.get())) {
+					if (dmSlot.getDamageValue() >= dmSlot.getMaxDamage()) {
+						inv.setItem(index, ItemStack.EMPTY);
+					}
+				} else {
+					canProcess = false;
+				}
+			}
+		} else {
+			progress = 0;
+		}
+
+		boolean canProduce = false;
+		if (canProcess) {
+			if (progress++ >= Constants.QUANTUMASSEMBLER_REQUIRED_TICKS) {
+				canProduce = true;
+			}
+			electro.extractPower(TransferPack.joulesVoltage(Constants.QUANTUMASSEMBLER_USAGE_PER_TICK, electro.getVoltage()), false);
+		}
+		if (canProduce) {
+			progress = 0;
+			for (int index = 0; index < 6; index++) {
+				ItemStack dmSlot = inv.getItem(index);
+				if (dmSlot.is(DeferredRegisters.ITEM_CELLDARKMATTER.get())) {
+					if (dmSlot.getDamageValue() >= dmSlot.getMaxDamage()) {
+						inv.setItem(index, ItemStack.EMPTY);
+					}
+					dmSlot.setDamageValue(dmSlot.getDamageValue() + 1);
+				}
+			}
+			if (output.isEmpty()) {
+				inv.setItem(7, input.copy());
+				inv.getItem(7).setCount(1);
+			} else {
+				output.setCount(output.getCount() + 1);
+			}
+		}
+	}
+
+	private void tickServer(ComponentTickable tickable) {
+		if (tickable.getTicks() % 20 == 0) {
+			this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendGuiPacketToTracking();
+		}
+	}
+
+	private void writeGuiPacket(CompoundTag compound) {
+		compound.putInt("progress", progress);
+	}
+
+	private void readGuiPacket(CompoundTag compound) {
+		progress = compound.getInt("progress");
 	}
 }

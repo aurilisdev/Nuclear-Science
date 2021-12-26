@@ -14,16 +14,13 @@ import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerChemicalExtractor;
-import nuclearscience.common.item.ItemRadioactive;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 import nuclearscience.common.settings.Constants;
-import nuclearscience.prefab.tile.utilities.ITileRadioactive;
 
-public class TileChemicalExtractor extends GenericTile implements ITileRadioactive {
+public class TileChemicalExtractor extends GenericTile {
 
 	public static final int DEFAULT_RAD_STRENGTH = 300;
 	public static final int RAD_RADIUS = 2;
@@ -55,21 +52,4 @@ public class TileChemicalExtractor extends GenericTile implements ITileRadioacti
 					worldPosition.getY() + level.random.nextDouble() * 0.8 + 0.5, worldPosition.getZ() + level.random.nextDouble(), 0.0D, 0.0D, 0.0D);
 		}
 	}
-
-	@Override
-	public double getStrength() {
-		ComponentInventory inv = getComponent(ComponentType.Inventory);
-		for (ItemStack stack : inv.getOutputContents()) {
-			if (stack.getItem() instanceof ItemRadioactive item) {
-
-			}
-		}
-		return 0;
-	}
-
-	@Override
-	public double getBlocksRadius() {
-		return 2;
-	}
-
 }

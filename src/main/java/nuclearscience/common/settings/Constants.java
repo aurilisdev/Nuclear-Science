@@ -59,5 +59,7 @@ public class Constants {
 	public static double QUANTUMASSEMBLER_USAGE_PER_TICK = 1250.0;
 	@DoubleValue(def = 480.0)
 	public static double QUANTUMASSEMBLER_VOLTAGE = 480.0;
+	@IntValue(def = 1200)
+	public static int QUANTUMASSEMBLER_REQUIRED_TICKS = 1200;
 
 }
