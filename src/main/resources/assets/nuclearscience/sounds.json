@@ -26,5 +26,12 @@
 		"sounds": [
 			"nuclearscience:siren"
 		]
+	},
+	"geiger": {
+		"category": "blocks",
+		"subtitle": "subtitles.nuclearscience.geiger",
+		"sounds": [
+			"nuclearscience:geiger"
+		]
 	}
 }

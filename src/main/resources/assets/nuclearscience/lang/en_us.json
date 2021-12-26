@@ -131,6 +131,7 @@
   "subtitles.nuclearscience.nuclearboiler" : "Machine Nuclear Boiler",
   "subtitles.nuclearscience.turbine" : "Machine Turbine",
   "subtitles.nuclearscience.siren" : "Machine Siren",
+  "subtitles.nuclearscience.geiger" : "Tick",
   "gui.jei.category.nuclear_boiler" : "Nuclear Boiler",
   "gui.jei.category.nuclear_boiler.info.power" : "240V 15kW",
   "gui.jei.category.fuel_reprocessor" : "Fuel Reprocessor",

@@ -16,4 +16,6 @@ public class SoundRegister {
 			() -> new SoundEvent(new ResourceLocation(References.ID + ":gascentrifuge")));
 	public static final RegistryObject<SoundEvent> SOUND_SIREN = SOUNDS.register("siren",
 			() -> new SoundEvent(new ResourceLocation(References.ID + ":siren")));
+	public static final RegistryObject<SoundEvent> SOUND_GEIGER = SOUNDS.register("geiger",
+			() -> new SoundEvent(new ResourceLocation(References.ID + ":geiger")));
 }

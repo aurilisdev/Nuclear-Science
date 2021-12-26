@@ -119,6 +119,21 @@ public class TileReactorCore extends GenericTile {
 					meltdown();
 				}
 			}
+		} else {
+			ticksOverheating = 0;
+		}
+		temperature = Math.max(AIR_TEMPERATURE, temperature);
+		if (fuelCount > 0 && level.random.nextFloat() < 1 / (1200.0 * MELTDOWN_TEMPERATURE_CALC / temperature)) {
+			processFissReact(inv);
+		}
+	}
+
+	protected void tickCommon(ComponentTickable tickable) {
+		ticks = ticks > Integer.MAX_VALUE - 2 ? 0 : ticks + 1;
+		if (ticks % 20 == 0) {
+			level.getLightEngine().checkBlock(worldPosition);
+		}
+		if (fuelCount > 0 && ticks > 50) {
 			if (level.getLevelData().getGameTime() % 10 == 0) {
 				Location source = new Location(worldPosition);
 				double totstrength = temperature * 10;
@@ -135,19 +150,6 @@ public class TileReactorCore extends GenericTile {
 					}
 				}
 			}
-		} else {
-			ticksOverheating = 0;
-		}
-		temperature = Math.max(AIR_TEMPERATURE, temperature);
-		if (fuelCount > 0 && level.random.nextFloat() < 1 / (1200.0 * MELTDOWN_TEMPERATURE_CALC / temperature)) {
-			processFissReact(inv);
-		}
-	}
-
-	protected void tickCommon(ComponentTickable tickable) {
-		ticks = ticks > Integer.MAX_VALUE - 2 ? 0 : ticks + 1;
-		if (ticks % 20 == 0) {
-			level.getLightEngine().checkBlock(worldPosition);
 		}
 		produceSteam();
 	}
