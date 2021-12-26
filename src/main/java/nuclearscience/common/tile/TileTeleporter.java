@@ -2,7 +2,7 @@ package nuclearscience.common.tile;
 
 import java.util.List;
 
-import electrodynamics.api.capability.electrodynamic.CapabilityElectrodynamic;
+import electrodynamics.api.capability.ElectrodynamicsCapabilities;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentDirection;
@@ -33,7 +33,7 @@ public class TileTeleporter extends GenericTile {
 		addComponent(new ComponentTickable().tickServer(this::tickServer));
 		addComponent(new ComponentPacketHandler());
 		addComponent(
-				new ComponentElectrodynamic(this).maxJoules(5000000).voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 4).input(Direction.DOWN));
+				new ComponentElectrodynamic(this).maxJoules(5000000).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 4).input(Direction.DOWN));
 
 	}
 

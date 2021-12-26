@@ -7,7 +7,7 @@ import com.mojang.math.Vector3f;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
-import electrodynamics.prefab.utilities.UtilitiesRendering;
+import electrodynamics.prefab.utilities.RenderingUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -44,10 +44,10 @@ public class RenderRadioactiveProcessor implements BlockEntityRenderer<TileRadio
 		}
 		if (tile.<ComponentProcessor>getComponent(ComponentType.Processor).operatingTicks > 0) {
 			BakedModel on = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_RADIOACTIVEPROCESSOR_ON);
-			UtilitiesRendering.renderModel(on, tile, RenderType.solid(), matrixStack, buffer, combinedLightIn, combinedOverlayIn);
+			RenderingUtils.renderModel(on, tile, RenderType.solid(), matrixStack, buffer, combinedLightIn, combinedOverlayIn);
 		} else {
 			BakedModel off = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_RADIOACTIVEPROCESSOR);
-			UtilitiesRendering.renderModel(off, tile, RenderType.solid(), matrixStack, buffer, combinedLightIn, combinedOverlayIn);
+			RenderingUtils.renderModel(off, tile, RenderType.solid(), matrixStack, buffer, combinedLightIn, combinedOverlayIn);
 		}
 		matrixStack.popPose();
 	}

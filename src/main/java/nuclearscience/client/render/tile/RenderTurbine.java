@@ -3,7 +3,7 @@ package nuclearscience.client.render.tile;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Quaternion;
 
-import electrodynamics.prefab.utilities.UtilitiesRendering;
+import electrodynamics.prefab.utilities.RenderingUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -28,19 +28,19 @@ public class RenderTurbine implements BlockEntityRenderer<TileTurbine> {
 			matrixStackIn.pushPose();
 			matrixStackIn.translate(8 / 16.0, 4.75 / 16.0, 8 / 16.0);
 			matrixStackIn.mulPose(new Quaternion(0, (float) (daytime * 20 % 360), 0, true));
-			UtilitiesRendering.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn,
+			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn,
 					combinedOverlayIn);
 			matrixStackIn.popPose();
 			matrixStackIn.pushPose();
 			matrixStackIn.translate(8 / 16.0, 7.75 / 16.0, 8 / 16.0);
 			matrixStackIn.mulPose(new Quaternion(0, (float) (daytime * 20 % 360 + 22.5f), 0, true));
-			UtilitiesRendering.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn,
+			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn,
 					combinedOverlayIn);
 			matrixStackIn.popPose();
 			matrixStackIn.pushPose();
 			matrixStackIn.translate(8 / 16.0, 10.75 / 16.0, 8 / 16.0);
 			matrixStackIn.mulPose(new Quaternion(0, (float) (daytime * 20 % 360 + 45.0f), 0, true));
-			UtilitiesRendering.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn,
+			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn,
 					combinedOverlayIn);
 			matrixStackIn.popPose();
 		} else if (isCore) {
@@ -49,28 +49,28 @@ public class RenderTurbine implements BlockEntityRenderer<TileTurbine> {
 			matrixStackIn.translate(8 / 16.0, 4.75 / 16.0, 8 / 16.0);
 			matrixStackIn.mulPose(new Quaternion(0, (float) (daytime * 20 % 360), 0, true));
 			matrixStackIn.scale(size, 1, size);
-			UtilitiesRendering.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn,
+			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn,
 					combinedOverlayIn);
 			matrixStackIn.popPose();
 			matrixStackIn.pushPose();
 			matrixStackIn.translate(8 / 16.0, 7.75 / 16.0, 8 / 16.0);
 			matrixStackIn.mulPose(new Quaternion(0, (float) (daytime * 20 % 360 + 22.5f), 0, true));
 			matrixStackIn.scale(size, 1, size);
-			UtilitiesRendering.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn,
+			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn,
 					combinedOverlayIn);
 			matrixStackIn.popPose();
 			matrixStackIn.pushPose();
 			matrixStackIn.translate(8 / 16.0, 10.75 / 16.0, 8 / 16.0);
 			matrixStackIn.mulPose(new Quaternion(0, (float) (daytime * 20 % 360 + 45.0f), 0, true));
 			matrixStackIn.scale(size, 1, size);
-			UtilitiesRendering.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn,
+			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn,
 					combinedOverlayIn);
 			matrixStackIn.popPose();
 			matrixStackIn.pushPose();
 			matrixStackIn.translate(0.5, 0.5, 0.5);
 			matrixStackIn.scale(size, 1, size);
 			ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_TURBINECASING);
-			UtilitiesRendering.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn,
+			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn,
 					combinedOverlayIn);
 			matrixStackIn.popPose();
 		}

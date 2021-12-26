@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import electrodynamics.prefab.block.GenericEntityBlock;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
-import electrodynamics.prefab.utilities.UtilitiesRendering;
+import electrodynamics.prefab.utilities.RenderingUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -27,14 +27,14 @@ public class RenderChemicalExtractor implements BlockEntityRenderer<TileChemical
 		BakedModel ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_CHEMICALEXTRACTORWATER);
 		Direction face = tileEntityIn.getBlockState().getValue(GenericEntityBlock.FACING);
 		matrixStackIn.translate(face.getStepX(), face.getStepY(), face.getStepZ());
-		UtilitiesRendering.prepareRotationalTileModel(tileEntityIn, matrixStackIn);
+		RenderingUtils.prepareRotationalTileModel(tileEntityIn, matrixStackIn);
 		matrixStackIn.translate(-0.5, 0, 0.5);
 		float prog = tileEntityIn.<ComponentFluidHandlerMulti>getComponent(ComponentType.FluidHandler).getTankFromFluid(Fluids.WATER, true)
 				.getFluidAmount() / (float) TileChemicalExtractor.MAX_TANK_CAPACITY;
 		if (prog > 0) {
 			matrixStackIn.scale(1, prog / 16.0f * 5.8f * 2, 1);
 			matrixStackIn.translate(0, prog / 16.0f * 5.8f, 0);
-			UtilitiesRendering.renderModel(ibakedmodel, tileEntityIn, RenderType.cutout(), matrixStackIn, bufferIn, combinedLightIn,
+			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.cutout(), matrixStackIn, bufferIn, combinedLightIn,
 					combinedOverlayIn);
 		}
 	}

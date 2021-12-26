@@ -7,7 +7,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import electrodynamics.api.screen.IScreenWrapper;
 import electrodynamics.prefab.screen.component.ScreenComponent;
-import electrodynamics.prefab.utilities.UtilitiesRendering;
+import electrodynamics.prefab.utilities.RenderingUtils;
 import net.minecraft.resources.ResourceLocation;
 import nuclearscience.References;
 
@@ -48,7 +48,7 @@ public class ScreenComponentGasCentrifuge extends ScreenComponent {
 
 	@Override
 	public void renderBackground(PoseStack stack, final int xAxis, final int yAxis, final int guiWidth, final int guiHeight) {
-		UtilitiesRendering.bindTexture(resource);
+		RenderingUtils.bindTexture(resource);
 		gui.drawTexturedRect(stack, guiWidth + xLocation, guiHeight + yLocation, 0, 0, WIDTH, HEIGHT);
 		int progressBulbs = (int) (progressInfoHandlerBulbs.getAsDouble() * BULB_WIDTH);
 		int topProgress = (int) (progressInfoHandlerProgressTop.getAsDouble() * ARROW_WIDTH);

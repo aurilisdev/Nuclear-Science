@@ -30,7 +30,7 @@ import nuclearscience.common.item.ItemHazmatArmor;
 
 @EventBusSubscriber(modid = References.ID, bus = Bus.FORGE)
 public class RadiationSystem {
-	public static ThreadLocal<HashMap<Player, Double>> radiationMap = ThreadLocal.withInitial(() -> new HashMap<>());
+	public static ThreadLocal<HashMap<Player, Double>> radiationMap = ThreadLocal.withInitial(HashMap::new);
 
 	private static double getRadiationModifier(Level world, Location source, Location end) {
 		double distance = 1 + source.distance(end);

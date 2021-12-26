@@ -2,7 +2,7 @@ package nuclearscience.common.tile;
 
 import java.util.UUID;
 
-import electrodynamics.api.capability.electrodynamic.CapabilityElectrodynamic;
+import electrodynamics.api.capability.ElectrodynamicsCapabilities;
 import electrodynamics.common.network.ElectricityUtilities;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
@@ -40,7 +40,7 @@ public class TileQuantumCapacitor extends GenericTile implements IEnergyStorage 
 		super(DeferredRegisters.TILE_QUANTUMCAPACITOR.get(), pos, state);
 		addComponent(new ComponentTickable().tickServer(this::tickServer));
 		addComponent(new ComponentPacketHandler().guiPacketReader(this::readGUIPacket).guiPacketWriter(this::writeGUIPacket));
-		addComponent(new ComponentElectrodynamic(this).voltage(16 * CapabilityElectrodynamic.DEFAULT_VOLTAGE).output(Direction.DOWN)
+		addComponent(new ComponentElectrodynamic(this).voltage(16 * ElectrodynamicsCapabilities.DEFAULT_VOLTAGE).output(Direction.DOWN)
 				.output(Direction.UP).input(Direction.WEST).input(Direction.EAST).input(Direction.SOUTH).input(Direction.NORTH)
 				.receivePower(this::receivePower).setJoules(this::setJoulesStored).getJoules(this::getJoulesStored));
 		addComponent(new ComponentInventory(this));

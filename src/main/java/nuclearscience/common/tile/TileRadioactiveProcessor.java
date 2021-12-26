@@ -1,6 +1,6 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.api.capability.electrodynamic.CapabilityElectrodynamic;
+import electrodynamics.api.capability.ElectrodynamicsCapabilities;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
@@ -28,7 +28,7 @@ public class TileRadioactiveProcessor extends GenericTile {
 		addComponent(new ComponentTickable());
 		addComponent(new ComponentDirection());
 		addComponent(new ComponentPacketHandler());
-		addComponent(new ComponentElectrodynamic(this).voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 4)
+		addComponent(new ComponentElectrodynamic(this).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 4)
 				.maxJoules(Constants.RADIOACTIVEPROCESSOR_USAGE_PER_TICK * 10.0).relativeInput(Direction.NORTH));
 		addComponent(new ComponentFluidHandlerMulti(this)
 				.setAddFluidsValues(NuclearScienceRecipeInit.RADIOACTIVE_PROCESSOR_TYPE, MAX_TANK_CAPACITY, true, false).input(Direction.UP));

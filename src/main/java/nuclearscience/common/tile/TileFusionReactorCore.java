@@ -1,6 +1,6 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.api.capability.electrodynamic.CapabilityElectrodynamic;
+import electrodynamics.api.capability.ElectrodynamicsCapabilities;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
@@ -25,7 +25,7 @@ public class TileFusionReactorCore extends GenericTile {
 		addComponent(new ComponentTickable().tickServer(this::tickServer));
 		addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket));
 		addComponent(new ComponentElectrodynamic(this).input(Direction.DOWN).input(Direction.UP)
-				.maxJoules(Constants.FUSIONREACTOR_USAGE_PER_TICK * 20.0).voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 4));
+				.maxJoules(Constants.FUSIONREACTOR_USAGE_PER_TICK * 20.0).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 4));
 	}
 
 	public void tickServer(ComponentTickable tick) {

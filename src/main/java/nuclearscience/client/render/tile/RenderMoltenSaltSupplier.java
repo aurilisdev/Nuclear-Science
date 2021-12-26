@@ -7,7 +7,7 @@ import com.mojang.math.Vector3f;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
-import electrodynamics.prefab.utilities.UtilitiesRendering;
+import electrodynamics.prefab.utilities.RenderingUtils;
 import electrodynamics.prefab.utilities.object.TransferPack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -50,10 +50,10 @@ public class RenderMoltenSaltSupplier implements BlockEntityRenderer<TileMoltenS
 		ComponentElectrodynamic electro = tile.getComponent(ComponentType.Electrodynamic);
 		if (electro != null && electro.getJoulesStored() >= PACK.getJoules()) {
 			BakedModel on = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_MOLTENSALTSUPPLIER_ON);
-			UtilitiesRendering.renderModel(on, tile, RenderType.solid(), matrixStack, buffer, combinedLightIn, combinedOverlayIn);
+			RenderingUtils.renderModel(on, tile, RenderType.solid(), matrixStack, buffer, combinedLightIn, combinedOverlayIn);
 		} else {
 			BakedModel off = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_MOLTENSALTSUPPLIER);
-			UtilitiesRendering.renderModel(off, tile, RenderType.solid(), matrixStack, buffer, combinedLightIn, combinedOverlayIn);
+			RenderingUtils.renderModel(off, tile, RenderType.solid(), matrixStack, buffer, combinedLightIn, combinedOverlayIn);
 		}
 		matrixStack.popPose();
 
