@@ -1,8 +1,8 @@
 package nuclearscience.common.inventory.container;
 
 import electrodynamics.prefab.inventory.container.GenericContainerBlockEntity;
-import electrodynamics.prefab.inventory.container.slot.GenericSlot;
-import electrodynamics.prefab.inventory.container.slot.SlotRestricted;
+import electrodynamics.prefab.inventory.container.slot.item.SlotGeneric;
+import electrodynamics.prefab.inventory.container.slot.item.type.SlotRestricted;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -31,7 +31,7 @@ public class ContainerQuantumAssembler extends GenericContainerBlockEntity<TileQ
 		addSlot(new SlotRestricted(inv, nextIndex(), 114 + 27, 88, DeferredRegisters.ITEM_CELLDARKMATTER.get()));
 		addSlot(new SlotRestricted(inv, nextIndex(), 60 + 18 * 3 / 2, 103, DeferredRegisters.ITEM_CELLDARKMATTER.get()));
 
-		addSlot(new GenericSlot(inv, nextIndex(), 60, 72));
-		addSlot(new GenericSlot(inv, nextIndex(), 114, 72));
+		addSlot(new SlotGeneric(inv, nextIndex(), 60, 72));
+		addSlot(new SlotGeneric(inv, nextIndex(), 114, 72));
 	}
 }

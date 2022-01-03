@@ -26,12 +26,8 @@ public class NuclearSciencePsuedoRecipes {
 		addNuclearScienceFluids();
 		addNuclearScienceItems();
 
-		/* Gas Centrifuge */
-
 		GAS_CENTRIFUGE_RECIPES.add(new PsuedoGasCentrifugeRecipe(new FluidStack(NUCLEAR_SCIENCE_FLUIDS.get(0), 5000),
 				NUCLEAR_SCIENCE_ITEMS.get(0).get(2), NUCLEAR_SCIENCE_ITEMS.get(0).get(1), new ItemStack(DeferredRegisters.ITEM_FISSILEDUST.get())));
-
-		/* Anit Matter Production */
 
 		ANTI_MATTER_RECIPES.add(new PsuedoItem2ItemRecipe(Arrays.asList(new ItemStack[] { NUCLEAR_SCIENCE_ITEMS.get(1).get(4) }),
 				NUCLEAR_SCIENCE_ITEMS.get(1).get(5)));
@@ -44,8 +40,6 @@ public class NuclearSciencePsuedoRecipes {
 
 		INFO_ITEMS.add(new ItemStack(nuclearscience.DeferredRegisters.blockReactorCore));
 		INFO_ITEMS.add(new ItemStack(nuclearscience.DeferredRegisters.blockFusionReactorCore));
-		INFO_ITEMS.add(new ItemStack(nuclearscience.DeferredRegisters.blockNuclearBoiler));
-		INFO_ITEMS.add(new ItemStack(nuclearscience.DeferredRegisters.blockChemicalExtractor));
 		INFO_ITEMS.add(new ItemStack(nuclearscience.DeferredRegisters.blockElectromagnet));
 		INFO_ITEMS.add(new ItemStack(nuclearscience.DeferredRegisters.blockElectromagneticBooster));
 		INFO_ITEMS.add(new ItemStack(nuclearscience.DeferredRegisters.blockElectromagneticSwitch));

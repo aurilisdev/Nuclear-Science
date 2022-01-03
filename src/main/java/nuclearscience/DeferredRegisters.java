@@ -222,15 +222,25 @@ public class DeferredRegisters {
 
 		FLUIDS.register("fluidammonia", supplier(fluidAmmonia = new FluidAmmonia()));
 
-		BlockItemDescriptable.addDescription(blockGasCentrifuge, "|translate|tooltip.gascentrifuge.voltage");
-		BlockItemDescriptable.addDescription(blockNuclearBoiler, "|translate|tooltip.nuclearboiler.voltage");
-		BlockItemDescriptable.addDescription(blockChemicalExtractor, "|translate|tooltip.chemicalextractor.voltage");
-		BlockItemDescriptable.addDescription(blockParticleInjector, "|translate|tooltip.particleinjector.voltage");
-		BlockItemDescriptable.addDescription(blockQuantumCapacitor, "|translate|tooltip.quantumcapacitor.voltage");
-		BlockItemDescriptable.addDescription(blockTeleporter, "|translate|tooltip.teleporter.voltage");
-		BlockItemDescriptable.addDescription(blockFuelReprocessor, "|translate|tooltip.fuelreprocessor.voltage");
-		BlockItemDescriptable.addDescription(blockRadioactiveProcessor, "|translate|tooltip.radioactiveprocessor.voltage");
-
+		//Machines
+		BlockItemDescriptable.addDescription(blockGasCentrifuge, "|translate|tooltip.voltage.240");
+		BlockItemDescriptable.addDescription(blockNuclearBoiler, "|translate|tooltip.voltage.240");
+		BlockItemDescriptable.addDescription(blockChemicalExtractor, "|translate|tooltip.voltage.240");
+		BlockItemDescriptable.addDescription(blockParticleInjector, "|translate|tooltip.voltage.960");
+		BlockItemDescriptable.addDescription(blockTeleporter, "|translate|tooltip.voltage.480");
+		BlockItemDescriptable.addDescription(blockFuelReprocessor, "|translate|tooltip.voltage.480");
+		BlockItemDescriptable.addDescription(blockRadioactiveProcessor, "|translate|tooltip.voltage.480");
+		BlockItemDescriptable.addDescription(blockMSRFuelPreProcessor, "|translate|tooltip.voltage.240");
+		BlockItemDescriptable.addDescription(blockMoltenSaltSupplier, "|translate|tooltip.voltage.120");
+		BlockItemDescriptable.addDescription(blockFusionReactorCore, "|translate|tooltip.voltage.480");
+		BlockItemDescriptable.addDescription(blockFreezePlug, "|translate|tooltip.voltage.120");
+		BlockItemDescriptable.addDescription(blockQuantumAssembler, "|translate|tooltip.voltage.480");
+		
+		//Generators
+		BlockItemDescriptable.addDescription(blockRadioisotopeGenerator, "|translate|tooltip.voltage.120");
+		
+		//Misc
+		BlockItemDescriptable.addDescription(blockQuantumCapacitor, "|translate|tooltip.voltage.1920");
 	}
 
 	public static final RegistryObject<Item> ITEM_URANIUM235 = ITEMS.register("uranium235",

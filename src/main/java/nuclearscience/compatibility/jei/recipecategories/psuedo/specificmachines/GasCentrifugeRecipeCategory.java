@@ -42,7 +42,7 @@ public class GasCentrifugeRecipeCategory implements IRecipeCategory<PsuedoGasCen
 	private static int ANIMATION_TIME = 100;
 
 	private static String MOD_ID = References.ID;
-	private static String RECIPE_GROUP = "gas_centrifuge";
+	private static String RECIPE_GROUP = "gascentrifuge";
 	private static String GUI_TEXTURE = "textures/gui/jei/gascentrifuge.png";
 
 	public static ItemStack INPUT_MACHINE = new ItemStack(DeferredRegisters.blockGasCentrifuge);
@@ -82,7 +82,7 @@ public class GasCentrifugeRecipeCategory implements IRecipeCategory<PsuedoGasCen
 
 	@Override
 	public Component getTitle() {
-		return new TranslatableComponent("gui.jei.category." + RECIPE_GROUP);
+		return new TranslatableComponent("jei.gui." + RECIPE_GROUP);
 	}
 
 	@Override
@@ -124,11 +124,11 @@ public class GasCentrifugeRecipeCategory implements IRecipeCategory<PsuedoGasCen
 
 		int animTimeSeconds = ANIMATION_TIME / 20;
 
-		TranslatableComponent percentU235String = new TranslatableComponent("gui.jei.category." + RECIPE_GROUP + ".info.percent_u235",
+		TranslatableComponent percentU235String = new TranslatableComponent("jei.gui." + RECIPE_GROUP + ".info.percent_u235",
 				animTimeSeconds);
-		TranslatableComponent percentU238String = new TranslatableComponent("gui.jei.category." + RECIPE_GROUP + ".info.percent_u238",
+		TranslatableComponent percentU238String = new TranslatableComponent("jei.gui." + RECIPE_GROUP + ".info.percent_u238",
 				animTimeSeconds);
-		TranslatableComponent percentBiproductString = new TranslatableComponent("gui.jei.category." + RECIPE_GROUP + ".info.percent_biproduct",
+		TranslatableComponent percentBiproductString = new TranslatableComponent("jei.gui." + RECIPE_GROUP + ".info.percent_biproduct",
 				animTimeSeconds);
 
 		Minecraft minecraft = Minecraft.getInstance();

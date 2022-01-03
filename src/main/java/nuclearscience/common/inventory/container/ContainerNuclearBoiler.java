@@ -3,8 +3,9 @@ package nuclearscience.common.inventory.container;
 import electrodynamics.common.item.gear.tools.ItemCanister;
 import electrodynamics.common.item.subtype.SubtypeItemUpgrade;
 import electrodynamics.prefab.inventory.container.GenericContainerBlockEntity;
-import electrodynamics.prefab.inventory.container.slot.GenericSlot;
-import electrodynamics.prefab.inventory.container.slot.SlotRestricted;
+import electrodynamics.prefab.inventory.container.slot.item.SlotGeneric;
+import electrodynamics.prefab.inventory.container.slot.item.type.SlotFluid;
+import electrodynamics.prefab.inventory.container.slot.item.type.SlotUpgrade;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -31,17 +32,20 @@ public class ContainerNuclearBoiler extends GenericContainerBlockEntity<TileNucl
 
 	@Override
 	public void addInventorySlots(Container inv, Inventory playerinv) {
-		addSlot(new GenericSlot(inv, nextIndex(), 74, 31));
-		addSlot(new SlotRestricted(inv, nextIndex(), 74, 51, false, ItemCanister.class, BucketItem.class));
-		addSlot(new SlotRestricted(inv, nextIndex(), 108, 51, false, ItemCanister.class, BucketItem.class));
-		addSlot(new SlotRestricted(inv, nextIndex(), 150, 14,
-				electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.basicspeed),
-				electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.advancedspeed)));
-		addSlot(new SlotRestricted(inv, nextIndex(), 150, 34,
-				electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.basicspeed),
-				electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.advancedspeed)));
-		addSlot(new SlotRestricted(inv, nextIndex(), 150, 54,
-				electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.basicspeed),
-				electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.advancedspeed)));
+		addSlot(new SlotGeneric(inv, nextIndex(), 74, 31));
+		addSlot(new SlotFluid(inv, nextIndex(), 74, 51));
+		addSlot(new SlotFluid(inv, nextIndex(), 108, 51));
+		addSlot(new SlotUpgrade(inv, nextIndex(), 150, 14, SubtypeItemUpgrade.basicspeed,
+				SubtypeItemUpgrade.advancedspeed));
+				//electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.basicspeed),
+				//electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.advancedspeed)));
+		addSlot(new SlotUpgrade(inv, nextIndex(), 150, 34, SubtypeItemUpgrade.basicspeed,
+				SubtypeItemUpgrade.advancedspeed));
+				//electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.basicspeed),
+				//electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.advancedspeed)));
+		addSlot(new SlotUpgrade(inv, nextIndex(), 150, 54, SubtypeItemUpgrade.basicspeed,
+				SubtypeItemUpgrade.advancedspeed));
+				//electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.basicspeed),
+				//electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.advancedspeed)));
 	}
 }

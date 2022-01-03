@@ -36,7 +36,7 @@ public class ParticleAcceleratorDarkMatterRecipeCategory implements IRecipeCateg
 	private static int DESC_Y_HEIGHT = 122;
 
 	private static String MOD_ID = References.ID;
-	private static String RECIPE_GROUP = "partical_accelerator_darkmatter";
+	private static String RECIPE_GROUP = "particalaccelerator.darkmatter";
 	private static String GUI_TEXTURE = "textures/gui/jei/particle_accelerator_dark_matter_gui.png";
 
 	public static ItemStack INPUT_MACHINE = new ItemStack(nuclearscience.DeferredRegisters.blockParticleInjector);
@@ -56,7 +56,7 @@ public class ParticleAcceleratorDarkMatterRecipeCategory implements IRecipeCateg
 
 		ResourceLocation guiTexture = new ResourceLocation(MOD_ID, GUI_TEXTURE);
 
-		cachedArrows = CacheBuilder.newBuilder().maximumSize(25).build(new CacheLoader<Integer, ArrayList<IDrawableAnimated>>() {
+		cachedArrows = CacheBuilder.newBuilder().maximumSize(2).build(new CacheLoader<Integer, ArrayList<IDrawableAnimated>>() {
 			@Override
 			public ArrayList<IDrawableAnimated> load(Integer cookTime) {
 
@@ -85,7 +85,7 @@ public class ParticleAcceleratorDarkMatterRecipeCategory implements IRecipeCateg
 
 	@Override
 	public Component getTitle() {
-		return new TranslatableComponent("gui.jei.category." + RECIPE_GROUP);
+		return new TranslatableComponent("jei.gui." + RECIPE_GROUP);
 	}
 
 	@Override
@@ -121,7 +121,7 @@ public class ParticleAcceleratorDarkMatterRecipeCategory implements IRecipeCateg
 		arrow.get(1).draw(matrixStack, 23, 21);
 
 		int animTimeSeconds = ANIM_TIME / 20;
-		TranslatableComponent timeString = new TranslatableComponent("gui.jei.category." + RECIPE_GROUP + ".info.power", animTimeSeconds);
+		TranslatableComponent timeString = new TranslatableComponent("jei.gui." + RECIPE_GROUP + ".info.power", animTimeSeconds);
 		Minecraft minecraft = Minecraft.getInstance();
 		Font fontRenderer = minecraft.font;
 		float stringWidth = fontRenderer.width(timeString);

@@ -12,6 +12,7 @@ import mezz.jei.api.helpers.IGuiHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import nuclearscience.DeferredRegisters;
+import nuclearscience.common.settings.Constants;
 
 public class NuclearBoilerRecipeCategory extends FluidItem2FluidRecipeCategory {
 
@@ -29,12 +30,12 @@ public class NuclearBoilerRecipeCategory extends FluidItem2FluidRecipeCategory {
 	private static DefaultFluidGaugeWrapper IN_GAUGE = new DefaultFluidGaugeWrapper(10, 5, 5000);
 	private static DefaultFluidGaugeWrapper OUT_GAUGE = new DefaultFluidGaugeWrapper(108, 5, 5000);
 
-	private static PowerLabelWrapper POWER_LABEL = new PowerLabelWrapper(2, 55);
+	private static PowerLabelWrapper POWER_LABEL = new PowerLabelWrapper(2, 55, Constants.CHEMICALBOILER_USAGE_PER_TICK, 240);
 
 	private static int ANIM_TIME = 50;
 
 	private static String MOD_ID = electrodynamics.api.References.ID;
-	private static String RECIPE_GROUP = "nuclear_boiler";
+	private static String RECIPE_GROUP = "nuclearboiler";
 
 	public static ItemStack INPUT_MACHINE = new ItemStack(DeferredRegisters.blockNuclearBoiler);
 
