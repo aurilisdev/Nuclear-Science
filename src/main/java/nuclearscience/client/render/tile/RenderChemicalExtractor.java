@@ -34,8 +34,7 @@ public class RenderChemicalExtractor implements BlockEntityRenderer<TileChemical
 		if (prog > 0) {
 			matrixStackIn.scale(1, prog / 16.0f * 5.8f * 2, 1);
 			matrixStackIn.translate(0, prog / 16.0f * 5.8f, 0);
-			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.cutout(), matrixStackIn, bufferIn, combinedLightIn,
-					combinedOverlayIn);
+			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.cutout(), matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
 		}
 	}
 

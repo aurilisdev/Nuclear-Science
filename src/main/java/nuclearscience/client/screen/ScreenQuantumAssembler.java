@@ -17,8 +17,8 @@ public class ScreenQuantumAssembler extends GenericScreen<ContainerQuantumAssemb
 
 	public ScreenQuantumAssembler(ContainerQuantumAssembler container, Inventory playerInventory, Component title) {
 		super(container, playerInventory, title);
-		components.add(new ScreenComponentElectricInfo(this, -ScreenComponentInfo.SIZE + 1, 2)
-				.wattage(Constants.QUANTUMASSEMBLER_USAGE_PER_TICK * 20));
+		components
+				.add(new ScreenComponentElectricInfo(this, -ScreenComponentInfo.SIZE + 1, 2).wattage(Constants.QUANTUMASSEMBLER_USAGE_PER_TICK * 20));
 		imageHeight += 64;
 		inventoryLabelY += 64;
 		components.add(new ScreenComponentProgress(() -> {

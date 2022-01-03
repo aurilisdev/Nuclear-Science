@@ -71,16 +71,13 @@ public class ScreenRadioisotopeGenerator extends GenericScreen<ContainerRadioiso
 		TransferPack transfer = TransferPack.ampsVoltage(currentOutput / Constants.RADIOISOTOPEGENERATOR_VOLTAGE,
 				Constants.RADIOISOTOPEGENERATOR_VOLTAGE);
 		font.draw(matrixStack,
-				new TranslatableComponent("gui.machine.current",
-						ChatFormatter.getElectricDisplayShort(transfer.getAmps(), ElectricUnit.AMPERE)),
+				new TranslatableComponent("gui.machine.current", ChatFormatter.getElectricDisplayShort(transfer.getAmps(), ElectricUnit.AMPERE)),
 				(float) inventoryLabelX + 60, (float) inventoryLabelY - 48, 4210752);
 		font.draw(matrixStack,
-				new TranslatableComponent("gui.machine.output",
-						ChatFormatter.getElectricDisplayShort(transfer.getWatts(), ElectricUnit.WATT)),
+				new TranslatableComponent("gui.machine.output", ChatFormatter.getElectricDisplayShort(transfer.getWatts(), ElectricUnit.WATT)),
 				(float) inventoryLabelX + 60, (float) inventoryLabelY - 35, 4210752);
 		font.draw(matrixStack,
-				new TranslatableComponent("gui.machine.voltage",
-						ChatFormatter.getElectricDisplayShort(transfer.getVoltage(), ElectricUnit.VOLTAGE)),
+				new TranslatableComponent("gui.machine.voltage", ChatFormatter.getElectricDisplayShort(transfer.getVoltage(), ElectricUnit.VOLTAGE)),
 				(float) inventoryLabelX + 60, (float) inventoryLabelY - 22, 4210752);
 	}
 }

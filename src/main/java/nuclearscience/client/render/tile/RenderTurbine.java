@@ -28,20 +28,17 @@ public class RenderTurbine implements BlockEntityRenderer<TileTurbine> {
 			matrixStackIn.pushPose();
 			matrixStackIn.translate(8 / 16.0, 4.75 / 16.0, 8 / 16.0);
 			matrixStackIn.mulPose(new Quaternion(0, (float) (daytime * 20 % 360), 0, true));
-			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn,
-					combinedOverlayIn);
+			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
 			matrixStackIn.popPose();
 			matrixStackIn.pushPose();
 			matrixStackIn.translate(8 / 16.0, 7.75 / 16.0, 8 / 16.0);
 			matrixStackIn.mulPose(new Quaternion(0, (float) (daytime * 20 % 360 + 22.5f), 0, true));
-			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn,
-					combinedOverlayIn);
+			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
 			matrixStackIn.popPose();
 			matrixStackIn.pushPose();
 			matrixStackIn.translate(8 / 16.0, 10.75 / 16.0, 8 / 16.0);
 			matrixStackIn.mulPose(new Quaternion(0, (float) (daytime * 20 % 360 + 45.0f), 0, true));
-			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn,
-					combinedOverlayIn);
+			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
 			matrixStackIn.popPose();
 		} else if (isCore) {
 			float size = 3;
@@ -49,29 +46,25 @@ public class RenderTurbine implements BlockEntityRenderer<TileTurbine> {
 			matrixStackIn.translate(8 / 16.0, 4.75 / 16.0, 8 / 16.0);
 			matrixStackIn.mulPose(new Quaternion(0, (float) (daytime * 20 % 360), 0, true));
 			matrixStackIn.scale(size, 1, size);
-			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn,
-					combinedOverlayIn);
+			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
 			matrixStackIn.popPose();
 			matrixStackIn.pushPose();
 			matrixStackIn.translate(8 / 16.0, 7.75 / 16.0, 8 / 16.0);
 			matrixStackIn.mulPose(new Quaternion(0, (float) (daytime * 20 % 360 + 22.5f), 0, true));
 			matrixStackIn.scale(size, 1, size);
-			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn,
-					combinedOverlayIn);
+			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
 			matrixStackIn.popPose();
 			matrixStackIn.pushPose();
 			matrixStackIn.translate(8 / 16.0, 10.75 / 16.0, 8 / 16.0);
 			matrixStackIn.mulPose(new Quaternion(0, (float) (daytime * 20 % 360 + 45.0f), 0, true));
 			matrixStackIn.scale(size, 1, size);
-			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn,
-					combinedOverlayIn);
+			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
 			matrixStackIn.popPose();
 			matrixStackIn.pushPose();
 			matrixStackIn.translate(0.5, 0.5, 0.5);
 			matrixStackIn.scale(size, 1, size);
 			ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_TURBINECASING);
-			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn,
-					combinedOverlayIn);
+			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
 			matrixStackIn.popPose();
 		}
 	}

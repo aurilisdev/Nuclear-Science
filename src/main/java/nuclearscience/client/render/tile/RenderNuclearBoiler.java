@@ -37,8 +37,7 @@ public class RenderNuclearBoiler implements BlockEntityRenderer<TileNuclearBoile
 			matrixStackIn.translate(0, 4.5 / 16.0, 2.0 / 16.0);
 			matrixStackIn.scale(1, prog / 16.0f * 12f, 1);
 			matrixStackIn.translate(0, prog / 16.0f * 6f, 0);
-			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.cutout(), matrixStackIn, bufferIn, combinedLightIn,
-					combinedOverlayIn);
+			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.cutout(), matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
 		}
 		matrixStackIn.popPose();
 		matrixStackIn.pushPose();
@@ -53,8 +52,7 @@ public class RenderNuclearBoiler implements BlockEntityRenderer<TileNuclearBoile
 			matrixStackIn.translate(0, 4.5 / 16.0, -2.0 / 16.0);
 			matrixStackIn.scale(1, prog / 16.0f * 12f, 1);
 			matrixStackIn.translate(0, prog / 16.0f * 6f, 0);
-			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.cutout(), matrixStackIn, bufferIn, combinedLightIn,
-					combinedOverlayIn);
+			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.cutout(), matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
 		}
 		matrixStackIn.popPose();
 	}

@@ -49,12 +49,8 @@ import nuclearscience.compatibility.jei.utils.psuedorecipes.PsuedoGasCentrifugeR
 @JeiPlugin
 public class NuclearSciencePlugin implements IModPlugin {
 
-	private static final int FULL_FLUID_SQUARE = 1600;
-	
-	private static final String INFO_ITEM = "jei.info.item.";
 	private static final String INFO_BLOCK = "jei.info.block.";
-	private static final String INFO_FLUID = "jei.info.fluid.";
-	
+
 	@Override
 	public ResourceLocation getPluginUid() {
 		return new ResourceLocation(nuclearscience.References.ID, "jei");
@@ -62,7 +58,7 @@ public class NuclearSciencePlugin implements IModPlugin {
 
 	@Override
 	public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-		
+
 		registration.addRecipeCatalyst(GasCentrifugeRecipeCategory.INPUT_MACHINE, GasCentrifugeRecipeCategory.UID);
 		registration.addRecipeCatalyst(NuclearBoilerRecipeCategory.INPUT_MACHINE, NuclearBoilerRecipeCategory.UID);
 		registration.addRecipeCatalyst(ChemicalExtractorRecipeCategory.INPUT_MACHINE, ChemicalExtractorRecipeCategory.UID);
@@ -95,30 +91,30 @@ public class NuclearSciencePlugin implements IModPlugin {
 				.copyOf(recipeManager.getAllRecipesFor(NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE));
 		registration.addRecipes(chemicalExtractorRecipes, ChemicalExtractorRecipeCategory.UID);
 
-		//Fission Reactor
+		// Fission Reactor
 		Set<Item2ItemRecipe> fissionReactorRecipes = ImmutableSet
 				.copyOf(recipeManager.getAllRecipesFor(NuclearScienceRecipeInit.FISSION_REACTOR_TYPE));
 		registration.addRecipes(fissionReactorRecipes, FissionReactorRecipeCategory.UID);
 
-		//Anti-Matter
+		// Anti-Matter
 		Set<PsuedoItem2ItemRecipe> antiMatterRecipes = new HashSet<>(NuclearSciencePsuedoRecipes.ANTI_MATTER_RECIPES);
 		registration.addRecipes(antiMatterRecipes, ParticleAcceleratorAntiMatterRecipeCategory.UID);
 
-		//Dark Matter
+		// Dark Matter
 		Set<PsuedoItem2ItemRecipe> darkMatterRecipes = new HashSet<>(NuclearSciencePsuedoRecipes.DARK_MATTER_RECIPES);
 		registration.addRecipes(darkMatterRecipes, ParticleAcceleratorDarkMatterRecipeCategory.UID);
 
-		//Fuel Reprocessor
+		// Fuel Reprocessor
 		Set<Item2ItemRecipe> fuelReprocessorRecipes = ImmutableSet
 				.copyOf(recipeManager.getAllRecipesFor(NuclearScienceRecipeInit.FUEL_REPROCESSOR_TYPE));
 		registration.addRecipes(fuelReprocessorRecipes, FuelReprocessorRecipeCategory.UID);
 
-		//Radioactive Processor
+		// Radioactive Processor
 		Set<FluidItem2ItemRecipe> radioactiveProcessorRecipes = ImmutableSet
 				.copyOf(recipeManager.getAllRecipesFor(NuclearScienceRecipeInit.RADIOACTIVE_PROCESSOR_TYPE));
 		registration.addRecipes(radioactiveProcessorRecipes, RadioactiveProcessorRecipeCategory.UID);
 
-		//MSR Processor
+		// MSR Processor
 		Set<FluidItem2ItemRecipe> msrProcessorRecipes = ImmutableSet
 				.copyOf(recipeManager.getAllRecipesFor(NuclearScienceRecipeInit.MSR_FUEL_PREPROCESSOR_TYPE));
 		registration.addRecipes(msrProcessorRecipes, MSRProcessorRecipeCategory.UID);
@@ -128,7 +124,7 @@ public class NuclearSciencePlugin implements IModPlugin {
 
 	@Override
 	public void registerCategories(IRecipeCategoryRegistration registration) {
-		
+
 		IGuiHelper helper = registration.getJeiHelpers().getGuiHelper();
 
 		registration.addRecipeCategories(new GasCentrifugeRecipeCategory(helper));
@@ -145,7 +141,7 @@ public class NuclearSciencePlugin implements IModPlugin {
 
 	@Override
 	public void registerGuiHandlers(IGuiHandlerRegistration registry) {
-		
+
 		registry.addRecipeClickArea(ScreenO2OProcessor.class, 85, 35, 22, 15,
 				ElectrodynamicsJEIPlugin.O2O_CLICK_AREAS.toArray(new ResourceLocation[ElectrodynamicsJEIPlugin.O2O_CLICK_AREAS.size()]));
 		registry.addRecipeClickArea(ScreenNuclearBoiler.class, 97, 31, 22, 15, NuclearBoilerRecipeCategory.UID);
@@ -160,7 +156,7 @@ public class NuclearSciencePlugin implements IModPlugin {
 
 	private static void nuclearScienceInfoTabs(IRecipeRegistration registration) {
 
-		//BLOCKS
+		// BLOCKS
 		for (ItemStack itemStack : NuclearSciencePsuedoRecipes.INFO_ITEMS) {
 			registration.addIngredientInfo(itemStack, VanillaTypes.ITEM, new TranslatableComponent(INFO_BLOCK + itemStack.getItem().toString()));
 		}

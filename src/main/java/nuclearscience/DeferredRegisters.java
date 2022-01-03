@@ -222,7 +222,7 @@ public class DeferredRegisters {
 
 		FLUIDS.register("fluidammonia", supplier(fluidAmmonia = new FluidAmmonia()));
 
-		//Machines
+		// Machines
 		BlockItemDescriptable.addDescription(blockGasCentrifuge, "|translate|tooltip.voltage.240");
 		BlockItemDescriptable.addDescription(blockNuclearBoiler, "|translate|tooltip.voltage.240");
 		BlockItemDescriptable.addDescription(blockChemicalExtractor, "|translate|tooltip.voltage.240");
@@ -235,11 +235,11 @@ public class DeferredRegisters {
 		BlockItemDescriptable.addDescription(blockFusionReactorCore, "|translate|tooltip.voltage.480");
 		BlockItemDescriptable.addDescription(blockFreezePlug, "|translate|tooltip.voltage.120");
 		BlockItemDescriptable.addDescription(blockQuantumAssembler, "|translate|tooltip.voltage.480");
-		
-		//Generators
+
+		// Generators
 		BlockItemDescriptable.addDescription(blockRadioisotopeGenerator, "|translate|tooltip.voltage.120");
-		
-		//Misc
+
+		// Misc
 		BlockItemDescriptable.addDescription(blockQuantumCapacitor, "|translate|tooltip.voltage.1920");
 	}
 
