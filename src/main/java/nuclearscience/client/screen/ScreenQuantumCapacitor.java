@@ -132,19 +132,19 @@ public class ScreenQuantumCapacitor extends GenericScreen<ContainerQuantumCapaci
 		TileQuantumCapacitor box = menu.getHostFromIntArray();
 		if (box != null) {
 			font.draw(matrixStack,
-					new TranslatableComponent("gui.quantumcapacitor.current", ChatFormatter
+					new TranslatableComponent("gui.machine.current", ChatFormatter
 							.getElectricDisplayShort(box.getOutputJoules() * 20.0 / TileQuantumCapacitor.DEFAULT_VOLTAGE, ElectricUnit.AMPERE)),
 					inventoryLabelX, (float) inventoryLabelY - 55, 4210752);
 			font.draw(matrixStack,
-					new TranslatableComponent("gui.quantumcapacitor.transfer",
+					new TranslatableComponent("gui.machine.transfer",
 							ChatFormatter.getElectricDisplayShort(box.getOutputJoules() * 20.0, ElectricUnit.WATT)),
 					inventoryLabelX, (float) inventoryLabelY - 42, 4210752);
 			font.draw(matrixStack,
-					new TranslatableComponent("gui.quantumcapacitor.voltage",
+					new TranslatableComponent("gui.machine.voltage",
 							ChatFormatter.getElectricDisplayShort(TileQuantumCapacitor.DEFAULT_VOLTAGE, ElectricUnit.VOLTAGE)),
 					inventoryLabelX, (float) inventoryLabelY - 29, 4210752);
 			font.draw(matrixStack,
-					new TranslatableComponent("gui.quantumcapacitor.stored",
+					new TranslatableComponent("gui.machine.stored",
 							ChatFormatter.getElectricDisplayShort(box.joulesClient, ElectricUnit.JOULES) + " / "
 									+ ChatFormatter.getElectricDisplayShort(TileQuantumCapacitor.DEFAULT_MAX_JOULES, ElectricUnit.JOULES)),
 					inventoryLabelX, (float) inventoryLabelY - 16, 4210752);

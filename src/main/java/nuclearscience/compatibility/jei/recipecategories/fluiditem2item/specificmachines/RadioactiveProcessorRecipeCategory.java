@@ -13,6 +13,7 @@ import mezz.jei.api.helpers.IGuiHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import nuclearscience.DeferredRegisters;
+import nuclearscience.common.settings.Constants;
 
 public class RadioactiveProcessorRecipeCategory extends FluidItem2ItemRecipeCategory {
 
@@ -29,12 +30,12 @@ public class RadioactiveProcessorRecipeCategory extends FluidItem2ItemRecipeCate
 
 	private static DefaultFluidGaugeWrapper IN_GAUGE = new DefaultFluidGaugeWrapper(10, 5, 5000);
 
-	private static PowerLabelWrapper POWER_LABEL = new PowerLabelWrapper(2, 55);
+	private static PowerLabelWrapper POWER_LABEL = new PowerLabelWrapper(2, 55, Constants.RADIOACTIVEPROCESSOR_USAGE_PER_TICK, 480);
 
 	private static int ANIM_TIME = 50;
 
 	private static String MOD_ID = References.ID;
-	private static String RECIPE_GROUP = "radioactive_processor";
+	private static String RECIPE_GROUP = "radioactiveprocessor";
 
 	public static ItemStack INPUT_MACHINE = new ItemStack(DeferredRegisters.blockRadioactiveProcessor);
 

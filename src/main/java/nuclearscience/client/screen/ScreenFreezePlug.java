@@ -15,7 +15,7 @@ public class ScreenFreezePlug extends GenericScreen<ContainerFreezePlug> {
 
 	public ScreenFreezePlug(ContainerFreezePlug container, Inventory playerInventory, Component title) {
 		super(container, playerInventory, title);
-		components.add(new ScreenComponentElectricInfo(this, -ScreenComponentInfo.SIZE + 1, 2).tag("freezeplug")
+		components.add(new ScreenComponentElectricInfo(this, -ScreenComponentInfo.SIZE + 1, 2)
 				.wattage(Constants.FREEZEPLUG_USAGE_PER_TICK * 20));
 	}
 }

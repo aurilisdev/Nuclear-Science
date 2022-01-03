@@ -37,7 +37,7 @@ public class TileMSRFuelPreProcessor extends GenericTile {
 				.relativeSlotFaces(3, Direction.DOWN).inputs(3).outputs(1).bucketInputs(1).upgrades(3).processors(1).processorInputs(3)
 				.valid(machineValidator()));
 		addComponent(new ComponentProcessor(this).setProcessorNumber(0)
-				.canProcess(component -> component.outputToPipe(component).consumeBucket().canProcessFluidItem2ItemRecipe(component,
+				.canProcess(component -> component.outputToPipe().consumeBucket().canProcessFluidItem2ItemRecipe(component,
 						NuclearScienceRecipeInit.MSR_FUEL_PREPROCESSOR_TYPE))
 				.process(component -> component.processFluidItem2ItemRecipe(component)).usage(Constants.MSRFUELPREPROCESSOR_USAGE_PER_TICK)
 				.requiredTicks(Constants.MSRFUELPREPROCESSOR_REQUIRED_TICKS));

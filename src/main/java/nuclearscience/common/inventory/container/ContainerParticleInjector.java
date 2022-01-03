@@ -1,8 +1,8 @@
 package nuclearscience.common.inventory.container;
 
 import electrodynamics.prefab.inventory.container.GenericContainerBlockEntity;
-import electrodynamics.prefab.inventory.container.slot.GenericSlot;
-import electrodynamics.prefab.inventory.container.slot.SlotRestricted;
+import electrodynamics.prefab.inventory.container.slot.item.SlotGeneric;
+import electrodynamics.prefab.inventory.container.slot.item.type.SlotRestricted;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -29,7 +29,7 @@ public class ContainerParticleInjector extends GenericContainerBlockEntity<TileP
 
 	@Override
 	public void addInventorySlots(Container inv, Inventory playerinv) {
-		addSlot(new GenericSlot(inv, nextIndex(), 98, 14));
+		addSlot(new SlotGeneric(inv, nextIndex(), 98, 14));
 		addSlot(new SlotRestricted(inv, nextIndex(), 98, 50, DeferredRegisters.ITEM_CELLELECTROMAGNETIC.get()));
 		addSlot(new FurnaceResultSlot(playerinv.player, inv, nextIndex(), 133, 32));
 	}

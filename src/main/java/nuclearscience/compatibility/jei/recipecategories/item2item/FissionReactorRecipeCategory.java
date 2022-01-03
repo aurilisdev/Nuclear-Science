@@ -11,7 +11,7 @@ import electrodynamics.compatibility.jei.recipecategories.item2item.Item2ItemRec
 import electrodynamics.compatibility.jei.utils.gui.arrows.animated.FeynmanDiagramAnimatedWrapper;
 import electrodynamics.compatibility.jei.utils.gui.backgroud.BackgroundWrapper;
 import electrodynamics.compatibility.jei.utils.gui.item.DefaultItemSlotWrapper;
-import electrodynamics.compatibility.jei.utils.label.PowerLabelWrapper;
+import electrodynamics.compatibility.jei.utils.label.GenericLabelWrapper;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
@@ -32,12 +32,12 @@ public class FissionReactorRecipeCategory extends Item2ItemRecipeCategory {
 
 	private static FeynmanDiagramAnimatedWrapper ARROW = new FeynmanDiagramAnimatedWrapper(35, 40);
 
-	private static PowerLabelWrapper POWER_LABEL = new PowerLabelWrapper(2, 122);
+	private static GenericLabelWrapper POWER_LABEL = new GenericLabelWrapper(0xFF808080, 122, 2, "reactorcore.info.temp");
 
 	private static int ANIM_TIME = 50;
 
 	private static String MOD_ID = References.ID;
-	private static String RECIPE_GROUP = "fission_reactor";
+	private static String RECIPE_GROUP = "reactorcore";
 
 	public static ItemStack INPUT_MACHINE = new ItemStack(nuclearscience.DeferredRegisters.blockReactorCore);
 

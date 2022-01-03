@@ -2,7 +2,7 @@ package nuclearscience.common.inventory.container;
 
 import electrodynamics.common.item.subtype.SubtypeItemUpgrade;
 import electrodynamics.prefab.inventory.container.GenericContainerBlockEntity;
-import electrodynamics.prefab.inventory.container.slot.UpgradeSlot;
+import electrodynamics.prefab.inventory.container.slot.item.type.SlotUpgrade;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -32,8 +32,8 @@ public class ContainerGasCentrifuge extends GenericContainerBlockEntity<TileGasC
 		addSlot(new FurnaceResultSlot(playerinv.player, inv, nextIndex(), 129, 14));
 		addSlot(new FurnaceResultSlot(playerinv.player, inv, nextIndex(), 129, 34));
 		addSlot(new FurnaceResultSlot(playerinv.player, inv, nextIndex(), 129, 55));
-		addSlot(new UpgradeSlot(inv, nextIndex(), 153, 14, SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.basicspeed));
-		addSlot(new UpgradeSlot(inv, nextIndex(), 153, 34, SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.basicspeed));
-		addSlot(new UpgradeSlot(inv, nextIndex(), 153, 55, SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.basicspeed));
+		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 14, SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.basicspeed));
+		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 34, SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.basicspeed));
+		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 55, SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.basicspeed));
 	}
 }

@@ -48,7 +48,7 @@ public class ParticleAcceleratorAntiMatterRecipeCategory implements IRecipeCateg
 	private static int DESC_Y_HEIGHT = 58;
 
 	private static String MOD_ID = References.ID;
-	private static String RECIPE_GROUP = "partical_accelerator_antimatter";
+	private static String RECIPE_GROUP = "particalaccelerator.antimatter";
 	private static String GUI_TEXTURE = "textures/gui/jei/particle_accelerator_antimatter_gui.png";
 
 	public static ItemStack INPUT_MACHINE = new ItemStack(nuclearscience.DeferredRegisters.blockParticleInjector);
@@ -66,7 +66,7 @@ public class ParticleAcceleratorAntiMatterRecipeCategory implements IRecipeCateg
 		BACKGROUND = guiHelper.createDrawable(new ResourceLocation(MOD_ID, GUI_TEXTURE), GUI_BACKGROUND[0], GUI_BACKGROUND[1], GUI_BACKGROUND[2],
 				GUI_BACKGROUND[3]);
 
-		cachedArrows = CacheBuilder.newBuilder().maximumSize(25).build(new CacheLoader<Integer, IDrawableAnimated>() {
+		cachedArrows = CacheBuilder.newBuilder().maximumSize(1).build(new CacheLoader<Integer, IDrawableAnimated>() {
 			@Override
 			public IDrawableAnimated load(Integer cookTime) {
 				return guiHelper.drawableBuilder(new ResourceLocation(MOD_ID, GUI_TEXTURE), PROCESSING_ARROW_COORDS[0], PROCESSING_ARROW_COORDS[1],
@@ -87,7 +87,7 @@ public class ParticleAcceleratorAntiMatterRecipeCategory implements IRecipeCateg
 
 	@Override
 	public Component getTitle() {
-		return new TranslatableComponent("gui.jei.category." + RECIPE_GROUP);
+		return new TranslatableComponent("jei.gui." + RECIPE_GROUP);
 	}
 
 	@Override
@@ -125,7 +125,7 @@ public class ParticleAcceleratorAntiMatterRecipeCategory implements IRecipeCateg
 		arrow.draw(matrixStack, PROCESSING_ARROW_OFFSET[0], PROCESSING_ARROW_OFFSET[1]);
 
 		int animTimeSeconds = ANIM_TIME / 20;
-		TranslatableComponent timeString = new TranslatableComponent("gui.jei.category." + RECIPE_GROUP + ".info.power", animTimeSeconds);
+		TranslatableComponent timeString = new TranslatableComponent("jei.gui." + RECIPE_GROUP + ".info.power", animTimeSeconds);
 		Minecraft minecraft = Minecraft.getInstance();
 		Font fontRenderer = minecraft.font;
 		float stringWidth = fontRenderer.width(timeString);
