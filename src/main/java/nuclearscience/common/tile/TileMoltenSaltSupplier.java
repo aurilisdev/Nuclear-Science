@@ -50,7 +50,7 @@ public class TileMoltenSaltSupplier extends GenericTile {
 			if (tickable.getTicks() % 40 == 0) {
 				output.update();
 				ItemStack in = this.<ComponentInventory>getComponent(ComponentType.Inventory).getItem(0);
-				if (in.getCount() > 0 && output.valid() && output.getSafe() instanceof TileMSRReactorCore core) {
+				if (in.getCount() > 0 && output.valid() && output.getSafe()instanceof TileMSRReactorCore core) {
 					if (core.<ComponentDirection>getComponent(ComponentType.Direction).getDirection() == dir) {
 						if (TileMSRReactorCore.FUEL_CAPACITY - core.currentFuel >= 250) {
 							in.shrink(1);

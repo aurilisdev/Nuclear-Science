@@ -79,7 +79,7 @@ public class TileMSRReactorCore extends GenericTile {
 		if (change != 0) {
 			temperature -= change < 0.001 && change > 0 ? 0.001 : change > -0.001 && change < 0 ? -0.001 : change;
 		}
-		if (plugCache.valid() && plugCache.getSafe() instanceof TileFreezePlug freeze && freeze.isFrozen()) {
+		if (plugCache.valid() && plugCache.getSafe()instanceof TileFreezePlug freeze && freeze.isFrozen()) {
 			if (currentFuel > FUEL_USAGE_RATE) {
 				int insertion = 0;
 				for (Direction dir : Direction.values()) {

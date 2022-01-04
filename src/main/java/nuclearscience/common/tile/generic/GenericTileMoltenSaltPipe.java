@@ -55,7 +55,7 @@ public abstract class GenericTileMoltenSaltPipe extends GenericTile implements I
 			HashSet<IMoltenSaltPipe> adjacentCables = getConnectedConductors();
 			HashSet<MoltenSaltNetwork> connectedNets = new HashSet<>();
 			for (IMoltenSaltPipe wire : adjacentCables) {
-				if (wire.getNetwork(false) != null && wire.getNetwork() instanceof MoltenSaltNetwork net) {
+				if (wire.getNetwork(false) != null && wire.getNetwork()instanceof MoltenSaltNetwork net) {
 					connectedNets.add(net);
 				}
 			}
@@ -88,7 +88,7 @@ public abstract class GenericTileMoltenSaltPipe extends GenericTile implements I
 			ArrayList<MoltenSaltNetwork> foundNetworks = new ArrayList<>();
 			for (Direction dir : Direction.values()) {
 				BlockEntity facing = level.getBlockEntity(new BlockPos(worldPosition).relative(dir));
-				if (facing instanceof IMoltenSaltPipe pipe && pipe.getNetwork() instanceof MoltenSaltNetwork net) {
+				if (facing instanceof IMoltenSaltPipe pipe && pipe.getNetwork()instanceof MoltenSaltNetwork net) {
 					foundNetworks.add(net);
 				}
 			}
