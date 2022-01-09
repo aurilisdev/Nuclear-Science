@@ -3,6 +3,7 @@ package nuclearscience.common.tile;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
+import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
@@ -24,6 +25,7 @@ public class TileAtomicAssembler extends GenericTile {
 
 	public TileAtomicAssembler(BlockPos pos, BlockState state) {
 		super(DeferredRegisters.TILE_ATOMICASSEMBLER.get(), pos, state);
+		addComponent(new ComponentDirection());
 		addComponent(new ComponentTickable().tickServer(this::tickServer).tickCommon(this::tickCommon));
 		addComponent(new ComponentPacketHandler().guiPacketWriter(this::writeGuiPacket).guiPacketReader(this::readGuiPacket));
 		addComponent(new ComponentElectrodynamic(this).voltage(Constants.QUANTUMASSEMBLER_VOLTAGE).input(Direction.DOWN));

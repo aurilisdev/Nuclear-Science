@@ -3,19 +3,19 @@
 	"variants": {
 		"facing=west": {
 			"model": "nuclearscience:block/atomicassembler",
-			"y": 0
+			"y": 90
 		},
 		"facing=south": {
 			"model": "nuclearscience:block/atomicassembler",
-			"y": 270
+			"y": 0
 		},
 		"facing=north": {
 			"model": "nuclearscience:block/atomicassembler",
-			"y": 90
+			"y": 180
 		},
 		"facing=east": {
 			"model": "nuclearscience:block/atomicassembler",
-			"y": 180
+			"y": 270
 		}
 	}
 }
