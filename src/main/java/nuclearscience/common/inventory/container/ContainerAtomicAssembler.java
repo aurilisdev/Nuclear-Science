@@ -9,16 +9,16 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import nuclearscience.DeferredRegisters;
-import nuclearscience.common.tile.TileQuantumAssembler;
+import nuclearscience.common.tile.TileAtomicAssembler;
 
-public class ContainerQuantumAssembler extends GenericContainerBlockEntity<TileQuantumAssembler> {
+public class ContainerAtomicAssembler extends GenericContainerBlockEntity<TileAtomicAssembler> {
 
-	public ContainerQuantumAssembler(int id, Inventory playerinv) {
+	public ContainerAtomicAssembler(int id, Inventory playerinv) {
 		this(id, playerinv, new SimpleContainer(8), new SimpleContainerData(3));
 	}
 
-	public ContainerQuantumAssembler(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
-		super(DeferredRegisters.CONTAINER_QUANTUMASSEMBLER.get(), id, playerinv, inventory, inventorydata);
+	public ContainerAtomicAssembler(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
+		super(DeferredRegisters.CONTAINER_ATOMICASSEMBLER.get(), id, playerinv, inventory, inventorydata);
 	}
 
 	@Override

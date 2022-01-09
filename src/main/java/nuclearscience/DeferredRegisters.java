@@ -54,7 +54,7 @@ import nuclearscience.common.inventory.container.ContainerMSRReactorCore;
 import nuclearscience.common.inventory.container.ContainerMoltenSaltSupplier;
 import nuclearscience.common.inventory.container.ContainerNuclearBoiler;
 import nuclearscience.common.inventory.container.ContainerParticleInjector;
-import nuclearscience.common.inventory.container.ContainerQuantumAssembler;
+import nuclearscience.common.inventory.container.ContainerAtomicAssembler;
 import nuclearscience.common.inventory.container.ContainerQuantumCapacitor;
 import nuclearscience.common.inventory.container.ContainerRadioactiveProcessor;
 import nuclearscience.common.inventory.container.ContainerRadioisotopeGenerator;
@@ -80,7 +80,7 @@ import nuclearscience.common.tile.TileMoltenSaltSupplier;
 import nuclearscience.common.tile.TileNuclearBoiler;
 import nuclearscience.common.tile.TileParticleInjector;
 import nuclearscience.common.tile.TilePlasma;
-import nuclearscience.common.tile.TileQuantumAssembler;
+import nuclearscience.common.tile.TileAtomicAssembler;
 import nuclearscience.common.tile.TileQuantumCapacitor;
 import nuclearscience.common.tile.TileRadioactiveProcessor;
 import nuclearscience.common.tile.TileRadioisotopeGenerator;
@@ -130,7 +130,7 @@ public class DeferredRegisters {
 	public static GenericMachineBlock blockMsrReactorCore;
 	public static GenericMachineBlock blockHeatExchanger;
 	public static GenericMachineBlock blockSiren;
-	public static GenericMachineBlock blockQuantumAssembler;
+	public static GenericMachineBlock blockAtomicAssembler;
 	public static BlockMoltenSaltSupplier blockMoltenSaltSupplier;
 	public static BlockRadioactiveSoil blockRadioactiveSoil;
 	public static BlockRadioactiveAir blockRadioactiveAir;
@@ -163,7 +163,7 @@ public class DeferredRegisters {
 		BLOCKS.register("msrreactorcore", supplier(blockMsrReactorCore = new GenericMachineBlock(TileMSRReactorCore::new)));
 		BLOCKS.register("heatexchanger", supplier(blockHeatExchanger = new GenericMachineBlock(TileHeatExchanger::new)));
 		BLOCKS.register("siren", supplier(blockSiren = new GenericMachineBlock(TileSiren::new)));
-		BLOCKS.register("quantumassembler", supplier(blockQuantumAssembler = new GenericMachineBlock(TileQuantumAssembler::new)));
+		BLOCKS.register("atomicassembler", supplier(blockAtomicAssembler = new GenericMachineBlock(TileAtomicAssembler::new)));
 		BLOCKS.register("moltensaltsupplier", supplier(blockMoltenSaltSupplier = new BlockMoltenSaltSupplier()));
 		for (SubtypeMoltenSaltPipe subtype : SubtypeMoltenSaltPipe.values()) {
 			SUBTYPEBLOCKREGISTER_MAPPINGS.put(subtype, BLOCKS.register(subtype.tag(), supplier(new BlockMoltenSaltPipe(subtype), subtype)));
@@ -209,8 +209,8 @@ public class DeferredRegisters {
 		ITEMS.register("moltensaltsupplier",
 				supplier(new BlockItemDescriptable(blockMoltenSaltSupplier, new Item.Properties().tab(References.NUCLEARTAB))));
 		ITEMS.register("siren", supplier(new BlockItemDescriptable(blockSiren, new Item.Properties().tab(References.NUCLEARTAB))));
-		ITEMS.register("quantumassembler",
-				supplier(new BlockItemDescriptable(blockQuantumAssembler, new Item.Properties().tab(References.NUCLEARTAB))));
+		ITEMS.register("atomicassembler",
+				supplier(new BlockItemDescriptable(blockAtomicAssembler, new Item.Properties().tab(References.NUCLEARTAB))));
 		for (SubtypeMoltenSaltPipe subtype : SubtypeMoltenSaltPipe.values()) {
 			ITEMS.register(subtype.tag(), supplier(
 					new BlockItemDescriptable(SUBTYPEBLOCK_MAPPINGS.get(subtype), new Item.Properties().tab(References.NUCLEARTAB)), subtype));
@@ -234,7 +234,7 @@ public class DeferredRegisters {
 		BlockItemDescriptable.addDescription(blockMoltenSaltSupplier, "|translate|tooltip.voltage.120");
 		BlockItemDescriptable.addDescription(blockFusionReactorCore, "|translate|tooltip.voltage.480");
 		BlockItemDescriptable.addDescription(blockFreezePlug, "|translate|tooltip.voltage.120");
-		BlockItemDescriptable.addDescription(blockQuantumAssembler, "|translate|tooltip.voltage.480");
+		BlockItemDescriptable.addDescription(blockAtomicAssembler, "|translate|tooltip.voltage.480");
 
 		// Generators
 		BlockItemDescriptable.addDescription(blockRadioisotopeGenerator, "|translate|tooltip.voltage.120");
@@ -361,8 +361,8 @@ public class DeferredRegisters {
 			() -> new BlockEntityType<>(TileMoltenSaltPipe::new, BlockMoltenSaltPipe.PIPESET, null));
 	public static final RegistryObject<BlockEntityType<TileSiren>> TILE_SIREN = TILES.register("siren",
 			() -> new BlockEntityType<>(TileSiren::new, Sets.newHashSet(blockSiren), null));
-	public static final RegistryObject<BlockEntityType<TileQuantumAssembler>> TILE_QUANTUMASSEMBLER = TILES.register("quantumassembler",
-			() -> new BlockEntityType<>(TileQuantumAssembler::new, Sets.newHashSet(blockQuantumAssembler), null));
+	public static final RegistryObject<BlockEntityType<TileAtomicAssembler>> TILE_QUANTUMASSEMBLER = TILES.register("atomicassembler",
+			() -> new BlockEntityType<>(TileAtomicAssembler::new, Sets.newHashSet(blockAtomicAssembler), null));
 
 	public static final RegistryObject<MenuType<ContainerGasCentrifuge>> CONTAINER_GASCENTRIFUGE = CONTAINERS.register("gascentrifuge",
 			() -> new MenuType<>(ContainerGasCentrifuge::new));
@@ -388,8 +388,8 @@ public class DeferredRegisters {
 			() -> new MenuType<>(ContainerMSRReactorCore::new));
 	public static final RegistryObject<MenuType<ContainerMoltenSaltSupplier>> CONTAINER_MOLTENSALTSUPPLIER = CONTAINERS.register("moltensaltsupplier",
 			() -> new MenuType<>(ContainerMoltenSaltSupplier::new));
-	public static final RegistryObject<MenuType<ContainerQuantumAssembler>> CONTAINER_QUANTUMASSEMBLER = CONTAINERS.register("quantumassembler",
-			() -> new MenuType<>(ContainerQuantumAssembler::new));
+	public static final RegistryObject<MenuType<ContainerAtomicAssembler>> CONTAINER_ATOMICASSEMBLER = CONTAINERS.register("atomicassembler",
+			() -> new MenuType<>(ContainerAtomicAssembler::new));
 
 	public static final RegistryObject<EntityType<EntityParticle>> ENTITY_PARTICLE = ENTITIES.register("particle", () -> EntityType.Builder
 			.<EntityParticle>of(EntityParticle::new, MobCategory.MISC).clientTrackingRange(8).build(References.ID + ".particle"));

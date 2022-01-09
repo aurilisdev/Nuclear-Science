@@ -21,6 +21,7 @@
 		"nuclearscience:nuclearboiler",
 		"nuclearscience:particleinjector",
 		"nuclearscience:quantumcapacitor",
+		"nuclearscience:atomicassembler",
 		"nuclearscience:radioactiveprocessor",
 		"nuclearscience:radioisotopegenerator",
 		"nuclearscience:reactorcore",

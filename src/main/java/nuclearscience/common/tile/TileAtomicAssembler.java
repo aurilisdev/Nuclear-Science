@@ -15,21 +15,21 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.CapabilityItemHandler;
 import nuclearscience.DeferredRegisters;
-import nuclearscience.common.inventory.container.ContainerQuantumAssembler;
+import nuclearscience.common.inventory.container.ContainerAtomicAssembler;
 import nuclearscience.common.settings.Constants;
 
-public class TileQuantumAssembler extends GenericTile {
+public class TileAtomicAssembler extends GenericTile {
 	public int progress = 0;
 
-	public TileQuantumAssembler(BlockPos pos, BlockState state) {
+	public TileAtomicAssembler(BlockPos pos, BlockState state) {
 		super(DeferredRegisters.TILE_QUANTUMASSEMBLER.get(), pos, state);
 		addComponent(new ComponentTickable().tickServer(this::tickServer).tickCommon(this::tickCommon));
 		addComponent(new ComponentPacketHandler().guiPacketWriter(this::writeGuiPacket).guiPacketReader(this::readGuiPacket));
 		addComponent(new ComponentElectrodynamic(this).voltage(Constants.QUANTUMASSEMBLER_VOLTAGE).input(Direction.DOWN));
 		addComponent(new ComponentInventory(this).size(8).slotFaces(0, Direction.values())
 				.valid((slot, stack, i) -> slot == 6 || slot < 6 && stack.is(DeferredRegisters.ITEM_CELLDARKMATTER.get())).shouldSendInfo());
-		addComponent(new ComponentContainerProvider("container.quantumassembler")
-				.createMenu((id, player) -> new ContainerQuantumAssembler(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
+		addComponent(new ComponentContainerProvider("container.atomicassembler")
+				.createMenu((id, player) -> new ContainerAtomicAssembler(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 	}
 
 	private void tickCommon(ComponentTickable tickable) {
@@ -37,7 +37,7 @@ public class TileQuantumAssembler extends GenericTile {
 		ComponentElectrodynamic electro = getComponent(ComponentType.Electrodynamic);
 		ItemStack input = inv.getItem(6);
 		ItemStack output = inv.getItem(7);
-		boolean canProcess = electro.getJoulesStored() < Constants.QUANTUMASSEMBLER_USAGE_PER_TICK
+		boolean canProcess = electro.getJoulesStored() < Constants.ATOMICASSEMBLER_USAGE_PER_TICK
 				&& !input.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).isPresent()
 				&& (ItemStack.isSame(input, output) && output.getCount() + 1 <= output.getMaxStackSize() || output.isEmpty()) && !input.isEmpty();
 		if (canProcess) {
@@ -60,7 +60,7 @@ public class TileQuantumAssembler extends GenericTile {
 			if (progress++ >= Constants.QUANTUMASSEMBLER_REQUIRED_TICKS) {
 				canProduce = true;
 			}
-			electro.extractPower(TransferPack.joulesVoltage(Constants.QUANTUMASSEMBLER_USAGE_PER_TICK, electro.getVoltage()), false);
+			electro.extractPower(TransferPack.joulesVoltage(Constants.ATOMICASSEMBLER_USAGE_PER_TICK, electro.getVoltage()), false);
 		}
 		if (canProduce) {
 			progress = 0;

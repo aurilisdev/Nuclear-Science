@@ -56,7 +56,7 @@ public class Constants {
 	@DoubleValue(def = 200.0)
 	public static double MOLTENSALTSUPPLIER_USAGE_PER_TICK = 200.0;
 	@DoubleValue(def = 1250.0)
-	public static double QUANTUMASSEMBLER_USAGE_PER_TICK = 1250.0;
+	public static double ATOMICASSEMBLER_USAGE_PER_TICK = 1250.0;
 	@DoubleValue(def = 480.0)
 	public static double QUANTUMASSEMBLER_VOLTAGE = 480.0;
 	@IntValue(def = 1200)

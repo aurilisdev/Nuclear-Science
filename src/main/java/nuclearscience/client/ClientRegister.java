@@ -35,7 +35,7 @@ import nuclearscience.client.screen.ScreenMSRReactorCore;
 import nuclearscience.client.screen.ScreenMoltenSaltSupplier;
 import nuclearscience.client.screen.ScreenNuclearBoiler;
 import nuclearscience.client.screen.ScreenParticleInjector;
-import nuclearscience.client.screen.ScreenQuantumAssembler;
+import nuclearscience.client.screen.ScreenAtomicAssembler;
 import nuclearscience.client.screen.ScreenQuantumCapacitor;
 import nuclearscience.client.screen.ScreenRadioactiveProcessor;
 import nuclearscience.client.screen.ScreenRadioisotopeGenerator;
@@ -108,7 +108,7 @@ public class ClientRegister {
 		MenuScreens.register(DeferredRegisters.CONTAINER_RADIOACTIVEPROCESSOR.get(), ScreenRadioactiveProcessor::new);
 		MenuScreens.register(DeferredRegisters.CONTAINER_MSRREACTORCORE.get(), ScreenMSRReactorCore::new);
 		MenuScreens.register(DeferredRegisters.CONTAINER_MOLTENSALTSUPPLIER.get(), ScreenMoltenSaltSupplier::new);
-		MenuScreens.register(DeferredRegisters.CONTAINER_QUANTUMASSEMBLER.get(), ScreenQuantumAssembler::new);
+		MenuScreens.register(DeferredRegisters.CONTAINER_ATOMICASSEMBLER.get(), ScreenAtomicAssembler::new);
 
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegisters.blockChemicalExtractor, ClientRegister::shouldMultilayerRender);
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegisters.blockNuclearBoiler, ClientRegister::shouldMultilayerRender);

@@ -26,6 +26,7 @@
 		"nuclearscience:reactorcore",
 		"nuclearscience:teleporter",
 		"nuclearscience:turbine",
-		"nuclearscience:radioactivesoil"
+		"nuclearscience:radioactivesoil",
+		"nuclearscience:atomicassembler"
 	]
 }
