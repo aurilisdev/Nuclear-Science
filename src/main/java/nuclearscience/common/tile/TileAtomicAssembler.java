@@ -20,9 +20,10 @@ import nuclearscience.common.settings.Constants;
 
 public class TileAtomicAssembler extends GenericTile {
 	public int progress = 0;
+	public ItemStack current = ItemStack.EMPTY;
 
 	public TileAtomicAssembler(BlockPos pos, BlockState state) {
-		super(DeferredRegisters.TILE_QUANTUMASSEMBLER.get(), pos, state);
+		super(DeferredRegisters.TILE_ATOMICASSEMBLER.get(), pos, state);
 		addComponent(new ComponentTickable().tickServer(this::tickServer).tickCommon(this::tickCommon));
 		addComponent(new ComponentPacketHandler().guiPacketWriter(this::writeGuiPacket).guiPacketReader(this::readGuiPacket));
 		addComponent(new ComponentElectrodynamic(this).voltage(Constants.QUANTUMASSEMBLER_VOLTAGE).input(Direction.DOWN));
@@ -86,13 +87,17 @@ public class TileAtomicAssembler extends GenericTile {
 		if (tickable.getTicks() % 20 == 0) {
 			this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendGuiPacketToTracking();
 		}
+		ComponentInventory inv = getComponent(ComponentType.Inventory);
+		current = inv.getItem(6);
 	}
 
 	private void writeGuiPacket(CompoundTag compound) {
 		compound.putInt("progress", progress);
+		current.save(compound);
 	}
 
 	private void readGuiPacket(CompoundTag compound) {
 		progress = compound.getInt("progress");
+		current = ItemStack.of(compound);
 	}
 }

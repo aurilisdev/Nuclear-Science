@@ -46,6 +46,7 @@ import nuclearscience.common.block.subtype.SubtypeMoltenSaltPipe;
 import nuclearscience.common.entity.EntityParticle;
 import nuclearscience.common.fluid.types.FluidAmmonia;
 import nuclearscience.common.fluid.types.FluidUraniumHexafluoride;
+import nuclearscience.common.inventory.container.ContainerAtomicAssembler;
 import nuclearscience.common.inventory.container.ContainerChemicalExtractor;
 import nuclearscience.common.inventory.container.ContainerFreezePlug;
 import nuclearscience.common.inventory.container.ContainerGasCentrifuge;
@@ -54,7 +55,6 @@ import nuclearscience.common.inventory.container.ContainerMSRReactorCore;
 import nuclearscience.common.inventory.container.ContainerMoltenSaltSupplier;
 import nuclearscience.common.inventory.container.ContainerNuclearBoiler;
 import nuclearscience.common.inventory.container.ContainerParticleInjector;
-import nuclearscience.common.inventory.container.ContainerAtomicAssembler;
 import nuclearscience.common.inventory.container.ContainerQuantumCapacitor;
 import nuclearscience.common.inventory.container.ContainerRadioactiveProcessor;
 import nuclearscience.common.inventory.container.ContainerRadioisotopeGenerator;
@@ -65,6 +65,7 @@ import nuclearscience.common.item.ItemFrequencyCard;
 import nuclearscience.common.item.ItemGeigerCounter;
 import nuclearscience.common.item.ItemHazmatArmor;
 import nuclearscience.common.item.ItemRadioactive;
+import nuclearscience.common.tile.TileAtomicAssembler;
 import nuclearscience.common.tile.TileChemicalExtractor;
 import nuclearscience.common.tile.TileControlRodAssembly;
 import nuclearscience.common.tile.TileElectromagneticSwitch;
@@ -80,7 +81,6 @@ import nuclearscience.common.tile.TileMoltenSaltSupplier;
 import nuclearscience.common.tile.TileNuclearBoiler;
 import nuclearscience.common.tile.TileParticleInjector;
 import nuclearscience.common.tile.TilePlasma;
-import nuclearscience.common.tile.TileAtomicAssembler;
 import nuclearscience.common.tile.TileQuantumCapacitor;
 import nuclearscience.common.tile.TileRadioactiveProcessor;
 import nuclearscience.common.tile.TileRadioisotopeGenerator;
@@ -361,7 +361,7 @@ public class DeferredRegisters {
 			() -> new BlockEntityType<>(TileMoltenSaltPipe::new, BlockMoltenSaltPipe.PIPESET, null));
 	public static final RegistryObject<BlockEntityType<TileSiren>> TILE_SIREN = TILES.register("siren",
 			() -> new BlockEntityType<>(TileSiren::new, Sets.newHashSet(blockSiren), null));
-	public static final RegistryObject<BlockEntityType<TileAtomicAssembler>> TILE_QUANTUMASSEMBLER = TILES.register("atomicassembler",
+	public static final RegistryObject<BlockEntityType<TileAtomicAssembler>> TILE_ATOMICASSEMBLER = TILES.register("atomicassembler",
 			() -> new BlockEntityType<>(TileAtomicAssembler::new, Sets.newHashSet(blockAtomicAssembler), null));
 
 	public static final RegistryObject<MenuType<ContainerGasCentrifuge>> CONTAINER_GASCENTRIFUGE = CONTAINERS.register("gascentrifuge",

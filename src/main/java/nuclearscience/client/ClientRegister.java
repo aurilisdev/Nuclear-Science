@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.References;
 import nuclearscience.client.render.entity.RenderParticle;
+import nuclearscience.client.render.tile.RenderAtomicAssembler;
 import nuclearscience.client.render.tile.RenderChemicalExtractor;
 import nuclearscience.client.render.tile.RenderFuelReprocessor;
 import nuclearscience.client.render.tile.RenderFusionReactorCore;
@@ -27,6 +28,7 @@ import nuclearscience.client.render.tile.RenderReactorCore;
 import nuclearscience.client.render.tile.RenderRodAssembly;
 import nuclearscience.client.render.tile.RenderTeleporter;
 import nuclearscience.client.render.tile.RenderTurbine;
+import nuclearscience.client.screen.ScreenAtomicAssembler;
 import nuclearscience.client.screen.ScreenChemicalExtractor;
 import nuclearscience.client.screen.ScreenFreezePlug;
 import nuclearscience.client.screen.ScreenGasCentrifuge;
@@ -35,7 +37,6 @@ import nuclearscience.client.screen.ScreenMSRReactorCore;
 import nuclearscience.client.screen.ScreenMoltenSaltSupplier;
 import nuclearscience.client.screen.ScreenNuclearBoiler;
 import nuclearscience.client.screen.ScreenParticleInjector;
-import nuclearscience.client.screen.ScreenAtomicAssembler;
 import nuclearscience.client.screen.ScreenQuantumCapacitor;
 import nuclearscience.client.screen.ScreenRadioactiveProcessor;
 import nuclearscience.client.screen.ScreenRadioisotopeGenerator;
@@ -113,6 +114,7 @@ public class ClientRegister {
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegisters.blockChemicalExtractor, ClientRegister::shouldMultilayerRender);
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegisters.blockNuclearBoiler, ClientRegister::shouldMultilayerRender);
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegisters.blockReactorCore, ClientRegister::shouldMultilayerRender);
+		ItemBlockRenderTypes.setRenderLayer(DeferredRegisters.blockAtomicAssembler, ClientRegister::shouldMultilayerRender);
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegisters.blockElectromagneticGlass, RenderType.cutout());
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegisters.blockElectromagneticBooster, RenderType.translucent());
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegisters.blockPlasma, RenderType.translucent());
@@ -132,6 +134,7 @@ public class ClientRegister {
 		event.registerBlockEntityRenderer(DeferredRegisters.TILE_FUELREPROCESSOR.get(), RenderFuelReprocessor::new);
 		event.registerBlockEntityRenderer(DeferredRegisters.TILE_RADIOACTIVEPROCESSOR.get(), RenderRadioactiveProcessor::new);
 		event.registerBlockEntityRenderer(DeferredRegisters.TILE_MOLTENSALTSUPPLIER.get(), RenderMoltenSaltSupplier::new);
+		event.registerBlockEntityRenderer(DeferredRegisters.TILE_ATOMICASSEMBLER.get(), RenderAtomicAssembler::new);
 
 		event.registerEntityRenderer(DeferredRegisters.ENTITY_PARTICLE.get(), RenderParticle::new);
 
