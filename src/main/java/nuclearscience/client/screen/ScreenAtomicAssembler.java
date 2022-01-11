@@ -24,7 +24,7 @@ public class ScreenAtomicAssembler extends GenericScreen<ContainerAtomicAssemble
 		components.add(new ScreenComponentProgress(() -> {
 			TileAtomicAssembler assembler = container.getHostFromIntArray();
 			if (assembler != null) {
-				return assembler.progress / (double) Constants.QUANTUMASSEMBLER_REQUIRED_TICKS;
+				return assembler.progress / (double) Constants.ATOMICASSEMBLER_REQUIRED_TICKS;
 			}
 			return 0;
 		}, this, 84, 71));

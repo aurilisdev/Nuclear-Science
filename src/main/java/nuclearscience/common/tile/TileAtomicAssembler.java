@@ -28,7 +28,7 @@ public class TileAtomicAssembler extends GenericTile {
 		addComponent(new ComponentDirection());
 		addComponent(new ComponentTickable().tickServer(this::tickServer).tickCommon(this::tickCommon));
 		addComponent(new ComponentPacketHandler().guiPacketWriter(this::writeGuiPacket).guiPacketReader(this::readGuiPacket));
-		addComponent(new ComponentElectrodynamic(this).voltage(Constants.QUANTUMASSEMBLER_VOLTAGE).input(Direction.DOWN));
+		addComponent(new ComponentElectrodynamic(this).voltage(Constants.ATOMICASSEMBLER_VOLTAGE).input(Direction.DOWN));
 		addComponent(new ComponentInventory(this).size(8).slotFaces(0, Direction.values())
 				.valid((slot, stack, i) -> slot == 6 || slot < 6 && stack.is(DeferredRegisters.ITEM_CELLDARKMATTER.get())).shouldSendInfo());
 		addComponent(new ComponentContainerProvider("container.atomicassembler")
@@ -60,7 +60,7 @@ public class TileAtomicAssembler extends GenericTile {
 
 		boolean canProduce = false;
 		if (canProcess) {
-			if (progress++ >= Constants.QUANTUMASSEMBLER_REQUIRED_TICKS) {
+			if (progress++ >= Constants.ATOMICASSEMBLER_REQUIRED_TICKS) {
 				canProduce = true;
 			}
 			electro.extractPower(TransferPack.joulesVoltage(Constants.ATOMICASSEMBLER_USAGE_PER_TICK, electro.getVoltage()), false);
