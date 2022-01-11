@@ -1,0 +1,19 @@
+{
+  "type" : "minecraft:crafting_shaped",
+  "pattern" : [ "ccc", "sgs", "sss" ],
+  "key" : {
+    "g" : {
+      "item" : "nuclearscience:gascentrifuge"
+    },
+    "c" : {
+      "tag" : "forge:circuits/elite"
+    },
+    "s" : {
+      "tag" : "forge:plates/steel"
+    }
+  },
+  "result" : {
+    "item" : "nuclearscience:atomicassembler",
+    "count" : 1
+  }
+}
