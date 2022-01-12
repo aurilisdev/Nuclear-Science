@@ -142,7 +142,7 @@ public class NuclearSciencePlugin implements IModPlugin {
 	@Override
 	public void registerGuiHandlers(IGuiHandlerRegistration registry) {
 
-		registry.addRecipeClickArea(ScreenO2OProcessor.class, 85, 35, 22, 15,
+		registry.addRecipeClickArea(ScreenO2OProcessor.class, 48, 35, 22, 15,
 				ElectrodynamicsJEIPlugin.O2O_CLICK_AREAS.toArray(new ResourceLocation[ElectrodynamicsJEIPlugin.O2O_CLICK_AREAS.size()]));
 		registry.addRecipeClickArea(ScreenNuclearBoiler.class, 97, 31, 22, 15, NuclearBoilerRecipeCategory.UID);
 		registry.addRecipeClickArea(ScreenRadioactiveProcessor.class, 97, 31, 22, 15, RadioactiveProcessorRecipeCategory.UID);
