@@ -21,7 +21,6 @@ import nuclearscience.api.radiation.RadiationSystem;
 import nuclearscience.common.inventory.container.ContainerMSRReactorCore;
 import nuclearscience.common.network.MoltenSaltNetwork;
 
-//TODO: Rename from bloody MSRReactor everywhere to MSReactor as MSRReactor now means Molten-Salt-ReactorReactor
 public class TileMSRReactorCore extends GenericTile {
 	public static final int MELTDOWN_TEMPERATURE = 900;
 	public static final double FUEL_CAPACITY = 1000;
