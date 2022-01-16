@@ -16,12 +16,13 @@ public class FuelReprocessorRecipe extends Item2ItemRecipe {
 	public static final String MOD_ID = nuclearscience.References.ID;
 	public static final ResourceLocation RECIPE_ID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
 
-	public FuelReprocessorRecipe(ResourceLocation id, CountableIngredient[] inputs, ItemStack output) {
-		super(id, inputs, output);
+	public FuelReprocessorRecipe(ResourceLocation id, CountableIngredient[] inputs, ItemStack output, double experience) {
+		super(id, inputs, output, experience);
 	}
 
-	public FuelReprocessorRecipe(ResourceLocation id, CountableIngredient[] input, ItemStack output, ProbableItem[] itemBiproducts) {
-		super(id, input, output, itemBiproducts);
+	public FuelReprocessorRecipe(ResourceLocation id, CountableIngredient[] input, ItemStack output, ProbableItem[] itemBiproducts, 
+			double experience) {
+		super(id, input, output, itemBiproducts, experience);
 	}
 
 	@Override

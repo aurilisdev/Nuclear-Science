@@ -17,8 +17,8 @@ public class RadioactiveProcessorRecipe extends FluidItem2ItemRecipe {
 	public static final ResourceLocation RECIPE_ID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
 
 	public RadioactiveProcessorRecipe(ResourceLocation recipeID, CountableIngredient[] itemInputs, FluidIngredient[] fluidInputs,
-			ItemStack itemOutput) {
-		super(recipeID, itemInputs, fluidInputs, itemOutput);
+			ItemStack itemOutput, double experience) {
+		super(recipeID, itemInputs, fluidInputs, itemOutput, experience);
 	}
 
 	@Override
