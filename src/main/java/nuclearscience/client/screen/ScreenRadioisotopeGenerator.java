@@ -6,7 +6,7 @@ import java.util.List;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import electrodynamics.api.electricity.formatting.ChatFormatter;
-import electrodynamics.api.electricity.formatting.ElectricUnit;
+import electrodynamics.api.electricity.formatting.DisplayUnit;
 import electrodynamics.prefab.screen.GenericScreen;
 import electrodynamics.prefab.screen.component.ScreenComponentElectricInfo;
 import electrodynamics.prefab.screen.component.ScreenComponentInfo;
@@ -51,13 +51,13 @@ public class ScreenRadioisotopeGenerator extends GenericScreen<ContainerRadioiso
 		TransferPack transfer = TransferPack.ampsVoltage(currentOutput / Constants.RADIOISOTOPEGENERATOR_VOLTAGE,
 				Constants.RADIOISOTOPEGENERATOR_VOLTAGE);
 		list.add(new TranslatableComponent("gui.machine.current",
-				new TextComponent(ChatFormatter.getElectricDisplayShort(transfer.getAmps(), ElectricUnit.AMPERE)).withStyle(ChatFormatting.GRAY))
+				new TextComponent(ChatFormatter.getChatDisplayShort(transfer.getAmps(), DisplayUnit.AMPERE)).withStyle(ChatFormatting.GRAY))
 						.withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
 		list.add(new TranslatableComponent("gui.machine.output",
-				new TextComponent(ChatFormatter.getElectricDisplayShort(transfer.getWatts(), ElectricUnit.WATT)).withStyle(ChatFormatting.GRAY))
+				new TextComponent(ChatFormatter.getChatDisplayShort(transfer.getWatts(), DisplayUnit.WATT)).withStyle(ChatFormatting.GRAY))
 						.withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
 		list.add(new TranslatableComponent("gui.machine.voltage",
-				new TextComponent(ChatFormatter.getElectricDisplayShort(transfer.getVoltage(), ElectricUnit.VOLTAGE)).withStyle(ChatFormatting.GRAY))
+				new TextComponent(ChatFormatter.getChatDisplayShort(transfer.getVoltage(), DisplayUnit.VOLTAGE)).withStyle(ChatFormatting.GRAY))
 						.withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
 		return list;
 	}
@@ -71,13 +71,13 @@ public class ScreenRadioisotopeGenerator extends GenericScreen<ContainerRadioiso
 		TransferPack transfer = TransferPack.ampsVoltage(currentOutput / Constants.RADIOISOTOPEGENERATOR_VOLTAGE,
 				Constants.RADIOISOTOPEGENERATOR_VOLTAGE);
 		font.draw(matrixStack,
-				new TranslatableComponent("gui.machine.current", ChatFormatter.getElectricDisplayShort(transfer.getAmps(), ElectricUnit.AMPERE)),
+				new TranslatableComponent("gui.machine.current", ChatFormatter.getChatDisplayShort(transfer.getAmps(), DisplayUnit.AMPERE)),
 				(float) inventoryLabelX + 60, (float) inventoryLabelY - 48, 4210752);
 		font.draw(matrixStack,
-				new TranslatableComponent("gui.machine.output", ChatFormatter.getElectricDisplayShort(transfer.getWatts(), ElectricUnit.WATT)),
+				new TranslatableComponent("gui.machine.output", ChatFormatter.getChatDisplayShort(transfer.getWatts(), DisplayUnit.WATT)),
 				(float) inventoryLabelX + 60, (float) inventoryLabelY - 35, 4210752);
 		font.draw(matrixStack,
-				new TranslatableComponent("gui.machine.voltage", ChatFormatter.getElectricDisplayShort(transfer.getVoltage(), ElectricUnit.VOLTAGE)),
+				new TranslatableComponent("gui.machine.voltage", ChatFormatter.getChatDisplayShort(transfer.getVoltage(), DisplayUnit.VOLTAGE)),
 				(float) inventoryLabelX + 60, (float) inventoryLabelY - 22, 4210752);
 	}
 }

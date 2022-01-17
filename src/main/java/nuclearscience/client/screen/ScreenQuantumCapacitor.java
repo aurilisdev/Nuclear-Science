@@ -3,7 +3,7 @@ package nuclearscience.client.screen;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import electrodynamics.api.electricity.formatting.ChatFormatter;
-import electrodynamics.api.electricity.formatting.ElectricUnit;
+import electrodynamics.api.electricity.formatting.DisplayUnit;
 import electrodynamics.prefab.screen.GenericScreen;
 import electrodynamics.prefab.screen.component.ScreenComponentTextInputBar;
 import net.minecraft.client.Minecraft;
@@ -133,20 +133,20 @@ public class ScreenQuantumCapacitor extends GenericScreen<ContainerQuantumCapaci
 		if (box != null) {
 			font.draw(matrixStack,
 					new TranslatableComponent("gui.machine.current", ChatFormatter
-							.getElectricDisplayShort(box.getOutputJoules() * 20.0 / TileQuantumCapacitor.DEFAULT_VOLTAGE, ElectricUnit.AMPERE)),
+							.getChatDisplayShort(box.getOutputJoules() * 20.0 / TileQuantumCapacitor.DEFAULT_VOLTAGE, DisplayUnit.AMPERE)),
 					inventoryLabelX, (float) inventoryLabelY - 55, 4210752);
 			font.draw(matrixStack,
 					new TranslatableComponent("gui.machine.transfer",
-							ChatFormatter.getElectricDisplayShort(box.getOutputJoules() * 20.0, ElectricUnit.WATT)),
+							ChatFormatter.getChatDisplayShort(box.getOutputJoules() * 20.0, DisplayUnit.WATT)),
 					inventoryLabelX, (float) inventoryLabelY - 42, 4210752);
 			font.draw(matrixStack,
 					new TranslatableComponent("gui.machine.voltage",
-							ChatFormatter.getElectricDisplayShort(TileQuantumCapacitor.DEFAULT_VOLTAGE, ElectricUnit.VOLTAGE)),
+							ChatFormatter.getChatDisplayShort(TileQuantumCapacitor.DEFAULT_VOLTAGE, DisplayUnit.VOLTAGE)),
 					inventoryLabelX, (float) inventoryLabelY - 29, 4210752);
 			font.draw(matrixStack,
 					new TranslatableComponent("gui.machine.stored",
-							ChatFormatter.getElectricDisplayShort(box.joulesClient, ElectricUnit.JOULES) + " / "
-									+ ChatFormatter.getElectricDisplayShort(TileQuantumCapacitor.DEFAULT_MAX_JOULES, ElectricUnit.JOULES)),
+							ChatFormatter.getChatDisplayShort(box.joulesClient, DisplayUnit.JOULES) + " / "
+									+ ChatFormatter.getChatDisplayShort(TileQuantumCapacitor.DEFAULT_MAX_JOULES, DisplayUnit.JOULES)),
 					inventoryLabelX, (float) inventoryLabelY - 16, 4210752);
 		}
 	}

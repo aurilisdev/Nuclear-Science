@@ -3,7 +3,7 @@ package nuclearscience.client.screen;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import electrodynamics.api.electricity.formatting.ChatFormatter;
-import electrodynamics.api.electricity.formatting.ElectricUnit;
+import electrodynamics.api.electricity.formatting.DisplayUnit;
 import electrodynamics.prefab.screen.GenericCustomScreen;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
@@ -45,11 +45,11 @@ public class ScreenParticleInjector extends GenericCustomScreen<ContainerParticl
 							.append("%"),
 					titleLabelX, titleLabelY + 30f, 4210752);
 			font.draw(matrixStack,
-					new TranslatableComponent("gui.machine.usage", ChatFormatter.getElectricDisplayShort(processor.getUsage(), ElectricUnit.JOULES)),
+					new TranslatableComponent("gui.machine.usage", ChatFormatter.getChatDisplayShort(processor.getUsage(), DisplayUnit.JOULES)),
 					inventoryLabelX, inventoryLabelY, 4210752);
 			font.draw(matrixStack,
 					new TranslatableComponent("gui.machine.voltage",
-							ChatFormatter.getElectricDisplayShort(electro.getVoltage(), ElectricUnit.VOLTAGE)),
+							ChatFormatter.getChatDisplayShort(electro.getVoltage(), DisplayUnit.VOLTAGE)),
 					(float) inventoryLabelX + 85, inventoryLabelY, 4210752);
 		}
 	}
