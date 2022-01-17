@@ -17,8 +17,8 @@ public class MSRFuelPreProcessorRecipe extends FluidItem2ItemRecipe {
 	public static final ResourceLocation RECIPE_ID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
 
 	public MSRFuelPreProcessorRecipe(ResourceLocation location, CountableIngredient[] inputItems, FluidIngredient[] inputFluids,
-			ItemStack outputItem) {
-		super(location, inputItems, inputFluids, outputItem);
+			ItemStack outputItem, double experience) {
+		super(location, inputItems, inputFluids, outputItem, experience);
 	}
 
 	@Override

@@ -15,8 +15,8 @@ public class FissionReactorRecipe extends Item2ItemRecipe {
 	public static final String MOD_ID = nuclearscience.References.ID;
 	public static final ResourceLocation RECIPE_ID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
 
-	public FissionReactorRecipe(ResourceLocation id, CountableIngredient[] inputs, ItemStack output) {
-		super(id, inputs, output);
+	public FissionReactorRecipe(ResourceLocation id, CountableIngredient[] inputs, ItemStack output, double experience) {
+		super(id, inputs, output, experience);
 	}
 
 	@Override

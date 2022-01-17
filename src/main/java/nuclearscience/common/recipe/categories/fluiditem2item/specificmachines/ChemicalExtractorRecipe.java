@@ -16,8 +16,9 @@ public class ChemicalExtractorRecipe extends FluidItem2ItemRecipe {
 	public static final String MOD_ID = electrodynamics.api.References.ID;
 	public static final ResourceLocation RECIPE_ID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
 
-	public ChemicalExtractorRecipe(ResourceLocation recipeID, CountableIngredient[] itemInputs, FluidIngredient[] fluidInputs, ItemStack itemOutput) {
-		super(recipeID, itemInputs, fluidInputs, itemOutput);
+	public ChemicalExtractorRecipe(ResourceLocation recipeID, CountableIngredient[] itemInputs, FluidIngredient[] fluidInputs, 
+			ItemStack itemOutput, double experience) {
+		super(recipeID, itemInputs, fluidInputs, itemOutput, experience);
 	}
 
 	@Override
