@@ -1,8 +1,8 @@
 package nuclearscience.client.screen;
 
 import electrodynamics.prefab.screen.GenericScreen;
-import electrodynamics.prefab.screen.component.ScreenComponentElectricInfo;
-import electrodynamics.prefab.screen.component.ScreenComponentInfo;
+import electrodynamics.prefab.screen.component.gui.ScreenComponentInfo;
+import electrodynamics.prefab.screen.component.gui.type.ScreenComponentElectricInfo;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
