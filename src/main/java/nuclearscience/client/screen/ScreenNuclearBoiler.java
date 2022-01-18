@@ -1,14 +1,14 @@
 package nuclearscience.client.screen;
 
 import electrodynamics.prefab.screen.GenericScreen;
-import electrodynamics.prefab.screen.component.gui.ScreenComponentInfo;
-import electrodynamics.prefab.screen.component.gui.type.ScreenComponentElectricInfo;
-import electrodynamics.prefab.screen.component.gui.type.ScreenComponentFluid;
-import electrodynamics.prefab.screen.component.gui.type.ScreenComponentProgress;
+import electrodynamics.prefab.screen.component.ScreenComponentElectricInfo;
+import electrodynamics.prefab.screen.component.ScreenComponentFluid;
+import electrodynamics.prefab.screen.component.ScreenComponentInfo;
+import electrodynamics.prefab.screen.component.ScreenComponentProgress;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
+import electrodynamics.prefab.tile.components.generic.AbstractFluidHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
-import electrodynamics.prefab.tile.components.utils.AbstractFluidHandler;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.level.material.Fluid;

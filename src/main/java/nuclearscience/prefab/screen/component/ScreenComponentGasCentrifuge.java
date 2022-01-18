@@ -6,7 +6,7 @@ import java.util.function.DoubleSupplier;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import electrodynamics.api.screen.IScreenWrapper;
-import electrodynamics.prefab.screen.component.gui.ScreenComponent;
+import electrodynamics.prefab.screen.component.ScreenComponent;
 import electrodynamics.prefab.utilities.RenderingUtils;
 import net.minecraft.resources.ResourceLocation;
 import nuclearscience.References;

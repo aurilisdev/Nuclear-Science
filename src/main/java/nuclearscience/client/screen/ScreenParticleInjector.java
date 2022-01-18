@@ -48,8 +48,7 @@ public class ScreenParticleInjector extends GenericCustomScreen<ContainerParticl
 					new TranslatableComponent("gui.machine.usage", ChatFormatter.getChatDisplayShort(processor.getUsage(), DisplayUnit.JOULES)),
 					inventoryLabelX, inventoryLabelY, 4210752);
 			font.draw(matrixStack,
-					new TranslatableComponent("gui.machine.voltage",
-							ChatFormatter.getChatDisplayShort(electro.getVoltage(), DisplayUnit.VOLTAGE)),
+					new TranslatableComponent("gui.machine.voltage", ChatFormatter.getChatDisplayShort(electro.getVoltage(), DisplayUnit.VOLTAGE)),
 					(float) inventoryLabelX + 85, inventoryLabelY, 4210752);
 		}
 	}
