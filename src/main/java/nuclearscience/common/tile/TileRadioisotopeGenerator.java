@@ -1,6 +1,5 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.common.network.ElectricityUtilities;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
@@ -8,6 +7,7 @@ import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
+import electrodynamics.prefab.utilities.ElectricityUtils;
 import electrodynamics.prefab.utilities.object.CachedTileOutput;
 import electrodynamics.prefab.utilities.object.TransferPack;
 import net.minecraft.core.BlockPos;
@@ -55,10 +55,10 @@ public class TileRadioisotopeGenerator extends GenericTile {
 			TransferPack transfer = TransferPack.ampsVoltage(currentOutput / (Constants.RADIOISOTOPEGENERATOR_VOLTAGE * 2.0),
 					Constants.RADIOISOTOPEGENERATOR_VOLTAGE);
 			if (output1.valid()) {
-				ElectricityUtilities.receivePower(output1.getSafe(), Direction.DOWN, transfer, false);
+				ElectricityUtils.receivePower(output1.getSafe(), Direction.DOWN, transfer, false);
 			}
 			if (output2.valid()) {
-				ElectricityUtilities.receivePower(output2.getSafe(), Direction.UP, transfer, false);
+				ElectricityUtils.receivePower(output2.getSafe(), Direction.UP, transfer, false);
 			}
 		}
 	}

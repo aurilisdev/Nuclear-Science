@@ -1,12 +1,12 @@
 package nuclearscience.common.tile;
 
 import electrodynamics.api.sound.SoundAPI;
-import electrodynamics.common.network.ElectricityUtilities;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
+import electrodynamics.prefab.utilities.ElectricityUtils;
 import electrodynamics.prefab.utilities.object.CachedTileOutput;
 import electrodynamics.prefab.utilities.object.TransferPack;
 import net.minecraft.core.BlockPos;
@@ -145,7 +145,7 @@ public class TileTurbine extends GenericTile {
 			wait = 30;
 			if (output.valid()) {
 				TransferPack transfer = TransferPack.joulesVoltage(steam * (hasCore ? 1.111 : 1), currentVoltage);
-				ElectricityUtilities.receivePower(output.getSafe(), Direction.DOWN, transfer, false);
+				ElectricityUtils.receivePower(output.getSafe(), Direction.DOWN, transfer, false);
 				steam = Math.max(steam - Math.max(75, steam), 0);
 			}
 		} else {

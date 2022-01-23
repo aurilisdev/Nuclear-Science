@@ -3,7 +3,6 @@ package nuclearscience.common.tile;
 import java.util.UUID;
 
 import electrodynamics.api.capability.ElectrodynamicsCapabilities;
-import electrodynamics.common.network.ElectricityUtilities;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
@@ -11,6 +10,7 @@ import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
+import electrodynamics.prefab.utilities.ElectricityUtils;
 import electrodynamics.prefab.utilities.object.CachedTileOutput;
 import electrodynamics.prefab.utilities.object.TransferPack;
 import net.minecraft.core.BlockPos;
@@ -66,13 +66,13 @@ public class TileQuantumCapacitor extends GenericTile implements IEnergyStorage 
 		}
 		double joules = getJoulesStored();
 		if (joules > 0 && outputCache.valid()) {
-			double sent = ElectricityUtilities.receivePower(outputCache.getSafe(), Direction.DOWN,
+			double sent = ElectricityUtils.receivePower(outputCache.getSafe(), Direction.DOWN,
 					TransferPack.joulesVoltage(Math.min(joules, outputJoules), DEFAULT_VOLTAGE), false).getJoules();
 			QuantumCapacitorData.get(level).setJoules(uuid, frequency, getJoulesStored() - sent);
 		}
 		joules = getJoulesStored();
 		if (joules > 0 && outputCache2.valid()) {
-			double sent = ElectricityUtilities.receivePower(outputCache2.getSafe(), Direction.UP,
+			double sent = ElectricityUtils.receivePower(outputCache2.getSafe(), Direction.UP,
 					TransferPack.joulesVoltage(Math.min(joules, outputJoules), DEFAULT_VOLTAGE), false).getJoules();
 			QuantumCapacitorData.get(level).setJoules(uuid, frequency, getJoulesStored() - sent);
 		}
