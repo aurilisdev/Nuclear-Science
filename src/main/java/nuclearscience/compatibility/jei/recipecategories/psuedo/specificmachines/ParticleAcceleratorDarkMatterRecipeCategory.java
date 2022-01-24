@@ -51,8 +51,7 @@ public class ParticleAcceleratorDarkMatterRecipeCategory implements IRecipeCateg
 	public ParticleAcceleratorDarkMatterRecipeCategory(IGuiHelper guiHelper) {
 
 		ICON = guiHelper.createDrawableIngredient(INPUT_MACHINE);
-		BACKGROUND = guiHelper.createDrawable(new ResourceLocation(MOD_ID, GUI_TEXTURE), GUI_BACKGROUND[0], GUI_BACKGROUND[1], GUI_BACKGROUND[2],
-				GUI_BACKGROUND[3]);
+		BACKGROUND = guiHelper.createDrawable(new ResourceLocation(MOD_ID, GUI_TEXTURE), GUI_BACKGROUND[0], GUI_BACKGROUND[1], GUI_BACKGROUND[2], GUI_BACKGROUND[3]);
 
 		ResourceLocation guiTexture = new ResourceLocation(MOD_ID, GUI_TEXTURE);
 
@@ -60,11 +59,9 @@ public class ParticleAcceleratorDarkMatterRecipeCategory implements IRecipeCateg
 			@Override
 			public ArrayList<IDrawableAnimated> load(Integer cookTime) {
 
-				IDrawableAnimated majorArrowBottom = guiHelper.drawableBuilder(guiTexture, 179, 17, 37, 75).buildAnimated(cookTime,
-						IDrawableAnimated.StartDirection.BOTTOM, false);
+				IDrawableAnimated majorArrowBottom = guiHelper.drawableBuilder(guiTexture, 179, 17, 37, 75).buildAnimated(cookTime, IDrawableAnimated.StartDirection.BOTTOM, false);
 
-				IDrawableAnimated majorArrowTop = guiHelper.drawableBuilder(guiTexture, 132, 0, 37, 75).buildAnimated(cookTime,
-						IDrawableAnimated.StartDirection.TOP, false);
+				IDrawableAnimated majorArrowTop = guiHelper.drawableBuilder(guiTexture, 132, 0, 37, 75).buildAnimated(cookTime, IDrawableAnimated.StartDirection.TOP, false);
 
 				IDrawableAnimated[] arrows = { majorArrowBottom, majorArrowTop };
 				return new ArrayList<>(Arrays.asList(arrows));

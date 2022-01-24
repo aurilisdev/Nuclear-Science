@@ -32,8 +32,7 @@ public class TileTeleporter extends GenericTile {
 		addComponent(new ComponentDirection());
 		addComponent(new ComponentTickable().tickServer(this::tickServer));
 		addComponent(new ComponentPacketHandler());
-		addComponent(
-				new ComponentElectrodynamic(this).maxJoules(5000000).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 4).input(Direction.DOWN));
+		addComponent(new ComponentElectrodynamic(this).maxJoules(5000000).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 4).input(Direction.DOWN));
 
 	}
 

@@ -48,17 +48,10 @@ public class ScreenRadioisotopeGenerator extends GenericScreen<ContainerRadioiso
 		ItemStack in = menu.getSlot(0).getItem();
 		IRadioactiveObject rad = RadiationRegister.get(in.getItem());
 		double currentOutput = in.getCount() * Constants.RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER * rad.getRadiationStrength();
-		TransferPack transfer = TransferPack.ampsVoltage(currentOutput / Constants.RADIOISOTOPEGENERATOR_VOLTAGE,
-				Constants.RADIOISOTOPEGENERATOR_VOLTAGE);
-		list.add(new TranslatableComponent("gui.machine.current",
-				new TextComponent(ChatFormatter.getChatDisplayShort(transfer.getAmps(), DisplayUnit.AMPERE)).withStyle(ChatFormatting.GRAY))
-						.withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
-		list.add(new TranslatableComponent("gui.machine.output",
-				new TextComponent(ChatFormatter.getChatDisplayShort(transfer.getWatts(), DisplayUnit.WATT)).withStyle(ChatFormatting.GRAY))
-						.withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
-		list.add(new TranslatableComponent("gui.machine.voltage",
-				new TextComponent(ChatFormatter.getChatDisplayShort(transfer.getVoltage(), DisplayUnit.VOLTAGE)).withStyle(ChatFormatting.GRAY))
-						.withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
+		TransferPack transfer = TransferPack.ampsVoltage(currentOutput / Constants.RADIOISOTOPEGENERATOR_VOLTAGE, Constants.RADIOISOTOPEGENERATOR_VOLTAGE);
+		list.add(new TranslatableComponent("gui.machine.current", new TextComponent(ChatFormatter.getChatDisplayShort(transfer.getAmps(), DisplayUnit.AMPERE)).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
+		list.add(new TranslatableComponent("gui.machine.output", new TextComponent(ChatFormatter.getChatDisplayShort(transfer.getWatts(), DisplayUnit.WATT)).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
+		list.add(new TranslatableComponent("gui.machine.voltage", new TextComponent(ChatFormatter.getChatDisplayShort(transfer.getVoltage(), DisplayUnit.VOLTAGE)).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
 		return list;
 	}
 
@@ -68,16 +61,9 @@ public class ScreenRadioisotopeGenerator extends GenericScreen<ContainerRadioiso
 		ItemStack in = menu.getSlot(0).getItem();
 		IRadioactiveObject rad = RadiationRegister.get(in.getItem());
 		double currentOutput = in.getCount() * Constants.RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER * rad.getRadiationStrength();
-		TransferPack transfer = TransferPack.ampsVoltage(currentOutput / Constants.RADIOISOTOPEGENERATOR_VOLTAGE,
-				Constants.RADIOISOTOPEGENERATOR_VOLTAGE);
-		font.draw(matrixStack,
-				new TranslatableComponent("gui.machine.current", ChatFormatter.getChatDisplayShort(transfer.getAmps(), DisplayUnit.AMPERE)),
-				(float) inventoryLabelX + 60, (float) inventoryLabelY - 48, 4210752);
-		font.draw(matrixStack,
-				new TranslatableComponent("gui.machine.output", ChatFormatter.getChatDisplayShort(transfer.getWatts(), DisplayUnit.WATT)),
-				(float) inventoryLabelX + 60, (float) inventoryLabelY - 35, 4210752);
-		font.draw(matrixStack,
-				new TranslatableComponent("gui.machine.voltage", ChatFormatter.getChatDisplayShort(transfer.getVoltage(), DisplayUnit.VOLTAGE)),
-				(float) inventoryLabelX + 60, (float) inventoryLabelY - 22, 4210752);
+		TransferPack transfer = TransferPack.ampsVoltage(currentOutput / Constants.RADIOISOTOPEGENERATOR_VOLTAGE, Constants.RADIOISOTOPEGENERATOR_VOLTAGE);
+		font.draw(matrixStack, new TranslatableComponent("gui.machine.current", ChatFormatter.getChatDisplayShort(transfer.getAmps(), DisplayUnit.AMPERE)), (float) inventoryLabelX + 60, (float) inventoryLabelY - 48, 4210752);
+		font.draw(matrixStack, new TranslatableComponent("gui.machine.output", ChatFormatter.getChatDisplayShort(transfer.getWatts(), DisplayUnit.WATT)), (float) inventoryLabelX + 60, (float) inventoryLabelY - 35, 4210752);
+		font.draw(matrixStack, new TranslatableComponent("gui.machine.voltage", ChatFormatter.getChatDisplayShort(transfer.getVoltage(), DisplayUnit.VOLTAGE)), (float) inventoryLabelX + 60, (float) inventoryLabelY - 22, 4210752);
 	}
 }

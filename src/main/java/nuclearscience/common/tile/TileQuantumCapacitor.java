@@ -40,12 +40,9 @@ public class TileQuantumCapacitor extends GenericTile implements IEnergyStorage 
 		super(DeferredRegisters.TILE_QUANTUMCAPACITOR.get(), pos, state);
 		addComponent(new ComponentTickable().tickServer(this::tickServer));
 		addComponent(new ComponentPacketHandler().guiPacketReader(this::readGUIPacket).guiPacketWriter(this::writeGUIPacket));
-		addComponent(new ComponentElectrodynamic(this).voltage(16 * ElectrodynamicsCapabilities.DEFAULT_VOLTAGE).output(Direction.DOWN)
-				.output(Direction.UP).input(Direction.WEST).input(Direction.EAST).input(Direction.SOUTH).input(Direction.NORTH)
-				.receivePower(this::receivePower).setJoules(this::setJoulesStored).getJoules(this::getJoulesStored));
+		addComponent(new ComponentElectrodynamic(this).voltage(16 * ElectrodynamicsCapabilities.DEFAULT_VOLTAGE).output(Direction.DOWN).output(Direction.UP).input(Direction.WEST).input(Direction.EAST).input(Direction.SOUTH).input(Direction.NORTH).receivePower(this::receivePower).setJoules(this::setJoulesStored).getJoules(this::getJoulesStored));
 		addComponent(new ComponentInventory(this));
-		addComponent(new ComponentContainerProvider("container.quantumcapacitor")
-				.createMenu((id, player) -> new ContainerQuantumCapacitor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
+		addComponent(new ComponentContainerProvider("container.quantumcapacitor").createMenu((id, player) -> new ContainerQuantumCapacitor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 
 	}
 
@@ -66,14 +63,12 @@ public class TileQuantumCapacitor extends GenericTile implements IEnergyStorage 
 		}
 		double joules = getJoulesStored();
 		if (joules > 0 && outputCache.valid()) {
-			double sent = ElectricityUtils.receivePower(outputCache.getSafe(), Direction.DOWN,
-					TransferPack.joulesVoltage(Math.min(joules, outputJoules), DEFAULT_VOLTAGE), false).getJoules();
+			double sent = ElectricityUtils.receivePower(outputCache.getSafe(), Direction.DOWN, TransferPack.joulesVoltage(Math.min(joules, outputJoules), DEFAULT_VOLTAGE), false).getJoules();
 			QuantumCapacitorData.get(level).setJoules(uuid, frequency, getJoulesStored() - sent);
 		}
 		joules = getJoulesStored();
 		if (joules > 0 && outputCache2.valid()) {
-			double sent = ElectricityUtils.receivePower(outputCache2.getSafe(), Direction.UP,
-					TransferPack.joulesVoltage(Math.min(joules, outputJoules), DEFAULT_VOLTAGE), false).getJoules();
+			double sent = ElectricityUtils.receivePower(outputCache2.getSafe(), Direction.UP, TransferPack.joulesVoltage(Math.min(joules, outputJoules), DEFAULT_VOLTAGE), false).getJoules();
 			QuantumCapacitorData.get(level).setJoules(uuid, frequency, getJoulesStored() - sent);
 		}
 		if (tickable.getTicks() % 50 == 0) {
@@ -137,8 +132,7 @@ public class TileQuantumCapacitor extends GenericTile implements IEnergyStorage 
 				QuantumCapacitorData.get(level).setJoules(uuid, frequency, joules);
 				if (transfer.getVoltage() > DEFAULT_VOLTAGE) {
 					level.setBlockAndUpdate(worldPosition, Blocks.AIR.defaultBlockState());
-					level.explode(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(),
-							(float) Math.log10(10 + transfer.getVoltage() / DEFAULT_VOLTAGE), BlockInteraction.DESTROY);
+					level.explode(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), (float) Math.log10(10 + transfer.getVoltage() / DEFAULT_VOLTAGE), BlockInteraction.DESTROY);
 					return TransferPack.EMPTY;
 				}
 			}
@@ -157,8 +151,7 @@ public class TileQuantumCapacitor extends GenericTile implements IEnergyStorage 
 	@Override
 	public int extractEnergy(int maxExtract, boolean simulate) {
 		int calVoltage = 120;
-		TransferPack pack = this.<ComponentElectrodynamic>getComponent(ComponentType.Electrodynamic)
-				.extractPower(TransferPack.joulesVoltage(maxExtract, calVoltage), simulate);
+		TransferPack pack = this.<ComponentElectrodynamic>getComponent(ComponentType.Electrodynamic).extractPower(TransferPack.joulesVoltage(maxExtract, calVoltage), simulate);
 		return (int) Math.min(Integer.MAX_VALUE, pack.getJoules());
 	}
 

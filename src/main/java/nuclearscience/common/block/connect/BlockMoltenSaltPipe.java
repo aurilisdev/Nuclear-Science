@@ -83,8 +83,7 @@ public class BlockMoltenSaltPipe extends GenericEntityBlockWaterloggable {
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		super.createBlockStateDefinition(builder);
-		builder.add(EnumConnectType.UP, EnumConnectType.DOWN, EnumConnectType.NORTH, EnumConnectType.EAST, EnumConnectType.SOUTH,
-				EnumConnectType.WEST);
+		builder.add(EnumConnectType.UP, EnumConnectType.DOWN, EnumConnectType.NORTH, EnumConnectType.EAST, EnumConnectType.SOUTH, EnumConnectType.WEST);
 	}
 
 	@Override
@@ -161,8 +160,7 @@ public class BlockMoltenSaltPipe extends GenericEntityBlockWaterloggable {
 			BlockEntity facingTile = worldIn.getBlockEntity(pos.relative(d));
 			if (facingTile instanceof IMoltenSaltPipe) {
 				acc = acc.setValue(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.WIRE);
-			} else if (facingTile instanceof TileMSRReactorCore && d.getOpposite() == Direction.UP
-					|| facingTile instanceof TileHeatExchanger && d.getOpposite() == Direction.DOWN) {
+			} else if (facingTile instanceof TileMSRReactorCore && d.getOpposite() == Direction.UP || facingTile instanceof TileHeatExchanger && d.getOpposite() == Direction.DOWN) {
 				acc = acc.setValue(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.INVENTORY);
 			}
 		}
@@ -192,8 +190,7 @@ public class BlockMoltenSaltPipe extends GenericEntityBlockWaterloggable {
 	}
 
 	@Override
-	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos,
-			BlockPos facingPos) {
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
 		if (stateIn.getValue(BlockStateProperties.WATERLOGGED) == Boolean.TRUE) {
 			world.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
 		}
@@ -201,8 +198,7 @@ public class BlockMoltenSaltPipe extends GenericEntityBlockWaterloggable {
 		BlockEntity tile = world.getBlockEntity(facingPos);
 		if (tile instanceof IMoltenSaltPipe) {
 			return stateIn.setValue(property, EnumConnectType.WIRE);
-		} else if (tile instanceof TileMSRReactorCore && facing.getOpposite() == Direction.UP
-				|| tile instanceof TileHeatExchanger && facing.getOpposite() == Direction.DOWN) {
+		} else if (tile instanceof TileMSRReactorCore && facing.getOpposite() == Direction.UP || tile instanceof TileHeatExchanger && facing.getOpposite() == Direction.DOWN) {
 			return stateIn.setValue(property, EnumConnectType.INVENTORY);
 		} else {
 			return stateIn.setValue(property, EnumConnectType.NONE);

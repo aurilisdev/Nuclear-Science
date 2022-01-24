@@ -18,8 +18,7 @@ public class RenderGasCentrifuge implements BlockEntityRenderer<TileGasCentrifug
 	}
 
 	@Override
-	public void render(TileGasCentrifuge tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn,
-			int combinedOverlayIn) {
+	public void render(TileGasCentrifuge tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
 		BakedModel ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_GASCENTRIFUGECENTER);
 		matrixStackIn.translate(0.5, 0.5, 0.5);
 		double daytime = System.currentTimeMillis() / 5.0 * (tileEntityIn.spinSpeed / 20.0);

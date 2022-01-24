@@ -33,8 +33,7 @@ public class TileHeatExchanger extends GenericTile {
 	public TileHeatExchanger(BlockPos pos, BlockState state) {
 		super(DeferredRegisters.TILE_HEATEXCHANGER.get(), pos, state);
 		addComponent(new ComponentTickable().tickCommon(this::tickCommon).tickServer(this::tickServer));
-		addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket)
-				.guiPacketReader(this::readCustomPacket).guiPacketWriter(this::writeCustomPacket));
+		addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket).guiPacketReader(this::readCustomPacket).guiPacketWriter(this::writeCustomPacket));
 	}
 
 	protected void tickServer(ComponentTickable tickable) {
@@ -70,8 +69,7 @@ public class TileHeatExchanger extends GenericTile {
 				for (int k = 0; k < STEAM_GEN_DIAMETER; k++) {
 					boolean isReactor2d = i - STEAM_GEN_DIAMETER / 2 == 0 && k - STEAM_GEN_DIAMETER / 2 == 0;
 					if (isReactor2d && j == 0) {
-						if (!level.isClientSide && level.random.nextFloat() < temperature
-								/ (TileMSRReactorCore.MELTDOWN_TEMPERATURE * 20.0 * STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * STEAM_GEN_HEIGHT)) {
+						if (!level.isClientSide && level.random.nextFloat() < temperature / (TileMSRReactorCore.MELTDOWN_TEMPERATURE * 20.0 * STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * STEAM_GEN_HEIGHT)) {
 							if (level.getBlockState(worldPosition).hasProperty(BlockStateProperties.WATERLOGGED)) {
 								level.setBlockAndUpdate(worldPosition, getBlockState().setValue(BlockStateProperties.WATERLOGGED, false));
 							}
@@ -84,10 +82,7 @@ public class TileHeatExchanger extends GenericTile {
 					BlockPos offpos = new BlockPos(offsetX, offsetY, offsetZ);
 					Block offset = level.getBlockState(offpos).getBlock();
 					if (offset == Blocks.WATER) {
-						boolean isFaceWater = level.getBlockState(new BlockPos(offsetX, worldPosition.getY(), worldPosition.getZ()))
-								.getBlock() == Blocks.WATER
-								|| level.getBlockState(new BlockPos(worldPosition.getX(), worldPosition.getY(), offsetZ)).getBlock() == Blocks.WATER
-								|| isReactor2d;
+						boolean isFaceWater = level.getBlockState(new BlockPos(offsetX, worldPosition.getY(), worldPosition.getZ())).getBlock() == Blocks.WATER || level.getBlockState(new BlockPos(worldPosition.getX(), worldPosition.getY(), offsetZ)).getBlock() == Blocks.WATER || isReactor2d;
 						if (isFaceWater) {
 							if (!level.isClientSide) {
 								TileTurbine turbine = cachedTurbines[i][j][k];
@@ -95,11 +90,9 @@ public class TileHeatExchanger extends GenericTile {
 									if (turbine.isRemoved()) {
 										cachedTurbines[i][j][k] = null;
 									}
-									turbine.addSteam((int) (Constants.MSRREACTOR_MAXENERGYTARGET / (STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * 20.0
-											* (TileMSRReactorCore.MELTDOWN_TEMPERATURE / temperature))), (int) temperature);
+									turbine.addSteam((int) (Constants.MSRREACTOR_MAXENERGYTARGET / (STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * 20.0 * (TileMSRReactorCore.MELTDOWN_TEMPERATURE / temperature))), (int) temperature);
 								}
-								if (level.random.nextFloat() < temperature / (TileMSRReactorCore.MELTDOWN_TEMPERATURE * 20.0 * STEAM_GEN_DIAMETER
-										* STEAM_GEN_DIAMETER * STEAM_GEN_HEIGHT)) {
+								if (level.random.nextFloat() < temperature / (TileMSRReactorCore.MELTDOWN_TEMPERATURE * 20.0 * STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * STEAM_GEN_HEIGHT)) {
 									level.setBlockAndUpdate(offpos, Blocks.AIR.defaultBlockState());
 									continue;
 								}
@@ -115,8 +108,7 @@ public class TileHeatExchanger extends GenericTile {
 								double offsetFX = offsetX + level.random.nextDouble() / 2.0 * (level.random.nextBoolean() ? -1 : 1);
 								double offsetFY = offsetY + level.random.nextDouble() / 2.0 * (level.random.nextBoolean() ? -1 : 1);
 								double offsetFZ = offsetZ + level.random.nextDouble() / 2.0 * (level.random.nextBoolean() ? -1 : 1);
-								level.addParticle(ParticleTypes.BUBBLE, offsetFX + 0.5D, offsetFY + 0.20000000298023224D, offsetFZ + 0.5D, 0.0D, 0.0D,
-										0.0D);
+								level.addParticle(ParticleTypes.BUBBLE, offsetFX + 0.5D, offsetFY + 0.20000000298023224D, offsetFZ + 0.5D, 0.0D, 0.0D, 0.0D);
 								if (level.random.nextInt(3) == 0) {
 									level.addParticle(ParticleTypes.SMOKE, offsetFX + 0.5D, offsetFY + 0.5D, offsetFZ + 0.5D, 0.0D, 0.0D, 0.0D);
 								}

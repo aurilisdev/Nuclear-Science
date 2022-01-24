@@ -23,16 +23,14 @@ public class RenderNuclearBoiler implements BlockEntityRenderer<TileNuclearBoile
 	}
 
 	@Override
-	public void render(TileNuclearBoiler tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn,
-			int combinedOverlayIn) {
+	public void render(TileNuclearBoiler tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
 		matrixStackIn.pushPose();
 		BakedModel ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_CHEMICALBOILERWATER);
 		Direction face = tileEntityIn.getBlockState().getValue(GenericEntityBlock.FACING);
 		matrixStackIn.translate(face.getStepX(), face.getStepY(), face.getStepZ());
 		RenderingUtils.prepareRotationalTileModel(tileEntityIn, matrixStackIn);
 		matrixStackIn.translate(-0.5, 0, 0.5);
-		float prog = tileEntityIn.<ComponentFluidHandlerMulti>getComponent(ComponentType.FluidHandler).getTankFromFluid(Fluids.WATER, true)
-				.getFluidAmount() / (float) TileNuclearBoiler.MAX_TANK_CAPACITY;
+		float prog = tileEntityIn.<ComponentFluidHandlerMulti>getComponent(ComponentType.FluidHandler).getTankFromFluid(Fluids.WATER, true).getFluidAmount() / (float) TileNuclearBoiler.MAX_TANK_CAPACITY;
 		if (prog > 0) {
 			matrixStackIn.translate(0, 4.5 / 16.0, 2.0 / 16.0);
 			matrixStackIn.scale(1, prog / 16.0f * 12f, 1);
@@ -46,8 +44,7 @@ public class RenderNuclearBoiler implements BlockEntityRenderer<TileNuclearBoile
 		matrixStackIn.translate(face.getStepX(), face.getStepY(), face.getStepZ());
 		RenderingUtils.prepareRotationalTileModel(tileEntityIn, matrixStackIn);
 		matrixStackIn.translate(-0.5, 0, 0.5);
-		prog = tileEntityIn.<ComponentFluidHandlerMulti>getComponent(ComponentType.FluidHandler)
-				.getTankFromFluid(DeferredRegisters.fluidUraniumHexafluoride, false).getFluidAmount() / (float) TileNuclearBoiler.MAX_TANK_CAPACITY;
+		prog = tileEntityIn.<ComponentFluidHandlerMulti>getComponent(ComponentType.FluidHandler).getTankFromFluid(DeferredRegisters.fluidUraniumHexafluoride, false).getFluidAmount() / (float) TileNuclearBoiler.MAX_TANK_CAPACITY;
 		if (prog > 0) {
 			matrixStackIn.translate(0, 4.5 / 16.0, -2.0 / 16.0);
 			matrixStackIn.scale(1, prog / 16.0f * 12f, 1);

@@ -81,8 +81,7 @@ public class ScreenQuantumCapacitor extends GenericScreen<ContainerQuantumCapaci
 				// Not required
 			}
 			if (menu.getHostFromIntArray() != null) {
-				NetworkHandler.CHANNEL
-						.sendToServer(new PacketSetQuantumCapacitorData(menu.getHostFromIntArray().getBlockPos(), triedOutput, frequency));
+				NetworkHandler.CHANNEL.sendToServer(new PacketSetQuantumCapacitorData(menu.getHostFromIntArray().getBlockPos(), triedOutput, frequency));
 			}
 		}
 	}
@@ -131,23 +130,10 @@ public class ScreenQuantumCapacitor extends GenericScreen<ContainerQuantumCapaci
 		super.renderLabels(matrixStack, mouseX, mouseY);
 		TileQuantumCapacitor box = menu.getHostFromIntArray();
 		if (box != null) {
-			font.draw(matrixStack,
-					new TranslatableComponent("gui.machine.current", ChatFormatter
-							.getChatDisplayShort(box.getOutputJoules() * 20.0 / TileQuantumCapacitor.DEFAULT_VOLTAGE, DisplayUnit.AMPERE)),
-					inventoryLabelX, (float) inventoryLabelY - 55, 4210752);
-			font.draw(matrixStack,
-					new TranslatableComponent("gui.machine.transfer",
-							ChatFormatter.getChatDisplayShort(box.getOutputJoules() * 20.0, DisplayUnit.WATT)),
-					inventoryLabelX, (float) inventoryLabelY - 42, 4210752);
-			font.draw(matrixStack,
-					new TranslatableComponent("gui.machine.voltage",
-							ChatFormatter.getChatDisplayShort(TileQuantumCapacitor.DEFAULT_VOLTAGE, DisplayUnit.VOLTAGE)),
-					inventoryLabelX, (float) inventoryLabelY - 29, 4210752);
-			font.draw(matrixStack,
-					new TranslatableComponent("gui.machine.stored",
-							ChatFormatter.getChatDisplayShort(box.joulesClient, DisplayUnit.JOULES) + " / "
-									+ ChatFormatter.getChatDisplayShort(TileQuantumCapacitor.DEFAULT_MAX_JOULES, DisplayUnit.JOULES)),
-					inventoryLabelX, (float) inventoryLabelY - 16, 4210752);
+			font.draw(matrixStack, new TranslatableComponent("gui.machine.current", ChatFormatter.getChatDisplayShort(box.getOutputJoules() * 20.0 / TileQuantumCapacitor.DEFAULT_VOLTAGE, DisplayUnit.AMPERE)), inventoryLabelX, (float) inventoryLabelY - 55, 4210752);
+			font.draw(matrixStack, new TranslatableComponent("gui.machine.transfer", ChatFormatter.getChatDisplayShort(box.getOutputJoules() * 20.0, DisplayUnit.WATT)), inventoryLabelX, (float) inventoryLabelY - 42, 4210752);
+			font.draw(matrixStack, new TranslatableComponent("gui.machine.voltage", ChatFormatter.getChatDisplayShort(TileQuantumCapacitor.DEFAULT_VOLTAGE, DisplayUnit.VOLTAGE)), inventoryLabelX, (float) inventoryLabelY - 29, 4210752);
+			font.draw(matrixStack, new TranslatableComponent("gui.machine.stored", ChatFormatter.getChatDisplayShort(box.joulesClient, DisplayUnit.JOULES) + " / " + ChatFormatter.getChatDisplayShort(TileQuantumCapacitor.DEFAULT_MAX_JOULES, DisplayUnit.JOULES)), inventoryLabelX, (float) inventoryLabelY - 16, 4210752);
 		}
 	}
 }

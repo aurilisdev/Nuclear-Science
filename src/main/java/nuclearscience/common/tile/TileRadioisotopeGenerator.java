@@ -29,12 +29,9 @@ public class TileRadioisotopeGenerator extends GenericTile {
 		super(DeferredRegisters.TILE_RADIOISOTOPEGENERATOR.get(), pos, state);
 		addComponent(new ComponentTickable().tickServer(this::tickServer));
 		addComponent(new ComponentPacketHandler());
-		addComponent(new ComponentElectrodynamic(this).voltage(Constants.RADIOISOTOPEGENERATOR_VOLTAGE).extractPower((x, y) -> TransferPack.EMPTY)
-				.output(Direction.UP).output(Direction.DOWN));
-		addComponent(new ComponentInventory(this).size(1).slotFaces(0, Direction.values())
-				.valid((slot, stack, i) -> RadiationRegister.get(stack.getItem()) != RadiationRegister.NULL));
-		addComponent(new ComponentContainerProvider("container.radioisotopegenerator")
-				.createMenu((id, player) -> new ContainerRadioisotopeGenerator(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
+		addComponent(new ComponentElectrodynamic(this).voltage(Constants.RADIOISOTOPEGENERATOR_VOLTAGE).extractPower((x, y) -> TransferPack.EMPTY).output(Direction.UP).output(Direction.DOWN));
+		addComponent(new ComponentInventory(this).size(1).slotFaces(0, Direction.values()).valid((slot, stack, i) -> RadiationRegister.get(stack.getItem()) != RadiationRegister.NULL));
+		addComponent(new ComponentContainerProvider("container.radioisotopegenerator").createMenu((id, player) -> new ContainerRadioisotopeGenerator(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 	}
 
 	public void tickServer(ComponentTickable tickable) {
@@ -52,8 +49,7 @@ public class TileRadioisotopeGenerator extends GenericTile {
 		IRadioactiveObject rad = RadiationRegister.get(in.getItem());
 		double currentOutput = in.getCount() * Constants.RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER * rad.getRadiationStrength();
 		if (currentOutput > 0) {
-			TransferPack transfer = TransferPack.ampsVoltage(currentOutput / (Constants.RADIOISOTOPEGENERATOR_VOLTAGE * 2.0),
-					Constants.RADIOISOTOPEGENERATOR_VOLTAGE);
+			TransferPack transfer = TransferPack.ampsVoltage(currentOutput / (Constants.RADIOISOTOPEGENERATOR_VOLTAGE * 2.0), Constants.RADIOISOTOPEGENERATOR_VOLTAGE);
 			if (output1.valid()) {
 				ElectricityUtils.receivePower(output1.getSafe(), Direction.DOWN, transfer, false);
 			}

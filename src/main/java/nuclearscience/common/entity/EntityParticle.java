@@ -117,8 +117,7 @@ public class EntityParticle extends Entity {
 					if (level.getBlockState(positionNow).getBlock() == DeferredRegisters.blockElectromagneticSwitch) {
 						HashSet<Direction> directions = new HashSet<>();
 						for (Direction dir : Direction.values()) {
-							if (dir != Direction.UP && dir != Direction.DOWN && dir != direction.getOpposite()
-									&& level.getBlockState(positionNow.relative(dir)).getBlock() == Blocks.AIR) {
+							if (dir != Direction.UP && dir != Direction.DOWN && dir != direction.getOpposite() && level.getBlockState(positionNow.relative(dir)).getBlock() == Blocks.AIR) {
 								directions.add(dir);
 							}
 						}
@@ -154,8 +153,7 @@ public class EntityParticle extends Entity {
 							break;
 						}
 						BlockState testNextBlock = level.getBlockState(getPos.relative(direction));
-						if (testNextBlock.getBlock() instanceof IElectromagnet
-								&& testNextBlock.getBlock() != DeferredRegisters.blockElectromagneticSwitch) {
+						if (testNextBlock.getBlock() instanceof IElectromagnet && testNextBlock.getBlock() != DeferredRegisters.blockElectromagneticSwitch) {
 							Direction checkRot = direction.getClockWise();
 							testNextBlock = level.getBlockState(getPos.relative(checkRot));
 							if (testNextBlock.getBlock() == Blocks.AIR || testNextBlock.getBlock() == DeferredRegisters.blockElectromagneticSwitch) {
@@ -165,8 +163,7 @@ public class EntityParticle extends Entity {
 							} else {
 								checkRot = direction.getClockWise().getOpposite();
 								testNextBlock = level.getBlockState(getPos.relative(checkRot));
-								if (testNextBlock.getBlock() == Blocks.AIR
-										|| testNextBlock.getBlock() == DeferredRegisters.blockElectromagneticSwitch) {
+								if (testNextBlock.getBlock() == Blocks.AIR || testNextBlock.getBlock() == DeferredRegisters.blockElectromagneticSwitch) {
 									BlockPos floor = blockPosition();
 									direction = checkRot;
 									setPos(floor.getX() + 0.5, floor.getY() + 0.5, floor.getZ() + 0.5);
@@ -178,8 +175,7 @@ public class EntityParticle extends Entity {
 							}
 						}
 					} else {
-						boolean checkIsBooster = nextState.getBlock() == DeferredRegisters.blockElectromagneticBooster
-								&& oldState.getBlock() == DeferredRegisters.blockElectromagneticBooster;
+						boolean checkIsBooster = nextState.getBlock() == DeferredRegisters.blockElectromagneticBooster && oldState.getBlock() == DeferredRegisters.blockElectromagneticBooster;
 						boolean explode = false;
 						if (checkIsBooster) {
 							Direction oldDir = oldState.getValue(GenericEntityBlock.FACING);

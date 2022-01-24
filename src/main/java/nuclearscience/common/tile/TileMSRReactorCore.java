@@ -35,10 +35,8 @@ public class TileMSRReactorCore extends GenericTile {
 		super(DeferredRegisters.TILE_MSRREACTORCORE.get(), pos, state);
 		addComponent(new ComponentDirection());
 		addComponent(new ComponentTickable().tickServer(this::tickServer).tickClient(this::tickClient));
-		addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket)
-				.guiPacketReader(this::readCustomPacket).guiPacketWriter(this::writeCustomPacket));
-		addComponent(new ComponentContainerProvider("container.msrreactorcore")
-				.createMenu((id, player) -> new ContainerMSRReactorCore(id, player, null, getCoordsArray())));
+		addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket).guiPacketReader(this::readCustomPacket).guiPacketWriter(this::writeCustomPacket));
+		addComponent(new ComponentContainerProvider("container.msrreactorcore").createMenu((id, player) -> new ContainerMSRReactorCore(id, player, null, getCoordsArray())));
 	}
 
 	protected void writeCustomPacket(CompoundTag tag) {
@@ -98,8 +96,7 @@ public class TileMSRReactorCore extends GenericTile {
 					RadiationSystem.emitRadiationFromLocation(level, new Location(worldPosition), range, totstrength);
 				}
 				double insertDecimal = (100 - insertion) / 100.0;
-				currentFuel -= Math.min(currentFuel,
-						FUEL_USAGE_RATE * insertDecimal * Math.pow(2, Math.pow(temperature / (MELTDOWN_TEMPERATURE - 100), 4)));
+				currentFuel -= Math.min(currentFuel, FUEL_USAGE_RATE * insertDecimal * Math.pow(2, Math.pow(temperature / (MELTDOWN_TEMPERATURE - 100), 4)));
 				temperature += (MELTDOWN_TEMPERATURE * insertDecimal * (1.2 + level.random.nextDouble() / 5.0) - temperature) / 200;
 				if (outputCache.valid() && outputCache.getSafe() instanceof IMoltenSaltPipe) {
 					MoltenSaltNetwork net = (MoltenSaltNetwork) outputCache.<IMoltenSaltPipe>getSafe().getNetwork();

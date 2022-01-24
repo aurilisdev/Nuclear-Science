@@ -17,8 +17,7 @@ public class RenderParticle extends EntityRenderer<EntityParticle> {
 	}
 
 	@Override
-	public void render(EntityParticle entityIn, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn,
-			int packedLightIn) {
+	public void render(EntityParticle entityIn, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
 		matrixStackIn.pushPose();
 		matrixStackIn.scale(0.01f, 0.01f, 0.01f);
 		RenderingUtils.renderStar(matrixStackIn, bufferIn, entityIn.tickCount + partialTicks, 60, 1, 1, 1, 0.3f, true);

@@ -82,18 +82,15 @@ public class NuclearSciencePlugin implements IModPlugin {
 		registration.addRecipes(gasCentrifugeRecipes, GasCentrifugeRecipeCategory.UID);
 
 		// Nuclear Boiler
-		Set<FluidItem2FluidRecipe> nuclearBoilerRecipes = ImmutableSet
-				.copyOf(recipeManager.getAllRecipesFor(NuclearScienceRecipeInit.NUCLEAR_BOILER_TYPE));
+		Set<FluidItem2FluidRecipe> nuclearBoilerRecipes = ImmutableSet.copyOf(recipeManager.getAllRecipesFor(NuclearScienceRecipeInit.NUCLEAR_BOILER_TYPE));
 		registration.addRecipes(nuclearBoilerRecipes, NuclearBoilerRecipeCategory.UID);
 
 		// Chemical Extractor
-		Set<FluidItem2ItemRecipe> chemicalExtractorRecipes = ImmutableSet
-				.copyOf(recipeManager.getAllRecipesFor(NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE));
+		Set<FluidItem2ItemRecipe> chemicalExtractorRecipes = ImmutableSet.copyOf(recipeManager.getAllRecipesFor(NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE));
 		registration.addRecipes(chemicalExtractorRecipes, ChemicalExtractorRecipeCategory.UID);
 
 		// Fission Reactor
-		Set<Item2ItemRecipe> fissionReactorRecipes = ImmutableSet
-				.copyOf(recipeManager.getAllRecipesFor(NuclearScienceRecipeInit.FISSION_REACTOR_TYPE));
+		Set<Item2ItemRecipe> fissionReactorRecipes = ImmutableSet.copyOf(recipeManager.getAllRecipesFor(NuclearScienceRecipeInit.FISSION_REACTOR_TYPE));
 		registration.addRecipes(fissionReactorRecipes, FissionReactorRecipeCategory.UID);
 
 		// Anti-Matter
@@ -105,18 +102,15 @@ public class NuclearSciencePlugin implements IModPlugin {
 		registration.addRecipes(darkMatterRecipes, ParticleAcceleratorDarkMatterRecipeCategory.UID);
 
 		// Fuel Reprocessor
-		Set<Item2ItemRecipe> fuelReprocessorRecipes = ImmutableSet
-				.copyOf(recipeManager.getAllRecipesFor(NuclearScienceRecipeInit.FUEL_REPROCESSOR_TYPE));
+		Set<Item2ItemRecipe> fuelReprocessorRecipes = ImmutableSet.copyOf(recipeManager.getAllRecipesFor(NuclearScienceRecipeInit.FUEL_REPROCESSOR_TYPE));
 		registration.addRecipes(fuelReprocessorRecipes, FuelReprocessorRecipeCategory.UID);
 
 		// Radioactive Processor
-		Set<FluidItem2ItemRecipe> radioactiveProcessorRecipes = ImmutableSet
-				.copyOf(recipeManager.getAllRecipesFor(NuclearScienceRecipeInit.RADIOACTIVE_PROCESSOR_TYPE));
+		Set<FluidItem2ItemRecipe> radioactiveProcessorRecipes = ImmutableSet.copyOf(recipeManager.getAllRecipesFor(NuclearScienceRecipeInit.RADIOACTIVE_PROCESSOR_TYPE));
 		registration.addRecipes(radioactiveProcessorRecipes, RadioactiveProcessorRecipeCategory.UID);
 
 		// MSR Processor
-		Set<FluidItem2ItemRecipe> msrProcessorRecipes = ImmutableSet
-				.copyOf(recipeManager.getAllRecipesFor(NuclearScienceRecipeInit.MSR_FUEL_PREPROCESSOR_TYPE));
+		Set<FluidItem2ItemRecipe> msrProcessorRecipes = ImmutableSet.copyOf(recipeManager.getAllRecipesFor(NuclearScienceRecipeInit.MSR_FUEL_PREPROCESSOR_TYPE));
 		registration.addRecipes(msrProcessorRecipes, MSRProcessorRecipeCategory.UID);
 
 		nuclearScienceInfoTabs(registration);
@@ -142,15 +136,13 @@ public class NuclearSciencePlugin implements IModPlugin {
 	@Override
 	public void registerGuiHandlers(IGuiHandlerRegistration registry) {
 
-		registry.addRecipeClickArea(ScreenO2OProcessor.class, 48, 35, 22, 15,
-				ElectrodynamicsJEIPlugin.O2O_CLICK_AREAS.toArray(new ResourceLocation[ElectrodynamicsJEIPlugin.O2O_CLICK_AREAS.size()]));
+		registry.addRecipeClickArea(ScreenO2OProcessor.class, 48, 35, 22, 15, ElectrodynamicsJEIPlugin.O2O_CLICK_AREAS.toArray(new ResourceLocation[ElectrodynamicsJEIPlugin.O2O_CLICK_AREAS.size()]));
 		registry.addRecipeClickArea(ScreenNuclearBoiler.class, 97, 31, 22, 15, NuclearBoilerRecipeCategory.UID);
 		registry.addRecipeClickArea(ScreenRadioactiveProcessor.class, 97, 31, 22, 15, RadioactiveProcessorRecipeCategory.UID);
 		registry.addRecipeClickArea(ScreenChemicalExtractor.class, 97, 31, 22, 15, ChemicalExtractorRecipeCategory.UID);
 		registry.addRecipeClickArea(ScreenGasCentrifuge.class, 44, 19, 50, 36, GasCentrifugeRecipeCategory.UID);
 		registry.addRecipeClickArea(ScreenReactorCore.class, 117, 43, 14, 13, FissionReactorRecipeCategory.UID);
-		registry.addRecipeClickArea(ScreenParticleInjector.class, 102, 33, 28, 14, ParticleAcceleratorAntiMatterRecipeCategory.UID,
-				ParticleAcceleratorDarkMatterRecipeCategory.UID);
+		registry.addRecipeClickArea(ScreenParticleInjector.class, 102, 33, 28, 14, ParticleAcceleratorAntiMatterRecipeCategory.UID, ParticleAcceleratorDarkMatterRecipeCategory.UID);
 		registry.addRecipeClickArea(ScreenMSRFuelPreProcessor.class, 98, 40, 16, 16, MSRProcessorRecipeCategory.UID);
 	}
 

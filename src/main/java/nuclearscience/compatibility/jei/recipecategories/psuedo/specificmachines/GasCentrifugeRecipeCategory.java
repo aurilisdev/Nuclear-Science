@@ -58,14 +58,12 @@ public class GasCentrifugeRecipeCategory implements IRecipeCategory<PsuedoGasCen
 	public GasCentrifugeRecipeCategory(IGuiHelper guiHelper) {
 
 		ICON = guiHelper.createDrawableIngredient(INPUT_MACHINE);
-		BACKGROUND = guiHelper.createDrawable(new ResourceLocation(MOD_ID, GUI_TEXTURE), GUI_BACKGROUND[0], GUI_BACKGROUND[1], GUI_BACKGROUND[2],
-				GUI_BACKGROUND[3]);
+		BACKGROUND = guiHelper.createDrawable(new ResourceLocation(MOD_ID, GUI_TEXTURE), GUI_BACKGROUND[0], GUI_BACKGROUND[1], GUI_BACKGROUND[2], GUI_BACKGROUND[3]);
 
 		cachedArrows = CacheBuilder.newBuilder().maximumSize(1).build(new CacheLoader<Integer, IDrawableAnimated>() {
 			@Override
 			public IDrawableAnimated load(Integer cookTime) {
-				return guiHelper.drawableBuilder(new ResourceLocation(MOD_ID, GUI_TEXTURE), 0, 68, 47, 54).buildAnimated(cookTime,
-						ARROW_START_DIRECTION, false);
+				return guiHelper.drawableBuilder(new ResourceLocation(MOD_ID, GUI_TEXTURE), 0, 68, 47, 54).buildAnimated(cookTime, ARROW_START_DIRECTION, false);
 			}
 		});
 	}
@@ -126,8 +124,7 @@ public class GasCentrifugeRecipeCategory implements IRecipeCategory<PsuedoGasCen
 
 		TranslatableComponent percentU235String = new TranslatableComponent("jei.gui." + RECIPE_GROUP + ".info.percent_u235", animTimeSeconds);
 		TranslatableComponent percentU238String = new TranslatableComponent("jei.gui." + RECIPE_GROUP + ".info.percent_u238", animTimeSeconds);
-		TranslatableComponent percentBiproductString = new TranslatableComponent("jei.gui." + RECIPE_GROUP + ".info.percent_biproduct",
-				animTimeSeconds);
+		TranslatableComponent percentBiproductString = new TranslatableComponent("jei.gui." + RECIPE_GROUP + ".info.percent_biproduct", animTimeSeconds);
 
 		Minecraft minecraft = Minecraft.getInstance();
 		Font fontRenderer = minecraft.font;

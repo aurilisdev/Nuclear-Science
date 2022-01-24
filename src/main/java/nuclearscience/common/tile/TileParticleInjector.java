@@ -31,15 +31,10 @@ public class TileParticleInjector extends GenericTile {
 		addComponent(new ComponentTickable());
 		addComponent(new ComponentDirection());
 		addComponent(new ComponentPacketHandler());
-		addComponent(new ComponentInventory(this).size(3)
-				.valid((index, stack, i) -> index != 1 || stack.getItem() == DeferredRegisters.ITEM_CELLELECTROMAGNETIC.get())
-				.relativeFaceSlots(Direction.UP, 0, 1).relativeFaceSlots(Direction.WEST, 0, 1).relativeSlotFaces(2, Direction.DOWN, Direction.EAST));
-		addComponent(new ComponentElectrodynamic(this).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 8).relativeInput(Direction.NORTH)
-				.maxJoules(Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE * 10));
-		addComponent(new ComponentProcessor(this).canProcess(this::canProcess).usage(Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE)
-				.process(this::process));
-		addComponent(new ComponentContainerProvider("container.particleinjector")
-				.createMenu((id, player) -> new ContainerParticleInjector(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
+		addComponent(new ComponentInventory(this).size(3).valid((index, stack, i) -> index != 1 || stack.getItem() == DeferredRegisters.ITEM_CELLELECTROMAGNETIC.get()).relativeFaceSlots(Direction.UP, 0, 1).relativeFaceSlots(Direction.WEST, 0, 1).relativeSlotFaces(2, Direction.DOWN, Direction.EAST));
+		addComponent(new ComponentElectrodynamic(this).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 8).relativeInput(Direction.NORTH).maxJoules(Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE * 10));
+		addComponent(new ComponentProcessor(this).canProcess(this::canProcess).usage(Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE).process(this::process));
+		addComponent(new ComponentContainerProvider("container.particleinjector").createMenu((id, player) -> new ContainerParticleInjector(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 	}
 
 	protected boolean canProcess(ComponentProcessor processor) {
@@ -63,8 +58,7 @@ public class TileParticleInjector extends GenericTile {
 			isItem = true;
 		}
 
-		return timeSinceSpawn < 0 && isItem && (particles[0] == null || particles[1] == null) && inv.getItem(0).getCount() > 0
-				&& resultStack.getCount() < resultStack.getMaxStackSize();
+		return timeSinceSpawn < 0 && isItem && (particles[0] == null || particles[1] == null) && inv.getItem(0).getCount() > 0 && resultStack.getCount() < resultStack.getMaxStackSize();
 	}
 
 	public void checkCollision() {
@@ -103,8 +97,7 @@ public class TileParticleInjector extends GenericTile {
 		Direction dir = this.<ComponentDirection>getComponent(ComponentType.Direction).getDirection();
 		ItemStack stack = this.<ComponentInventory>getComponent(ComponentType.Inventory).getItem(0);
 		stack.shrink(1);
-		EntityParticle particle = new EntityParticle(dir, level, new Location(worldPosition.getX() + 0.5f + dir.getStepX() * 1.5f,
-				worldPosition.getY() + 0.5f + dir.getStepY() * 1.5f, worldPosition.getZ() + 0.5f + dir.getStepZ() * 1.5f));
+		EntityParticle particle = new EntityParticle(dir, level, new Location(worldPosition.getX() + 0.5f + dir.getStepX() * 1.5f, worldPosition.getY() + 0.5f + dir.getStepY() * 1.5f, worldPosition.getZ() + 0.5f + dir.getStepZ() * 1.5f));
 		addParticle(particle);
 		level.addFreshEntity(particle);
 	}

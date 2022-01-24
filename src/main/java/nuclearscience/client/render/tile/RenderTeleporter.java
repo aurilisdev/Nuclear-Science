@@ -24,8 +24,7 @@ public class RenderTeleporter implements BlockEntityRenderer<TileTeleporter> {
 	}
 
 	@Override
-	public void render(TileTeleporter tileEntityIn, float partialTicks, PoseStack stack, MultiBufferSource bufferIn, int combinedLightIn,
-			int combinedOverlayIn) {
+	public void render(TileTeleporter tileEntityIn, float partialTicks, PoseStack stack, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
 		stack.pushPose();
 		BakedModel ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_TELEPORTER);
 		stack.translate(0.5, 0.5, 0.5);

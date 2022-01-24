@@ -48,8 +48,7 @@ public class RadiationSystem {
 			if (!curr.equals(next)) {
 				curr = next;
 				BlockState state = world.getBlockState(curr);
-				lastHard = hard = (state.getBlock() == DeferredRegisters.blocklead ? 20000 : state.getDestroySpeed(world, curr))
-						/ (world.getFluidState(curr).isEmpty() ? 1 : 50.0);
+				lastHard = hard = (state.getBlock() == DeferredRegisters.blocklead ? 20000 : state.getDestroySpeed(world, curr)) / (world.getFluidState(curr).isEmpty() ? 1 : 50.0);
 			}
 			modifier += hard / 4.5f;
 			checks--;
@@ -85,8 +84,7 @@ public class RadiationSystem {
 		}
 		Location end = new Location(entity.position());
 		double radiation = 0;
-		if (entity instanceof Player pl && (pl.getItemBySlot(EquipmentSlot.MAINHAND).getItem() instanceof ItemGeigerCounter
-				|| pl.getItemBySlot(EquipmentSlot.OFFHAND).getItem() instanceof ItemGeigerCounter)) {
+		if (entity instanceof Player pl && (pl.getItemBySlot(EquipmentSlot.MAINHAND).getItem() instanceof ItemGeigerCounter || pl.getItemBySlot(EquipmentSlot.OFFHAND).getItem() instanceof ItemGeigerCounter)) {
 			double already = radiationMap.get().containsKey(entity) ? radiationMap.get().get(entity) : 0;
 			radiation = getRadiation(entity.level, source, end, strength);
 			radiationMap.get().put((Player) entity, already + radiation);

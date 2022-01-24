@@ -17,8 +17,7 @@ public class ScreenAtomicAssembler extends GenericScreen<ContainerAtomicAssemble
 
 	public ScreenAtomicAssembler(ContainerAtomicAssembler container, Inventory playerInventory, Component title) {
 		super(container, playerInventory, title);
-		components
-				.add(new ScreenComponentElectricInfo(this, -ScreenComponentInfo.SIZE + 1, 2).wattage(Constants.ATOMICASSEMBLER_USAGE_PER_TICK * 20));
+		components.add(new ScreenComponentElectricInfo(this, -ScreenComponentInfo.SIZE + 1, 2).wattage(Constants.ATOMICASSEMBLER_USAGE_PER_TICK * 20));
 		imageHeight += 64;
 		inventoryLabelY += 64;
 		components.add(new ScreenComponentProgress(() -> {

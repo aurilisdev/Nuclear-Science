@@ -22,8 +22,7 @@ public class RenderFuelReprocessor implements BlockEntityRenderer<TileFuelReproc
 	}
 
 	@Override
-	public void render(TileFuelReprocessor tile, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLightIn,
-			int combinedOverlayIn) {
+	public void render(TileFuelReprocessor tile, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLightIn, int combinedOverlayIn) {
 		matrixStack.pushPose();
 		matrixStack.translate(0.5, 0.5, 0.5);
 		Direction dir = tile.<ComponentDirection>getComponent(ComponentType.Direction).getDirection();

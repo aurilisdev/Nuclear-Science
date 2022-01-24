@@ -108,8 +108,7 @@ public class MoltenSaltNetwork extends AbstractNetwork<IMoltenSaltPipe, SubtypeM
 	}
 
 	@Override
-	public AbstractNetwork<IMoltenSaltPipe, SubtypeMoltenSaltPipe, BlockEntity, Double> createInstance(
-			Set<AbstractNetwork<IMoltenSaltPipe, SubtypeMoltenSaltPipe, BlockEntity, Double>> networks) {
+	public AbstractNetwork<IMoltenSaltPipe, SubtypeMoltenSaltPipe, BlockEntity, Double> createInstance(Set<AbstractNetwork<IMoltenSaltPipe, SubtypeMoltenSaltPipe, BlockEntity, Double>> networks) {
 		return new MoltenSaltNetwork(networks);
 
 	}

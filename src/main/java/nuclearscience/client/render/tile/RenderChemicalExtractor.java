@@ -22,15 +22,13 @@ public class RenderChemicalExtractor implements BlockEntityRenderer<TileChemical
 	}
 
 	@Override
-	public void render(TileChemicalExtractor tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn,
-			int combinedLightIn, int combinedOverlayIn) {
+	public void render(TileChemicalExtractor tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
 		BakedModel ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_CHEMICALEXTRACTORWATER);
 		Direction face = tileEntityIn.getBlockState().getValue(GenericEntityBlock.FACING);
 		matrixStackIn.translate(face.getStepX(), face.getStepY(), face.getStepZ());
 		RenderingUtils.prepareRotationalTileModel(tileEntityIn, matrixStackIn);
 		matrixStackIn.translate(-0.5, 0, 0.5);
-		float prog = tileEntityIn.<ComponentFluidHandlerMulti>getComponent(ComponentType.FluidHandler).getTankFromFluid(Fluids.WATER, true)
-				.getFluidAmount() / (float) TileChemicalExtractor.MAX_TANK_CAPACITY;
+		float prog = tileEntityIn.<ComponentFluidHandlerMulti>getComponent(ComponentType.FluidHandler).getTankFromFluid(Fluids.WATER, true).getFluidAmount() / (float) TileChemicalExtractor.MAX_TANK_CAPACITY;
 		if (prog > 0) {
 			matrixStackIn.scale(1, prog / 16.0f * 5.8f * 2, 1);
 			matrixStackIn.translate(0, prog / 16.0f * 5.8f, 0);

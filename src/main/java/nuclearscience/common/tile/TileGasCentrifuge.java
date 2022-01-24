@@ -48,16 +48,11 @@ public class TileGasCentrifuge extends GenericTile {
 		addComponent(new ComponentTickable().tickClient(this::tickClient).tickServer(this::tickServer));
 		addComponent(new ComponentDirection());
 		addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket));
-		addComponent(new ComponentFluidHandlerMulti(this).setManualFluidTags(1, true, TANKCAPACITY, NuclearScienceTags.Fluids.URANIUM_HEXAFLUORIDE)
-				.relativeInput(Direction.NORTH));
-		addComponent(new ComponentElectrodynamic(this).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 2).input(Direction.DOWN)
-				.maxJoules(Constants.GASCENTRIFUGE_USAGE_PER_TICK * 10));
-		addComponent(new ComponentInventory(this).size(6).faceSlots(Direction.DOWN, 0, 1).relativeFaceSlots(Direction.WEST, 0, 1).outputs(3)
-				.upgrades(3).valid(machineValidator()));
-		addComponent(new ComponentProcessor(this).usage(Constants.GASCENTRIFUGE_USAGE_PER_TICK)
-				.requiredTicks(Constants.GASCENTRIFUGE_REQUIRED_TICKS_PER_PROCESSING).canProcess(this::canProcess).process(this::process));
-		addComponent(new ComponentContainerProvider("container.gascentrifuge")
-				.createMenu((id, player) -> new ContainerGasCentrifuge(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
+		addComponent(new ComponentFluidHandlerMulti(this).setManualFluidTags(1, true, TANKCAPACITY, NuclearScienceTags.Fluids.URANIUM_HEXAFLUORIDE).relativeInput(Direction.NORTH));
+		addComponent(new ComponentElectrodynamic(this).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 2).input(Direction.DOWN).maxJoules(Constants.GASCENTRIFUGE_USAGE_PER_TICK * 10));
+		addComponent(new ComponentInventory(this).size(6).faceSlots(Direction.DOWN, 0, 1).relativeFaceSlots(Direction.WEST, 0, 1).outputs(3).upgrades(3).valid(machineValidator()));
+		addComponent(new ComponentProcessor(this).usage(Constants.GASCENTRIFUGE_USAGE_PER_TICK).requiredTicks(Constants.GASCENTRIFUGE_REQUIRED_TICKS_PER_PROCESSING).canProcess(this::canProcess).process(this::process));
+		addComponent(new ComponentContainerProvider("container.gascentrifuge").createMenu((id, player) -> new ContainerGasCentrifuge(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 	}
 
 	public boolean canProcess(ComponentProcessor processor) {
@@ -65,8 +60,7 @@ public class TileGasCentrifuge extends GenericTile {
 		ComponentInventory inv = getComponent(ComponentType.Inventory);
 		ComponentFluidHandlerMulti tank = getComponent(ComponentType.FluidHandler);
 		boolean hasFluid = tank.getInputTanks()[0].getFluidAmount() >= REQUIRED / 60.0;
-		boolean val = electro.getJoulesStored() >= processor.getUsage() && hasFluid && inv.getItem(0).getCount() < inv.getItem(0).getMaxStackSize()
-				&& inv.getItem(1).getCount() < inv.getItem(1).getMaxStackSize() && inv.getItem(2).getCount() < inv.getItem(2).getMaxStackSize();
+		boolean val = electro.getJoulesStored() >= processor.getUsage() && hasFluid && inv.getItem(0).getCount() < inv.getItem(0).getMaxStackSize() && inv.getItem(1).getCount() < inv.getItem(1).getMaxStackSize() && inv.getItem(2).getCount() < inv.getItem(2).getMaxStackSize();
 		if (!val && spinSpeed > 0) {
 			spinSpeed = 0;
 			this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();

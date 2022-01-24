@@ -34,8 +34,7 @@ public class TilePlasma extends GenericTile {
 				boolean didntExist = false;
 				if (state.getBlock() != getBlockState().getBlock()) {
 					didntExist = true;
-					if (state.getDestroySpeed(level, offset) != -1 && !(state.getBlock() instanceof IElectromagnet)
-							&& state.getBlock() != DeferredRegisters.blockFusionReactorCore) {
+					if (state.getDestroySpeed(level, offset) != -1 && !(state.getBlock() instanceof IElectromagnet) && state.getBlock() != DeferredRegisters.blockFusionReactorCore) {
 						level.setBlockAndUpdate(offset, DeferredRegisters.blockPlasma.defaultBlockState());
 					}
 				}
@@ -50,8 +49,7 @@ public class TilePlasma extends GenericTile {
 				}
 			}
 		}
-		if (ticksExisted > 1 && level.getBlockState(getBlockPos().relative(Direction.UP)).getBlock() instanceof IElectromagnet
-				&& level.getBlockState(getBlockPos().relative(Direction.UP, 2)).getBlock() == Blocks.WATER) {
+		if (ticksExisted > 1 && level.getBlockState(getBlockPos().relative(Direction.UP)).getBlock() instanceof IElectromagnet && level.getBlockState(getBlockPos().relative(Direction.UP, 2)).getBlock() == Blocks.WATER) {
 			if (output == null) {
 				output = new CachedTileOutput(level, getBlockPos().relative(Direction.UP, 3));
 			} else if (output.getSafe() instanceof TileTurbine) {

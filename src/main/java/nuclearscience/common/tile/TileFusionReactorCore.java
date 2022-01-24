@@ -24,8 +24,7 @@ public class TileFusionReactorCore extends GenericTile {
 		super(DeferredRegisters.TILE_FUSIONREACTORCORE.get(), pos, state);
 		addComponent(new ComponentTickable().tickServer(this::tickServer));
 		addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket));
-		addComponent(new ComponentElectrodynamic(this).input(Direction.DOWN).input(Direction.UP)
-				.maxJoules(Constants.FUSIONREACTOR_USAGE_PER_TICK * 20.0).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 4));
+		addComponent(new ComponentElectrodynamic(this).input(Direction.DOWN).input(Direction.UP).maxJoules(Constants.FUSIONREACTOR_USAGE_PER_TICK * 20.0).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 4));
 	}
 
 	public void tickServer(ComponentTickable tick) {

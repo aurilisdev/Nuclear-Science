@@ -33,8 +33,7 @@ public class BlockElectromagneticBooster extends Block implements IElectromagnet
 
 	public BlockElectromagneticBooster() {
 		super(Properties.of(Material.GLASS).strength(3.5f, 20).requiresCorrectToolForDrops().noOcclusion().isRedstoneConductor((x, y, z) -> false));
-		registerDefaultState(
-				stateDefinition.any().setValue(GenericEntityBlock.FACING, Direction.NORTH).setValue(FACINGDIRECTION, FacingDirection.NONE));
+		registerDefaultState(stateDefinition.any().setValue(GenericEntityBlock.FACING, Direction.NORTH).setValue(FACINGDIRECTION, FacingDirection.NONE));
 	}
 
 	@Override

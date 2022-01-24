@@ -31,8 +31,7 @@ public class BlockElectromagnet extends Block implements IElectromagnet {
 	}
 
 	public BlockElectromagnet(boolean isGlass) {
-		super(Properties.of(isGlass ? Material.GLASS : Material.METAL).strength(3.5f, 20).requiresCorrectToolForDrops().noOcclusion()
-				.isRedstoneConductor((x, y, z) -> false));
+		super(Properties.of(isGlass ? Material.GLASS : Material.METAL).strength(3.5f, 20).requiresCorrectToolForDrops().noOcclusion().isRedstoneConductor((x, y, z) -> false));
 		this.isGlass = isGlass;
 	}
 
@@ -44,8 +43,7 @@ public class BlockElectromagnet extends Block implements IElectromagnet {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
-		return !isGlass ? super.skipRendering(state, adjacentBlockState, side)
-				: adjacentBlockState.is(this) || super.skipRendering(state, adjacentBlockState, side);
+		return !isGlass ? super.skipRendering(state, adjacentBlockState, side) : adjacentBlockState.is(this) || super.skipRendering(state, adjacentBlockState, side);
 	}
 
 	@OnlyIn(Dist.CLIENT)

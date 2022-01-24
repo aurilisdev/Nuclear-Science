@@ -32,8 +32,7 @@ public class ItemFrequencyCard extends Item {
 				tel.yCoord = nbt.getInt("yCoord");
 				tel.zCoord = nbt.getInt("zCoord");
 				tel.world = nbt.getString("world");
-				context.getPlayer().sendMessage(new TranslatableComponent("tooltip.frequencycard.linked",
-						tel.world + ", " + tel.xCoord + ", " + tel.yCoord + ", " + tel.zCoord), UUID.randomUUID());
+				context.getPlayer().sendMessage(new TranslatableComponent("tooltip.frequencycard.linked", tel.world + ", " + tel.xCoord + ", " + tel.yCoord + ", " + tel.zCoord), UUID.randomUUID());
 			} else {
 				nbt.putInt("xCoord", ent.getBlockPos().getX());
 				nbt.putInt("yCoord", ent.getBlockPos().getY());

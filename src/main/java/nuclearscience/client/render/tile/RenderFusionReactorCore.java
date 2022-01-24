@@ -17,8 +17,7 @@ public class RenderFusionReactorCore implements BlockEntityRenderer<TileFusionRe
 	}
 
 	@Override
-	public void render(TileFusionReactorCore tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn,
-			int combinedLightIn, int combinedOverlayIn) {
+	public void render(TileFusionReactorCore tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
 		BlockPos pos = tileEntityIn.getBlockPos();
 		if (Minecraft.getInstance().player.distanceToSqr(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) <= 32) {
 			renderFloatingText(matrixStackIn, bufferIn, "Deuterium: " + tileEntityIn.deuterium, 0.6f, 0.7f, 0.6f, 16777215, combinedLightIn);
@@ -26,8 +25,7 @@ public class RenderFusionReactorCore implements BlockEntityRenderer<TileFusionRe
 		}
 	}
 
-	public static void renderFloatingText(PoseStack matrixStackIn, MultiBufferSource bufferIn, String text, float x, float y, float z, int color,
-			int combinedLightIn) {
+	public static void renderFloatingText(PoseStack matrixStackIn, MultiBufferSource bufferIn, String text, float x, float y, float z, int color, int combinedLightIn) {
 		TextComponent displayNameIn = new TextComponent(text);
 		matrixStackIn.pushPose();
 		matrixStackIn.translate(x, y, z);

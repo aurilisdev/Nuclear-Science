@@ -31,9 +31,7 @@ public class ScreenComponentGasCentrifuge extends ScreenComponent {
 	private final DoubleSupplier progressInfoHandlerProgressMiddle;
 	private final DoubleSupplier progressInfoHandlerProgressBottom;
 
-	public ScreenComponentGasCentrifuge(final DoubleSupplier progressInfoHandlerBulbs, final DoubleSupplier progressInfoHandlerProgressTop,
-			final DoubleSupplier progressInfoHandlerProgressMiddle, DoubleSupplier progressInfoHandlerProgressBottom, final IScreenWrapper gui,
-			final int x, final int y) {
+	public ScreenComponentGasCentrifuge(final DoubleSupplier progressInfoHandlerBulbs, final DoubleSupplier progressInfoHandlerProgressTop, final DoubleSupplier progressInfoHandlerProgressMiddle, DoubleSupplier progressInfoHandlerProgressBottom, final IScreenWrapper gui, final int x, final int y) {
 		super(TEXTURE, gui, x, y);
 		this.progressInfoHandlerBulbs = progressInfoHandlerBulbs;
 		this.progressInfoHandlerProgressTop = progressInfoHandlerProgressTop;

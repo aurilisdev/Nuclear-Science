@@ -22,15 +22,13 @@ import nuclearscience.common.tile.TileMoltenSaltSupplier;
 
 public class RenderMoltenSaltSupplier implements BlockEntityRenderer<TileMoltenSaltSupplier> {
 
-	private static final TransferPack PACK = TransferPack.joulesVoltage(Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK,
-			Constants.MOLTENSALTSUPPLIER_VOLTAGE);
+	private static final TransferPack PACK = TransferPack.joulesVoltage(Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK, Constants.MOLTENSALTSUPPLIER_VOLTAGE);
 
 	public RenderMoltenSaltSupplier(BlockEntityRendererProvider.Context context) {
 	}
 
 	@Override
-	public void render(TileMoltenSaltSupplier tile, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLightIn,
-			int combinedOverlayIn) {
+	public void render(TileMoltenSaltSupplier tile, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLightIn, int combinedOverlayIn) {
 		matrixStack.pushPose();
 		matrixStack.translate(0.5, 0.5, 0.5);
 		Direction dir = tile.<ComponentDirection>getComponent(ComponentType.Direction).getDirection();

@@ -23,14 +23,11 @@ public class ItemGeigerCounter extends Item {
 		super.inventoryTick(stack, worldIn, entityIn, itemSlot, isSelected);
 		if (entityIn instanceof Player player) {
 			if (!worldIn.isClientSide) {
-				if ((isSelected || player.getItemBySlot(EquipmentSlot.OFFHAND).getItem() instanceof ItemGeigerCounter)
-						&& RadiationSystem.radiationMap.get().containsKey(entityIn)) {
-					player.displayClientMessage(
-							new TranslatableComponent("message.geigercounter.text", RadiationSystem.radiationMap.get().get(entityIn)), true);
+				if ((isSelected || player.getItemBySlot(EquipmentSlot.OFFHAND).getItem() instanceof ItemGeigerCounter) && RadiationSystem.radiationMap.get().containsKey(entityIn)) {
+					player.displayClientMessage(new TranslatableComponent("message.geigercounter.text", RadiationSystem.radiationMap.get().get(entityIn)), true);
 				}
 			}
-			if (worldIn.isClientSide && RadiationSystem.radiationMap.get().containsKey(entityIn)
-					&& (isSelected || player.getItemBySlot(EquipmentSlot.OFFHAND).getItem() instanceof ItemGeigerCounter)) {
+			if (worldIn.isClientSide && RadiationSystem.radiationMap.get().containsKey(entityIn) && (isSelected || player.getItemBySlot(EquipmentSlot.OFFHAND).getItem() instanceof ItemGeigerCounter)) {
 				double amount = RadiationSystem.radiationMap.get().get(entityIn);
 				if (worldIn.random.nextFloat() * 50 * 60.995 / 3 < amount) {
 					SoundAPI.playSound(SoundRegister.SOUND_GEIGER.get(), SoundSource.BLOCKS, 1, 1, player.blockPosition());

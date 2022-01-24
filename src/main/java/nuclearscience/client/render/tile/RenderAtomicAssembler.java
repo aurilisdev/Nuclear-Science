@@ -19,8 +19,7 @@ public class RenderAtomicAssembler implements BlockEntityRenderer<TileAtomicAsse
 	}
 
 	@Override
-	public void render(TileAtomicAssembler tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn,
-			int combinedOverlayIn) {
+	public void render(TileAtomicAssembler tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
 		ComponentInventory inv = tileEntityIn.getComponent(ComponentType.Inventory);
 		ItemStack stack = inv.getItem(6);
 		if (!stack.isEmpty()) {
@@ -33,8 +32,7 @@ public class RenderAtomicAssembler implements BlockEntityRenderer<TileAtomicAsse
 				matrixStackIn.scale(0.3f, 0.3f, 0.3f);
 				matrixStackIn.translate(0, -0.5, 0);
 			}
-			Minecraft.getInstance().getItemRenderer().renderStatic(stack, TransformType.NONE, combinedLightIn, combinedOverlayIn, matrixStackIn,
-					bufferIn, 0);
+			Minecraft.getInstance().getItemRenderer().renderStatic(stack, TransformType.NONE, combinedLightIn, combinedOverlayIn, matrixStackIn, bufferIn, 0);
 			matrixStackIn.popPose();
 		}
 	}

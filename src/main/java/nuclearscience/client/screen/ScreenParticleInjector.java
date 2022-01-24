@@ -40,16 +40,9 @@ public class ScreenParticleInjector extends GenericCustomScreen<ContainerParticl
 		if (injector != null) {
 			ComponentElectrodynamic electro = injector.getComponent(ComponentType.Electrodynamic);
 			ComponentProcessor processor = injector.getComponent(ComponentType.Processor);
-			font.draw(matrixStack,
-					new TranslatableComponent("gui.particleinjector.charge", (int) (electro.getJoulesStored() / processor.getUsage() * 100.0))
-							.append("%"),
-					titleLabelX, titleLabelY + 30f, 4210752);
-			font.draw(matrixStack,
-					new TranslatableComponent("gui.machine.usage", ChatFormatter.getChatDisplayShort(processor.getUsage(), DisplayUnit.JOULES)),
-					inventoryLabelX, inventoryLabelY, 4210752);
-			font.draw(matrixStack,
-					new TranslatableComponent("gui.machine.voltage", ChatFormatter.getChatDisplayShort(electro.getVoltage(), DisplayUnit.VOLTAGE)),
-					(float) inventoryLabelX + 85, inventoryLabelY, 4210752);
+			font.draw(matrixStack, new TranslatableComponent("gui.particleinjector.charge", (int) (electro.getJoulesStored() / processor.getUsage() * 100.0)).append("%"), titleLabelX, titleLabelY + 30f, 4210752);
+			font.draw(matrixStack, new TranslatableComponent("gui.machine.usage", ChatFormatter.getChatDisplayShort(processor.getUsage(), DisplayUnit.JOULES)), inventoryLabelX, inventoryLabelY, 4210752);
+			font.draw(matrixStack, new TranslatableComponent("gui.machine.voltage", ChatFormatter.getChatDisplayShort(electro.getVoltage(), DisplayUnit.VOLTAGE)), (float) inventoryLabelX + 85, inventoryLabelY, 4210752);
 		}
 	}
 
