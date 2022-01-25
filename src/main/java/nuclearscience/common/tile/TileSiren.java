@@ -19,7 +19,7 @@ public class TileSiren extends GenericTile {
 
 	public void tickClient(ComponentTickable tick) {
 		if (tick.getTicks() % 30 == 0) {
-			if (level.getDirectSignalTo(worldPosition) > 0) {
+			if (isPoweredByRedstone()) {
 				int volume = 2;
 				for (Direction dir : Direction.values()) {
 					if (level.getBlockEntity(worldPosition.offset(dir.getNormal())) instanceof TileSiren) {
