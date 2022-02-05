@@ -74,7 +74,7 @@ public class RadiationSystem {
 						float damage = (float) (strength * 2.15f) / 2169.9975f;
 						if (Math.random() < damage) {
 							int integerDamage = (int) Math.max(1, damage);
-							if (next.getDamageValue() > next.getMaxDamage() || next.hurt(integerDamage, entity.level.random, (ServerPlayer) player)) {
+							if (next.getDamageValue() > next.getMaxDamage() || next.hurt(integerDamage, entity.level.random, player instanceof ServerPlayer s ? s : null)) {
 								player.getInventory().armor.set(i, ItemStack.EMPTY);
 							}
 						}
