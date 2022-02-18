@@ -16,8 +16,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.SoundRegister;
 import nuclearscience.common.inventory.container.ContainerNuclearBoiler;
@@ -30,7 +35,7 @@ public class TileNuclearBoiler extends GenericTile {
 
 	public TileNuclearBoiler(BlockPos pos, BlockState state) {
 		super(DeferredRegisters.TILE_CHEMICALBOILER.get(), pos, state);
-		addComponent(new ComponentTickable().tickClient(this::tickClient));
+		addComponent(new ComponentTickable().tickServer(this::tickServer).tickClient(this::tickClient));
 		addComponent(new ComponentDirection());
 		addComponent(new ComponentPacketHandler());
 		addComponent(new ComponentElectrodynamic(this).input(Direction.DOWN).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 2).maxJoules(Constants.CHEMICALBOILER_USAGE_PER_TICK * 10));
@@ -43,6 +48,28 @@ public class TileNuclearBoiler extends GenericTile {
 	@Override
 	public AABB getRenderBoundingBox() {
 		return super.getRenderBoundingBox().inflate(1);
+	}
+	
+	protected void tickServer(ComponentTickable tickable) {
+		Level world = getLevel();
+		ComponentDirection boilerComponentDir = getComponent(ComponentType.Direction);
+		Direction centrifugeDir = boilerComponentDir.getDirection().getCounterClockWise();
+		BlockEntity tile = world.getBlockEntity(getBlockPos().relative(centrifugeDir));
+		if(tile != null && tile instanceof TileGasCentrifuge centrifuge) {
+			ComponentFluidHandlerMulti centrifugeHandler = centrifuge.getComponent(ComponentType.FluidHandler);
+			if(centrifugeHandler != null) {
+				ComponentDirection centrifugeComponentDir = centrifuge.getComponent(ComponentType.Direction);
+				if(centrifugeComponentDir.getDirection() == centrifugeDir) {
+					ComponentFluidHandlerMulti boilerHandler = getComponent(ComponentType.FluidHandler);
+					FluidTank boilerTank = boilerHandler.getOutputTanks()[0];
+					FluidTank centrifugeTank = centrifugeHandler.getInputTanks()[0];
+					int accepted = centrifugeTank.fill(boilerTank.getFluid(), FluidAction.SIMULATE);
+					centrifugeTank.fill(new FluidStack(boilerTank.getFluid().getFluid(), accepted), FluidAction.EXECUTE);
+					boilerTank.drain(accepted, FluidAction.EXECUTE);
+				}
+			}
+		}
+		
 	}
 
 	protected void tickClient(ComponentTickable tickable) {
