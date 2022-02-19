@@ -1,6 +1,7 @@
 package nuclearscience.compatibility.jei.recipecategories.psuedo.specificmachines;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.google.common.cache.CacheBuilder;
@@ -10,13 +11,13 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import electrodynamics.compatibility.jei.recipecategories.psuedo.PsuedoItem2ItemRecipe;
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import mezz.jei.api.gui.drawable.IDrawableAnimated.StartDirection;
-import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.recipe.IFocusGroup;
+import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -32,16 +33,10 @@ import nuclearscience.References;
 
 public class ParticleAcceleratorAntiMatterRecipeCategory implements IRecipeCategory<PsuedoItem2ItemRecipe> {
 
-	// JEI Window Parameters
-	private static final int INPUT_SLOT = 0;
-	private static final int OUTPUT_SLOT = 1;
-	private static final int ANY_ITEM_INPUT_SLOT = 2;
 
 	private static int[] GUI_BACKGROUND = { 0, 0, 132, 66 };
 	private static int[] PROCESSING_ARROW_COORDS = { 0, 67, 82, 47 };
 
-	private static int[] INPUT_OFFSET = { 12, 39 };
-	private static int[] OUTPUT_OFFSET = { 101, 20 };
 	private static int[] PROCESSING_ARROW_OFFSET = { 17, 6 };
 
 	private static int ANIM_TIME = 50;
@@ -62,7 +57,7 @@ public class ParticleAcceleratorAntiMatterRecipeCategory implements IRecipeCateg
 
 	public ParticleAcceleratorAntiMatterRecipeCategory(IGuiHelper guiHelper) {
 
-		ICON = guiHelper.createDrawableIngredient(INPUT_MACHINE);
+		ICON = guiHelper.createDrawableIngredient(VanillaTypes.ITEM, INPUT_MACHINE);
 		BACKGROUND = guiHelper.createDrawable(new ResourceLocation(MOD_ID, GUI_TEXTURE), GUI_BACKGROUND[0], GUI_BACKGROUND[1], GUI_BACKGROUND[2], GUI_BACKGROUND[3]);
 
 		cachedArrows = CacheBuilder.newBuilder().maximumSize(1).build(new CacheLoader<Integer, IDrawableAnimated>() {
@@ -97,24 +92,12 @@ public class ParticleAcceleratorAntiMatterRecipeCategory implements IRecipeCateg
 	public IDrawable getIcon() {
 		return ICON;
 	}
-
+	
 	@Override
-	public void setIngredients(PsuedoItem2ItemRecipe recipe, IIngredients ingredients) {
-		ingredients.setInputLists(VanillaTypes.ITEM, recipeInput(recipe));
-		ingredients.setOutput(VanillaTypes.ITEM, recipe.OUTPUT);
-	}
-
-	@Override
-	public void setRecipe(IRecipeLayout recipeLayout, PsuedoItem2ItemRecipe recipe, IIngredients ingredients) {
-
-		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-
-		guiItemStacks.init(INPUT_SLOT, true, INPUT_OFFSET[0], INPUT_OFFSET[1]);
-		guiItemStacks.init(ANY_ITEM_INPUT_SLOT, true, 12, 2);
-		guiItemStacks.init(OUTPUT_SLOT, false, OUTPUT_OFFSET[0], OUTPUT_OFFSET[1]);
-
-		guiItemStacks.set(ingredients);
-
+	public void setRecipe(IRecipeLayoutBuilder builder, PsuedoItem2ItemRecipe recipe, IFocusGroup focuses) {
+		builder.addSlot(RecipeIngredientRole.INPUT, 13, 40).addItemStacks(Arrays.asList(recipe.INPUTS.get(0).getItems()));
+		builder.addSlot(RecipeIngredientRole.INPUT, 13, 3).addItemStacks(filterItems(recipe));
+		builder.addSlot(RecipeIngredientRole.OUTPUT, 102, 21).addItemStack(recipe.OUTPUT);
 	}
 
 	@Override
@@ -130,13 +113,7 @@ public class ParticleAcceleratorAntiMatterRecipeCategory implements IRecipeCateg
 		fontRenderer.draw(matrixStack, timeString, getBackground().getWidth() - stringWidth, DESC_Y_HEIGHT, 0xFF808080);
 	}
 
-	private static List<List<ItemStack>> recipeInput(PsuedoItem2ItemRecipe recipe) {
-
-		List<ItemStack> emagCell = new ArrayList<>();
-		emagCell.add(recipe.INPUTS.get(0).getItems()[0]);
-
-		/* Gets a list of all Vanilla items */
-
+	protected static List<ItemStack> filterItems(PsuedoItem2ItemRecipe recipe) {
 		int i = 0;
 		List<Item> allItems = new ArrayList<>(ForgeRegistries.ITEMS.getValues());
 		List<Item> vanillaItems = new ArrayList<>();
@@ -161,11 +138,7 @@ public class ParticleAcceleratorAntiMatterRecipeCategory implements IRecipeCateg
 			vanillaItemStacks.add(new ItemStack(item));
 		}
 
-		List<List<ItemStack>> inputSlots = new ArrayList<>();
-		inputSlots.add(emagCell);
-		inputSlots.add(vanillaItemStacks);
-
-		return inputSlots;
+		return vanillaItemStacks;
 
 	}
 
