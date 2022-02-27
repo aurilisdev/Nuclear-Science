@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import electrodynamics.api.References;
+import electrodynamics.common.recipe.ElectrodynamicsRecipe;
 import electrodynamics.common.recipe.categories.item2item.Item2ItemRecipe;
 import electrodynamics.common.recipe.recipeutils.CountableIngredient;
 import electrodynamics.compatibility.jei.recipecategories.item2item.Item2ItemRecipeCategory;
@@ -12,9 +13,7 @@ import electrodynamics.compatibility.jei.utils.gui.arrows.animated.FeynmanDiagra
 import electrodynamics.compatibility.jei.utils.gui.backgroud.BackgroundWrapper;
 import electrodynamics.compatibility.jei.utils.gui.item.DefaultItemSlotWrapper;
 import electrodynamics.compatibility.jei.utils.label.GenericLabelWrapper;
-import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.ingredients.IIngredients;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
@@ -57,13 +56,8 @@ public class FissionReactorRecipeCategory extends Item2ItemRecipeCategory {
 	}
 
 	@Override
-	public void setIngredients(Item2ItemRecipe recipe, IIngredients ingredients) {
-
-		ingredients.setInputLists(VanillaTypes.ITEM, recipeInput(recipe));
-		ingredients.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
-	}
-
-	private static List<List<ItemStack>> recipeInput(Item2ItemRecipe recipe) {
+	public List<List<ItemStack>> getItemInputs(ElectrodynamicsRecipe electro) {
+		Item2ItemRecipe recipe = (Item2ItemRecipe) electro;
 		ItemStack u235Cell = new ItemStack(nuclearscience.DeferredRegisters.ITEM_FUELHEUO2.get(), 1);
 		ItemStack u238Cell = new ItemStack(nuclearscience.DeferredRegisters.ITEM_FUELLEUO2.get(), 1);
 		ItemStack plutoniumCell = new ItemStack(nuclearscience.DeferredRegisters.ITEM_FUELPLUTONIUM.get(), 1);

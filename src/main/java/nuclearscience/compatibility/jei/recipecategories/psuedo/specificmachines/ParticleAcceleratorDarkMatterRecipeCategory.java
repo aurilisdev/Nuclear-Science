@@ -10,12 +10,12 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import electrodynamics.compatibility.jei.recipecategories.psuedo.PsuedoItem2ItemRecipe;
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
-import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.recipe.IFocusGroup;
+import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -30,7 +30,6 @@ public class ParticleAcceleratorDarkMatterRecipeCategory implements IRecipeCateg
 	public static final int OUTPUT_SLOT = 0;
 
 	private static int[] GUI_BACKGROUND = { 0, 0, 132, 132 };
-	private static int[] OUTPUT_OFFSET = { 57, 57 };
 
 	public static int ANIM_TIME = 50;
 	private static int DESC_Y_HEIGHT = 122;
@@ -50,7 +49,7 @@ public class ParticleAcceleratorDarkMatterRecipeCategory implements IRecipeCateg
 
 	public ParticleAcceleratorDarkMatterRecipeCategory(IGuiHelper guiHelper) {
 
-		ICON = guiHelper.createDrawableIngredient(INPUT_MACHINE);
+		ICON = guiHelper.createDrawableIngredient(VanillaTypes.ITEM, INPUT_MACHINE);
 		BACKGROUND = guiHelper.createDrawable(new ResourceLocation(MOD_ID, GUI_TEXTURE), GUI_BACKGROUND[0], GUI_BACKGROUND[1], GUI_BACKGROUND[2], GUI_BACKGROUND[3]);
 
 		ResourceLocation guiTexture = new ResourceLocation(MOD_ID, GUI_TEXTURE);
@@ -94,21 +93,12 @@ public class ParticleAcceleratorDarkMatterRecipeCategory implements IRecipeCateg
 	public IDrawable getIcon() {
 		return ICON;
 	}
-
+	
 	@Override
-	public void setIngredients(PsuedoItem2ItemRecipe recipe, IIngredients ingredients) {
-		ingredients.setInputIngredients(recipe.INPUTS);
-		ingredients.setOutput(VanillaTypes.ITEM, recipe.OUTPUT);
-	}
-
-	@Override
-	public void setRecipe(IRecipeLayout recipeLayout, PsuedoItem2ItemRecipe recipe, IIngredients ingredients) {
-
-		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-
-		guiItemStacks.init(OUTPUT_SLOT, false, OUTPUT_OFFSET[0], OUTPUT_OFFSET[1]);
-		guiItemStacks.set(ingredients);
-
+	public void setRecipe(IRecipeLayoutBuilder builder, PsuedoItem2ItemRecipe recipe, IFocusGroup focuses) {
+		builder.addInvisibleIngredients(RecipeIngredientRole.INPUT).addItemStacks(ParticleAcceleratorAntiMatterRecipeCategory.filterItems(recipe));
+		builder.addInvisibleIngredients(RecipeIngredientRole.INPUT).addItemStacks(Arrays.asList(recipe.INPUTS.get(0).getItems()));
+		builder.addSlot(RecipeIngredientRole.OUTPUT, 58, 58).addItemStack(recipe.OUTPUT);
 	}
 
 	@Override
