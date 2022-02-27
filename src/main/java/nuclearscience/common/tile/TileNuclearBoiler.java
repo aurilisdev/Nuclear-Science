@@ -49,17 +49,17 @@ public class TileNuclearBoiler extends GenericTile {
 	public AABB getRenderBoundingBox() {
 		return super.getRenderBoundingBox().inflate(1);
 	}
-	
+
 	protected void tickServer(ComponentTickable tickable) {
 		Level world = getLevel();
 		ComponentDirection boilerComponentDir = getComponent(ComponentType.Direction);
 		Direction centrifugeDir = boilerComponentDir.getDirection().getCounterClockWise();
 		BlockEntity tile = world.getBlockEntity(getBlockPos().relative(centrifugeDir));
-		if(tile != null && tile instanceof TileGasCentrifuge centrifuge) {
+		if (tile != null && tile instanceof TileGasCentrifuge centrifuge) {
 			ComponentFluidHandlerMulti centrifugeHandler = centrifuge.getComponent(ComponentType.FluidHandler);
-			if(centrifugeHandler != null) {
+			if (centrifugeHandler != null) {
 				ComponentDirection centrifugeComponentDir = centrifuge.getComponent(ComponentType.Direction);
-				if(centrifugeComponentDir.getDirection() == centrifugeDir) {
+				if (centrifugeComponentDir.getDirection() == centrifugeDir) {
 					ComponentFluidHandlerMulti boilerHandler = getComponent(ComponentType.FluidHandler);
 					FluidTank boilerTank = boilerHandler.getOutputTanks()[0];
 					FluidTank centrifugeTank = centrifugeHandler.getInputTanks()[0];
@@ -69,7 +69,7 @@ public class TileNuclearBoiler extends GenericTile {
 				}
 			}
 		}
-		
+
 	}
 
 	protected void tickClient(ComponentTickable tickable) {

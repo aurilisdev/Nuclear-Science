@@ -33,7 +33,6 @@ import nuclearscience.References;
 
 public class ParticleAcceleratorAntiMatterRecipeCategory implements IRecipeCategory<PsuedoItem2ItemRecipe> {
 
-
 	private static int[] GUI_BACKGROUND = { 0, 0, 132, 66 };
 	private static int[] PROCESSING_ARROW_COORDS = { 0, 67, 82, 47 };
 
@@ -92,7 +91,7 @@ public class ParticleAcceleratorAntiMatterRecipeCategory implements IRecipeCateg
 	public IDrawable getIcon() {
 		return ICON;
 	}
-	
+
 	@Override
 	public void setRecipe(IRecipeLayoutBuilder builder, PsuedoItem2ItemRecipe recipe, IFocusGroup focuses) {
 		builder.addSlot(RecipeIngredientRole.INPUT, 13, 40).addItemStacks(Arrays.asList(recipe.INPUTS.get(0).getItems()));

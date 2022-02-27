@@ -51,7 +51,7 @@ public class GasCentrifugeRecipeCategory implements IRecipeCategory<PsuedoGasCen
 
 	public GasCentrifugeRecipeCategory(IGuiHelper guiHelper) {
 
-		ICON = guiHelper.createDrawableIngredient(VanillaTypes.ITEM,INPUT_MACHINE);
+		ICON = guiHelper.createDrawableIngredient(VanillaTypes.ITEM, INPUT_MACHINE);
 		BACKGROUND = guiHelper.createDrawable(new ResourceLocation(MOD_ID, GUI_TEXTURE), GUI_BACKGROUND[0], GUI_BACKGROUND[1], GUI_BACKGROUND[2], GUI_BACKGROUND[3]);
 
 		cachedArrows = CacheBuilder.newBuilder().maximumSize(1).build(new CacheLoader<Integer, IDrawableAnimated>() {
@@ -86,7 +86,7 @@ public class GasCentrifugeRecipeCategory implements IRecipeCategory<PsuedoGasCen
 	public IDrawable getIcon() {
 		return ICON;
 	}
-	
+
 	@Override
 	public void setRecipe(IRecipeLayoutBuilder builder, PsuedoGasCentrifugeRecipe recipe, IFocusGroup focuses) {
 		builder.addSlot(RecipeIngredientRole.INPUT, 3, 7).addIngredient(VanillaTypes.FLUID, recipe.inputFluidStack).setFluidRenderer(5000, false, 12, 47);

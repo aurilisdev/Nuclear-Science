@@ -93,7 +93,7 @@ public class ParticleAcceleratorDarkMatterRecipeCategory implements IRecipeCateg
 	public IDrawable getIcon() {
 		return ICON;
 	}
-	
+
 	@Override
 	public void setRecipe(IRecipeLayoutBuilder builder, PsuedoItem2ItemRecipe recipe, IFocusGroup focuses) {
 		builder.addInvisibleIngredients(RecipeIngredientRole.INPUT).addItemStacks(ParticleAcceleratorAntiMatterRecipeCategory.filterItems(recipe));
