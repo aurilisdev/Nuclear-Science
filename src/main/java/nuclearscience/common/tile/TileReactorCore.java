@@ -20,7 +20,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Explosion.BlockInteraction;
@@ -58,6 +57,8 @@ public class TileReactorCore extends GenericTile {
 	public int ticksOverheating = 0;
 	public int fuelCount = 0;
 	public int ticks = 0;
+	
+	private Set<Recipe<?>> cachedRecipes;
 
 	public TileReactorCore(BlockPos pos, BlockState state) {
 		super(DeferredRegisters.TILE_REACTORCORE.get(), pos, state);
@@ -274,9 +275,11 @@ public class TileReactorCore extends GenericTile {
 		ItemStack input = inv.getItem(inputSlot);
 		ItemStack output = inv.getItem(outputSlot);
 
-		if (input != null && !input.equals(new ItemStack(Items.AIR), true)) {
-			Set<Recipe<?>> recipes = ElectrodynamicsRecipe.findRecipesbyType(NuclearScienceRecipeInit.FISSION_REACTOR_TYPE, level);
-			for (Recipe<?> iRecipe : recipes) {
+		if (input != null && !input.isEmpty()) {
+			if(cachedRecipes == null || cachedRecipes.size() == 0) {
+				cachedRecipes = ElectrodynamicsRecipe.findRecipesbyType(NuclearScienceRecipeInit.FISSION_REACTOR_TYPE, level);
+			}
+			for (Recipe<?> iRecipe : cachedRecipes) {
 				Item2ItemRecipe recipe = (Item2ItemRecipe) iRecipe;
 				for (CountableIngredient ing : recipe.getCountedIngredients()) {
 					if (ing.testStack(input)) {
@@ -293,4 +296,5 @@ public class TileReactorCore extends GenericTile {
 			}
 		}
 	}
+	
 }
