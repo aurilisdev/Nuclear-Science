@@ -1,7 +1,6 @@
 package nuclearscience.common.tile;
 
 import java.util.List;
-import java.util.Set;
 
 import electrodynamics.common.recipe.ElectrodynamicsRecipe;
 import electrodynamics.common.recipe.categories.item2item.Item2ItemRecipe;
@@ -20,7 +19,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Explosion.BlockInteraction;
 import net.minecraft.world.level.block.Block;
@@ -58,7 +56,7 @@ public class TileReactorCore extends GenericTile {
 	public int fuelCount = 0;
 	public int ticks = 0;
 	
-	private Set<Recipe<?>> cachedRecipes;
+	private List<ElectrodynamicsRecipe> cachedRecipes;
 
 	public TileReactorCore(BlockPos pos, BlockState state) {
 		super(DeferredRegisters.TILE_REACTORCORE.get(), pos, state);
@@ -279,7 +277,7 @@ public class TileReactorCore extends GenericTile {
 			if(cachedRecipes == null || cachedRecipes.size() == 0) {
 				cachedRecipes = ElectrodynamicsRecipe.findRecipesbyType(NuclearScienceRecipeInit.FISSION_REACTOR_TYPE, level);
 			}
-			for (Recipe<?> iRecipe : cachedRecipes) {
+			for (ElectrodynamicsRecipe iRecipe : cachedRecipes) {
 				Item2ItemRecipe recipe = (Item2ItemRecipe) iRecipe;
 				for (CountableIngredient ing : recipe.getCountedIngredients()) {
 					if (ing.testStack(input)) {
