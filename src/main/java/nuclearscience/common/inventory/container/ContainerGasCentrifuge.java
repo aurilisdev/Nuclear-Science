@@ -15,6 +15,8 @@ import nuclearscience.common.tile.TileGasCentrifuge;
 
 public class ContainerGasCentrifuge extends GenericContainerBlockEntity<TileGasCentrifuge> {
 
+	public static final SubtypeItemUpgrade[] VALID_UPGRADES = new SubtypeItemUpgrade[] {SubtypeItemUpgrade.basicspeed, SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.itemoutput, SubtypeItemUpgrade.experience};
+	
 	public ContainerGasCentrifuge(int id, Inventory playerinv) {
 		this(id, playerinv, new SimpleContainer(6), new SimpleContainerData(3));
 	}
@@ -32,8 +34,8 @@ public class ContainerGasCentrifuge extends GenericContainerBlockEntity<TileGasC
 		addSlot(new FurnaceResultSlot(playerinv.player, inv, nextIndex(), 129, 14));
 		addSlot(new FurnaceResultSlot(playerinv.player, inv, nextIndex(), 129, 34));
 		addSlot(new FurnaceResultSlot(playerinv.player, inv, nextIndex(), 129, 55));
-		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 14, SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.basicspeed));
-		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 34, SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.basicspeed));
-		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 55, SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.basicspeed));
+		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 14, VALID_UPGRADES));
+		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 34, VALID_UPGRADES));
+		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 55, VALID_UPGRADES));
 	}
 }
