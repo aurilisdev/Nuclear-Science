@@ -16,6 +16,8 @@ import nuclearscience.common.tile.TileNuclearBoiler;
 
 public class ContainerNuclearBoiler extends GenericContainerBlockEntity<TileNuclearBoiler> {
 
+	public static final SubtypeItemUpgrade[] VALID_UPGRADES = new SubtypeItemUpgrade[] {SubtypeItemUpgrade.basicspeed, SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.iteminput, SubtypeItemUpgrade.experience};
+	
 	public ContainerNuclearBoiler(int id, Inventory playerinv) {
 		this(id, playerinv, new SimpleContainer(6), new SimpleContainerData(3));
 	}
@@ -33,14 +35,8 @@ public class ContainerNuclearBoiler extends GenericContainerBlockEntity<TileNucl
 		addSlot(new SlotGeneric(inv, nextIndex(), 74, 31));
 		addSlot(new SlotFluid(inv, nextIndex(), 74, 51));
 		addSlot(new SlotFluid(inv, nextIndex(), 108, 51));
-		addSlot(new SlotUpgrade(inv, nextIndex(), 150, 14, SubtypeItemUpgrade.basicspeed, SubtypeItemUpgrade.advancedspeed));
-		// electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.basicspeed),
-		// electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.advancedspeed)));
-		addSlot(new SlotUpgrade(inv, nextIndex(), 150, 34, SubtypeItemUpgrade.basicspeed, SubtypeItemUpgrade.advancedspeed));
-		// electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.basicspeed),
-		// electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.advancedspeed)));
-		addSlot(new SlotUpgrade(inv, nextIndex(), 150, 54, SubtypeItemUpgrade.basicspeed, SubtypeItemUpgrade.advancedspeed));
-		// electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.basicspeed),
-		// electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.advancedspeed)));
+		addSlot(new SlotUpgrade(inv, nextIndex(), 150, 14, VALID_UPGRADES));
+		addSlot(new SlotUpgrade(inv, nextIndex(), 150, 34, VALID_UPGRADES));
+		addSlot(new SlotUpgrade(inv, nextIndex(), 150, 54, VALID_UPGRADES));
 	}
 }

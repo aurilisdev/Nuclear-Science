@@ -62,7 +62,7 @@ public class TileReactorCore extends GenericTile {
 		super(DeferredRegisters.TILE_REACTORCORE.get(), pos, state);
 		addComponent(new ComponentTickable().tickCommon(this::tickCommon).tickServer(this::tickServer));
 		addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket).guiPacketReader(this::readCustomPacket).guiPacketWriter(this::writeCustomPacket));
-		addComponent(new ComponentInventory(this).size(6).faceSlots(Direction.UP, 0, 1, 2, 3, 4).faceSlots(Direction.DOWN, 5));
+		addComponent(new ComponentInventory(this).inputs(5).outputs(1).size(6).faceSlots(Direction.UP, 0, 1, 2, 3, 4).faceSlots(Direction.DOWN, 5));
 		addComponent(new ComponentContainerProvider("container.reactorcore").createMenu((id, player) -> new ContainerReactorCore(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 	}
 

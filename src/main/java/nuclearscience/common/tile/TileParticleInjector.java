@@ -31,7 +31,7 @@ public class TileParticleInjector extends GenericTile {
 		addComponent(new ComponentTickable());
 		addComponent(new ComponentDirection());
 		addComponent(new ComponentPacketHandler());
-		addComponent(new ComponentInventory(this).size(3).valid((index, stack, i) -> index != 1 || stack.getItem() == DeferredRegisters.ITEM_CELLELECTROMAGNETIC.get()).relativeFaceSlots(Direction.UP, 0, 1).relativeFaceSlots(Direction.WEST, 0, 1).relativeSlotFaces(2, Direction.DOWN, Direction.EAST));
+		addComponent(new ComponentInventory(this).size(3).inputs(2).outputs(1).valid((index, stack, i) -> index != 1 || stack.getItem() == DeferredRegisters.ITEM_CELLELECTROMAGNETIC.get()).relativeFaceSlots(Direction.UP, 0, 1).relativeFaceSlots(Direction.WEST, 0, 1).relativeSlotFaces(2, Direction.DOWN, Direction.EAST));
 		addComponent(new ComponentElectrodynamic(this).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 8).relativeInput(Direction.NORTH).maxJoules(Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE * 10));
 		addComponent(new ComponentProcessor(this).canProcess(this::canProcess).usage(Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE).process(this::process));
 		addComponent(new ComponentContainerProvider("container.particleinjector").createMenu((id, player) -> new ContainerParticleInjector(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));

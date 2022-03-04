@@ -17,6 +17,8 @@ import nuclearscience.common.tile.TileMSRFuelPreProcessor;
 
 public class ContainerMSRFuelPreProcessor extends GenericContainerBlockEntity<TileMSRFuelPreProcessor> {
 
+	public static final SubtypeItemUpgrade[] VALID_UPGRADES = new SubtypeItemUpgrade[] {SubtypeItemUpgrade.basicspeed, SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.iteminput, SubtypeItemUpgrade.itemoutput, SubtypeItemUpgrade.experience};
+	
 	public ContainerMSRFuelPreProcessor(int id, Inventory playerinv) {
 		this(id, playerinv, new SimpleContainer(8), new SimpleContainerData(3));
 	}
@@ -36,14 +38,8 @@ public class ContainerMSRFuelPreProcessor extends GenericContainerBlockEntity<Ti
 		addSlot(new SlotGeneric(inv, nextIndex(), 74, 60));
 		addSlot(new FurnaceResultSlot(playerinv.player, inv, nextIndex(), 128, 40));
 		addSlot(new SlotFluid(inv, nextIndex(), 45, 50));
-		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 14, SubtypeItemUpgrade.basicspeed, SubtypeItemUpgrade.advancedspeed));
-		// electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.basicspeed),
-		// electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.advancedspeed)));
-		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 34, SubtypeItemUpgrade.basicspeed, SubtypeItemUpgrade.advancedspeed));
-		// electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.basicspeed),
-		// electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.advancedspeed)));
-		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 54, SubtypeItemUpgrade.basicspeed, SubtypeItemUpgrade.advancedspeed));
-		// electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.basicspeed),
-		// electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.advancedspeed)));
+		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 14, VALID_UPGRADES));
+		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 34, VALID_UPGRADES));
+		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 54, VALID_UPGRADES));
 	}
 }

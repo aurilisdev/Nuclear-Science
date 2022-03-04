@@ -17,6 +17,8 @@ import nuclearscience.common.tile.TileChemicalExtractor;
 
 public class ContainerChemicalExtractor extends GenericContainerBlockEntity<TileChemicalExtractor> {
 
+	public static final SubtypeItemUpgrade[] VALID_UPGRADES = new SubtypeItemUpgrade[] {SubtypeItemUpgrade.basicspeed, SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.iteminput, SubtypeItemUpgrade.itemoutput, SubtypeItemUpgrade.experience};
+	
 	public ContainerChemicalExtractor(int id, Inventory playerinv) {
 		this(id, playerinv, new SimpleContainer(6), new SimpleContainerData(3));
 	}
@@ -34,14 +36,8 @@ public class ContainerChemicalExtractor extends GenericContainerBlockEntity<Tile
 		addSlot(new SlotGeneric(inv, nextIndex(), 74, 31));
 		addSlot(new FurnaceResultSlot(playerinv.player, inv, nextIndex(), 128, 31));
 		addSlot(new SlotFluid(inv, nextIndex(), 74, 51));
-		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 14, SubtypeItemUpgrade.basicspeed, SubtypeItemUpgrade.advancedspeed));
-		// electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.basicspeed),
-		// electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.advancedspeed)));
-		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 34, SubtypeItemUpgrade.basicspeed, SubtypeItemUpgrade.advancedspeed));
-		// electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.basicspeed),
-		// electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.advancedspeed)));
-		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 54, SubtypeItemUpgrade.basicspeed, SubtypeItemUpgrade.advancedspeed));
-		// electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.basicspeed),
-		// electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeItemUpgrade.advancedspeed)));
+		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 14, VALID_UPGRADES));
+		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 34, VALID_UPGRADES));
+		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 54, VALID_UPGRADES));
 	}
 }
