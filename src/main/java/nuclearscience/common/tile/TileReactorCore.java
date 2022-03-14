@@ -55,7 +55,7 @@ public class TileReactorCore extends GenericTile {
 	public int ticksOverheating = 0;
 	public int fuelCount = 0;
 	public int ticks = 0;
-	
+
 	private List<ElectrodynamicsRecipe> cachedRecipes;
 
 	public TileReactorCore(BlockPos pos, BlockState state) {
@@ -274,7 +274,7 @@ public class TileReactorCore extends GenericTile {
 		ItemStack output = inv.getItem(outputSlot);
 
 		if (input != null && !input.isEmpty()) {
-			if(cachedRecipes == null || cachedRecipes.size() == 0) {
+			if (cachedRecipes == null || cachedRecipes.size() == 0) {
 				cachedRecipes = ElectrodynamicsRecipe.findRecipesbyType(NuclearScienceRecipeInit.FISSION_REACTOR_TYPE, level);
 			}
 			for (ElectrodynamicsRecipe iRecipe : cachedRecipes) {
@@ -294,5 +294,5 @@ public class TileReactorCore extends GenericTile {
 			}
 		}
 	}
-	
+
 }

@@ -16,8 +16,8 @@ import nuclearscience.common.tile.TileNuclearBoiler;
 
 public class ContainerNuclearBoiler extends GenericContainerBlockEntity<TileNuclearBoiler> {
 
-	public static final SubtypeItemUpgrade[] VALID_UPGRADES = new SubtypeItemUpgrade[] {SubtypeItemUpgrade.basicspeed, SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.iteminput, SubtypeItemUpgrade.experience};
-	
+	public static final SubtypeItemUpgrade[] VALID_UPGRADES = new SubtypeItemUpgrade[] { SubtypeItemUpgrade.basicspeed, SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.iteminput, SubtypeItemUpgrade.experience };
+
 	public ContainerNuclearBoiler(int id, Inventory playerinv) {
 		this(id, playerinv, new SimpleContainer(6), new SimpleContainerData(3));
 	}

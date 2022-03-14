@@ -17,8 +17,8 @@ import nuclearscience.common.tile.TileChemicalExtractor;
 
 public class ContainerChemicalExtractor extends GenericContainerBlockEntity<TileChemicalExtractor> {
 
-	public static final SubtypeItemUpgrade[] VALID_UPGRADES = new SubtypeItemUpgrade[] {SubtypeItemUpgrade.basicspeed, SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.iteminput, SubtypeItemUpgrade.itemoutput, SubtypeItemUpgrade.experience};
-	
+	public static final SubtypeItemUpgrade[] VALID_UPGRADES = new SubtypeItemUpgrade[] { SubtypeItemUpgrade.basicspeed, SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.iteminput, SubtypeItemUpgrade.itemoutput, SubtypeItemUpgrade.experience };
+
 	public ContainerChemicalExtractor(int id, Inventory playerinv) {
 		this(id, playerinv, new SimpleContainer(6), new SimpleContainerData(3));
 	}
