@@ -119,7 +119,7 @@ public class ClientRegister {
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegisters.blockElectromagneticGlass, RenderType.cutout());
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegisters.blockElectromagneticBooster, RenderType.translucent());
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegisters.blockPlasma, RenderType.translucent());
-		
+
 		ScreenGuidebook.addGuidebookModule(new ModuleNuclearScience());
 	}
 

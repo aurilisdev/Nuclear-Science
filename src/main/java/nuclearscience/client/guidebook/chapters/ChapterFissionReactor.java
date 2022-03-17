@@ -12,7 +12,7 @@ import nuclearscience.DeferredRegisters;
 public class ChapterFissionReactor extends Chapter {
 
 	private static final ItemWrapperObject LOGO = new ItemWrapperObject(17, 60, 2.0F, ItemUtils.fromBlock(DeferredRegisters.blockReactorCore));
-	
+
 	@Override
 	protected List<Page> genPages() {
 		List<Page> pages = new ArrayList<>();

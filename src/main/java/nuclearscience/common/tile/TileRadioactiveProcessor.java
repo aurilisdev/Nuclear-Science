@@ -35,7 +35,7 @@ public class TileRadioactiveProcessor extends GenericTile {
 		addComponent(new ComponentProcessor(this).setProcessorNumber(0).usage(Constants.RADIOACTIVEPROCESSOR_USAGE_PER_TICK).requiredTicks((long) Constants.RADIOACTIVEPROCESSOR_REQUIRED_TICKS).canProcess(component -> component.consumeBucket().canProcessFluidItem2ItemRecipe(component, NuclearScienceRecipeInit.RADIOACTIVE_PROCESSOR_TYPE)).process(component -> component.processFluidItem2ItemRecipe(component)));
 		addComponent(new ComponentContainerProvider("container.radioactiveprocessor").createMenu((id, player) -> new ContainerRadioactiveProcessor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 	}
-	
+
 	protected void tickServer(ComponentTickable tick) {
 		InventoryUtils.handleExpereinceUpgrade(this);
 	}

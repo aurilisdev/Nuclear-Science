@@ -18,7 +18,7 @@ import nuclearscience.client.guidebook.chapters.ChapterRadiation;
 public class ModuleNuclearScience extends Module {
 
 	private static final ImageWrapperObject LOGO = new ImageWrapperObject(10, 38, 0, 0, 32, 32, 32, 32, References.ID + ":textures/screen/guidebook/nuclearsciencelogo.png");
-	
+
 	@Override
 	public ImageWrapperObject getLogo() {
 		return LOGO;

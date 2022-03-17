@@ -10,9 +10,9 @@ import electrodynamics.client.guidebook.utils.components.Page;
 import nuclearscience.DeferredRegisters;
 
 public class ChapterMSReactor extends Chapter {
-	
-private static final ItemWrapperObject LOGO = new ItemWrapperObject(17, 60, 2.0F, ItemUtils.fromBlock(DeferredRegisters.blockMsrReactorCore));
-	
+
+	private static final ItemWrapperObject LOGO = new ItemWrapperObject(17, 60, 2.0F, ItemUtils.fromBlock(DeferredRegisters.blockMsrReactorCore));
+
 	@Override
 	protected List<Page> genPages() {
 		List<Page> pages = new ArrayList<>();
