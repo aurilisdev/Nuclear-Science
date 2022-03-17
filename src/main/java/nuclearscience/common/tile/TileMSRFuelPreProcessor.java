@@ -11,6 +11,7 @@ import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
+import electrodynamics.prefab.utilities.InventoryUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -26,7 +27,7 @@ public class TileMSRFuelPreProcessor extends GenericTile {
 
 	public TileMSRFuelPreProcessor(BlockPos pos, BlockState state) {
 		super(DeferredRegisters.TILE_MSRFUELPREPROCESSOR.get(), pos, state);
-		addComponent(new ComponentTickable().tickClient(this::tickClient));
+		addComponent(new ComponentTickable().tickServer(this::tickServer).tickClient(this::tickClient));
 		addComponent(new ComponentDirection());
 		addComponent(new ComponentPacketHandler());
 		addComponent(new ComponentElectrodynamic(this).relativeInput(Direction.NORTH).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 2).maxJoules(Constants.MSRFUELPREPROCESSOR_USAGE_PER_TICK * 10));
@@ -35,6 +36,10 @@ public class TileMSRFuelPreProcessor extends GenericTile {
 		addComponent(new ComponentProcessor(this).setProcessorNumber(0).canProcess(component -> component.outputToPipe().consumeBucket().canProcessFluidItem2ItemRecipe(component, NuclearScienceRecipeInit.MSR_FUEL_PREPROCESSOR_TYPE)).process(component -> component.processFluidItem2ItemRecipe(component)).usage(Constants.MSRFUELPREPROCESSOR_USAGE_PER_TICK).requiredTicks(Constants.MSRFUELPREPROCESSOR_REQUIRED_TICKS));
 		addComponent(new ComponentContainerProvider("container.msrfuelpreprocessor").createMenu((id, player) -> new ContainerMSRFuelPreProcessor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 
+	}
+	
+	protected void tickServer(ComponentTickable tick) {
+		InventoryUtils.handleExpereinceUpgrade(this);
 	}
 
 	protected void tickClient(ComponentTickable tickable) {

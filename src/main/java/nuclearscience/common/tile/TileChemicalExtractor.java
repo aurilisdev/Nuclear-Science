@@ -11,6 +11,7 @@ import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
+import electrodynamics.prefab.utilities.InventoryUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -28,7 +29,7 @@ public class TileChemicalExtractor extends GenericTile {
 
 	public TileChemicalExtractor(BlockPos pos, BlockState state) {
 		super(DeferredRegisters.TILE_CHEMICALEXTRACTOR.get(), pos, state);
-		addComponent(new ComponentTickable().tickClient(this::tickClient));
+		addComponent(new ComponentTickable().tickServer(this::tickServer).tickClient(this::tickClient));
 		addComponent(new ComponentDirection());
 		addComponent(new ComponentPacketHandler());
 		addComponent(new ComponentElectrodynamic(this).universalInput().voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 2).maxJoules(Constants.CHEMICALEXTRACTOR_USAGE_PER_TICK * 10));
@@ -36,6 +37,10 @@ public class TileChemicalExtractor extends GenericTile {
 		addComponent(new ComponentInventory(this).size(6).faceSlots(Direction.UP, 0).faceSlots(Direction.DOWN, 1).slotFaces(2, Direction.SOUTH, Direction.NORTH, Direction.EAST, Direction.WEST).inputs(1).outputs(1).bucketInputs(1).upgrades(3).processors(1).processorInputs(1).validUpgrades(ContainerChemicalExtractor.VALID_UPGRADES).valid(machineValidator()));
 		addComponent(new ComponentProcessor(this).setProcessorNumber(0).usage(Constants.CHEMICALEXTRACTOR_USAGE_PER_TICK).requiredTicks(Constants.CHEMICALEXTRACTOR_REQUIRED_TICKS).canProcess(component -> component.consumeBucket().canProcessFluidItem2ItemRecipe(component, NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE)).process(component -> component.processFluidItem2ItemRecipe(component)));
 		addComponent(new ComponentContainerProvider("container.chemicalextractor").createMenu((id, player) -> new ContainerChemicalExtractor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
+	}
+	
+	protected void tickServer(ComponentTickable tick) {
+		InventoryUtils.handleExpereinceUpgrade(this);
 	}
 
 	protected void tickClient(ComponentTickable tickable) {

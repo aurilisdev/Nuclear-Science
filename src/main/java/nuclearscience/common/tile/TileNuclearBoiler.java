@@ -12,6 +12,7 @@ import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
+import electrodynamics.prefab.utilities.InventoryUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -69,7 +70,7 @@ public class TileNuclearBoiler extends GenericTile {
 				}
 			}
 		}
-
+		InventoryUtils.handleExpereinceUpgrade(this);
 	}
 
 	protected void tickClient(ComponentTickable tickable) {
