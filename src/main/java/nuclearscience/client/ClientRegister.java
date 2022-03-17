@@ -1,5 +1,6 @@
 package nuclearscience.client;
 
+import electrodynamics.client.guidebook.ScreenGuidebook;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -14,6 +15,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.References;
+import nuclearscience.client.guidebook.ModuleNuclearScience;
 import nuclearscience.client.render.entity.RenderParticle;
 import nuclearscience.client.render.tile.RenderAtomicAssembler;
 import nuclearscience.client.render.tile.RenderChemicalExtractor;
@@ -117,6 +119,8 @@ public class ClientRegister {
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegisters.blockElectromagneticGlass, RenderType.cutout());
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegisters.blockElectromagneticBooster, RenderType.translucent());
 		ItemBlockRenderTypes.setRenderLayer(DeferredRegisters.blockPlasma, RenderType.translucent());
+		
+		ScreenGuidebook.addGuidebookModule(new ModuleNuclearScience());
 	}
 
 	@SubscribeEvent

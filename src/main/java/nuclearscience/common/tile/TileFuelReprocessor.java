@@ -12,6 +12,7 @@ import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
+import electrodynamics.prefab.utilities.InventoryUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
@@ -26,11 +27,15 @@ public class TileFuelReprocessor extends GenericTile {
 		super(DeferredRegisters.TILE_FUELREPROCESSOR.get(), pos, state);
 		addComponent(new ComponentDirection());
 		addComponent(new ComponentPacketHandler());
-		addComponent(new ComponentTickable().tickClient(this::tickClient));
+		addComponent(new ComponentTickable().tickServer(this::tickServer).tickClient(this::tickClient));
 		addComponent(new ComponentElectrodynamic(this).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 4).relativeInput(Direction.NORTH));
 		addComponent(new ComponentInventory(this).size(6).faceSlots(Direction.UP, 0).faceSlots(Direction.DOWN, 1).relativeFaceSlots(Direction.EAST, 1).relativeFaceSlots(Direction.WEST, 2).inputs(1).outputs(1).upgrades(3).processors(1).processorInputs(1).biproducts(1).validUpgrades(ContainerO2OProcessor.VALID_UPGRADES).valid(machineValidator()));
 		addProcessor(new ComponentProcessor(this).setProcessorNumber(0).canProcess(component -> component.canProcessItem2ItemRecipe(component, NuclearScienceRecipeInit.FUEL_REPROCESSOR_TYPE)).process(component -> component.processItem2ItemRecipe(component)).requiredTicks((long) Constants.FUELREPROCESSOR_REQUIRED_TICKS).usage(Constants.FUELREPROCESSOR_USAGE_PER_TICK));
 		addComponent(new ComponentContainerProvider("container.fuelreprocessor").createMenu((id, player) -> new ContainerO2OProcessor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
+	}
+	
+	protected void tickServer(ComponentTickable tick) {
+		InventoryUtils.handleExpereinceUpgrade(this);
 	}
 
 	public void tickClient(ComponentTickable tickable) {

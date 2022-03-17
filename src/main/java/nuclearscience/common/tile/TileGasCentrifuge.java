@@ -12,6 +12,7 @@ import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
+import electrodynamics.prefab.utilities.InventoryUtils;
 import electrodynamics.prefab.utilities.object.Location;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -127,6 +128,7 @@ public class TileGasCentrifuge extends GenericTile {
 		if (level.getLevelData().getGameTime() % 10 == 0 && isRunning) {
 			RadiationSystem.emitRadiationFromLocation(level, new Location(worldPosition), RADATION_RADIUS_BLOCKS, RADIATION_STRENGTH);
 		}
+		InventoryUtils.handleExpereinceUpgrade(this);
 	}
 
 	@Override
