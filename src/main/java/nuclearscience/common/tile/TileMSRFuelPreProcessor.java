@@ -39,7 +39,7 @@ public class TileMSRFuelPreProcessor extends GenericTile {
 	}
 
 	protected void tickServer(ComponentTickable tick) {
-		InventoryUtils.handleExpereinceUpgrade(this);
+		InventoryUtils.handleExperienceUpgrade(this);
 	}
 
 	protected void tickClient(ComponentTickable tickable) {

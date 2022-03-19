@@ -35,7 +35,7 @@ public class TileFuelReprocessor extends GenericTile {
 	}
 
 	protected void tickServer(ComponentTickable tick) {
-		InventoryUtils.handleExpereinceUpgrade(this);
+		InventoryUtils.handleExperienceUpgrade(this);
 	}
 
 	public void tickClient(ComponentTickable tickable) {

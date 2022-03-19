@@ -70,7 +70,7 @@ public class TileNuclearBoiler extends GenericTile {
 				}
 			}
 		}
-		InventoryUtils.handleExpereinceUpgrade(this);
+		InventoryUtils.handleExperienceUpgrade(this);
 	}
 
 	protected void tickClient(ComponentTickable tickable) {
