@@ -1,5 +1,6 @@
 package nuclearscience.common.tile;
 
+import electrodynamics.common.block.VoxelShapes;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
@@ -14,6 +15,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.api.radiation.IRadioactiveObject;
 import nuclearscience.api.radiation.RadiationRegister;
@@ -57,5 +61,40 @@ public class TileRadioisotopeGenerator extends GenericTile {
 				ElectricityUtils.receivePower(output2.getSafe(), Direction.UP, transfer, false);
 			}
 		}
+	}
+
+	static {
+		VoxelShape shape = Shapes.empty();
+		shape = Shapes.join(shape, Shapes.box(0.46304375, 0.0625, 0.0625, 0.53695625, 0.9375, 0.9375), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.46304375, 0.0625, 0.0625, 0.53695625, 0.9375, 0.9375), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.0625, 0.0625, 0.46304375, 0.9375, 0.9375, 0.53695625), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.0625, 0.0625, 0.46304375, 0.9375, 0.9375, 0.53695625), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.450271875, 0.09375, 0.25, 0.549728125, 0.9078125, 0.75), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.450271875, 0.09375, 0.25, 0.549728125, 0.90625, 0.75), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.450271875, 0.09375, 0.25, 0.549728125, 0.9078125, 0.75), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.450271875, 0.09375, 0.25, 0.549728125, 0.90625, 0.75), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.450271875, 0.09375, 0.25, 0.549728125, 0.9078125, 0.75), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.25, 0.09375, 0.450271875, 0.75, 0.90625, 0.549728125), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.25, 0.09375, 0.450271875, 0.75, 0.9078125, 0.549728125), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.25, 0.09375, 0.450271875, 0.75, 0.90625, 0.549728125), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.450271875, 0.9375, 0.25, 0.549728125, 0.984375, 0.75), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.450271875, 0.9375, 0.25, 0.549728125, 0.984375, 0.75), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.450271875, 0.9375, 0.25, 0.549728125, 0.984375, 0.75), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.450271875, 0.9375, 0.25, 0.549728125, 0.984375, 0.75), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.450271875, 0.9375, 0.25, 0.549728125, 0.984375, 0.75), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.25, 0.9375, 0.450271875, 0.75, 0.984375, 0.549728125), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.25, 0.9375, 0.450271875, 0.75, 0.984375, 0.549728125), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.25, 0.9375, 0.450271875, 0.75, 0.984375, 0.549728125), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.328125, 0.953125, 0.328125, 0.671875, 1, 0.671875), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.328125, 0, 0.328125, 0.671875, 0.046875, 0.671875), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.450271875, 0.015625, 0.25, 0.549728125, 0.0625, 0.75), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.450271875, 0.015625, 0.25, 0.549728125, 0.0625, 0.75), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.450271875, 0.015625, 0.25, 0.549728125, 0.0625, 0.75), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.450271875, 0.015625, 0.25, 0.549728125, 0.0625, 0.75), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.450271875, 0.015625, 0.25, 0.549728125, 0.0625, 0.75), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.25, 0.015625, 0.450271875, 0.75, 0.0625, 0.549728125), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.25, 0.015625, 0.450271875, 0.75, 0.0625, 0.549728125), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.25, 0.015625, 0.450271875, 0.75, 0.0625, 0.549728125), BooleanOp.OR);
+		VoxelShapes.registerShape(DeferredRegisters.blockRadioisotopeGenerator, shape, Direction.NORTH);
 	}
 }
