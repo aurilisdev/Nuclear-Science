@@ -91,7 +91,7 @@ public class TileGasCentrifuge extends GenericTile {
 		}
 
 		stored235 += processed * PERCENT_U235;
-		stored238 += processed * (1 - PERCENT_U235);
+		stored238 += processed * (1 - PERCENT_U235 - WASTE_MULTIPLIER);
 		storedWaste += processed * WASTE_MULTIPLIER;
 		if (stored235 > REQUIRED) {
 			ItemStack stack = inv.getItem(0);

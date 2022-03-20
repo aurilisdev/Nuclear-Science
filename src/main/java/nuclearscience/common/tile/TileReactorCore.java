@@ -9,6 +9,7 @@ import electrodynamics.common.recipe.recipeutils.CountableIngredient;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
+import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
@@ -64,6 +65,7 @@ public class TileReactorCore extends GenericTile {
 
 	public TileReactorCore(BlockPos pos, BlockState state) {
 		super(DeferredRegisters.TILE_REACTORCORE.get(), pos, state);
+		addComponent(new ComponentDirection());
 		addComponent(new ComponentTickable().tickCommon(this::tickCommon).tickServer(this::tickServer));
 		addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket).guiPacketReader(this::readCustomPacket).guiPacketWriter(this::writeCustomPacket));
 		addComponent(new ComponentInventory(this).inputs(5).outputs(1).size(6).faceSlots(Direction.UP, 0, 1, 2, 3, 4).faceSlots(Direction.DOWN, 5));

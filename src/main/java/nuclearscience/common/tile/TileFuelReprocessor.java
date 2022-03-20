@@ -120,6 +120,6 @@ public class TileFuelReprocessor extends GenericTile {
 		shape = Shapes.join(shape, Shapes.box(0.8125, 0.6875, 0.375, 0.875, 0.75, 0.4375), BooleanOp.OR);
 		shape = Shapes.join(shape, Shapes.box(0.8125, 0.25, 0.375, 0.875, 0.3125, 0.4375), BooleanOp.OR);
 		shape = Shapes.join(shape, Shapes.box(0.8125, 0.25, 0.5625, 0.875, 0.3125, 0.625), BooleanOp.OR);
-		VoxelShapes.registerShape(DeferredRegisters.blockFuelReprocessor, shape, Direction.EAST);
+		VoxelShapes.registerShape(DeferredRegisters.blockFuelReprocessor, shape, Direction.WEST);
 	}
 }
