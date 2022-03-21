@@ -2,12 +2,14 @@ package nuclearscience.common.tile;
 
 import java.util.List;
 
+import electrodynamics.common.block.VoxelShapes;
 import electrodynamics.common.recipe.ElectrodynamicsRecipe;
 import electrodynamics.common.recipe.categories.item2item.Item2ItemRecipe;
 import electrodynamics.common.recipe.recipeutils.CountableIngredient;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
+import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
@@ -30,6 +32,9 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import nuclearscience.DeferredRegisters;
 import nuclearscience.api.radiation.DamageSourceRadiation;
 import nuclearscience.api.radiation.RadiationSystem;
@@ -60,6 +65,7 @@ public class TileReactorCore extends GenericTile {
 
 	public TileReactorCore(BlockPos pos, BlockState state) {
 		super(DeferredRegisters.TILE_REACTORCORE.get(), pos, state);
+		addComponent(new ComponentDirection());
 		addComponent(new ComponentTickable().tickCommon(this::tickCommon).tickServer(this::tickServer));
 		addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket).guiPacketReader(this::readCustomPacket).guiPacketWriter(this::writeCustomPacket));
 		addComponent(new ComponentInventory(this).inputs(5).outputs(1).size(6).faceSlots(Direction.UP, 0, 1, 2, 3, 4).faceSlots(Direction.DOWN, 5));
@@ -274,7 +280,7 @@ public class TileReactorCore extends GenericTile {
 		ItemStack output = inv.getItem(outputSlot);
 
 		if (input != null && !input.isEmpty()) {
-			if (cachedRecipes == null || cachedRecipes.size() == 0) {
+			if (cachedRecipes == null || cachedRecipes.isEmpty()) {
 				cachedRecipes = ElectrodynamicsRecipe.findRecipesbyType(NuclearScienceRecipeInit.FISSION_REACTOR_TYPE, level);
 			}
 			for (ElectrodynamicsRecipe iRecipe : cachedRecipes) {
@@ -293,6 +299,43 @@ public class TileReactorCore extends GenericTile {
 
 			}
 		}
+	}
+
+	static {
+		VoxelShape shape = Shapes.empty();
+
+		shape = Shapes.join(shape, Shapes.box(0.40625, 0.115675, 0.40625, 0.59375, 0.7088875, 0.59375), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.25, 0.06565, 0.125, 0.75, 0.1148875, 0.1875), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.84375, 0.7878, 0.25, 0.90625, 0.8370375, 0.75), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.8125, 0.06565, 0.25, 0.875, 0.1148875, 0.75), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.0625, 0.72215, 0.125, 0.125, 0.7878, 0.875), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.1875, 0.06565, 0.875, 0.25, 0.72215, 0.9375), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.1875, 0.06565, 0.0625, 0.25, 0.72215, 0.125), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.25, 0.06565, 0.25, 0.3125, 0.72215, 0.3125), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.25, 0.06565, 0.6875, 0.3125, 0.72215, 0.75), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.6875, 0.06565, 0.25, 0.75, 0.72215, 0.3125), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.6875, 0.06565, 0.6875, 0.75, 0.72215, 0.75), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.75, 0.06565, 0.875, 0.8125, 0.72215, 0.9375), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.75, 0.06565, 0.0625, 0.8125, 0.72215, 0.125), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.0625, 0.06565, 0.75, 0.125, 0.72215, 0.8125), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.0625, 0.06565, 0.1875, 0.125, 0.72215, 0.25), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.875, 0.06565, 0.75, 0.9375, 0.72215, 0.8125), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.875, 0.06565, 0.1875, 0.9375, 0.72215, 0.25), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.0625, 0, 0.125, 0.125, 0.06565, 0.875), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.09375, 0.7878, 0.25, 0.15625, 0.8370375, 0.75), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.125, 0.06565, 0.25, 0.1875, 0.1148875, 0.75), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.875, 0, 0.125, 0.9375, 0.06565, 0.875), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.125, 0, 0.0625, 0.875, 0.06565, 0.9375), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.125, 0.72215, 0.0625, 0.875, 0.7878, 0.9375), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.15625, 0.7878, 0.15625, 0.84375, 0.8370375, 0.84375), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.1875, 0.06565, 0.1875, 0.8125, 0.1148875, 0.8125), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.1875, 0.8370375, 0.1875, 0.8125, 0.886275, 0.8125), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.25, 0.886275, 0.25, 0.75, 0.9355125, 0.75), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.25, 0.7878, 0.84375, 0.75, 0.8370375, 0.90625), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.25, 0.06565, 0.8125, 0.75, 0.1148875, 0.875), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.875, 0.72215, 0.125, 0.9375, 0.7878, 0.875), BooleanOp.OR);
+		shape = Shapes.join(shape, Shapes.box(0.25, 0.7878, 0.09375, 0.75, 0.8370375, 0.15625), BooleanOp.OR);
+		VoxelShapes.registerShape(DeferredRegisters.blockReactorCore, shape, Direction.NORTH);
 	}
 
 }

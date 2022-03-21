@@ -51,5 +51,4 @@ public class TileMSRFuelPreProcessor extends GenericTile {
 			clientTicks++;
 		}
 	}
-
 }
