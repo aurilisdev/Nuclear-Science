@@ -14,15 +14,13 @@ public class NuclearSciencePsuedoRecipes {
 
 	private static ArrayList<ArrayList<ItemStack>> NUCLEAR_SCIENCE_ITEMS = new ArrayList<>();
 	private static ArrayList<Fluid> NUCLEAR_SCIENCE_FLUIDS = new ArrayList<>();
-	public static ArrayList<ItemStack> INFO_ITEMS = new ArrayList<>();
 
 	public static ArrayList<PsuedoGasCentrifugeRecipe> GAS_CENTRIFUGE_RECIPES = new ArrayList<>();
 	public static ArrayList<PsuedoItem2ItemRecipe> ANTI_MATTER_RECIPES = new ArrayList<>();
 	public static ArrayList<PsuedoItem2ItemRecipe> DARK_MATTER_RECIPES = new ArrayList<>();
 
 	public static void addNuclearScienceRecipes() {
-
-		addNuclearScienceMachines();
+		
 		addNuclearScienceFluids();
 		addNuclearScienceItems();
 
@@ -31,22 +29,6 @@ public class NuclearSciencePsuedoRecipes {
 		ANTI_MATTER_RECIPES.add(new PsuedoItem2ItemRecipe(Arrays.asList(new ItemStack[] { NUCLEAR_SCIENCE_ITEMS.get(1).get(4) }), NUCLEAR_SCIENCE_ITEMS.get(1).get(5)));
 
 		DARK_MATTER_RECIPES.add(new PsuedoItem2ItemRecipe(Arrays.asList(new ItemStack[] { NUCLEAR_SCIENCE_ITEMS.get(1).get(4) }), NUCLEAR_SCIENCE_ITEMS.get(1).get(7)));
-	}
-
-	private static void addNuclearScienceMachines() {
-
-		INFO_ITEMS.add(new ItemStack(nuclearscience.DeferredRegisters.blockReactorCore));
-		INFO_ITEMS.add(new ItemStack(nuclearscience.DeferredRegisters.blockFusionReactorCore));
-		INFO_ITEMS.add(new ItemStack(nuclearscience.DeferredRegisters.blockElectromagnet));
-		INFO_ITEMS.add(new ItemStack(nuclearscience.DeferredRegisters.blockElectromagneticBooster));
-		INFO_ITEMS.add(new ItemStack(nuclearscience.DeferredRegisters.blockElectromagneticSwitch));
-		INFO_ITEMS.add(new ItemStack(nuclearscience.DeferredRegisters.blockGasCentrifuge));
-		INFO_ITEMS.add(new ItemStack(nuclearscience.DeferredRegisters.blockParticleInjector));
-		INFO_ITEMS.add(new ItemStack(nuclearscience.DeferredRegisters.blockQuantumCapacitor));
-		INFO_ITEMS.add(new ItemStack(nuclearscience.DeferredRegisters.blockRadioisotopeGenerator));
-		INFO_ITEMS.add(new ItemStack(nuclearscience.DeferredRegisters.blockTurbine));
-		INFO_ITEMS.add(new ItemStack(nuclearscience.DeferredRegisters.blockTeleporter));
-
 	}
 
 	private static void addNuclearScienceFluids() {

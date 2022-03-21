@@ -128,7 +128,7 @@ public class TileGasCentrifuge extends GenericTile {
 		if (level.getLevelData().getGameTime() % 10 == 0 && isRunning) {
 			RadiationSystem.emitRadiationFromLocation(level, new Location(worldPosition), RADATION_RADIUS_BLOCKS, RADIATION_STRENGTH);
 		}
-		InventoryUtils.handleExpereinceUpgrade(this);
+		InventoryUtils.handleExperienceUpgrade(this);
 	}
 
 	@Override

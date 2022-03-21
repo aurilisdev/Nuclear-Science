@@ -1,5 +1,6 @@
 package nuclearscience.common.tile;
 
+import electrodynamics.api.item.ItemUtils;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
@@ -8,7 +9,6 @@ import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import electrodynamics.prefab.utilities.object.TransferPack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -38,7 +38,8 @@ public class TileAtomicAssembler extends GenericTile {
 		ComponentElectrodynamic electro = getComponent(ComponentType.Electrodynamic);
 		ItemStack input = inv.getItem(6);
 		ItemStack output = inv.getItem(7);
-		boolean canProcess = electro.getJoulesStored() < Constants.ATOMICASSEMBLER_USAGE_PER_TICK && !input.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).isPresent() && (ItemStack.isSame(input, output) && output.getCount() + 1 <= output.getMaxStackSize() || output.isEmpty()) && !input.isEmpty();
+		boolean validItem = (ItemStack.isSame(input, output) && output.getCount() + 1 <= output.getMaxStackSize() || output.isEmpty()) && !input.isEmpty() && !ItemUtils.testItems(input.getItem(), DeferredRegisters.ITEM_CELLDARKMATTER.get()) && !input.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).isPresent();
+		boolean canProcess = electro.getJoulesStored() >= Constants.ATOMICASSEMBLER_USAGE_PER_TICK && validItem;
 		if (canProcess) {
 			for (int index = 0; index < 6; index++) {
 				ItemStack dmSlot = inv.getItem(index);
@@ -59,7 +60,7 @@ public class TileAtomicAssembler extends GenericTile {
 			if (progress++ >= Constants.ATOMICASSEMBLER_REQUIRED_TICKS) {
 				canProduce = true;
 			}
-			electro.extractPower(TransferPack.joulesVoltage(Constants.ATOMICASSEMBLER_USAGE_PER_TICK, electro.getVoltage()), false);
+			electro.joules(electro.getJoulesStored() - Constants.ATOMICASSEMBLER_USAGE_PER_TICK);
 		}
 		if (canProduce) {
 			progress = 0;

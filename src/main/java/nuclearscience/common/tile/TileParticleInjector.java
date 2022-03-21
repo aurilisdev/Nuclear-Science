@@ -57,8 +57,10 @@ public class TileParticleInjector extends GenericTile {
 		if (inputItem != null && !inputItem.isEmpty()) {
 			isItem = true;
 		}
+		
+		ComponentElectrodynamic electro = getComponent(ComponentType.Electrodynamic);
 
-		return timeSinceSpawn < 0 && isItem && (particles[0] == null || particles[1] == null) && inv.getItem(0).getCount() > 0 && resultStack.getCount() < resultStack.getMaxStackSize();
+		return timeSinceSpawn < 0 && isItem && (particles[0] == null || particles[1] == null) && inv.getItem(0).getCount() > 0 && resultStack.getCount() < resultStack.getMaxStackSize() && electro.getJoulesStored() >= Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE;
 	}
 
 	public void checkCollision() {
@@ -73,19 +75,22 @@ public class TileParticleInjector extends GenericTile {
 				one.remove(RemovalReason.KILLED);
 				two.remove(RemovalReason.KILLED);
 				particles[0] = particles[1] = null;
-				cellStack.shrink(1);
 				double mod = level.random.nextDouble();
 				if (speedOfMax > 0.999) {
 					if (resultStack.getItem() == DeferredRegisters.ITEM_CELLDARKMATTER.get()) {
 						resultStack.setCount(resultStack.getCount() + 1);
+						cellStack.shrink(1);
 					} else if (resultStack.isEmpty()) {
 						inv.setItem(2, new ItemStack(DeferredRegisters.ITEM_CELLDARKMATTER.get()));
+						cellStack.shrink(1);
 					}
 				} else if (speedOfMax > mod) {
 					if (resultStack.getItem() == DeferredRegisters.ITEM_CELLANTIMATTERSMALL.get()) {
 						resultStack.setCount(resultStack.getCount() + 1);
+						cellStack.shrink(1);
 					} else if (resultStack.isEmpty()) {
 						inv.setItem(2, new ItemStack(DeferredRegisters.ITEM_CELLANTIMATTERSMALL.get()));
+						cellStack.shrink(1);
 					}
 				}
 			}
@@ -93,6 +98,8 @@ public class TileParticleInjector extends GenericTile {
 	}
 
 	public void process(ComponentProcessor processor) {
+		ComponentElectrodynamic electro = getComponent(ComponentType.Electrodynamic);
+		electro.joules(electro.getJoulesStored() - Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE);
 		timeSinceSpawn = 100;
 		Direction dir = this.<ComponentDirection>getComponent(ComponentType.Direction).getDirection();
 		ItemStack stack = this.<ComponentInventory>getComponent(ComponentType.Inventory).getItem(0);

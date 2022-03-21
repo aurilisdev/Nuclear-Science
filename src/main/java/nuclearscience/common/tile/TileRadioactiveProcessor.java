@@ -37,6 +37,6 @@ public class TileRadioactiveProcessor extends GenericTile {
 	}
 
 	protected void tickServer(ComponentTickable tick) {
-		InventoryUtils.handleExpereinceUpgrade(this);
+		InventoryUtils.handleExperienceUpgrade(this);
 	}
 }
