@@ -14,7 +14,6 @@ import electrodynamics.compatibility.jei.ElectrodynamicsJEIPlugin;
 import electrodynamics.compatibility.jei.recipecategories.psuedo.PsuedoItem2ItemRecipe;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
-import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
@@ -22,9 +21,7 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
 import nuclearscience.client.screen.ScreenChemicalExtractor;
 import nuclearscience.client.screen.ScreenGasCentrifuge;
@@ -48,8 +45,6 @@ import nuclearscience.compatibility.jei.utils.psuedorecipes.PsuedoGasCentrifugeR
 
 @JeiPlugin
 public class NuclearSciencePlugin implements IModPlugin {
-
-	private static final String INFO_BLOCK = "jei.info.block.";
 
 	@Override
 	public ResourceLocation getPluginUid() {
@@ -146,11 +141,6 @@ public class NuclearSciencePlugin implements IModPlugin {
 	}
 
 	private static void nuclearScienceInfoTabs(IRecipeRegistration registration) {
-
-		// BLOCKS
-		for (ItemStack itemStack : NuclearSciencePsuedoRecipes.INFO_ITEMS) {
-			registration.addIngredientInfo(itemStack, VanillaTypes.ITEM, new TranslatableComponent(INFO_BLOCK + itemStack.getItem().toString()));
-		}
 
 	}
 
