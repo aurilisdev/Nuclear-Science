@@ -16,11 +16,9 @@ public class ChapterMisc extends Chapter {
 	@Override
 	protected List<Page> genPages() {
 		List<Page> pages = new ArrayList<>();
-		
-		pages.add(new Page(new TextWrapperObject[] { 
-			new TextWrapperObject(10, 40, 4210752, "guidebook.nuclearscience.chapter.misc.p1l1"), 
-		}));
-		
+
+		pages.add(new Page(new TextWrapperObject[] { new TextWrapperObject(10, 40, 4210752, "guidebook.nuclearscience.chapter.misc.p1l1"), }));
+
 		return pages;
 	}
 

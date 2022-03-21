@@ -20,7 +20,7 @@ public class NuclearSciencePsuedoRecipes {
 	public static ArrayList<PsuedoItem2ItemRecipe> DARK_MATTER_RECIPES = new ArrayList<>();
 
 	public static void addNuclearScienceRecipes() {
-		
+
 		addNuclearScienceFluids();
 		addNuclearScienceItems();
 

@@ -57,7 +57,7 @@ public class TileParticleInjector extends GenericTile {
 		if (inputItem != null && !inputItem.isEmpty()) {
 			isItem = true;
 		}
-		
+
 		ComponentElectrodynamic electro = getComponent(ComponentType.Electrodynamic);
 
 		return timeSinceSpawn < 0 && isItem && (particles[0] == null || particles[1] == null) && inv.getItem(0).getCount() > 0 && resultStack.getCount() < resultStack.getMaxStackSize() && electro.getJoulesStored() >= Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE;
