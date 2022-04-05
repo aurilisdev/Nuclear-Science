@@ -138,7 +138,9 @@ public class TileReactorCore extends GenericTile {
 				Location source = new Location(worldPosition);
 				double totstrength = temperature * 10;
 				double range = Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 2;
-				RadiationSystem.emitRadiationFromLocation(level, source, range, totstrength);
+				if (level.getLevelData().getGameTime() % 10 == 0) {
+					RadiationSystem.emitRadiationFromLocation(level, source, range, totstrength);
+				}
 				if (temperature > 100) {
 					AABB bb = AABB.ofSize(new Vec3(source.x(), source.y(), source.z()), 4, 4, 4);
 					List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, bb);
