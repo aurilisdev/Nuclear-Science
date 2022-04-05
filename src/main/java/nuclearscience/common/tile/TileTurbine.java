@@ -135,7 +135,7 @@ public class TileTurbine extends GenericTile {
 		if (tickable.getTicks() % 30 == 0) {
 			this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();
 			spinSpeed = currentVoltage / 120;
-			output.update();
+			output.update(worldPosition.relative(Direction.UP));
 		}
 		if (hasCore && !isCore) {
 			currentVoltage = 0;

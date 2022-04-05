@@ -73,8 +73,8 @@ public class TileMSRReactorCore extends GenericTile {
 			plugCache = new CachedTileOutput(level, new BlockPos(worldPosition).relative(Direction.DOWN));
 		}
 		if (tick.getTicks() % 40 == 0) {
-			outputCache.update();
-			plugCache.update();
+			outputCache.update(new BlockPos(worldPosition).relative(Direction.UP));
+			plugCache.update(new BlockPos(worldPosition).relative(Direction.DOWN));
 		}
 		double change = (temperature - TileReactorCore.AIR_TEMPERATURE) / 3000.0 + (temperature - TileReactorCore.AIR_TEMPERATURE) / 5000.0;
 		if (change != 0) {

@@ -58,8 +58,8 @@ public class TileQuantumCapacitor extends GenericTile implements IEnergyStorage 
 			outputCache2 = new CachedTileOutput(level, new BlockPos(worldPosition).relative(Direction.DOWN));
 		}
 		if (tickable.getTicks() % 40 == 0) {
-			outputCache.update();
-			outputCache2.update();
+			outputCache.update(new BlockPos(worldPosition).relative(Direction.UP));
+			outputCache2.update(new BlockPos(worldPosition).relative(Direction.DOWN));
 		}
 		double joules = getJoulesStored();
 		if (joules > 0 && outputCache.valid()) {

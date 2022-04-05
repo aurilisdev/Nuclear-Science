@@ -42,8 +42,8 @@ public class TileRadioisotopeGenerator extends GenericTile {
 			output2 = new CachedTileOutput(level, worldPosition.relative(Direction.DOWN));
 		}
 		if (tickable.getTicks() % 40 == 0) {
-			output1.update();
-			output2.update();
+			output1.update(worldPosition.relative(Direction.UP));
+			output2.update(worldPosition.relative(Direction.DOWN));
 		}
 		ItemStack in = this.<ComponentInventory>getComponent(ComponentType.Inventory).getItem(0);
 		IRadioactiveObject rad = RadiationRegister.get(in.getItem());
