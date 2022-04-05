@@ -61,7 +61,7 @@ public class RadiationSystem {
 		return strength / (getRadiationModifier(world, source, end) * distance * distance);
 	}
 
-	private static void applyRadiation(LivingEntity entity, Location source, double strength) {
+	public static void applyRadiation(LivingEntity entity, Location source, double strength) {
 		int protection = 1;
 		boolean isPlayer = entity instanceof Player;
 		if (isPlayer) {
