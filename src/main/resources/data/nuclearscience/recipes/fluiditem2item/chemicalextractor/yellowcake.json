@@ -4,7 +4,7 @@
 	"iteminputs":{
 		"count" : 1,
 		"0":{
-			"tag":"forge:ores/uranium",
+			"tag":"forge:rawores/uranium",
 			"count":1		
 		}
 	},
