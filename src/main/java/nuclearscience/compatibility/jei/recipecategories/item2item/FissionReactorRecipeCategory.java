@@ -57,6 +57,11 @@ public class FissionReactorRecipeCategory extends Item2ItemRecipeCategory<Fissio
 	public ResourceLocation getUid() {
 		return UID;
 	}
+	
+	@Override
+	public RecipeType<FissionReactorRecipe> getRecipeType() {
+		return RECIPE_TYPE;
+	}
 
 	@Override
 	public List<List<ItemStack>> getItemInputs(ElectrodynamicsRecipe electro) {

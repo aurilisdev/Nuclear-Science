@@ -3,7 +3,6 @@ package nuclearscience.common.recipe.categories.fluiditem2item.specificmachines;
 import electrodynamics.common.recipe.categories.fluiditem2item.FluidItem2ItemRecipe;
 import electrodynamics.common.recipe.recipeutils.CountableIngredient;
 import electrodynamics.common.recipe.recipeutils.FluidIngredient;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -27,7 +26,7 @@ public class ChemicalExtractorRecipe extends FluidItem2ItemRecipe {
 
 	@Override
 	public RecipeType<?> getType() {
-		return Registry.RECIPE_TYPE.get(RECIPE_ID);
+		return NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE.get();
 	}
 
 }

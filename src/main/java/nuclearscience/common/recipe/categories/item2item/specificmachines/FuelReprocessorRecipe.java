@@ -3,7 +3,6 @@ package nuclearscience.common.recipe.categories.item2item.specificmachines;
 import electrodynamics.common.recipe.categories.item2item.Item2ItemRecipe;
 import electrodynamics.common.recipe.recipeutils.CountableIngredient;
 import electrodynamics.common.recipe.recipeutils.ProbableItem;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -31,7 +30,7 @@ public class FuelReprocessorRecipe extends Item2ItemRecipe {
 
 	@Override
 	public RecipeType<?> getType() {
-		return Registry.RECIPE_TYPE.get(RECIPE_ID);
+		return NuclearScienceRecipeInit.FUEL_REPROCESSOR_TYPE.get();
 	}
 
 }

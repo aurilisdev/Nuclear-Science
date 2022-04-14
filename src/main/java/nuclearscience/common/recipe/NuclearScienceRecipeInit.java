@@ -35,8 +35,6 @@ public class NuclearScienceRecipeInit {
 	// FLUIDITEM2ITEM
 	public static final RegistryObject<CustomRecipeType<ChemicalExtractorRecipe>> CHEMICAL_EXTRACTOR_TYPE = RECIPE_TYPES.register(ChemicalExtractorRecipe.RECIPE_GROUP, () -> new CustomRecipeType<>());
 	public static final RegistryObject<CustomRecipeType<RadioactiveProcessorRecipe>> RADIOACTIVE_PROCESSOR_TYPE = RECIPE_TYPES.register(RadioactiveProcessorRecipe.RECIPE_GROUP, () -> new CustomRecipeType<>());
-
-	// FLUID3ITEMS2ITEM
 	public static final RegistryObject<CustomRecipeType<MSRFuelPreProcessorRecipe>> MSR_FUEL_PREPROCESSOR_TYPE = RECIPE_TYPES.register(MSRFuelPreProcessorRecipe.RECIPE_GROUP, () -> new CustomRecipeType<>());
 
 	/* RECIPE SERIALIZERS */

@@ -59,5 +59,10 @@ public class NuclearBoilerRecipeCategory extends FluidItem2FluidRecipeCategory<N
 	public ResourceLocation getUid() {
 		return UID;
 	}
+	
+	@Override
+	public RecipeType<NuclearBoilerRecipe> getRecipeType() {
+		return RECIPE_TYPE;
+	}
 
 }
