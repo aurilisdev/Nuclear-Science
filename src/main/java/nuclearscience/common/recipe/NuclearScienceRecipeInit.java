@@ -7,7 +7,6 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import nuclearscience.References;
 import nuclearscience.common.recipe.categories.fluiditem2fluid.FluidItem2FluidRecipeTypes;
 import nuclearscience.common.recipe.categories.fluiditem2fluid.specificmachines.NuclearBoilerRecipe;
 import nuclearscience.common.recipe.categories.fluiditem2item.FluidItem2ItemRecipeTypes;
@@ -22,7 +21,7 @@ public class NuclearScienceRecipeInit {
 
 	// Deferred Register
 	public static DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZER = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, nuclearscience.References.ID);
-	public static DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(Registry.RECIPE_TYPE_REGISTRY, References.ID);
+	public static DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(Registry.RECIPE_TYPE.key(), nuclearscience.References.ID);
 
 	/* RECIPE TYPES */
 
