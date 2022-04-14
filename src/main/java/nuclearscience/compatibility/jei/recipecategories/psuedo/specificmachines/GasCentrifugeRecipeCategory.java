@@ -6,6 +6,7 @@ import com.google.common.cache.LoadingCache;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import mezz.jei.api.constants.VanillaTypes;
+import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
@@ -13,6 +14,7 @@ import mezz.jei.api.gui.drawable.IDrawableAnimated.StartDirection;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
+import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -48,10 +50,13 @@ public class GasCentrifugeRecipeCategory implements IRecipeCategory<PsuedoGasCen
 
 	private LoadingCache<Integer, IDrawableAnimated> cachedArrows;
 	private static StartDirection ARROW_START_DIRECTION = IDrawableAnimated.StartDirection.LEFT;
+	
+	// TODO: REPLACE NULL WITH RECIPE TYPE
+	public static final RecipeType<PsuedoGasCentrifugeRecipe> RECIPE_TYPE = RecipeType.create(References.ID, null, PsuedoGasCentrifugeRecipe.class);
 
 	public GasCentrifugeRecipeCategory(IGuiHelper guiHelper) {
 
-		ICON = guiHelper.createDrawableIngredient(VanillaTypes.ITEM, INPUT_MACHINE);
+		ICON = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, INPUT_MACHINE);
 		BACKGROUND = guiHelper.createDrawable(new ResourceLocation(MOD_ID, GUI_TEXTURE), GUI_BACKGROUND[0], GUI_BACKGROUND[1], GUI_BACKGROUND[2], GUI_BACKGROUND[3]);
 
 		cachedArrows = CacheBuilder.newBuilder().maximumSize(1).build(new CacheLoader<Integer, IDrawableAnimated>() {
@@ -89,7 +94,7 @@ public class GasCentrifugeRecipeCategory implements IRecipeCategory<PsuedoGasCen
 
 	@Override
 	public void setRecipe(IRecipeLayoutBuilder builder, PsuedoGasCentrifugeRecipe recipe, IFocusGroup focuses) {
-		builder.addSlot(RecipeIngredientRole.INPUT, 3, 7).addIngredient(VanillaTypes.FLUID, recipe.inputFluidStack).setFluidRenderer(5000, false, 12, 47);
+		builder.addSlot(RecipeIngredientRole.INPUT, 3, 7).addIngredient(ForgeTypes.FLUID_STACK, recipe.inputFluidStack).setFluidRenderer(5000, false, 12, 47);
 		builder.addSlot(RecipeIngredientRole.OUTPUT, 114, 3).addItemStack(recipe.output1);
 		builder.addSlot(RecipeIngredientRole.OUTPUT, 114, 23).addItemStack(recipe.output2);
 		builder.addSlot(RecipeIngredientRole.OUTPUT, 114, 43).addItemStack(recipe.biproduct);

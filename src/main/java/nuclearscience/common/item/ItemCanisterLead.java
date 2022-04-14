@@ -7,8 +7,8 @@ import com.mojang.datafixers.util.Pair;
 
 import electrodynamics.common.item.gear.tools.ItemCanister;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.ForgeRegistries;
 import nuclearscience.DeferredRegisters;
 
@@ -31,8 +31,8 @@ public class ItemCanisterLead extends ItemCanister {
 		return Pair.of(TAG_NAMES, whitelist);
 	}
 
-	public static void addTag(Tags.IOptionalNamedTag<Fluid> tag) {
-		TAG_NAMES.add(tag.getName());
+	public static void addTag(TagKey<Fluid> tag) {
+		TAG_NAMES.add(tag.location());
 	}
 
 }

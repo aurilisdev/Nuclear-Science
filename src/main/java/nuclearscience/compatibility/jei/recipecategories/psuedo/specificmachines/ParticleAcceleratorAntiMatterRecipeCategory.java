@@ -18,6 +18,7 @@ import mezz.jei.api.gui.drawable.IDrawableAnimated.StartDirection;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
+import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -53,10 +54,12 @@ public class ParticleAcceleratorAntiMatterRecipeCategory implements IRecipeCateg
 
 	private IDrawable BACKGROUND;
 	private IDrawable ICON;
+	// TODO: REPLACE NULL WITH RECIPE TYPE
+	public static final RecipeType<PsuedoItem2ItemRecipe> RECIPE_TYPE = RecipeType.create(References.ID, null, PsuedoItem2ItemRecipe.class);
 
 	public ParticleAcceleratorAntiMatterRecipeCategory(IGuiHelper guiHelper) {
 
-		ICON = guiHelper.createDrawableIngredient(VanillaTypes.ITEM, INPUT_MACHINE);
+		ICON = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, INPUT_MACHINE);
 		BACKGROUND = guiHelper.createDrawable(new ResourceLocation(MOD_ID, GUI_TEXTURE), GUI_BACKGROUND[0], GUI_BACKGROUND[1], GUI_BACKGROUND[2], GUI_BACKGROUND[3]);
 
 		cachedArrows = CacheBuilder.newBuilder().maximumSize(1).build(new CacheLoader<Integer, IDrawableAnimated>() {
@@ -116,7 +119,8 @@ public class ParticleAcceleratorAntiMatterRecipeCategory implements IRecipeCateg
 		int i = 0;
 		List<Item> allItems = new ArrayList<>(ForgeRegistries.ITEMS.getValues());
 		List<Item> vanillaItems = new ArrayList<>();
-		CreativeModeTab[] vanillaItemGroups = { CreativeModeTab.TAB_BREWING, CreativeModeTab.TAB_BUILDING_BLOCKS, CreativeModeTab.TAB_COMBAT, CreativeModeTab.TAB_DECORATIONS, CreativeModeTab.TAB_FOOD, CreativeModeTab.TAB_MISC, CreativeModeTab.TAB_REDSTONE, CreativeModeTab.TAB_TOOLS, CreativeModeTab.TAB_TRANSPORTATION };
+		CreativeModeTab[] vanillaItemGroups = { CreativeModeTab.TAB_BREWING, CreativeModeTab.TAB_BUILDING_BLOCKS, CreativeModeTab.TAB_COMBAT, CreativeModeTab.TAB_DECORATIONS, CreativeModeTab.TAB_FOOD, CreativeModeTab.TAB_MISC, CreativeModeTab.TAB_REDSTONE, CreativeModeTab.TAB_TOOLS,
+				CreativeModeTab.TAB_TRANSPORTATION };
 		for (Item item : allItems) {
 			for (i = 0; i < vanillaItemGroups.length; i++) {
 				if (item.getItemCategory() == vanillaItemGroups[i]) {

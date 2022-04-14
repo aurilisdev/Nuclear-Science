@@ -40,9 +40,9 @@ public class TileNuclearBoiler extends GenericTile {
 		addComponent(new ComponentDirection());
 		addComponent(new ComponentPacketHandler());
 		addComponent(new ComponentElectrodynamic(this).input(Direction.DOWN).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 2).maxJoules(Constants.CHEMICALBOILER_USAGE_PER_TICK * 10));
-		addComponent(new ComponentFluidHandlerMulti(this).setAddFluidsValues(NuclearScienceRecipeInit.NUCLEAR_BOILER_TYPE, MAX_TANK_CAPACITY, true, true).relativeInput(Direction.EAST).relativeOutput(Direction.WEST));
+		addComponent(new ComponentFluidHandlerMulti(this).setAddFluidsValues(NuclearScienceRecipeInit.NUCLEAR_BOILER_TYPE.get(), MAX_TANK_CAPACITY, true, true).relativeInput(Direction.EAST).relativeOutput(Direction.WEST));
 		addComponent(new ComponentInventory(this).size(6).relativeSlotFaces(0, Direction.EAST, Direction.UP).relativeSlotFaces(1, Direction.DOWN).inputs(1).bucketInputs(1).bucketOutputs(1).upgrades(3).processors(1).processorInputs(1).validUpgrades(ContainerNuclearBoiler.VALID_UPGRADES).valid(machineValidator()));
-		addComponent(new ComponentProcessor(this).setProcessorNumber(0).canProcess(component -> component.outputToPipe().consumeBucket().dispenseBucket().canProcessFluidItem2FluidRecipe(component, NuclearScienceRecipeInit.NUCLEAR_BOILER_TYPE)).process(component -> component.processFluidItem2FluidRecipe(component)).usage(Constants.CHEMICALBOILER_USAGE_PER_TICK).requiredTicks(Constants.CHEMICALBOILER_REQUIRED_TICKS));
+		addComponent(new ComponentProcessor(this).setProcessorNumber(0).canProcess(component -> component.outputToPipe().consumeBucket().dispenseBucket().canProcessFluidItem2FluidRecipe(component, NuclearScienceRecipeInit.NUCLEAR_BOILER_TYPE.get())).process(component -> component.processFluidItem2FluidRecipe(component)).usage(Constants.CHEMICALBOILER_USAGE_PER_TICK).requiredTicks(Constants.CHEMICALBOILER_REQUIRED_TICKS));
 		addComponent(new ComponentContainerProvider("container.nuclearboiler").createMenu((id, player) -> new ContainerNuclearBoiler(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 	}
 

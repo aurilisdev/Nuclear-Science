@@ -9,12 +9,14 @@ import electrodynamics.compatibility.jei.utils.gui.item.BucketSlotWrapper;
 import electrodynamics.compatibility.jei.utils.gui.item.DefaultItemSlotWrapper;
 import electrodynamics.compatibility.jei.utils.label.PowerLabelWrapper;
 import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import nuclearscience.DeferredRegisters;
+import nuclearscience.common.recipe.categories.fluiditem2item.specificmachines.MSRFuelPreProcessorRecipe;
 import nuclearscience.common.settings.Constants;
 
-public class MSRProcessorRecipeCategory extends FluidItem2ItemRecipeCategory {
+public class MSRProcessorRecipeCategory extends FluidItem2ItemRecipeCategory<MSRFuelPreProcessorRecipe> {
 
 	// JEI Window Parameters
 	private static BackgroundWrapper BACK_WRAP = new BackgroundWrapper(132, 64);
@@ -40,9 +42,10 @@ public class MSRProcessorRecipeCategory extends FluidItem2ItemRecipeCategory {
 	public static ItemStack INPUT_MACHINE = new ItemStack(DeferredRegisters.blockMSRFuelPreProcessor);
 
 	public static ResourceLocation UID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
+	public static final RecipeType<MSRFuelPreProcessorRecipe> RECIPE_TYPE = RecipeType.create(References.ID, MSRFuelPreProcessorRecipe.RECIPE_GROUP, MSRFuelPreProcessorRecipe.class);
 
 	public MSRProcessorRecipeCategory(IGuiHelper guiHelper) {
-		super(guiHelper, MOD_ID, RECIPE_GROUP, INPUT_MACHINE, BACK_WRAP, ANIM_TIME);
+		super(guiHelper, MOD_ID, RECIPE_GROUP, INPUT_MACHINE, BACK_WRAP, MSRFuelPreProcessorRecipe.class, ANIM_TIME);
 		setInputSlots(guiHelper, INPUT_SLOT_1, INPUT_SLOT_2, INPUT_SLOT_3, INPUT_BUCKET_SLOT);
 		setOutputSlots(guiHelper, OUTPUT_SLOT);
 		setFluidInputs(guiHelper, IN_GAUGE);

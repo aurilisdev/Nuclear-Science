@@ -16,6 +16,7 @@ import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
+import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -46,10 +47,12 @@ public class ParticleAcceleratorDarkMatterRecipeCategory implements IRecipeCateg
 
 	private IDrawable BACKGROUND;
 	private IDrawable ICON;
+	// TODO: REPLACE NULL WITH RECIPE TYPE
+	public static final RecipeType<PsuedoItem2ItemRecipe> RECIPE_TYPE = RecipeType.create(References.ID,null, PsuedoItem2ItemRecipe.class);
 
 	public ParticleAcceleratorDarkMatterRecipeCategory(IGuiHelper guiHelper) {
 
-		ICON = guiHelper.createDrawableIngredient(VanillaTypes.ITEM, INPUT_MACHINE);
+		ICON = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, INPUT_MACHINE);
 		BACKGROUND = guiHelper.createDrawable(new ResourceLocation(MOD_ID, GUI_TEXTURE), GUI_BACKGROUND[0], GUI_BACKGROUND[1], GUI_BACKGROUND[2], GUI_BACKGROUND[3]);
 
 		ResourceLocation guiTexture = new ResourceLocation(MOD_ID, GUI_TEXTURE);

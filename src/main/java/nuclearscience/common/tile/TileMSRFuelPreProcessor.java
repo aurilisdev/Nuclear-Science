@@ -31,9 +31,9 @@ public class TileMSRFuelPreProcessor extends GenericTile {
 		addComponent(new ComponentDirection());
 		addComponent(new ComponentPacketHandler());
 		addComponent(new ComponentElectrodynamic(this).relativeInput(Direction.NORTH).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 2).maxJoules(Constants.MSRFUELPREPROCESSOR_USAGE_PER_TICK * 10));
-		addComponent(((ComponentFluidHandlerMulti) new ComponentFluidHandlerMulti(this).relativeInput(Direction.EAST).relativeOutput(Direction.WEST)).setAddFluidsValues(NuclearScienceRecipeInit.MSR_FUEL_PREPROCESSOR_TYPE, MAX_TANK_CAPACITY, true, true));
+		addComponent(((ComponentFluidHandlerMulti) new ComponentFluidHandlerMulti(this).relativeInput(Direction.EAST).relativeOutput(Direction.WEST)).setAddFluidsValues(NuclearScienceRecipeInit.MSR_FUEL_PREPROCESSOR_TYPE.get(), MAX_TANK_CAPACITY, true, true));
 		addComponent(new ComponentInventory(this).size(8).relativeFaceSlots(Direction.EAST, 0, 1, 2).relativeFaceSlots(Direction.UP, 0, 1, 2).relativeSlotFaces(3, Direction.DOWN).inputs(3).outputs(1).bucketInputs(1).upgrades(3).processors(1).processorInputs(3).validUpgrades(ContainerMSRFuelPreProcessor.VALID_UPGRADES).valid(machineValidator()));
-		addComponent(new ComponentProcessor(this).setProcessorNumber(0).canProcess(component -> component.outputToPipe().consumeBucket().canProcessFluidItem2ItemRecipe(component, NuclearScienceRecipeInit.MSR_FUEL_PREPROCESSOR_TYPE)).process(component -> component.processFluidItem2ItemRecipe(component)).usage(Constants.MSRFUELPREPROCESSOR_USAGE_PER_TICK).requiredTicks(Constants.MSRFUELPREPROCESSOR_REQUIRED_TICKS));
+		addComponent(new ComponentProcessor(this).setProcessorNumber(0).canProcess(component -> component.outputToPipe().consumeBucket().canProcessFluidItem2ItemRecipe(component, NuclearScienceRecipeInit.MSR_FUEL_PREPROCESSOR_TYPE.get())).process(component -> component.processFluidItem2ItemRecipe(component)).usage(Constants.MSRFUELPREPROCESSOR_USAGE_PER_TICK).requiredTicks(Constants.MSRFUELPREPROCESSOR_REQUIRED_TICKS));
 		addComponent(new ComponentContainerProvider("container.msrfuelpreprocessor").createMenu((id, player) -> new ContainerMSRFuelPreProcessor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 
 	}

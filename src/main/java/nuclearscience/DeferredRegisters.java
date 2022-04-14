@@ -23,7 +23,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.IForgeRegistryEntry;
+import net.minecraftforge.registries.ForgeRegistryEntry;
 import net.minecraftforge.registries.RegistryObject;
 import nuclearscience.common.block.BlockControlRodAssembly;
 import nuclearscience.common.block.BlockElectromagnet;
@@ -99,9 +99,6 @@ public class DeferredRegisters {
 	public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, References.ID);
 	public static final HashMap<ISubtype, RegistryObject<Item>> SUBTYPEITEMREGISTER_MAPPINGS = new HashMap<>();
 	public static final HashMap<ISubtype, RegistryObject<Block>> SUBTYPEBLOCKREGISTER_MAPPINGS = new HashMap<>();
-	public static final HashMap<ISubtype, Item> SUBTYPEITEM_MAPPINGS = new HashMap<>();
-	public static final HashMap<Item, ISubtype> ITEMSUBTYPE_MAPPINGS = new HashMap<>();
-	public static final HashMap<ISubtype, Block> SUBTYPEBLOCK_MAPPINGS = new HashMap<>();
 
 	public static FluidUraniumHexafluoride fluidUraniumHexafluoride;
 	public static FluidAmmonia fluidAmmonia;
@@ -138,129 +135,129 @@ public class DeferredRegisters {
 	public static Block blocklead;
 
 	static {
-		BLOCKS.register("gascentrifuge", supplier(blockGasCentrifuge = new GenericMachineBlock(TileGasCentrifuge::new)));
-		BLOCKS.register("nuclearboiler", supplier(blockNuclearBoiler = new GenericMachineBlock(TileNuclearBoiler::new)));
-		BLOCKS.register("chemicalextractor", supplier(blockChemicalExtractor = new GenericMachineBlock(TileChemicalExtractor::new)));
-		BLOCKS.register("radioisotopegenerator", supplier(blockRadioisotopeGenerator = new GenericMachineBlock(TileRadioisotopeGenerator::new)));
-		BLOCKS.register("freezeplug", supplier(blockFreezePlug = new GenericMachineBlock(TileFreezePlug::new)));
-		BLOCKS.register("turbine", supplier(blockTurbine = new BlockTurbine()));
-		BLOCKS.register("reactorcore", supplier(blockReactorCore = new BlockReactorCore()));
-		BLOCKS.register("electromagnet", supplier(blockElectromagnet = new BlockElectromagnet(false)));
-		BLOCKS.register("electromagneticglass", supplier(blockElectromagneticGlass = new BlockElectromagnet(true)));
-		BLOCKS.register("electromagneticbooster", supplier(blockElectromagneticBooster = new BlockElectromagneticBooster()));
-		BLOCKS.register("electromagneticswitch", supplier(blockElectromagneticSwitch = new BlockElectromagneticSwitch()));
-		BLOCKS.register("fusionreactorcore", supplier(blockFusionReactorCore = new BlockFusionReactorCore()));
-		BLOCKS.register("plasma", supplier(blockPlasma = new BlockPlasma()));
-		BLOCKS.register("particleinjector", supplier(blockParticleInjector = new GenericMachineBlock(TileParticleInjector::new)));
-		BLOCKS.register("quantumcapacitor", supplier(blockQuantumCapacitor = new BlockQuantumCapacitor()));
-		BLOCKS.register("teleporter", supplier(blockTeleporter = new BlockTeleporter()));
-		BLOCKS.register("controlrodassembly", supplier(blockControlRodAssembly = new BlockControlRodAssembly()));
-		BLOCKS.register("fuelreprocessor", supplier(blockFuelReprocessor = new BlockFuelReprocessor()));
-		BLOCKS.register("radioactiveprocessor", supplier(blockRadioactiveProcessor = new BlockRadioactiveProcessor()));
-		BLOCKS.register("msrfuelpreprocessor", supplier(blockMSRFuelPreProcessor = new GenericMachineBlock(TileMSRFuelPreProcessor::new)));
-		BLOCKS.register("blocklead", supplier(blocklead = new Block(Properties.of(Material.METAL, MaterialColor.COLOR_BLACK).strength(5.0f, 3.0f).sound(SoundType.METAL).requiresCorrectToolForDrops())));
-		BLOCKS.register("msrreactorcore", supplier(blockMsrReactorCore = new GenericMachineBlock(TileMSRReactorCore::new)));
-		BLOCKS.register("heatexchanger", supplier(blockHeatExchanger = new GenericMachineBlock(TileHeatExchanger::new)));
-		BLOCKS.register("siren", supplier(blockSiren = new GenericMachineBlock(TileSiren::new)));
-		BLOCKS.register("atomicassembler", supplier(blockAtomicAssembler = new GenericMachineBlock(TileAtomicAssembler::new)));
-		BLOCKS.register("moltensaltsupplier", supplier(blockMoltenSaltSupplier = new BlockMoltenSaltSupplier()));
+		BLOCKS.register("gascentrifuge", supplier(() -> blockGasCentrifuge = new GenericMachineBlock(TileGasCentrifuge::new)));
+		BLOCKS.register("nuclearboiler", supplier(() -> blockNuclearBoiler = new GenericMachineBlock(TileNuclearBoiler::new)));
+		BLOCKS.register("chemicalextractor", supplier(() -> blockChemicalExtractor = new GenericMachineBlock(TileChemicalExtractor::new)));
+		BLOCKS.register("radioisotopegenerator", supplier(() -> blockRadioisotopeGenerator = new GenericMachineBlock(TileRadioisotopeGenerator::new)));
+		BLOCKS.register("freezeplug", supplier(() -> blockFreezePlug = new GenericMachineBlock(TileFreezePlug::new)));
+		BLOCKS.register("turbine", supplier(() -> blockTurbine = new BlockTurbine()));
+		BLOCKS.register("reactorcore", supplier(() -> blockReactorCore = new BlockReactorCore()));
+		BLOCKS.register("electromagnet", supplier(() -> blockElectromagnet = new BlockElectromagnet(false)));
+		BLOCKS.register("electromagneticglass", supplier(() -> blockElectromagneticGlass = new BlockElectromagnet(true)));
+		BLOCKS.register("electromagneticbooster", supplier(() -> blockElectromagneticBooster = new BlockElectromagneticBooster()));
+		BLOCKS.register("electromagneticswitch", supplier(() -> blockElectromagneticSwitch = new BlockElectromagneticSwitch()));
+		BLOCKS.register("fusionreactorcore", supplier(() -> blockFusionReactorCore = new BlockFusionReactorCore()));
+		BLOCKS.register("plasma", supplier(() -> blockPlasma = new BlockPlasma()));
+		BLOCKS.register("particleinjector", supplier(() -> blockParticleInjector = new GenericMachineBlock(TileParticleInjector::new)));
+		BLOCKS.register("quantumcapacitor", supplier(() -> blockQuantumCapacitor = new BlockQuantumCapacitor()));
+		BLOCKS.register("teleporter", supplier(() -> blockTeleporter = new BlockTeleporter()));
+		BLOCKS.register("controlrodassembly", supplier(() -> blockControlRodAssembly = new BlockControlRodAssembly()));
+		BLOCKS.register("fuelreprocessor", supplier(() -> blockFuelReprocessor = new BlockFuelReprocessor()));
+		BLOCKS.register("radioactiveprocessor", supplier(() -> blockRadioactiveProcessor = new BlockRadioactiveProcessor()));
+		BLOCKS.register("msrfuelpreprocessor", supplier(() -> blockMSRFuelPreProcessor = new GenericMachineBlock(TileMSRFuelPreProcessor::new)));
+		BLOCKS.register("blocklead", supplier(() -> blocklead = new Block(Properties.of(Material.METAL, MaterialColor.COLOR_BLACK).strength(5.0f, 3.0f).sound(SoundType.METAL).requiresCorrectToolForDrops())));
+		BLOCKS.register("msrreactorcore", supplier(() -> blockMsrReactorCore = new GenericMachineBlock(TileMSRReactorCore::new)));
+		BLOCKS.register("heatexchanger", supplier(() -> blockHeatExchanger = new GenericMachineBlock(TileHeatExchanger::new)));
+		BLOCKS.register("siren", supplier(() -> blockSiren = new GenericMachineBlock(TileSiren::new)));
+		BLOCKS.register("atomicassembler", supplier(() -> blockAtomicAssembler = new GenericMachineBlock(TileAtomicAssembler::new)));
+		BLOCKS.register("moltensaltsupplier", supplier(() -> blockMoltenSaltSupplier = new BlockMoltenSaltSupplier()));
 		for (SubtypeMoltenSaltPipe subtype : SubtypeMoltenSaltPipe.values()) {
-			SUBTYPEBLOCKREGISTER_MAPPINGS.put(subtype, BLOCKS.register(subtype.tag(), supplier(new BlockMoltenSaltPipe(subtype), subtype)));
+			SUBTYPEBLOCKREGISTER_MAPPINGS.put(subtype, BLOCKS.register(subtype.tag(), supplier(() -> new BlockMoltenSaltPipe(subtype), subtype)));
 		}
-		BLOCKS.register("meltedreactor", supplier(blockMeltedReactor = new BlockMeltedReactor()));
-		BLOCKS.register("radioactiveair", supplier(blockRadioactiveAir = new BlockRadioactiveAir()));
-		BLOCKS.register("radioactivesoil", supplier(blockRadioactiveSoil = new BlockRadioactiveSoil()));
-		ITEMS.register("gascentrifuge", supplier(new BlockItemDescriptable(blockGasCentrifuge, new Item.Properties().tab(References.NUCLEARTAB))));
-		ITEMS.register("nuclearboiler", supplier(new BlockItemDescriptable(blockNuclearBoiler, new Item.Properties().tab(References.NUCLEARTAB))));
-		ITEMS.register("chemicalextractor", supplier(new BlockItemDescriptable(blockChemicalExtractor, new Item.Properties().tab(References.NUCLEARTAB))));
-		ITEMS.register("radioisotopegenerator", supplier(new BlockItemDescriptable(blockRadioisotopeGenerator, new Item.Properties().tab(References.NUCLEARTAB))));
-		ITEMS.register("freezeplug", supplier(new BlockItemDescriptable(blockFreezePlug, new Item.Properties().tab(References.NUCLEARTAB))));
-		ITEMS.register("turbine", supplier(new BlockItemDescriptable(blockTurbine, new Item.Properties().tab(References.NUCLEARTAB))));
-		ITEMS.register("reactorcore", supplier(new BlockItemDescriptable(blockReactorCore, new Item.Properties().tab(References.NUCLEARTAB))));
-		ITEMS.register("fuelreprocessor", supplier(new BlockItemDescriptable(blockFuelReprocessor, new Item.Properties().tab(References.NUCLEARTAB))));
-		ITEMS.register("radioactiveprocessor", supplier(new BlockItemDescriptable(blockRadioactiveProcessor, new Item.Properties().tab(References.NUCLEARTAB))));
-		ITEMS.register("msrfuelpreprocessor", supplier(new BlockItemDescriptable(blockMSRFuelPreProcessor, new Item.Properties().tab(References.NUCLEARTAB))));
-		ITEMS.register("blocklead", supplier(new BlockItemDescriptable(blocklead, new BlockItem.Properties().tab(References.NUCLEARTAB))));
-		ITEMS.register("electromagnet", supplier(new BlockItemDescriptable(blockElectromagnet, new Item.Properties().tab(References.NUCLEARTAB))));
-		ITEMS.register("electromagneticglass", supplier(new BlockItemDescriptable(blockElectromagneticGlass, new Item.Properties().tab(References.NUCLEARTAB))));
-		ITEMS.register("electromagneticbooster", supplier(new BlockItemDescriptable(blockElectromagneticBooster, new Item.Properties().tab(References.NUCLEARTAB))));
-		ITEMS.register("electromagneticswitch", supplier(new BlockItemDescriptable(blockElectromagneticSwitch, new Item.Properties().tab(References.NUCLEARTAB))));
-		ITEMS.register("fusionreactorcore", supplier(new BlockItemDescriptable(blockFusionReactorCore, new Item.Properties().tab(References.NUCLEARTAB))));
-		ITEMS.register("plasma", supplier(new BlockItemDescriptable(blockPlasma, new Item.Properties())));
-		ITEMS.register("particleinjector", supplier(new BlockItemDescriptable(blockParticleInjector, new Item.Properties().tab(References.NUCLEARTAB))));
-		ITEMS.register("quantumcapacitor", supplier(new BlockItemDescriptable(blockQuantumCapacitor, new Item.Properties().tab(References.NUCLEARTAB))));
-		ITEMS.register("teleporter", supplier(new BlockItemDescriptable(blockTeleporter, new Item.Properties().tab(References.NUCLEARTAB))));
-		ITEMS.register("controlrodassembly", supplier(new BlockItemDescriptable(blockControlRodAssembly, new Item.Properties().tab(References.NUCLEARTAB))));
-		ITEMS.register("msrreactorcore", supplier(new BlockItemDescriptable(blockMsrReactorCore, new Item.Properties().tab(References.NUCLEARTAB))));
-		ITEMS.register("heatexchanger", supplier(new BlockItemDescriptable(blockHeatExchanger, new Item.Properties().tab(References.NUCLEARTAB))));
-		ITEMS.register("moltensaltsupplier", supplier(new BlockItemDescriptable(blockMoltenSaltSupplier, new Item.Properties().tab(References.NUCLEARTAB))));
-		ITEMS.register("siren", supplier(new BlockItemDescriptable(blockSiren, new Item.Properties().tab(References.NUCLEARTAB))));
-		ITEMS.register("atomicassembler", supplier(new BlockItemDescriptable(blockAtomicAssembler, new Item.Properties().tab(References.NUCLEARTAB))));
+		BLOCKS.register("meltedreactor", supplier(() -> blockMeltedReactor = new BlockMeltedReactor()));
+		BLOCKS.register("radioactiveair", supplier(() -> blockRadioactiveAir = new BlockRadioactiveAir()));
+		BLOCKS.register("radioactivesoil", supplier(() -> blockRadioactiveSoil = new BlockRadioactiveSoil()));
+		ITEMS.register("gascentrifuge", supplier(() -> new BlockItemDescriptable(() -> blockGasCentrifuge, new Item.Properties().tab(References.NUCLEARTAB))));
+		ITEMS.register("nuclearboiler", supplier(() -> new BlockItemDescriptable(() -> blockNuclearBoiler, new Item.Properties().tab(References.NUCLEARTAB))));
+		ITEMS.register("chemicalextractor", supplier(() -> new BlockItemDescriptable(() -> blockChemicalExtractor, new Item.Properties().tab(References.NUCLEARTAB))));
+		ITEMS.register("radioisotopegenerator", supplier(() -> new BlockItemDescriptable(() -> blockRadioisotopeGenerator, new Item.Properties().tab(References.NUCLEARTAB))));
+		ITEMS.register("freezeplug", supplier(() -> new BlockItemDescriptable(() -> blockFreezePlug, new Item.Properties().tab(References.NUCLEARTAB))));
+		ITEMS.register("turbine", supplier(() -> new BlockItemDescriptable(() -> blockTurbine, new Item.Properties().tab(References.NUCLEARTAB))));
+		ITEMS.register("reactorcore", supplier(() -> new BlockItemDescriptable(() -> blockReactorCore, new Item.Properties().tab(References.NUCLEARTAB))));
+		ITEMS.register("fuelreprocessor", supplier(() -> new BlockItemDescriptable(() -> blockFuelReprocessor, new Item.Properties().tab(References.NUCLEARTAB))));
+		ITEMS.register("radioactiveprocessor", supplier(() -> new BlockItemDescriptable(() -> blockRadioactiveProcessor, new Item.Properties().tab(References.NUCLEARTAB))));
+		ITEMS.register("msrfuelpreprocessor", supplier(() -> new BlockItemDescriptable(() -> blockMSRFuelPreProcessor, new Item.Properties().tab(References.NUCLEARTAB))));
+		ITEMS.register("blocklead", supplier(() -> new BlockItemDescriptable(() -> blocklead, new BlockItem.Properties().tab(References.NUCLEARTAB))));
+		ITEMS.register("electromagnet", supplier(() -> new BlockItemDescriptable(() -> blockElectromagnet, new Item.Properties().tab(References.NUCLEARTAB))));
+		ITEMS.register("electromagneticglass", supplier(() -> new BlockItemDescriptable(() -> blockElectromagneticGlass, new Item.Properties().tab(References.NUCLEARTAB))));
+		ITEMS.register("electromagneticbooster", supplier(() -> new BlockItemDescriptable(() -> blockElectromagneticBooster, new Item.Properties().tab(References.NUCLEARTAB))));
+		ITEMS.register("electromagneticswitch", supplier(() -> new BlockItemDescriptable(() -> blockElectromagneticSwitch, new Item.Properties().tab(References.NUCLEARTAB))));
+		ITEMS.register("fusionreactorcore", supplier(() -> new BlockItemDescriptable(() -> blockFusionReactorCore, new Item.Properties().tab(References.NUCLEARTAB))));
+		ITEMS.register("plasma", supplier(() -> new BlockItemDescriptable(() -> blockPlasma, new Item.Properties())));
+		ITEMS.register("particleinjector", supplier(() -> new BlockItemDescriptable(() -> blockParticleInjector, new Item.Properties().tab(References.NUCLEARTAB))));
+		ITEMS.register("quantumcapacitor", supplier(() -> new BlockItemDescriptable(() -> blockQuantumCapacitor, new Item.Properties().tab(References.NUCLEARTAB))));
+		ITEMS.register("teleporter", supplier(() -> new BlockItemDescriptable(() -> blockTeleporter, new Item.Properties().tab(References.NUCLEARTAB))));
+		ITEMS.register("controlrodassembly", supplier(() -> new BlockItemDescriptable(() -> blockControlRodAssembly, new Item.Properties().tab(References.NUCLEARTAB))));
+		ITEMS.register("msrreactorcore", supplier(() -> new BlockItemDescriptable(() -> blockMsrReactorCore, new Item.Properties().tab(References.NUCLEARTAB))));
+		ITEMS.register("heatexchanger", supplier(() -> new BlockItemDescriptable(() -> blockHeatExchanger, new Item.Properties().tab(References.NUCLEARTAB))));
+		ITEMS.register("moltensaltsupplier", supplier(() -> new BlockItemDescriptable(() -> blockMoltenSaltSupplier, new Item.Properties().tab(References.NUCLEARTAB))));
+		ITEMS.register("siren", supplier(() -> new BlockItemDescriptable(() -> blockSiren, new Item.Properties().tab(References.NUCLEARTAB))));
+		ITEMS.register("atomicassembler", supplier(() -> new BlockItemDescriptable(() -> blockAtomicAssembler, new Item.Properties().tab(References.NUCLEARTAB))));
 		for (SubtypeMoltenSaltPipe subtype : SubtypeMoltenSaltPipe.values()) {
-			ITEMS.register(subtype.tag(), supplier(new BlockItemDescriptable(SUBTYPEBLOCK_MAPPINGS.get(subtype), new Item.Properties().tab(References.NUCLEARTAB)), subtype));
+			ITEMS.register(subtype.tag(), supplier(() -> new BlockItemDescriptable(() -> getSafeBlock(subtype), new Item.Properties().tab(References.NUCLEARTAB)), subtype));
 		}
-		ITEMS.register("radioactivesoil", supplier(new BlockItemDescriptable(blockRadioactiveSoil, new Item.Properties().tab(References.NUCLEARTAB))));
-		ITEMS.register("meltedreactor", supplier(new BlockItemDescriptable(blockMeltedReactor, new Item.Properties().tab(References.NUCLEARTAB))));
-		FLUIDS.register("fluiduraniumhexafluoride", supplier(fluidUraniumHexafluoride = new FluidUraniumHexafluoride()));
+		ITEMS.register("radioactivesoil", supplier(() -> new BlockItemDescriptable(() -> blockRadioactiveSoil, new Item.Properties().tab(References.NUCLEARTAB))));
+		ITEMS.register("meltedreactor", supplier(() -> new BlockItemDescriptable(() -> blockMeltedReactor, new Item.Properties().tab(References.NUCLEARTAB))));
+		FLUIDS.register("fluiduraniumhexafluoride", supplier(() -> fluidUraniumHexafluoride = new FluidUraniumHexafluoride()));
 
-		FLUIDS.register("fluidammonia", supplier(fluidAmmonia = new FluidAmmonia()));
+		FLUIDS.register("fluidammonia", supplier(() -> fluidAmmonia = new FluidAmmonia()));
 
 		// Machines
-		BlockItemDescriptable.addDescription(blockGasCentrifuge, "|translate|tooltip.voltage.240");
-		BlockItemDescriptable.addDescription(blockNuclearBoiler, "|translate|tooltip.voltage.240");
-		BlockItemDescriptable.addDescription(blockChemicalExtractor, "|translate|tooltip.voltage.240");
-		BlockItemDescriptable.addDescription(blockParticleInjector, "|translate|tooltip.voltage.960");
-		BlockItemDescriptable.addDescription(blockTeleporter, "|translate|tooltip.voltage.480");
-		BlockItemDescriptable.addDescription(blockFuelReprocessor, "|translate|tooltip.voltage.480");
-		BlockItemDescriptable.addDescription(blockRadioactiveProcessor, "|translate|tooltip.voltage.480");
-		BlockItemDescriptable.addDescription(blockMSRFuelPreProcessor, "|translate|tooltip.voltage.240");
-		BlockItemDescriptable.addDescription(blockMoltenSaltSupplier, "|translate|tooltip.voltage.120");
-		BlockItemDescriptable.addDescription(blockFusionReactorCore, "|translate|tooltip.voltage.480");
-		BlockItemDescriptable.addDescription(blockFreezePlug, "|translate|tooltip.voltage.120");
-		BlockItemDescriptable.addDescription(blockAtomicAssembler, "|translate|tooltip.voltage.480");
+		BlockItemDescriptable.addDescription(() -> blockGasCentrifuge, "|translate|tooltip.voltage.240");
+		BlockItemDescriptable.addDescription(() -> blockNuclearBoiler, "|translate|tooltip.voltage.240");
+		BlockItemDescriptable.addDescription(() -> blockChemicalExtractor, "|translate|tooltip.voltage.240");
+		BlockItemDescriptable.addDescription(() -> blockParticleInjector, "|translate|tooltip.voltage.960");
+		BlockItemDescriptable.addDescription(() -> blockTeleporter, "|translate|tooltip.voltage.480");
+		BlockItemDescriptable.addDescription(() -> blockFuelReprocessor, "|translate|tooltip.voltage.480");
+		BlockItemDescriptable.addDescription(() -> blockRadioactiveProcessor, "|translate|tooltip.voltage.480");
+		BlockItemDescriptable.addDescription(() -> blockMSRFuelPreProcessor, "|translate|tooltip.voltage.240");
+		BlockItemDescriptable.addDescription(() -> blockMoltenSaltSupplier, "|translate|tooltip.voltage.120");
+		BlockItemDescriptable.addDescription(() -> blockFusionReactorCore, "|translate|tooltip.voltage.480");
+		BlockItemDescriptable.addDescription(() -> blockFreezePlug, "|translate|tooltip.voltage.120");
+		BlockItemDescriptable.addDescription(() -> blockAtomicAssembler, "|translate|tooltip.voltage.480");
 
 		// Generators
-		BlockItemDescriptable.addDescription(blockRadioisotopeGenerator, "|translate|tooltip.voltage.120");
+		BlockItemDescriptable.addDescription(() -> blockRadioisotopeGenerator, "|translate|tooltip.voltage.120");
 
 		// Misc
-		BlockItemDescriptable.addDescription(blockQuantumCapacitor, "|translate|tooltip.voltage.1920");
+		BlockItemDescriptable.addDescription(() -> blockQuantumCapacitor, "|translate|tooltip.voltage.1920");
 	}
 
-	public static final RegistryObject<Item> ITEM_URANIUM235 = ITEMS.register("uranium235", supplier(new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
-	public static final RegistryObject<Item> ITEM_URANIUM238 = ITEMS.register("uranium238", supplier(new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
-	public static final RegistryObject<Item> ITEM_PLUTONIUM239 = ITEMS.register("plutonium239", supplier(new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
-	public static final RegistryObject<Item> ITEM_POLONIUM210 = ITEMS.register("polonium210", supplier(new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
-	public static final RegistryObject<Item> ITEM_POLONIUM210_CHUNK = ITEMS.register("polonium210chunk", supplier(new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
-	public static final RegistryObject<Item> ITEM_LIFHT4PUF3 = ITEMS.register("lifthf4uf4", supplier(new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
-	public static final RegistryObject<Item> ITEM_FLINAK = ITEMS.register("flinak", supplier(new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
-	public static final RegistryObject<Item> ITEM_YELLOWCAKE = ITEMS.register("yellowcake", supplier(new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
-	public static final RegistryObject<Item> ITEM_FISSILEDUST = ITEMS.register("fissiledust", supplier(new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
-	public static final RegistryObject<Item> ITEM_PLUTONIUMOXIDE = ITEMS.register("plutoniumoxide", supplier(new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
-	public static final RegistryObject<Item> ITEM_THORIANITEDUST = ITEMS.register("thorianitedust", supplier(new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
+	public static final RegistryObject<Item> ITEM_URANIUM235 = ITEMS.register("uranium235", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
+	public static final RegistryObject<Item> ITEM_URANIUM238 = ITEMS.register("uranium238", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
+	public static final RegistryObject<Item> ITEM_PLUTONIUM239 = ITEMS.register("plutonium239", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
+	public static final RegistryObject<Item> ITEM_POLONIUM210 = ITEMS.register("polonium210", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
+	public static final RegistryObject<Item> ITEM_POLONIUM210_CHUNK = ITEMS.register("polonium210chunk", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
+	public static final RegistryObject<Item> ITEM_LIFHT4PUF3 = ITEMS.register("lifthf4uf4", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
+	public static final RegistryObject<Item> ITEM_FLINAK = ITEMS.register("flinak", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
+	public static final RegistryObject<Item> ITEM_YELLOWCAKE = ITEMS.register("yellowcake", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
+	public static final RegistryObject<Item> ITEM_FISSILEDUST = ITEMS.register("fissiledust", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
+	public static final RegistryObject<Item> ITEM_PLUTONIUMOXIDE = ITEMS.register("plutoniumoxide", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
+	public static final RegistryObject<Item> ITEM_THORIANITEDUST = ITEMS.register("thorianitedust", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
 
-	public static final RegistryObject<Item> ITEM_CELLEMPTY = ITEMS.register("cellempty", supplier(new Item(new Item.Properties().tab(References.NUCLEARTAB))));
-	public static final RegistryObject<Item> ITEM_CELLDEUTERIUM = ITEMS.register("celldeuterium", supplier(new Item(new Item.Properties().tab(References.NUCLEARTAB))));
-	public static final RegistryObject<Item> ITEM_CELLTRITIUM = ITEMS.register("celltritium", supplier(new Item(new Item.Properties().tab(References.NUCLEARTAB))));
-	public static final RegistryObject<Item> ITEM_CELLHEAVYWATER = ITEMS.register("cellheavywater", supplier(new Item(new Item.Properties().tab(References.NUCLEARTAB))));
-	public static final RegistryObject<Item> ITEM_CELLELECTROMAGNETIC = ITEMS.register("cellelectromagnetic", supplier(new Item(new Item.Properties().tab(References.NUCLEARTAB))));
-	public static final RegistryObject<Item> ITEM_CELLANTIMATTERSMALL = ITEMS.register("cellantimattersmall", supplier(new Item(new Item.Properties().tab(References.NUCLEARTAB))));
-	public static final RegistryObject<Item> ITEM_CELLANTIMATTERLARGE = ITEMS.register("cellantimatterlarge", supplier(new Item(new Item.Properties().tab(References.NUCLEARTAB))));
-	public static final RegistryObject<Item> ITEM_CELLANTIMATTERVERYLARGE = ITEMS.register("cellantimatterverylarge", supplier(new Item(new Item.Properties().tab(References.NUCLEARTAB))));
-	public static final RegistryObject<Item> ITEM_CELLDARKMATTER = ITEMS.register("celldarkmatter", supplier(new Item(new Item.Properties().tab(References.NUCLEARTAB).defaultDurability(64))));
-	public static final RegistryObject<Item> ITEM_FUELHEUO2 = ITEMS.register("fuelheuo2", supplier(new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(24000))));
-	public static final RegistryObject<Item> ITEM_FUELLEUO2 = ITEMS.register("fuelleuo2", supplier(new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(26000))));
-	public static final RegistryObject<Item> ITEM_FUELSPENT = ITEMS.register("fuelspent", supplier(new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1))));
+	public static final RegistryObject<Item> ITEM_CELLEMPTY = ITEMS.register("cellempty", supplier(() -> new Item(new Item.Properties().tab(References.NUCLEARTAB))));
+	public static final RegistryObject<Item> ITEM_CELLDEUTERIUM = ITEMS.register("celldeuterium", supplier(() -> new Item(new Item.Properties().tab(References.NUCLEARTAB))));
+	public static final RegistryObject<Item> ITEM_CELLTRITIUM = ITEMS.register("celltritium", supplier(() -> new Item(new Item.Properties().tab(References.NUCLEARTAB))));
+	public static final RegistryObject<Item> ITEM_CELLHEAVYWATER = ITEMS.register("cellheavywater", supplier(() -> new Item(new Item.Properties().tab(References.NUCLEARTAB))));
+	public static final RegistryObject<Item> ITEM_CELLELECTROMAGNETIC = ITEMS.register("cellelectromagnetic", supplier(() -> new Item(new Item.Properties().tab(References.NUCLEARTAB))));
+	public static final RegistryObject<Item> ITEM_CELLANTIMATTERSMALL = ITEMS.register("cellantimattersmall", supplier(() -> new Item(new Item.Properties().tab(References.NUCLEARTAB))));
+	public static final RegistryObject<Item> ITEM_CELLANTIMATTERLARGE = ITEMS.register("cellantimatterlarge", supplier(() -> new Item(new Item.Properties().tab(References.NUCLEARTAB))));
+	public static final RegistryObject<Item> ITEM_CELLANTIMATTERVERYLARGE = ITEMS.register("cellantimatterverylarge", supplier(() -> new Item(new Item.Properties().tab(References.NUCLEARTAB))));
+	public static final RegistryObject<Item> ITEM_CELLDARKMATTER = ITEMS.register("celldarkmatter", supplier(() -> new Item(new Item.Properties().tab(References.NUCLEARTAB).defaultDurability(64))));
+	public static final RegistryObject<Item> ITEM_FUELHEUO2 = ITEMS.register("fuelheuo2", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(24000))));
+	public static final RegistryObject<Item> ITEM_FUELLEUO2 = ITEMS.register("fuelleuo2", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(26000))));
+	public static final RegistryObject<Item> ITEM_FUELSPENT = ITEMS.register("fuelspent", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1))));
 	// Incredibly long life-span, but hard to get
-	public static final RegistryObject<Item> ITEM_FUELPLUTONIUM = ITEMS.register("fuelplutonium", supplier(new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(120000))));
+	public static final RegistryObject<Item> ITEM_FUELPLUTONIUM = ITEMS.register("fuelplutonium", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(120000))));
 
-	public static final RegistryObject<Item> ITEM_GEIGERCOUNTER = ITEMS.register("geigercounter", supplier(new ItemGeigerCounter(new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(26000))));
-	public static final RegistryObject<Item> ITEM_HAZMATBOOTS = ITEMS.register("hazmatboots", supplier(new ItemHazmatArmor(EquipmentSlot.FEET, new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(26000))));
-	public static final RegistryObject<Item> ITEM_HAZMATHELMET = ITEMS.register("hazmathelmet", supplier(new ItemHazmatArmor(EquipmentSlot.HEAD, new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(26000))));
-	public static final RegistryObject<Item> ITEM_HAZMATLEGS = ITEMS.register("hazmatlegs", supplier(new ItemHazmatArmor(EquipmentSlot.LEGS, new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(26000))));
-	public static final RegistryObject<Item> ITEM_HAZMATPLATE = ITEMS.register("hazmatplate", supplier(new ItemHazmatArmor(EquipmentSlot.CHEST, new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(26000))));
-	public static final RegistryObject<Item> ITEM_ANTIDOTE = ITEMS.register("antidote", supplier(new ItemAntidote(new Item.Properties().tab(References.NUCLEARTAB))));
-	public static final RegistryObject<Item> ITEM_FREQUENCYCARD = ITEMS.register("frequencycard", supplier(new ItemFrequencyCard(new Item.Properties().tab(References.NUCLEARTAB))));
-	public static final RegistryObject<Item> ITEM_CANISTERLEAD = ITEMS.register("canisterlead", supplier(new ItemCanisterLead(new Item.Properties().stacksTo(1).tab(References.NUCLEARTAB))));
+	public static final RegistryObject<Item> ITEM_GEIGERCOUNTER = ITEMS.register("geigercounter", supplier(() -> new ItemGeigerCounter(new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(26000))));
+	public static final RegistryObject<Item> ITEM_HAZMATBOOTS = ITEMS.register("hazmatboots", supplier(() -> new ItemHazmatArmor(EquipmentSlot.FEET, new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(26000))));
+	public static final RegistryObject<Item> ITEM_HAZMATHELMET = ITEMS.register("hazmathelmet", supplier(() -> new ItemHazmatArmor(EquipmentSlot.HEAD, new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(26000))));
+	public static final RegistryObject<Item> ITEM_HAZMATLEGS = ITEMS.register("hazmatlegs", supplier(() -> new ItemHazmatArmor(EquipmentSlot.LEGS, new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(26000))));
+	public static final RegistryObject<Item> ITEM_HAZMATPLATE = ITEMS.register("hazmatplate", supplier(() -> new ItemHazmatArmor(EquipmentSlot.CHEST, new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(26000))));
+	public static final RegistryObject<Item> ITEM_ANTIDOTE = ITEMS.register("antidote", supplier(() -> new ItemAntidote(new Item.Properties().tab(References.NUCLEARTAB))));
+	public static final RegistryObject<Item> ITEM_FREQUENCYCARD = ITEMS.register("frequencycard", supplier(() -> new ItemFrequencyCard(new Item.Properties().tab(References.NUCLEARTAB))));
+	public static final RegistryObject<Item> ITEM_CANISTERLEAD = ITEMS.register("canisterlead", supplier(() -> new ItemCanisterLead(new Item.Properties().stacksTo(1).tab(References.NUCLEARTAB))));
 
 	public static final RegistryObject<BlockEntityType<TileGasCentrifuge>> TILE_GASCENTRIFUGE = TILES.register("gascentrifuge", () -> new BlockEntityType<>(TileGasCentrifuge::new, Sets.newHashSet(blockGasCentrifuge), null));
 	public static final RegistryObject<BlockEntityType<TileNuclearBoiler>> TILE_CHEMICALBOILER = TILES.register("nuclearboiler", () -> new BlockEntityType<>(TileNuclearBoiler::new, Sets.newHashSet(blockNuclearBoiler), null));
@@ -307,17 +304,15 @@ public class DeferredRegisters {
 
 	public static final RegistryObject<EntityType<EntityParticle>> ENTITY_PARTICLE = ENTITIES.register("particle", () -> EntityType.Builder.<EntityParticle>of(EntityParticle::new, MobCategory.MISC).clientTrackingRange(8).build(References.ID + ".particle"));
 
-	private static <T extends IForgeRegistryEntry<T>> Supplier<? extends T> supplier(T entry) {
-		return () -> entry;
+	private static <T extends ForgeRegistryEntry<T>> Supplier<? extends T> supplier(Supplier<? extends T> entry) {
+		return entry;
 	}
 
-	private static <T extends IForgeRegistryEntry<T>> Supplier<? extends T> supplier(T entry, ISubtype en) {
-		if (entry instanceof Block block) {
-			SUBTYPEBLOCK_MAPPINGS.put(en, block);
-		} else if (entry instanceof Item item) {
-			SUBTYPEITEM_MAPPINGS.put(en, item);
-			ITEMSUBTYPE_MAPPINGS.put(item, en);
-		}
-		return supplier(entry);
+	private static <T extends ForgeRegistryEntry<T>> Supplier<? extends T> supplier(Supplier<? extends T> entry, ISubtype en) {
+		return entry;
+	}
+
+	public static Block getSafeBlock(ISubtype type) {
+		return SUBTYPEBLOCKREGISTER_MAPPINGS.get(type).get();
 	}
 }

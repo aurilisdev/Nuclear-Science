@@ -1,6 +1,7 @@
 package nuclearscience.common.recipe;
 
-import electrodynamics.common.recipe.ElectrodynamicsRecipeInit;
+import electrodynamics.common.recipe.ElectrodynamicsRecipeInit.CustomRecipeType;
+import net.minecraft.core.Registry;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.registries.DeferredRegister;
@@ -20,22 +21,23 @@ public class NuclearScienceRecipeInit {
 
 	// Deferred Register
 	public static DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZER = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, nuclearscience.References.ID);
+	public static DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(Registry.RECIPE_TYPE.key(), nuclearscience.References.ID);
 
 	/* RECIPE TYPES */
 
 	// ITEM2ITEM
-	public static final RecipeType<FissionReactorRecipe> FISSION_REACTOR_TYPE = ElectrodynamicsRecipeInit.registerType(FissionReactorRecipe.RECIPE_ID);
-	public static final RecipeType<FuelReprocessorRecipe> FUEL_REPROCESSOR_TYPE = ElectrodynamicsRecipeInit.registerType(FuelReprocessorRecipe.RECIPE_ID);
+	public static final RegistryObject<CustomRecipeType<FissionReactorRecipe>> FISSION_REACTOR_TYPE = RECIPE_TYPES.register(FissionReactorRecipe.RECIPE_GROUP, () -> new CustomRecipeType<>());
+	public static final RegistryObject<CustomRecipeType<FuelReprocessorRecipe>> FUEL_REPROCESSOR_TYPE = RECIPE_TYPES.register(FuelReprocessorRecipe.RECIPE_GROUP, () -> new CustomRecipeType<>());
 
 	// FLUIDITEM2FLUID
-	public static final RecipeType<NuclearBoilerRecipe> NUCLEAR_BOILER_TYPE = ElectrodynamicsRecipeInit.registerType(NuclearBoilerRecipe.RECIPE_ID);
+	public static final RegistryObject<CustomRecipeType<NuclearBoilerRecipe>> NUCLEAR_BOILER_TYPE = RECIPE_TYPES.register(NuclearBoilerRecipe.RECIPE_GROUP, () -> new CustomRecipeType<>());
 
 	// FLUIDITEM2ITEM
-	public static final RecipeType<ChemicalExtractorRecipe> CHEMICAL_EXTRACTOR_TYPE = ElectrodynamicsRecipeInit.registerType(ChemicalExtractorRecipe.RECIPE_ID);
-	public static final RecipeType<RadioactiveProcessorRecipe> RADIOACTIVE_PROCESSOR_TYPE = ElectrodynamicsRecipeInit.registerType(RadioactiveProcessorRecipe.RECIPE_ID);
+	public static final RegistryObject<CustomRecipeType<ChemicalExtractorRecipe>> CHEMICAL_EXTRACTOR_TYPE = RECIPE_TYPES.register(ChemicalExtractorRecipe.RECIPE_GROUP, () -> new CustomRecipeType<>());
+	public static final RegistryObject<CustomRecipeType<RadioactiveProcessorRecipe>> RADIOACTIVE_PROCESSOR_TYPE = RECIPE_TYPES.register(RadioactiveProcessorRecipe.RECIPE_GROUP, () -> new CustomRecipeType<>());
 
 	// FLUID3ITEMS2ITEM
-	public static final RecipeType<MSRFuelPreProcessorRecipe> MSR_FUEL_PREPROCESSOR_TYPE = ElectrodynamicsRecipeInit.registerType(MSRFuelPreProcessorRecipe.RECIPE_ID);
+	public static final RegistryObject<CustomRecipeType<MSRFuelPreProcessorRecipe>> MSR_FUEL_PREPROCESSOR_TYPE = RECIPE_TYPES.register(MSRFuelPreProcessorRecipe.RECIPE_GROUP, () -> new CustomRecipeType<>());
 
 	/* RECIPE SERIALIZERS */
 

@@ -283,7 +283,7 @@ public class TileReactorCore extends GenericTile {
 
 		if (input != null && !input.isEmpty()) {
 			if (cachedRecipes == null || cachedRecipes.isEmpty()) {
-				cachedRecipes = ElectrodynamicsRecipe.findRecipesbyType(NuclearScienceRecipeInit.FISSION_REACTOR_TYPE, level);
+				cachedRecipes = ElectrodynamicsRecipe.findRecipesbyType(NuclearScienceRecipeInit.FISSION_REACTOR_TYPE.get(), level);
 			}
 			for (ElectrodynamicsRecipe iRecipe : cachedRecipes) {
 				Item2ItemRecipe recipe = (Item2ItemRecipe) iRecipe;

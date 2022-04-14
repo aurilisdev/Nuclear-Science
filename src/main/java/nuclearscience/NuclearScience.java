@@ -36,6 +36,7 @@ public class NuclearScience {
 		DeferredRegisters.CONTAINERS.register(bus);
 		DeferredRegisters.FLUIDS.register(bus);
 		DeferredRegisters.ENTITIES.register(bus);
+		NuclearScienceRecipeInit.RECIPE_TYPES.register(bus);
 		NuclearScienceRecipeInit.RECIPE_SERIALIZER.register(bus);
 		SoundRegister.SOUNDS.register(bus);
 	}

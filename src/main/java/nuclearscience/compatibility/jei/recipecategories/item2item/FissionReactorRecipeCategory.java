@@ -14,10 +14,12 @@ import electrodynamics.compatibility.jei.utils.gui.backgroud.BackgroundWrapper;
 import electrodynamics.compatibility.jei.utils.gui.item.DefaultItemSlotWrapper;
 import electrodynamics.compatibility.jei.utils.label.GenericLabelWrapper;
 import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import nuclearscience.common.recipe.categories.item2item.specificmachines.FissionReactorRecipe;
 
-public class FissionReactorRecipeCategory extends Item2ItemRecipeCategory {
+public class FissionReactorRecipeCategory extends Item2ItemRecipeCategory<FissionReactorRecipe> {
 
 	// JEI Window Parameters
 	private static BackgroundWrapper BACK_WRAP = new BackgroundWrapper(132, 132);
@@ -41,9 +43,10 @@ public class FissionReactorRecipeCategory extends Item2ItemRecipeCategory {
 	public static ItemStack INPUT_MACHINE = new ItemStack(nuclearscience.DeferredRegisters.blockReactorCore);
 
 	public static ResourceLocation UID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
+	public static final RecipeType<FissionReactorRecipe> RECIPE_TYPE = RecipeType.create(References.ID, FissionReactorRecipe.RECIPE_GROUP, FissionReactorRecipe.class);
 
 	public FissionReactorRecipeCategory(IGuiHelper guiHelper) {
-		super(guiHelper, MOD_ID, RECIPE_GROUP, INPUT_MACHINE, BACK_WRAP, ANIM_TIME);
+		super(guiHelper, MOD_ID, RECIPE_GROUP, INPUT_MACHINE, BACK_WRAP, FissionReactorRecipe.class, ANIM_TIME);
 		setInputSlots(guiHelper, INPUT_SLOT, CELL_SLOT_1, CELL_SLOT_2, CELL_SLOT_3, CELL_SLOT_4);
 		setOutputSlots(guiHelper, OUTPUT_SLOT);
 		setAnimatedArrows(guiHelper, ARROW);
