@@ -4,7 +4,7 @@
 	"iteminputs":{
 		"count" : 1,
 		"0":{
-			"tag":"forge:rawores/uranium",
+			"tag":"forge:raw_materials/uranium",
 			"count":1		
 		}
 	},

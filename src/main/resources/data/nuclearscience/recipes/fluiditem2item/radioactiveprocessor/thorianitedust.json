@@ -4,7 +4,7 @@
 	"iteminputs":{
 		"count" : 1,
 		"0" : {
-			"tag":"forge:rawores/thorium",
+			"tag":"forge:raw_materials/thorium",
 			"count":1
 		}
 	},
