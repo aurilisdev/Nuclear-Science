@@ -57,5 +57,10 @@ public class ChemicalExtractorRecipeCategory extends FluidItem2ItemRecipeCategor
 	public ResourceLocation getUid() {
 		return UID;
 	}
+	
+	@Override
+	public RecipeType<ChemicalExtractorRecipe> getRecipeType() {
+		return RECIPE_TYPE;
+	}
 
 }

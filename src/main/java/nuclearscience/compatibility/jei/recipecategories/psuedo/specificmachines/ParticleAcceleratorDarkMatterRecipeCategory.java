@@ -47,8 +47,8 @@ public class ParticleAcceleratorDarkMatterRecipeCategory implements IRecipeCateg
 
 	private IDrawable BACKGROUND;
 	private IDrawable ICON;
-	// TODO: REPLACE NULL WITH RECIPE TYPE
-	public static final RecipeType<PsuedoItem2ItemRecipe> RECIPE_TYPE = RecipeType.create(References.ID,null, PsuedoItem2ItemRecipe.class);
+
+	public static final RecipeType<PsuedoItem2ItemRecipe> RECIPE_TYPE = RecipeType.create(References.ID, "dark_matter_recipe", PsuedoItem2ItemRecipe.class);
 
 	public ParticleAcceleratorDarkMatterRecipeCategory(IGuiHelper guiHelper) {
 
@@ -75,6 +75,11 @@ public class ParticleAcceleratorDarkMatterRecipeCategory implements IRecipeCateg
 	@Override
 	public ResourceLocation getUid() {
 		return UID;
+	}
+	
+	@Override
+	public RecipeType<PsuedoItem2ItemRecipe> getRecipeType() {
+		return RECIPE_TYPE;
 	}
 
 	@Override

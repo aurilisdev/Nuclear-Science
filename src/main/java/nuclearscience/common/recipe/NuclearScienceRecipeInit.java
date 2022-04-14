@@ -7,6 +7,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import nuclearscience.References;
 import nuclearscience.common.recipe.categories.fluiditem2fluid.FluidItem2FluidRecipeTypes;
 import nuclearscience.common.recipe.categories.fluiditem2fluid.specificmachines.NuclearBoilerRecipe;
 import nuclearscience.common.recipe.categories.fluiditem2item.FluidItem2ItemRecipeTypes;
@@ -21,7 +22,7 @@ public class NuclearScienceRecipeInit {
 
 	// Deferred Register
 	public static DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZER = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, nuclearscience.References.ID);
-	public static DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(Registry.RECIPE_TYPE.key(), nuclearscience.References.ID);
+	public static DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(Registry.RECIPE_TYPE_REGISTRY, References.ID);
 
 	/* RECIPE TYPES */
 
@@ -35,8 +36,6 @@ public class NuclearScienceRecipeInit {
 	// FLUIDITEM2ITEM
 	public static final RegistryObject<CustomRecipeType<ChemicalExtractorRecipe>> CHEMICAL_EXTRACTOR_TYPE = RECIPE_TYPES.register(ChemicalExtractorRecipe.RECIPE_GROUP, () -> new CustomRecipeType<>());
 	public static final RegistryObject<CustomRecipeType<RadioactiveProcessorRecipe>> RADIOACTIVE_PROCESSOR_TYPE = RECIPE_TYPES.register(RadioactiveProcessorRecipe.RECIPE_GROUP, () -> new CustomRecipeType<>());
-
-	// FLUID3ITEMS2ITEM
 	public static final RegistryObject<CustomRecipeType<MSRFuelPreProcessorRecipe>> MSR_FUEL_PREPROCESSOR_TYPE = RECIPE_TYPES.register(MSRFuelPreProcessorRecipe.RECIPE_GROUP, () -> new CustomRecipeType<>());
 
 	/* RECIPE SERIALIZERS */
