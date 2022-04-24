@@ -57,7 +57,7 @@ public class RadioactiveProcessorRecipeCategory extends FluidItem2ItemRecipeCate
 	public ResourceLocation getUid() {
 		return UID;
 	}
-	
+
 	@Override
 	public RecipeType<RadioactiveProcessorRecipe> getRecipeType() {
 		return RECIPE_TYPE;

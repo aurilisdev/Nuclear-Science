@@ -50,7 +50,7 @@ public class GasCentrifugeRecipeCategory implements IRecipeCategory<PsuedoGasCen
 
 	private LoadingCache<Integer, IDrawableAnimated> cachedArrows;
 	private static StartDirection ARROW_START_DIRECTION = IDrawableAnimated.StartDirection.LEFT;
-	
+
 	public static final RecipeType<PsuedoGasCentrifugeRecipe> RECIPE_TYPE = RecipeType.create(References.ID, "gas_centrifuge", PsuedoGasCentrifugeRecipe.class);
 
 	public GasCentrifugeRecipeCategory(IGuiHelper guiHelper) {
@@ -90,7 +90,7 @@ public class GasCentrifugeRecipeCategory implements IRecipeCategory<PsuedoGasCen
 	public IDrawable getIcon() {
 		return ICON;
 	}
-	
+
 	@Override
 	public RecipeType<PsuedoGasCentrifugeRecipe> getRecipeType() {
 		return RECIPE_TYPE;

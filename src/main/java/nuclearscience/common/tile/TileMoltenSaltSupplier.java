@@ -48,7 +48,7 @@ public class TileMoltenSaltSupplier extends GenericTile {
 		if (electro.getJoulesStored() > Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK) {
 			electro.extractPower(TransferPack.joulesVoltage(Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK, Constants.MOLTENSALTSUPPLIER_VOLTAGE), false);
 			if (tickable.getTicks() % 40 == 0) {
-				output.update( worldPosition.relative(dir.getOpposite()));
+				output.update(worldPosition.relative(dir.getOpposite()));
 				ItemStack in = this.<ComponentInventory>getComponent(ComponentType.Inventory).getItem(0);
 				if (in.getCount() > 0 && output.valid() && output.getSafe() instanceof TileMSRReactorCore core) {
 					if (core.<ComponentDirection>getComponent(ComponentType.Direction).getDirection() == dir) {

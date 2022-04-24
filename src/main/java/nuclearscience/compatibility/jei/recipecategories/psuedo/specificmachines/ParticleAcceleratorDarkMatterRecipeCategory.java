@@ -76,7 +76,7 @@ public class ParticleAcceleratorDarkMatterRecipeCategory implements IRecipeCateg
 	public ResourceLocation getUid() {
 		return UID;
 	}
-	
+
 	@Override
 	public RecipeType<PsuedoItem2ItemRecipe> getRecipeType() {
 		return RECIPE_TYPE;

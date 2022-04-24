@@ -57,7 +57,7 @@ public class MSRProcessorRecipeCategory extends FluidItem2ItemRecipeCategory<MSR
 	public ResourceLocation getUid() {
 		return UID;
 	}
-	
+
 	@Override
 	public RecipeType<MSRFuelPreProcessorRecipe> getRecipeType() {
 		return RECIPE_TYPE;

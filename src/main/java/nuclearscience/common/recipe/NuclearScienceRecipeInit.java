@@ -26,16 +26,16 @@ public class NuclearScienceRecipeInit {
 	/* RECIPE TYPES */
 
 	// ITEM2ITEM
-	public static final RegistryObject<CustomRecipeType<FissionReactorRecipe>> FISSION_REACTOR_TYPE = RECIPE_TYPES.register(FissionReactorRecipe.RECIPE_GROUP, () -> new CustomRecipeType<>());
-	public static final RegistryObject<CustomRecipeType<FuelReprocessorRecipe>> FUEL_REPROCESSOR_TYPE = RECIPE_TYPES.register(FuelReprocessorRecipe.RECIPE_GROUP, () -> new CustomRecipeType<>());
+	public static final RegistryObject<CustomRecipeType<FissionReactorRecipe>> FISSION_REACTOR_TYPE = RECIPE_TYPES.register(FissionReactorRecipe.RECIPE_GROUP, CustomRecipeType::new);
+	public static final RegistryObject<CustomRecipeType<FuelReprocessorRecipe>> FUEL_REPROCESSOR_TYPE = RECIPE_TYPES.register(FuelReprocessorRecipe.RECIPE_GROUP, CustomRecipeType::new);
 
 	// FLUIDITEM2FLUID
-	public static final RegistryObject<CustomRecipeType<NuclearBoilerRecipe>> NUCLEAR_BOILER_TYPE = RECIPE_TYPES.register(NuclearBoilerRecipe.RECIPE_GROUP, () -> new CustomRecipeType<>());
+	public static final RegistryObject<CustomRecipeType<NuclearBoilerRecipe>> NUCLEAR_BOILER_TYPE = RECIPE_TYPES.register(NuclearBoilerRecipe.RECIPE_GROUP, CustomRecipeType::new);
 
 	// FLUIDITEM2ITEM
-	public static final RegistryObject<CustomRecipeType<ChemicalExtractorRecipe>> CHEMICAL_EXTRACTOR_TYPE = RECIPE_TYPES.register(ChemicalExtractorRecipe.RECIPE_GROUP, () -> new CustomRecipeType<>());
-	public static final RegistryObject<CustomRecipeType<RadioactiveProcessorRecipe>> RADIOACTIVE_PROCESSOR_TYPE = RECIPE_TYPES.register(RadioactiveProcessorRecipe.RECIPE_GROUP, () -> new CustomRecipeType<>());
-	public static final RegistryObject<CustomRecipeType<MSRFuelPreProcessorRecipe>> MSR_FUEL_PREPROCESSOR_TYPE = RECIPE_TYPES.register(MSRFuelPreProcessorRecipe.RECIPE_GROUP, () -> new CustomRecipeType<>());
+	public static final RegistryObject<CustomRecipeType<ChemicalExtractorRecipe>> CHEMICAL_EXTRACTOR_TYPE = RECIPE_TYPES.register(ChemicalExtractorRecipe.RECIPE_GROUP, CustomRecipeType::new);
+	public static final RegistryObject<CustomRecipeType<RadioactiveProcessorRecipe>> RADIOACTIVE_PROCESSOR_TYPE = RECIPE_TYPES.register(RadioactiveProcessorRecipe.RECIPE_GROUP, CustomRecipeType::new);
+	public static final RegistryObject<CustomRecipeType<MSRFuelPreProcessorRecipe>> MSR_FUEL_PREPROCESSOR_TYPE = RECIPE_TYPES.register(MSRFuelPreProcessorRecipe.RECIPE_GROUP, CustomRecipeType::new);
 
 	/* RECIPE SERIALIZERS */
 

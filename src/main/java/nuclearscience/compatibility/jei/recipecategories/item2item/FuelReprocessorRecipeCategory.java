@@ -53,7 +53,7 @@ public class FuelReprocessorRecipeCategory extends Item2ItemRecipeCategory<FuelR
 	public ResourceLocation getUid() {
 		return UID;
 	}
-	
+
 	@Override
 	public RecipeType<FuelReprocessorRecipe> getRecipeType() {
 		return RECIPE_TYPE;
