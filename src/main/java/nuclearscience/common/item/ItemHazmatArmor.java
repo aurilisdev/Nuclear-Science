@@ -1,5 +1,7 @@
 package nuclearscience.common.item;
 
+import electrodynamics.DeferredRegisters;
+import electrodynamics.common.item.subtype.SubtypePlate;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
@@ -23,20 +25,21 @@ public class ItemHazmatArmor extends ArmorItem {
 
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-		return References.ID + ":textures/model/hazmatarmor.png";
+		return References.ID + ":textures/model/" + (material == ArmorMaterialHazmat.hazmat ? "" : "reinforced") + "hazmatarmor.png";
 	}
 
 	public enum ArmorMaterialHazmat implements ArmorMaterial {
-		hazmat;
+		hazmat,
+		reinforcedhazmat;
 
 		@Override
 		public int getDurabilityForSlot(EquipmentSlot slotIn) {
-			return 37500;
+			return this == hazmat ? 37500 : 37500 * 5;
 		}
 
 		@Override
 		public int getDefenseForSlot(EquipmentSlot slotIn) {
-			return 2;
+			return this == hazmat ? 2 : 4;
 		}
 
 		@Override
@@ -51,7 +54,7 @@ public class ItemHazmatArmor extends ArmorItem {
 
 		@Override
 		public Ingredient getRepairIngredient() {
-			return Ingredient.of(Items.LEATHER);
+			return Ingredient.of(this == hazmat ? Items.LEATHER : DeferredRegisters.SUBTYPEITEMREGISTER_MAPPINGS.get(SubtypePlate.lead).get());
 		}
 
 		@Override

@@ -64,6 +64,7 @@ import nuclearscience.common.item.ItemCanisterLead;
 import nuclearscience.common.item.ItemFrequencyCard;
 import nuclearscience.common.item.ItemGeigerCounter;
 import nuclearscience.common.item.ItemHazmatArmor;
+import nuclearscience.common.item.ItemHazmatArmor.ArmorMaterialHazmat;
 import nuclearscience.common.item.ItemRadioactive;
 import nuclearscience.common.tile.TileAtomicAssembler;
 import nuclearscience.common.tile.TileChemicalExtractor;
@@ -255,6 +256,10 @@ public class DeferredRegisters {
 	public static final RegistryObject<Item> ITEM_HAZMATHELMET = ITEMS.register("hazmathelmet", supplier(() -> new ItemHazmatArmor(EquipmentSlot.HEAD, new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(26000))));
 	public static final RegistryObject<Item> ITEM_HAZMATLEGS = ITEMS.register("hazmatlegs", supplier(() -> new ItemHazmatArmor(EquipmentSlot.LEGS, new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(26000))));
 	public static final RegistryObject<Item> ITEM_HAZMATPLATE = ITEMS.register("hazmatplate", supplier(() -> new ItemHazmatArmor(EquipmentSlot.CHEST, new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(26000))));
+	public static final RegistryObject<Item> ITEM_REINFORCEDHAZMATBOOTS = ITEMS.register("reinforcedhazmatboots", supplier(() -> new ItemHazmatArmor(ArmorMaterialHazmat.reinforcedhazmat, EquipmentSlot.FEET, new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(26000 * 5))));
+	public static final RegistryObject<Item> ITEM_REINFORCEDHAZMATHELMET = ITEMS.register("reinforcedhazmathelmet", supplier(() -> new ItemHazmatArmor(ArmorMaterialHazmat.reinforcedhazmat, EquipmentSlot.HEAD, new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(26000 * 5))));
+	public static final RegistryObject<Item> ITEM_REINFORCEDHAZMATLEGS = ITEMS.register("reinforcedhazmatlegs", supplier(() -> new ItemHazmatArmor(ArmorMaterialHazmat.reinforcedhazmat, EquipmentSlot.LEGS, new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(26000 * 5))));
+	public static final RegistryObject<Item> ITEM_REINFORCEDHAZMATPLATE = ITEMS.register("reinforcedhazmatplate", supplier(() -> new ItemHazmatArmor(ArmorMaterialHazmat.reinforcedhazmat, EquipmentSlot.CHEST, new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(26000 * 5))));
 	public static final RegistryObject<Item> ITEM_ANTIDOTE = ITEMS.register("antidote", supplier(() -> new ItemAntidote(new Item.Properties().tab(References.NUCLEARTAB))));
 	public static final RegistryObject<Item> ITEM_FREQUENCYCARD = ITEMS.register("frequencycard", supplier(() -> new ItemFrequencyCard(new Item.Properties().tab(References.NUCLEARTAB))));
 	public static final RegistryObject<Item> ITEM_CANISTERLEAD = ITEMS.register("canisterlead", supplier(() -> new ItemCanisterLead(new Item.Properties().stacksTo(1).tab(References.NUCLEARTAB))));
