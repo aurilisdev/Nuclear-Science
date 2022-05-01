@@ -7,13 +7,9 @@ buildscript {
     }
     dependencies {
 		classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-        classpath 'org.ajoberstar:gradle-git:0.6.1'
         classpath 'org.parchmentmc:librarian:1.+'
     }
 }
-import org.ajoberstar.gradle.git.tasks.GitTag
-import org.ajoberstar.gradle.git.tasks.GitPush
-
 plugins {
     id "com.matthewprenger.cursegradle" version '1.4.0'
 }
@@ -30,7 +26,7 @@ distsDirName = "../output"
 def version_minor='4'
 def version_revision='8'
 def minecraft_version='1.18.2'
-def version_build='8'
+def version_build='9'
 def version_major='0'
 
 version = minecraft_version+'-'+version_major+'.'+version_minor+'.'+version_revision+'-'+version_build
@@ -168,19 +164,7 @@ repositories{
 	    }
 }
 
-ext.gittagnew = 'v'+project.version
-
-task createTag(type: GitTag) {
-   repoPath = rootDir
-   tagName = gittagnew
-   message = "tag ${project.version.toString()}"
-}
-
-task pushTag(type: GitPush, dependsOn: createTag) {
-   namesOrSpecs = [gittagnew]
-}
 tasks.curseforge.dependsOn jar
-tasks.curseforge.dependsOn pushTag
 
 curseforge {
   apiKey = System.getenv("CURSEFORGE_KEY")
