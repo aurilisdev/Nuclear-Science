@@ -12,7 +12,9 @@ import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.ShulkerBoxBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.CapabilityItemHandler;
 import nuclearscience.DeferredRegisters;
@@ -39,6 +41,7 @@ public class TileAtomicAssembler extends GenericTile {
 		ItemStack input = inv.getItem(6);
 		ItemStack output = inv.getItem(7);
 		boolean validItem = (ItemStack.isSame(input, output) && output.getCount() + 1 <= output.getMaxStackSize() || output.isEmpty()) && !input.isEmpty() && !ItemUtils.testItems(input.getItem(), DeferredRegisters.ITEM_CELLDARKMATTER.get()) && !input.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).isPresent();
+		validItem = validItem && !(input.getItem() instanceof BlockItem bitem && bitem.getBlock() instanceof ShulkerBoxBlock);
 		boolean canProcess = electro.getJoulesStored() >= Constants.ATOMICASSEMBLER_USAGE_PER_TICK && validItem;
 		if (canProcess) {
 			for (int index = 0; index < 6; index++) {
