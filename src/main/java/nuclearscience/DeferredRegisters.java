@@ -1,8 +1,8 @@
 package nuclearscience;
 
 import java.util.HashMap;
+import java.util.function.Supplier;
 
-import com.google.common.base.Supplier;
 import com.google.common.collect.Sets;
 
 import electrodynamics.api.ISubtype;
