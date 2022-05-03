@@ -47,7 +47,7 @@ public class BlockQuantumCapacitor extends GenericMachineBlock {
 			if (stack.getOrCreateTag().contains("uuid")) {
 				cap.uuid = stack.getOrCreateTag().getUUID("uuid");
 			} else if (placer instanceof Player pl) {
-				pl.getGameProfile().getId();
+				cap.uuid = pl.getGameProfile().getId();
 			}
 		} else {
 			super.setPlacedBy(worldIn, pos, state, placer, stack);

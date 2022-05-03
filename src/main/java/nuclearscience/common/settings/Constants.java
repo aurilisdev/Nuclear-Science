@@ -9,12 +9,12 @@ public class Constants {
 
 	@DoubleValue(def = 120.0)
 	public static double RADIOISOTOPEGENERATOR_VOLTAGE = 120.0;
-	@DoubleValue(def = 0.15)
-	public static double RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER = 0.15f;
-	@DoubleValue(def = 400000.0)
-	public static double FISSIONREACTOR_MAXENERGYTARGET = 400000.0;
-	@DoubleValue(def = 750000.0)
-	public static double MSRREACTOR_MAXENERGYTARGET = 750000.0;
+	@DoubleValue(def = 0.35)
+	public static double RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER = 0.35f;
+	@DoubleValue(def = 350000.0)
+	public static double FISSIONREACTOR_MAXENERGYTARGET = 350000.0;
+	@DoubleValue(def = 850000.0)
+	public static double MSRREACTOR_MAXENERGYTARGET = 850000.0;
 	@DoubleValue(def = 6000000.0)
 	public static double FUSIONREACTOR_MAXENERGYTARGET = 6000000.0;
 	@DoubleValue(def = 50000.0)
@@ -60,6 +60,6 @@ public class Constants {
 	@DoubleValue(def = 480.0)
 	public static double ATOMICASSEMBLER_VOLTAGE = 480.0;
 	@IntValue(def = 1200)
-	public static int ATOMICASSEMBLER_REQUIRED_TICKS = 3600;
+	public static int ATOMICASSEMBLER_REQUIRED_TICKS = 12000;
 
 }
