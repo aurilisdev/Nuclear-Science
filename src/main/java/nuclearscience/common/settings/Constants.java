@@ -15,12 +15,12 @@ public class Constants {
 	public static double FISSIONREACTOR_MAXENERGYTARGET = 400000.0;
 	@DoubleValue(def = 750000.0)
 	public static double MSRREACTOR_MAXENERGYTARGET = 750000.0;
-	@DoubleValue(def = 4000000.0)
-	public static double FUSIONREACTOR_MAXENERGYTARGET = 4000000.0;
+	@DoubleValue(def = 6000000.0)
+	public static double FUSIONREACTOR_MAXENERGYTARGET = 6000000.0;
 	@DoubleValue(def = 50000.0)
 	public static double FUSIONREACTOR_USAGE_PER_TICK = 50000.0;
-	@DoubleValue(def = 20000000.0)
-	public static double PARTICLEINJECTOR_USAGE_PER_PARTICLE = 20000000.0;
+	@DoubleValue(def = 200000000.0)
+	public static double PARTICLEINJECTOR_USAGE_PER_PARTICLE = 200000000.0;
 	@IntValue(def = 1024)
 	public static int FUSIONREACTOR_MAXSTORAGE = 1024;
 	@IntValue(def = 2500)
@@ -56,7 +56,7 @@ public class Constants {
 	@DoubleValue(def = 200.0)
 	public static double MOLTENSALTSUPPLIER_USAGE_PER_TICK = 200.0;
 	@DoubleValue(def = 1250.0)
-	public static double ATOMICASSEMBLER_USAGE_PER_TICK = 3000.0;
+	public static double ATOMICASSEMBLER_USAGE_PER_TICK = 6000.0;
 	@DoubleValue(def = 480.0)
 	public static double ATOMICASSEMBLER_VOLTAGE = 480.0;
 	@IntValue(def = 1200)

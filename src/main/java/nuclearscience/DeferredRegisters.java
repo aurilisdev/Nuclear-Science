@@ -244,7 +244,7 @@ public class DeferredRegisters {
 	public static final RegistryObject<Item> ITEM_CELLANTIMATTERSMALL = ITEMS.register("cellantimattersmall", supplier(() -> new Item(new Item.Properties().tab(References.NUCLEARTAB))));
 	public static final RegistryObject<Item> ITEM_CELLANTIMATTERLARGE = ITEMS.register("cellantimatterlarge", supplier(() -> new Item(new Item.Properties().tab(References.NUCLEARTAB))));
 	public static final RegistryObject<Item> ITEM_CELLANTIMATTERVERYLARGE = ITEMS.register("cellantimatterverylarge", supplier(() -> new Item(new Item.Properties().tab(References.NUCLEARTAB))));
-	public static final RegistryObject<Item> ITEM_CELLDARKMATTER = ITEMS.register("celldarkmatter", supplier(() -> new Item(new Item.Properties().tab(References.NUCLEARTAB).defaultDurability(7))));
+	public static final RegistryObject<Item> ITEM_CELLDARKMATTER = ITEMS.register("celldarkmatter", supplier(() -> new Item(new Item.Properties().tab(References.NUCLEARTAB).defaultDurability(4))));
 	public static final RegistryObject<Item> ITEM_FUELHEUO2 = ITEMS.register("fuelheuo2", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(24000))));
 	public static final RegistryObject<Item> ITEM_FUELLEUO2 = ITEMS.register("fuelleuo2", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1).defaultDurability(26000))));
 	public static final RegistryObject<Item> ITEM_FUELSPENT = ITEMS.register("fuelspent", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB).stacksTo(1))));

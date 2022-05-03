@@ -41,7 +41,7 @@ public class TileAtomicAssembler extends GenericTile {
 		ItemStack input = inv.getItem(6);
 		ItemStack output = inv.getItem(7);
 		boolean validItem = (ItemStack.isSame(input, output) && output.getCount() + 1 <= output.getMaxStackSize() || output.isEmpty()) && !input.isEmpty() && !ItemUtils.testItems(input.getItem(), DeferredRegisters.ITEM_CELLDARKMATTER.get()) && !input.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).isPresent();
-		validItem = validItem && !(input.getItem() instanceof BlockItem bitem && bitem.getBlock() instanceof ShulkerBoxBlock);
+		validItem = validItem && !(input.getItem() instanceof BlockItem bitem && bitem.getBlock() instanceof ShulkerBoxBlock) && input.getItem() != DeferredRegisters.blockQuantumCapacitor.asItem();
 		boolean canProcess = electro.getJoulesStored() >= Constants.ATOMICASSEMBLER_USAGE_PER_TICK && validItem;
 		if (canProcess) {
 			for (int index = 0; index < 6; index++) {
