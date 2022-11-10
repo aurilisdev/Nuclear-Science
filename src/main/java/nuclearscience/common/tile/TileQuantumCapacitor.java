@@ -20,8 +20,8 @@ import net.minecraft.world.level.Explosion.BlockInteraction;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import nuclearscience.common.inventory.container.ContainerQuantumCapacitor;
 import nuclearscience.common.world.QuantumCapacitorData;
@@ -112,7 +112,7 @@ public class TileQuantumCapacitor extends GenericTile implements IEnergyStorage 
 
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction facing) {
-		if (capability == CapabilityEnergy.ENERGY) {
+		if (capability == ForgeCapabilities.ENERGY) {
 			lastDir = facing;
 			return (LazyOptional<T>) LazyOptional.of(() -> this);
 		}
