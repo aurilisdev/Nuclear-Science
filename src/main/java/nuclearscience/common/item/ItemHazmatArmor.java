@@ -1,7 +1,7 @@
 package nuclearscience.common.item;
 
-import electrodynamics.DeferredRegisters;
 import electrodynamics.common.item.subtype.SubtypePlate;
+import electrodynamics.registers.ElectrodynamicsItems;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
@@ -54,7 +54,7 @@ public class ItemHazmatArmor extends ArmorItem {
 
 		@Override
 		public Ingredient getRepairIngredient() {
-			return Ingredient.of(this == hazmat ? Items.LEATHER : DeferredRegisters.SUBTYPEITEMREGISTER_MAPPINGS.get(SubtypePlate.lead).get());
+			return Ingredient.of(this == hazmat ? Items.LEATHER : ElectrodynamicsItems.SUBTYPEITEMREGISTER_MAPPINGS.get(SubtypePlate.lead).get());
 		}
 
 		@Override

@@ -11,6 +11,7 @@ import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import mezz.jei.api.gui.drawable.IDrawableAnimated.StartDirection;
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
@@ -19,7 +20,6 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import nuclearscience.DeferredRegisters;
@@ -66,19 +66,17 @@ public class GasCentrifugeRecipeCategory implements IRecipeCategory<PsuedoGasCen
 		});
 	}
 
-	@Override
 	public ResourceLocation getUid() {
 		return UID;
 	}
 
-	@Override
 	public Class<? extends PsuedoGasCentrifugeRecipe> getRecipeClass() {
 		return PsuedoGasCentrifugeRecipe.class;
 	}
 
 	@Override
 	public Component getTitle() {
-		return new TranslatableComponent("jei.gui." + RECIPE_GROUP);
+		return Component.translatable("jei.gui." + RECIPE_GROUP);
 	}
 
 	@Override
@@ -105,16 +103,16 @@ public class GasCentrifugeRecipeCategory implements IRecipeCategory<PsuedoGasCen
 	}
 
 	@Override
-	public void draw(PsuedoGasCentrifugeRecipe recipe, PoseStack matrixStack, double mouseX, double mouseY) {
+	public void draw(PsuedoGasCentrifugeRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack matrixStack, double mouseX, double mouseY) {
 
 		IDrawableAnimated arrow = cachedArrows.getUnchecked(ANIMATION_TIME);
 		arrow.draw(matrixStack, 64, 4);
 
 		int animTimeSeconds = ANIMATION_TIME / 20;
 
-		TranslatableComponent percentU235String = new TranslatableComponent("jei.gui." + RECIPE_GROUP + ".info.percent_u235", animTimeSeconds);
-		TranslatableComponent percentU238String = new TranslatableComponent("jei.gui." + RECIPE_GROUP + ".info.percent_u238", animTimeSeconds);
-		TranslatableComponent percentBiproductString = new TranslatableComponent("jei.gui." + RECIPE_GROUP + ".info.percent_biproduct", animTimeSeconds);
+		Component percentU235String = Component.translatable("jei.gui." + RECIPE_GROUP + ".info.percent_u235", animTimeSeconds);
+		Component percentU238String = Component.translatable("jei.gui." + RECIPE_GROUP + ".info.percent_u238", animTimeSeconds);
+		Component percentBiproductString =Component.translatable("jei.gui." + RECIPE_GROUP + ".info.percent_biproduct", animTimeSeconds);
 
 		Minecraft minecraft = Minecraft.getInstance();
 		Font fontRenderer = minecraft.font;

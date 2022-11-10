@@ -49,7 +49,6 @@ public class FuelReprocessorRecipeCategory extends Item2ItemRecipeCategory<FuelR
 		setLabels(POWER_LABEL, ITEM_LABEL);
 	}
 
-	@Override
 	public ResourceLocation getUid() {
 		return UID;
 	}

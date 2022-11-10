@@ -4,7 +4,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import electrodynamics.prefab.screen.GenericCustomScreen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
@@ -29,12 +28,12 @@ public class ScreenReactorCore extends GenericCustomScreen<ContainerReactorCore>
 	@Override
 	protected void renderLabels(PoseStack matrixStack, int mouseX, int mouseY) {
 		super.renderLabels(matrixStack, mouseX, mouseY);
-		font.draw(matrixStack, new TranslatableComponent("gui.reactorcore.deuterium"), titleLabelX, (float) titleLabelY + 14, 4210752);
+		font.draw(matrixStack, Component.translatable("gui.reactorcore.deuterium"), titleLabelX, (float) titleLabelY + 14, 4210752);
 		TileReactorCore core = menu.getHostFromIntArray();
 		if (core != null) {
-			font.draw(matrixStack, new TranslatableComponent("gui.reactorcore.temperature", (int) core.temperature / 4 + 15 + " C"), titleLabelX, (float) titleLabelY + 14 * 3, 4210752);
+			font.draw(matrixStack, Component.translatable("gui.reactorcore.temperature", (int) core.temperature / 4 + 15 + " C"), titleLabelX, (float) titleLabelY + 14 * 3, 4210752);
 			if (core.temperature > TileReactorCore.MELTDOWN_TEMPERATURE_ACTUAL && System.currentTimeMillis() % 1000 < 500) {
-				font.draw(matrixStack, new TranslatableComponent("gui.reactorcore.warning"), titleLabelX, (float) titleLabelY + 55, 16711680);
+				font.draw(matrixStack, Component.translatable("gui.reactorcore.warning"), titleLabelX, (float) titleLabelY + 55, 16711680);
 			}
 		}
 	}

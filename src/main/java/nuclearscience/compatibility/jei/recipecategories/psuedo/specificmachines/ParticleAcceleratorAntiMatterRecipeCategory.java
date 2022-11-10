@@ -15,6 +15,7 @@ import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import mezz.jei.api.gui.drawable.IDrawableAnimated.StartDirection;
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
@@ -23,7 +24,6 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.AirItem;
 import net.minecraft.world.item.CreativeModeTab;
@@ -70,7 +70,6 @@ public class ParticleAcceleratorAntiMatterRecipeCategory implements IRecipeCateg
 		});
 	}
 
-	@Override
 	public ResourceLocation getUid() {
 		return UID;
 	}
@@ -80,14 +79,13 @@ public class ParticleAcceleratorAntiMatterRecipeCategory implements IRecipeCateg
 		return RECIPE_TYPE;
 	}
 
-	@Override
 	public Class<? extends PsuedoItem2ItemRecipe> getRecipeClass() {
 		return PsuedoItem2ItemRecipe.class;
 	}
 
 	@Override
 	public Component getTitle() {
-		return new TranslatableComponent("jei.gui." + RECIPE_GROUP);
+		return Component.translatable("jei.gui." + RECIPE_GROUP);
 	}
 
 	@Override
@@ -108,12 +106,12 @@ public class ParticleAcceleratorAntiMatterRecipeCategory implements IRecipeCateg
 	}
 
 	@Override
-	public void draw(PsuedoItem2ItemRecipe recipe, PoseStack matrixStack, double mouseX, double mouseY) {
+	public void draw(PsuedoItem2ItemRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack matrixStack, double mouseX, double mouseY) {
 		IDrawableAnimated arrow = cachedArrows.getUnchecked(ANIM_TIME);
 		arrow.draw(matrixStack, PROCESSING_ARROW_OFFSET[0], PROCESSING_ARROW_OFFSET[1]);
 
 		int animTimeSeconds = ANIM_TIME / 20;
-		TranslatableComponent timeString = new TranslatableComponent("jei.gui." + RECIPE_GROUP + ".info.power", animTimeSeconds);
+		Component timeString = Component.translatable("jei.gui." + RECIPE_GROUP + ".info.power", animTimeSeconds);
 		Minecraft minecraft = Minecraft.getInstance();
 		Font fontRenderer = minecraft.font;
 		float stringWidth = fontRenderer.width(timeString);

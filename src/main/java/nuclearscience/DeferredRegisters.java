@@ -21,9 +21,9 @@ import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 import net.minecraftforge.registries.RegistryObject;
 import nuclearscience.common.block.BlockControlRodAssembly;
 import nuclearscience.common.block.BlockElectromagnet;
@@ -94,10 +94,11 @@ import nuclearscience.common.tile.network.TileMoltenSaltPipe;
 public class DeferredRegisters {
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, References.ID);
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, References.ID);
-	public static final DeferredRegister<BlockEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, References.ID);
-	public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, References.ID);
+	public static final DeferredRegister<BlockEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, References.ID);
+	public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, References.ID);
 	public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, References.ID);
-	public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, References.ID);
+	public static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(ForgeRegistries.Keys.FLUID_TYPES, References.ID);
+	public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, References.ID);
 	public static final HashMap<ISubtype, RegistryObject<Item>> SUBTYPEITEMREGISTER_MAPPINGS = new HashMap<>();
 	public static final HashMap<ISubtype, RegistryObject<Block>> SUBTYPEBLOCKREGISTER_MAPPINGS = new HashMap<>();
 
@@ -199,9 +200,11 @@ public class DeferredRegisters {
 		}
 		ITEMS.register("radioactivesoil", supplier(() -> new BlockItemDescriptable(() -> blockRadioactiveSoil, new Item.Properties().tab(References.NUCLEARTAB))));
 		ITEMS.register("meltedreactor", supplier(() -> new BlockItemDescriptable(() -> blockMeltedReactor, new Item.Properties().tab(References.NUCLEARTAB))));
-		FLUIDS.register("fluiduraniumhexafluoride", supplier(() -> fluidUraniumHexafluoride = new FluidUraniumHexafluoride()));
 
+		FLUIDS.register("fluiduraniumhexafluoride", supplier(() -> fluidUraniumHexafluoride = new FluidUraniumHexafluoride()));
 		FLUIDS.register("fluidammonia", supplier(() -> fluidAmmonia = new FluidAmmonia()));
+		FLUID_TYPES.register("fluiduraniumhexafluoride", supplier(() -> fluidUraniumHexafluoride.getFluidType()));
+		FLUID_TYPES.register("fluidammonia", supplier(() -> fluidAmmonia.getFluidType()));
 
 		// Machines
 		BlockItemDescriptable.addDescription(() -> blockGasCentrifuge, "|translate|tooltip.voltage.240");
@@ -309,11 +312,11 @@ public class DeferredRegisters {
 
 	public static final RegistryObject<EntityType<EntityParticle>> ENTITY_PARTICLE = ENTITIES.register("particle", () -> EntityType.Builder.<EntityParticle>of(EntityParticle::new, MobCategory.MISC).clientTrackingRange(8).build(References.ID + ".particle"));
 
-	private static <T extends ForgeRegistryEntry<T>> Supplier<? extends T> supplier(Supplier<? extends T> entry) {
+	public static <T> Supplier<? extends T> supplier(Supplier<? extends T> entry) {
 		return entry;
 	}
 
-	private static <T extends ForgeRegistryEntry<T>> Supplier<? extends T> supplier(Supplier<? extends T> entry, ISubtype en) {
+	public static <T> Supplier<? extends T> supplier(Supplier<? extends T> entry, ISubtype en) {
 		return entry;
 	}
 

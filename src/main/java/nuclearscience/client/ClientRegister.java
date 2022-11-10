@@ -8,8 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.client.model.ForgeModelBakery;
+import net.minecraftforge.client.event.ModelEvent.RegisterAdditional;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
@@ -48,29 +47,29 @@ import nuclearscience.client.screen.ScreenReactorCore;
 @EventBusSubscriber(modid = References.ID, bus = Bus.MOD, value = { Dist.CLIENT })
 public class ClientRegister {
 	@SubscribeEvent
-	public static void onModelEvent(ModelRegistryEvent event) {
-		ForgeModelBakery.addSpecialModel(MODEL_GASCENTRIFUGEFULL);
-		ForgeModelBakery.addSpecialModel(MODEL_GASCENTRIFUGEOUTLINE);
-		ForgeModelBakery.addSpecialModel(MODEL_GASCENTRIFUGECENTER);
-		ForgeModelBakery.addSpecialModel(MODEL_CHEMICALEXTRACTORWATER);
-		ForgeModelBakery.addSpecialModel(MODEL_CHEMICALBOILERWATER);
-		ForgeModelBakery.addSpecialModel(MODEL_CHEMICALBOILERHEXAFLUORIDE);
-		ForgeModelBakery.addSpecialModel(MODEL_TURBINEFULL);
-		ForgeModelBakery.addSpecialModel(MODEL_TURBINECASING);
-		ForgeModelBakery.addSpecialModel(MODEL_TURBINEROTORLAYER);
-		ForgeModelBakery.addSpecialModel(MODEL_REACTORCORE);
-		ForgeModelBakery.addSpecialModel(MODEL_REACTORFUELROD);
-		ForgeModelBakery.addSpecialModel(MODEL_REACTORDEUTERIUM);
-		ForgeModelBakery.addSpecialModel(MODEL_TELEPORTERON);
-		ForgeModelBakery.addSpecialModel(MODEL_TELEPORTER);
-		ForgeModelBakery.addSpecialModel(MODEL_CONTROLRODASSEMBLYSTRUCTURE);
-		ForgeModelBakery.addSpecialModel(MODEL_CONTROLRODASSEMBLYSROD);
-		ForgeModelBakery.addSpecialModel(MODEL_FUELREPROCESSOR);
-		ForgeModelBakery.addSpecialModel(MODEL_FUELREPROCESSOR_ON);
-		ForgeModelBakery.addSpecialModel(MODEL_RADIOACTIVEPROCESSOR);
-		ForgeModelBakery.addSpecialModel(MODEL_RADIOACTIVEPROCESSOR_ON);
-		ForgeModelBakery.addSpecialModel(MODEL_MOLTENSALTSUPPLIER);
-		ForgeModelBakery.addSpecialModel(MODEL_MOLTENSALTSUPPLIER_ON);
+	public static void onModelEvent(RegisterAdditional event) {
+		event.register(MODEL_GASCENTRIFUGEFULL);
+		event.register(MODEL_GASCENTRIFUGEOUTLINE);
+		event.register(MODEL_GASCENTRIFUGECENTER);
+		event.register(MODEL_CHEMICALEXTRACTORWATER);
+		event.register(MODEL_CHEMICALBOILERWATER);
+		event.register(MODEL_CHEMICALBOILERHEXAFLUORIDE);
+		event.register(MODEL_TURBINEFULL);
+		event.register(MODEL_TURBINECASING);
+		event.register(MODEL_TURBINEROTORLAYER);
+		event.register(MODEL_REACTORCORE);
+		event.register(MODEL_REACTORFUELROD);
+		event.register(MODEL_REACTORDEUTERIUM);
+		event.register(MODEL_TELEPORTERON);
+		event.register(MODEL_TELEPORTER);
+		event.register(MODEL_CONTROLRODASSEMBLYSTRUCTURE);
+		event.register(MODEL_CONTROLRODASSEMBLYSROD);
+		event.register(MODEL_FUELREPROCESSOR);
+		event.register(MODEL_FUELREPROCESSOR_ON);
+		event.register(MODEL_RADIOACTIVEPROCESSOR);
+		event.register(MODEL_RADIOACTIVEPROCESSOR_ON);
+		event.register(MODEL_MOLTENSALTSUPPLIER);
+		event.register(MODEL_MOLTENSALTSUPPLIER_ON);
 	}
 
 	public static final ResourceLocation MODEL_GASCENTRIFUGEFULL = new ResourceLocation(References.ID + ":block/gascentrifuge");

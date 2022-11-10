@@ -5,9 +5,10 @@
     "0" : "nuclearscience:model/atomicassembler",
     "particle" : "nuclearscience:model/atomicassembler"
   },
-  "loader" : "forge:multi-layer",
-  "layers" : {
+  "loader" : "forge:composite",
+  "children" : {
     "solid" : {
+      "render_type" : "minecraft:solid",
       "textures" : {
         "0" : "nuclearscience:model/atomicassembler",
         "particle" : "nuclearscience:model/atomicassembler"
@@ -585,6 +586,7 @@
       } ]
     },
     "translucent" : {
+      "render_type": "minecraft:translucent",
       "textures" : {
         "0" : "nuclearscience:model/atomicassembler",
         "particle" : "nuclearscience:model/atomicassembler"

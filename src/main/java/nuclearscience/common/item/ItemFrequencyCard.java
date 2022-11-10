@@ -1,11 +1,9 @@
 package nuclearscience.common.item;
 
 import java.util.List;
-import java.util.UUID;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
@@ -32,7 +30,8 @@ public class ItemFrequencyCard extends Item {
 				tel.yCoord = nbt.getInt("yCoord");
 				tel.zCoord = nbt.getInt("zCoord");
 				tel.world = nbt.getString("world");
-				context.getPlayer().sendMessage(new TranslatableComponent("tooltip.frequencycard.linked", tel.world + ", " + tel.xCoord + ", " + tel.yCoord + ", " + tel.zCoord), UUID.randomUUID());
+				// TODO: Update method sendMessage
+//				context.getPlayer().sendMessage(Component.translatable("tooltip.frequencycard.linked", tel.world + ", " + tel.xCoord + ", " + tel.yCoord + ", " + tel.zCoord), UUID.randomUUID());
 			} else {
 				nbt.putInt("xCoord", ent.getBlockPos().getX());
 				nbt.putInt("yCoord", ent.getBlockPos().getY());
@@ -61,9 +60,9 @@ public class ItemFrequencyCard extends Item {
 			int y = nbt.getInt("yCoord");
 			int z = nbt.getInt("zCoord");
 			String world = nbt.getString("world");
-			tooltip.add(new TranslatableComponent("tooltip.frequencycard.linked", world + ", " + x + ", " + y + ", " + z));
+			tooltip.add(Component.translatable("tooltip.frequencycard.linked", world + ", " + x + ", " + y + ", " + z));
 		} else {
-			tooltip.add(new TranslatableComponent("tooltip.frequencycard.notag"));
+			tooltip.add(Component.translatable("tooltip.frequencycard.notag"));
 		}
 	}
 }

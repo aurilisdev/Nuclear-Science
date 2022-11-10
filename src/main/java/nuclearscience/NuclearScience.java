@@ -4,7 +4,6 @@ import electrodynamics.prefab.configuration.ConfigurationHandler;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -14,6 +13,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegisterEvent;
 import nuclearscience.api.radiation.EffectRadiation;
 import nuclearscience.api.radiation.FieldRadioactiveObject;
 import nuclearscience.api.radiation.RadiationRegister;
@@ -71,7 +72,9 @@ public class NuclearScience {
 	}
 
 	@SubscribeEvent
-	public static void registerEffects(RegistryEvent.Register<MobEffect> event) {
-		event.getRegistry().registerAll(EffectRadiation.INSTANCE);
+	public static void registerEffects(RegisterEvent event) {
+		if (event.getRegistryKey() == ForgeRegistries.MOB_EFFECTS) {
+			event.<MobEffect>getForgeRegistry().register("radiation", EffectRadiation.INSTANCE);
+		}
 	}
 }

@@ -9,7 +9,6 @@ import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
@@ -34,15 +33,15 @@ public class ScreenParticleInjector extends GenericCustomScreen<ContainerParticl
 	@Override
 	protected void renderLabels(PoseStack matrixStack, int mouseX, int mouseY) {
 		font.draw(matrixStack, title, titleLabelX, titleLabelY, 4210752);
-		font.draw(matrixStack, new TranslatableComponent("gui.particleinjector.matter"), titleLabelX, titleLabelY + 12f, 4210752);
-		font.draw(matrixStack, new TranslatableComponent("gui.particleinjector.cells"), titleLabelX, titleLabelY + 48f, 4210752);
+		font.draw(matrixStack, Component.translatable("gui.particleinjector.matter"), titleLabelX, titleLabelY + 12f, 4210752);
+		font.draw(matrixStack, Component.translatable("gui.particleinjector.cells"), titleLabelX, titleLabelY + 48f, 4210752);
 		TileParticleInjector injector = menu.getHostFromIntArray();
 		if (injector != null) {
 			ComponentElectrodynamic electro = injector.getComponent(ComponentType.Electrodynamic);
 			ComponentProcessor processor = injector.getComponent(ComponentType.Processor);
-			font.draw(matrixStack, new TranslatableComponent("gui.particleinjector.charge", (int) (electro.getJoulesStored() / processor.getUsage() * 100.0)).append("%"), titleLabelX, titleLabelY + 30f, 4210752);
-			font.draw(matrixStack, new TranslatableComponent("gui.machine.usage", ChatFormatter.getChatDisplayShort(processor.getUsage(), DisplayUnit.JOULES)), inventoryLabelX, inventoryLabelY, 4210752);
-			font.draw(matrixStack, new TranslatableComponent("gui.machine.voltage", ChatFormatter.getChatDisplayShort(electro.getVoltage(), DisplayUnit.VOLTAGE)), (float) inventoryLabelX + 85, inventoryLabelY, 4210752);
+			font.draw(matrixStack, Component.translatable("gui.particleinjector.charge", (int) (electro.getJoulesStored() / processor.getUsage() * 100.0)).append("%"), titleLabelX, titleLabelY + 30f, 4210752);
+			font.draw(matrixStack, Component.translatable("gui.machine.usage", ChatFormatter.getChatDisplayShort(processor.getUsage(), DisplayUnit.JOULES)), inventoryLabelX, inventoryLabelY, 4210752);
+			font.draw(matrixStack, Component.translatable("gui.machine.voltage", ChatFormatter.getChatDisplayShort(electro.getVoltage(), DisplayUnit.VOLTAGE)), (float) inventoryLabelX + 85, inventoryLabelY, 4210752);
 		}
 	}
 

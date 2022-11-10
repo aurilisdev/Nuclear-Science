@@ -55,7 +55,6 @@ public class NuclearBoilerRecipeCategory extends FluidItem2FluidRecipeCategory<N
 		setLabels(POWER_LABEL);
 	}
 
-	@Override
 	public ResourceLocation getUid() {
 		return UID;
 	}

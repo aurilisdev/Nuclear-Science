@@ -53,7 +53,6 @@ public class FissionReactorRecipeCategory extends Item2ItemRecipeCategory<Fissio
 		setLabels(POWER_LABEL);
 	}
 
-	@Override
 	public ResourceLocation getUid() {
 		return UID;
 	}

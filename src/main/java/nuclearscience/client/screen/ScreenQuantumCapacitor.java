@@ -9,7 +9,6 @@ import electrodynamics.prefab.screen.component.ScreenComponentTextInputBar;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -46,14 +45,14 @@ public class ScreenQuantumCapacitor extends GenericScreen<ContainerQuantumCapaci
 		minecraft.keyboardHandler.setSendRepeatsToGui(true);
 		int i = (width - imageWidth) / 2;
 		int j = (height - imageHeight) / 2;
-		outputField = new EditBox(font, i + 120, j + 18, 46, 13, new TranslatableComponent("container.quantumcapacitor.joulesoutput"));
+		outputField = new EditBox(font, i + 120, j + 18, 46, 13, Component.translatable("container.quantumcapacitor.joulesoutput"));
 		outputField.setTextColor(-1);
 		outputField.setTextColorUneditable(-1);
 		outputField.setBordered(false);
 		outputField.setMaxLength(6);
 		outputField.setResponder(this::updateOutput);
 
-		frequencyField = new EditBox(font, i + 120, j + 18 + 20, 46, 13, new TranslatableComponent("container.quantumcapacitor.frequency"));
+		frequencyField = new EditBox(font, i + 120, j + 18 + 20, 46, 13, Component.translatable("container.quantumcapacitor.frequency"));
 		frequencyField.setTextColor(-1);
 		frequencyField.setTextColorUneditable(-1);
 		frequencyField.setBordered(false);
@@ -130,10 +129,10 @@ public class ScreenQuantumCapacitor extends GenericScreen<ContainerQuantumCapaci
 		super.renderLabels(matrixStack, mouseX, mouseY);
 		TileQuantumCapacitor box = menu.getHostFromIntArray();
 		if (box != null) {
-			font.draw(matrixStack, new TranslatableComponent("gui.machine.current", ChatFormatter.getChatDisplayShort(box.getOutputJoules() * 20.0 / TileQuantumCapacitor.DEFAULT_VOLTAGE, DisplayUnit.AMPERE)), inventoryLabelX, (float) inventoryLabelY - 55, 4210752);
-			font.draw(matrixStack, new TranslatableComponent("gui.machine.transfer", ChatFormatter.getChatDisplayShort(box.getOutputJoules() * 20.0, DisplayUnit.WATT)), inventoryLabelX, (float) inventoryLabelY - 42, 4210752);
-			font.draw(matrixStack, new TranslatableComponent("gui.machine.voltage", ChatFormatter.getChatDisplayShort(TileQuantumCapacitor.DEFAULT_VOLTAGE, DisplayUnit.VOLTAGE)), inventoryLabelX, (float) inventoryLabelY - 29, 4210752);
-			font.draw(matrixStack, new TranslatableComponent("gui.machine.stored", ChatFormatter.getChatDisplayShort(box.joulesClient, DisplayUnit.JOULES) + " / " + ChatFormatter.getChatDisplayShort(TileQuantumCapacitor.DEFAULT_MAX_JOULES, DisplayUnit.JOULES)), inventoryLabelX, (float) inventoryLabelY - 16, 4210752);
+			font.draw(matrixStack, Component.translatable("gui.machine.current", ChatFormatter.getChatDisplayShort(box.getOutputJoules() * 20.0 / TileQuantumCapacitor.DEFAULT_VOLTAGE, DisplayUnit.AMPERE)), inventoryLabelX, (float) inventoryLabelY - 55, 4210752);
+			font.draw(matrixStack, Component.translatable("gui.machine.transfer", ChatFormatter.getChatDisplayShort(box.getOutputJoules() * 20.0, DisplayUnit.WATT)), inventoryLabelX, (float) inventoryLabelY - 42, 4210752);
+			font.draw(matrixStack, Component.translatable("gui.machine.voltage", ChatFormatter.getChatDisplayShort(TileQuantumCapacitor.DEFAULT_VOLTAGE, DisplayUnit.VOLTAGE)), inventoryLabelX, (float) inventoryLabelY - 29, 4210752);
+			font.draw(matrixStack, Component.translatable("gui.machine.stored", ChatFormatter.getChatDisplayShort(box.joulesClient, DisplayUnit.JOULES) + " / " + ChatFormatter.getChatDisplayShort(TileQuantumCapacitor.DEFAULT_MAX_JOULES, DisplayUnit.JOULES)), inventoryLabelX, (float) inventoryLabelY - 16, 4210752);
 		}
 	}
 }

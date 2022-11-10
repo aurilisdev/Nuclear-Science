@@ -9,7 +9,6 @@ import electrodynamics.prefab.screen.component.ScreenComponentInfo;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.generic.AbstractFluidHandler;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.api.distmarker.Dist;
@@ -75,9 +74,9 @@ public class ScreenGasCentrifuge extends GenericScreen<ContainerGasCentrifuge> {
 			String u235String = getIntString(centrifuge.stored235);
 			String u238String = getIntString(centrifuge.stored238);
 			String wasteString = getIntString(centrifuge.storedWaste);
-			font.draw(matrixStack, new TextComponent("U235 " + u235String + "%"), 54, 17, 4210752);
-			font.draw(matrixStack, new TextComponent("U238 " + u238String + "%"), 54, 37, 4210752);
-			font.draw(matrixStack, new TextComponent("DUST " + wasteString + "%"), 54, 58, 4210752);
+			font.draw(matrixStack, Component.literal("U235 " + u235String + "%"), 54, 17, 4210752);
+			font.draw(matrixStack, Component.literal("U238 " + u238String + "%"), 54, 37, 4210752);
+			font.draw(matrixStack, Component.literal("DUST " + wasteString + "%"), 54, 58, 4210752);
 		}
 	}
 

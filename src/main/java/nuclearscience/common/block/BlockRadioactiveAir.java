@@ -16,7 +16,7 @@ import nuclearscience.api.radiation.RadiationSystem;
 public class BlockRadioactiveAir extends AirBlock {
 
 	public BlockRadioactiveAir() {
-		super(Properties.of(Material.AIR).noCollission().noDrops().air());
+		super(Properties.of(Material.AIR).noCollission().air());
 	}
 
 	@Override

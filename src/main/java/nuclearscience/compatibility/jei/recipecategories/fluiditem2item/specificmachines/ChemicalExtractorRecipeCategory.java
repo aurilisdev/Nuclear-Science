@@ -53,7 +53,6 @@ public class ChemicalExtractorRecipeCategory extends FluidItem2ItemRecipeCategor
 		setLabels(POWER_LABEL);
 	}
 
-	@Override
 	public ResourceLocation getUid() {
 		return UID;
 	}

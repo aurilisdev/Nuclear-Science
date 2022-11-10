@@ -53,7 +53,6 @@ public class MSRProcessorRecipeCategory extends FluidItem2ItemRecipeCategory<MSR
 		setLabels(POWER_LABEL);
 	}
 
-	@Override
 	public ResourceLocation getUid() {
 		return UID;
 	}

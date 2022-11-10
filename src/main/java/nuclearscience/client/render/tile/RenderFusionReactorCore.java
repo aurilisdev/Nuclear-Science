@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import nuclearscience.common.tile.TileFusionReactorCore;
 
 public class RenderFusionReactorCore implements BlockEntityRenderer<TileFusionReactorCore> {
@@ -26,7 +26,7 @@ public class RenderFusionReactorCore implements BlockEntityRenderer<TileFusionRe
 	}
 
 	public static void renderFloatingText(PoseStack matrixStackIn, MultiBufferSource bufferIn, String text, float x, float y, float z, int color, int combinedLightIn) {
-		TextComponent displayNameIn = new TextComponent(text);
+		Component displayNameIn = Component.literal(text);
 		matrixStackIn.pushPose();
 		matrixStackIn.translate(x, y, z);
 		matrixStackIn.mulPose(Minecraft.getInstance().getEntityRenderDispatcher().cameraOrientation());

@@ -9,11 +9,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import nuclearscience.DeferredRegisters;
-import nuclearscience.References;
 
 public class EffectRadiation extends MobEffect {
 
-	public static final EffectRadiation INSTANCE = (EffectRadiation) new EffectRadiation().setRegistryName(References.ID, "radiation");
+	public static final EffectRadiation INSTANCE = new EffectRadiation();
 
 	protected EffectRadiation(MobEffectCategory typeIn, int liquidColorIn) {
 		super(typeIn, liquidColorIn);

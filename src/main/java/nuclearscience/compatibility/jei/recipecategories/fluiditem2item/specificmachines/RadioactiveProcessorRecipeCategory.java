@@ -53,7 +53,6 @@ public class RadioactiveProcessorRecipeCategory extends FluidItem2ItemRecipeCate
 		setLabels(POWER_LABEL);
 	}
 
-	@Override
 	public ResourceLocation getUid() {
 		return UID;
 	}
