@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.registries.ForgeRegistries;
-import nuclearscience.DeferredRegisters;
+import nuclearscience.registers.NuclearScienceItems;
 
 public class ItemCanisterLead extends ItemCanister {
 
@@ -24,7 +24,7 @@ public class ItemCanisterLead extends ItemCanister {
 	public Pair<List<ResourceLocation>, List<Fluid>> getWhitelistedFluids() {
 		ArrayList<Fluid> whitelist = new ArrayList<>();
 		for (Fluid fluid : ForgeRegistries.FLUIDS.getValues()) {
-			if (fluid.getBucket() != null && DeferredRegisters.ITEM_CANISTERLEAD.get() != null && fluid.getBucket().builtInRegistryHolder().key().location().equals(DeferredRegisters.ITEM_CANISTERLEAD.get().builtInRegistryHolder().key().location())) {
+			if (fluid.getBucket() != null && fluid.getBucket().builtInRegistryHolder().key().location().equals(NuclearScienceItems.ITEM_CANISTERLEAD.get().builtInRegistryHolder().key().location())) {
 				whitelist.add(fluid);
 			}
 		}

@@ -12,10 +12,10 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.References;
 import nuclearscience.common.recipe.categories.fluiditem2fluid.specificmachines.NuclearBoilerRecipe;
 import nuclearscience.common.settings.Constants;
+import nuclearscience.registers.NuclearScienceBlocks;
 
 public class NuclearBoilerRecipeCategory extends FluidItem2FluidRecipeCategory<NuclearBoilerRecipe> {
 
@@ -40,7 +40,7 @@ public class NuclearBoilerRecipeCategory extends FluidItem2FluidRecipeCategory<N
 	private static String MOD_ID = electrodynamics.api.References.ID;
 	private static String RECIPE_GROUP = "nuclearboiler";
 
-	public static ItemStack INPUT_MACHINE = new ItemStack(DeferredRegisters.blockNuclearBoiler);
+	public static ItemStack INPUT_MACHINE = new ItemStack(NuclearScienceBlocks.blockNuclearBoiler);
 
 	public static ResourceLocation UID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
 	public static final RecipeType<NuclearBoilerRecipe> RECIPE_TYPE = RecipeType.create(References.ID, NuclearBoilerRecipe.RECIPE_GROUP, NuclearBoilerRecipe.class);

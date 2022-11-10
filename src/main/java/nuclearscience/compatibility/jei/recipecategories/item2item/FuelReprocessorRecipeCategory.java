@@ -15,6 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import nuclearscience.common.recipe.categories.item2item.specificmachines.FuelReprocessorRecipe;
 import nuclearscience.common.settings.Constants;
+import nuclearscience.registers.NuclearScienceBlocks;
 
 public class FuelReprocessorRecipeCategory extends Item2ItemRecipeCategory<FuelReprocessorRecipe> {
 
@@ -35,7 +36,7 @@ public class FuelReprocessorRecipeCategory extends Item2ItemRecipeCategory<FuelR
 	private static String MOD_ID = References.ID;
 	private static String RECIPE_GROUP = "fuelreprocessor";
 
-	public static ItemStack INPUT_MACHINE = new ItemStack(nuclearscience.DeferredRegisters.blockFuelReprocessor);
+	public static ItemStack INPUT_MACHINE = new ItemStack(NuclearScienceBlocks.blockFuelReprocessor);
 
 	public static ResourceLocation UID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
 	public static final RecipeType<FuelReprocessorRecipe> RECIPE_TYPE = RecipeType.create(References.ID, FuelReprocessorRecipe.RECIPE_GROUP, FuelReprocessorRecipe.class);

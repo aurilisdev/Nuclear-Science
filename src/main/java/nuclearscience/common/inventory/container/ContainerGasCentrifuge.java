@@ -10,8 +10,8 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.FurnaceResultSlot;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.SimpleContainerData;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.common.tile.TileGasCentrifuge;
+import nuclearscience.registers.NuclearScienceMenuTypes;
 
 public class ContainerGasCentrifuge extends GenericContainerBlockEntity<TileGasCentrifuge> {
 
@@ -22,7 +22,7 @@ public class ContainerGasCentrifuge extends GenericContainerBlockEntity<TileGasC
 	}
 
 	public ContainerGasCentrifuge(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
-		super(DeferredRegisters.CONTAINER_GASCENTRIFUGE.get(), id, playerinv, inventory, inventorydata);
+		super(NuclearScienceMenuTypes.CONTAINER_GASCENTRIFUGE.get(), id, playerinv, inventory, inventorydata);
 	}
 
 	public ContainerGasCentrifuge(MenuType<?> type, int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {

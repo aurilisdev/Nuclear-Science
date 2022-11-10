@@ -12,8 +12,8 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.FurnaceResultSlot;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.SimpleContainerData;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.common.tile.TileMSRFuelPreProcessor;
+import nuclearscience.registers.NuclearScienceMenuTypes;
 
 public class ContainerMSRFuelPreProcessor extends GenericContainerBlockEntity<TileMSRFuelPreProcessor> {
 
@@ -24,7 +24,7 @@ public class ContainerMSRFuelPreProcessor extends GenericContainerBlockEntity<Ti
 	}
 
 	public ContainerMSRFuelPreProcessor(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
-		super(DeferredRegisters.CONTAINER_MSRFUELPREPROCESSOR.get(), id, playerinv, inventory, inventorydata);
+		super(NuclearScienceMenuTypes.CONTAINER_MSRFUELPREPROCESSOR.get(), id, playerinv, inventory, inventorydata);
 	}
 
 	public ContainerMSRFuelPreProcessor(MenuType<?> type, int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {

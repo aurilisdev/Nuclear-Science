@@ -24,18 +24,18 @@ import net.minecraft.world.phys.AABB;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
-import nuclearscience.DeferredRegisters;
-import nuclearscience.SoundRegister;
 import nuclearscience.common.inventory.container.ContainerNuclearBoiler;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 import nuclearscience.common.settings.Constants;
+import nuclearscience.registers.NuclearScienceBlockTypes;
+import nuclearscience.registers.NuclearScienceSounds;
 
 public class TileNuclearBoiler extends GenericTile {
 
 	public static final int MAX_TANK_CAPACITY = 5000;
 
 	public TileNuclearBoiler(BlockPos pos, BlockState state) {
-		super(DeferredRegisters.TILE_CHEMICALBOILER.get(), pos, state);
+		super(NuclearScienceBlockTypes.TILE_CHEMICALBOILER.get(), pos, state);
 		addComponent(new ComponentTickable().tickServer(this::tickServer).tickClient(this::tickClient));
 		addComponent(new ComponentDirection());
 		addComponent(new ComponentPacketHandler());
@@ -79,7 +79,7 @@ public class TileNuclearBoiler extends GenericTile {
 			level.addParticle(ParticleTypes.SMOKE, worldPosition.getX() + level.random.nextDouble(), worldPosition.getY() + level.random.nextDouble() * 0.4 + 0.5, worldPosition.getZ() + level.random.nextDouble(), 0.0D, 0.0D, 0.0D);
 		}
 		if (running && tickable.getTicks() % 100 == 0) {
-			SoundAPI.playSound(SoundRegister.SOUND_NUCLEARBOILER.get(), SoundSource.BLOCKS, 1, 1, worldPosition);
+			SoundAPI.playSound(NuclearScienceSounds.SOUND_NUCLEARBOILER.get(), SoundSource.BLOCKS, 1, 1, worldPosition);
 		}
 	}
 

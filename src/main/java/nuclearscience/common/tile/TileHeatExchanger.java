@@ -21,8 +21,8 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.common.settings.Constants;
+import nuclearscience.registers.NuclearScienceBlockTypes;
 
 public class TileHeatExchanger extends GenericTile {
 	public static final int STEAM_GEN_DIAMETER = 5;
@@ -31,7 +31,7 @@ public class TileHeatExchanger extends GenericTile {
 	private double temperature;
 
 	public TileHeatExchanger(BlockPos pos, BlockState state) {
-		super(DeferredRegisters.TILE_HEATEXCHANGER.get(), pos, state);
+		super(NuclearScienceBlockTypes.TILE_HEATEXCHANGER.get(), pos, state);
 		addComponent(new ComponentTickable().tickCommon(this::tickCommon).tickServer(this::tickServer));
 		addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket).guiPacketReader(this::readCustomPacket).guiPacketWriter(this::writeCustomPacket));
 	}

@@ -35,12 +35,14 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.api.radiation.DamageSourceRadiation;
 import nuclearscience.api.radiation.RadiationSystem;
 import nuclearscience.common.inventory.container.ContainerReactorCore;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 import nuclearscience.common.settings.Constants;
+import nuclearscience.registers.NuclearScienceBlockTypes;
+import nuclearscience.registers.NuclearScienceBlocks;
+import nuclearscience.registers.NuclearScienceItems;
 
 public class TileReactorCore extends GenericTile {
 	public static final int MELTDOWN_TEMPERATURE_ACTUAL = 5611;
@@ -64,7 +66,7 @@ public class TileReactorCore extends GenericTile {
 	private List<ElectrodynamicsRecipe> cachedRecipes;
 
 	public TileReactorCore(BlockPos pos, BlockState state) {
-		super(DeferredRegisters.TILE_REACTORCORE.get(), pos, state);
+		super(NuclearScienceBlockTypes.TILE_REACTORCORE.get(), pos, state);
 		addComponent(new ComponentDirection());
 		addComponent(new ComponentTickable().tickCommon(this::tickCommon).tickServer(this::tickServer));
 		addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket).guiPacketReader(this::readCustomPacket).guiPacketWriter(this::writeCustomPacket));
@@ -80,7 +82,7 @@ public class TileReactorCore extends GenericTile {
 		fuelCount = 0;
 		for (int i = 0; i < 4; i++) {
 			ItemStack stack = inv.getItem(i);
-			fuelCount += stack.getItem() == DeferredRegisters.ITEM_FUELLEUO2.get() ? 2 : stack.getItem() == DeferredRegisters.ITEM_FUELHEUO2.get() ? 3 : stack.getItem() == DeferredRegisters.ITEM_FUELPLUTONIUM.get() ? 2 : 0;
+			fuelCount += stack.getItem() == NuclearScienceItems.ITEM_FUELLEUO2.get() ? 2 : stack.getItem() == NuclearScienceItems.ITEM_FUELHEUO2.get() ? 3 : stack.getItem() == NuclearScienceItems.ITEM_FUELPLUTONIUM.get() ? 2 : 0;
 		}
 		hasDeuterium = !inv.getItem(4).isEmpty();
 
@@ -106,7 +108,7 @@ public class TileReactorCore extends GenericTile {
 				for (int slot = 0; slot < 4; slot++) {
 					ItemStack fuelRod = inv.getItem(slot);
 					if (fuelRod != ItemStack.EMPTY && fuelRod.getDamageValue() >= fuelRod.getMaxDamage()) {
-						inv.setItem(slot, new ItemStack(DeferredRegisters.ITEM_FUELSPENT.get()));
+						inv.setItem(slot, new ItemStack(NuclearScienceItems.ITEM_FUELSPENT.get()));
 					}
 					fuelRod.setDamageValue((int) (fuelRod.getDamageValue() + 1 + Math.round(temperature) / MELTDOWN_TEMPERATURE_CALC));
 				}
@@ -196,7 +198,7 @@ public class TileReactorCore extends GenericTile {
 				}
 			}
 			level.explode(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), 20, BlockInteraction.DESTROY);
-			level.setBlockAndUpdate(worldPosition, DeferredRegisters.blockMeltedReactor.defaultBlockState());
+			level.setBlockAndUpdate(worldPosition, NuclearScienceBlocks.blockMeltedReactor.defaultBlockState());
 		}
 	}
 
@@ -264,7 +266,7 @@ public class TileReactorCore extends GenericTile {
 		ComponentInventory inv = getComponent(ComponentType.Inventory);
 		tag.putBoolean("hasDeuterium", hasDeuterium);
 		tag.putDouble("temperature", temperature);
-		tag.putInt("fuelCount", inv.countItem(DeferredRegisters.ITEM_FUELHEUO2.get()) + inv.countItem(DeferredRegisters.ITEM_FUELLEUO2.get()));
+		tag.putInt("fuelCount", inv.countItem(NuclearScienceItems.ITEM_FUELHEUO2.get()) + inv.countItem(NuclearScienceItems.ITEM_FUELLEUO2.get()));
 	}
 
 	protected void readCustomPacket(CompoundTag nbt) {
@@ -337,7 +339,7 @@ public class TileReactorCore extends GenericTile {
 		shape = Shapes.join(shape, Shapes.box(0.25, 0.06565, 0.8125, 0.75, 0.1148875, 0.875), BooleanOp.OR);
 		shape = Shapes.join(shape, Shapes.box(0.875, 0.72215, 0.125, 0.9375, 0.7878, 0.875), BooleanOp.OR);
 		shape = Shapes.join(shape, Shapes.box(0.25, 0.7878, 0.09375, 0.75, 0.8370375, 0.15625), BooleanOp.OR);
-		VoxelShapes.registerShape(DeferredRegisters.blockReactorCore, shape, Direction.NORTH);
+		VoxelShapes.registerShape(NuclearScienceBlocks.blockReactorCore, shape, Direction.NORTH);
 	}
 
 }

@@ -5,13 +5,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.BlockState;
-import nuclearscience.DeferredRegisters;
+import nuclearscience.registers.NuclearScienceBlockTypes;
 
 public class TileElectromagneticSwitch extends GenericTile {
 	public Direction lastDirection;
 
 	public TileElectromagneticSwitch(BlockPos worldPosition, BlockState blockState) {
-		super(DeferredRegisters.TILE_ELECTROMAGNETICSWITCH.get(), worldPosition, blockState);
+		super(NuclearScienceBlockTypes.TILE_ELECTROMAGNETICSWITCH.get(), worldPosition, blockState);
 	}
 
 	@Override

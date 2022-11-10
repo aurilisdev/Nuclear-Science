@@ -13,9 +13,9 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.common.settings.Constants;
 import nuclearscience.common.tile.TileFusionReactorCore;
+import nuclearscience.registers.NuclearScienceItems;
 
 public class BlockFusionReactorCore extends GenericMachineBlock {
 
@@ -33,10 +33,10 @@ public class BlockFusionReactorCore extends GenericMachineBlock {
 		if (!worldIn.isClientSide) {
 			ItemStack inHand = player.getItemBySlot(handIn == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
 			Item itemInHand = inHand.getItem();
-			if (itemInHand == DeferredRegisters.ITEM_CELLDEUTERIUM.get() || itemInHand == DeferredRegisters.ITEM_CELLTRITIUM.get()) {
+			if (itemInHand == NuclearScienceItems.ITEM_CELLDEUTERIUM.get() || itemInHand == NuclearScienceItems.ITEM_CELLTRITIUM.get()) {
 				BlockEntity tile = worldIn.getBlockEntity(pos);
 				if (tile instanceof TileFusionReactorCore core) {
-					boolean tritium = itemInHand == DeferredRegisters.ITEM_CELLTRITIUM.get();
+					boolean tritium = itemInHand == NuclearScienceItems.ITEM_CELLTRITIUM.get();
 					int type = tritium ? core.tritium : core.deuterium;
 					int added = Math.min(inHand.getCount(), Constants.FUSIONREACTOR_MAXSTORAGE - type);
 					inHand.setCount(inHand.getCount() - added);

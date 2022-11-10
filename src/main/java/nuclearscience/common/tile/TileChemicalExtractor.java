@@ -16,10 +16,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.block.state.BlockState;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerChemicalExtractor;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 import nuclearscience.common.settings.Constants;
+import nuclearscience.registers.NuclearScienceBlockTypes;
 
 public class TileChemicalExtractor extends GenericTile {
 
@@ -28,7 +28,7 @@ public class TileChemicalExtractor extends GenericTile {
 	public static final int MAX_TANK_CAPACITY = 5000;
 
 	public TileChemicalExtractor(BlockPos pos, BlockState state) {
-		super(DeferredRegisters.TILE_CHEMICALEXTRACTOR.get(), pos, state);
+		super(NuclearScienceBlockTypes.TILE_CHEMICALEXTRACTOR.get(), pos, state);
 		addComponent(new ComponentTickable().tickServer(this::tickServer).tickClient(this::tickClient));
 		addComponent(new ComponentDirection());
 		addComponent(new ComponentPacketHandler());

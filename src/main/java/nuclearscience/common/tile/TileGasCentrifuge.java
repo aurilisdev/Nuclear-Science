@@ -27,12 +27,15 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.registries.ForgeRegistries;
-import nuclearscience.DeferredRegisters;
-import nuclearscience.SoundRegister;
 import nuclearscience.api.radiation.RadiationSystem;
 import nuclearscience.common.inventory.container.ContainerGasCentrifuge;
 import nuclearscience.common.settings.Constants;
 import nuclearscience.common.tags.NuclearScienceTags;
+import nuclearscience.registers.NuclearScienceBlockTypes;
+import nuclearscience.registers.NuclearScienceBlocks;
+import nuclearscience.registers.NuclearScienceFluids;
+import nuclearscience.registers.NuclearScienceItems;
+import nuclearscience.registers.NuclearScienceSounds;
 
 public class TileGasCentrifuge extends GenericTile {
 	public static final int TANKCAPACITY = 5000;
@@ -50,11 +53,11 @@ public class TileGasCentrifuge extends GenericTile {
 	private static final int RADIATION_STRENGTH = 5000;
 
 	public TileGasCentrifuge(BlockPos pos, BlockState state) {
-		super(DeferredRegisters.TILE_GASCENTRIFUGE.get(), pos, state);
+		super(NuclearScienceBlockTypes.TILE_GASCENTRIFUGE.get(), pos, state);
 		addComponent(new ComponentTickable().tickClient(this::tickClient).tickServer(this::tickServer));
 		addComponent(new ComponentDirection());
 		addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket));
-		addComponent(new ComponentFluidHandlerMulti(this).setManualFluids(1, true, TANKCAPACITY, DeferredRegisters.fluidUraniumHexafluoride).relativeInput(Direction.NORTH));
+		addComponent(new ComponentFluidHandlerMulti(this).setManualFluids(1, true, TANKCAPACITY, NuclearScienceFluids.fluidUraniumHexafluoride).relativeInput(Direction.NORTH));
 		addComponent(new ComponentElectrodynamic(this).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 2).input(Direction.DOWN).maxJoules(Constants.GASCENTRIFUGE_USAGE_PER_TICK * 10));
 		addComponent(new ComponentInventory(this).size(6).universalSlots(0, 1, 2).outputs(3).upgrades(3).validUpgrades(ContainerGasCentrifuge.VALID_UPGRADES).valid(machineValidator()));
 		addComponent(new ComponentProcessor(this).usage(Constants.GASCENTRIFUGE_USAGE_PER_TICK).requiredTicks(Constants.GASCENTRIFUGE_REQUIRED_TICKS_PER_PROCESSING).canProcess(this::canProcess).process(this::process));
@@ -99,7 +102,7 @@ public class TileGasCentrifuge extends GenericTile {
 			if (!stack.isEmpty()) {
 				stack.setCount(stack.getCount() + 1);
 			} else {
-				inv.setItem(0, new ItemStack(DeferredRegisters.ITEM_URANIUM235.get()));
+				inv.setItem(0, new ItemStack(NuclearScienceItems.ITEM_URANIUM235.get()));
 			}
 			stored235 -= REQUIRED;
 		}
@@ -108,7 +111,7 @@ public class TileGasCentrifuge extends GenericTile {
 			if (!stack.isEmpty()) {
 				stack.setCount(stack.getCount() + 1);
 			} else {
-				inv.setItem(1, new ItemStack(DeferredRegisters.ITEM_URANIUM238.get()));
+				inv.setItem(1, new ItemStack(NuclearScienceItems.ITEM_URANIUM238.get()));
 			}
 			stored238 -= REQUIRED;
 		}
@@ -117,7 +120,7 @@ public class TileGasCentrifuge extends GenericTile {
 			if (!stack.isEmpty()) {
 				stack.grow(1);
 			} else {
-				inv.setItem(2, new ItemStack(DeferredRegisters.ITEM_FISSILEDUST.get(), 1));
+				inv.setItem(2, new ItemStack(NuclearScienceItems.ITEM_FISSILEDUST.get(), 1));
 			}
 			storedWaste -= REQUIRED;
 		}
@@ -125,7 +128,7 @@ public class TileGasCentrifuge extends GenericTile {
 
 	protected void tickClient(ComponentTickable tickable) {
 		if (spinSpeed > 0 && tickable.getTicks() % 80 == 0) {
-			SoundAPI.playSound(SoundRegister.SOUND_GASCENTRIFUGE.get(), SoundSource.BLOCKS, 1, 1, worldPosition);
+			SoundAPI.playSound(NuclearScienceSounds.SOUND_GASCENTRIFUGE.get(), SoundSource.BLOCKS, 1, 1, worldPosition);
 		}
 	}
 
@@ -204,6 +207,6 @@ public class TileGasCentrifuge extends GenericTile {
 		shape = Shapes.join(shape, Shapes.box(0.46875, 0.3125, 0.34375, 0.53125, 0.4375, 0.40625), BooleanOp.OR);
 		shape = Shapes.join(shape, Shapes.box(0.375, 0.3125, 0.375, 0.4375, 0.4375, 0.4375), BooleanOp.OR);
 		shape = Shapes.join(shape, Shapes.box(0.59375, 0.3125, 0.46875, 0.65625, 0.4375, 0.53125), BooleanOp.OR);
-		VoxelShapes.registerShape(DeferredRegisters.blockGasCentrifuge, shape, Direction.WEST);
+		VoxelShapes.registerShape(NuclearScienceBlocks.blockGasCentrifuge, shape, Direction.WEST);
 	}
 }

@@ -16,9 +16,9 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import nuclearscience.DeferredRegisters;
-import nuclearscience.SoundRegister;
 import nuclearscience.common.block.BlockTurbine;
+import nuclearscience.registers.NuclearScienceBlockTypes;
+import nuclearscience.registers.NuclearScienceSounds;
 
 public class TileTurbine extends GenericTile {
 
@@ -38,7 +38,7 @@ public class TileTurbine extends GenericTile {
 	}
 
 	public TileTurbine(BlockPos pos, BlockState state) {
-		super(DeferredRegisters.TILE_TURBINE.get(), pos, state);
+		super(NuclearScienceBlockTypes.TILE_TURBINE.get(), pos, state);
 		addComponent(new ComponentTickable().tickServer(this::tickServer).tickClient(this::tickClient));
 		addComponent(new ComponentPacketHandler().customPacketWriter(this::writeCustomPacket).customPacketReader(this::readCustomPacket));
 		addComponent(new ComponentElectrodynamic(this).output(Direction.UP).setCapabilityTest(() -> (!hasCore || isCore)));
@@ -160,7 +160,7 @@ public class TileTurbine extends GenericTile {
 
 	public void tickClient(ComponentTickable tickable) {
 		if (spinSpeed > 0 && tickable.getTicks() % 200 == 0) {
-			SoundAPI.playSound(SoundRegister.SOUND_TURBINE.get(), SoundSource.BLOCKS, 1, 1, worldPosition);
+			SoundAPI.playSound(NuclearScienceSounds.SOUND_TURBINE.get(), SoundSource.BLOCKS, 1, 1, worldPosition);
 		}
 	}
 

@@ -8,9 +8,10 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.api.fusion.IElectromagnet;
 import nuclearscience.common.settings.Constants;
+import nuclearscience.registers.NuclearScienceBlockTypes;
+import nuclearscience.registers.NuclearScienceBlocks;
 
 public class TilePlasma extends GenericTile {
 	public int ticksExisted;
@@ -18,7 +19,7 @@ public class TilePlasma extends GenericTile {
 	private CachedTileOutput output;
 
 	public TilePlasma(BlockPos pos, BlockState state) {
-		super(DeferredRegisters.TILE_PLASMA.get(), pos, state);
+		super(NuclearScienceBlockTypes.TILE_PLASMA.get(), pos, state);
 		addComponent(new ComponentTickable().tickServer(this::tickServer));
 	}
 
@@ -34,8 +35,8 @@ public class TilePlasma extends GenericTile {
 				boolean didntExist = false;
 				if (state.getBlock() != getBlockState().getBlock()) {
 					didntExist = true;
-					if (state.getDestroySpeed(level, offset) != -1 && !(state.getBlock() instanceof IElectromagnet) && state.getBlock() != DeferredRegisters.blockFusionReactorCore) {
-						level.setBlockAndUpdate(offset, DeferredRegisters.blockPlasma.defaultBlockState());
+					if (state.getDestroySpeed(level, offset) != -1 && !(state.getBlock() instanceof IElectromagnet) && state.getBlock() != NuclearScienceBlocks.blockFusionReactorCore) {
+						level.setBlockAndUpdate(offset, NuclearScienceBlocks.blockPlasma.defaultBlockState());
 					}
 				}
 				BlockEntity tile = level.getBlockEntity(offset);

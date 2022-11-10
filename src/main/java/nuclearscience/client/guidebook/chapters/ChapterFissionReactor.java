@@ -9,12 +9,12 @@ import electrodynamics.client.guidebook.utils.ItemWrapperObject;
 import electrodynamics.client.guidebook.utils.TextWrapperObject;
 import electrodynamics.client.guidebook.utils.components.Chapter;
 import electrodynamics.client.guidebook.utils.components.Page;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.References;
+import nuclearscience.registers.NuclearScienceBlocks;
 
 public class ChapterFissionReactor extends Chapter {
 
-	private static final ItemWrapperObject LOGO = new ItemWrapperObject(17, 60, 2.0F, ItemUtils.fromBlock(DeferredRegisters.blockReactorCore));
+	private static final ItemWrapperObject LOGO = new ItemWrapperObject(17, 60, 2.0F, ItemUtils.fromBlock(NuclearScienceBlocks.blockReactorCore));
 
 	@Override
 	protected List<Page> genPages() {

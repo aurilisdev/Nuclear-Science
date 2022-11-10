@@ -14,11 +14,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.api.radiation.IRadioactiveObject;
 import nuclearscience.api.radiation.RadiationRegister;
 import nuclearscience.common.inventory.container.ContainerRadioisotopeGenerator;
 import nuclearscience.common.settings.Constants;
+import nuclearscience.registers.NuclearScienceBlockTypes;
 
 public class TileRadioisotopeGenerator extends GenericTile {
 
@@ -26,7 +26,7 @@ public class TileRadioisotopeGenerator extends GenericTile {
 	protected CachedTileOutput output2;
 
 	public TileRadioisotopeGenerator(BlockPos pos, BlockState state) {
-		super(DeferredRegisters.TILE_RADIOISOTOPEGENERATOR.get(), pos, state);
+		super(NuclearScienceBlockTypes.TILE_RADIOISOTOPEGENERATOR.get(), pos, state);
 		addComponent(new ComponentTickable().tickServer(this::tickServer));
 		addComponent(new ComponentPacketHandler());
 		addComponent(new ComponentElectrodynamic(this).voltage(Constants.RADIOISOTOPEGENERATOR_VOLTAGE).extractPower((x, y) -> TransferPack.EMPTY).output(Direction.UP).output(Direction.DOWN));

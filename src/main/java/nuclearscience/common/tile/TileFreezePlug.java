@@ -17,20 +17,22 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerFreezePlug;
 import nuclearscience.common.settings.Constants;
+import nuclearscience.registers.NuclearScienceBlockTypes;
+import nuclearscience.registers.NuclearScienceBlocks;
+import nuclearscience.registers.NuclearScienceItems;
 
 public class TileFreezePlug extends GenericTile {
 	private boolean isFrozen = false;
 
 	public TileFreezePlug(BlockPos pos, BlockState state) {
-		super(DeferredRegisters.TILE_FREEZEPLUG.get(), pos, state);
+		super(NuclearScienceBlockTypes.TILE_FREEZEPLUG.get(), pos, state);
 		addComponent(new ComponentTickable().tickServer(this::tickServer));
 		addComponent(new ComponentPacketHandler());
 		addComponent(new ComponentDirection());
 		addComponent(new ComponentElectrodynamic(this).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE).extractPower((x, y) -> TransferPack.EMPTY).input(Direction.UP).input(Direction.DOWN).maxJoules(Constants.FREEZEPLUG_USAGE_PER_TICK * 20));
-		addComponent(new ComponentInventory(this).size(1).inputs(1).slotFaces(0, Direction.values()).valid((slot, stack, i) -> stack.getItem() == DeferredRegisters.ITEM_FLINAK.get()));
+		addComponent(new ComponentInventory(this).size(1).inputs(1).slotFaces(0, Direction.values()).valid((slot, stack, i) -> stack.getItem() == NuclearScienceItems.ITEM_FLINAK.get()));
 		addComponent(new ComponentContainerProvider("container.freezeplug").createMenu((id, player) -> new ContainerFreezePlug(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 	}
 
@@ -93,6 +95,6 @@ public class TileFreezePlug extends GenericTile {
 		shape = Shapes.join(shape, Shapes.box(0.75, 0.1875, 0.3125, 0.84375, 0.25, 0.375), BooleanOp.OR);
 		shape = Shapes.join(shape, Shapes.box(0.3125, 0, 0.3125, 0.6875, 0.1875, 0.6875), BooleanOp.OR);
 
-		VoxelShapes.registerShape(DeferredRegisters.blockFreezePlug, shape, Direction.EAST);
+		VoxelShapes.registerShape(NuclearScienceBlocks.blockFreezePlug, shape, Direction.EAST);
 	}
 }

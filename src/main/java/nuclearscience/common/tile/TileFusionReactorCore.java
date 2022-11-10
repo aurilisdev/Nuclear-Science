@@ -13,8 +13,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.common.settings.Constants;
+import nuclearscience.registers.NuclearScienceBlockTypes;
+import nuclearscience.registers.NuclearScienceBlocks;
 
 public class TileFusionReactorCore extends GenericTile {
 	public int deuterium;
@@ -22,7 +23,7 @@ public class TileFusionReactorCore extends GenericTile {
 	private int timeLeft = 0;
 
 	public TileFusionReactorCore(BlockPos pos, BlockState state) {
-		super(DeferredRegisters.TILE_FUSIONREACTORCORE.get(), pos, state);
+		super(NuclearScienceBlockTypes.TILE_FUSIONREACTORCORE.get(), pos, state);
 		addComponent(new ComponentDirection());
 		addComponent(new ComponentTickable().tickServer(this::tickServer));
 		addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket));
@@ -44,13 +45,13 @@ public class TileFusionReactorCore extends GenericTile {
 				if (dir != Direction.UP && dir != Direction.DOWN) {
 					BlockPos offset = worldPosition.relative(dir);
 					BlockState state = level.getBlockState(offset);
-					if (state.getBlock() == DeferredRegisters.blockPlasma) {
+					if (state.getBlock() == NuclearScienceBlocks.blockPlasma) {
 						BlockEntity tile = level.getBlockEntity(offset);
 						if (tile instanceof TilePlasma plasma && plasma.ticksExisted > 30) {
 							plasma.ticksExisted = 0;
 						}
 					} else if (state.getBlock() == Blocks.AIR) {
-						level.setBlockAndUpdate(offset, DeferredRegisters.blockPlasma.defaultBlockState());
+						level.setBlockAndUpdate(offset, NuclearScienceBlocks.blockPlasma.defaultBlockState());
 					}
 				}
 			}

@@ -13,9 +13,9 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.common.recipe.categories.fluiditem2item.specificmachines.ChemicalExtractorRecipe;
 import nuclearscience.common.settings.Constants;
+import nuclearscience.registers.NuclearScienceBlocks;
 
 public class ChemicalExtractorRecipeCategory extends FluidItem2ItemRecipeCategory<ChemicalExtractorRecipe> {
 
@@ -39,7 +39,7 @@ public class ChemicalExtractorRecipeCategory extends FluidItem2ItemRecipeCategor
 	private static String MOD_ID = References.ID;
 	private static String RECIPE_GROUP = "chemicalextractor";
 
-	public static ItemStack INPUT_MACHINE = new ItemStack(DeferredRegisters.blockChemicalExtractor);
+	public static ItemStack INPUT_MACHINE = new ItemStack(NuclearScienceBlocks.blockChemicalExtractor);
 
 	public static ResourceLocation UID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
 	public static final RecipeType<ChemicalExtractorRecipe> RECIPE_TYPE = RecipeType.create(References.ID, ChemicalExtractorRecipe.RECIPE_GROUP, ChemicalExtractorRecipe.class);

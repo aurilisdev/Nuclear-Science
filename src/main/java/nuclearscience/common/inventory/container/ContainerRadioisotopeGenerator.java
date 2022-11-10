@@ -8,9 +8,9 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.item.ItemStack;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.api.radiation.RadiationRegister;
 import nuclearscience.common.tile.TileRadioisotopeGenerator;
+import nuclearscience.registers.NuclearScienceMenuTypes;
 
 public class ContainerRadioisotopeGenerator extends GenericContainerBlockEntity<TileRadioisotopeGenerator> {
 
@@ -19,7 +19,7 @@ public class ContainerRadioisotopeGenerator extends GenericContainerBlockEntity<
 	}
 
 	public ContainerRadioisotopeGenerator(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
-		super(DeferredRegisters.CONTAINER_RADIOISOTOPEGENERATOR.get(), id, playerinv, inventory, inventorydata);
+		super(NuclearScienceMenuTypes.CONTAINER_RADIOISOTOPEGENERATOR.get(), id, playerinv, inventory, inventorydata);
 	}
 
 	@Override

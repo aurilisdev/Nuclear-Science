@@ -23,6 +23,8 @@ import nuclearscience.common.packet.NetworkHandler;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 import nuclearscience.common.settings.Constants;
 import nuclearscience.common.tags.NuclearScienceTags;
+import nuclearscience.registers.NuclearScienceItems;
+import nuclearscience.registers.UnifiedNuclearScienceRegister;
 
 @Mod(References.ID)
 @EventBusSubscriber(modid = References.ID, bus = Bus.MOD)
@@ -31,15 +33,10 @@ public class NuclearScience {
 	public NuclearScience() {
 		ConfigurationHandler.registerConfig(Constants.class);
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-		DeferredRegisters.BLOCKS.register(bus);
-		DeferredRegisters.ITEMS.register(bus);
-		DeferredRegisters.TILES.register(bus);
-		DeferredRegisters.CONTAINERS.register(bus);
-		DeferredRegisters.FLUIDS.register(bus);
-		DeferredRegisters.ENTITIES.register(bus);
+		UnifiedNuclearScienceRegister.register(bus);
 		NuclearScienceRecipeInit.RECIPE_TYPES.register(bus);
 		NuclearScienceRecipeInit.RECIPE_SERIALIZER.register(bus);
-		SoundRegister.SOUNDS.register(bus);
+
 	}
 
 	@SubscribeEvent
@@ -56,19 +53,19 @@ public class NuclearScience {
 
 	@SubscribeEvent
 	public static void onLoadEvent(FMLLoadCompleteEvent event) {
-		RadiationRegister.register(DeferredRegisters.ITEM_URANIUM235.get(), new FieldRadioactiveObject(1000));
-		RadiationRegister.register(DeferredRegisters.ITEM_URANIUM238.get(), new FieldRadioactiveObject(500));
-		RadiationRegister.register(DeferredRegisters.ITEM_YELLOWCAKE.get(), new FieldRadioactiveObject(300));
-		RadiationRegister.register(DeferredRegisters.ITEM_FUELHEUO2.get(), new FieldRadioactiveObject(3000));
-		RadiationRegister.register(DeferredRegisters.ITEM_FUELLEUO2.get(), new FieldRadioactiveObject(2000));
-		RadiationRegister.register(DeferredRegisters.ITEM_FUELSPENT.get(), new FieldRadioactiveObject(3500));
-		RadiationRegister.register(DeferredRegisters.ITEM_FUELPLUTONIUM.get(), new FieldRadioactiveObject(2500));
-		RadiationRegister.register(DeferredRegisters.ITEM_FISSILEDUST.get(), new FieldRadioactiveObject(2000));
-		RadiationRegister.register(DeferredRegisters.ITEM_PLUTONIUMOXIDE.get(), new FieldRadioactiveObject(4000));
-		RadiationRegister.register(DeferredRegisters.ITEM_PLUTONIUM239.get(), new FieldRadioactiveObject(4500));
-		RadiationRegister.register(DeferredRegisters.ITEM_THORIANITEDUST.get(), new FieldRadioactiveObject(2000));
-		RadiationRegister.register(DeferredRegisters.ITEM_POLONIUM210.get(), new FieldRadioactiveObject(2500));
-		RadiationRegister.register(DeferredRegisters.ITEM_POLONIUM210_CHUNK.get(), new FieldRadioactiveObject(1500));
+		RadiationRegister.register(NuclearScienceItems.ITEM_URANIUM235.get(), new FieldRadioactiveObject(1000));
+		RadiationRegister.register(NuclearScienceItems.ITEM_URANIUM238.get(), new FieldRadioactiveObject(500));
+		RadiationRegister.register(NuclearScienceItems.ITEM_YELLOWCAKE.get(), new FieldRadioactiveObject(300));
+		RadiationRegister.register(NuclearScienceItems.ITEM_FUELHEUO2.get(), new FieldRadioactiveObject(3000));
+		RadiationRegister.register(NuclearScienceItems.ITEM_FUELLEUO2.get(), new FieldRadioactiveObject(2000));
+		RadiationRegister.register(NuclearScienceItems.ITEM_FUELSPENT.get(), new FieldRadioactiveObject(3500));
+		RadiationRegister.register(NuclearScienceItems.ITEM_FUELPLUTONIUM.get(), new FieldRadioactiveObject(2500));
+		RadiationRegister.register(NuclearScienceItems.ITEM_FISSILEDUST.get(), new FieldRadioactiveObject(2000));
+		RadiationRegister.register(NuclearScienceItems.ITEM_PLUTONIUMOXIDE.get(), new FieldRadioactiveObject(4000));
+		RadiationRegister.register(NuclearScienceItems.ITEM_PLUTONIUM239.get(), new FieldRadioactiveObject(4500));
+		RadiationRegister.register(NuclearScienceItems.ITEM_THORIANITEDUST.get(), new FieldRadioactiveObject(2000));
+		RadiationRegister.register(NuclearScienceItems.ITEM_POLONIUM210.get(), new FieldRadioactiveObject(2500));
+		RadiationRegister.register(NuclearScienceItems.ITEM_POLONIUM210_CHUNK.get(), new FieldRadioactiveObject(1500));
 	}
 
 	@SubscribeEvent

@@ -12,9 +12,9 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.common.recipe.categories.fluiditem2item.specificmachines.MSRFuelPreProcessorRecipe;
 import nuclearscience.common.settings.Constants;
+import nuclearscience.registers.NuclearScienceBlocks;
 
 public class MSRProcessorRecipeCategory extends FluidItem2ItemRecipeCategory<MSRFuelPreProcessorRecipe> {
 
@@ -39,7 +39,7 @@ public class MSRProcessorRecipeCategory extends FluidItem2ItemRecipeCategory<MSR
 	private static String MOD_ID = References.ID;
 	private static String RECIPE_GROUP = "msrfuelpreprocessor";
 
-	public static ItemStack INPUT_MACHINE = new ItemStack(DeferredRegisters.blockMSRFuelPreProcessor);
+	public static ItemStack INPUT_MACHINE = new ItemStack(NuclearScienceBlocks.blockMSRFuelPreProcessor);
 
 	public static ResourceLocation UID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
 	public static final RecipeType<MSRFuelPreProcessorRecipe> RECIPE_TYPE = RecipeType.create(References.ID, MSRFuelPreProcessorRecipe.RECIPE_GROUP, MSRFuelPreProcessorRecipe.class);

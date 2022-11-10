@@ -22,14 +22,15 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 import nuclearscience.common.settings.Constants;
+import nuclearscience.registers.NuclearScienceBlockTypes;
+import nuclearscience.registers.NuclearScienceBlocks;
 
 public class TileFuelReprocessor extends GenericTile {
 
 	public TileFuelReprocessor(BlockPos pos, BlockState state) {
-		super(DeferredRegisters.TILE_FUELREPROCESSOR.get(), pos, state);
+		super(NuclearScienceBlockTypes.TILE_FUELREPROCESSOR.get(), pos, state);
 		addComponent(new ComponentDirection());
 		addComponent(new ComponentPacketHandler());
 		addComponent(new ComponentTickable().tickServer(this::tickServer).tickClient(this::tickClient));
@@ -121,6 +122,6 @@ public class TileFuelReprocessor extends GenericTile {
 		shape = Shapes.join(shape, Shapes.box(0.8125, 0.6875, 0.375, 0.875, 0.75, 0.4375), BooleanOp.OR);
 		shape = Shapes.join(shape, Shapes.box(0.8125, 0.25, 0.375, 0.875, 0.3125, 0.4375), BooleanOp.OR);
 		shape = Shapes.join(shape, Shapes.box(0.8125, 0.25, 0.5625, 0.875, 0.3125, 0.625), BooleanOp.OR);
-		VoxelShapes.registerShape(DeferredRegisters.blockFuelReprocessor, shape, Direction.WEST);
+		VoxelShapes.registerShape(NuclearScienceBlocks.blockFuelReprocessor, shape, Direction.WEST);
 	}
 }

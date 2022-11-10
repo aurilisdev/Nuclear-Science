@@ -25,6 +25,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import nuclearscience.References;
+import nuclearscience.registers.NuclearScienceBlocks;
 
 public class ParticleAcceleratorDarkMatterRecipeCategory implements IRecipeCategory<PsuedoItem2ItemRecipe> {
 
@@ -39,7 +40,7 @@ public class ParticleAcceleratorDarkMatterRecipeCategory implements IRecipeCateg
 	private static String RECIPE_GROUP = "particalaccelerator.darkmatter";
 	private static String GUI_TEXTURE = "textures/gui/jei/particle_accelerator_dark_matter_gui.png";
 
-	public static ItemStack INPUT_MACHINE = new ItemStack(nuclearscience.DeferredRegisters.blockParticleInjector);
+	public static ItemStack INPUT_MACHINE = new ItemStack(NuclearScienceBlocks.blockParticleInjector);
 
 	private LoadingCache<Integer, ArrayList<IDrawableAnimated>> cachedArrows;
 

@@ -18,6 +18,8 @@ import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import nuclearscience.common.recipe.categories.item2item.specificmachines.FissionReactorRecipe;
+import nuclearscience.registers.NuclearScienceBlocks;
+import nuclearscience.registers.NuclearScienceItems;
 
 public class FissionReactorRecipeCategory extends Item2ItemRecipeCategory<FissionReactorRecipe> {
 
@@ -40,7 +42,7 @@ public class FissionReactorRecipeCategory extends Item2ItemRecipeCategory<Fissio
 	private static String MOD_ID = References.ID;
 	private static String RECIPE_GROUP = "reactorcore";
 
-	public static ItemStack INPUT_MACHINE = new ItemStack(nuclearscience.DeferredRegisters.blockReactorCore);
+	public static ItemStack INPUT_MACHINE = new ItemStack(NuclearScienceBlocks.blockReactorCore);
 
 	public static ResourceLocation UID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
 	public static final RecipeType<FissionReactorRecipe> RECIPE_TYPE = RecipeType.create(References.ID, FissionReactorRecipe.RECIPE_GROUP, FissionReactorRecipe.class);
@@ -65,9 +67,9 @@ public class FissionReactorRecipeCategory extends Item2ItemRecipeCategory<Fissio
 	@Override
 	public List<List<ItemStack>> getItemInputs(ElectrodynamicsRecipe electro) {
 		Item2ItemRecipe recipe = (Item2ItemRecipe) electro;
-		ItemStack u235Cell = new ItemStack(nuclearscience.DeferredRegisters.ITEM_FUELHEUO2.get(), 1);
-		ItemStack u238Cell = new ItemStack(nuclearscience.DeferredRegisters.ITEM_FUELLEUO2.get(), 1);
-		ItemStack plutoniumCell = new ItemStack(nuclearscience.DeferredRegisters.ITEM_FUELPLUTONIUM.get(), 1);
+		ItemStack u235Cell = new ItemStack(NuclearScienceItems.ITEM_FUELHEUO2.get(), 1);
+		ItemStack u238Cell = new ItemStack(NuclearScienceItems.ITEM_FUELLEUO2.get(), 1);
+		ItemStack plutoniumCell = new ItemStack(NuclearScienceItems.ITEM_FUELPLUTONIUM.get(), 1);
 
 		List<ItemStack> fuels = new ArrayList<>();
 		fuels.add(u238Cell);

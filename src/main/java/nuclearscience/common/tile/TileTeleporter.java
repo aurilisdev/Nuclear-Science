@@ -17,8 +17,8 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.common.item.ItemFrequencyCard;
+import nuclearscience.registers.NuclearScienceBlockTypes;
 
 public class TileTeleporter extends GenericTile {
 	public int xCoord;
@@ -28,7 +28,7 @@ public class TileTeleporter extends GenericTile {
 	public String world;
 
 	public TileTeleporter(BlockPos pos, BlockState state) {
-		super(DeferredRegisters.TILE_TELEPORTER.get(), pos, state);
+		super(NuclearScienceBlockTypes.TILE_TELEPORTER.get(), pos, state);
 		addComponent(new ComponentDirection());
 		addComponent(new ComponentTickable().tickServer(this::tickServer));
 		addComponent(new ComponentPacketHandler());

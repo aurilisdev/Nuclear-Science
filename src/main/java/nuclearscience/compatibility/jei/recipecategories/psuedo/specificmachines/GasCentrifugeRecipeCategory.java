@@ -22,9 +22,9 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.References;
 import nuclearscience.compatibility.jei.utils.psuedorecipes.PsuedoGasCentrifugeRecipe;
+import nuclearscience.registers.NuclearScienceBlocks;
 
 public class GasCentrifugeRecipeCategory implements IRecipeCategory<PsuedoGasCentrifugeRecipe> {
 
@@ -41,7 +41,7 @@ public class GasCentrifugeRecipeCategory implements IRecipeCategory<PsuedoGasCen
 	private static String RECIPE_GROUP = "gascentrifuge";
 	private static String GUI_TEXTURE = "textures/gui/jei/gascentrifuge.png";
 
-	public static ItemStack INPUT_MACHINE = new ItemStack(DeferredRegisters.blockGasCentrifuge);
+	public static ItemStack INPUT_MACHINE = new ItemStack(NuclearScienceBlocks.blockGasCentrifuge);
 
 	public static ResourceLocation UID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
 
@@ -112,7 +112,7 @@ public class GasCentrifugeRecipeCategory implements IRecipeCategory<PsuedoGasCen
 
 		Component percentU235String = Component.translatable("jei.gui." + RECIPE_GROUP + ".info.percent_u235", animTimeSeconds);
 		Component percentU238String = Component.translatable("jei.gui." + RECIPE_GROUP + ".info.percent_u238", animTimeSeconds);
-		Component percentBiproductString =Component.translatable("jei.gui." + RECIPE_GROUP + ".info.percent_biproduct", animTimeSeconds);
+		Component percentBiproductString = Component.translatable("jei.gui." + RECIPE_GROUP + ".info.percent_biproduct", animTimeSeconds);
 
 		Minecraft minecraft = Minecraft.getInstance();
 		Font fontRenderer = minecraft.font;

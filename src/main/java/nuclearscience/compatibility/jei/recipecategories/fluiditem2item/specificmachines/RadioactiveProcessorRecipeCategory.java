@@ -13,9 +13,9 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.common.recipe.categories.fluiditem2item.specificmachines.RadioactiveProcessorRecipe;
 import nuclearscience.common.settings.Constants;
+import nuclearscience.registers.NuclearScienceBlocks;
 
 public class RadioactiveProcessorRecipeCategory extends FluidItem2ItemRecipeCategory<RadioactiveProcessorRecipe> {
 
@@ -39,7 +39,7 @@ public class RadioactiveProcessorRecipeCategory extends FluidItem2ItemRecipeCate
 	private static String MOD_ID = References.ID;
 	private static String RECIPE_GROUP = "radioactiveprocessor";
 
-	public static ItemStack INPUT_MACHINE = new ItemStack(DeferredRegisters.blockRadioactiveProcessor);
+	public static ItemStack INPUT_MACHINE = new ItemStack(NuclearScienceBlocks.blockRadioactiveProcessor);
 
 	public static ResourceLocation UID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
 	public static final RecipeType<RadioactiveProcessorRecipe> RECIPE_TYPE = RecipeType.create(References.ID, RadioactiveProcessorRecipe.RECIPE_GROUP, RadioactiveProcessorRecipe.class);

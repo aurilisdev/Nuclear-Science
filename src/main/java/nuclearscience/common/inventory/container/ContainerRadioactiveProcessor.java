@@ -12,8 +12,8 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.FurnaceResultSlot;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.SimpleContainerData;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.common.tile.TileRadioactiveProcessor;
+import nuclearscience.registers.NuclearScienceMenuTypes;
 
 public class ContainerRadioactiveProcessor extends GenericContainerBlockEntity<TileRadioactiveProcessor> {
 
@@ -24,7 +24,7 @@ public class ContainerRadioactiveProcessor extends GenericContainerBlockEntity<T
 	}
 
 	public ContainerRadioactiveProcessor(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
-		super(DeferredRegisters.CONTAINER_RADIOACTIVEPROCESSOR.get(), id, playerinv, inventory, inventorydata);
+		super(NuclearScienceMenuTypes.CONTAINER_RADIOACTIVEPROCESSOR.get(), id, playerinv, inventory, inventorydata);
 	}
 
 	public ContainerRadioactiveProcessor(MenuType<?> type, int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {

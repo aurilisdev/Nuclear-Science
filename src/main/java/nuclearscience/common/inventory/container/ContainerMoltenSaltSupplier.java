@@ -7,8 +7,9 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.common.tile.TileMoltenSaltSupplier;
+import nuclearscience.registers.NuclearScienceItems;
+import nuclearscience.registers.NuclearScienceMenuTypes;
 
 public class ContainerMoltenSaltSupplier extends GenericContainerBlockEntity<TileMoltenSaltSupplier> {
 
@@ -17,11 +18,11 @@ public class ContainerMoltenSaltSupplier extends GenericContainerBlockEntity<Til
 	}
 
 	public ContainerMoltenSaltSupplier(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
-		super(DeferredRegisters.CONTAINER_MOLTENSALTSUPPLIER.get(), id, playerinv, inventory, inventorydata);
+		super(NuclearScienceMenuTypes.CONTAINER_MOLTENSALTSUPPLIER.get(), id, playerinv, inventory, inventorydata);
 	}
 
 	@Override
 	public void addInventorySlots(Container inv, Inventory playerinv) {
-		addSlot(new SlotRestricted(inv, nextIndex(), 25, 42, DeferredRegisters.ITEM_LIFHT4PUF3.get()));
+		addSlot(new SlotRestricted(inv, nextIndex(), 25, 42, NuclearScienceItems.ITEM_LIFHT4PUF3.get()));
 	}
 }

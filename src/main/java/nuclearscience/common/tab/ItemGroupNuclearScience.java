@@ -2,7 +2,7 @@ package nuclearscience.common.tab;
 
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
-import nuclearscience.DeferredRegisters;
+import nuclearscience.registers.NuclearScienceBlocks;
 
 public class ItemGroupNuclearScience extends CreativeModeTab {
 
@@ -12,6 +12,6 @@ public class ItemGroupNuclearScience extends CreativeModeTab {
 
 	@Override
 	public ItemStack makeIcon() {
-		return new ItemStack(DeferredRegisters.blockGasCentrifuge);
+		return new ItemStack(NuclearScienceBlocks.blockGasCentrifuge);
 	}
 }

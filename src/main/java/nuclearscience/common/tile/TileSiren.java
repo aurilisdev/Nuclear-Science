@@ -7,13 +7,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.block.state.BlockState;
-import nuclearscience.DeferredRegisters;
-import nuclearscience.SoundRegister;
+import nuclearscience.registers.NuclearScienceBlockTypes;
+import nuclearscience.registers.NuclearScienceSounds;
 
 public class TileSiren extends GenericTile {
 
 	public TileSiren(BlockPos worldPos, BlockState blockState) {
-		super(DeferredRegisters.TILE_SIREN.get(), worldPos, blockState);
+		super(NuclearScienceBlockTypes.TILE_SIREN.get(), worldPos, blockState);
 		addComponent(new ComponentTickable().tickClient(this::tickClient));
 	}
 
@@ -26,7 +26,7 @@ public class TileSiren extends GenericTile {
 						volume += 2;
 					}
 				}
-				SoundAPI.playSound(SoundRegister.SOUND_SIREN.get(), SoundSource.BLOCKS, volume, 1, worldPosition);
+				SoundAPI.playSound(NuclearScienceSounds.SOUND_SIREN.get(), SoundSource.BLOCKS, volume, 1, worldPosition);
 			}
 		}
 	}

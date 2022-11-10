@@ -31,6 +31,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 import nuclearscience.References;
+import nuclearscience.registers.NuclearScienceBlocks;
 
 public class ParticleAcceleratorAntiMatterRecipeCategory implements IRecipeCategory<PsuedoItem2ItemRecipe> {
 
@@ -46,7 +47,7 @@ public class ParticleAcceleratorAntiMatterRecipeCategory implements IRecipeCateg
 	private static String RECIPE_GROUP = "particalaccelerator.antimatter";
 	private static String GUI_TEXTURE = "textures/gui/jei/particle_accelerator_antimatter_gui.png";
 
-	public static ItemStack INPUT_MACHINE = new ItemStack(nuclearscience.DeferredRegisters.blockParticleInjector);
+	public static ItemStack INPUT_MACHINE = new ItemStack(NuclearScienceBlocks.blockParticleInjector);
 	private LoadingCache<Integer, IDrawableAnimated> cachedArrows;
 	private static StartDirection ARROW_START_DIRECTION = IDrawableAnimated.StartDirection.LEFT;
 

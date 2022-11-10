@@ -10,8 +10,9 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.api.radiation.RadiationSystem;
+import nuclearscience.registers.NuclearScienceBlockTypes;
+import nuclearscience.registers.NuclearScienceBlocks;
 
 public class TileMeltedReactor extends GenericTile {
 	public static final float RADIATION_RADIUS = 30;
@@ -20,7 +21,7 @@ public class TileMeltedReactor extends GenericTile {
 	public int temperature = 6000;
 
 	public TileMeltedReactor(BlockPos pos, BlockState state) {
-		super(DeferredRegisters.TILE_MELTEDREACTOR.get(), pos, state);
+		super(NuclearScienceBlockTypes.TILE_MELTEDREACTOR.get(), pos, state);
 		addComponent(new ComponentTickable().tickServer(this::tickServer));
 	}
 
@@ -83,7 +84,7 @@ public class TileMeltedReactor extends GenericTile {
 				BlockState st = level.getBlockState(p);
 				Block block = st.getBlock();
 				if (block == Blocks.GRASS_BLOCK || block == Blocks.DIRT) {
-					level.setBlockAndUpdate(p, DeferredRegisters.blockRadioactiveSoil.defaultBlockState());
+					level.setBlockAndUpdate(p, NuclearScienceBlocks.blockRadioactiveSoil.defaultBlockState());
 				}
 			}
 		}

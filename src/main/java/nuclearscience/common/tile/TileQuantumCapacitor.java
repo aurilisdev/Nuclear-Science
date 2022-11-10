@@ -23,9 +23,9 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerQuantumCapacitor;
 import nuclearscience.common.world.QuantumCapacitorData;
+import nuclearscience.registers.NuclearScienceBlockTypes;
 
 public class TileQuantumCapacitor extends GenericTile implements IEnergyStorage {
 	public static final double DEFAULT_MAX_JOULES = Double.MAX_VALUE;
@@ -37,7 +37,7 @@ public class TileQuantumCapacitor extends GenericTile implements IEnergyStorage 
 	private CachedTileOutput outputCache2;
 
 	public TileQuantumCapacitor(BlockPos pos, BlockState state) {
-		super(DeferredRegisters.TILE_QUANTUMCAPACITOR.get(), pos, state);
+		super(NuclearScienceBlockTypes.TILE_QUANTUMCAPACITOR.get(), pos, state);
 		addComponent(new ComponentTickable().tickServer(this::tickServer));
 		addComponent(new ComponentPacketHandler().guiPacketReader(this::readGUIPacket).guiPacketWriter(this::writeGUIPacket));
 		addComponent(new ComponentElectrodynamic(this).voltage(16 * ElectrodynamicsCapabilities.DEFAULT_VOLTAGE).output(Direction.DOWN).output(Direction.UP).input(Direction.WEST).input(Direction.EAST).input(Direction.SOUTH).input(Direction.NORTH).receivePower(this::receivePower).setJoules(this::setJoulesStored).getJoules(this::getJoulesStored));

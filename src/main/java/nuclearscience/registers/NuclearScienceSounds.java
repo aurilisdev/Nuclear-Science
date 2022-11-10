@@ -1,12 +1,13 @@
-package nuclearscience;
+package nuclearscience.registers;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import nuclearscience.References;
 
-public class SoundRegister {
+public class NuclearScienceSounds {
 	public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, References.ID);
 	public static final RegistryObject<SoundEvent> SOUND_TURBINE = SOUNDS.register("turbine", () -> new SoundEvent(new ResourceLocation(References.ID + ":turbine")));
 	public static final RegistryObject<SoundEvent> SOUND_NUCLEARBOILER = SOUNDS.register("nuclearboiler", () -> new SoundEvent(new ResourceLocation(References.ID + ":nuclearboiler")));

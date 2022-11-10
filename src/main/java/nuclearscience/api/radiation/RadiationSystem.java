@@ -23,10 +23,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.References;
 import nuclearscience.common.item.ItemGeigerCounter;
 import nuclearscience.common.item.ItemHazmatArmor;
+import nuclearscience.registers.NuclearScienceBlocks;
 
 @EventBusSubscriber(modid = References.ID, bus = Bus.FORGE)
 public class RadiationSystem {
@@ -48,7 +48,7 @@ public class RadiationSystem {
 			if (!curr.equals(next)) {
 				curr = next;
 				BlockState state = world.getBlockState(curr);
-				lastHard = hard = (state.getBlock() == DeferredRegisters.blocklead ? 20000 : state.getDestroySpeed(world, curr)) / (world.getFluidState(curr).isEmpty() ? 1 : 50.0);
+				lastHard = hard = (state.getBlock() == NuclearScienceBlocks.blocklead ? 20000 : state.getDestroySpeed(world, curr)) / (world.getFluidState(curr).isEmpty() ? 1 : 50.0);
 			}
 			modifier += hard / 4.5f;
 			checks--;

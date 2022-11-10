@@ -11,8 +11,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.SimpleContainerData;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.common.tile.TileNuclearBoiler;
+import nuclearscience.registers.NuclearScienceMenuTypes;
 
 public class ContainerNuclearBoiler extends GenericContainerBlockEntity<TileNuclearBoiler> {
 
@@ -23,7 +23,7 @@ public class ContainerNuclearBoiler extends GenericContainerBlockEntity<TileNucl
 	}
 
 	public ContainerNuclearBoiler(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
-		super(DeferredRegisters.CONTAINER_NUCLEARBOILER.get(), id, playerinv, inventory, inventorydata);
+		super(NuclearScienceMenuTypes.CONTAINER_NUCLEARBOILER.get(), id, playerinv, inventory, inventorydata);
 	}
 
 	public ContainerNuclearBoiler(MenuType<?> type, int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {

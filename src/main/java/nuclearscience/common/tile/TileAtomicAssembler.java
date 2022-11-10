@@ -17,21 +17,23 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.ShulkerBoxBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.CapabilityItemHandler;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerAtomicAssembler;
 import nuclearscience.common.settings.Constants;
+import nuclearscience.registers.NuclearScienceBlockTypes;
+import nuclearscience.registers.NuclearScienceBlocks;
+import nuclearscience.registers.NuclearScienceItems;
 
 public class TileAtomicAssembler extends GenericTile {
 	public int progress = 0;
 
 	public TileAtomicAssembler(BlockPos pos, BlockState state) {
-		super(DeferredRegisters.TILE_ATOMICASSEMBLER.get(), pos, state);
+		super(NuclearScienceBlockTypes.TILE_ATOMICASSEMBLER.get(), pos, state);
 		addComponent(new ComponentDirection());
 		addComponent(new ComponentTickable().tickServer(this::tickServer).tickCommon(this::tickCommon));
 		addComponent(new ComponentPacketHandler().guiPacketWriter(this::writeGuiPacket).guiPacketReader(this::readGuiPacket));
 		addComponent(new ComponentElectrodynamic(this).maxJoules(Constants.ATOMICASSEMBLER_USAGE_PER_TICK * 20).voltage(Constants.ATOMICASSEMBLER_VOLTAGE).input(Direction.DOWN));
 		// The slot == 6 has to be there to allow items into the input slot.
-		addComponent(new ComponentInventory(this).size(8).faceSlots(Direction.UP, 0, 1, 2, 3, 4, 5, 6).slotFaces(6, Direction.DOWN, Direction.WEST, Direction.SOUTH, Direction.NORTH, Direction.EAST).valid((slot, stack, i) -> slot == 6 || slot < 6 && stack.is(DeferredRegisters.ITEM_CELLDARKMATTER.get())).shouldSendInfo());
+		addComponent(new ComponentInventory(this).size(8).faceSlots(Direction.UP, 0, 1, 2, 3, 4, 5, 6).slotFaces(6, Direction.DOWN, Direction.WEST, Direction.SOUTH, Direction.NORTH, Direction.EAST).valid((slot, stack, i) -> slot == 6 || slot < 6 && stack.is(NuclearScienceItems.ITEM_CELLDARKMATTER.get())).shouldSendInfo());
 		addComponent(new ComponentContainerProvider("container.atomicassembler").createMenu((id, player) -> new ContainerAtomicAssembler(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 	}
 
@@ -40,13 +42,13 @@ public class TileAtomicAssembler extends GenericTile {
 		ComponentElectrodynamic electro = getComponent(ComponentType.Electrodynamic);
 		ItemStack input = inv.getItem(6);
 		ItemStack output = inv.getItem(7);
-		boolean validItem = (ItemStack.isSame(input, output) && output.getCount() + 1 <= output.getMaxStackSize() || output.isEmpty()) && !input.isEmpty() && !ItemUtils.testItems(input.getItem(), DeferredRegisters.ITEM_CELLDARKMATTER.get()) && !input.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).isPresent();
-		validItem = validItem && !(input.getItem() instanceof BlockItem bitem && bitem.getBlock() instanceof ShulkerBoxBlock) && input.getItem() != DeferredRegisters.blockQuantumCapacitor.asItem();
+		boolean validItem = (ItemStack.isSame(input, output) && output.getCount() + 1 <= output.getMaxStackSize() || output.isEmpty()) && !input.isEmpty() && !ItemUtils.testItems(input.getItem(), NuclearScienceItems.ITEM_CELLDARKMATTER.get()) && !input.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).isPresent();
+		validItem = validItem && !(input.getItem() instanceof BlockItem bitem && bitem.getBlock() instanceof ShulkerBoxBlock) && input.getItem() != NuclearScienceBlocks.blockQuantumCapacitor.asItem();
 		boolean canProcess = electro.getJoulesStored() >= Constants.ATOMICASSEMBLER_USAGE_PER_TICK && validItem;
 		if (canProcess) {
 			for (int index = 0; index < 6; index++) {
 				ItemStack dmSlot = inv.getItem(index);
-				if (dmSlot.is(DeferredRegisters.ITEM_CELLDARKMATTER.get())) {
+				if (dmSlot.is(NuclearScienceItems.ITEM_CELLDARKMATTER.get())) {
 					if (dmSlot.getDamageValue() >= dmSlot.getMaxDamage()) {
 						inv.setItem(index, ItemStack.EMPTY);
 					}
@@ -69,7 +71,7 @@ public class TileAtomicAssembler extends GenericTile {
 			progress = 0;
 			for (int index = 0; index < 6; index++) {
 				ItemStack dmSlot = inv.getItem(index);
-				if (dmSlot.is(DeferredRegisters.ITEM_CELLDARKMATTER.get())) {
+				if (dmSlot.is(NuclearScienceItems.ITEM_CELLDARKMATTER.get())) {
 					if (dmSlot.getDamageValue() >= dmSlot.getMaxDamage()) {
 						inv.setItem(index, ItemStack.EMPTY);
 					}

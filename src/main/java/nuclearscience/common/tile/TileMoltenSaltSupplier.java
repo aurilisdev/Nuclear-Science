@@ -18,21 +18,23 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerMoltenSaltSupplier;
 import nuclearscience.common.settings.Constants;
+import nuclearscience.registers.NuclearScienceBlockTypes;
+import nuclearscience.registers.NuclearScienceBlocks;
+import nuclearscience.registers.NuclearScienceItems;
 
 public class TileMoltenSaltSupplier extends GenericTile {
 
 	protected CachedTileOutput output;
 
 	public TileMoltenSaltSupplier(BlockPos pos, BlockState state) {
-		super(DeferredRegisters.TILE_MOLTENSALTSUPPLIER.get(), pos, state);
+		super(NuclearScienceBlockTypes.TILE_MOLTENSALTSUPPLIER.get(), pos, state);
 		addComponent(new ComponentDirection());
 		addComponent(new ComponentTickable().tickServer(this::tickServer));
 		addComponent(new ComponentPacketHandler());
 		addComponent(new ComponentElectrodynamic(this).voltage(Constants.MOLTENSALTSUPPLIER_VOLTAGE).extractPower((x, y) -> TransferPack.EMPTY).input(Direction.UP).input(Direction.DOWN).maxJoules(Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK * 20));
-		addComponent(new ComponentInventory(this).size(1).inputs(1).slotFaces(0, Direction.values()).valid((slot, stack, i) -> stack.getItem() == DeferredRegisters.ITEM_LIFHT4PUF3.get()));
+		addComponent(new ComponentInventory(this).size(1).inputs(1).slotFaces(0, Direction.values()).valid((slot, stack, i) -> stack.getItem() == NuclearScienceItems.ITEM_LIFHT4PUF3.get()));
 		addComponent(new ComponentContainerProvider("container.moltensaltsupplier").createMenu((id, player) -> new ContainerMoltenSaltSupplier(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 	}
 
@@ -105,6 +107,6 @@ public class TileMoltenSaltSupplier extends GenericTile {
 		shape = Shapes.join(shape, Shapes.box(0.125, 0.6875, 0.1875, 0.1875, 0.75, 0.25), BooleanOp.OR);
 		shape = Shapes.join(shape, Shapes.box(0.1875, 0.0625, 0.3125, 0.25, 0.125, 0.375), BooleanOp.OR);
 		shape = Shapes.join(shape, Shapes.box(0.1875, 0.0625, 0.625, 0.25, 0.125, 0.6875), BooleanOp.OR);
-		VoxelShapes.registerShape(DeferredRegisters.blockMoltenSaltSupplier, shape, Direction.EAST);
+		VoxelShapes.registerShape(NuclearScienceBlocks.blockMoltenSaltSupplier, shape, Direction.EAST);
 	}
 }

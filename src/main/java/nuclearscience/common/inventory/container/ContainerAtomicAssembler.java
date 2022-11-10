@@ -8,8 +8,9 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.common.tile.TileAtomicAssembler;
+import nuclearscience.registers.NuclearScienceItems;
+import nuclearscience.registers.NuclearScienceMenuTypes;
 
 public class ContainerAtomicAssembler extends GenericContainerBlockEntity<TileAtomicAssembler> {
 
@@ -18,18 +19,18 @@ public class ContainerAtomicAssembler extends GenericContainerBlockEntity<TileAt
 	}
 
 	public ContainerAtomicAssembler(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
-		super(DeferredRegisters.CONTAINER_ATOMICASSEMBLER.get(), id, playerinv, inventory, inventorydata);
+		super(NuclearScienceMenuTypes.CONTAINER_ATOMICASSEMBLER.get(), id, playerinv, inventory, inventorydata);
 	}
 
 	@Override
 	public void addInventorySlots(Container inv, Inventory playerinv) {
 		playerInvOffset = 64;
-		addSlot(new SlotRestricted(inv, nextIndex(), 60 + 18 * 3 / 2, 40, DeferredRegisters.ITEM_CELLDARKMATTER.get()));
-		addSlot(new SlotRestricted(inv, nextIndex(), 33, 56, DeferredRegisters.ITEM_CELLDARKMATTER.get()));
-		addSlot(new SlotRestricted(inv, nextIndex(), 114 + 27, 56, DeferredRegisters.ITEM_CELLDARKMATTER.get()));
-		addSlot(new SlotRestricted(inv, nextIndex(), 33, 88, DeferredRegisters.ITEM_CELLDARKMATTER.get()));
-		addSlot(new SlotRestricted(inv, nextIndex(), 114 + 27, 88, DeferredRegisters.ITEM_CELLDARKMATTER.get()));
-		addSlot(new SlotRestricted(inv, nextIndex(), 60 + 18 * 3 / 2, 103, DeferredRegisters.ITEM_CELLDARKMATTER.get()));
+		addSlot(new SlotRestricted(inv, nextIndex(), 60 + 18 * 3 / 2, 40, NuclearScienceItems.ITEM_CELLDARKMATTER.get()));
+		addSlot(new SlotRestricted(inv, nextIndex(), 33, 56, NuclearScienceItems.ITEM_CELLDARKMATTER.get()));
+		addSlot(new SlotRestricted(inv, nextIndex(), 114 + 27, 56, NuclearScienceItems.ITEM_CELLDARKMATTER.get()));
+		addSlot(new SlotRestricted(inv, nextIndex(), 33, 88, NuclearScienceItems.ITEM_CELLDARKMATTER.get()));
+		addSlot(new SlotRestricted(inv, nextIndex(), 114 + 27, 88, NuclearScienceItems.ITEM_CELLDARKMATTER.get()));
+		addSlot(new SlotRestricted(inv, nextIndex(), 60 + 18 * 3 / 2, 103, NuclearScienceItems.ITEM_CELLDARKMATTER.get()));
 
 		addSlot(new SlotGeneric(inv, nextIndex(), 60, 72));
 		addSlot(new SlotGeneric(inv, nextIndex(), 114, 72));

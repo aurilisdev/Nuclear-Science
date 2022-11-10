@@ -8,7 +8,7 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import nuclearscience.DeferredRegisters;
+import nuclearscience.registers.NuclearScienceItems;
 
 public class EffectRadiation extends MobEffect {
 
@@ -35,7 +35,7 @@ public class EffectRadiation extends MobEffect {
 	@Override
 	public List<ItemStack> getCurativeItems() {
 		ArrayList<ItemStack> ret = new ArrayList<>();
-		ret.add(new ItemStack(DeferredRegisters.ITEM_ANTIDOTE.get()));
+		ret.add(new ItemStack(NuclearScienceItems.ITEM_ANTIDOTE.get()));
 		return ret;
 	}
 

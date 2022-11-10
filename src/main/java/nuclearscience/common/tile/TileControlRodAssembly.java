@@ -9,7 +9,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import nuclearscience.DeferredRegisters;
+import nuclearscience.registers.NuclearScienceBlockTypes;
 
 public class TileControlRodAssembly extends GenericTile {
 
@@ -18,7 +18,7 @@ public class TileControlRodAssembly extends GenericTile {
 	public Direction direction = Direction.DOWN;
 
 	public TileControlRodAssembly(BlockPos pos, BlockState state) {
-		super(DeferredRegisters.TILE_CONTROLRODASSEMBLY.get(), pos, state);
+		super(NuclearScienceBlockTypes.TILE_CONTROLRODASSEMBLY.get(), pos, state);
 		addComponent(new ComponentTickable().tickServer(this::tickServer));
 		addComponent(new ComponentPacketHandler().customPacketWriter(this::writePacket).customPacketReader(this::readPacket));
 	}

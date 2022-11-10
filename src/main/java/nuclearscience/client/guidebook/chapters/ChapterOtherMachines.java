@@ -10,12 +10,12 @@ import electrodynamics.client.guidebook.utils.TextWrapperObject;
 import electrodynamics.client.guidebook.utils.components.Chapter;
 import electrodynamics.client.guidebook.utils.components.Page;
 import net.minecraft.ChatFormatting;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.References;
+import nuclearscience.registers.NuclearScienceBlocks;
 
 public class ChapterOtherMachines extends Chapter {
 
-	private static final ItemWrapperObject LOGO = new ItemWrapperObject(17, 60, 2.0F, ItemUtils.fromBlock(DeferredRegisters.blockAtomicAssembler));
+	private static final ItemWrapperObject LOGO = new ItemWrapperObject(17, 60, 2.0F, ItemUtils.fromBlock(NuclearScienceBlocks.blockAtomicAssembler));
 
 	@Override
 	protected List<Page> genPages() {
@@ -48,7 +48,7 @@ public class ChapterOtherMachines extends Chapter {
 				new TextWrapperObject(10, 180, 4210752, "guidebook.nuclearscience.chapter.othermachines.p1l11") },
 				new ItemWrapperObject[] {
 						//
-						new ItemWrapperObject(17, 50, 2.0F, ItemUtils.fromBlock(DeferredRegisters.blockRadioisotopeGenerator)) }));
+						new ItemWrapperObject(17, 50, 2.0F, ItemUtils.fromBlock(NuclearScienceBlocks.blockRadioisotopeGenerator)) }));
 
 		pages.add(new Page(new TextWrapperObject[] {
 				//
@@ -77,7 +77,7 @@ public class ChapterOtherMachines extends Chapter {
 				new TextWrapperObject(10, 180, 4210752, "guidebook.nuclearscience.chapter.othermachines.p2l11") },
 				new ItemWrapperObject[] {
 						//
-						new ItemWrapperObject(17, 50, 2.0F, ItemUtils.fromBlock(DeferredRegisters.blockGasCentrifuge)) }));
+						new ItemWrapperObject(17, 50, 2.0F, ItemUtils.fromBlock(NuclearScienceBlocks.blockGasCentrifuge)) }));
 
 		pages.add(new Page(new TextWrapperObject[] { new TextWrapperObject(10, 40, 4210752, "guidebook.nuclearscience.chapter.othermachines.p3l1"),
 				//
@@ -142,7 +142,7 @@ public class ChapterOtherMachines extends Chapter {
 				new TextWrapperObject(10, 180, 4210752, "guidebook.nuclearscience.chapter.othermachines.p5l11") },
 				new ItemWrapperObject[] {
 						//
-						new ItemWrapperObject(17, 50, 2.0F, ItemUtils.fromBlock(DeferredRegisters.blockQuantumCapacitor)) }));
+						new ItemWrapperObject(17, 50, 2.0F, ItemUtils.fromBlock(NuclearScienceBlocks.blockQuantumCapacitor)) }));
 
 		pages.add(new Page(new TextWrapperObject[] {
 				//
@@ -171,7 +171,7 @@ public class ChapterOtherMachines extends Chapter {
 				new TextWrapperObject(10, 180, 4210752, "guidebook.nuclearscience.chapter.othermachines.p6l11") },
 				new ItemWrapperObject[] {
 						//
-						new ItemWrapperObject(17, 50, 2.0F, ItemUtils.fromBlock(DeferredRegisters.blockTeleporter)) }));
+						new ItemWrapperObject(17, 50, 2.0F, ItemUtils.fromBlock(NuclearScienceBlocks.blockTeleporter)) }));
 
 		pages.add(new Page(new TextWrapperObject[] { new TextWrapperObject(10, 40, 4210752, "guidebook.nuclearscience.chapter.othermachines.p7l1"),
 				//
@@ -214,7 +214,7 @@ public class ChapterOtherMachines extends Chapter {
 				new TextWrapperObject(10, 180, 4210752, "guidebook.nuclearscience.chapter.othermachines.p8l11") },
 				new ItemWrapperObject[] {
 						//
-						new ItemWrapperObject(17, 50, 2.0F, ItemUtils.fromBlock(DeferredRegisters.blockAtomicAssembler)) }));
+						new ItemWrapperObject(17, 50, 2.0F, ItemUtils.fromBlock(NuclearScienceBlocks.blockAtomicAssembler)) }));
 
 		pages.add(new Page(new ImageWrapperObject[] {
 				//

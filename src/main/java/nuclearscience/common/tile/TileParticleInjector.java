@@ -17,21 +17,22 @@ import net.minecraft.world.entity.Entity.RemovalReason;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.common.entity.EntityParticle;
 import nuclearscience.common.inventory.container.ContainerParticleInjector;
 import nuclearscience.common.settings.Constants;
+import nuclearscience.registers.NuclearScienceBlockTypes;
+import nuclearscience.registers.NuclearScienceItems;
 
 public class TileParticleInjector extends GenericTile {
 	private EntityParticle[] particles = new EntityParticle[2];
 	private long timeSinceSpawn = 0;
 
 	public TileParticleInjector(BlockPos pos, BlockState state) {
-		super(DeferredRegisters.TILE_PARTICLEINJECTOR.get(), pos, state);
+		super(NuclearScienceBlockTypes.TILE_PARTICLEINJECTOR.get(), pos, state);
 		addComponent(new ComponentTickable());
 		addComponent(new ComponentDirection());
 		addComponent(new ComponentPacketHandler());
-		addComponent(new ComponentInventory(this).size(3).inputs(2).outputs(1).valid((index, stack, i) -> index != 1 || stack.getItem() == DeferredRegisters.ITEM_CELLELECTROMAGNETIC.get()).relativeFaceSlots(Direction.UP, 0, 1).relativeFaceSlots(Direction.WEST, 0, 1).relativeSlotFaces(2, Direction.DOWN, Direction.EAST));
+		addComponent(new ComponentInventory(this).size(3).inputs(2).outputs(1).valid((index, stack, i) -> index != 1 || stack.getItem() == NuclearScienceItems.ITEM_CELLELECTROMAGNETIC.get()).relativeFaceSlots(Direction.UP, 0, 1).relativeFaceSlots(Direction.WEST, 0, 1).relativeSlotFaces(2, Direction.DOWN, Direction.EAST));
 		addComponent(new ComponentElectrodynamic(this).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 8).relativeInput(Direction.NORTH).maxJoules(Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE * 10));
 		addComponent(new ComponentProcessor(this).canProcess(this::canProcess).usage(Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE).process(this::process));
 		addComponent(new ComponentContainerProvider("container.particleinjector").createMenu((id, player) -> new ContainerParticleInjector(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
@@ -77,19 +78,19 @@ public class TileParticleInjector extends GenericTile {
 				particles[0] = particles[1] = null;
 				double mod = level.random.nextDouble();
 				if (speedOfMax > 0.999) {
-					if (resultStack.getItem() == DeferredRegisters.ITEM_CELLDARKMATTER.get()) {
+					if (resultStack.getItem() == NuclearScienceItems.ITEM_CELLDARKMATTER.get()) {
 						resultStack.setCount(resultStack.getCount() + 1);
 						cellStack.shrink(1);
 					} else if (resultStack.isEmpty()) {
-						inv.setItem(2, new ItemStack(DeferredRegisters.ITEM_CELLDARKMATTER.get()));
+						inv.setItem(2, new ItemStack(NuclearScienceItems.ITEM_CELLDARKMATTER.get()));
 						cellStack.shrink(1);
 					}
 				} else if (speedOfMax > mod) {
-					if (resultStack.getItem() == DeferredRegisters.ITEM_CELLANTIMATTERSMALL.get()) {
+					if (resultStack.getItem() == NuclearScienceItems.ITEM_CELLANTIMATTERSMALL.get()) {
 						resultStack.setCount(resultStack.getCount() + 1);
 						cellStack.shrink(1);
 					} else if (resultStack.isEmpty()) {
-						inv.setItem(2, new ItemStack(DeferredRegisters.ITEM_CELLANTIMATTERSMALL.get()));
+						inv.setItem(2, new ItemStack(NuclearScienceItems.ITEM_CELLANTIMATTERSMALL.get()));
 						cellStack.shrink(1);
 					}
 				}

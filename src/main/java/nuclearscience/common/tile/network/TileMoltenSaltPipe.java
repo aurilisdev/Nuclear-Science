@@ -3,16 +3,16 @@ package nuclearscience.common.tile.network;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.BlockState;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.common.block.connect.BlockMoltenSaltPipe;
 import nuclearscience.common.block.subtype.SubtypeMoltenSaltPipe;
 import nuclearscience.common.tile.generic.GenericTileMoltenSaltPipe;
+import nuclearscience.registers.NuclearScienceBlockTypes;
 
 public class TileMoltenSaltPipe extends GenericTileMoltenSaltPipe {
 	public double transmit = 0;
 
 	public TileMoltenSaltPipe(BlockPos pos, BlockState state) {
-		super(DeferredRegisters.TILE_MOLTENSALTPIPE.get(), pos, state);
+		super(NuclearScienceBlockTypes.TILE_MOLTENSALTPIPE.get(), pos, state);
 	}
 
 	public SubtypeMoltenSaltPipe pipe = null;

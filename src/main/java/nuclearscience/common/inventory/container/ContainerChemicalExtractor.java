@@ -12,8 +12,8 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.FurnaceResultSlot;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.SimpleContainerData;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.common.tile.TileChemicalExtractor;
+import nuclearscience.registers.NuclearScienceMenuTypes;
 
 public class ContainerChemicalExtractor extends GenericContainerBlockEntity<TileChemicalExtractor> {
 
@@ -24,7 +24,7 @@ public class ContainerChemicalExtractor extends GenericContainerBlockEntity<Tile
 	}
 
 	public ContainerChemicalExtractor(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
-		super(DeferredRegisters.CONTAINER_CHEMICALEXTRACTOR.get(), id, playerinv, inventory, inventorydata);
+		super(NuclearScienceMenuTypes.CONTAINER_CHEMICALEXTRACTOR.get(), id, playerinv, inventory, inventorydata);
 	}
 
 	public ContainerChemicalExtractor(MenuType<?> type, int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
