@@ -1,6 +1,6 @@
 package nuclearscience.registers;
 
-import static electrodynamics.registers.UnifiedElectrodynamicsRegister.getSafeBlock;
+import static nuclearscience.registers.UnifiedNuclearScienceRegister.getSafeBlock;
 import static electrodynamics.registers.UnifiedElectrodynamicsRegister.supplier;
 import static nuclearscience.registers.NuclearScienceBlocks.blockAtomicAssembler;
 import static nuclearscience.registers.NuclearScienceBlocks.blockChemicalExtractor;

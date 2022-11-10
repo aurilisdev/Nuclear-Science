@@ -70,8 +70,6 @@ public class NuclearScience {
 
 	@SubscribeEvent
 	public static void registerEffects(RegisterEvent event) {
-		if (event.getRegistryKey() == ForgeRegistries.MOB_EFFECTS) {
-			event.<MobEffect>getForgeRegistry().register("radiation", EffectRadiation.INSTANCE);
-		}
+		event.<MobEffect>register(ForgeRegistries.Keys.MOB_EFFECTS, helper -> helper.register("radiation", EffectRadiation.INSTANCE));
 	}
 }

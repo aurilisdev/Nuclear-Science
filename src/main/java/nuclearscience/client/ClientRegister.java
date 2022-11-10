@@ -2,7 +2,6 @@ package nuclearscience.client;
 
 import electrodynamics.client.guidebook.ScreenGuidebook;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -42,7 +41,6 @@ import nuclearscience.client.screen.ScreenRadioactiveProcessor;
 import nuclearscience.client.screen.ScreenRadioisotopeGenerator;
 import nuclearscience.client.screen.ScreenReactorCore;
 import nuclearscience.registers.NuclearScienceBlockTypes;
-import nuclearscience.registers.NuclearScienceBlocks;
 import nuclearscience.registers.NuclearScienceEntities;
 import nuclearscience.registers.NuclearScienceMenuTypes;
 
@@ -113,14 +111,6 @@ public class ClientRegister {
 		MenuScreens.register(NuclearScienceMenuTypes.CONTAINER_MSRREACTORCORE.get(), ScreenMSRReactorCore::new);
 		MenuScreens.register(NuclearScienceMenuTypes.CONTAINER_MOLTENSALTSUPPLIER.get(), ScreenMoltenSaltSupplier::new);
 		MenuScreens.register(NuclearScienceMenuTypes.CONTAINER_ATOMICASSEMBLER.get(), ScreenAtomicAssembler::new);
-
-		ItemBlockRenderTypes.setRenderLayer(NuclearScienceBlocks.blockChemicalExtractor, ClientRegister::shouldMultilayerRender);
-		ItemBlockRenderTypes.setRenderLayer(NuclearScienceBlocks.blockNuclearBoiler, ClientRegister::shouldMultilayerRender);
-		ItemBlockRenderTypes.setRenderLayer(NuclearScienceBlocks.blockReactorCore, ClientRegister::shouldMultilayerRender);
-		ItemBlockRenderTypes.setRenderLayer(NuclearScienceBlocks.blockAtomicAssembler, ClientRegister::shouldMultilayerRender);
-		ItemBlockRenderTypes.setRenderLayer(NuclearScienceBlocks.blockElectromagneticGlass, RenderType.cutout());
-		ItemBlockRenderTypes.setRenderLayer(NuclearScienceBlocks.blockElectromagneticBooster, RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(NuclearScienceBlocks.blockPlasma, RenderType.translucent());
 
 		ScreenGuidebook.addGuidebookModule(new ModuleNuclearScience());
 	}
