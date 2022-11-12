@@ -1,6 +1,5 @@
 package nuclearscience.registers;
 
-import static nuclearscience.registers.UnifiedNuclearScienceRegister.getSafeBlock;
 import static electrodynamics.registers.UnifiedElectrodynamicsRegister.supplier;
 import static nuclearscience.registers.NuclearScienceBlocks.blockAtomicAssembler;
 import static nuclearscience.registers.NuclearScienceBlocks.blockChemicalExtractor;
@@ -30,6 +29,7 @@ import static nuclearscience.registers.NuclearScienceBlocks.blockSiren;
 import static nuclearscience.registers.NuclearScienceBlocks.blockTeleporter;
 import static nuclearscience.registers.NuclearScienceBlocks.blockTurbine;
 import static nuclearscience.registers.NuclearScienceBlocks.blocklead;
+import static nuclearscience.registers.UnifiedNuclearScienceRegister.getSafeBlock;
 
 import java.util.HashMap;
 
