@@ -23,7 +23,7 @@ public class RenderReactorCore implements BlockEntityRenderer<TileReactorCore> {
 		ModelBlockRenderer.enableCaching();
 		BakedModel fuelrod = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_REACTORFUELROD);
 		if (tileEntityIn.fuelCount > 0) {
-			for (int i = 1; i <= tileEntityIn.fuelCount; i++) {
+			for (int i = 1; i <= Math.min(4, tileEntityIn.fuelCount); i++) {
 				matrixStackIn.pushPose();
 				switch (i) {
 				case 1:
