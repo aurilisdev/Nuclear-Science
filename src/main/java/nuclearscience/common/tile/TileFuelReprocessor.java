@@ -45,7 +45,7 @@ public class TileFuelReprocessor extends GenericTile {
 	}
 
 	public void tickClient(ComponentTickable tickable) {
-		boolean running = getProcessor(0).operatingTicks > 0;
+		boolean running = getProcessor(0).operatingTicks.get() > 0;
 		if (running && tickable.getTicks() % 100 == 0) {
 			SoundAPI.playSound(ElectrodynamicsSounds.SOUND_MINERALCRUSHER.get(), SoundSource.BLOCKS, 1, 1, worldPosition);
 		}

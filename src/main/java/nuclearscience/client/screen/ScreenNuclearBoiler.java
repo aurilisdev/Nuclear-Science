@@ -26,8 +26,8 @@ public class ScreenNuclearBoiler extends GenericScreen<ContainerNuclearBoiler> {
 			GenericTile furnace = container.getHostFromIntArray();
 			if (furnace != null) {
 				ComponentProcessor processor = furnace.getComponent(ComponentType.Processor);
-				if (processor.operatingTicks > 0) {
-					return Math.min(1.0, processor.operatingTicks / (processor.requiredTicks / 2.0));
+				if (processor.operatingTicks.get() > 0) {
+					return Math.min(1.0, processor.operatingTicks.get() / (processor.requiredTicks.get() / 2.0));
 				}
 			}
 			return 0;
@@ -36,8 +36,8 @@ public class ScreenNuclearBoiler extends GenericScreen<ContainerNuclearBoiler> {
 			GenericTile furnace = container.getHostFromIntArray();
 			if (furnace != null) {
 				ComponentProcessor processor = furnace.getComponent(ComponentType.Processor);
-				if (processor.operatingTicks > processor.requiredTicks / 2.0) {
-					return Math.min(1.0, (processor.operatingTicks - processor.requiredTicks / 2.0) / (processor.requiredTicks / 2.0));
+				if (processor.operatingTicks.get() > processor.requiredTicks.get() / 2.0) {
+					return Math.min(1.0, (processor.operatingTicks.get() - processor.requiredTicks.get() / 2.0) / (processor.requiredTicks.get() / 2.0));
 				}
 			}
 			return 0;

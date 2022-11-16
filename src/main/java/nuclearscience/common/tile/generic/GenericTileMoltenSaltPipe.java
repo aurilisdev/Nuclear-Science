@@ -37,8 +37,8 @@ public abstract class GenericTileMoltenSaltPipe extends GenericTile implements I
 		HashSet<IMoltenSaltPipe> set = new HashSet<>();
 		for (Direction dir : Direction.values()) {
 			BlockEntity facing = level.getBlockEntity(new BlockPos(worldPosition).relative(dir));
-			if (facing instanceof IMoltenSaltPipe) {
-				set.add((IMoltenSaltPipe) facing);
+			if (facing instanceof IMoltenSaltPipe pipe) {
+				set.add(pipe);
 			}
 		}
 		return set;

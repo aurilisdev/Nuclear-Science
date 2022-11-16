@@ -39,7 +39,7 @@ public class RenderFuelReprocessor implements BlockEntityRenderer<TileFuelReproc
 		default:
 			break;
 		}
-		if (tile.getProcessor(0).operatingTicks > 0) {
+		if (tile.getProcessor(0).operatingTicks.get() > 0) {
 			BakedModel on = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_FUELREPROCESSOR_ON);
 			RenderingUtils.renderModel(on, tile, RenderType.solid(), matrixStack, buffer, combinedLightIn, combinedOverlayIn);
 		} else {

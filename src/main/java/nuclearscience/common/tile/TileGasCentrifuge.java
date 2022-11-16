@@ -83,7 +83,7 @@ public class TileGasCentrifuge extends GenericTile {
 	public void process(ComponentProcessor processor) {
 		ComponentInventory inv = getComponent(ComponentType.Inventory);
 		ComponentFluidHandlerMulti tank = getComponent(ComponentType.FluidHandler);
-		spinSpeed = (int) processor.operatingSpeed;
+		spinSpeed = processor.operatingSpeed.get().intValue();
 		this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();
 		int processed = (int) (REQUIRED / 60.0);
 		for (Fluid fluid : ForgeRegistries.FLUIDS.tags().getTag(NuclearScienceTags.Fluids.URANIUM_HEXAFLUORIDE)) {

@@ -41,7 +41,7 @@ public class RenderRadioactiveProcessor implements BlockEntityRenderer<TileRadio
 		default:
 			break;
 		}
-		if (tile.<ComponentProcessor>getComponent(ComponentType.Processor).operatingTicks > 0) {
+		if (tile.<ComponentProcessor>getComponent(ComponentType.Processor).operatingTicks.get() > 0) {
 			BakedModel on = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_RADIOACTIVEPROCESSOR_ON);
 			RenderingUtils.renderModel(on, tile, RenderType.solid(), matrixStack, buffer, combinedLightIn, combinedOverlayIn);
 		} else {
