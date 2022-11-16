@@ -27,8 +27,8 @@ public class PacketSetQuantumCapacitorData {
 			if (world != null) {
 				TileQuantumCapacitor tile = (TileQuantumCapacitor) world.getBlockEntity(message.pos);
 				if (tile != null) {
-					tile.outputJoules = message.outputJoules;
-					tile.frequency = message.frequency;
+					tile.outputJoules.set(message.outputJoules);
+					tile.frequency.set(message.frequency);
 				}
 			}
 		});

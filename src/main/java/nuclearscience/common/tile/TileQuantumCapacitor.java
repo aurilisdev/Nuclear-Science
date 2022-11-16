@@ -3,6 +3,8 @@ package nuclearscience.common.tile;
 import java.util.UUID;
 
 import electrodynamics.api.capability.ElectrodynamicsCapabilities;
+import electrodynamics.prefab.properties.Property;
+import electrodynamics.prefab.properties.PropertyType;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
@@ -15,7 +17,6 @@ import electrodynamics.prefab.utilities.object.CachedTileOutput;
 import electrodynamics.prefab.utilities.object.TransferPack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Explosion.BlockInteraction;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -30,16 +31,16 @@ import nuclearscience.registers.NuclearScienceBlockTypes;
 public class TileQuantumCapacitor extends GenericTile implements IEnergyStorage {
 	public static final double DEFAULT_MAX_JOULES = Double.MAX_VALUE;
 	public static final double DEFAULT_VOLTAGE = 1920.0;
-	public double outputJoules = 359.0;
-	public int frequency = 0;
-	public UUID uuid = UUID.randomUUID();
+	public Property<Double> outputJoules = property(new Property<Double>(PropertyType.Double, "outputJoules")).set(359.0).save();
+	public Property<Integer> frequency = property(new Property<Integer>(PropertyType.Integer, "frequency")).set(0).save();
+	public Property<UUID> uuid = property(new Property<UUID>(PropertyType.UUID, "uuid")).set(UUID.randomUUID()).save();
 	private CachedTileOutput outputCache;
 	private CachedTileOutput outputCache2;
 
 	public TileQuantumCapacitor(BlockPos pos, BlockState state) {
 		super(NuclearScienceBlockTypes.TILE_QUANTUMCAPACITOR.get(), pos, state);
 		addComponent(new ComponentTickable().tickServer(this::tickServer));
-		addComponent(new ComponentPacketHandler().guiPacketReader(this::readGUIPacket).guiPacketWriter(this::writeGUIPacket));
+		addComponent(new ComponentPacketHandler());
 		addComponent(new ComponentElectrodynamic(this).voltage(16 * ElectrodynamicsCapabilities.DEFAULT_VOLTAGE).output(Direction.DOWN).output(Direction.UP).input(Direction.WEST).input(Direction.EAST).input(Direction.SOUTH).input(Direction.NORTH).receivePower(this::receivePower).setJoules(this::setJoulesStored).getJoules(this::getJoulesStored));
 		addComponent(new ComponentInventory(this));
 		addComponent(new ComponentContainerProvider("container.quantumcapacitor").createMenu((id, player) -> new ContainerQuantumCapacitor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
@@ -47,7 +48,7 @@ public class TileQuantumCapacitor extends GenericTile implements IEnergyStorage 
 	}
 
 	public double getOutputJoules() {
-		return outputJoules;
+		return outputJoules.get();
 	}
 
 	public void tickServer(ComponentTickable tickable) {
@@ -63,50 +64,13 @@ public class TileQuantumCapacitor extends GenericTile implements IEnergyStorage 
 		}
 		double joules = getJoulesStored();
 		if (joules > 0 && outputCache.valid()) {
-			double sent = ElectricityUtils.receivePower(outputCache.getSafe(), Direction.DOWN, TransferPack.joulesVoltage(Math.min(joules, outputJoules), DEFAULT_VOLTAGE), false).getJoules();
-			QuantumCapacitorData.get(level).setJoules(uuid, frequency, getJoulesStored() - sent);
+			double sent = ElectricityUtils.receivePower(outputCache.getSafe(), Direction.DOWN, TransferPack.joulesVoltage(Math.min(joules, outputJoules.get()), DEFAULT_VOLTAGE), false).getJoules();
+			QuantumCapacitorData.get(level).setJoules(uuid.get(), frequency.get(), getJoulesStored() - sent);
 		}
 		joules = getJoulesStored();
 		if (joules > 0 && outputCache2.valid()) {
-			double sent = ElectricityUtils.receivePower(outputCache2.getSafe(), Direction.UP, TransferPack.joulesVoltage(Math.min(joules, outputJoules), DEFAULT_VOLTAGE), false).getJoules();
-			QuantumCapacitorData.get(level).setJoules(uuid, frequency, getJoulesStored() - sent);
-		}
-		if (tickable.getTicks() % 50 == 0) {
-			this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendGuiPacketToTracking();
-		}
-	}
-
-	public double joulesClient = 0;
-
-	public void writeGUIPacket(CompoundTag nbt) {
-		nbt.putDouble("joulesClient", getJoulesStored());
-		nbt.putInt("frequency", frequency);
-		nbt.putUUID("uuid", uuid);
-		nbt.putDouble("outputJoules", outputJoules);
-	}
-
-	public void readGUIPacket(CompoundTag nbt) {
-		joulesClient = nbt.getDouble("joulesClient");
-		frequency = nbt.getInt("frequency");
-		uuid = nbt.getUUID("uuid");
-		outputJoules = nbt.getDouble("outputJoules");
-	}
-
-	@Override
-	public void saveAdditional(CompoundTag compound) {
-		super.saveAdditional(compound);
-		compound.putInt("frequency", frequency);
-		compound.putDouble("outputJoules", outputJoules);
-		compound.putUUID("uuid", uuid);
-	}
-
-	@Override
-	public void load(CompoundTag compound) {
-		super.load(compound);
-		outputJoules = compound.getDouble("outputJoules");
-		frequency = compound.getInt("frequency");
-		if (compound.hasUUID("uuid")) {
-			uuid = compound.getUUID("uuid");
+			double sent = ElectricityUtils.receivePower(outputCache2.getSafe(), Direction.UP, TransferPack.joulesVoltage(Math.min(joules, outputJoules.get()), DEFAULT_VOLTAGE), false).getJoules();
+			QuantumCapacitorData.get(level).setJoules(uuid.get(), frequency.get(), getJoulesStored() - sent);
 		}
 	}
 
@@ -129,7 +93,7 @@ public class TileQuantumCapacitor extends GenericTile implements IEnergyStorage 
 				if (transfer.getVoltage() == DEFAULT_VOLTAGE) {
 					joules += received;
 				}
-				QuantumCapacitorData.get(level).setJoules(uuid, frequency, joules);
+				QuantumCapacitorData.get(level).setJoules(uuid.get(), frequency.get(), joules);
 				if (transfer.getVoltage() > DEFAULT_VOLTAGE) {
 					level.setBlockAndUpdate(worldPosition, Blocks.AIR.defaultBlockState());
 					level.explode(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), (float) Math.log10(10 + transfer.getVoltage() / DEFAULT_VOLTAGE), BlockInteraction.DESTROY);
@@ -178,13 +142,13 @@ public class TileQuantumCapacitor extends GenericTile implements IEnergyStorage 
 	public void setJoulesStored(double joules) {
 		QuantumCapacitorData data = QuantumCapacitorData.get(level);
 		if (data != null) {
-			data.setJoules(uuid, frequency, joules);
+			data.setJoules(uuid.get(), frequency.get(), joules);
 		}
 	}
 
 	public double getJoulesStored() {
 		QuantumCapacitorData data = QuantumCapacitorData.get(level);
-		return data == null ? 0 : data.getJoules(uuid, frequency);
+		return data == null ? 0 : data.getJoules(uuid.get(), frequency.get());
 	}
 
 	public double getMaxJoulesStored() {

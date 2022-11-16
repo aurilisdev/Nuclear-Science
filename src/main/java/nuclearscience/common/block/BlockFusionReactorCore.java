@@ -37,13 +37,13 @@ public class BlockFusionReactorCore extends GenericMachineBlock {
 				BlockEntity tile = worldIn.getBlockEntity(pos);
 				if (tile instanceof TileFusionReactorCore core) {
 					boolean tritium = itemInHand == NuclearScienceItems.ITEM_CELLTRITIUM.get();
-					int type = tritium ? core.tritium : core.deuterium;
-					int added = Math.min(inHand.getCount(), Constants.FUSIONREACTOR_MAXSTORAGE - type);
+					int count = tritium ? core.tritium.get() : core.deuterium.get();
+					int added = Math.min(inHand.getCount(), Constants.FUSIONREACTOR_MAXSTORAGE - count);
 					inHand.setCount(inHand.getCount() - added);
 					if (tritium) {
-						core.tritium += added;
+						core.tritium.set(core.tritium.get() + added);
 					} else {
-						core.deuterium += added;
+						core.deuterium.set(core.deuterium.get() + added);
 					}
 				}
 				return InteractionResult.CONSUME;

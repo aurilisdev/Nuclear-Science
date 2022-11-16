@@ -43,9 +43,6 @@ public class TileMoltenSaltSupplier extends GenericTile {
 		if (output == null) {
 			output = new CachedTileOutput(level, worldPosition.relative(dir.getOpposite()));
 		}
-		if (tickable.getTicks() % 50 == 0) {
-			this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendGuiPacketToTracking();
-		}
 		ComponentElectrodynamic electro = getComponent(ComponentType.Electrodynamic);
 		if (electro.getJoulesStored() > Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK) {
 			electro.extractPower(TransferPack.joulesVoltage(Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK, Constants.MOLTENSALTSUPPLIER_VOLTAGE), false);
@@ -54,9 +51,9 @@ public class TileMoltenSaltSupplier extends GenericTile {
 				ItemStack in = this.<ComponentInventory>getComponent(ComponentType.Inventory).getItem(0);
 				if (in.getCount() > 0 && output.valid() && output.getSafe() instanceof TileMSRReactorCore core) {
 					if (core.<ComponentDirection>getComponent(ComponentType.Direction).getDirection() == dir) {
-						if (TileMSRReactorCore.FUEL_CAPACITY - core.currentFuel >= 250) {
+						if (TileMSRReactorCore.FUEL_CAPACITY - core.currentFuel.get() >= 250) {
 							in.shrink(1);
-							core.currentFuel += 250;
+							core.currentFuel.set(core.currentFuel.get() + 250);
 						}
 					}
 				}

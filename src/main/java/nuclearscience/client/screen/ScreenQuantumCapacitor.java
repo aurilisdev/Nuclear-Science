@@ -6,6 +6,8 @@ import electrodynamics.api.electricity.formatting.ChatFormatter;
 import electrodynamics.api.electricity.formatting.DisplayUnit;
 import electrodynamics.prefab.screen.GenericScreen;
 import electrodynamics.prefab.screen.component.ScreenComponentTextInputBar;
+import electrodynamics.prefab.tile.components.ComponentType;
+import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
@@ -132,7 +134,7 @@ public class ScreenQuantumCapacitor extends GenericScreen<ContainerQuantumCapaci
 			font.draw(matrixStack, Component.translatable("gui.machine.current", ChatFormatter.getChatDisplayShort(box.getOutputJoules() * 20.0 / TileQuantumCapacitor.DEFAULT_VOLTAGE, DisplayUnit.AMPERE)), inventoryLabelX, (float) inventoryLabelY - 55, 4210752);
 			font.draw(matrixStack, Component.translatable("gui.machine.transfer", ChatFormatter.getChatDisplayShort(box.getOutputJoules() * 20.0, DisplayUnit.WATT)), inventoryLabelX, (float) inventoryLabelY - 42, 4210752);
 			font.draw(matrixStack, Component.translatable("gui.machine.voltage", ChatFormatter.getChatDisplayShort(TileQuantumCapacitor.DEFAULT_VOLTAGE, DisplayUnit.VOLTAGE)), inventoryLabelX, (float) inventoryLabelY - 29, 4210752);
-			font.draw(matrixStack, Component.translatable("gui.machine.stored", ChatFormatter.getChatDisplayShort(box.joulesClient, DisplayUnit.JOULES) + " / " + ChatFormatter.getChatDisplayShort(TileQuantumCapacitor.DEFAULT_MAX_JOULES, DisplayUnit.JOULES)), inventoryLabelX, (float) inventoryLabelY - 16, 4210752);
+			font.draw(matrixStack, Component.translatable("gui.machine.stored", ChatFormatter.getChatDisplayShort(box.<ComponentElectrodynamic>getComponent(ComponentType.Electrodynamic).getJoulesStored(), DisplayUnit.JOULES) + " / " + ChatFormatter.getChatDisplayShort(TileQuantumCapacitor.DEFAULT_MAX_JOULES, DisplayUnit.JOULES)), inventoryLabelX, (float) inventoryLabelY - 16, 4210752);
 		}
 	}
 }

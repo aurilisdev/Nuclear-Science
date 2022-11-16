@@ -1,8 +1,6 @@
 package nuclearscience.common.block;
 
 import electrodynamics.prefab.block.GenericMachineBlock;
-import electrodynamics.prefab.tile.components.ComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -29,11 +27,10 @@ public class BlockControlRodAssembly extends GenericMachineBlock {
 	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
 		BlockEntity tile = worldIn.getBlockEntity(pos);
 		if (tile instanceof TileControlRodAssembly assembly) {
-			assembly.insertion = assembly.insertion + 10;
-			if (assembly.insertion > 100) {
-				assembly.insertion = 0;
+			assembly.insertion.set(assembly.insertion.get() + 10);
+			if (assembly.insertion.get() > 100) {
+				assembly.insertion.set(0);
 			}
-			assembly.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();
 		}
 		return super.use(state, worldIn, pos, player, handIn, hit);
 	}

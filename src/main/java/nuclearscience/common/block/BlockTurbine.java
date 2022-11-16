@@ -38,7 +38,7 @@ public class BlockTurbine extends GenericEntityBlockWaterloggable {
 	public void onRotate(ItemStack stack, BlockPos pos, Player player) {
 		TileTurbine turbine = (TileTurbine) player.level.getBlockEntity(pos);
 		if (turbine != null) {
-			if (turbine.isCore) {
+			if (turbine.isCore.get()) {
 				turbine.deconstructStructure();
 			} else {
 				turbine.constructStructure();

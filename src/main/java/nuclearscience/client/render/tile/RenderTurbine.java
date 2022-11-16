@@ -20,9 +20,9 @@ public class RenderTurbine implements BlockEntityRenderer<TileTurbine> {
 
 	@Override
 	public void render(TileTurbine tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
-		boolean isCore = tileEntityIn.isCore;
+		boolean isCore = tileEntityIn.isCore.get();
 		BakedModel ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_TURBINEROTORLAYER);
-		double daytime = System.currentTimeMillis() / 5.0 * (tileEntityIn.spinSpeed / 20.0);
+		double daytime = System.currentTimeMillis() / 5.0 * (tileEntityIn.spinSpeed.get() / 20.0);
 		if (!isCore && tileEntityIn.getBlockState().getBlock().getRenderShape(tileEntityIn.getBlockState()) != RenderShape.INVISIBLE) {
 			matrixStackIn.pushPose();
 			matrixStackIn.translate(8 / 16.0, 4.75 / 16.0, 8 / 16.0);

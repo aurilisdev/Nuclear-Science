@@ -25,8 +25,8 @@ public class ScreenMSRReactorCore extends GenericScreen<ContainerMSRReactorCore>
 		super.renderLabels(matrixStack, mouseX, mouseY);
 		TileMSRReactorCore core = menu.getHostFromIntArray();
 		if (core != null) {
-			font.draw(matrixStack, Component.translatable("gui.reactorcore.temperature", (int) core.temperature + " C"), titleLabelX, (float) titleLabelY + 14 * 1, 4210752);
-			if (core.temperature > TileMSRReactorCore.MELTDOWN_TEMPERATURE && System.currentTimeMillis() % 1000 < 500) {
+			font.draw(matrixStack, Component.translatable("gui.reactorcore.temperature", core.temperature.get().intValue() + " C"), titleLabelX, (float) titleLabelY + 14 * 1, 4210752);
+			if (core.temperature.get() > TileMSRReactorCore.MELTDOWN_TEMPERATURE && System.currentTimeMillis() % 1000 < 500) {
 				font.draw(matrixStack, Component.translatable("gui.reactorcore.warning"), titleLabelX, (float) titleLabelY + 55, 16711680);
 			}
 			font.draw(matrixStack, Component.translatable("gui.msrreactorcore.fuel", new DecimalFormat("#.##").format(core.currentFuel)), titleLabelX, (float) titleLabelY + 14 * 2, 4210752);

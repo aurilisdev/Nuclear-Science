@@ -39,7 +39,7 @@ public class ScreenGasCentrifuge extends GenericScreen<ContainerGasCentrifuge> {
 		}, this, 18, 19));
 		components.add(new ScreenComponentGasCentrifuge(() -> {
 			TileGasCentrifuge box = menu.getHostFromIntArray();
-			if (box != null && box.isRunning) {
+			if (box != null && box.isRunning.get()) {
 				// return (box.ticks % 100) / 100.0;
 				return 13;
 			}
@@ -47,19 +47,19 @@ public class ScreenGasCentrifuge extends GenericScreen<ContainerGasCentrifuge> {
 		}, () -> {
 			TileGasCentrifuge boiler = container.getHostFromIntArray();
 			if (boiler != null) {
-				return boiler.stored235 / TileGasCentrifuge.REQUIRED;
+				return boiler.stored235.get() / TileGasCentrifuge.REQUIRED;
 			}
 			return 0;
 		}, () -> {
 			TileGasCentrifuge boiler = container.getHostFromIntArray();
 			if (boiler != null) {
-				return boiler.stored238 / TileGasCentrifuge.REQUIRED;
+				return boiler.stored238.get() / TileGasCentrifuge.REQUIRED;
 			}
 			return 0;
 		}, () -> {
 			TileGasCentrifuge boiler = container.getHostFromIntArray();
 			if (boiler != null) {
-				return boiler.storedWaste / TileGasCentrifuge.REQUIRED;
+				return boiler.storedWaste.get() / TileGasCentrifuge.REQUIRED;
 			}
 			return 0;
 		}, this, 34, 14));
@@ -71,9 +71,9 @@ public class ScreenGasCentrifuge extends GenericScreen<ContainerGasCentrifuge> {
 		super.renderLabels(matrixStack, mouseX, mouseY);
 		TileGasCentrifuge centrifuge = menu.getHostFromIntArray();
 		if (centrifuge != null) {
-			String u235String = getIntString(centrifuge.stored235);
-			String u238String = getIntString(centrifuge.stored238);
-			String wasteString = getIntString(centrifuge.storedWaste);
+			String u235String = getIntString(centrifuge.stored235.get());
+			String u238String = getIntString(centrifuge.stored238.get());
+			String wasteString = getIntString(centrifuge.storedWaste.get());
 			font.draw(matrixStack, Component.literal("U235 " + u235String + "%"), 54, 17, 4210752);
 			font.draw(matrixStack, Component.literal("U238 " + u238String + "%"), 54, 37, 4210752);
 			font.draw(matrixStack, Component.literal("DUST " + wasteString + "%"), 54, 58, 4210752);
@@ -81,7 +81,7 @@ public class ScreenGasCentrifuge extends GenericScreen<ContainerGasCentrifuge> {
 	}
 
 	private static String getIntString(int value) {
-		int perc = (int) (value / TileGasCentrifuge.REQUIRED * 100);
+		int perc = (int) (value / (float) (TileGasCentrifuge.REQUIRED) * 100);
 		if (perc < 10) {
 			return "0" + perc;
 		}

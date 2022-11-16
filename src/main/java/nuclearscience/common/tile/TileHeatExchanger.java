@@ -2,6 +2,8 @@ package nuclearscience.common.tile;
 
 import java.util.List;
 
+import electrodynamics.prefab.properties.Property;
+import electrodynamics.prefab.properties.PropertyType;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
@@ -9,7 +11,6 @@ import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import electrodynamics.prefab.utilities.object.Location;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.Block;
@@ -28,12 +29,12 @@ public class TileHeatExchanger extends GenericTile {
 	public static final int STEAM_GEN_DIAMETER = 5;
 	public static final int STEAM_GEN_HEIGHT = 2;
 	private TileTurbine[][][] cachedTurbines = new TileTurbine[STEAM_GEN_DIAMETER][STEAM_GEN_HEIGHT][STEAM_GEN_DIAMETER];
-	private double temperature;
+	public Property<Double> temperature = property(new Property<Double>(PropertyType.Double, "temperature")).set(0.0).save();
 
 	public TileHeatExchanger(BlockPos pos, BlockState state) {
 		super(NuclearScienceBlockTypes.TILE_HEATEXCHANGER.get(), pos, state);
 		addComponent(new ComponentTickable().tickCommon(this::tickCommon).tickServer(this::tickServer));
-		addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket).guiPacketReader(this::readCustomPacket).guiPacketWriter(this::writeCustomPacket));
+		addComponent(new ComponentPacketHandler());
 	}
 
 	protected void tickServer(ComponentTickable tickable) {
@@ -43,17 +44,17 @@ public class TileHeatExchanger extends GenericTile {
 	}
 
 	protected void tickCommon(ComponentTickable tickable) {
-		if (temperature > 100) {
+		if (temperature.get() > 100) {
 			produceSteam();
 		}
-		temperature *= 0.9;
+		temperature.set(temperature.get() * 0.9);
 	}
 
 	/**
 	 * Mostly copied from {@link TileReactorCore#produceSteam()} with some changes to fit the exchanger
 	 */
 	protected void produceSteam() {
-		if (temperature > 100) {
+		if (temperature.get() > 100) {
 			Location source = new Location(worldPosition.getX() + 0.5f, worldPosition.getY() + 0.5f, worldPosition.getZ() + 0.5f);
 			AABB bb = AABB.ofSize(new Vec3(source.x(), source.y(), source.z()), 4, 4, 4);
 			List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, bb);
@@ -69,7 +70,7 @@ public class TileHeatExchanger extends GenericTile {
 				for (int k = 0; k < STEAM_GEN_DIAMETER; k++) {
 					boolean isReactor2d = i - STEAM_GEN_DIAMETER / 2 == 0 && k - STEAM_GEN_DIAMETER / 2 == 0;
 					if (isReactor2d && j == 0) {
-						if (!level.isClientSide && level.random.nextFloat() < temperature / (TileMSRReactorCore.MELTDOWN_TEMPERATURE * 20.0 * STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * STEAM_GEN_HEIGHT)) {
+						if (!level.isClientSide && level.random.nextFloat() < temperature.get() / (TileMSRReactorCore.MELTDOWN_TEMPERATURE * 20.0 * STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * STEAM_GEN_HEIGHT)) {
 							if (level.getBlockState(worldPosition).hasProperty(BlockStateProperties.WATERLOGGED)) {
 								level.setBlockAndUpdate(worldPosition, getBlockState().setValue(BlockStateProperties.WATERLOGGED, false));
 							}
@@ -90,9 +91,9 @@ public class TileHeatExchanger extends GenericTile {
 									if (turbine.isRemoved()) {
 										cachedTurbines[i][j][k] = null;
 									}
-									turbine.addSteam((int) (Constants.MSRREACTOR_MAXENERGYTARGET / (STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * 20.0 * (TileMSRReactorCore.MELTDOWN_TEMPERATURE / temperature))), (int) temperature);
+									turbine.addSteam((int) (Constants.MSRREACTOR_MAXENERGYTARGET / (STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * 20.0 * (TileMSRReactorCore.MELTDOWN_TEMPERATURE / temperature.get()))), temperature.get().intValue());
 								}
-								if (level.random.nextFloat() < temperature / (TileMSRReactorCore.MELTDOWN_TEMPERATURE * 20.0 * STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * STEAM_GEN_HEIGHT)) {
+								if (level.random.nextFloat() < temperature.get() / (TileMSRReactorCore.MELTDOWN_TEMPERATURE * 20.0 * STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * STEAM_GEN_HEIGHT)) {
 									level.setBlockAndUpdate(offpos, Blocks.AIR.defaultBlockState());
 									continue;
 								}
@@ -104,7 +105,7 @@ public class TileHeatExchanger extends GenericTile {
 										cachedTurbines[i][j][k] = null;
 									}
 								}
-							} else if (level.isClientSide && level.random.nextFloat() < temperature / (TileMSRReactorCore.MELTDOWN_TEMPERATURE * 3)) {
+							} else if (level.isClientSide && level.random.nextFloat() < temperature.get() / (TileMSRReactorCore.MELTDOWN_TEMPERATURE * 3)) {
 								double offsetFX = offsetX + level.random.nextDouble() / 2.0 * (level.random.nextBoolean() ? -1 : 1);
 								double offsetFY = offsetY + level.random.nextDouble() / 2.0 * (level.random.nextBoolean() ? -1 : 1);
 								double offsetFZ = offsetZ + level.random.nextDouble() / 2.0 * (level.random.nextBoolean() ? -1 : 1);
@@ -120,16 +121,8 @@ public class TileHeatExchanger extends GenericTile {
 		}
 	}
 
-	protected void writeCustomPacket(CompoundTag tag) {
-		tag.putDouble("temperature", temperature);
-	}
-
-	protected void readCustomPacket(CompoundTag nbt) {
-		temperature = nbt.getDouble("temperature");
-	}
-
 	public Double receiveHeat(Double perReceiver) {
-		temperature = perReceiver;
+		temperature.set(perReceiver);
 		return perReceiver;
 	}
 }

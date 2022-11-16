@@ -3,8 +3,9 @@ package nuclearscience.common.tile;
 import java.util.ArrayList;
 
 import electrodynamics.common.block.VoxelShapes;
+import electrodynamics.prefab.properties.Property;
+import electrodynamics.prefab.properties.PropertyType;
 import electrodynamics.prefab.tile.GenericTile;
-import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
 import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
@@ -13,7 +14,6 @@ import electrodynamics.prefab.utilities.object.CachedTileOutput;
 import electrodynamics.prefab.utilities.object.Location;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.BooleanOp;
@@ -30,9 +30,10 @@ public class TileMSRReactorCore extends GenericTile {
 	public static final int MELTDOWN_TEMPERATURE = 900;
 	public static final double FUEL_CAPACITY = 1000;
 	public static final double FUEL_USAGE_RATE = 0.01;
-	public double temperature = TileReactorCore.AIR_TEMPERATURE;
+	public Property<Double> temperature = property(new Property<Double>(PropertyType.Double, "temperature")).set(TileReactorCore.AIR_TEMPERATURE).save();
+	public Property<Double> currentFuel = property(new Property<Double>(PropertyType.Double, "currentFuel")).set(0.0).save();
+
 	public int ticksOverheating = 0;
-	public double currentFuel = 0;
 	private CachedTileOutput outputCache;
 	public CachedTileOutput plugCache;
 
@@ -40,30 +41,8 @@ public class TileMSRReactorCore extends GenericTile {
 		super(NuclearScienceBlockTypes.TILE_MSRREACTORCORE.get(), pos, state);
 		addComponent(new ComponentDirection());
 		addComponent(new ComponentTickable().tickServer(this::tickServer).tickClient(this::tickClient));
-		addComponent(new ComponentPacketHandler().customPacketReader(this::readCustomPacket).customPacketWriter(this::writeCustomPacket).guiPacketReader(this::readCustomPacket).guiPacketWriter(this::writeCustomPacket));
+		addComponent(new ComponentPacketHandler());
 		addComponent(new ComponentContainerProvider("container.msrreactorcore").createMenu((id, player) -> new ContainerMSRReactorCore(id, player, null, getCoordsArray())));
-	}
-
-	protected void writeCustomPacket(CompoundTag tag) {
-		tag.putDouble("temperature", temperature);
-		tag.putDouble("currentFuel", currentFuel);
-	}
-
-	protected void readCustomPacket(CompoundTag nbt) {
-		temperature = nbt.getDouble("temperature");
-		currentFuel = nbt.getDouble("currentFuel");
-	}
-
-	@Override
-	public void saveAdditional(CompoundTag compound) {
-		writeCustomPacket(compound);
-		super.saveAdditional(compound);
-	}
-
-	@Override
-	public void load(CompoundTag compound) {
-		readCustomPacket(compound);
-		super.load(compound);
 	}
 
 	protected void tickServer(ComponentTickable tick) {
@@ -77,12 +56,12 @@ public class TileMSRReactorCore extends GenericTile {
 			outputCache.update(new BlockPos(worldPosition).relative(Direction.UP));
 			plugCache.update(new BlockPos(worldPosition).relative(Direction.DOWN));
 		}
-		double change = (temperature - TileReactorCore.AIR_TEMPERATURE) / 3000.0 + (temperature - TileReactorCore.AIR_TEMPERATURE) / 5000.0;
+		double change = (temperature.get() - TileReactorCore.AIR_TEMPERATURE) / 3000.0 + (temperature.get() - TileReactorCore.AIR_TEMPERATURE) / 5000.0;
 		if (change != 0) {
-			temperature -= change < 0.001 && change > 0 ? 0.001 : change > -0.001 && change < 0 ? -0.001 : change;
+			temperature.set(temperature.get() - change < 0.001 && change > 0 ? 0.001 : change > -0.001 && change < 0 ? -0.001 : change);
 		}
 		if (plugCache.valid() && plugCache.getSafe() instanceof TileFreezePlug freeze && freeze.isFrozen()) {
-			if (currentFuel > FUEL_USAGE_RATE) {
+			if (currentFuel.get() > FUEL_USAGE_RATE) {
 				int insertion = 0;
 				for (Direction dir : Direction.values()) {
 					if (dir != Direction.UP && dir != Direction.DOWN) {
@@ -90,27 +69,24 @@ public class TileMSRReactorCore extends GenericTile {
 						if (tile instanceof TileControlRodAssembly cr) {
 							TileControlRodAssembly control = cr;
 							if (control.direction == dir.getOpposite()) {
-								insertion += control.insertion;
+								insertion += control.insertion.get();
 							}
 						}
 					}
 				}
 				if (level.getLevelData().getGameTime() % 10 == 0) {
-					double totstrength = temperature * Math.pow(3, Math.pow(temperature / MELTDOWN_TEMPERATURE, 9));
+					double totstrength = temperature.get() * Math.pow(3, Math.pow(temperature.get() / MELTDOWN_TEMPERATURE, 9));
 					double range = Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 2;
 					RadiationSystem.emitRadiationFromLocation(level, new Location(worldPosition), range, totstrength);
 				}
 				double insertDecimal = (100 - insertion) / 100.0;
-				currentFuel -= Math.min(currentFuel, FUEL_USAGE_RATE * insertDecimal * Math.pow(2, Math.pow(temperature / (MELTDOWN_TEMPERATURE - 100), 4)));
-				temperature += (MELTDOWN_TEMPERATURE * insertDecimal * (1.2 + level.random.nextDouble() / 5.0) - temperature) / 200;
+				currentFuel.set(currentFuel.get() - Math.min(currentFuel.get(), FUEL_USAGE_RATE * insertDecimal * Math.pow(2, Math.pow(temperature.get() / (MELTDOWN_TEMPERATURE - 100), 4))));
+				temperature.set(temperature.get() + MELTDOWN_TEMPERATURE * insertDecimal * (1.2 + level.random.nextDouble() / 5.0) - temperature.get() / 200);
 				if (outputCache.valid() && outputCache.getSafe() instanceof IMoltenSaltPipe) {
 					MoltenSaltNetwork net = (MoltenSaltNetwork) outputCache.<IMoltenSaltPipe>getSafe().getNetwork();
-					net.emit(temperature, new ArrayList<>(), false);
+					net.emit(temperature.get(), new ArrayList<>(), false);
 				}
 			}
-		}
-		if (tick.getTicks() % 5 == 0) {
-			this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendGuiPacketToTracking();
 		}
 	}
 

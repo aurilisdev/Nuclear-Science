@@ -27,7 +27,7 @@ public class BlockReactorCore extends GenericMachineBlock {
 	public int getLightEmission(BlockState state, BlockGetter world, BlockPos pos) {
 		BlockEntity core = world.getBlockEntity(pos);
 		if (core instanceof TileReactorCore rc) {
-			return (int) Math.max(0, Math.min(rc.temperature / TileReactorCore.MELTDOWN_TEMPERATURE_ACTUAL * 15, 15));
+			return (int) Math.max(0, Math.min(rc.temperature.get() / TileReactorCore.MELTDOWN_TEMPERATURE_ACTUAL * 15, 15));
 		}
 		return 0;
 	}

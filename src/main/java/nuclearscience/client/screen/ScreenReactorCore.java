@@ -31,8 +31,8 @@ public class ScreenReactorCore extends GenericCustomScreen<ContainerReactorCore>
 		font.draw(matrixStack, Component.translatable("gui.reactorcore.deuterium"), titleLabelX, (float) titleLabelY + 14, 4210752);
 		TileReactorCore core = menu.getHostFromIntArray();
 		if (core != null) {
-			font.draw(matrixStack, Component.translatable("gui.reactorcore.temperature", (int) core.temperature / 4 + 15 + " C"), titleLabelX, (float) titleLabelY + 14 * 3, 4210752);
-			if (core.temperature > TileReactorCore.MELTDOWN_TEMPERATURE_ACTUAL && System.currentTimeMillis() % 1000 < 500) {
+			font.draw(matrixStack, Component.translatable("gui.reactorcore.temperature", core.temperature.get().intValue() / 4 + 15 + " C"), titleLabelX, (float) titleLabelY + 14 * 3, 4210752);
+			if (core.temperature.get() > TileReactorCore.MELTDOWN_TEMPERATURE_ACTUAL && System.currentTimeMillis() % 1000 < 500) {
 				font.draw(matrixStack, Component.translatable("gui.reactorcore.warning"), titleLabelX, (float) titleLabelY + 55, 16711680);
 			}
 		}

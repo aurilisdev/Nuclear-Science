@@ -1,5 +1,7 @@
 package nuclearscience.common.tile.network;
 
+import electrodynamics.prefab.properties.Property;
+import electrodynamics.prefab.properties.PropertyType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.BlockState;
@@ -9,7 +11,7 @@ import nuclearscience.common.tile.generic.GenericTileMoltenSaltPipe;
 import nuclearscience.registers.NuclearScienceBlockTypes;
 
 public class TileMoltenSaltPipe extends GenericTileMoltenSaltPipe {
-	public double transmit = 0;
+	public Property<Double> transmit = property(new Property<Double>(PropertyType.Double, "transmit")).set(0.0);
 
 	public TileMoltenSaltPipe(BlockPos pos, BlockState state) {
 		super(NuclearScienceBlockTypes.TILE_MOLTENSALTPIPE.get(), pos, state);
@@ -35,15 +37,5 @@ public class TileMoltenSaltPipe extends GenericTileMoltenSaltPipe {
 	public void load(CompoundTag compound) {
 		super.load(compound);
 		pipe = SubtypeMoltenSaltPipe.values()[compound.getInt("ord")];
-	}
-
-	@Override
-	protected void writeCustomPacket(CompoundTag nbt) {
-		nbt.putDouble("transmit", transmit);
-	}
-
-	@Override
-	protected void readCustomPacket(CompoundTag nbt) {
-		transmit = nbt.getDouble("transmit");
 	}
 }

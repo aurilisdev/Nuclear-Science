@@ -23,12 +23,12 @@ public class RenderRodAssembly implements BlockEntityRenderer<TileControlRodAsse
 		stack.pushPose();
 		BakedModel ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_CONTROLRODASSEMBLYSTRUCTURE);
 		stack.translate(0.5, 0.5, 0.5);
-		if (tileEntityIn.isMSR) {
+		if (tileEntityIn.isMSR.get()) {
 			Direction dir = tileEntityIn.direction;
 			stack.mulPose(new Quaternion(90, 0, dir.toYRot(), true));
 		}
 		RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), stack, bufferIn, combinedLightIn, combinedOverlayIn);
-		int insertion = tileEntityIn.insertion - 100;
+		int insertion = tileEntityIn.insertion.get() - 100;
 		stack.translate(0, 12 / 16.0 * insertion / 100.0 + .5 / 16.0, 0);
 		ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_CONTROLRODASSEMBLYSROD);
 		RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), stack, bufferIn, combinedLightIn, combinedOverlayIn);
