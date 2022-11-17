@@ -72,7 +72,6 @@ public class TileGasCentrifuge extends GenericTile {
 		boolean val = electro.getJoulesStored() >= processor.getUsage() && hasFluid && inv.getItem(0).getCount() < inv.getItem(0).getMaxStackSize() && inv.getItem(1).getCount() < inv.getItem(1).getMaxStackSize() && inv.getItem(2).getCount() < inv.getItem(2).getMaxStackSize();
 		if (!val && spinSpeed.get() > 0) {
 			spinSpeed.set(0);
-			this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();
 		}
 
 		isRunning.set(val);
@@ -84,7 +83,6 @@ public class TileGasCentrifuge extends GenericTile {
 		ComponentInventory inv = getComponent(ComponentType.Inventory);
 		ComponentFluidHandlerMulti tank = getComponent(ComponentType.FluidHandler);
 		spinSpeed.set(processor.operatingSpeed.get().intValue());
-		this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();
 		int processed = (int) (REQUIRED / 60.0);
 		for (Fluid fluid : ForgeRegistries.FLUIDS.tags().getTag(NuclearScienceTags.Fluids.URANIUM_HEXAFLUORIDE)) {
 			FluidTank fTank = tank.getTankFromFluid(fluid, true);

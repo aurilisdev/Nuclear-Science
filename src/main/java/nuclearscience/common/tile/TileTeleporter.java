@@ -43,9 +43,6 @@ public class TileTeleporter extends GenericTile {
 
 	protected void tickServer(ComponentTickable tickable) {
 		ComponentElectrodynamic electro = getComponent(ComponentType.Electrodynamic);
-		if (tickable.getTicks() % (electro.getJoulesStored() == 0 ? 40 : 15) == 0) {
-			this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendGuiPacketToTracking();
-		}
 		if (cooldown <= 0) {
 			cooldown = 20;
 			if (electro.getJoulesStored() == electro.getMaxJoulesStored()) {
@@ -66,7 +63,7 @@ public class TileTeleporter extends GenericTile {
 	}
 
 	@Override
-	public void saveAdditional(CompoundTag compound) {
+	public void saveAdditional(CompoundTag compound) { // TODO: Maybe sent information to the client?
 		if (world != null) {
 			compound.putInt("xCoord", xCoord);
 			compound.putInt("yCoord", yCoord);

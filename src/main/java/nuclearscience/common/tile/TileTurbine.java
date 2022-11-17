@@ -100,14 +100,12 @@ public class TileTurbine extends GenericTile {
 				core.deconstructStructure();
 			}
 		}
-		this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();
 
 	}
 
 	protected void addToStructure(TileTurbine core) {
 		coreLocation.set(core.worldPosition);
 		hasCore.set(true);
-		this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();
 	}
 
 	public void addSteam(int steam, int temp) {

@@ -33,9 +33,6 @@ public class TileFusionReactorCore extends GenericTile {
 
 	public void tickServer(ComponentTickable tick) {
 		ComponentElectrodynamic electro = getComponent(ComponentType.Electrodynamic);
-		if (level.getLevelData().getDayTime() % 20 == 0) {
-			this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendCustomPacket();
-		}
 		if (tritium.get() > 0 && deuterium.get() > 0 && timeLeft <= 0 && electro.getJoulesStored() > Constants.FUSIONREACTOR_USAGE_PER_TICK) {
 			deuterium.set(deuterium.get() - 1);
 			tritium.set(tritium.get() - 1);

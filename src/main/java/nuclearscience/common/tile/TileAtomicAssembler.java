@@ -30,7 +30,7 @@ public class TileAtomicAssembler extends GenericTile {
 	public TileAtomicAssembler(BlockPos pos, BlockState state) {
 		super(NuclearScienceBlockTypes.TILE_ATOMICASSEMBLER.get(), pos, state);
 		addComponent(new ComponentDirection());
-		addComponent(new ComponentTickable().tickServer(this::tickServer).tickCommon(this::tickCommon));
+		addComponent(new ComponentTickable().tickCommon(this::tickCommon));
 		addComponent(new ComponentPacketHandler());
 		addComponent(new ComponentElectrodynamic(this).maxJoules(Constants.ATOMICASSEMBLER_USAGE_PER_TICK * 20).voltage(Constants.ATOMICASSEMBLER_VOLTAGE).input(Direction.DOWN));
 		// The slot == 6 has to be there to allow items into the input slot.
@@ -85,12 +85,6 @@ public class TileAtomicAssembler extends GenericTile {
 			} else {
 				output.setCount(output.getCount() + 1);
 			}
-		}
-	}
-
-	private void tickServer(ComponentTickable tickable) {
-		if (tickable.getTicks() % 20 == 0) {
-			this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendGuiPacketToTracking();
 		}
 	}
 }
