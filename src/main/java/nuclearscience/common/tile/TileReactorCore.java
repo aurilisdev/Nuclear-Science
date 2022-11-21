@@ -93,7 +93,7 @@ public class TileReactorCore extends GenericTile {
 			decrease += (temperature.get() - WATER_TEMPERATURE) / 5000.0;
 		}
 		if (decrease != 0) {
-			temperature.set(temperature.get() - decrease < 0.001 && decrease > 0 ? 0.001 : decrease > -0.001 && decrease < 0 ? -0.001 : decrease);
+			temperature.set(temperature.get() - (decrease < 0.001 && decrease > 0 ? 0.001 : decrease > -0.001 && decrease < 0 ? -0.001 : decrease));
 		}
 		if (fuelCount.get() > 0 && ticks > 50) {
 			BlockEntity tile = level.getBlockEntity(worldPosition.below());

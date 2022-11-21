@@ -58,7 +58,7 @@ public class TileMSRReactorCore extends GenericTile {
 		}
 		double change = (temperature.get() - TileReactorCore.AIR_TEMPERATURE) / 3000.0 + (temperature.get() - TileReactorCore.AIR_TEMPERATURE) / 5000.0;
 		if (change != 0) {
-			temperature.set(temperature.get() - change < 0.001 && change > 0 ? 0.001 : change > -0.001 && change < 0 ? -0.001 : change);
+			temperature.set(temperature.get() - (change < 0.001 && change > 0 ? 0.001 : change > -0.001 && change < 0 ? -0.001 : change));
 		}
 		if (plugCache.valid() && plugCache.getSafe() instanceof TileFreezePlug freeze && freeze.isFrozen()) {
 			if (currentFuel.get() > FUEL_USAGE_RATE) {
