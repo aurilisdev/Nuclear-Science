@@ -2,7 +2,9 @@ package nuclearscience.registers;
 
 import static electrodynamics.registers.UnifiedElectrodynamicsRegister.supplier;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import electrodynamics.api.ISubtype;
 import electrodynamics.prefab.block.GenericMachineBlock;
@@ -21,6 +23,7 @@ import nuclearscience.common.block.BlockElectromagneticBooster;
 import nuclearscience.common.block.BlockElectromagneticSwitch;
 import nuclearscience.common.block.BlockFuelReprocessor;
 import nuclearscience.common.block.BlockFusionReactorCore;
+import nuclearscience.common.block.BlockMSRFuelPreprocessor;
 import nuclearscience.common.block.BlockMeltedReactor;
 import nuclearscience.common.block.BlockMoltenSaltSupplier;
 import nuclearscience.common.block.BlockPlasma;
@@ -68,7 +71,7 @@ public class NuclearScienceBlocks {
 	public static BlockControlRodAssembly blockControlRodAssembly;
 	public static BlockFuelReprocessor blockFuelReprocessor;
 	public static BlockRadioactiveProcessor blockRadioactiveProcessor;
-	public static GenericMachineBlock blockMSRFuelPreProcessor;
+	public static BlockMSRFuelPreprocessor blockMSRFuelPreProcessor;
 	public static GenericMachineBlock blockFreezePlug;
 	public static GenericMachineBlock blockMsrReactorCore;
 	public static GenericMachineBlock blockHeatExchanger;
@@ -99,7 +102,7 @@ public class NuclearScienceBlocks {
 		BLOCKS.register("controlrodassembly", supplier(() -> blockControlRodAssembly = new BlockControlRodAssembly()));
 		BLOCKS.register("fuelreprocessor", supplier(() -> blockFuelReprocessor = new BlockFuelReprocessor()));
 		BLOCKS.register("radioactiveprocessor", supplier(() -> blockRadioactiveProcessor = new BlockRadioactiveProcessor()));
-		BLOCKS.register("msrfuelpreprocessor", supplier(() -> blockMSRFuelPreProcessor = new GenericMachineBlock(TileMSRFuelPreProcessor::new)));
+		BLOCKS.register("msrfuelpreprocessor", supplier(() -> blockMSRFuelPreProcessor = new BlockMSRFuelPreprocessor(TileMSRFuelPreProcessor::new)));
 		BLOCKS.register("blocklead", supplier(() -> blocklead = new Block(Properties.of(Material.METAL, MaterialColor.COLOR_BLACK).strength(5.0f, 3.0f).sound(SoundType.METAL).requiresCorrectToolForDrops())));
 		BLOCKS.register("msrreactorcore", supplier(() -> blockMsrReactorCore = new GenericMachineBlock(TileMSRReactorCore::new)));
 		BLOCKS.register("heatexchanger", supplier(() -> blockHeatExchanger = new GenericMachineBlock(TileHeatExchanger::new)));
@@ -114,4 +117,17 @@ public class NuclearScienceBlocks {
 		BLOCKS.register("radioactivesoil", supplier(() -> blockRadioactiveSoil = new BlockRadioactiveSoil()));
 
 	}
+	
+	public static Block[] getAllBlockForSubtype(ISubtype[] values) {
+		List<Block> list = new ArrayList<>();
+		for (ISubtype value : values) {
+			list.add(SUBTYPEBLOCKREGISTER_MAPPINGS.get(value).get());
+		}
+		return list.toArray(new Block[] {});
+	}
+
+	public static Block getBlock(ISubtype value) {
+		return SUBTYPEBLOCKREGISTER_MAPPINGS.get(value).get();
+	}
+
 }

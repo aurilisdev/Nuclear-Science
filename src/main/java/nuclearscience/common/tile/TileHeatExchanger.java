@@ -28,7 +28,7 @@ public class TileHeatExchanger extends GenericTile {
 	public static final int STEAM_GEN_DIAMETER = 5;
 	public static final int STEAM_GEN_HEIGHT = 2;
 	private TileTurbine[][][] cachedTurbines = new TileTurbine[STEAM_GEN_DIAMETER][STEAM_GEN_HEIGHT][STEAM_GEN_DIAMETER];
-	public Property<Double> temperature = property(new Property<Double>(PropertyType.Double, "temperature")).set(0.0).save();
+	public Property<Double> temperature = property(new Property<Double>(PropertyType.Double, "temperature", 0.0));
 
 	public TileHeatExchanger(BlockPos pos, BlockState state) {
 		super(NuclearScienceBlockTypes.TILE_HEATEXCHANGER.get(), pos, state);

@@ -1,0 +1,24 @@
+{
+  "type": "nuclearscience:chemical_extractor_recipe",
+  "experience": 0.0,
+  "fluidinputs": {
+    "0": {
+      "amount": 4800,
+      "tag": "minecraft:water"
+    },
+    "count": 1
+  },
+  "iteminputs": {
+    "0": {
+      "count": 1,
+      "tag": "forge:cells/empty"
+    },
+    "count": 1
+  },
+  "output": {
+    "count": 1,
+    "item": "nuclearscience:cellheavywater"
+  },
+  "ticks": 400,
+  "usagepertick": 750.0
+}

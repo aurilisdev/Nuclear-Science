@@ -3,18 +3,19 @@ package nuclearscience.client.screen;
 import electrodynamics.prefab.screen.GenericScreen;
 import electrodynamics.prefab.screen.component.ScreenComponentElectricInfo;
 import electrodynamics.prefab.screen.component.ScreenComponentFluid;
-import electrodynamics.prefab.screen.component.ScreenComponentInfo;
+import electrodynamics.prefab.screen.component.ScreenComponentGeneric;
 import electrodynamics.prefab.screen.component.ScreenComponentProgress;
+import electrodynamics.prefab.screen.component.ScreenComponentProgress.ProgressBars;
+import electrodynamics.prefab.screen.component.ScreenComponentProgress.ProgressTextures;
+import electrodynamics.prefab.screen.component.utils.AbstractScreenComponentInfo;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
-import electrodynamics.prefab.tile.components.generic.AbstractFluidHandler;
+import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
 import nuclearscience.common.inventory.container.ContainerNuclearBoiler;
 import nuclearscience.common.tile.TileNuclearBoiler;
 
@@ -22,7 +23,7 @@ import nuclearscience.common.tile.TileNuclearBoiler;
 public class ScreenNuclearBoiler extends GenericScreen<ContainerNuclearBoiler> {
 	public ScreenNuclearBoiler(ContainerNuclearBoiler container, Inventory playerInventory, Component title) {
 		super(container, playerInventory, title);
-		components.add(new ScreenComponentProgress(() -> {
+		components.add(new ScreenComponentProgress(ProgressBars.PROGRESS_ARROW_RIGHT, () -> {
 			GenericTile furnace = container.getHostFromIntArray();
 			if (furnace != null) {
 				ComponentProcessor processor = furnace.getComponent(ComponentType.Processor);
@@ -32,7 +33,7 @@ public class ScreenNuclearBoiler extends GenericScreen<ContainerNuclearBoiler> {
 			}
 			return 0;
 		}, this, 42, 30));
-		components.add(new ScreenComponentProgress(() -> {
+		components.add(new ScreenComponentProgress(ProgressBars.PROGRESS_ARROW_RIGHT, () -> {
 			GenericTile furnace = container.getHostFromIntArray();
 			if (furnace != null) {
 				ComponentProcessor processor = furnace.getComponent(ComponentType.Processor);
@@ -42,34 +43,22 @@ public class ScreenNuclearBoiler extends GenericScreen<ContainerNuclearBoiler> {
 			}
 			return 0;
 		}, this, 98, 30));
-		components.add(new ScreenComponentProgress(() -> 0, this, 42, 50).left());
+		components.add(new ScreenComponentGeneric(ProgressTextures.ARROW_LEFT_OFF, this, 42, 50));
 		components.add(new ScreenComponentFluid(() -> {
 			TileNuclearBoiler boiler = container.getHostFromIntArray();
 			if (boiler != null) {
-				AbstractFluidHandler<?> handler = boiler.getComponent(ComponentType.FluidHandler);
-				for (Fluid fluid : handler.getValidInputFluids()) {
-					FluidTank tank = handler.getTankFromFluid(fluid, true);
-					if (tank.getFluidAmount() > 0) {
-						return tank;
-					}
-				}
+				return boiler.<ComponentFluidHandlerMulti>getComponent(ComponentType.FluidHandler).getInputTanks()[0];
 			}
 			return null;
 		}, this, 21, 18));
 		components.add(new ScreenComponentFluid(() -> {
 			TileNuclearBoiler boiler = container.getHostFromIntArray();
 			if (boiler != null) {
-				AbstractFluidHandler<?> handler = boiler.getComponent(ComponentType.FluidHandler);
-				for (Fluid fluid : handler.getValidOutputFluids()) {
-					FluidTank tank = handler.getTankFromFluid(fluid, false);
-					if (tank.getFluidAmount() > 0) {
-						return tank;
-					}
-				}
+				return boiler.<ComponentFluidHandlerMulti>getComponent(ComponentType.FluidHandler).getOutputTanks()[0];
 			}
 			return null;
 		}, this, 127, 18));
-		components.add(new ScreenComponentElectricInfo(this, -ScreenComponentInfo.SIZE + 1, 2));
+		components.add(new ScreenComponentElectricInfo(this, -AbstractScreenComponentInfo.SIZE + 1, 2));
 	}
 
 }

@@ -31,7 +31,7 @@ public class ContainerParticleInjector extends GenericContainerBlockEntity<TileP
 	@Override
 	public void addInventorySlots(Container inv, Inventory playerinv) {
 		addSlot(new SlotGeneric(inv, nextIndex(), 98, 14));
-		addSlot(new SlotRestricted(inv, nextIndex(), 98, 50, NuclearScienceItems.ITEM_CELLELECTROMAGNETIC.get()));
+		addSlot(new SlotRestricted(inv, nextIndex(), 98, 50).setRestriction(NuclearScienceItems.ITEM_CELLELECTROMAGNETIC.get()));
 		addSlot(new FurnaceResultSlot(playerinv.player, inv, nextIndex(), 133, 32));
 	}
 }

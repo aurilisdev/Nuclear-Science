@@ -15,8 +15,8 @@ public class NuclearBoilerRecipe extends FluidItem2FluidRecipe {
 	public static final String MOD_ID = electrodynamics.api.References.ID;
 	public static final ResourceLocation RECIPE_ID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
 
-	public NuclearBoilerRecipe(ResourceLocation recipeID, CountableIngredient[] inputItems, FluidIngredient[] inputFluids, FluidStack outputFluid, double experience) {
-		super(recipeID, inputItems, inputFluids, outputFluid, experience);
+	public NuclearBoilerRecipe(ResourceLocation recipeID, CountableIngredient[] inputItems, FluidIngredient[] inputFluids, FluidStack outputFluid, double experience, int ticks, double usagePerTick) {
+		super(recipeID, inputItems, inputFluids, outputFluid, experience, ticks, usagePerTick);
 	}
 
 	@Override

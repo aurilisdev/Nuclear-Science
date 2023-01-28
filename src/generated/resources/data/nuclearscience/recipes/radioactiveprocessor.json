@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "tag": "forge:circuits/elite"
+    },
+    "M": {
+      "item": "electrodynamics:chemicalmixer"
+    },
+    "T": {
+      "item": "electrodynamics:titaniumheatcoil"
+    },
+    "V": {
+      "tag": "forge:plates/vanadiumsteel"
+    }
+  },
+  "pattern": [
+    "VTV",
+    "VMV",
+    "VCV"
+  ],
+  "result": {
+    "item": "nuclearscience:radioactiveprocessor"
+  }
+}

@@ -2,9 +2,9 @@ package nuclearscience.common.fluid.types;
 
 import electrodynamics.common.fluid.FluidNonPlaceable;
 import electrodynamics.common.fluid.types.SimpleWaterBasedFluidType;
-import electrodynamics.registers.ElectrodynamicsItems;
 import net.minecraftforge.fluids.FluidType;
 import nuclearscience.References;
+import nuclearscience.registers.NuclearScienceItems;
 
 public class FluidUraniumHexafluoride extends FluidNonPlaceable {
 
@@ -13,8 +13,8 @@ public class FluidUraniumHexafluoride extends FluidNonPlaceable {
 	private final FluidType type;
 
 	public FluidUraniumHexafluoride() {
-		super(() -> ElectrodynamicsItems.ITEM_CANISTERREINFORCED);
-		type = new SimpleWaterBasedFluidType(References.ID, "uraniumhexafluoride", -431922120);
+		super(() -> NuclearScienceItems.ITEM_CANISTERLEAD);
+		type = new SimpleWaterBasedFluidType(References.ID, "fluiduraniumhexafluoride", -431922120);
 	}
 
 	@Override

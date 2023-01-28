@@ -6,6 +6,7 @@ import java.util.List;
 import electrodynamics.client.guidebook.utils.ImageWrapperObject;
 import electrodynamics.client.guidebook.utils.components.Chapter;
 import electrodynamics.client.guidebook.utils.components.Module;
+import net.minecraft.network.chat.MutableComponent;
 import nuclearscience.References;
 import nuclearscience.client.guidebook.chapters.ChapterFissionReactor;
 import nuclearscience.client.guidebook.chapters.ChapterFusionReactor;
@@ -14,6 +15,7 @@ import nuclearscience.client.guidebook.chapters.ChapterMisc;
 import nuclearscience.client.guidebook.chapters.ChapterOtherMachines;
 import nuclearscience.client.guidebook.chapters.ChapterParticleAccelerator;
 import nuclearscience.client.guidebook.chapters.ChapterRadiation;
+import nuclearscience.prefab.utils.TextUtils;
 
 public class ModuleNuclearScience extends Module {
 
@@ -25,8 +27,8 @@ public class ModuleNuclearScience extends Module {
 	}
 
 	@Override
-	public String getTitleCat() {
-		return References.ID;
+	public MutableComponent getTitle() {
+		return TextUtils.guidebook(References.ID);
 	}
 
 	@Override

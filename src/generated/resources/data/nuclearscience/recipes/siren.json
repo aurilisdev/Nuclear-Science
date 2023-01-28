@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "N": {
+      "item": "minecraft:note_block"
+    },
+    "P": {
+      "tag": "forge:plates/bronze"
+    }
+  },
+  "pattern": [
+    "NPN"
+  ],
+  "result": {
+    "item": "nuclearscience:siren"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "tag": "forge:circuits/basic"
+    },
+    "P": {
+      "tag": "forge:plates/iron"
+    },
+    "W": {
+      "item": "electrodynamics:wirecopper"
+    }
+  },
+  "pattern": [
+    " P ",
+    "WCW",
+    " P "
+  ],
+  "result": {
+    "item": "nuclearscience:frequencycard"
+  }
+}

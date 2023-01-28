@@ -3,18 +3,20 @@ package nuclearscience.client.render.tile;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Quaternion;
 
+import electrodynamics.client.render.tile.AbstractTileRenderer;
 import electrodynamics.prefab.utilities.RenderingUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.BakedModel;
 import nuclearscience.client.ClientRegister;
 import nuclearscience.common.tile.TileGasCentrifuge;
 
-public class RenderGasCentrifuge implements BlockEntityRenderer<TileGasCentrifuge> {
+public class RenderGasCentrifuge extends AbstractTileRenderer<TileGasCentrifuge> {
+	
 	public RenderGasCentrifuge(BlockEntityRendererProvider.Context context) {
+		super(context);
 	}
 
 	@Override

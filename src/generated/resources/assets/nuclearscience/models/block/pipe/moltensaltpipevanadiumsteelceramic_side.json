@@ -1,0 +1,7 @@
+{
+  "parent": "nuclearscience:parent/pipe_side",
+  "textures": {
+    "particle": "#texture",
+    "texture": "nuclearscience:block/pipe/moltensaltpipevanadiumsteelceramic"
+  }
+}

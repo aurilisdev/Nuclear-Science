@@ -25,12 +25,12 @@ public class ContainerAtomicAssembler extends GenericContainerBlockEntity<TileAt
 	@Override
 	public void addInventorySlots(Container inv, Inventory playerinv) {
 		playerInvOffset = 64;
-		addSlot(new SlotRestricted(inv, nextIndex(), 60 + 18 * 3 / 2, 40, NuclearScienceItems.ITEM_CELLDARKMATTER.get()));
-		addSlot(new SlotRestricted(inv, nextIndex(), 33, 56, NuclearScienceItems.ITEM_CELLDARKMATTER.get()));
-		addSlot(new SlotRestricted(inv, nextIndex(), 114 + 27, 56, NuclearScienceItems.ITEM_CELLDARKMATTER.get()));
-		addSlot(new SlotRestricted(inv, nextIndex(), 33, 88, NuclearScienceItems.ITEM_CELLDARKMATTER.get()));
-		addSlot(new SlotRestricted(inv, nextIndex(), 114 + 27, 88, NuclearScienceItems.ITEM_CELLDARKMATTER.get()));
-		addSlot(new SlotRestricted(inv, nextIndex(), 60 + 18 * 3 / 2, 103, NuclearScienceItems.ITEM_CELLDARKMATTER.get()));
+		addSlot(new SlotRestricted(inv, nextIndex(), 60 + 18 * 3 / 2, 40).setRestriction(NuclearScienceItems.ITEM_CELLDARKMATTER.get()));
+		addSlot(new SlotRestricted(inv, nextIndex(), 33, 56).setRestriction(NuclearScienceItems.ITEM_CELLDARKMATTER.get()));
+		addSlot(new SlotRestricted(inv, nextIndex(), 114 + 27, 56).setRestriction(NuclearScienceItems.ITEM_CELLDARKMATTER.get()));
+		addSlot(new SlotRestricted(inv, nextIndex(), 33, 88).setRestriction(NuclearScienceItems.ITEM_CELLDARKMATTER.get()));
+		addSlot(new SlotRestricted(inv, nextIndex(), 114 + 27, 88).setRestriction(NuclearScienceItems.ITEM_CELLDARKMATTER.get()));
+		addSlot(new SlotRestricted(inv, nextIndex(), 60 + 18 * 3 / 2, 103).setRestriction(NuclearScienceItems.ITEM_CELLDARKMATTER.get()));
 
 		addSlot(new SlotGeneric(inv, nextIndex(), 60, 72));
 		addSlot(new SlotGeneric(inv, nextIndex(), 114, 72));

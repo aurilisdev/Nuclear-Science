@@ -3,7 +3,7 @@
   "parent" : "block/cube_all",
   "textures" : {
     "0" : "nuclearscience:model/atomicassembler",
-    "particle" : "nuclearscience:model/atomicassembler"
+    "particle" : "electrodynamics:block/steelcasing"
   },
   "loader" : "forge:composite",
   "children" : {
@@ -11,7 +11,7 @@
       "render_type" : "minecraft:solid",
       "textures" : {
         "0" : "nuclearscience:model/atomicassembler",
-        "particle" : "nuclearscience:model/atomicassembler"
+        "particle" : "electrodynamics:block/steelcasing"
       },
       "elements" : [ {
         "from" : [ 0, 1, 0 ],

@@ -14,7 +14,7 @@ public class FluidAmmonia extends FluidNonPlaceable {
 
 	public FluidAmmonia() {
 		super(() -> ElectrodynamicsItems.ITEM_CANISTERREINFORCED);
-		type = new SimpleWaterBasedFluidType(References.ID, "ammonia");
+		type = new SimpleWaterBasedFluidType(References.ID, "fluidammonia");
 	}
 
 	@Override

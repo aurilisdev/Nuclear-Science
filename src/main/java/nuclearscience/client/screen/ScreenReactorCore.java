@@ -11,6 +11,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import nuclearscience.References;
 import nuclearscience.common.inventory.container.ContainerReactorCore;
 import nuclearscience.common.tile.TileReactorCore;
+import nuclearscience.prefab.utils.TextUtils;
 
 @OnlyIn(Dist.CLIENT)
 public class ScreenReactorCore extends GenericCustomScreen<ContainerReactorCore> {
@@ -18,6 +19,8 @@ public class ScreenReactorCore extends GenericCustomScreen<ContainerReactorCore>
 
 	public ScreenReactorCore(ContainerReactorCore container, Inventory playerInventory, Component title) {
 		super(container, playerInventory, title);
+		imageHeight += 10;
+		inventoryLabelY += 10;
 	}
 
 	@Override
@@ -28,12 +31,12 @@ public class ScreenReactorCore extends GenericCustomScreen<ContainerReactorCore>
 	@Override
 	protected void renderLabels(PoseStack matrixStack, int mouseX, int mouseY) {
 		super.renderLabels(matrixStack, mouseX, mouseY);
-		font.draw(matrixStack, Component.translatable("gui.reactorcore.deuterium"), titleLabelX, (float) titleLabelY + 14, 4210752);
+		font.draw(matrixStack, TextUtils.gui("reactorcore.deuterium"), titleLabelX, (float) titleLabelY + 24, 4210752);
 		TileReactorCore core = menu.getHostFromIntArray();
 		if (core != null) {
-			font.draw(matrixStack, Component.translatable("gui.reactorcore.temperature", core.temperature.get().intValue() / 4 + 15 + " C"), titleLabelX, (float) titleLabelY + 14 * 3, 4210752);
+			font.draw(matrixStack, TextUtils.gui("reactorcore.temperature", core.temperature.get().intValue() / 4 + 15 + " C"), titleLabelX, (float) titleLabelY + 55, 4210752);
 			if (core.temperature.get() > TileReactorCore.MELTDOWN_TEMPERATURE_ACTUAL && System.currentTimeMillis() % 1000 < 500) {
-				font.draw(matrixStack, Component.translatable("gui.reactorcore.warning"), titleLabelX, (float) titleLabelY + 55, 16711680);
+				font.draw(matrixStack, TextUtils.gui("reactorcore.warning"), titleLabelX, (float) titleLabelY + 65, 16711680);
 			}
 		}
 	}

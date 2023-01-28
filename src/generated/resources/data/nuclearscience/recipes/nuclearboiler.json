@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "tag": "forge:circuits/elite"
+    },
+    "E": {
+      "tag": "forge:cells/empty"
+    },
+    "F": {
+      "item": "electrodynamics:electricarcfurnace"
+    },
+    "M": {
+      "item": "electrodynamics:motor"
+    },
+    "P": {
+      "tag": "forge:plates/steel"
+    }
+  },
+  "pattern": [
+    "PCP",
+    "EFE",
+    "PMP"
+  ],
+  "result": {
+    "item": "nuclearscience:nuclearboiler"
+  }
+}

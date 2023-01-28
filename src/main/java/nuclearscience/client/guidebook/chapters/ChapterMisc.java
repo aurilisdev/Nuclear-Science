@@ -7,7 +7,9 @@ import electrodynamics.client.guidebook.utils.ImageWrapperObject;
 import electrodynamics.client.guidebook.utils.TextWrapperObject;
 import electrodynamics.client.guidebook.utils.components.Chapter;
 import electrodynamics.client.guidebook.utils.components.Page;
+import net.minecraft.network.chat.MutableComponent;
 import nuclearscience.References;
+import nuclearscience.prefab.utils.TextUtils;
 
 public class ChapterMisc extends Chapter {
 
@@ -17,7 +19,7 @@ public class ChapterMisc extends Chapter {
 	protected List<Page> genPages() {
 		List<Page> pages = new ArrayList<>();
 
-		pages.add(new Page(new TextWrapperObject[] { new TextWrapperObject(10, 40, 4210752, "guidebook.nuclearscience.chapter.misc.p1l1"), }));
+		pages.add(new Page(new TextWrapperObject[] { new TextWrapperObject(10, 40, 4210752, TextUtils.guidebook("chapter.misc.p1l1")), }));
 
 		return pages;
 	}
@@ -28,8 +30,8 @@ public class ChapterMisc extends Chapter {
 	}
 
 	@Override
-	public String getTitleKey() {
-		return "guidebook.nuclearscience.chapter.misc";
+	public MutableComponent getTitle() {
+		return TextUtils.guidebook("chapter.misc");
 	}
 
 }

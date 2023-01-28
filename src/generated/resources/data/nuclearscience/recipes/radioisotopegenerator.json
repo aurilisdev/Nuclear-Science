@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "tag": "forge:circuits/advanced"
+    },
+    "E": {
+      "tag": "forge:cells/empty"
+    },
+    "L": {
+      "tag": "forge:plates/lead"
+    },
+    "V": {
+      "tag": "forge:plates/vanadiumsteel"
+    }
+  },
+  "pattern": [
+    "VCV",
+    "LEL",
+    "VCV"
+  ],
+  "result": {
+    "item": "nuclearscience:radioisotopegenerator"
+  }
+}

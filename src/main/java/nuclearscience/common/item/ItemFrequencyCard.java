@@ -13,6 +13,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import nuclearscience.common.tile.TileTeleporter;
+import nuclearscience.prefab.utils.TextUtils;
 
 public class ItemFrequencyCard extends Item {
 
@@ -59,9 +60,9 @@ public class ItemFrequencyCard extends Item {
 			int y = nbt.getInt("yCoord");
 			int z = nbt.getInt("zCoord");
 			String world = nbt.getString("world");
-			tooltip.add(Component.translatable("tooltip.frequencycard.linked", world + ", " + x + ", " + y + ", " + z));
+			tooltip.add(TextUtils.tooltip("frequencycard.linked", world + ", " + x + ", " + y + ", " + z));
 		} else {
-			tooltip.add(Component.translatable("tooltip.frequencycard.notag"));
+			tooltip.add(TextUtils.tooltip("frequencycard.notag"));
 		}
 	}
 }

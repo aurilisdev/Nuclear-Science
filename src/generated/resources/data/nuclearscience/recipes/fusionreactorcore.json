@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "item": "nuclearscience:msrreactorcore"
+    },
+    "E": {
+      "item": "nuclearscience:electromagnet"
+    },
+    "U": {
+      "tag": "forge:circuits/ultimate"
+    }
+  },
+  "pattern": [
+    "UEU",
+    "ECE",
+    "UEU"
+  ],
+  "result": {
+    "item": "nuclearscience:fusionreactorcore"
+  }
+}

@@ -1,10 +1,11 @@
 package nuclearscience.common.tile;
 
 import electrodynamics.api.capability.ElectrodynamicsCapabilities;
-import electrodynamics.api.sound.SoundAPI;
 import electrodynamics.common.block.VoxelShapes;
 import electrodynamics.prefab.properties.Property;
 import electrodynamics.prefab.properties.PropertyType;
+import electrodynamics.prefab.sound.SoundBarrierMethods;
+import electrodynamics.prefab.sound.utils.ITickableSoundTile;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
@@ -15,11 +16,9 @@ import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import electrodynamics.prefab.utilities.InventoryUtils;
 import electrodynamics.prefab.utilities.object.Location;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
@@ -38,26 +37,29 @@ import nuclearscience.registers.NuclearScienceFluids;
 import nuclearscience.registers.NuclearScienceItems;
 import nuclearscience.registers.NuclearScienceSounds;
 
-public class TileGasCentrifuge extends GenericTile {
+public class TileGasCentrifuge extends GenericTile implements ITickableSoundTile {
+	
 	public static final int TANKCAPACITY = 5000;
 	public static final int REQUIRED = 2500;
 	private static final double PERCENT_U235 = 0.172;
 	private static final double WASTE_MULTIPLIER = 0.1;
-	public Property<Integer> spinSpeed = property(new Property<Integer>(PropertyType.Integer, "spinSpeed")).set(0);
-	public Property<Integer> stored235 = property(new Property<Integer>(PropertyType.Integer, "stored235")).set(0).save();
-	public Property<Integer> stored238 = property(new Property<Integer>(PropertyType.Integer, "stored238")).set(0).save();
-	public Property<Integer> storedWaste = property(new Property<Integer>(PropertyType.Integer, "storedWaste")).set(0).save();
-	public Property<Boolean> isRunning = property(new Property<Boolean>(PropertyType.Boolean, "isRunning")).set(false);
+	public Property<Integer> spinSpeed = property(new Property<Integer>(PropertyType.Integer, "spinSpeed", 0));
+	public Property<Integer> stored235 = property(new Property<Integer>(PropertyType.Integer, "stored235", 0));
+	public Property<Integer> stored238 = property(new Property<Integer>(PropertyType.Integer, "stored238", 0));
+	public Property<Integer> storedWaste = property(new Property<Integer>(PropertyType.Integer, "storedWaste", 0));
+	public Property<Boolean> isRunning = property(new Property<Boolean>(PropertyType.Boolean, "isRunning", false));
 
 	private static final int RADATION_RADIUS_BLOCKS = 5;
 	private static final int RADIATION_STRENGTH = 5000;
 
+	private boolean isSoundPlaying = false;
+	
 	public TileGasCentrifuge(BlockPos pos, BlockState state) {
 		super(NuclearScienceBlockTypes.TILE_GASCENTRIFUGE.get(), pos, state);
 		addComponent(new ComponentTickable().tickClient(this::tickClient).tickServer(this::tickServer));
 		addComponent(new ComponentDirection());
 		addComponent(new ComponentPacketHandler());
-		addComponent(new ComponentFluidHandlerMulti(this).setManualFluids(1, true, TANKCAPACITY, NuclearScienceFluids.fluidUraniumHexafluoride).relativeInput(Direction.NORTH));
+		addComponent(new ComponentFluidHandlerMulti(this).setTanks(1, 0, TANKCAPACITY).setInputFluids(NuclearScienceFluids.fluidUraniumHexafluoride).setInputDirections(Direction.NORTH));
 		addComponent(new ComponentElectrodynamic(this).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 2).input(Direction.DOWN).maxJoules(Constants.GASCENTRIFUGE_USAGE_PER_TICK * 10));
 		addComponent(new ComponentInventory(this).size(6).universalSlots(0, 1, 2).outputs(3).upgrades(3).validUpgrades(ContainerGasCentrifuge.VALID_UPGRADES).valid(machineValidator()));
 		addComponent(new ComponentProcessor(this).usage(Constants.GASCENTRIFUGE_USAGE_PER_TICK).requiredTicks(Constants.GASCENTRIFUGE_REQUIRED_TICKS_PER_PROCESSING).canProcess(this::canProcess).process(this::process));
@@ -125,8 +127,9 @@ public class TileGasCentrifuge extends GenericTile {
 	}
 
 	protected void tickClient(ComponentTickable tickable) {
-		if (spinSpeed.get() > 0 && tickable.getTicks() % 80 == 0) {
-			SoundAPI.playSound(NuclearScienceSounds.SOUND_GASCENTRIFUGE.get(), SoundSource.BLOCKS, 1, 1, worldPosition);
+		if (!isSoundPlaying && shouldPlaySound()) {
+			isSoundPlaying = true;
+			SoundBarrierMethods.playTileSound(NuclearScienceSounds.SOUND_GASCENTRIFUGE.get(), this, true);
 		}
 	}
 
@@ -134,7 +137,6 @@ public class TileGasCentrifuge extends GenericTile {
 		if (level.getLevelData().getGameTime() % 10 == 0 && isRunning.get()) {
 			RadiationSystem.emitRadiationFromLocation(level, new Location(worldPosition), RADATION_RADIUS_BLOCKS, RADIATION_STRENGTH);
 		}
-		InventoryUtils.handleExperienceUpgrade(this);
 	}
 
 	static {
@@ -168,5 +170,15 @@ public class TileGasCentrifuge extends GenericTile {
 		shape = Shapes.join(shape, Shapes.box(0.375, 0.3125, 0.375, 0.4375, 0.4375, 0.4375), BooleanOp.OR);
 		shape = Shapes.join(shape, Shapes.box(0.59375, 0.3125, 0.46875, 0.65625, 0.4375, 0.53125), BooleanOp.OR);
 		VoxelShapes.registerShape(NuclearScienceBlocks.blockGasCentrifuge, shape, Direction.WEST);
+	}
+
+	@Override
+	public void setNotPlaying() {
+		isSoundPlaying = false;
+	}
+
+	@Override
+	public boolean shouldPlaySound() {
+		return spinSpeed.get() > 0;
 	}
 }

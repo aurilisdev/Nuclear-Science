@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "nuclearscience:block/reactorcore"
+    },
+    "facing=north": {
+      "model": "nuclearscience:block/reactorcore",
+      "y": 270
+    },
+    "facing=south": {
+      "model": "nuclearscience:block/reactorcore",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "nuclearscience:block/reactorcore",
+      "y": 180
+    }
+  }
+}

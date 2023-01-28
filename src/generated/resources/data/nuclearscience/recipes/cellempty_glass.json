@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "G": {
+      "tag": "forge:glass"
+    },
+    "T": {
+      "tag": "forge:ingots/tin"
+    }
+  },
+  "pattern": [
+    "GTG",
+    "T T",
+    "GTG"
+  ],
+  "result": {
+    "count": 4,
+    "item": "nuclearscience:cellempty"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "M": {
+      "item": "electrodynamics:motor"
+    },
+    "P": {
+      "tag": "forge:plates/steel"
+    },
+    "W": {
+      "item": "electrodynamics:wiregold"
+    }
+  },
+  "pattern": [
+    " W ",
+    "PMP",
+    " P "
+  ],
+  "result": {
+    "item": "nuclearscience:turbine"
+  }
+}

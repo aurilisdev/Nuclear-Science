@@ -9,12 +9,12 @@ import electrodynamics.compatibility.jei.utils.gui.fluid.DefaultFluidGaugeWrappe
 import electrodynamics.compatibility.jei.utils.gui.item.BucketSlotWrapper;
 import electrodynamics.compatibility.jei.utils.gui.item.DefaultItemSlotWrapper;
 import electrodynamics.compatibility.jei.utils.label.PowerLabelWrapper;
+import electrodynamics.compatibility.jei.utils.label.TimeLabelWrapper;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import nuclearscience.common.recipe.categories.fluiditem2item.specificmachines.RadioactiveProcessorRecipe;
-import nuclearscience.common.settings.Constants;
 import nuclearscience.registers.NuclearScienceBlocks;
 
 public class RadioactiveProcessorRecipeCategory extends FluidItem2ItemRecipeCategory<RadioactiveProcessorRecipe> {
@@ -32,7 +32,8 @@ public class RadioactiveProcessorRecipeCategory extends FluidItem2ItemRecipeCate
 
 	private static DefaultFluidGaugeWrapper IN_GAUGE = new DefaultFluidGaugeWrapper(10, 5, 5000);
 
-	private static PowerLabelWrapper POWER_LABEL = new PowerLabelWrapper(2, 55, Constants.RADIOACTIVEPROCESSOR_USAGE_PER_TICK, 480);
+	private static PowerLabelWrapper POWER_LABEL = new PowerLabelWrapper(2, 55, 480);
+	private static TimeLabelWrapper TIME_LABEL = new TimeLabelWrapper(130, 55);
 
 	private static int ANIM_TIME = 50;
 
@@ -50,7 +51,7 @@ public class RadioactiveProcessorRecipeCategory extends FluidItem2ItemRecipeCate
 		setOutputSlots(guiHelper, OUTPUT_SLOT);
 		setFluidInputs(guiHelper, IN_GAUGE);
 		setAnimatedArrows(guiHelper, ANIM_LEFT_ARROW, ANIM_RIGHT_ARROW_1, ANIM_RIGHT_ARROW_2);
-		setLabels(POWER_LABEL);
+		setLabels(POWER_LABEL, TIME_LABEL);
 	}
 
 	public ResourceLocation getUid() {

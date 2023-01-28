@@ -1,8 +1,10 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.api.sound.SoundAPI;
+import electrodynamics.common.tile.quarry.TileQuarry;
 import electrodynamics.prefab.properties.Property;
 import electrodynamics.prefab.properties.PropertyType;
+import electrodynamics.prefab.sound.SoundBarrierMethods;
+import electrodynamics.prefab.sound.utils.ITickableSoundTile;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
@@ -13,25 +15,30 @@ import electrodynamics.prefab.utilities.object.CachedTileOutput;
 import electrodynamics.prefab.utilities.object.TransferPack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
 import nuclearscience.common.block.BlockTurbine;
 import nuclearscience.registers.NuclearScienceBlockTypes;
 import nuclearscience.registers.NuclearScienceSounds;
 
-public class TileTurbine extends GenericTile {
+public class TileTurbine extends GenericTile implements ITickableSoundTile {
 
 	public static final int MAX_STEAM = 3000000;
-	public Property<Integer> spinSpeed = property(new Property<Integer>(PropertyType.Integer, "spinSpeed")).set(0);
-	public Property<Boolean> hasCore = property(new Property<Boolean>(PropertyType.Boolean, "hasCore")).set(false).save();
-	public Property<Boolean> isCore = property(new Property<Boolean>(PropertyType.Boolean, "isCore")).set(false).save();
-	public Property<BlockPos> coreLocation = property(new Property<BlockPos>(PropertyType.BlockPos, "coreLocation")).set(BlockPos.ZERO).save();
+	public Property<Integer> spinSpeed = property(new Property<Integer>(PropertyType.Integer, "spinSpeed", 0));
+	public Property<Boolean> hasCore = property(new Property<Boolean>(PropertyType.Boolean, "hasCore", false));
+	public Property<Boolean> isCore = property(new Property<Boolean>(PropertyType.Boolean, "isCore", false));
+	public Property<BlockPos> coreLocation = property(new Property<BlockPos>(PropertyType.BlockPos, "coreLocation", TileQuarry.OUT_OF_REACH));
 	protected CachedTileOutput output;
 	protected int currentVoltage = 0;
 	protected int steam;
 	protected int wait = 30;
+	
+	private boolean isSoundPlaying = false;
 
 	@Override
 	public AABB getRenderBoundingBox() {
@@ -155,8 +162,24 @@ public class TileTurbine extends GenericTile {
 	}
 
 	public void tickClient(ComponentTickable tickable) {
-		if (spinSpeed.get() > 0 && tickable.getTicks() % 200 == 0) {
-			SoundAPI.playSound(NuclearScienceSounds.SOUND_TURBINE.get(), SoundSource.BLOCKS, 1, 1, worldPosition);
+		if(!isSoundPlaying && shouldPlaySound()) {
+			isSoundPlaying = true;
+			SoundBarrierMethods.playTileSound(NuclearScienceSounds.SOUND_TURBINE.get(), this, true);
 		}
+	}
+
+	@Override
+	public void setNotPlaying() {
+		isSoundPlaying = false;
+	}
+
+	@Override
+	public boolean shouldPlaySound() {
+		return spinSpeed.get() > 0;
+	}
+	
+	@Override
+	public InteractionResult use(Player arg0, InteractionHand arg1, BlockHitResult arg2) {
+		return InteractionResult.FAIL;
 	}
 }

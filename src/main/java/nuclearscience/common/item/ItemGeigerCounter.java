@@ -1,7 +1,6 @@
 package nuclearscience.common.item;
 
 import electrodynamics.api.sound.SoundAPI;
-import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -10,6 +9,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import nuclearscience.api.radiation.RadiationSystem;
+import nuclearscience.prefab.utils.TextUtils;
 import nuclearscience.registers.NuclearScienceSounds;
 
 public class ItemGeigerCounter extends Item {
@@ -24,7 +24,7 @@ public class ItemGeigerCounter extends Item {
 		if (entityIn instanceof Player player) {
 			if (!worldIn.isClientSide) {
 				if ((isSelected || player.getItemBySlot(EquipmentSlot.OFFHAND).getItem() instanceof ItemGeigerCounter) && RadiationSystem.radiationMap.get().containsKey(entityIn)) {
-					player.displayClientMessage(Component.translatable("message.geigercounter.text", RadiationSystem.radiationMap.get().get(entityIn)), true);
+					player.displayClientMessage(TextUtils.chatMessage("geigercounter.text", RadiationSystem.radiationMap.get().get(entityIn)), true);
 				}
 			}
 			if (worldIn.isClientSide && RadiationSystem.radiationMap.get().containsKey(entityIn) && (isSelected || player.getItemBySlot(EquipmentSlot.OFFHAND).getItem() instanceof ItemGeigerCounter)) {

@@ -11,7 +11,7 @@ import nuclearscience.common.tile.generic.GenericTileMoltenSaltPipe;
 import nuclearscience.registers.NuclearScienceBlockTypes;
 
 public class TileMoltenSaltPipe extends GenericTileMoltenSaltPipe {
-	public Property<Double> transmit = property(new Property<Double>(PropertyType.Double, "transmit")).set(0.0);
+	public Property<Double> transmit = property(new Property<Double>(PropertyType.Double, "transmit", 0.0));
 
 	public TileMoltenSaltPipe(BlockPos pos, BlockState state) {
 		super(NuclearScienceBlockTypes.TILE_MOLTENSALTPIPE.get(), pos, state);

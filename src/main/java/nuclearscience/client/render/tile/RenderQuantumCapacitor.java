@@ -2,17 +2,19 @@ package nuclearscience.client.render.tile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import electrodynamics.client.render.tile.AbstractTileRenderer;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import electrodynamics.prefab.utilities.RenderingUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import nuclearscience.common.tile.TileQuantumCapacitor;
 
-public class RenderQuantumCapacitor implements BlockEntityRenderer<TileQuantumCapacitor> {
+public class RenderQuantumCapacitor extends AbstractTileRenderer<TileQuantumCapacitor> {
+	
 	public RenderQuantumCapacitor(BlockEntityRendererProvider.Context context) {
+		super(context);
 	}
 
 	@Override

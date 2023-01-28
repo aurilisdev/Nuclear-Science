@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": {
+      "tag": "forge:plates/stainlesssteel"
+    },
+    "T": {
+      "item": "electrodynamics:titaniumheatcoil"
+    },
+    "V": {
+      "tag": "forge:plates/vanadiumsteel"
+    }
+  },
+  "pattern": [
+    "SVS",
+    "TTT",
+    "SVS"
+  ],
+  "result": {
+    "item": "nuclearscience:moltensaltsupplier"
+  }
+}

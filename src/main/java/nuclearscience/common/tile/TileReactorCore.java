@@ -58,9 +58,9 @@ public class TileReactorCore extends GenericTile {
 	public static final int STEAM_GEN_DIAMETER = 5;
 	public static final int STEAM_GEN_HEIGHT = 2;
 	private TileTurbine[][][] cachedTurbines = new TileTurbine[STEAM_GEN_DIAMETER][STEAM_GEN_HEIGHT][STEAM_GEN_DIAMETER];
-	public Property<Double> temperature = property(new Property<Double>(PropertyType.Double, "temperature")).set(AIR_TEMPERATURE);
-	public Property<Integer> fuelCount = property(new Property<Integer>(PropertyType.Integer, "fuelCount")).set(0);
-	public Property<Boolean> hasDeuterium = property(new Property<Boolean>(PropertyType.Boolean, "hasDeuterium")).set(false);
+	public Property<Double> temperature = property(new Property<Double>(PropertyType.Double, "temperature", AIR_TEMPERATURE));
+	public Property<Integer> fuelCount = property(new Property<Integer>(PropertyType.Integer, "fuelCount", 0));
+	public Property<Boolean> hasDeuterium = property(new Property<Boolean>(PropertyType.Boolean, "hasDeuterium", false));
 	public int ticksOverheating = 0;
 	public int ticks = 0;
 
@@ -77,7 +77,7 @@ public class TileReactorCore extends GenericTile {
 
 	protected void tickServer(ComponentTickable tickable) {
 		ComponentInventory inv = getComponent(ComponentType.Inventory);
-		fuelCount.set(0, true);
+		fuelCount.set(0);
 		for (int i = 0; i < 4; i++) {
 			ItemStack stack = inv.getItem(i);
 			fuelCount.set(fuelCount.get() + (stack.getItem() == NuclearScienceItems.ITEM_FUELLEUO2.get() ? 2 : stack.getItem() == NuclearScienceItems.ITEM_FUELHEUO2.get() ? 3 : stack.getItem() == NuclearScienceItems.ITEM_FUELPLUTONIUM.get() ? 2 : 0));
