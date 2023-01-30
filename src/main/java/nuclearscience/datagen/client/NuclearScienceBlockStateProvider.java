@@ -39,17 +39,17 @@ public class NuclearScienceBlockStateProvider extends ElectrodynamicsBlockStateP
 		
 		horrRotatedBlock(NuclearScienceBlocks.blockAtomicAssembler, existingBlock(NuclearScienceBlocks.blockAtomicAssembler), false);
 		horrRotatedBlock(NuclearScienceBlocks.blockChemicalExtractor, existingBlock(NuclearScienceBlocks.blockChemicalExtractor), true);
-		horrRotatedBlock(NuclearScienceBlocks.blockControlRodAssembly, existingBlock(NuclearScienceBlocks.blockControlRodAssembly), 180, false);
+		horrRotatedBlock(NuclearScienceBlocks.blockControlRodAssembly, existingBlock(NuclearScienceBlocks.blockControlRodAssembly), 180, 0, false);
 		rotatedLeftRightBlock(NuclearScienceBlocks.blockElectromagneticBooster, existingBlock(blockLoc("electromagneticbooster")), existingBlock(blockLoc("electromagneticboosterleft")), existingBlock(blockLoc("electromagneticboosterright")), 90, true);
 		horrRotatedLitBlock(NuclearScienceBlocks.blockFuelReprocessor, existingBlock(NuclearScienceBlocks.blockFuelReprocessor), existingBlock(blockLoc("fuelreprocessoron")), true);
 		horrRotatedBlock(NuclearScienceBlocks.blockFusionReactorCore, existingBlock(NuclearScienceBlocks.blockFusionReactorCore), true);
-		horrRotatedBlock(NuclearScienceBlocks.blockGasCentrifuge, existingBlock(blockLoc("gascentrifugeoutline")), 180, false);
+		horrRotatedBlock(NuclearScienceBlocks.blockGasCentrifuge, existingBlock(blockLoc("gascentrifugeoutline")), 180, 0, false);
 		horrRotatedBlock(NuclearScienceBlocks.blockHeatExchanger, existingBlock(NuclearScienceBlocks.blockHeatExchanger), true);
 		horrRotatedLitBlock(NuclearScienceBlocks.blockMoltenSaltSupplier, existingBlock(NuclearScienceBlocks.blockMoltenSaltSupplier), existingBlock(blockLoc("moltensaltsupplieron")), true);
 		horrRotatedBlock(NuclearScienceBlocks.blockMSRFuelPreProcessor, existingBlock(NuclearScienceBlocks.blockMSRFuelPreProcessor), true);
-		horrRotatedBlock(NuclearScienceBlocks.blockMsrReactorCore, existingBlock(NuclearScienceBlocks.blockMsrReactorCore), 180, true);
-		horrRotatedBlock(NuclearScienceBlocks.blockNuclearBoiler, existingBlock(NuclearScienceBlocks.blockNuclearBoiler), 180, true);
-		horrRotatedBlock(NuclearScienceBlocks.blockParticleInjector, existingBlock(NuclearScienceBlocks.blockParticleInjector), 180, false);
+		horrRotatedBlock(NuclearScienceBlocks.blockMsrReactorCore, existingBlock(NuclearScienceBlocks.blockMsrReactorCore), 180, 0, true);
+		horrRotatedBlock(NuclearScienceBlocks.blockNuclearBoiler, existingBlock(NuclearScienceBlocks.blockNuclearBoiler), 180, 0, true);
+		horrRotatedBlock(NuclearScienceBlocks.blockParticleInjector, existingBlock(NuclearScienceBlocks.blockParticleInjector), 180, 0, false);
 		horrRotatedBlock(NuclearScienceBlocks.blockQuantumCapacitor, existingBlock(NuclearScienceBlocks.blockQuantumCapacitor), true);
 		horrRotatedLitBlock(NuclearScienceBlocks.blockRadioactiveProcessor, existingBlock(NuclearScienceBlocks.blockRadioactiveProcessor), existingBlock(blockLoc("radioactiveprocessoron")), true);
 		horrRotatedBlock(NuclearScienceBlocks.blockReactorCore, existingBlock(NuclearScienceBlocks.blockReactorCore), true);
