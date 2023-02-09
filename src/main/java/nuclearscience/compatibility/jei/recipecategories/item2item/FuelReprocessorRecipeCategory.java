@@ -9,12 +9,12 @@ import electrodynamics.compatibility.jei.utils.gui.item.BigItemSlotWrapper;
 import electrodynamics.compatibility.jei.utils.gui.item.DefaultItemSlotWrapper;
 import electrodynamics.compatibility.jei.utils.label.BiproductPercentWrapper;
 import electrodynamics.compatibility.jei.utils.label.PowerLabelWrapper;
+import electrodynamics.compatibility.jei.utils.label.TimeLabelWrapper;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import nuclearscience.common.recipe.categories.item2item.specificmachines.FuelReprocessorRecipe;
-import nuclearscience.common.settings.Constants;
 import nuclearscience.registers.NuclearScienceBlocks;
 
 public class FuelReprocessorRecipeCategory extends Item2ItemRecipeCategory<FuelReprocessorRecipe> {
@@ -28,8 +28,9 @@ public class FuelReprocessorRecipeCategory extends Item2ItemRecipeCategory<FuelR
 
 	private static ArrowRightAnimatedWrapper ANIM_ARROW = new ArrowRightAnimatedWrapper(41, 23);
 
-	private static PowerLabelWrapper POWER_LABEL = new PowerLabelWrapper(2, 48, Constants.FUELREPROCESSOR_REQUIRED_TICKS, 480);
+	private static PowerLabelWrapper POWER_LABEL = new PowerLabelWrapper(2, 48, 480);
 	private static BiproductPercentWrapper ITEM_LABEL = new BiproductPercentWrapper(100, 40, false);
+	private static TimeLabelWrapper TIME_LABEL = new TimeLabelWrapper(130, 48);
 
 	private static int ANIM_TIME = 50;
 
@@ -47,7 +48,7 @@ public class FuelReprocessorRecipeCategory extends Item2ItemRecipeCategory<FuelR
 		setInputSlots(guiHelper, INPUT_SLOT);
 		setOutputSlots(guiHelper, OUTPUT_SLOT, BIPRODUCT_SLOT);
 		setAnimatedArrows(guiHelper, ANIM_ARROW);
-		setLabels(POWER_LABEL, ITEM_LABEL);
+		setLabels(POWER_LABEL, ITEM_LABEL, TIME_LABEL);
 	}
 
 	public ResourceLocation getUid() {

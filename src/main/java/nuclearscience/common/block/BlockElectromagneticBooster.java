@@ -1,8 +1,5 @@
 package nuclearscience.common.block;
 
-import java.util.Arrays;
-import java.util.List;
-
 import electrodynamics.prefab.block.GenericEntityBlock;
 import electrodynamics.prefab.tile.IWrenchable;
 import net.minecraft.core.BlockPos;
@@ -18,7 +15,6 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.storage.loot.LootContext.Builder;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -34,11 +30,6 @@ public class BlockElectromagneticBooster extends Block implements IElectromagnet
 	public BlockElectromagneticBooster() {
 		super(Properties.of(Material.GLASS).strength(3.5f, 20).requiresCorrectToolForDrops().noOcclusion().isRedstoneConductor((x, y, z) -> false));
 		registerDefaultState(stateDefinition.any().setValue(GenericEntityBlock.FACING, Direction.NORTH).setValue(FACINGDIRECTION, FacingDirection.NONE));
-	}
-
-	@Override
-	public List<ItemStack> getDrops(BlockState state, Builder builder) {
-		return Arrays.asList(new ItemStack(this));
 	}
 
 	@Override

@@ -7,44 +7,54 @@ import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.registers.NuclearScienceBlockTypes;
 
 public class TileControlRodAssembly extends GenericTile {
 
-	public Direction direction = Direction.DOWN;
-	public Property<Integer> insertion = property(new Property<Integer>(PropertyType.Integer, "insertion")).set(0).save();
-	public Property<Boolean> isMSR = property(new Property<Boolean>(PropertyType.Boolean, "isMSR")).set(false);
+	public static final Direction[] HORIZONTAL_DIRECTIONS = { Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST };
+
+	public Property<Integer> direction = property(new Property<Integer>(PropertyType.Integer, "direction", Direction.DOWN.ordinal()));
+	public final Property<Integer> insertion = property(new Property<Integer>(PropertyType.Integer, "insertion", 0));
+	public final Property<Boolean> isMSR = property(new Property<Boolean>(PropertyType.Boolean, "isMSR", false));
 
 	public TileControlRodAssembly(BlockPos pos, BlockState state) {
 		super(NuclearScienceBlockTypes.TILE_CONTROLRODASSEMBLY.get(), pos, state);
-		addComponent(new ComponentTickable().tickServer(this::tickServer));
+		addComponent(new ComponentTickable());
 		addComponent(new ComponentPacketHandler());
 	}
 
-	public void tickServer(ComponentTickable tickable) {
-		if (tickable.getTicks() % 20 == 0) {
-			isMSR.set(false, true);
-			for (Direction dir : Direction.values()) {
-				if (dir != Direction.UP && dir != Direction.DOWN) {
-					BlockEntity tile = level.getBlockEntity(getBlockPos().relative(dir));
-					if (tile instanceof TileMSRReactorCore) {
-						isMSR.set(true);
-						direction = dir;
-					}
-				}
+	@Override
+	public void onNeightborChanged(BlockPos neighbor) {
+		super.onNeightborChanged(neighbor);
+		isMSR.set(false);
+		for (Direction dir : HORIZONTAL_DIRECTIONS) {
+			BlockEntity tile = level.getBlockEntity(getBlockPos().relative(dir));
+			if (tile instanceof TileMSRReactorCore) {
+				isMSR.set(true);
+				direction.set(dir.ordinal());
+				break;
 			}
+
+		}
+
+	}
+	
+	@Override
+	public void onPlace(BlockState oldState, boolean isMoving) {
+		super.onPlace(oldState, isMoving);
+		isMSR.set(false);
+		for (Direction dir : HORIZONTAL_DIRECTIONS) {
+			BlockEntity tile = level.getBlockEntity(getBlockPos().relative(dir));
+			if (tile instanceof TileMSRReactorCore) {
+				isMSR.set(true);
+				direction.set(dir.ordinal());
+				break;
+			}
+
 		}
 	}
 
-	public void writePacket(CompoundTag compound) {
-		compound.putInt("dir", direction.ordinal());
-	}
-
-	public void readPacket(CompoundTag compound) {
-		direction = Direction.from3DDataValue(compound.getInt("dir"));
-	}
 
 }

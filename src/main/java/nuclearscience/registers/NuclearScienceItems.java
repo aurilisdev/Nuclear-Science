@@ -31,7 +31,9 @@ import static nuclearscience.registers.NuclearScienceBlocks.blockTurbine;
 import static nuclearscience.registers.NuclearScienceBlocks.blocklead;
 import static nuclearscience.registers.UnifiedNuclearScienceRegister.getSafeBlock;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import electrodynamics.api.ISubtype;
 import electrodynamics.common.blockitem.BlockItemDescriptable;
@@ -83,7 +85,7 @@ public class NuclearScienceItems {
 		ITEMS.register("siren", supplier(() -> new BlockItemDescriptable(() -> blockSiren, new Item.Properties().tab(References.NUCLEARTAB))));
 		ITEMS.register("atomicassembler", supplier(() -> new BlockItemDescriptable(() -> blockAtomicAssembler, new Item.Properties().tab(References.NUCLEARTAB))));
 		for (SubtypeMoltenSaltPipe subtype : SubtypeMoltenSaltPipe.values()) {
-			ITEMS.register(subtype.tag(), supplier(() -> new BlockItemDescriptable(() -> getSafeBlock(subtype), new Item.Properties().tab(References.NUCLEARTAB)), subtype));
+			SUBTYPEITEMREGISTER_MAPPINGS.put(subtype, ITEMS.register(subtype.tag(), supplier(() -> new BlockItemDescriptable(() -> getSafeBlock(subtype), new Item.Properties().tab(References.NUCLEARTAB)), subtype)));
 		}
 		ITEMS.register("radioactivesoil", supplier(() -> new BlockItemDescriptable(() -> blockRadioactiveSoil, new Item.Properties().tab(References.NUCLEARTAB))));
 		ITEMS.register("meltedreactor", supplier(() -> new BlockItemDescriptable(() -> blockMeltedReactor, new Item.Properties().tab(References.NUCLEARTAB))));
@@ -128,5 +130,19 @@ public class NuclearScienceItems {
 	public static final RegistryObject<Item> ITEM_ANTIDOTE = ITEMS.register("antidote", supplier(() -> new ItemAntidote(new Item.Properties().tab(References.NUCLEARTAB))));
 	public static final RegistryObject<Item> ITEM_FREQUENCYCARD = ITEMS.register("frequencycard", supplier(() -> new ItemFrequencyCard(new Item.Properties().tab(References.NUCLEARTAB))));
 	public static final RegistryObject<Item> ITEM_CANISTERLEAD = ITEMS.register("canisterlead", supplier(() -> new ItemCanisterLead(new Item.Properties().stacksTo(1).tab(References.NUCLEARTAB))));
+	
+	
+	public static Item[] getAllItemForSubtype(ISubtype[] values){
+		List<Item> list = new ArrayList<>();
+		for(ISubtype value : values) {
+			list.add(SUBTYPEITEMREGISTER_MAPPINGS.get(value).get());
+		}
+		return list.toArray(new Item[] {});
+	}
+	
+	public static Item getItem(ISubtype value) {
+		return SUBTYPEITEMREGISTER_MAPPINGS.get(value).get();
+	}
+	
 
 }

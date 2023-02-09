@@ -30,8 +30,8 @@ public class TileMSRReactorCore extends GenericTile {
 	public static final int MELTDOWN_TEMPERATURE = 900;
 	public static final double FUEL_CAPACITY = 1000;
 	public static final double FUEL_USAGE_RATE = 0.01;
-	public Property<Double> temperature = property(new Property<Double>(PropertyType.Double, "temperature")).set(TileReactorCore.AIR_TEMPERATURE).save();
-	public Property<Double> currentFuel = property(new Property<Double>(PropertyType.Double, "currentFuel")).set(0.0).save();
+	public Property<Double> temperature = property(new Property<Double>(PropertyType.Double, "temperature", TileReactorCore.AIR_TEMPERATURE));
+	public Property<Double> currentFuel = property(new Property<Double>(PropertyType.Double, "currentFuel", 0.0));
 
 	public int ticksOverheating = 0;
 	private CachedTileOutput outputCache;
@@ -68,7 +68,7 @@ public class TileMSRReactorCore extends GenericTile {
 						BlockEntity tile = level.getBlockEntity(getBlockPos().relative(dir));
 						if (tile instanceof TileControlRodAssembly cr) {
 							TileControlRodAssembly control = cr;
-							if (control.direction == dir.getOpposite()) {
+							if (Direction.values()[control.direction.get()] == dir.getOpposite()) {
 								insertion += control.insertion.get();
 							}
 						}

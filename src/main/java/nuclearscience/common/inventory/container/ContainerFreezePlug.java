@@ -23,6 +23,6 @@ public class ContainerFreezePlug extends GenericContainerBlockEntity<TileFreezeP
 
 	@Override
 	public void addInventorySlots(Container inv, Inventory playerinv) {
-		addSlot(new SlotRestricted(inv, nextIndex(), 25, 42, NuclearScienceItems.ITEM_FLINAK.get()));
+		addSlot(new SlotRestricted(inv, nextIndex(), 25, 42).setRestriction(NuclearScienceItems.ITEM_FLINAK.get()));
 	}
 }

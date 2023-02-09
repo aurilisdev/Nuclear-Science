@@ -9,6 +9,7 @@ import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
+import electrodynamics.prefab.utilities.BlockEntityUtils;
 import electrodynamics.prefab.utilities.object.CachedTileOutput;
 import electrodynamics.prefab.utilities.object.TransferPack;
 import net.minecraft.core.BlockPos;
@@ -44,21 +45,32 @@ public class TileMoltenSaltSupplier extends GenericTile {
 			output = new CachedTileOutput(level, worldPosition.relative(dir.getOpposite()));
 		}
 		ComponentElectrodynamic electro = getComponent(ComponentType.Electrodynamic);
-		if (electro.getJoulesStored() > Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK) {
-			electro.extractPower(TransferPack.joulesVoltage(Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK, Constants.MOLTENSALTSUPPLIER_VOLTAGE), false);
-			if (tickable.getTicks() % 40 == 0) {
-				output.update(worldPosition.relative(dir.getOpposite()));
-				ItemStack in = this.<ComponentInventory>getComponent(ComponentType.Inventory).getItem(0);
-				if (in.getCount() > 0 && output.valid() && output.getSafe() instanceof TileMSRReactorCore core) {
-					if (core.<ComponentDirection>getComponent(ComponentType.Direction).getDirection() == dir) {
-						if (TileMSRReactorCore.FUEL_CAPACITY - core.currentFuel.get() >= 250) {
-							in.shrink(1);
-							core.currentFuel.set(core.currentFuel.get() + 250);
-						}
-					}
+		boolean enoughPower = electro.getJoulesStored() >= Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK;
+		if (!enoughPower) {
+			return;
+		}
+		
+		if(BlockEntityUtils.isLit(this) ^ enoughPower) {
+			BlockEntityUtils.updateLit(this, enoughPower);
+		}
+		
+		electro.joules(electro.getJoulesStored() - Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK);
+		
+		if (tickable.getTicks() % 40 != 0) {
+			return;
+		}
+		output.update(worldPosition.relative(dir.getOpposite()));
+		ItemStack in = this.<ComponentInventory>getComponent(ComponentType.Inventory).getItem(0);
+		if (in.getCount() > 0 && output.valid() && output.getSafe() instanceof TileMSRReactorCore core) {
+			if (core.<ComponentDirection>getComponent(ComponentType.Direction).getDirection() == dir) {
+				if (TileMSRReactorCore.FUEL_CAPACITY - core.currentFuel.get() >= 250) {
+					in.shrink(1);
+					core.currentFuel.set(core.currentFuel.get() + 250);
 				}
 			}
-		}
+		}	
+		
+		
 	}
 
 	static {

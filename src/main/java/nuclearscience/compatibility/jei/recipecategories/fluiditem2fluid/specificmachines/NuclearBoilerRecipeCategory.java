@@ -8,13 +8,13 @@ import electrodynamics.compatibility.jei.utils.gui.fluid.DefaultFluidGaugeWrappe
 import electrodynamics.compatibility.jei.utils.gui.item.BucketSlotWrapper;
 import electrodynamics.compatibility.jei.utils.gui.item.DefaultItemSlotWrapper;
 import electrodynamics.compatibility.jei.utils.label.PowerLabelWrapper;
+import electrodynamics.compatibility.jei.utils.label.TimeLabelWrapper;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import nuclearscience.References;
 import nuclearscience.common.recipe.categories.fluiditem2fluid.specificmachines.NuclearBoilerRecipe;
-import nuclearscience.common.settings.Constants;
 import nuclearscience.registers.NuclearScienceBlocks;
 
 public class NuclearBoilerRecipeCategory extends FluidItem2FluidRecipeCategory<NuclearBoilerRecipe> {
@@ -33,7 +33,8 @@ public class NuclearBoilerRecipeCategory extends FluidItem2FluidRecipeCategory<N
 	private static DefaultFluidGaugeWrapper IN_GAUGE = new DefaultFluidGaugeWrapper(10, 5, 5000);
 	private static DefaultFluidGaugeWrapper OUT_GAUGE = new DefaultFluidGaugeWrapper(108, 5, 5000);
 
-	private static PowerLabelWrapper POWER_LABEL = new PowerLabelWrapper(2, 55, Constants.CHEMICALBOILER_USAGE_PER_TICK, 240);
+	private static PowerLabelWrapper POWER_LABEL = new PowerLabelWrapper(2, 55, 240);
+	private static TimeLabelWrapper TIME_LABEL = new TimeLabelWrapper(130, 55);
 
 	private static int ANIM_TIME = 50;
 
@@ -52,7 +53,7 @@ public class NuclearBoilerRecipeCategory extends FluidItem2FluidRecipeCategory<N
 		setFluidInputs(guiHelper, IN_GAUGE);
 		setFluidOutputs(guiHelper, OUT_GAUGE);
 		setAnimatedArrows(guiHelper, ANIM_LEFT_ARROW, ANIM_RIGHT_ARROW_1, ANIM_RIGHT_ARROW_2);
-		setLabels(POWER_LABEL);
+		setLabels(POWER_LABEL, TIME_LABEL);
 	}
 
 	public ResourceLocation getUid() {

@@ -12,7 +12,8 @@ import electrodynamics.compatibility.jei.recipecategories.item2item.Item2ItemRec
 import electrodynamics.compatibility.jei.utils.gui.arrows.animated.FeynmanDiagramAnimatedWrapper;
 import electrodynamics.compatibility.jei.utils.gui.backgroud.BackgroundWrapper;
 import electrodynamics.compatibility.jei.utils.gui.item.DefaultItemSlotWrapper;
-import electrodynamics.compatibility.jei.utils.label.GenericLabelWrapper;
+import electrodynamics.compatibility.jei.utils.label.LabelWrapperGeneric;
+import electrodynamics.prefab.utilities.TextUtils;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.resources.ResourceLocation;
@@ -35,7 +36,7 @@ public class FissionReactorRecipeCategory extends Item2ItemRecipeCategory<Fissio
 
 	private static FeynmanDiagramAnimatedWrapper ARROW = new FeynmanDiagramAnimatedWrapper(35, 40);
 
-	private static GenericLabelWrapper POWER_LABEL = new GenericLabelWrapper(0xFF808080, 122, 2, "reactorcore.info.temp");
+	private static LabelWrapperGeneric POWER_LABEL = new LabelWrapperGeneric(0xFF808080, 122, 2, false, TextUtils.jeiTranslated("gui.reactorcore.info.temp"));
 
 	private static int ANIM_TIME = 50;
 

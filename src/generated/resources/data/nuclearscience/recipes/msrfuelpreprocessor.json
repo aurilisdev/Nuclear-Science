@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "item": "electrodynamics:chemicalmixer"
+    },
+    "E": {
+      "tag": "forge:circuits/elite"
+    },
+    "L": {
+      "tag": "forge:plates/lead"
+    },
+    "V": {
+      "tag": "forge:plates/vanadiumsteel"
+    }
+  },
+  "pattern": [
+    "VLV",
+    "LCL",
+    "VEV"
+  ],
+  "result": {
+    "item": "nuclearscience:msrfuelpreprocessor"
+  }
+}

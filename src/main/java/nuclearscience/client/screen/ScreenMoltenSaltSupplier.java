@@ -2,7 +2,7 @@ package nuclearscience.client.screen;
 
 import electrodynamics.prefab.screen.GenericScreen;
 import electrodynamics.prefab.screen.component.ScreenComponentElectricInfo;
-import electrodynamics.prefab.screen.component.ScreenComponentInfo;
+import electrodynamics.prefab.screen.component.utils.AbstractScreenComponentInfo;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
@@ -15,6 +15,6 @@ public class ScreenMoltenSaltSupplier extends GenericScreen<ContainerMoltenSaltS
 
 	public ScreenMoltenSaltSupplier(ContainerMoltenSaltSupplier container, Inventory playerInventory, Component title) {
 		super(container, playerInventory, title);
-		components.add(new ScreenComponentElectricInfo(this, -ScreenComponentInfo.SIZE + 1, 2).wattage(Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK * 20));
+		components.add(new ScreenComponentElectricInfo(this, -AbstractScreenComponentInfo.SIZE + 1, 2).wattage(Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK * 20));
 	}
 }

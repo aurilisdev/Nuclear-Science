@@ -79,7 +79,7 @@ minecraft {
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
-            args '--mod', 'nuclearscience', '--all', '--output', file('src/generated/resources/')
+            args '--mod', 'nuclearscience', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
             mods {
                 nuclearscience {
@@ -89,6 +89,8 @@ minecraft {
         }
     }
 }
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
     def Folder = new File("C:/AmpzLibz")

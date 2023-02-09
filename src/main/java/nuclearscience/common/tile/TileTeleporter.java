@@ -9,6 +9,7 @@ import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
+import electrodynamics.prefab.utilities.BlockEntityUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -43,6 +44,10 @@ public class TileTeleporter extends GenericTile {
 
 	protected void tickServer(ComponentTickable tickable) {
 		ComponentElectrodynamic electro = getComponent(ComponentType.Electrodynamic);
+		boolean powered = electro.getJoulesStored() > 0;
+		if(BlockEntityUtils.isLit(this) ^ powered) {
+			BlockEntityUtils.updateLit(this, powered);
+		}
 		if (cooldown <= 0) {
 			cooldown = 20;
 			if (electro.getJoulesStored() == electro.getMaxJoulesStored()) {

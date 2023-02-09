@@ -1,57 +1,114 @@
 package nuclearscience.client.render.tile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
-import electrodynamics.prefab.block.GenericEntityBlock;
+import electrodynamics.client.render.tile.AbstractTileRenderer;
 import electrodynamics.prefab.tile.components.ComponentType;
+import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
 import electrodynamics.prefab.utilities.RenderingUtils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.material.Fluids;
-import nuclearscience.client.ClientRegister;
+import net.minecraft.world.phys.AABB;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 import nuclearscience.common.tile.TileNuclearBoiler;
-import nuclearscience.registers.NuclearScienceFluids;
 
-public class RenderNuclearBoiler implements BlockEntityRenderer<TileNuclearBoiler> {
+public class RenderNuclearBoiler extends AbstractTileRenderer<TileNuclearBoiler> {
+
+	private static final float DELTA_Y = 3.6F / 16.0F;
+
 	public RenderNuclearBoiler(BlockEntityRendererProvider.Context context) {
+		super(context);
 	}
 
 	@Override
-	public void render(TileNuclearBoiler tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
-		matrixStackIn.pushPose();
-		BakedModel ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_CHEMICALBOILERWATER);
-		Direction face = tileEntityIn.getBlockState().getValue(GenericEntityBlock.FACING);
-		matrixStackIn.translate(face.getStepX(), face.getStepY(), face.getStepZ());
-		RenderingUtils.prepareRotationalTileModel(tileEntityIn, matrixStackIn);
-		matrixStackIn.translate(-0.5, 0, 0.5);
-		float prog = tileEntityIn.<ComponentFluidHandlerMulti>getComponent(ComponentType.FluidHandler).getTankFromFluid(Fluids.WATER, true).getFluidAmount() / (float) TileNuclearBoiler.MAX_TANK_CAPACITY;
-		if (prog > 0) {
-			matrixStackIn.translate(0, 4.5 / 16.0, 2.0 / 16.0);
-			matrixStackIn.scale(1, prog / 16.0f * 12f, 1);
-			matrixStackIn.translate(0, prog / 16.0f * 6f, 0);
-			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.cutout(), matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
+	public void render(TileNuclearBoiler tile, float partialTicks, PoseStack matrix, MultiBufferSource buffer, int light, int overlay) {
+
+		matrix.pushPose();
+
+		Direction facing = tile.<ComponentDirection>getComponent(ComponentType.Direction).getDirection();
+		ComponentFluidHandlerMulti multi = tile.getComponent(ComponentType.FluidHandler);
+		VertexConsumer builder = buffer.getBuffer(Sheets.translucentCullBlockSheet());
+
+		FluidTank input = multi.getInputTanks()[0];
+
+		if (!input.isEmpty()) {
+
+			drawFluidInput(matrix, builder, input.getFluid(), facing, (float) input.getFluidAmount() / (float) TileNuclearBoiler.MAX_TANK_CAPACITY, light, overlay);
+
 		}
-		matrixStackIn.popPose();
-		matrixStackIn.pushPose();
-		ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_CHEMICALBOILERHEXAFLUORIDE);
-		face = tileEntityIn.getBlockState().getValue(GenericEntityBlock.FACING);
-		matrixStackIn.translate(face.getStepX(), face.getStepY(), face.getStepZ());
-		RenderingUtils.prepareRotationalTileModel(tileEntityIn, matrixStackIn);
-		matrixStackIn.translate(-0.5, 0, 0.5);
-		prog = tileEntityIn.<ComponentFluidHandlerMulti>getComponent(ComponentType.FluidHandler).getTankFromFluid(NuclearScienceFluids.fluidUraniumHexafluoride, false).getFluidAmount() / (float) TileNuclearBoiler.MAX_TANK_CAPACITY;
-		if (prog > 0) {
-			matrixStackIn.translate(0, 4.5 / 16.0, -2.0 / 16.0);
-			matrixStackIn.scale(1, prog / 16.0f * 12f, 1);
-			matrixStackIn.translate(0, prog / 16.0f * 6f, 0);
-			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.cutout(), matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
+
+		matrix.popPose();
+		
+		matrix.pushPose();
+		
+		FluidTank output = multi.getOutputTanks()[0];
+		
+		if(!output.isEmpty()) {
+			
+			drawFluidOutput(matrix, builder, output.getFluid(), facing, (float) output.getFluidAmount() / (float) TileNuclearBoiler.MAX_TANK_CAPACITY, light, overlay);
+			
 		}
-		matrixStackIn.popPose();
+		
+		matrix.popPose();
+		
+	}
+
+	private void drawFluidInput(PoseStack stack, VertexConsumer builder, FluidStack fluid, Direction facing, float height, int light, int overlay) {
+
+		AABB box = null;
+
+		float maxY = DELTA_Y * height + 8.2F / 16.0F;
+
+		if (facing == Direction.NORTH) {
+
+			box = new AABB(8.7 / 16.0, 8.2 / 16, 6.2 / 16.0, 11.3 / 16.0, maxY, 9.8 / 16.0);
+
+		} else if (facing == Direction.EAST) {
+
+			box = new AABB(6.2 / 16.0, 8.2 / 16, 8.7 / 16.0, 9.8 / 16.0, maxY, 11.3 / 16.0);
+
+		} else if (facing == Direction.SOUTH) {
+
+			box = new AABB(4.7 / 16.0, 8.2 / 16, 6.2 / 16.0, 7.3 / 16.0, maxY, 9.8 / 16.0);
+
+		} else {
+
+			box = new AABB(6.2 / 16.0, 8.2 / 16, 4.7 / 16.0, 9.8 / 16.0, maxY, 7.3 / 16.0);
+
+		}
+
+		RenderingUtils.renderFluidBox(stack, minecraft(), builder, box, fluid, light, overlay);
+	}
+
+	private void drawFluidOutput(PoseStack stack, VertexConsumer builder, FluidStack fluid, Direction facing, float height, int light, int overlay) {
+
+		AABB box = null;
+
+		float maxY = DELTA_Y * height + 8.2F / 16.0F;
+
+		if (facing == Direction.NORTH) {
+
+			box = new AABB(4.7 / 16.0, 8.2 / 16, 6.2 / 16.0, 7.3 / 16.0, maxY, 9.8 / 16.0);
+
+		} else if (facing == Direction.EAST) {
+
+			box = new AABB(6.2 / 16.0, 8.2 / 16, 4.7 / 16.0, 9.8 / 16.0, maxY, 7.3 / 16.0);
+
+		} else if (facing == Direction.SOUTH) {
+
+			box = new AABB(8.7 / 16.0, 8.2 / 16, 6.2 / 16.0, 11.3 / 16.0, maxY, 9.8 / 16.0);
+		} else {
+
+			box = new AABB(6.2 / 16.0, 8.2 / 16, 8.7 / 16.0, 9.8 / 16.0, maxY, 11.3 / 16.0);
+
+		}
+
+		RenderingUtils.renderFluidBox(stack, minecraft(), builder, box, fluid, light, overlay);
 	}
 
 }

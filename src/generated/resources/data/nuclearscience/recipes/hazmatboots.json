@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": {
+      "item": "minecraft:leather_boots"
+    },
+    "C": {
+      "tag": "forge:circuits/basic"
+    },
+    "L": {
+      "tag": "forge:plates/lead"
+    },
+    "W": {
+      "tag": "minecraft:wool"
+    }
+  },
+  "pattern": [
+    "WWW",
+    "LBL",
+    "WCW"
+  ],
+  "result": {
+    "item": "nuclearscience:hazmatboots"
+  }
+}

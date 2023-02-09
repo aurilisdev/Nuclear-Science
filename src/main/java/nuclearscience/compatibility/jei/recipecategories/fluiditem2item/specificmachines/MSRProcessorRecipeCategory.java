@@ -8,12 +8,12 @@ import electrodynamics.compatibility.jei.utils.gui.fluid.DefaultFluidGaugeWrappe
 import electrodynamics.compatibility.jei.utils.gui.item.BucketSlotWrapper;
 import electrodynamics.compatibility.jei.utils.gui.item.DefaultItemSlotWrapper;
 import electrodynamics.compatibility.jei.utils.label.PowerLabelWrapper;
+import electrodynamics.compatibility.jei.utils.label.TimeLabelWrapper;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import nuclearscience.common.recipe.categories.fluiditem2item.specificmachines.MSRFuelPreProcessorRecipe;
-import nuclearscience.common.settings.Constants;
 import nuclearscience.registers.NuclearScienceBlocks;
 
 public class MSRProcessorRecipeCategory extends FluidItem2ItemRecipeCategory<MSRFuelPreProcessorRecipe> {
@@ -32,7 +32,8 @@ public class MSRProcessorRecipeCategory extends FluidItem2ItemRecipeCategory<MSR
 
 	private static DefaultFluidGaugeWrapper IN_GAUGE = new DefaultFluidGaugeWrapper(10, 5, 5000);
 
-	private static PowerLabelWrapper POWER_LABEL = new PowerLabelWrapper(0, 55, Constants.MSRFUELPREPROCESSOR_USAGE_PER_TICK, 240);
+	private static PowerLabelWrapper POWER_LABEL = new PowerLabelWrapper(0, 55, 240);
+	private static TimeLabelWrapper TIME_LABEL = new TimeLabelWrapper(130, 55);
 
 	private static int ANIM_TIME = 50;
 
@@ -50,7 +51,7 @@ public class MSRProcessorRecipeCategory extends FluidItem2ItemRecipeCategory<MSR
 		setOutputSlots(guiHelper, OUTPUT_SLOT);
 		setFluidInputs(guiHelper, IN_GAUGE);
 		setAnimatedArrows(guiHelper, ANIM_RIGHT_ARROW_1, ANIM_RIGHT_ARROW_2);
-		setLabels(POWER_LABEL);
+		setLabels(POWER_LABEL, TIME_LABEL);
 	}
 
 	public ResourceLocation getUid() {

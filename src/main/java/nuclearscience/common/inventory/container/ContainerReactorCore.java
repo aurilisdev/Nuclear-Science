@@ -23,11 +23,12 @@ public class ContainerReactorCore extends GenericContainerBlockEntity<TileReacto
 
 	@Override
 	public void addInventorySlots(Container inv, Inventory playerinv) {
-		addSlot(new SlotRestricted(inv, nextIndex(), 80, 11, NuclearScienceItems.ITEM_FUELHEUO2.get(), NuclearScienceItems.ITEM_FUELLEUO2.get(), NuclearScienceItems.ITEM_FUELPLUTONIUM.get()));
-		addSlot(new SlotRestricted(inv, nextIndex(), 152, 11, NuclearScienceItems.ITEM_FUELHEUO2.get(), NuclearScienceItems.ITEM_FUELLEUO2.get(), NuclearScienceItems.ITEM_FUELPLUTONIUM.get()));
-		addSlot(new SlotRestricted(inv, nextIndex(), 80, 47, NuclearScienceItems.ITEM_FUELHEUO2.get(), NuclearScienceItems.ITEM_FUELLEUO2.get(), NuclearScienceItems.ITEM_FUELPLUTONIUM.get()));
-		addSlot(new SlotRestricted(inv, nextIndex(), 152, 47, NuclearScienceItems.ITEM_FUELHEUO2.get(), NuclearScienceItems.ITEM_FUELLEUO2.get(), NuclearScienceItems.ITEM_FUELPLUTONIUM.get()));
-		addSlot(new SlotRestricted(inv, nextIndex(), 116, 24, NuclearScienceItems.ITEM_CELLDEUTERIUM.get()));
-		addSlot(new SlotRestricted(inv, nextIndex(), 116, 59, NuclearScienceItems.ITEM_CELLDEUTERIUM.get()));
+		playerInvOffset = 10;
+		addSlot(new SlotRestricted(inv, nextIndex(), 80, 21).setRestriction(NuclearScienceItems.ITEM_FUELHEUO2.get(), NuclearScienceItems.ITEM_FUELLEUO2.get(), NuclearScienceItems.ITEM_FUELPLUTONIUM.get()));
+		addSlot(new SlotRestricted(inv, nextIndex(), 152, 21).setRestriction(NuclearScienceItems.ITEM_FUELHEUO2.get(), NuclearScienceItems.ITEM_FUELLEUO2.get(), NuclearScienceItems.ITEM_FUELPLUTONIUM.get()));
+		addSlot(new SlotRestricted(inv, nextIndex(), 80, 57).setRestriction(NuclearScienceItems.ITEM_FUELHEUO2.get(), NuclearScienceItems.ITEM_FUELLEUO2.get(), NuclearScienceItems.ITEM_FUELPLUTONIUM.get()));
+		addSlot(new SlotRestricted(inv, nextIndex(), 152, 57).setRestriction(NuclearScienceItems.ITEM_FUELHEUO2.get(), NuclearScienceItems.ITEM_FUELLEUO2.get(), NuclearScienceItems.ITEM_FUELPLUTONIUM.get()));
+		addSlot(new SlotRestricted(inv, nextIndex(), 116, 34).setRestriction(NuclearScienceItems.ITEM_CELLDEUTERIUM.get()));
+		addSlot(new SlotRestricted(inv, nextIndex(), 116, 69).setRestriction(NuclearScienceItems.ITEM_CELLDEUTERIUM.get()));
 	}
 }

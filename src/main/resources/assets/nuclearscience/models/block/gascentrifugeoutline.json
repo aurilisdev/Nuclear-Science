@@ -4,7 +4,7 @@
 	"ambientocclusion": "false",
 	"textures": {
 		"0": "nuclearscience:model/gascentrifuge",
-		"particle": "nuclearscience:model/gascentrifuge"
+		"particle": "electrodynamics:block/steelcasing"
 	},
 	"elements": [
 		{

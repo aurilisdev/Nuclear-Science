@@ -1,0 +1,24 @@
+{
+  "type": "nuclearscience:radioactive_processor_recipe",
+  "experience": 0.0,
+  "fluidinputs": {
+    "0": {
+      "amount": 3000,
+      "tag": "forge:sulfate_iron"
+    },
+    "count": 1
+  },
+  "iteminputs": {
+    "0": {
+      "count": 2,
+      "tag": "forge:dusts/fissile"
+    },
+    "count": 1
+  },
+  "output": {
+    "count": 1,
+    "item": "nuclearscience:plutoniumoxide"
+  },
+  "ticks": 300,
+  "usagepertick": 480.0
+}

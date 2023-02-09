@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "item": "electrodynamics:coil"
+    },
+    "E": {
+      "tag": "forge:cells/empty"
+    }
+  },
+  "pattern": [
+    " C ",
+    "CEC",
+    " C "
+  ],
+  "result": {
+    "item": "nuclearscience:cellelectromagnetic"
+  }
+}

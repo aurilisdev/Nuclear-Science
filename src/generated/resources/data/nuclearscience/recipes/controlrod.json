@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "tag": "forge:circuits/advanced"
+    },
+    "P": {
+      "item": "minecraft:piston"
+    },
+    "S": {
+      "tag": "forge:plates/steel"
+    },
+    "s": {
+      "tag": "forge:ingots/silver"
+    }
+  },
+  "pattern": [
+    "SsS",
+    " P ",
+    "SCS"
+  ],
+  "result": {
+    "item": "nuclearscience:controlrodassembly"
+  }
+}
