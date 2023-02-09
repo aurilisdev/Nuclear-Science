@@ -95,7 +95,7 @@ public class NuclearScienceLangKeyProvider extends ElectrodynamicsLangKeyProvide
 			addBlock(NuclearScienceBlocks.blockRadioactiveSoil, "Radioactive Soil");
 			addBlock(NuclearScienceBlocks.blockRadioactiveAir, "Radioactive Air");
 			addBlock(NuclearScienceBlocks.blocklead, "Radiation Shielding");
-			
+
 			addBlock(NuclearScienceBlocks.getBlock(SubtypeMoltenSaltPipe.vanadiumsteelceramic), "VS-Ceramic Pipe");
 
 			addFluid(NuclearScienceFluids.fluidUraniumHexafluoride, "Uranium Hexafluoride");

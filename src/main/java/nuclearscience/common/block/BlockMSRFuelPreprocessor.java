@@ -15,7 +15,7 @@ public class BlockMSRFuelPreprocessor extends GenericMachineBlock {
 	public BlockMSRFuelPreprocessor(BlockEntitySupplier<BlockEntity> blockEntitySupplier) {
 		super(blockEntitySupplier);
 	}
-	
+
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
 		return Block.box(0, 0, 0, 16, 13, 16);

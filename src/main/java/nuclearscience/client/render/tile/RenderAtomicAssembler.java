@@ -15,7 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import nuclearscience.common.tile.TileAtomicAssembler;
 
 public class RenderAtomicAssembler extends AbstractTileRenderer<TileAtomicAssembler> {
-	
+
 	public RenderAtomicAssembler(BlockEntityRendererProvider.Context context) {
 		super(context);
 	}

@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import nuclearscience.common.tile.TileQuantumCapacitor;
 
 public class RenderQuantumCapacitor extends AbstractTileRenderer<TileQuantumCapacitor> {
-	
+
 	public RenderQuantumCapacitor(BlockEntityRendererProvider.Context context) {
 		super(context);
 	}

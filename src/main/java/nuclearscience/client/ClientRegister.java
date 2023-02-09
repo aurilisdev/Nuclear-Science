@@ -44,7 +44,7 @@ import nuclearscience.registers.NuclearScienceMenuTypes;
 @OnlyIn(Dist.CLIENT)
 @EventBusSubscriber(modid = References.ID, bus = Bus.MOD, value = { Dist.CLIENT })
 public class ClientRegister {
-	
+
 	@SubscribeEvent
 	public static void onModelEvent(RegisterAdditional event) {
 		event.register(MODEL_GASCENTRIFUGECENTER);

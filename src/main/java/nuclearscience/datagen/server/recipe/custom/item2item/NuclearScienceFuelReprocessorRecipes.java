@@ -2,11 +2,11 @@ package nuclearscience.datagen.server.recipe.custom.item2item;
 
 import java.util.function.Consumer;
 
-import electrodynamics.datagen.utils.recipe.AbstractRecipeGenerator;
-import electrodynamics.datagen.utils.recipe.FinishedRecipeItemOutput;
 import electrodynamics.common.item.subtype.SubtypeIngot;
 import electrodynamics.common.recipe.recipeutils.ProbableItem;
 import electrodynamics.datagen.utils.recipe.AbstractElectrodynamicsFinishedRecipe.RecipeCategory;
+import electrodynamics.datagen.utils.recipe.AbstractRecipeGenerator;
+import electrodynamics.datagen.utils.recipe.FinishedRecipeItemOutput;
 import electrodynamics.registers.ElectrodynamicsItems;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.world.item.ItemStack;

@@ -12,13 +12,13 @@ public class NuclearScienceFluidTagsProvider extends FluidTagsProvider {
 	public NuclearScienceFluidTagsProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
 		super(generator, References.ID, existingFileHelper);
 	}
-	
+
 	@Override
 	protected void addTags() {
-		
+
 		tag(NuclearScienceTags.Fluids.AMMONIA).add(NuclearScienceFluids.fluidAmmonia);
 		tag(NuclearScienceTags.Fluids.URANIUM_HEXAFLUORIDE).add(NuclearScienceFluids.fluidUraniumHexafluoride);
-		
+
 	}
 
 }

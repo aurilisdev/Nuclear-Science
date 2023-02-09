@@ -15,7 +15,7 @@ import net.minecraft.world.phys.AABB;
 import nuclearscience.common.tile.TileTeleporter;
 
 public class RenderTeleporter extends AbstractTileRenderer<TileTeleporter> {
-	
+
 	public RenderTeleporter(BlockEntityRendererProvider.Context context) {
 		super(context);
 	}

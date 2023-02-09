@@ -273,7 +273,7 @@ public class NuclearScienceCraftingTableRecipes extends AbstractRecipeGenerator 
 				.addKey('P', NuclearScienceTags.Items.NUGGET_POLONIUM)
 				//
 				.complete(References.ID, "poloniumpellet_from_nuggets", consumer);
-		
+
 		addGear(consumer);
 		addMachines(consumer);
 

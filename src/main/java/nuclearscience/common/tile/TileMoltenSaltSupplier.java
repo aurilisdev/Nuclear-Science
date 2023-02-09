@@ -49,13 +49,13 @@ public class TileMoltenSaltSupplier extends GenericTile {
 		if (!enoughPower) {
 			return;
 		}
-		
-		if(BlockEntityUtils.isLit(this) ^ enoughPower) {
+
+		if (BlockEntityUtils.isLit(this) ^ enoughPower) {
 			BlockEntityUtils.updateLit(this, enoughPower);
 		}
-		
+
 		electro.joules(electro.getJoulesStored() - Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK);
-		
+
 		if (tickable.getTicks() % 40 != 0) {
 			return;
 		}
@@ -68,9 +68,8 @@ public class TileMoltenSaltSupplier extends GenericTile {
 					core.currentFuel.set(core.currentFuel.get() + 250);
 				}
 			}
-		}	
-		
-		
+		}
+
 	}
 
 	static {

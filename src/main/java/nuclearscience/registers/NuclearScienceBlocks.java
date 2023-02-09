@@ -117,7 +117,7 @@ public class NuclearScienceBlocks {
 		BLOCKS.register("radioactivesoil", supplier(() -> blockRadioactiveSoil = new BlockRadioactiveSoil()));
 
 	}
-	
+
 	public static Block[] getAllBlockForSubtype(ISubtype[] values) {
 		List<Block> list = new ArrayList<>();
 		for (ISubtype value : values) {

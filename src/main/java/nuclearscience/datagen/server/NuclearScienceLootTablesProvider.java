@@ -14,7 +14,7 @@ public class NuclearScienceLootTablesProvider extends ElectrodynamicsLootTablesP
 
 	@Override
 	protected void addTables() {
-		
+
 		addIETable(NuclearScienceBlocks.blockAtomicAssembler, NuclearScienceBlockTypes.TILE_ATOMICASSEMBLER);
 		addIEFTable(NuclearScienceBlocks.blockChemicalExtractor, NuclearScienceBlockTypes.TILE_CHEMICALEXTRACTOR);
 		addSimpleBlock(NuclearScienceBlocks.blockControlRodAssembly);
@@ -43,8 +43,7 @@ public class NuclearScienceLootTablesProvider extends ElectrodynamicsLootTablesP
 		addETable(NuclearScienceBlocks.blockTeleporter, NuclearScienceBlockTypes.TILE_TELEPORTER);
 		addSimpleBlock(NuclearScienceBlocks.blockTurbine);
 		addSimpleBlock(NuclearScienceBlocks.getBlock(SubtypeMoltenSaltPipe.vanadiumsteelceramic));
-		
+
 	}
-	
 
 }

@@ -15,7 +15,7 @@ import nuclearscience.client.ClientRegister;
 import nuclearscience.common.tile.TileTurbine;
 
 public class RenderTurbine extends AbstractTileRenderer<TileTurbine> {
-	
+
 	public RenderTurbine(BlockEntityRendererProvider.Context context) {
 		super(context);
 	}

@@ -23,7 +23,7 @@ public class NuclearScienceBlockStateProvider extends ElectrodynamicsBlockStateP
 
 	@Override
 	protected void registerStatesAndModels() {
-		
+
 		simpleBlock(NuclearScienceBlocks.blocklead, blockLoc("blocklead"), true);
 		simpleColumnBlock(NuclearScienceBlocks.blockElectromagnet, blockLoc("electromagnet"), blockLoc("electromagnettop"), true);
 		glassBlock(NuclearScienceBlocks.blockElectromagneticGlass, blockLoc("electromagneticglass"), true);
@@ -36,7 +36,7 @@ public class NuclearScienceBlockStateProvider extends ElectrodynamicsBlockStateP
 		simpleBlock(NuclearScienceBlocks.blockSiren, blockLoc("siren"), true);
 		simpleBlock(NuclearScienceBlocks.blockTurbine, existingBlock(blockLoc("turbinecasing")), false);
 		simpleBlock(NuclearScienceBlocks.blockElectromagneticSwitch, existingBlock(NuclearScienceBlocks.blockElectromagneticSwitch), true);
-		
+
 		horrRotatedBlock(NuclearScienceBlocks.blockAtomicAssembler, existingBlock(NuclearScienceBlocks.blockAtomicAssembler), false);
 		horrRotatedBlock(NuclearScienceBlocks.blockChemicalExtractor, existingBlock(NuclearScienceBlocks.blockChemicalExtractor), true);
 		horrRotatedBlock(NuclearScienceBlocks.blockControlRodAssembly, existingBlock(NuclearScienceBlocks.blockControlRodAssembly), 180, 0, false);
@@ -56,80 +56,33 @@ public class NuclearScienceBlockStateProvider extends ElectrodynamicsBlockStateP
 		horrRotatedLitBlock(NuclearScienceBlocks.blockTeleporter, existingBlock(NuclearScienceBlocks.blockTeleporter), existingBlock(blockLoc("teleporteron")), true);
 
 		genPipes();
-	
+
 	}
-	
-	
 
 	private void genPipes() {
-		
+
 		String parent = "parent/";
-		String name = "block/pipe/" ;
+		String name = "block/pipe/";
 		String texture = "pipe/";
-		
-		for(SubtypeMoltenSaltPipe pipe : SubtypeMoltenSaltPipe.values()) {
-			wire(
-					NuclearScienceBlocks.getBlock(pipe), 
-					models().withExistingParent(name + pipe.tag() + "_none", modLoc(parent + "pipe_none"))
-						.texture("texture", blockLoc(texture + pipe.tag())).texture("particle", "#texture"), 
-					models().withExistingParent(name + pipe.tag() + "_side", modLoc(parent + "pipe_side"))
-						.texture("texture", blockLoc(texture + pipe.tag())).texture("particle", "#texture"),
-					false
-				);
+
+		for (SubtypeMoltenSaltPipe pipe : SubtypeMoltenSaltPipe.values()) {
+			wire(NuclearScienceBlocks.getBlock(pipe), models().withExistingParent(name + pipe.tag() + "_none", modLoc(parent + "pipe_none")).texture("texture", blockLoc(texture + pipe.tag())).texture("particle", "#texture"), models().withExistingParent(name + pipe.tag() + "_side", modLoc(parent + "pipe_side")).texture("texture", blockLoc(texture + pipe.tag())).texture("particle", "#texture"), false);
 		}
-		
+
 	}
-	
+
 	public ItemModelBuilder rotatedLeftRightBlock(Block block, ModelFile none, ModelFile left, ModelFile right, boolean registerItem) {
 		return rotatedLeftRightBlock(block, none, left, right, 0, registerItem);
 	}
-	
+
 	public ItemModelBuilder rotatedLeftRightBlock(Block block, ModelFile none, ModelFile left, ModelFile right, int rotationOffset, boolean registerItem) {
-		getVariantBuilder(block)
-			.partialState()
-				.with(GenericEntityBlock.FACING, Direction.NORTH).with(BlockElectromagneticBooster.FACINGDIRECTION, FacingDirection.NONE)
-				.modelForState().modelFile(none).rotationY((270 + rotationOffset) % 360).addModel()
-			.partialState()
-				.with(GenericEntityBlock.FACING, Direction.EAST).with(BlockElectromagneticBooster.FACINGDIRECTION, FacingDirection.NONE)
-				.modelForState().modelFile(none).rotationY((0 + rotationOffset) % 360).addModel()
-			.partialState()
-				.with(GenericEntityBlock.FACING, Direction.SOUTH).with(BlockElectromagneticBooster.FACINGDIRECTION, FacingDirection.NONE)
-				.modelForState().modelFile(none).rotationY((90 + rotationOffset) % 360).addModel()
-			.partialState()
-				.with(GenericEntityBlock.FACING, Direction.WEST).with(BlockElectromagneticBooster.FACINGDIRECTION, FacingDirection.NONE)
-				.modelForState().modelFile(none).rotationY((180 + rotationOffset) % 360).addModel()
-			.partialState()
-				.with(GenericEntityBlock.FACING, Direction.NORTH).with(BlockElectromagneticBooster.FACINGDIRECTION, FacingDirection.LEFT)
-				.modelForState().modelFile(left).rotationY((270 + rotationOffset) % 360).addModel()
-			.partialState()
-				.with(GenericEntityBlock.FACING, Direction.EAST).with(BlockElectromagneticBooster.FACINGDIRECTION, FacingDirection.LEFT)
-				.modelForState().modelFile(left).rotationY((0 + rotationOffset) % 360).addModel()
-			.partialState()
-				.with(GenericEntityBlock.FACING, Direction.SOUTH).with(BlockElectromagneticBooster.FACINGDIRECTION, FacingDirection.LEFT)
-				.modelForState().modelFile(left).rotationY((90 + rotationOffset) % 360).addModel()
-			.partialState()
-				.with(GenericEntityBlock.FACING, Direction.WEST).with(BlockElectromagneticBooster.FACINGDIRECTION, FacingDirection.LEFT)
-				.modelForState().modelFile(left).rotationY((180 + rotationOffset) % 360).addModel()
-			.partialState()
-				.with(GenericEntityBlock.FACING, Direction.NORTH).with(BlockElectromagneticBooster.FACINGDIRECTION, FacingDirection.RIGHT)
-				.modelForState().modelFile(right).rotationY((270 + rotationOffset) % 360).addModel()
-			.partialState()
-				.with(GenericEntityBlock.FACING, Direction.EAST).with(BlockElectromagneticBooster.FACINGDIRECTION, FacingDirection.RIGHT)
-				.modelForState().modelFile(right).rotationY((0 + rotationOffset) % 360).addModel()
-			.partialState()
-				.with(GenericEntityBlock.FACING, Direction.SOUTH).with(BlockElectromagneticBooster.FACINGDIRECTION, FacingDirection.RIGHT)
-				.modelForState().modelFile(right).rotationY((90 + rotationOffset) % 360).addModel()
-			.partialState()
-				.with(GenericEntityBlock.FACING, Direction.WEST).with(BlockElectromagneticBooster.FACINGDIRECTION, FacingDirection.RIGHT)
-				.modelForState().modelFile(right).rotationY((180 + rotationOffset) % 360).addModel();
-		
+		getVariantBuilder(block).partialState().with(GenericEntityBlock.FACING, Direction.NORTH).with(BlockElectromagneticBooster.FACINGDIRECTION, FacingDirection.NONE).modelForState().modelFile(none).rotationY((270 + rotationOffset) % 360).addModel().partialState().with(GenericEntityBlock.FACING, Direction.EAST).with(BlockElectromagneticBooster.FACINGDIRECTION, FacingDirection.NONE).modelForState().modelFile(none).rotationY((0 + rotationOffset) % 360).addModel().partialState().with(GenericEntityBlock.FACING, Direction.SOUTH).with(BlockElectromagneticBooster.FACINGDIRECTION, FacingDirection.NONE).modelForState().modelFile(none).rotationY((90 + rotationOffset) % 360).addModel().partialState().with(GenericEntityBlock.FACING, Direction.WEST).with(BlockElectromagneticBooster.FACINGDIRECTION, FacingDirection.NONE).modelForState().modelFile(none).rotationY((180 + rotationOffset) % 360).addModel().partialState().with(GenericEntityBlock.FACING, Direction.NORTH).with(BlockElectromagneticBooster.FACINGDIRECTION, FacingDirection.LEFT).modelForState().modelFile(left).rotationY((270 + rotationOffset) % 360).addModel().partialState().with(GenericEntityBlock.FACING, Direction.EAST).with(BlockElectromagneticBooster.FACINGDIRECTION, FacingDirection.LEFT).modelForState().modelFile(left).rotationY((0 + rotationOffset) % 360).addModel().partialState().with(GenericEntityBlock.FACING, Direction.SOUTH).with(BlockElectromagneticBooster.FACINGDIRECTION, FacingDirection.LEFT).modelForState().modelFile(left).rotationY((90 + rotationOffset) % 360).addModel().partialState().with(GenericEntityBlock.FACING, Direction.WEST).with(BlockElectromagneticBooster.FACINGDIRECTION, FacingDirection.LEFT).modelForState().modelFile(left).rotationY((180 + rotationOffset) % 360).addModel().partialState().with(GenericEntityBlock.FACING, Direction.NORTH).with(BlockElectromagneticBooster.FACINGDIRECTION, FacingDirection.RIGHT).modelForState().modelFile(right).rotationY((270 + rotationOffset) % 360).addModel().partialState().with(GenericEntityBlock.FACING, Direction.EAST).with(BlockElectromagneticBooster.FACINGDIRECTION, FacingDirection.RIGHT).modelForState().modelFile(right).rotationY((0 + rotationOffset) % 360).addModel().partialState().with(GenericEntityBlock.FACING, Direction.SOUTH).with(BlockElectromagneticBooster.FACINGDIRECTION, FacingDirection.RIGHT).modelForState().modelFile(right).rotationY((90 + rotationOffset) % 360).addModel().partialState().with(GenericEntityBlock.FACING, Direction.WEST).with(BlockElectromagneticBooster.FACINGDIRECTION, FacingDirection.RIGHT).modelForState().modelFile(right).rotationY((180 + rotationOffset) % 360).addModel();
+
 		if (registerItem) {
 			return blockItem(block, none);
 		}
 		return null;
 
 	}
-	
-	
-	
+
 }

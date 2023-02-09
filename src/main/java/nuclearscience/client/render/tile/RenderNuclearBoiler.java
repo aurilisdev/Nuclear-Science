@@ -43,19 +43,19 @@ public class RenderNuclearBoiler extends AbstractTileRenderer<TileNuclearBoiler>
 		}
 
 		matrix.popPose();
-		
+
 		matrix.pushPose();
-		
+
 		FluidTank output = multi.getOutputTanks()[0];
-		
-		if(!output.isEmpty()) {
-			
+
+		if (!output.isEmpty()) {
+
 			drawFluidOutput(matrix, builder, output.getFluid(), facing, (float) output.getFluidAmount() / (float) TileNuclearBoiler.MAX_TANK_CAPACITY, light, overlay);
-			
+
 		}
-		
+
 		matrix.popPose();
-		
+
 	}
 
 	private void drawFluidInput(PoseStack stack, VertexConsumer builder, FluidStack fluid, Direction facing, float height, int light, int overlay) {

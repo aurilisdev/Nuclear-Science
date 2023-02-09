@@ -29,15 +29,15 @@ import nuclearscience.registers.NuclearScienceSounds;
 public class TileTurbine extends GenericTile implements ITickableSoundTile {
 
 	public static final int MAX_STEAM = 3000000;
-	public Property<Integer> spinSpeed = property(new Property<Integer>(PropertyType.Integer, "spinSpeed", 0));
-	public Property<Boolean> hasCore = property(new Property<Boolean>(PropertyType.Boolean, "hasCore", false));
-	public Property<Boolean> isCore = property(new Property<Boolean>(PropertyType.Boolean, "isCore", false));
-	public Property<BlockPos> coreLocation = property(new Property<BlockPos>(PropertyType.BlockPos, "coreLocation", TileQuarry.OUT_OF_REACH));
+	public Property<Integer> spinSpeed = property(new Property<>(PropertyType.Integer, "spinSpeed", 0));
+	public Property<Boolean> hasCore = property(new Property<>(PropertyType.Boolean, "hasCore", false));
+	public Property<Boolean> isCore = property(new Property<>(PropertyType.Boolean, "isCore", false));
+	public Property<BlockPos> coreLocation = property(new Property<>(PropertyType.BlockPos, "coreLocation", TileQuarry.OUT_OF_REACH));
 	protected CachedTileOutput output;
 	protected int currentVoltage = 0;
 	protected int steam;
 	protected int wait = 30;
-	
+
 	private boolean isSoundPlaying = false;
 
 	@Override
@@ -162,7 +162,7 @@ public class TileTurbine extends GenericTile implements ITickableSoundTile {
 	}
 
 	public void tickClient(ComponentTickable tickable) {
-		if(!isSoundPlaying && shouldPlaySound()) {
+		if (!isSoundPlaying && shouldPlaySound()) {
 			isSoundPlaying = true;
 			SoundBarrierMethods.playTileSound(NuclearScienceSounds.SOUND_TURBINE.get(), this, true);
 		}
@@ -177,7 +177,7 @@ public class TileTurbine extends GenericTile implements ITickableSoundTile {
 	public boolean shouldPlaySound() {
 		return spinSpeed.get() > 0;
 	}
-	
+
 	@Override
 	public InteractionResult use(Player arg0, InteractionHand arg1, BlockHitResult arg2) {
 		return InteractionResult.FAIL;
