@@ -38,22 +38,22 @@ import nuclearscience.registers.NuclearScienceItems;
 import nuclearscience.registers.NuclearScienceSounds;
 
 public class TileGasCentrifuge extends GenericTile implements ITickableSoundTile {
-	
+
 	public static final int TANKCAPACITY = 5000;
 	public static final int REQUIRED = 2500;
 	private static final double PERCENT_U235 = 0.172;
 	private static final double WASTE_MULTIPLIER = 0.1;
-	public Property<Integer> spinSpeed = property(new Property<Integer>(PropertyType.Integer, "spinSpeed", 0));
-	public Property<Integer> stored235 = property(new Property<Integer>(PropertyType.Integer, "stored235", 0));
-	public Property<Integer> stored238 = property(new Property<Integer>(PropertyType.Integer, "stored238", 0));
-	public Property<Integer> storedWaste = property(new Property<Integer>(PropertyType.Integer, "storedWaste", 0));
-	public Property<Boolean> isRunning = property(new Property<Boolean>(PropertyType.Boolean, "isRunning", false));
+	public Property<Integer> spinSpeed = property(new Property<>(PropertyType.Integer, "spinSpeed", 0));
+	public Property<Integer> stored235 = property(new Property<>(PropertyType.Integer, "stored235", 0));
+	public Property<Integer> stored238 = property(new Property<>(PropertyType.Integer, "stored238", 0));
+	public Property<Integer> storedWaste = property(new Property<>(PropertyType.Integer, "storedWaste", 0));
+	public Property<Boolean> isRunning = property(new Property<>(PropertyType.Boolean, "isRunning", false));
 
 	private static final int RADATION_RADIUS_BLOCKS = 5;
 	private static final int RADIATION_STRENGTH = 5000;
 
 	private boolean isSoundPlaying = false;
-	
+
 	public TileGasCentrifuge(BlockPos pos, BlockState state) {
 		super(NuclearScienceBlockTypes.TILE_GASCENTRIFUGE.get(), pos, state);
 		addComponent(new ComponentTickable().tickClient(this::tickClient).tickServer(this::tickServer));

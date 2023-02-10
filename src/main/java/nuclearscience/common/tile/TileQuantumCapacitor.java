@@ -31,9 +31,9 @@ import nuclearscience.registers.NuclearScienceBlockTypes;
 public class TileQuantumCapacitor extends GenericTile implements IEnergyStorage {
 	public static final double DEFAULT_MAX_JOULES = Double.MAX_VALUE;
 	public static final double DEFAULT_VOLTAGE = 1920.0;
-	public Property<Double> outputJoules = property(new Property<Double>(PropertyType.Double, "outputJoules", 359.0));
-	public Property<Integer> frequency = property(new Property<Integer>(PropertyType.Integer, "frequency", 0));
-	public Property<UUID> uuid = property(new Property<UUID>(PropertyType.UUID, "uuid", UUID.randomUUID()));
+	public Property<Double> outputJoules = property(new Property<>(PropertyType.Double, "outputJoules", 359.0));
+	public Property<Integer> frequency = property(new Property<>(PropertyType.Integer, "frequency", 0));
+	public Property<UUID> uuid = property(new Property<>(PropertyType.UUID, "uuid", UUID.randomUUID()));
 	private CachedTileOutput outputCache;
 	private CachedTileOutput outputCache2;
 

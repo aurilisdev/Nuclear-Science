@@ -45,7 +45,7 @@ public class TileTeleporter extends GenericTile {
 	protected void tickServer(ComponentTickable tickable) {
 		ComponentElectrodynamic electro = getComponent(ComponentType.Electrodynamic);
 		boolean powered = electro.getJoulesStored() > 0;
-		if(BlockEntityUtils.isLit(this) ^ powered) {
+		if (BlockEntityUtils.isLit(this) ^ powered) {
 			BlockEntityUtils.updateLit(this, powered);
 		}
 		if (cooldown <= 0) {

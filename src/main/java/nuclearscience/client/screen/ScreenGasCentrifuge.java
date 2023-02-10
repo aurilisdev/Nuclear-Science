@@ -10,10 +10,8 @@ import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
 import nuclearscience.common.inventory.container.ContainerGasCentrifuge;
 import nuclearscience.common.tile.TileGasCentrifuge;
 import nuclearscience.prefab.screen.component.ScreenComponentGasCentrifuge;
@@ -75,7 +73,7 @@ public class ScreenGasCentrifuge extends GenericScreen<ContainerGasCentrifuge> {
 	}
 
 	private static String getIntString(int value) {
-		int perc = (int) (value / (float) (TileGasCentrifuge.REQUIRED) * 100);
+		int perc = (int) (value / (float) TileGasCentrifuge.REQUIRED * 100);
 		if (perc < 10) {
 			return "0" + perc;
 		}

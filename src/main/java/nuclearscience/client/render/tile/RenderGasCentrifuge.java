@@ -14,7 +14,7 @@ import nuclearscience.client.ClientRegister;
 import nuclearscience.common.tile.TileGasCentrifuge;
 
 public class RenderGasCentrifuge extends AbstractTileRenderer<TileGasCentrifuge> {
-	
+
 	public RenderGasCentrifuge(BlockEntityRendererProvider.Context context) {
 		super(context);
 	}

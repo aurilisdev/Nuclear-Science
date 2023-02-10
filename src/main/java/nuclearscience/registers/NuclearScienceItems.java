@@ -130,19 +130,17 @@ public class NuclearScienceItems {
 	public static final RegistryObject<Item> ITEM_ANTIDOTE = ITEMS.register("antidote", supplier(() -> new ItemAntidote(new Item.Properties().tab(References.NUCLEARTAB))));
 	public static final RegistryObject<Item> ITEM_FREQUENCYCARD = ITEMS.register("frequencycard", supplier(() -> new ItemFrequencyCard(new Item.Properties().tab(References.NUCLEARTAB))));
 	public static final RegistryObject<Item> ITEM_CANISTERLEAD = ITEMS.register("canisterlead", supplier(() -> new ItemCanisterLead(new Item.Properties().stacksTo(1).tab(References.NUCLEARTAB))));
-	
-	
-	public static Item[] getAllItemForSubtype(ISubtype[] values){
+
+	public static Item[] getAllItemForSubtype(ISubtype[] values) {
 		List<Item> list = new ArrayList<>();
-		for(ISubtype value : values) {
+		for (ISubtype value : values) {
 			list.add(SUBTYPEITEMREGISTER_MAPPINGS.get(value).get());
 		}
 		return list.toArray(new Item[] {});
 	}
-	
+
 	public static Item getItem(ISubtype value) {
 		return SUBTYPEITEMREGISTER_MAPPINGS.get(value).get();
 	}
-	
 
 }

@@ -31,31 +31,29 @@ public class ScreenComponentGasCentrifuge extends ScreenComponentGeneric {
 	@Override
 	public void renderBackground(PoseStack stack, final int xAxis, final int yAxis, final int guiWidth, final int guiHeight) {
 		super.renderBackground(stack, xAxis, yAxis, guiWidth, guiHeight);
-		
+
 		RenderingUtils.bindTexture(texture.getLocation());
-		
+
 		ITexture texture = GasCentrifugeTextures.BULB;
 		int progressBulbs = (int) (progressInfoHandlerBulbs.getAsDouble() * texture.textureWidth());
 		gui.drawTexturedRect(stack, guiWidth + xLocation, guiHeight + yLocation + 3, texture.textureU(), texture.textureV(), progressBulbs, texture.textureHeight(), texture.imageWidth(), texture.imageHeight());
-		
-		
+
 		texture = GasCentrifugeTextures.ARROW;
 		int topProgress = (int) (progressInfoHandlerProgressTop.getAsDouble() * texture.textureWidth());
 		int middleProgress = (int) (progressInfoHandlerProgressMiddle.getAsDouble() * texture.textureWidth());
 		int bottomProgress = (int) (progressInfoHandlerProgressBottom.getAsDouble() * texture.textureWidth());
-		
-		
+
 		gui.drawTexturedRect(stack, guiWidth + xLocation + 72, guiHeight + yLocation, texture.textureU(), texture.textureV(), topProgress, texture.textureHeight(), texture.imageWidth(), texture.imageHeight());
 		gui.drawTexturedRect(stack, guiWidth + xLocation + 72, guiHeight + yLocation + 20, texture.textureU(), texture.textureV(), middleProgress, texture.textureHeight(), texture.imageWidth(), texture.imageHeight());
 		gui.drawTexturedRect(stack, guiWidth + xLocation + 72, guiHeight + yLocation + 41, texture.textureU(), texture.textureV(), bottomProgress, texture.textureHeight(), texture.imageWidth(), texture.imageHeight());
-		
+
 	}
-	
-	public static enum GasCentrifugeTextures implements ITexture {
+
+	public enum GasCentrifugeTextures implements ITexture {
 		OFF(92, 54, 0, 0, 256, 256),
 		BULB(13, 48, 0, 57, 256, 256),
 		ARROW(20, 13, 0, 105, 256, 256);
-		
+
 		private final int textureWidth;
 		private final int textureHeight;
 		private final int textureU;
@@ -63,15 +61,15 @@ public class ScreenComponentGasCentrifuge extends ScreenComponentGeneric {
 		private final int imageWidth;
 		private final int imageHeight;
 		private final ResourceLocation loc;
-		
-		private GasCentrifugeTextures(int textureWidth, int textureHeight, int textureU, int textureV, int imageWidth, int imageHeight) {
+
+		GasCentrifugeTextures(int textureWidth, int textureHeight, int textureU, int textureV, int imageWidth, int imageHeight) {
 			this.textureWidth = textureWidth;
 			this.textureHeight = textureHeight;
 			this.textureU = textureU;
 			this.textureV = textureV;
 			this.imageWidth = imageWidth;
 			this.imageHeight = imageHeight;
-			this.loc = TEXTURE;
+			loc = TEXTURE;
 		}
 
 		@Override
@@ -108,7 +106,7 @@ public class ScreenComponentGasCentrifuge extends ScreenComponentGeneric {
 		public int textureWidth() {
 			return textureWidth;
 		}
-		
+
 	}
 
 }

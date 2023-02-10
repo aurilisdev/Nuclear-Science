@@ -15,7 +15,7 @@ import nuclearscience.client.ClientRegister;
 import nuclearscience.common.tile.TileReactorCore;
 
 public class RenderReactorCore extends AbstractTileRenderer<TileReactorCore> {
-	
+
 	public RenderReactorCore(BlockEntityRendererProvider.Context context) {
 		super(context);
 	}

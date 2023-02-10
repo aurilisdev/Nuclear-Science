@@ -3,9 +3,9 @@ package nuclearscience.datagen.server.recipe.custom.fluiditem2fluid;
 import java.util.function.Consumer;
 
 import electrodynamics.common.tags.ElectrodynamicsTags;
+import electrodynamics.datagen.utils.recipe.AbstractElectrodynamicsFinishedRecipe.RecipeCategory;
 import electrodynamics.datagen.utils.recipe.AbstractRecipeGenerator;
 import electrodynamics.datagen.utils.recipe.FinishedRecipeFluidOutput;
-import electrodynamics.datagen.utils.recipe.AbstractElectrodynamicsFinishedRecipe.RecipeCategory;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraftforge.fluids.FluidStack;
 import nuclearscience.References;

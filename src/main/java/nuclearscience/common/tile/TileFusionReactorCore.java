@@ -19,8 +19,8 @@ import nuclearscience.registers.NuclearScienceBlockTypes;
 import nuclearscience.registers.NuclearScienceBlocks;
 
 public class TileFusionReactorCore extends GenericTile {
-	public Property<Integer> deuterium = property(new Property<Integer>(PropertyType.Integer, "deuterium", 0));
-	public Property<Integer> tritium = property(new Property<Integer>(PropertyType.Integer, "tritium", 0));
+	public Property<Integer> deuterium = property(new Property<>(PropertyType.Integer, "deuterium", 0));
+	public Property<Integer> tritium = property(new Property<>(PropertyType.Integer, "tritium", 0));
 	private int timeLeft = 0;
 
 	public TileFusionReactorCore(BlockPos pos, BlockState state) {

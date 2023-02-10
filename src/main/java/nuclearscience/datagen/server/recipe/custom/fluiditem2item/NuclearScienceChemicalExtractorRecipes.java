@@ -2,10 +2,10 @@ package nuclearscience.datagen.server.recipe.custom.fluiditem2item;
 
 import java.util.function.Consumer;
 
-import electrodynamics.datagen.utils.recipe.AbstractRecipeGenerator;
-import electrodynamics.datagen.utils.recipe.FinishedRecipeItemOutput;
 import electrodynamics.common.tags.ElectrodynamicsTags;
 import electrodynamics.datagen.utils.recipe.AbstractElectrodynamicsFinishedRecipe.RecipeCategory;
+import electrodynamics.datagen.utils.recipe.AbstractRecipeGenerator;
+import electrodynamics.datagen.utils.recipe.FinishedRecipeItemOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.item.ItemStack;

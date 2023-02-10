@@ -58,9 +58,9 @@ public class TileReactorCore extends GenericTile {
 	public static final int STEAM_GEN_DIAMETER = 5;
 	public static final int STEAM_GEN_HEIGHT = 2;
 	private TileTurbine[][][] cachedTurbines = new TileTurbine[STEAM_GEN_DIAMETER][STEAM_GEN_HEIGHT][STEAM_GEN_DIAMETER];
-	public Property<Double> temperature = property(new Property<Double>(PropertyType.Double, "temperature", AIR_TEMPERATURE));
-	public Property<Integer> fuelCount = property(new Property<Integer>(PropertyType.Integer, "fuelCount", 0));
-	public Property<Boolean> hasDeuterium = property(new Property<Boolean>(PropertyType.Boolean, "hasDeuterium", false));
+	public Property<Double> temperature = property(new Property<>(PropertyType.Double, "temperature", AIR_TEMPERATURE));
+	public Property<Integer> fuelCount = property(new Property<>(PropertyType.Integer, "fuelCount", 0));
+	public Property<Boolean> hasDeuterium = property(new Property<>(PropertyType.Boolean, "hasDeuterium", false));
 	public int ticksOverheating = 0;
 	public int ticks = 0;
 

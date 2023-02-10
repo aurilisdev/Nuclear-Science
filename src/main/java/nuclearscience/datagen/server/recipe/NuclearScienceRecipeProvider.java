@@ -20,13 +20,12 @@ import nuclearscience.datagen.server.recipe.vanilla.NuclearScienceCraftingTableR
 public class NuclearScienceRecipeProvider extends RecipeProvider {
 
 	public final List<AbstractRecipeGenerator> GENERATORS = new ArrayList<>();
-	
-	
+
 	public NuclearScienceRecipeProvider(DataGenerator gen) {
 		super(gen);
 		addRecipes();
 	}
-	
+
 	public void addRecipes() {
 		GENERATORS.add(new NuclearScienceCraftingTableRecipes());
 		GENERATORS.add(new NuclearScienceChemicalMixerRecipes());
@@ -40,11 +39,9 @@ public class NuclearScienceRecipeProvider extends RecipeProvider {
 
 	@Override
 	protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
-		for(AbstractRecipeGenerator generator : GENERATORS) {
+		for (AbstractRecipeGenerator generator : GENERATORS) {
 			generator.addRecipes(consumer);
 		}
 	}
-
-
 
 }

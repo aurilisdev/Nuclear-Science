@@ -15,9 +15,9 @@ public class TileControlRodAssembly extends GenericTile {
 
 	public static final Direction[] HORIZONTAL_DIRECTIONS = { Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST };
 
-	public Property<Integer> direction = property(new Property<Integer>(PropertyType.Integer, "direction", Direction.DOWN.ordinal()));
-	public final Property<Integer> insertion = property(new Property<Integer>(PropertyType.Integer, "insertion", 0));
-	public final Property<Boolean> isMSR = property(new Property<Boolean>(PropertyType.Boolean, "isMSR", false));
+	public Property<Integer> direction = property(new Property<>(PropertyType.Integer, "direction", Direction.DOWN.ordinal()));
+	public final Property<Integer> insertion = property(new Property<>(PropertyType.Integer, "insertion", 0));
+	public final Property<Boolean> isMSR = property(new Property<>(PropertyType.Boolean, "isMSR", false));
 
 	public TileControlRodAssembly(BlockPos pos, BlockState state) {
 		super(NuclearScienceBlockTypes.TILE_CONTROLRODASSEMBLY.get(), pos, state);
@@ -40,7 +40,7 @@ public class TileControlRodAssembly extends GenericTile {
 		}
 
 	}
-	
+
 	@Override
 	public void onPlace(BlockState oldState, boolean isMoving) {
 		super.onPlace(oldState, isMoving);
@@ -55,6 +55,5 @@ public class TileControlRodAssembly extends GenericTile {
 
 		}
 	}
-
 
 }

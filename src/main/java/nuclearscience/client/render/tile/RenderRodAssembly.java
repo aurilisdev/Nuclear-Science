@@ -15,7 +15,7 @@ import nuclearscience.client.ClientRegister;
 import nuclearscience.common.tile.TileControlRodAssembly;
 
 public class RenderRodAssembly extends AbstractTileRenderer<TileControlRodAssembly> {
-	
+
 	public RenderRodAssembly(BlockEntityRendererProvider.Context context) {
 		super(context);
 	}

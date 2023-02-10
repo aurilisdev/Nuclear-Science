@@ -2,12 +2,12 @@ package nuclearscience.datagen.server.recipe.custom.fluiditem2item;
 
 import java.util.function.Consumer;
 
-import electrodynamics.datagen.utils.recipe.AbstractRecipeGenerator;
-import electrodynamics.datagen.utils.recipe.FinishedRecipeItemOutput;
-import electrodynamics.registers.ElectrodynamicsItems;
 import electrodynamics.common.item.subtype.SubtypeCrystal;
 import electrodynamics.common.tags.ElectrodynamicsTags;
 import electrodynamics.datagen.utils.recipe.AbstractElectrodynamicsFinishedRecipe.RecipeCategory;
+import electrodynamics.datagen.utils.recipe.AbstractRecipeGenerator;
+import electrodynamics.datagen.utils.recipe.FinishedRecipeItemOutput;
+import electrodynamics.registers.ElectrodynamicsItems;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.world.item.ItemStack;
 import nuclearscience.References;
