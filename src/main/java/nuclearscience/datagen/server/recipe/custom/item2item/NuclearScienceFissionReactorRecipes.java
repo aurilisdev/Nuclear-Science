@@ -26,8 +26,8 @@ public class NuclearScienceFissionReactorRecipes extends AbstractRecipeGenerator
 
 	@Override
 	public void addRecipes(Consumer<FinishedRecipe> consumer) {
-
-		newRecipe(new ItemStack(NuclearScienceItems.ITEM_CELLDEUTERIUM.get()), 0.0F, 1, 1, "cell_tritium")
+		
+		newRecipe(new ItemStack(NuclearScienceItems.ITEM_CELLTRITIUM.get()), 0.0F, 1, 1, "cell_tritium")
 				//
 				.addItemTagInput(NuclearScienceTags.Items.CELL_DEUTERIUM, 1)
 				//
