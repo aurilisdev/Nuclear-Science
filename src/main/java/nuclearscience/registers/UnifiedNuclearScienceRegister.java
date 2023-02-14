@@ -1,26 +1,12 @@
 package nuclearscience.registers;
 
 import static nuclearscience.registers.NuclearScienceBlocks.SUBTYPEBLOCKREGISTER_MAPPINGS;
-import static nuclearscience.registers.NuclearScienceBlocks.blockAtomicAssembler;
-import static nuclearscience.registers.NuclearScienceBlocks.blockChemicalExtractor;
-import static nuclearscience.registers.NuclearScienceBlocks.blockFreezePlug;
-import static nuclearscience.registers.NuclearScienceBlocks.blockFuelReprocessor;
-import static nuclearscience.registers.NuclearScienceBlocks.blockFusionReactorCore;
-import static nuclearscience.registers.NuclearScienceBlocks.blockGasCentrifuge;
-import static nuclearscience.registers.NuclearScienceBlocks.blockMSRFuelPreProcessor;
-import static nuclearscience.registers.NuclearScienceBlocks.blockMoltenSaltSupplier;
-import static nuclearscience.registers.NuclearScienceBlocks.blockNuclearBoiler;
-import static nuclearscience.registers.NuclearScienceBlocks.blockParticleInjector;
-import static nuclearscience.registers.NuclearScienceBlocks.blockQuantumCapacitor;
-import static nuclearscience.registers.NuclearScienceBlocks.blockRadioactiveProcessor;
-import static nuclearscience.registers.NuclearScienceBlocks.blockRadioisotopeGenerator;
-import static nuclearscience.registers.NuclearScienceBlocks.blockTeleporter;
 
 import electrodynamics.api.ISubtype;
 import electrodynamics.common.blockitem.BlockItemDescriptable;
-import electrodynamics.prefab.utilities.TextUtils;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.eventbus.api.IEventBus;
+import nuclearscience.prefab.utils.TextUtils;
 
 public class UnifiedNuclearScienceRegister {
 	public static void register(IEventBus bus) {
@@ -36,24 +22,24 @@ public class UnifiedNuclearScienceRegister {
 
 	static {
 		// Machines
-		BlockItemDescriptable.addDescription(() -> blockGasCentrifuge, TextUtils.tooltip("machine.voltage.240"));
-		BlockItemDescriptable.addDescription(() -> blockNuclearBoiler, TextUtils.tooltip("machine.voltage.240"));
-		BlockItemDescriptable.addDescription(() -> blockChemicalExtractor, TextUtils.tooltip("machine.voltage.240"));
-		BlockItemDescriptable.addDescription(() -> blockParticleInjector, TextUtils.tooltip("machine.voltage.960"));
-		BlockItemDescriptable.addDescription(() -> blockTeleporter, TextUtils.tooltip("machine.voltage.480"));
-		BlockItemDescriptable.addDescription(() -> blockFuelReprocessor, TextUtils.tooltip("machine.voltage.480"));
-		BlockItemDescriptable.addDescription(() -> blockRadioactiveProcessor, TextUtils.tooltip("machine.voltage.480"));
-		BlockItemDescriptable.addDescription(() -> blockMSRFuelPreProcessor, TextUtils.tooltip("machine.voltage.240"));
-		BlockItemDescriptable.addDescription(() -> blockMoltenSaltSupplier, TextUtils.tooltip("machine.voltage.120"));
-		BlockItemDescriptable.addDescription(() -> blockFusionReactorCore, TextUtils.tooltip("machine.voltage.480"));
-		BlockItemDescriptable.addDescription(() -> blockFreezePlug, TextUtils.tooltip("machine.voltage.120"));
-		BlockItemDescriptable.addDescription(() -> blockAtomicAssembler, TextUtils.tooltip("machine.voltage.480"));
+		BlockItemDescriptable.addDescription(() -> NuclearScienceBlocks.blockGasCentrifuge, TextUtils.tooltip("machine.voltage.240"));
+		BlockItemDescriptable.addDescription(() -> NuclearScienceBlocks.blockNuclearBoiler, TextUtils.tooltip("machine.voltage.240"));
+		BlockItemDescriptable.addDescription(() -> NuclearScienceBlocks.blockChemicalExtractor, TextUtils.tooltip("machine.voltage.240"));
+		BlockItemDescriptable.addDescription(() -> NuclearScienceBlocks.blockParticleInjector, TextUtils.tooltip("machine.voltage.960"));
+		BlockItemDescriptable.addDescription(() -> NuclearScienceBlocks.blockTeleporter, TextUtils.tooltip("machine.voltage.480"));
+		BlockItemDescriptable.addDescription(() -> NuclearScienceBlocks.blockFuelReprocessor, TextUtils.tooltip("machine.voltage.480"));
+		BlockItemDescriptable.addDescription(() -> NuclearScienceBlocks.blockRadioactiveProcessor, TextUtils.tooltip("machine.voltage.480"));
+		BlockItemDescriptable.addDescription(() -> NuclearScienceBlocks.blockMSRFuelPreProcessor, TextUtils.tooltip("machine.voltage.240"));
+		BlockItemDescriptable.addDescription(() -> NuclearScienceBlocks.blockMoltenSaltSupplier, TextUtils.tooltip("machine.voltage.120"));
+		BlockItemDescriptable.addDescription(() -> NuclearScienceBlocks.blockFusionReactorCore, TextUtils.tooltip("machine.voltage.480"));
+		BlockItemDescriptable.addDescription(() -> NuclearScienceBlocks.blockFreezePlug, TextUtils.tooltip("machine.voltage.120"));
+		BlockItemDescriptable.addDescription(() -> NuclearScienceBlocks.blockAtomicAssembler, TextUtils.tooltip("machine.voltage.480"));
 
 		// Generators
-		BlockItemDescriptable.addDescription(() -> blockRadioisotopeGenerator, TextUtils.tooltip("machine.voltage.120"));
+		BlockItemDescriptable.addDescription(() -> NuclearScienceBlocks.blockRadioisotopeGenerator, TextUtils.tooltip("machine.voltage.120"));
 
 		// Misc
-		BlockItemDescriptable.addDescription(() -> blockQuantumCapacitor, TextUtils.tooltip("machine.voltage.1920"));
+		BlockItemDescriptable.addDescription(() -> NuclearScienceBlocks.blockQuantumCapacitor, TextUtils.tooltip("machine.voltage.1920"));
 	}
 
 	public static Block getSafeBlock(ISubtype type) {

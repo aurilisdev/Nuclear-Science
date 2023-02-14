@@ -13,12 +13,12 @@ import electrodynamics.compatibility.jei.utils.gui.arrows.animated.FeynmanDiagra
 import electrodynamics.compatibility.jei.utils.gui.backgroud.BackgroundWrapper;
 import electrodynamics.compatibility.jei.utils.gui.item.DefaultItemSlotWrapper;
 import electrodynamics.compatibility.jei.utils.label.LabelWrapperGeneric;
-import electrodynamics.prefab.utilities.TextUtils;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import nuclearscience.common.recipe.categories.item2item.specificmachines.FissionReactorRecipe;
+import nuclearscience.prefab.utils.TextUtils;
 import nuclearscience.registers.NuclearScienceBlocks;
 import nuclearscience.registers.NuclearScienceItems;
 
