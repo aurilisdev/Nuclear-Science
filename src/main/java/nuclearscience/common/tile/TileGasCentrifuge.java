@@ -5,7 +5,7 @@ import electrodynamics.common.block.VoxelShapes;
 import electrodynamics.prefab.properties.Property;
 import electrodynamics.prefab.properties.PropertyType;
 import electrodynamics.prefab.sound.SoundBarrierMethods;
-import electrodynamics.prefab.sound.utils.ITickableSoundTile;
+import electrodynamics.prefab.sound.utils.ITickableSound;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
@@ -37,7 +37,7 @@ import nuclearscience.registers.NuclearScienceFluids;
 import nuclearscience.registers.NuclearScienceItems;
 import nuclearscience.registers.NuclearScienceSounds;
 
-public class TileGasCentrifuge extends GenericTile implements ITickableSoundTile {
+public class TileGasCentrifuge extends GenericTile implements ITickableSound {
 
 	public static final int TANKCAPACITY = 5000;
 	public static final int REQUIRED = 2500;

@@ -4,7 +4,7 @@ import electrodynamics.api.capability.ElectrodynamicsCapabilities;
 import electrodynamics.common.block.VoxelShapes;
 import electrodynamics.common.inventory.container.tile.ContainerO2OProcessor;
 import electrodynamics.prefab.sound.SoundBarrierMethods;
-import electrodynamics.prefab.sound.utils.ITickableSoundTile;
+import electrodynamics.prefab.sound.utils.ITickableSound;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
@@ -26,7 +26,7 @@ import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 import nuclearscience.registers.NuclearScienceBlockTypes;
 import nuclearscience.registers.NuclearScienceBlocks;
 
-public class TileFuelReprocessor extends GenericTile implements ITickableSoundTile {
+public class TileFuelReprocessor extends GenericTile implements ITickableSound {
 
 	private boolean isSoundPlaying = false;
 
