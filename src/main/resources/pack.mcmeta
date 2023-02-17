@@ -1,7 +1,7 @@
 {
     "pack": {
-        "description": "Ressources en sciences nucléaires",
+        "description": "Resources for Nuclear Science",
         "pack_format": 8,
-        "_comment": "Un pack_format de 6 nécessite des fichiers json lang et quelques changements de texture par rapport à la 1.16. Remarque : nous avons besoin de la meta-pack v5 pour tous les mods. Traduction Française par Myuui#6614 "
+        "_comment": "Datapack for Nuclear Science ( french translation by Myuui#6614 )"
     }
 }
