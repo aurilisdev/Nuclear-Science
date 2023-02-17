@@ -504,10 +504,10 @@
   "tooltip.nuclearscience.deuteriumlevel": "Deuterium: %s",
   "tooltip.nuclearscience.frequencycard.linked": "Linked to %s",
   "tooltip.nuclearscience.frequencycard.notag": "No Link",
-  "tooltip.nuclearscience.tritiumlevel": "Tritium: %s",
-  "tooltip.nuclearscience.voltage.120": "Voltage: 120 Volts",
-  "tooltip.nuclearscience.voltage.1920": "Voltage: 1.92 kV",
-  "tooltip.nuclearscience.voltage.240": "Voltage: 240 Volts",
-  "tooltip.nuclearscience.voltage.480": "Voltage: 480 Volts",
-  "tooltip.nuclearscience.voltage.960": "Voltage: 960 Volts"
+  "tooltip.nuclearscience.machine.voltage.120": "Voltage: 120 Volts",
+  "tooltip.nuclearscience.machine.voltage.1920": "Voltage: 1.92 kV",
+  "tooltip.nuclearscience.machine.voltage.240": "Voltage: 240 Volts",
+  "tooltip.nuclearscience.machine.voltage.480": "Voltage: 480 Volts",
+  "tooltip.nuclearscience.machine.voltage.960": "Voltage: 960 Volts",
+  "tooltip.nuclearscience.tritiumlevel": "Tritium: %s"
 }
