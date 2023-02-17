@@ -139,11 +139,11 @@ public class NuclearScienceLangKeyProvider extends ElectrodynamicsLangKeyProvide
 			add("death.attack.plasma", "%s was ionized!");
 			add("effect.nuclearscience.radiation", "Radiation");
 
-			addTooltip("voltage.120", "Voltage: 120 Volts");
-			addTooltip("voltage.240", "Voltage: 240 Volts");
-			addTooltip("voltage.480", "Voltage: 480 Volts");
-			addTooltip("voltage.960", "Voltage: 960 Volts");
-			addTooltip("voltage.1920", "Voltage: 1.92 kV");
+			addTooltip("machine.voltage.120", "Voltage: 120 Volts");
+			addTooltip("machine.voltage.240", "Voltage: 240 Volts");
+			addTooltip("machine.voltage.480", "Voltage: 480 Volts");
+			addTooltip("machine.voltage.960", "Voltage: 960 Volts");
+			addTooltip("machine.voltage.1920", "Voltage: 1.92 kV");
 			addTooltip("frequencycard.linked", "Linked to %s");
 			addTooltip("frequencycard.notag", "No Link");
 			addTooltip("deuteriumlevel", "Deuterium: %s");

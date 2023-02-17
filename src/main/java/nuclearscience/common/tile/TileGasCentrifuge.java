@@ -21,12 +21,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
-import net.minecraftforge.registries.ForgeRegistries;
 import nuclearscience.api.radiation.RadiationSystem;
 import nuclearscience.common.inventory.container.ContainerGasCentrifuge;
 import nuclearscience.common.settings.Constants;
@@ -83,15 +82,13 @@ public class TileGasCentrifuge extends GenericTile implements ITickableSound {
 
 	public void process(ComponentProcessor processor) {
 		ComponentInventory inv = getComponent(ComponentType.Inventory);
-		ComponentFluidHandlerMulti tank = getComponent(ComponentType.FluidHandler);
+		ComponentFluidHandlerMulti multi = getComponent(ComponentType.FluidHandler);
 		spinSpeed.set(processor.operatingSpeed.get().intValue());
 		int processed = (int) (REQUIRED / 60.0);
-		for (Fluid fluid : ForgeRegistries.FLUIDS.tags().getTag(NuclearScienceTags.Fluids.URANIUM_HEXAFLUORIDE)) {
-			FluidTank fTank = tank.getTankFromFluid(fluid, true);
-			if (fTank.getFluidAmount() >= processed) {
-				fTank.getFluid().shrink(processed);
-				break;
-			}
+		FluidTank tank = multi.getInputTanks()[0];
+		
+		if(tank.getFluid().getFluid().is(NuclearScienceTags.Fluids.URANIUM_HEXAFLUORIDE) && tank.getFluidAmount() >= processed) {
+			tank.drain(processed, FluidAction.EXECUTE);
 		}
 
 		stored235.set((int) (stored235.get() + processed * PERCENT_U235));
