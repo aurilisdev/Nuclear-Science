@@ -9,7 +9,6 @@ import electrodynamics.prefab.screen.component.ScreenComponentTextInputBar;
 import electrodynamics.prefab.screen.component.ScreenComponentTextInputBar.TextInputTextures;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
-import electrodynamics.prefab.utilities.TextUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
@@ -20,6 +19,7 @@ import nuclearscience.common.inventory.container.ContainerQuantumCapacitor;
 import nuclearscience.common.packet.NetworkHandler;
 import nuclearscience.common.packet.PacketSetQuantumCapacitorData;
 import nuclearscience.common.tile.TileQuantumCapacitor;
+import nuclearscience.prefab.utils.TextUtils;
 
 @OnlyIn(Dist.CLIENT)
 public class ScreenQuantumCapacitor extends GenericScreen<ContainerQuantumCapacitor> {

@@ -4,7 +4,7 @@ import electrodynamics.common.tile.quarry.TileQuarry;
 import electrodynamics.prefab.properties.Property;
 import electrodynamics.prefab.properties.PropertyType;
 import electrodynamics.prefab.sound.SoundBarrierMethods;
-import electrodynamics.prefab.sound.utils.ITickableSoundTile;
+import electrodynamics.prefab.sound.utils.ITickableSound;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
@@ -26,7 +26,7 @@ import nuclearscience.common.block.BlockTurbine;
 import nuclearscience.registers.NuclearScienceBlockTypes;
 import nuclearscience.registers.NuclearScienceSounds;
 
-public class TileTurbine extends GenericTile implements ITickableSoundTile {
+public class TileTurbine extends GenericTile implements ITickableSound {
 
 	public static final int MAX_STEAM = 3000000;
 	public Property<Integer> spinSpeed = property(new Property<>(PropertyType.Integer, "spinSpeed", 0));

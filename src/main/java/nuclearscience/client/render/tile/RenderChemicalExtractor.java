@@ -45,7 +45,7 @@ public class RenderChemicalExtractor extends AbstractTileRenderer<TileChemicalEx
 
 		float maxY = DELTA_Y * ((float) input.getFluidAmount() / (float) TileChemicalExtractor.MAX_TANK_CAPACITY) + 5.0F / 16.0F;
 
-		if (facing == Direction.NORTH) {
+		if (facing == Direction.NORTH || facing != Direction.EAST && facing == Direction.SOUTH) {
 
 			box = new AABB(2.7 / 16.0, 5 / 16.0, 2.2 / 16.0, 4.3 / 16.0, maxY, 3.8 / 16.0);
 
@@ -63,7 +63,7 @@ public class RenderChemicalExtractor extends AbstractTileRenderer<TileChemicalEx
 				box = box.move(3.0 / 16.0, 0, 0);
 			}
 
-		} else if ((facing == Direction.EAST) || (facing != Direction.SOUTH)) {
+		} else {
 
 			box = new AABB(2.2 / 16.0, 5 / 16.0, 2.7 / 16.0, 3.8 / 16.0, maxY, 4.3 / 16.0);
 
@@ -79,24 +79,6 @@ public class RenderChemicalExtractor extends AbstractTileRenderer<TileChemicalEx
 				RenderingUtils.renderFluidBox(matrix, minecraft(), builder, box, input.getFluid(), combinedLight, overlay);
 
 				box = box.move(0, 0, 3.0 / 16.0);
-			}
-
-		} else {
-
-			box = new AABB(2.7 / 16.0, 5 / 16.0, 2.2 / 16.0, 4.3 / 16.0, maxY, 3.8 / 16.0);
-
-			for (i = 0; i < 4; i++) {
-				RenderingUtils.renderFluidBox(matrix, minecraft(), builder, box, input.getFluid(), combinedLight, overlay);
-
-				box = box.move(3.0 / 16.0, 0, 0);
-			}
-
-			box = new AABB(2.7 / 16.0, 5 / 16.0, 12.2 / 16.0, 4.3 / 16.0, maxY, 13.8 / 16.0);
-
-			for (i = 0; i < 4; i++) {
-				RenderingUtils.renderFluidBox(matrix, minecraft(), builder, box, input.getFluid(), combinedLight, overlay);
-
-				box = box.move(3.0 / 16.0, 0, 0);
 			}
 
 		}
