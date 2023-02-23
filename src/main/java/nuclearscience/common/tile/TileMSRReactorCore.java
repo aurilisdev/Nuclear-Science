@@ -27,7 +27,7 @@ import nuclearscience.registers.NuclearScienceBlockTypes;
 import nuclearscience.registers.NuclearScienceBlocks;
 
 public class TileMSRReactorCore extends GenericTile {
-	public static final int MELTDOWN_TEMPERATURE = 900;
+	public static final int MELTDOWN_TEMPERATURE = 5000;
 	public static final double FUEL_CAPACITY = 1000;
 	public static final double FUEL_USAGE_RATE = 0.01;
 	public Property<Double> temperature = property(new Property<>(PropertyType.Double, "temperature", TileReactorCore.AIR_TEMPERATURE));
@@ -60,34 +60,40 @@ public class TileMSRReactorCore extends GenericTile {
 		if (change != 0) {
 			temperature.set(temperature.get() - (change < 0.001 && change > 0 ? 0.001 : change > -0.001 && change < 0 ? -0.001 : change));
 		}
-		if (plugCache.valid() && plugCache.getSafe() instanceof TileFreezePlug freeze && freeze.isFrozen()) {
-			if (currentFuel.get() > FUEL_USAGE_RATE) {
-				int insertion = 0;
-				for (Direction dir : Direction.values()) {
-					if (dir != Direction.UP && dir != Direction.DOWN) {
-						BlockEntity tile = level.getBlockEntity(getBlockPos().relative(dir));
-						if (tile instanceof TileControlRodAssembly cr) {
-							TileControlRodAssembly control = cr;
-							if (Direction.values()[control.direction.get()] == dir.getOpposite()) {
-								insertion += control.insertion.get();
-							}
-						}
+		if (!plugCache.valid() || !(plugCache.getSafe() instanceof TileFreezePlug freeze && freeze.isFrozen())) {
+			return;
+		}
+			
+		if (currentFuel.get() < FUEL_USAGE_RATE) {
+			return;
+		}
+		
+		int insertion = 0;
+		for (Direction dir : Direction.values()) {
+			if (dir != Direction.UP && dir != Direction.DOWN) {
+				BlockEntity tile = level.getBlockEntity(getBlockPos().relative(dir));
+				if (tile instanceof TileControlRodAssembly cr) {
+					TileControlRodAssembly control = cr;
+					if (Direction.values()[control.direction.get()] == dir.getOpposite()) {
+						insertion += control.insertion.get();
 					}
-				}
-				if (level.getLevelData().getGameTime() % 10 == 0) {
-					double totstrength = temperature.get() * Math.pow(3, Math.pow(temperature.get() / MELTDOWN_TEMPERATURE, 9));
-					double range = Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 2;
-					RadiationSystem.emitRadiationFromLocation(level, new Location(worldPosition), range, totstrength);
-				}
-				double insertDecimal = (100 - insertion) / 100.0;
-				currentFuel.set(currentFuel.get() - Math.min(currentFuel.get(), FUEL_USAGE_RATE * insertDecimal * Math.pow(2, Math.pow(temperature.get() / (MELTDOWN_TEMPERATURE - 100), 4))));
-				temperature.set(temperature.get() + MELTDOWN_TEMPERATURE * insertDecimal * (1.2 + level.random.nextDouble() / 5.0) - temperature.get() / 200);
-				if (outputCache.valid() && outputCache.getSafe() instanceof IMoltenSaltPipe) {
-					MoltenSaltNetwork net = (MoltenSaltNetwork) outputCache.<IMoltenSaltPipe>getSafe().getNetwork();
-					net.emit(temperature.get(), new ArrayList<>(), false);
 				}
 			}
 		}
+		if (level.getLevelData().getGameTime() % 10 == 0) {
+			double totstrength = temperature.get() * Math.pow(3, Math.pow(temperature.get() / MELTDOWN_TEMPERATURE, 9));
+			double range = Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 2;
+			RadiationSystem.emitRadiationFromLocation(level, new Location(worldPosition), range, totstrength);
+		}
+		double insertDecimal = (100 - insertion) / 100.0;
+		currentFuel.set(currentFuel.get() - Math.min(currentFuel.get(), FUEL_USAGE_RATE * insertDecimal * Math.pow(2, Math.pow(temperature.get() / (MELTDOWN_TEMPERATURE - 100), 4))));
+		temperature.set((temperature.get() + (MELTDOWN_TEMPERATURE * insertDecimal * (1.2 + level.random.nextDouble() / 5.0) - temperature.get()) / 570.0));
+		if (outputCache.valid() && outputCache.getSafe() instanceof IMoltenSaltPipe) {
+			MoltenSaltNetwork net = (MoltenSaltNetwork) outputCache.<IMoltenSaltPipe>getSafe().getNetwork();
+			net.emit(temperature.get(), new ArrayList<>(), false);
+		}
+		
+		
 	}
 
 	protected void tickClient(ComponentTickable tick) {

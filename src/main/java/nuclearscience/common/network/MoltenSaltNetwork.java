@@ -57,7 +57,7 @@ public class MoltenSaltNetwork extends AbstractNetwork<IMoltenSaltPipe, SubtypeM
 				double perReceiver = transfer / availableAcceptors.size();
 				for (BlockEntity receiver : availableAcceptors) {
 					if (acceptorInputMap.containsKey(receiver)) {
-						Double rec = ((TileHeatExchanger) receiver).receiveHeat(perReceiver - getSize() * 5);
+						Double rec = ((TileHeatExchanger) receiver).receiveHeat(perReceiver - getSize());
 						heat += rec;
 						transmittedThisTick += rec;
 						checkForOverload((int) transmittedThisTick);
