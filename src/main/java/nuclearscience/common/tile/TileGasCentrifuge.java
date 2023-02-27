@@ -16,6 +16,7 @@ import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
+import electrodynamics.prefab.tile.components.type.ComponentInventory.InventoryBuilder;
 import electrodynamics.prefab.utilities.object.Location;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -60,7 +61,7 @@ public class TileGasCentrifuge extends GenericTile implements ITickableSound {
 		addComponent(new ComponentPacketHandler());
 		addComponent(new ComponentFluidHandlerMulti(this).setTanks(1, 0, TANKCAPACITY).setInputFluids(NuclearScienceFluids.fluidUraniumHexafluoride).setInputDirections(Direction.NORTH));
 		addComponent(new ComponentElectrodynamic(this).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 2).input(Direction.DOWN).maxJoules(Constants.GASCENTRIFUGE_USAGE_PER_TICK * 10));
-		addComponent(new ComponentInventory(this).size(6).universalSlots(0, 1, 2).outputs(3).upgrades(3).validUpgrades(ContainerGasCentrifuge.VALID_UPGRADES).valid(machineValidator()));
+		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().outputs(3).upgrades(3)).universalSlots(0, 1, 2).validUpgrades(ContainerGasCentrifuge.VALID_UPGRADES).valid(machineValidator()));
 		addComponent(new ComponentProcessor(this).usage(Constants.GASCENTRIFUGE_USAGE_PER_TICK).requiredTicks(Constants.GASCENTRIFUGE_REQUIRED_TICKS_PER_PROCESSING).canProcess(this::canProcess).process(this::process));
 		addComponent(new ComponentContainerProvider("container.gascentrifuge").createMenu((id, player) -> new ContainerGasCentrifuge(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 	}

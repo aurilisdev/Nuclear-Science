@@ -5,6 +5,7 @@ import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentInventory;
+import electrodynamics.prefab.tile.components.type.ComponentInventory.InventoryBuilder;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import electrodynamics.prefab.utilities.ElectricityUtils;
@@ -30,7 +31,7 @@ public class TileRadioisotopeGenerator extends GenericTile {
 		addComponent(new ComponentTickable().tickServer(this::tickServer));
 		addComponent(new ComponentPacketHandler());
 		addComponent(new ComponentElectrodynamic(this).voltage(Constants.RADIOISOTOPEGENERATOR_VOLTAGE).extractPower((x, y) -> TransferPack.EMPTY).output(Direction.UP).output(Direction.DOWN));
-		addComponent(new ComponentInventory(this).size(1).slotFaces(0, Direction.values()).valid((slot, stack, i) -> RadiationRegister.get(stack.getItem()) != RadiationRegister.NULL));
+		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().inputs(1)).slotFaces(0, Direction.values()).valid((slot, stack, i) -> RadiationRegister.get(stack.getItem()) != RadiationRegister.NULL));
 		addComponent(new ComponentContainerProvider("container.radioisotopegenerator").createMenu((id, player) -> new ContainerRadioisotopeGenerator(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 	}
 

@@ -27,7 +27,7 @@ import nuclearscience.registers.NuclearScienceBlockTypes;
 import nuclearscience.registers.NuclearScienceBlocks;
 
 public class TileMSRReactorCore extends GenericTile {
-	public static final int MELTDOWN_TEMPERATURE = 5000;
+	public static final int MELTDOWN_TEMPERATURE = 1000;
 	public static final double FUEL_CAPACITY = 1000;
 	public static final double FUEL_USAGE_RATE = 0.01;
 	public Property<Double> temperature = property(new Property<>(PropertyType.Double, "temperature", TileReactorCore.AIR_TEMPERATURE));
@@ -87,7 +87,7 @@ public class TileMSRReactorCore extends GenericTile {
 		}
 		double insertDecimal = (100 - insertion) / 100.0;
 		currentFuel.set(currentFuel.get() - Math.min(currentFuel.get(), FUEL_USAGE_RATE * insertDecimal * Math.pow(2, Math.pow(temperature.get() / (MELTDOWN_TEMPERATURE - 100), 4))));
-		temperature.set((temperature.get() + (MELTDOWN_TEMPERATURE * insertDecimal * (1.2 + level.random.nextDouble() / 5.0) - temperature.get()) / 570.0));
+		temperature.set((temperature.get() + (MELTDOWN_TEMPERATURE * insertDecimal * (1.2 + level.random.nextDouble() / 5.0) - temperature.get()) / 600.0));
 		if (outputCache.valid() && outputCache.getSafe() instanceof IMoltenSaltPipe) {
 			MoltenSaltNetwork net = (MoltenSaltNetwork) outputCache.<IMoltenSaltPipe>getSafe().getNetwork();
 			net.emit(temperature.get(), new ArrayList<>(), false);

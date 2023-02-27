@@ -2,7 +2,7 @@ package nuclearscience.client.screen;
 
 import electrodynamics.prefab.screen.GenericScreen;
 import electrodynamics.prefab.screen.component.ScreenComponentElectricInfo;
-import electrodynamics.prefab.screen.component.ScreenComponentFluid;
+import electrodynamics.prefab.screen.component.ScreenComponentFluidInput;
 import electrodynamics.prefab.screen.component.ScreenComponentProgress;
 import electrodynamics.prefab.screen.component.ScreenComponentProgress.ProgressBars;
 import electrodynamics.prefab.screen.component.utils.AbstractScreenComponentInfo;
@@ -41,7 +41,7 @@ public class ScreenMSRFuelPreProcessor extends GenericScreen<ContainerMSRFuelPre
 			}
 			return 0;
 		}, this, 98, 40));
-		components.add(new ScreenComponentFluid(() -> {
+		components.add(new ScreenComponentFluidInput(() -> {
 			TileMSRFuelPreProcessor boiler = container.getHostFromIntArray();
 			if (boiler != null) {
 				return boiler.<ComponentFluidHandlerMulti>getComponent(ComponentType.FluidHandler).getInputTanks()[0];

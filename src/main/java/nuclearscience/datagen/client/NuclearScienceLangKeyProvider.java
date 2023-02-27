@@ -158,419 +158,137 @@ public class NuclearScienceLangKeyProvider extends ElectrodynamicsLangKeyProvide
 			addGuidebook(References.ID, "Nuclear Science");
 
 			addGuidebook("chapter.radiation", "Radiation");
-			addGuidebook("chapter.radiation.p1l1", "    Radiation is one of the    ");
-			addGuidebook("chapter.radiation.p1l2", "key mechanics of Nuclear       ");
-			addGuidebook("chapter.radiation.p1l3", "Science. Many items are        ");
-			addGuidebook("chapter.radiation.p1l4", "radioactive and will harm you  ");
-			addGuidebook("chapter.radiation.p1l5", "if not handled with the proper ");
-			addGuidebook("chapter.radiation.p1l6", "equipment. These include:      ");
-			addGuidebook("chapter.radiation.p1l7", "     Uranium 235               ");
-			addGuidebook("chapter.radiation.p1l8", "     Uranium 238               ");
-			addGuidebook("chapter.radiation.p1l9", "     Yellowcake                ");
-			addGuidebook("chapter.radiation.p1l10", "     Highly Enriched Fuel Rod  ");
-			addGuidebook("chapter.radiation.p1l11", "     Low Enriched Fuel Rod     ");
-			addGuidebook("chapter.radiation.p1l12", "     Fissile Dust              ");
-			addGuidebook("chapter.radiation.p1l13", "     Plutonium Tetroxide       ");
-			addGuidebook("chapter.radiation.p1l14", "     Plutonium 239             ");
-			addGuidebook("chapter.radiation.p1l15", "     Thorianite Dust           ");
+			addGuidebook("chapter.radiation.l1", "Radiation is one of the key mechanics of Nuclear Science. Many items are radioactive and will harm you if not handled with the proper equipment. The following items are radioactive:");
+			addGuidebook("chapter.radiation.radrating", "Rads: %s");
+			addGuidebook("chapter.radiation.l2", "You will need to wear a ");
+			addGuidebook("chapter.radiation.hazmatsuit", "Hazmat Suit");
+			addGuidebook("chapter.radiation.l3", " to avoid getting radiation poisoning. You must be wearing a full suit in order to benifit from its protection. Radiation will slowly damage the suit over time, and it has limited durability, so do not hang around in a radioactive zone for long! The suit can be repaired in an Anvil with a ");
 
-			addGuidebook("chapter.radiation.p2l1", "     Polonium 210              ");
-			addGuidebook("chapter.radiation.p2l2", "     Polonium 210 Chunk        ");
-			addGuidebook("chapter.radiation.p2l3", "To avoid getting radiation     ");
-			addGuidebook("chapter.radiation.p2l4", "poisoning, you will need to    ");
-			addGuidebook("chapter.radiation.p2l5-1", "wear a full");
-			addGuidebook("chapter.radiation.p2l5-2", "Hazmat Suit.");
-			addGuidebook("chapter.radiation.p2l6", "The suit will take damage when ");
-			addGuidebook("chapter.radiation.p2l7", "protecting you, so make sure   ");
-			addGuidebook("chapter.radiation.p2l8", "to use it sparingly.           ");
-			addGuidebook("chapter.radiation.p2l9", "    However, what if you forget ");
-			addGuidebook("chapter.radiation.p2l10", "your hazmat suit? No fear, for ");
-			addGuidebook("chapter.radiation.p2l11", "there is a solution to that    ");
-			addGuidebook("chapter.radiation.p2l12", "too! If you are suffering from ");
-			addGuidebook("chapter.radiation.p2l13", "radiation poisoning, you can   ");
-			addGuidebook("chapter.radiation.p2l14-1", "take some");
-			addGuidebook("chapter.radiation.p2l14-2", "Antidote");
-			addGuidebook("chapter.radiation.p2l14-3", "and it");
-			addGuidebook("chapter.radiation.p2l15", "will remove the effect.        ");
+			addGuidebook("chapter.radiation.l4", ". If the longevity of your suit is a real concern, a reinforced variant of the suit is available which sports more durability. It too can be repaired with a Lead Plate.");
 
+			addGuidebook("chapter.radiation.l5", "Radiation is also emitted from machines that process radioactive materials. The radiation spills out in a radius from the machine, becoming weaker the further you are away from the source. The more radioactive a material is, the bigger the area that will be affected.");
+
+			addGuidebook("chapter.radiation.l6", "However, what if you forget your Hazmat suit and become ill with Radiation Poisoning? No fear, for there is a solution to that! If you are suffering from Radiation Poisoning, you can take some ");
+			addGuidebook("chapter.radiation.l7", " and it will remove the effect. Antidote is extracted from fish, so you will probably want to get good at fishing.");
+			
+
+			addGuidebook("chapter.turbines", "Steam Turbines");
+			addGuidebook("chapter.turbines.l1", "Steam Turbines are what actually produce power in Nuclear Science. Turbines will produce at different voltages depending on what temperature of steam is venting through them. Turbines produce the following voltages under the following temperatures: ");
+			addGuidebook("chapter.turbines.tempvoltage", "%1$s C : %2$s V");
+			addGuidebook("chapter.turbines.l2", "This relationship is important, as Turbines produce more power the faster they spin. However, the only way to spin a turbine faster is to vent more steam through it. This means that as a turbine spins faster, it will produce more power, but also at an ever-increasing voltage. This can become a "
+					+ "major problem, especially in situations like a melting-down reactor, as not only will the reactor explode, but also any machinery that is connected downstream!");
+
+			addGuidebook("chapter.turbines.l3", "To get power out of a turbine, connect a wire to the top of one. A 3x3 group of turbines can be upgraded into a large turbine by whacking the center one with a wrench.");
+
+			
+			addGuidebook("chapter.centrifuge", "Gas Centrifuge");
+			addGuidebook("chapter.centrifuge.l1", 
+					"The Gas Centrifuge splits Uranium Hexafluoride into its isotopes of U235 and U238. There is a split of 17.5% to 82.5% respectively for each mB of Hexafluoride processed. The Centrifuge runs continuously as long as it has at least 42 mB of Uranium Hexafluoride in its input tank. 10% of each cycle "
+					+ 
+					"is also converted into waste. Note this is not subtracted from the aforementioned split, and is added on top of it.");
+			addGuidebook("chapter.centrifuge.l2", 
+					"Once the Centrifuge has collected 2500 mB of a material, it will produce an item of the respective material. This corrosponds to the percentage counter for a category in the Centrifuge's GUI reaching 100%. While this is not 100% realistic, it is a legacy feature to pay tribute to "
+					+ 
+					"the respective block from Atomic Science. The waste material generated from each cycle will produce Fissile Dust, which can then be processed into other useful materials. Uranium Hexaflouride can either be piped into the back of the Gas Centrifuge, or the Nuclear Boiler can output "
+					+ 
+					"directly into it.");
+			
+			
 			addGuidebook("chapter.fissionreactor", "Fission Reactor");
-			addGuidebook("chapter.fissionreactor.p1l1", "    The Fission Reactor is the ");
-			addGuidebook("chapter.fissionreactor.p1l2", "first nuclear power source     ");
-			addGuidebook("chapter.fissionreactor.p1l3", "you will have available. Crude ");
-			addGuidebook("chapter.fissionreactor.p1l4", "and simple, the block heats    ");
-			addGuidebook("chapter.fissionreactor.p1l5", "water and converts it to steam,");
-			addGuidebook("chapter.fissionreactor.p1l6", "which is used to spin turbines.");
-			addGuidebook("chapter.fissionreactor.p1l7", "    To construct the Fission   ");
-			addGuidebook("chapter.fissionreactor.p1l8", "Reactor, you will first need   ");
-			addGuidebook("chapter.fissionreactor.p1l9", "to craft a Fission Reactor     ");
-			addGuidebook("chapter.fissionreactor.p1l10", "Core. Place the Core in the    ");
-			addGuidebook("chapter.fissionreactor.p1l11", "center of a 5x5 cube filled    ");
-			addGuidebook("chapter.fissionreactor.p1l12", "with water like so:            ");
+			addGuidebook("chapter.fissionreactor.l1", "The Fission Reactor is the first nuclear power source that you will be able to access as you progress in Nuclear Science. Crude and simple, the block heats the water surrounding it and converts it to steam, which is used to spin turbines. To construct the Fission Reactor, you will first need "
+					+ "to craft a Fission Reactor Core. Place the Core in the center of a 5x5 cube filled with water like so:");
 
-			addGuidebook("chapter.fissionreactor.p3l1", "    Next, cover the top of the ");
-			addGuidebook("chapter.fissionreactor.p3l2", "area with Turbines. You can    ");
-			addGuidebook("chapter.fissionreactor.p3l3", "either have single turbines, or");
-			addGuidebook("chapter.fissionreactor.p3l4", "turn a group of 9 into a large ");
-			addGuidebook("chapter.fissionreactor.p3l5", "3x3 turbine using a wrench.    ");
-			addGuidebook("chapter.fissionreactor.p3l6", "The area around the Reactor    ");
-			addGuidebook("chapter.fissionreactor.p3l7", "can be larger than 5x5, but    ");
-			addGuidebook("chapter.fissionreactor.p3l8", "only the 5x5 section will make ");
-			addGuidebook("chapter.fissionreactor.p3l9", "power.                          ");
+			addGuidebook("chapter.fissionreactor.l2", " Next, cover the top of the water with Turbines. You can either have single turbines, or turn a group of 9 into a large 3x3 turbine using a wrench. The area around the Reactor can be larger than 5x5, but only the 5x5 section will make power.");
 
-			addGuidebook("chapter.fissionreactor.p5l1", "    To make steam, you will    ");
-			addGuidebook("chapter.fissionreactor.p5l2", "need a source of heat. There   ");
-			addGuidebook("chapter.fissionreactor.p5l3", "are 3 fuel types available to  ");
-			addGuidebook("chapter.fissionreactor.p5l4", "you:                           ");
-			addGuidebook("chapter.fissionreactor.p5l5", "1. Highly Enriched Fuel Rod    ");
-			addGuidebook("chapter.fissionreactor.p5l6", "    Max Temp: 1417 C           ");
-			addGuidebook("chapter.fissionreactor.p5l7", "    Uses: 96000                ");
-			addGuidebook("chapter.fissionreactor.p5l8", "2. Low Enriched Fuel Rod       ");
-			addGuidebook("chapter.fissionreactor.p5l9", "    Max Temp: 1075 C           ");
-			addGuidebook("chapter.fissionreactor.p5l10", "    Uses: 24000                ");
-			addGuidebook("chapter.fissionreactor.p5l11", "3. Plutonium Fuel Rod          ");
-			addGuidebook("chapter.fissionreactor.p5l12", "    Max Temp: 1075 C           ");
-			addGuidebook("chapter.fissionreactor.p5l13", "    Uses: 120000               ");
-			addGuidebook("chapter.fissionreactor.p5l14", "The higher the temperature,    ");
-			addGuidebook("chapter.fissionreactor.p5l15", "the faster a fuel will be will ");
+			addGuidebook("chapter.fissionreactor.l3", "To make steam, you will need a source of heat. This is where the Fission part of the name comes into play. The following fuel rods can be used to heat the reactor:");
+			addGuidebook("chapter.fissionreactor.maxtemp", "Max Temp: %s C");
+			addGuidebook("chapter.fissionreactor.cycles", "Cycles: %s");
+			addGuidebook("chapter.fissionreactor.l4", "The temperature associated with each fuel type is the temperature the reactor core will reach when 4 rods of that type are used. The Core has a temperature limit of 1417 C at which point it will begin overheating placing it at risk of melting down. The longer it runs in an overheated state, the greater "
+					+ "the risk of meltdown becomes. Also, the hotter a reactor runs, the quicker the fuel source degrades! When a fuel rod is expended, it will leave behind a Spent Fuel Rod which can be processed into other valuable materials.");
+			addGuidebook("chapter.fissionreactor.l5", "As you can see, some fuel types will actually cause the reactor to melt down if a set of 4 is used in their entirety. You have two methods of dealing with this. This first is to mix and match certain fuel types. However, this method is mostly a trial-by-error approach, and does not leave a large ammount " + "of room for error.");
+			addGuidebook("chapter.fissionreactor.l6", "The second and more reliable approach is to use a ");
+			addGuidebook("chapter.fissionreactor.controlrod", "Control Rod");
+			addGuidebook("chapter.fissionreactor.l7", " to decrease the rate of the fission reaction. Place a Control Rod under the Reactor Core and Right-Click to extend it. The futher extended the rod is, the slower the reaction and thus cooler the reactor will run. Shift + Right-Click to retract the rod.");
+			addGuidebook("chapter.fissionreactor.l8", "One final item of note is that by placing a Dueterium Cell in the reactor while running, it has a chance to be enriched and transformed into a Tritium Cell. Tritium is required in order to run a Fusion Reactor. The conversion process will occur when the temperature of the core is above 800 C.");
 
-			addGuidebook("chapter.fissionreactor.p6l1", "degrade. Turbines produce at   ");
-			addGuidebook("chapter.fissionreactor.p6l2", "120V for temperatures under    ");
-			addGuidebook("chapter.fissionreactor.p6l3", "1117 C, 240V for temperatures  ");
-			addGuidebook("chapter.fissionreactor.p6l4", "under 1515 C, and at 480V for  ");
-			addGuidebook("chapter.fissionreactor.p6l5", "higher temperatures. A full    ");
-			addGuidebook("chapter.fissionreactor.p6l6", "sized reactor will produce up  ");
-			addGuidebook("chapter.fissionreactor.p6l7", "to 22 kJ/t or 444 kW!          ");
-			addGuidebook("chapter.fissionreactor.p6l8", "    Note that the temerature   ");
-			addGuidebook("chapter.fissionreactor.p6l9", "of the reactor is key. Above   ");
-			addGuidebook("chapter.fissionreactor.p6l10", "1400 C, it is in danger of     ");
-			addGuidebook("chapter.fissionreactor.p6l11", "melting down. This is where the");
-			addGuidebook("chapter.fissionreactor.p6l12", "Control Rod Assembly comes     ");
-			addGuidebook("chapter.fissionreactor.p6l13", "in. The Assembly can be used   ");
-			addGuidebook("chapter.fissionreactor.p6l14", "to reduce the rate at which    ");
-			addGuidebook("chapter.fissionreactor.p6l15", "the reactor uses fuel. Place   ");
-
-			addGuidebook("chapter.fissionreactor.p7l1", "one under the Core, and right  ");
-			addGuidebook("chapter.fissionreactor.p7l2", "click it. This will extend the ");
-			addGuidebook("chapter.fissionreactor.p7l3", "rods into the Core. The higher ");
-			addGuidebook("chapter.fissionreactor.p7l4", "the rods, the lower the fuel   ");
-			addGuidebook("chapter.fissionreactor.p7l5", "usage and resulting heat, but  ");
-			addGuidebook("chapter.fissionreactor.p7l6", "also the lower the energy      ");
-			addGuidebook("chapter.fissionreactor.p7l7", "output!                        ");
-			addGuidebook("chapter.fissionreactor.p7l8", "    One final mention is that  ");
-			addGuidebook("chapter.fissionreactor.p7l9", "Tritium is produced in the Core ");
-			addGuidebook("chapter.fissionreactor.p7l10", "by placing Dueterium cells in  ");
-			addGuidebook("chapter.fissionreactor.p7l11", "it while running. They will be ");
-			addGuidebook("chapter.fissionreactor.p7l12", "converted randomly above       ");
-			addGuidebook("chapter.fissionreactor.p7l13", "800 C.                         ");
-
+			
+			addGuidebook("chapter.radiogen", "Radioisotropic Generator");
+			addGuidebook("chapter.radiogen.l1", 
+					"The Radioisotropic Generator presents an alternative to the fission reaction. It instead uses the natural heat produced from the radioactive decay of items to directly generate electricity. Simply place a radioactive item in it, and it will begin to generate power. The more radioactive an item is, "
+					+ 
+					"and the more of said item there is, the more power will be produced!");
+			
 			addGuidebook("chapter.msreactor", "MS Reactor");
-			addGuidebook("chapter.msreactor.p1l1", "    The Molton Salt Reactor is ");
-			addGuidebook("chapter.msreactor.p1l2", "a far more refined version of  ");
-			addGuidebook("chapter.msreactor.p1l3", "the crude Fission Reactor, but ");
-			addGuidebook("chapter.msreactor.p1l4", "is also far more expensive. To ");
-			addGuidebook("chapter.msreactor.p1l5", "start off, you will need 3     ");
-			addGuidebook("chapter.msreactor.p1l6", "components:                    ");
-			addGuidebook("chapter.msreactor.p1l7", "     MSR Reactor Core          ");
-			addGuidebook("chapter.msreactor.p1l8", "     Freeze Plug               ");
-			addGuidebook("chapter.msreactor.p1l9", "     Molten Salt Supplier      ");
-			addGuidebook("chapter.msreactor.p1l10", "Place a Freeze Plug, and then  ");
-			addGuidebook("chapter.msreactor.p1l11", "place a Reactor Core on top    ");
-			addGuidebook("chapter.msreactor.p1l12", "of it. Facing the green port on");
-			addGuidebook("chapter.msreactor.p1l13", "the core, place a Molten Salt  ");
-			addGuidebook("chapter.msreactor.p1l14", "Supplier so that its green port");
-			addGuidebook("chapter.msreactor.p1l15", "faces the Core's.              ");
+			addGuidebook("chapter.msreactor.l1", "The Molton Salt Reactor is a far more refined version of the crude Fission Reactor, but is also far more expensive. Instead of being directly cooled by water, the reactor core is cooled by molten salt, which is then ran through a water-cooled heat sink network to itself be cooled. This has the added "
+					+ "benefit of not needing to have the reactor core submessed in water and allowiong you to be flexable with turbine placement.");
+			addGuidebook("chapter.msreactor.l2", "To build a Molten Salt Reactor, you will need 3 components:");
+			addGuidebook("chapter.msreactor.l3", "Place a Freeze Plug, and then place a Reactor Core on top of it. Facing the green port on the core, place a Molten Salt Supplier so that its green port faces the Core's.");
 
-			addGuidebook("chapter.msreactor.p3l1", "    The MS Reactor isn't cooled");
-			addGuidebook("chapter.msreactor.p3l2", "by water and is instead cooled ");
-			addGuidebook("chapter.msreactor.p3l3", "by FLiNaK salt, which the      ");
-			addGuidebook("chapter.msreactor.p3l4", "Freeze Plug supplies. Simply   ");
-			addGuidebook("chapter.msreactor.p3l5", "make the salt and place it in  ");
-			addGuidebook("chapter.msreactor.p3l6", "the plug. The salt is not used ");
-			addGuidebook("chapter.msreactor.p3l7", "up by the reactor, but the     ");
-			addGuidebook("chapter.msreactor.p3l8", "more salt you add, the more    ");
-			addGuidebook("chapter.msreactor.p3l9", "heat it will be able to remove.");
-			addGuidebook("chapter.msreactor.p3l10", "    The actual fuel of the MS  ");
-			addGuidebook("chapter.msreactor.p3l11", "Reactor is LiF-ThF4-UF4 Salt,  ");
-			addGuidebook("chapter.msreactor.p3l12", "and is provided by the Molten  ");
-			addGuidebook("chapter.msreactor.p3l13", "Salt Supplier. This fuel is    ");
-			addGuidebook("chapter.msreactor.p3l14", "consumed over time unlike the  ");
-			addGuidebook("chapter.msreactor.p3l15", "coolant salt.                  ");
+			addGuidebook("chapter.msreactor.l4", "The MS Reactor isn't cooled by water and is instead cooled by FLiNaK salt, which the Freeze Plug supplies. Simply make the salt and place it in the Plug. The salt is not consumed by the reactor, but the more salt you add, the more heat it will be able to remove.");
+			addGuidebook("chapter.msreactor.l5", "Unlike the Fission Reactor which uses fuel rods to power its fission reaction, Molten Salt Reactor uses a specially prepared radioactive salt, LiF-ThF4-UF4 Salt. However, as the name of the reactor implies, this salt must be molten in order to be used. Place the salt pellet in the Molten Salt "
+					+ "Supplier to melt it. Each salt pellet melts to 250 mB, and the core has an internal capacity of 1000 mB. The salt is slowly consumed over time, and just like the Fission Reactor, the hotter the reactor, the faster the fuel is consumed.");
 
-			addGuidebook("chapter.msreactor.p6l1", "    To disperse the heat from  ");
-			addGuidebook("chapter.msreactor.p6l2", "the coolant, you will need:    ");
-			addGuidebook("chapter.msreactor.p6l3", "     VS-Ceramic Pipe           ");
-			addGuidebook("chapter.msreactor.p6l4", "     Heat Exchanger            ");
-			addGuidebook("chapter.msreactor.p6l5", "The VS Pipe is connected to    ");
-			addGuidebook("chapter.msreactor.p6l6", "the top of the Reactor Core    ");
-			addGuidebook("chapter.msreactor.p6l7", "and fed into the bottom of the ");
-			addGuidebook("chapter.msreactor.p6l8", "Exchanger. The Exchanger       ");
-			addGuidebook("chapter.msreactor.p6l9", "must be placed in a 5x5x2 pool ");
-			addGuidebook("chapter.msreactor.p6l10", "of water, and must be          ");
-			addGuidebook("chapter.msreactor.p6l11", "water-logged to function. The  ");
-			addGuidebook("chapter.msreactor.p6l12", "easiest way to do this is to fill");
-			addGuidebook("chapter.msreactor.p6l13", "the pool and then place the    ");
-			addGuidebook("chapter.msreactor.p6l14", "Exchanger.                     ");
+			addGuidebook("chapter.msreactor.l6", "Now that the reactor is hot, you need to disperse the heat from the coolant. The MS Reactor has a melt-down temperature of 1000 C. To do this, you will need:");
+			addGuidebook("chapter.msreactor.l7", "The VS Pipe is connected to the top of the Reactor Core and fed into the bottom of the Heat Exchanger. The Heat Exchanger is incredibally efficient, and very few are needed to keep the reactor cool. In fact, a single Heat Exchanger can almost keep a MS Reactor cool by itself! To effectively do this, "
+					+ "it must be placed in a 5x5x2 pool of water, and must be water-logged to function. The easiest way to do this is to fill the pool and then place the Exchanger. It should be noted that while the exchanger doesn't have to be directly above the reactor core, the longer the VS Pipe is, the more heat it will " + "lose before it reaches the Exchanger!");
 
-			addGuidebook("chapter.msreactor.p10l1", "    The Control Rod can also   ");
-			addGuidebook("chapter.msreactor.p10l2", "be used to slow the fuel use   ");
-			addGuidebook("chapter.msreactor.p10l3", "of the Core. Attach it to the  ");
-			addGuidebook("chapter.msreactor.p10l4", "side of the Core, and control  ");
-			addGuidebook("chapter.msreactor.p10l5", "it as with the Fission Reactor.");
-			addGuidebook("chapter.msreactor.p10l6", "It is worth noting that the MS ");
-			addGuidebook("chapter.msreactor.p10l7", "reactor does not melt down     ");
-			addGuidebook("chapter.msreactor.p10l8", "like the Fission Reactor, but  ");
-			addGuidebook("chapter.msreactor.p10l9", "above 900 C, the fuel will be  ");
-			addGuidebook("chapter.msreactor.p10l10", "used inefficiently!            ");
+			addGuidebook("chapter.msreactor.l8", "The Control Rod, like with the Fission Reactor, can also be used to slow the fuel use of the Core. Attach it to the side of the MS Reactor Core, and control it as with the Fission Reactor.");
 
 			addGuidebook("chapter.fusionreactor", "Fusion Reactor");
-			addGuidebook("chapter.fusionreactor.p1l1", "    The Fusion Reactor is the  ");
-			addGuidebook("chapter.fusionreactor.p1l2", "ultimate source of power that  ");
-			addGuidebook("chapter.fusionreactor.p1l3", "Nuclear Science has to offer,  ");
-			addGuidebook("chapter.fusionreactor.p1l4", "and is able to produce over    ");
-			addGuidebook("chapter.fusionreactor.p1l5", "80 MW of energy. However,      ");
-			addGuidebook("chapter.fusionreactor.p1l6", "havesting this energy is very  ");
-			addGuidebook("chapter.fusionreactor.p1l7", "expensive. First, you will     ");
-			addGuidebook("chapter.fusionreactor.p1l8", "to construct a Fusion Reactor  ");
-			addGuidebook("chapter.fusionreactor.p1l9", "Core. Leave a hole above and   ");
-			addGuidebook("chapter.fusionreactor.p1l10", "below the Core and build a    ");
-			addGuidebook("chapter.fusionreactor.p1l11", "diamond with a radius of 6 out ");
-			addGuidebook("chapter.fusionreactor.p1l12", "of Electromagnets like so.     ");
-			addGuidebook("chapter.fusionreactor.p1l13", "Electromagnetic Glass may also ");
-			addGuidebook("chapter.fusionreactor.p1l14", "be used. We are using Glass    ");
-			addGuidebook("chapter.fusionreactor.p1l15", "in this case.                  ");
-
-			addGuidebook("chapter.fusionreactor.p3l1", "    Next, surround the sides   ");
-			addGuidebook("chapter.fusionreactor.p3l2", "of the diamond with more       ");
-			addGuidebook("chapter.fusionreactor.p3l3", "Electromagnets like so:        ");
-
-			addGuidebook("chapter.fusionreactor.p5l1", "    Now, cover the top of the  ");
-			addGuidebook("chapter.fusionreactor.p5l2", "with Electromagnets. The       ");
-			addGuidebook("chapter.fusionreactor.p5l3", "Reactor itself does not make   ");
-			addGuidebook("chapter.fusionreactor.p5l4", "power and instead generates    ");
-			addGuidebook("chapter.fusionreactor.p5l5", "plasma, which the magnets will ");
-			addGuidebook("chapter.fusionreactor.p5l6", "be containing.                 ");
-
-			addGuidebook("chapter.fusionreactor.p7l1", "    To generate power with the ");
-			addGuidebook("chapter.fusionreactor.p7l2", "reactor, you will need to      ");
-			addGuidebook("chapter.fusionreactor.p7l3", "cover the top of the magnets   ");
-			addGuidebook("chapter.fusionreactor.p7l4", "with water. The magnets will   ");
-			addGuidebook("chapter.fusionreactor.p7l5", "heat the water and generate    ");
-			addGuidebook("chapter.fusionreactor.p7l6", "steam. To get the start the    ");
-			addGuidebook("chapter.fusionreactor.p7l7", "Fusion reaction, you will also ");
-			addGuidebook("chapter.fusionreactor.p7l8", "need to power the reactor. A   ");
-			addGuidebook("chapter.fusionreactor.p7l9", "wire can be connected to the   ");
-			addGuidebook("chapter.fusionreactor.p7l10", "top or the bottom of the Core. ");
-			addGuidebook("chapter.fusionreactor.p7l11", "Once the area has been filled  ");
-			addGuidebook("chapter.fusionreactor.p7l12", "with water, place Turbines     ");
-			addGuidebook("chapter.fusionreactor.p7l13", "above the water's surface.     ");
-
-			addGuidebook("chapter.fusionreactor.p11l1", "    The Fusion Reactor Core    ");
-			addGuidebook("chapter.fusionreactor.p11l2", "requires 50 kJ/t or 1 MW at    ");
-			addGuidebook("chapter.fusionreactor.p11l3", "480 V to keep the fusion       ");
-			addGuidebook("chapter.fusionreactor.p11l4", "reaction running. While you    ");
-			addGuidebook("chapter.fusionreactor.p11l5", "will need to supply the initial");
-			addGuidebook("chapter.fusionreactor.p11l6", "1 MW, you can feed the output  ");
-			addGuidebook("chapter.fusionreactor.p11l7", "of the Turbines back into the  ");
-			addGuidebook("chapter.fusionreactor.p11l8", "reactor keeping it going.      ");
-			addGuidebook("chapter.fusionreactor.p11l9", "    To fuel the Reactor, you   ");
-			addGuidebook("chapter.fusionreactor.p11l10", "will need to supply it with    ");
-			addGuidebook("chapter.fusionreactor.p11l11", "Dueterium and Tritium. This is ");
-			addGuidebook("chapter.fusionreactor.p11l12", "currently done by right Cells  ");
-			addGuidebook("chapter.fusionreactor.p11l13", "on the Reactor Core. This is   ");
-			addGuidebook("chapter.fusionreactor.p11l14", "planned to be changed in the   ");
-			addGuidebook("chapter.fusionreactor.p11l15", "future however.                ");
+			addGuidebook("chapter.fusionreactor.l1", "The Fusion Reactor is the ultimate source of power that Nuclear Science has to offer, and is able to produce over 6 MW of energy. However, harvesting this energy is very expensive. First, you will to construct 13x13 diamond of Electromagnets. They can be either glass or opaque. We will be using both. "
+					+ "Place the Fusion Reactor Core in the center of the diamond and remove the block below it.");
+			addGuidebook("chapter.fusionreactor.l2", "Next, surround the side of the 13x13 diamond with a ring of Electromagnets.");
+			addGuidebook("chapter.fusionreactor.l3", "Next, build another 13x13 diamond to act as the roof. Leave a hole in the middle for the Reactor Core like before.");
+			addGuidebook("chapter.fusionreactor.l4", "Next, you will need to cover the top of the Electromagnets with water. The plasma of the reactor will heat the water generating steam, which can in turn be used for spinning turbines. Note the turbines will operate at 480V.");
+			addGuidebook("chapter.fusionreactor.l5", "The core requires 50 kJ/t at 480V to operate. While the initial energy must come from somewhere else, you can use the outuput of the turbines to feed back into the reaction. The wire can be connected to the top or the bottom of the reactor. In this case, we will be using the top.");
+			addGuidebook("chapter.fusionreactor.l6", "The Reactor uses Deuterium and Tritium Cells to fuel the reaction. To add fuel to the core, right-click a cell on it. This can be done through the convenient hole left in the bottom.");
 
 			addGuidebook("chapter.particleaccelerator", "Particle Accelerator");
-			addGuidebook("chapter.particleaccelerator.p1l1", "    The Particle Accelerator   ");
-			addGuidebook("chapter.particleaccelerator.p1l2", "is used to make Anti-Matter    ");
-			addGuidebook("chapter.particleaccelerator.p1l3", "and Dark Matter. Both are      ");
-			addGuidebook("chapter.particleaccelerator.p1l4", "generated when two Particles   ");
-			addGuidebook("chapter.particleaccelerator.p1l5", "collide at great speeds. Anti- ");
-			addGuidebook("chapter.particleaccelerator.p1l6", "Matter is created when the two ");
-			addGuidebook("chapter.particleaccelerator.p1l7", "particles collide at less than ");
-			addGuidebook("chapter.particleaccelerator.p1l8", "100%, however the closer they  ");
-			addGuidebook("chapter.particleaccelerator.p1l9", "are to 100%, the more likely   ");
-			addGuidebook("chapter.particleaccelerator.p1l10", "Anti-Matter will be generated. ");
-			addGuidebook("chapter.particleaccelerator.p1l11", "Dark Matter is created when    ");
-			addGuidebook("chapter.particleaccelerator.p1l12", "the collision occurs at 100%   ");
-			addGuidebook("chapter.particleaccelerator.p1l13", "speed, and has a guarenteed    ");
-			addGuidebook("chapter.particleaccelerator.p1l14", "chance to be created.          ");
-			addGuidebook("chapter.particleaccelerator.p1l15", "    To create particles, you   ");
+			addGuidebook("chapter.particleaccelerator.l1", "The Particle Accelerator is used to make Anti-Matter and Dark Matter. Both are generated when two Particles collide at great speeds. The result of a particle collision is determined by the following formula:");
+			addGuidebook("chapter.particleaccelerator.formula", "((s1 + s2) / 4) ^ 2");
+			addGuidebook("chapter.particleaccelerator.l2", "where s1 and s2 are the speeds of the two particles. Dark Matter is created when the resulting value is greater than 0.999, and has a 100% chance of being created. Otherwise, Anti-Matter is created from the collision. However, the chance of Anti-Matter being generated is not guaranteed, "
+					+ "and its chance of being created increases the closer the resulting value gets to 0.999.");
 
-			addGuidebook("chapter.particleaccelerator.p2l1", "will need a Particle Injector. ");
-			addGuidebook("chapter.particleaccelerator.p2l2", "The Injector uses matter to    ");
-			addGuidebook("chapter.particleaccelerator.p2l3", "make a particle. Any block or  ");
-			addGuidebook("chapter.particleaccelerator.p2l4", "item can be used to supply the ");
-			addGuidebook("chapter.particleaccelerator.p2l5", "matter. To catch the result of ");
-			addGuidebook("chapter.particleaccelerator.p2l6", "the collision, you will need   ");
-			addGuidebook("chapter.particleaccelerator.p2l7", "Electromagnetic Cells, which   ");
-			addGuidebook("chapter.particleaccelerator.p2l8", "are placed in the slot below   ");
-			addGuidebook("chapter.particleaccelerator.p2l9", "the matter slot. The Injector  ");
-			addGuidebook("chapter.particleaccelerator.p2l10", "runs off of 960 V and uses     ");
-			addGuidebook("chapter.particleaccelerator.p2l11", "20 MJ per particle. This means ");
-			addGuidebook("chapter.particleaccelerator.p2l12", "you will need 40 MJ for each   ");
-			addGuidebook("chapter.particleaccelerator.p2l13", "collision.                     ");
+			addGuidebook("chapter.particleaccelerator.l3", "In order to collide particles, you will first need to create particles. For this, you will need a Particle Injector. The Injector uses matter to make a particle. Any block or item can be used to supply the matter. Place the matter in its respective slot in the Injector. To catch the result of the collision, "
+					+ "you will need to craft an Electromagnetic Cell and place it in its respective slot in the Injector as well. The Injector uses 20 MJ per particle at 960 V. This means you will need 40 MJ for each collision.");
 
-			addGuidebook("chapter.particleaccelerator.p4l1", "    While the Injector makes   ");
-			addGuidebook("chapter.particleaccelerator.p4l2", "particles, it does not affect  ");
-			addGuidebook("chapter.particleaccelerator.p4l3", "their speed. This is handled by");
-			addGuidebook("chapter.particleaccelerator.p4l4", "the Electromagnetic Booster.   ");
-			addGuidebook("chapter.particleaccelerator.p4l5", "If the particle and Booster    ");
-			addGuidebook("chapter.particleaccelerator.p4l6", "are facing the same direction, ");
-			addGuidebook("chapter.particleaccelerator.p4l7", "the Booster will add 0.33% to  ");
-			addGuidebook("chapter.particleaccelerator.p4l8", "the particle's speed. If the   ");
-			addGuidebook("chapter.particleaccelerator.p4l9", "Booster is a corner, it will   ");
-			addGuidebook("chapter.particleaccelerator.p4l10", "add 0.17% to the particle's    ");
-			addGuidebook("chapter.particleaccelerator.p4l11", "speed. This is done for every  ");
-			addGuidebook("chapter.particleaccelerator.p4l12", "tick the particle is in a      ");
-			addGuidebook("chapter.particleaccelerator.p4l13", "Booster. To reach 100% speed,  ");
-			addGuidebook("chapter.particleaccelerator.p4l14", "it will take 200 Boosters in a ");
-			addGuidebook("chapter.particleaccelerator.p4l15", "straight line. However, this   ");
+			addGuidebook("chapter.particleaccelerator.l4",
+					"While the Injector creates particles, it spawns them at very low speeds. In order to facilitate a collision, both particles will need to be moving at very high speeds. This can be accomplished by passing a Particle through an Electromagnetic Booster. If the Particle and Booster are facing the "
+							+ "same direction, the Booster will increase the Particle's speed by 0.33% for every tick the Particle is inside the Booster. If the Booster is a corner, it will increase the Particle's speed by 0.17% for every tick the Particle is inside the Booster. This means that the fasteer a Particle moves, "
+							+ "the less effective each successive Booster becomes. It is important to note that moving particles emit radiation.");
 
-			addGuidebook("chapter.particleaccelerator.p5l1", "requires a large amount of     ");
-			addGuidebook("chapter.particleaccelerator.p5l2", "room. Boosters can be set up   ");
-			addGuidebook("chapter.particleaccelerator.p5l3", "in a snake pattern to help     ");
-			addGuidebook("chapter.particleaccelerator.p5l4", "compact them. To make one      ");
-			addGuidebook("chapter.particleaccelerator.p5l5", "a corner variant, stand on top ");
-			addGuidebook("chapter.particleaccelerator.p5l6", "of Booster segment you wish to ");
-			addGuidebook("chapter.particleaccelerator.p5l7", "turn, and place a Booster to   ");
-			addGuidebook("chapter.particleaccelerator.p5l8", "start the next segment after   ");
-			addGuidebook("chapter.particleaccelerator.p5l9", "the corner. Looking at the      ");
-			addGuidebook("chapter.particleaccelerator.p5l10", "outer bottom corner of the     ");
-			addGuidebook("chapter.particleaccelerator.p5l11", "next segment's Booster, place  ");
-			addGuidebook("chapter.particleaccelerator.p5l12", "the corner Booster. If you did ");
-			addGuidebook("chapter.particleaccelerator.p5l13", "it properly, you will not be   ");
-			addGuidebook("chapter.particleaccelerator.p5l14", "able to directly see the inside");
-			addGuidebook("chapter.particleaccelerator.p5l15", "of Booster.                    ");
+			addGuidebook("chapter.particleaccelerator.l5", "To reach 100% speed, it will take 200 Boosters in a straight line. However, this would require a very large amount of room. Fortunately, Boosters can be set up in a snake pattern to help compact them by converting a placed Booster to a corner variant. To make one a corner variant, stand on top "
+					+ "of Booster segment you wish to turn, and place a Booster to start the next segment after the corner. Looking at the outter bottom corner of the next segment's Booster, place the corner Booster. If you did it properly, you will not be able to directly see the inside of Booster.");
 
-			addGuidebook("chapter.particleaccelerator.p7l1", "    A set of 60 Boosters as    ");
-			addGuidebook("chapter.particleaccelerator.p7l2", "pictured here has a roughly 1  ");
-			addGuidebook("chapter.particleaccelerator.p7l3", "5 chance of creating Anti      ");
-			addGuidebook("chapter.particleaccelerator.p7l4", "Matter from a collision:       ");
+			addGuidebook("chapter.particleaccelerator.l6", "The Particle Accelerator setup pictured here with 60 Boosters has a roughly 1 in 5 chance of creating Anti Matter from a collision:");
 
-			addGuidebook("chapter.particleaccelerator.p9l1", "    But how do we get two      ");
-			addGuidebook("chapter.particleaccelerator.p9l2", "particles to collide? This is  ");
-			addGuidebook("chapter.particleaccelerator.p9l3", "where regular Electromagnets   ");
-			addGuidebook("chapter.particleaccelerator.p9l4", "come in. You will need to      ");
-			addGuidebook("chapter.particleaccelerator.p9l5", "build a ring allowing them to  ");
-			addGuidebook("chapter.particleaccelerator.p9l6", "collide. The ring itself can   ");
-			addGuidebook("chapter.particleaccelerator.p9l7", "be as small as 3x3. Size has   ");
-			addGuidebook("chapter.particleaccelerator.p9l8", "no impact other than being     ");
-			addGuidebook("chapter.particleaccelerator.p9l9", "cheaper to make.               ");
-			addGuidebook("chapter.particleaccelerator.p9l10", "    Start by laying out the    ");
-			addGuidebook("chapter.particleaccelerator.p9l11", "bottom of the ring at the end  ");
-			addGuidebook("chapter.particleaccelerator.p9l12", "of the Booster chain like so:  ");
+			addGuidebook("chapter.particleaccelerator.l7", "But how do we get two particles to actually collide? This is where regular Electromagnets come in. You will need to construct a ring of Electromagnets to allow the Particles to circle and collide. It is incredibally important to note that particles will begin to lose speed the moment they exit "
+					+ "the Booster chain, so it is desirable to make the Electromagnet ring as small as possible. In this case, we will be using a 3x3 ring.");
+			addGuidebook("chapter.particleaccelerator.l8", "Start by laying out the bottom of the ring at the end of the Booster chain like so:");
 
-			addGuidebook("chapter.particleaccelerator.p11l1", "    Place an Electromagnetic   ");
-			addGuidebook("chapter.particleaccelerator.p11l2", "switch in front of the output  ");
-			addGuidebook("chapter.particleaccelerator.p11l3", "of the Booster chain. It is    ");
-			addGuidebook("chapter.particleaccelerator.p11l4", "vital you place one of these   ");
-			addGuidebook("chapter.particleaccelerator.p11l5", "here! Fill in the sides and    ");
-			addGuidebook("chapter.particleaccelerator.p11l6", "top of the ring as pictured.   ");
-			addGuidebook("chapter.particleaccelerator.p11l7", "Note either Electromagnets or  ");
-			addGuidebook("chapter.particleaccelerator.p11l8", "Electromagnetic Glass can be   ");
-			addGuidebook("chapter.particleaccelerator.p11l9", "used.                          ");
+			addGuidebook("chapter.particleaccelerator.l9", "To ensure the particles actually collide, you will need to switch the direction of one. This is what the Electromagnetic Switch is for. The switch flips the direction of every other particle that crosses it. Place an Electromagnetic switch in front of the output of the Booster chain like so:");
+			addGuidebook("chapter.particleaccelerator.l10", "Now, fill in the sides and top of the ring to create an enclosed structure for the Particles. Note either Electromagnets or Electromagnetic Glass can be used.");
 
 			addGuidebook("chapter.othermachines", "Other Machines");
-			addGuidebook("chapter.othermachines.radiogentitle", "Radioisotropic Gen");
-			addGuidebook("chapter.othermachines.p1l1", "    The Radioisotropic         ");
-			addGuidebook("chapter.othermachines.p1l2", "Generator uses the natural     ");
-			addGuidebook("chapter.othermachines.p1l3", "heat produced from the         ");
-			addGuidebook("chapter.othermachines.p1l4", "radioactive decay of items.    ");
-			addGuidebook("chapter.othermachines.p1l5", "Simply place a radioactive item");
-			addGuidebook("chapter.othermachines.p1l6", "in it, and it will begin to make");
-			addGuidebook("chapter.othermachines.p1l7", "power. See the chapter on      ");
-			addGuidebook("chapter.othermachines.p1l8", "Radiation to see which items   ");
-			addGuidebook("chapter.othermachines.p1l9", "are valid. The more radioactive");
-			addGuidebook("chapter.othermachines.p1l10", "an item is, the more power the ");
-			addGuidebook("chapter.othermachines.p1l11", "generator will produce!        ");
+			addGuidebook("chapter.othermachines.quantumcapacitor1", 
+					"The Quantum Capacitor is the ultimate energy storage device. It has an unlimited energy storage capacity and the storage is shared across capacitors. The GUI has two programmable fields. The first is for the joules/tick output of the capacitor. Note, the capacitor outputs at 1.92 kV! "
+					+ 
+					"The second is for the frequency. The frequency of two capacitors must match for them to link. Every capacitor network is tied to a specific player, so don't worry about other players stealing your energy!");
 
-			addGuidebook("chapter.othermachines.gascenttitle", "Gas Centrifuge");
-			addGuidebook("chapter.othermachines.p2l1", "    The Gas Centrifuge splits  ");
-			addGuidebook("chapter.othermachines.p2l2", "Uranium Hexafluoride into its  ");
-			addGuidebook("chapter.othermachines.p2l3", "isotopes of U235 and U238.     ");
-			addGuidebook("chapter.othermachines.p2l4", "There is a split of 17.5% to   ");
-			addGuidebook("chapter.othermachines.p2l5", "82.5% respectively for each    ");
-			addGuidebook("chapter.othermachines.p2l6", "mB of Hexafluoride. The        ");
-			addGuidebook("chapter.othermachines.p2l7", "Centrifuge runs continuously   ");
-			addGuidebook("chapter.othermachines.p2l8", "as long as it has at least 42  ");
-			addGuidebook("chapter.othermachines.p2l9", "mB per run. 10% of each cycle  ");
-			addGuidebook("chapter.othermachines.p2l10", "is also converted into waste.  ");
-			addGuidebook("chapter.othermachines.p2l11", "Note this is not subtracted    ");
+			addGuidebook("chapter.othermachines.teleporter1", 
+					"The Teleporter requires 5 MJ to teleport a player. Two teleporters are needed: one to send the player, and one to recieve them. Only the sending end needs to be powered. To link two teleporters, Right-Click the recieving end with a Frequency Card. Then Right-Click the sending end with the "
+					+ 
+					"same card to link the two teleporters.");
 
-			addGuidebook("chapter.othermachines.p3l1", "from the aforementioned split, ");
-			addGuidebook("chapter.othermachines.p3l2", "and is added on top of it.     ");
-			addGuidebook("chapter.othermachines.p3l3", "    Once the Centrifuge has    ");
-			addGuidebook("chapter.othermachines.p3l4", "collected 2500 mB of a material,");
-			addGuidebook("chapter.othermachines.p3l5", "it will produce an item of the ");
-			addGuidebook("chapter.othermachines.p3l6", "respective material. While this");
-			addGuidebook("chapter.othermachines.p3l7", "is not 100% realistic, it is a ");
-			addGuidebook("chapter.othermachines.p3l8", "legacy feature to pay tribute  ");
-			addGuidebook("chapter.othermachines.p3l9", "to Atomic Science. The waste   ");
-			addGuidebook("chapter.othermachines.p3l10", "material will produce Fissile  ");
-			addGuidebook("chapter.othermachines.p3l11", "Dust. Uranium Hexaflouride can ");
-			addGuidebook("chapter.othermachines.p3l12", "either be piped into the back  ");
-			addGuidebook("chapter.othermachines.p3l13", "of the Centrifuge, or the      ");
-			addGuidebook("chapter.othermachines.p3l14", "Nuclear Boiler can output      ");
-			addGuidebook("chapter.othermachines.p3l15", "directly into it.              ");
+			addGuidebook("chapter.othermachines.teleporter2", "After each teleport, there is 4 second cooldown applied to the sending end. Note, it is itself, so be careful! To wipe a Frequency Card, simply craft it in your inventory.");
 
-			addGuidebook("chapter.othermachines.quantumcaptitle", "Quantum Capacitor");
-			addGuidebook("chapter.othermachines.p5l1", "    The Quantum Capacitor is   ");
-			addGuidebook("chapter.othermachines.p5l2", "the ultimate energy storage    ");
-			addGuidebook("chapter.othermachines.p5l3", "device. It has an unlimited    ");
-			addGuidebook("chapter.othermachines.p5l4", "energy storage capacity, and   ");
-			addGuidebook("chapter.othermachines.p5l5", "has a programmable voltage     ");
-			addGuidebook("chapter.othermachines.p5l6", "and current. Furthermore,      ");
-			addGuidebook("chapter.othermachines.p5l7", "each Capacitor is linked to    ");
-			addGuidebook("chapter.othermachines.p5l8", "your player UUID. This means   ");
-			addGuidebook("chapter.othermachines.p5l9", "no matter where you place one  ");
-			addGuidebook("chapter.othermachines.p5l10", "in the world, all will share   ");
-			addGuidebook("chapter.othermachines.p5l11", "the same charge!               ");
-
-			addGuidebook("chapter.othermachines.teleportertitle", "Teleporter");
-			addGuidebook("chapter.othermachines.p6l1", "    The Teleporter requires    ");
-			addGuidebook("chapter.othermachines.p6l2", "5 MJ to teleport a player. Two ");
-			addGuidebook("chapter.othermachines.p6l3", "teleporters are needed: one    ");
-			addGuidebook("chapter.othermachines.p6l4", "to send the player, and one to ");
-			addGuidebook("chapter.othermachines.p6l5", "recieve them. Only the sending ");
-			addGuidebook("chapter.othermachines.p6l6", "end needs to be powered. To    ");
-			addGuidebook("chapter.othermachines.p6l7", "link two teleporters, right-   ");
-			addGuidebook("chapter.othermachines.p6l8", "click the recieving end with a ");
-			addGuidebook("chapter.othermachines.p6l9", "Frequency Card. Then right-    ");
-			addGuidebook("chapter.othermachines.p6l10", "click the sending end with the");
-			addGuidebook("chapter.othermachines.p6l11", "same card to link them.        ");
-
-			addGuidebook("chapter.othermachines.p7l1", "    After each teleport, there ");
-			addGuidebook("chapter.othermachines.p7l2", "is 4 second cooldown applied   ");
-			addGuidebook("chapter.othermachines.p7l3", "to the sending end. Note, it is");
-			addGuidebook("chapter.othermachines.p7l4", "possible to link a teleporter to");
-			addGuidebook("chapter.othermachines.p7l5", "itself, so be careful! To wipe ");
-			addGuidebook("chapter.othermachines.p7l6", "the frequency from a Card,     ");
-			addGuidebook("chapter.othermachines.p7l7", "craft it in your inventory.    ");
-
-			addGuidebook("chapter.othermachines.atomicasstitle", "Atomic Assembler");
-			addGuidebook("chapter.othermachines.p8l1", "    The Atomic Assembler makes ");
-			addGuidebook("chapter.othermachines.p8l2", "use of the strange properties  ");
-			addGuidebook("chapter.othermachines.p8l3", "of Dark Matter, and is able to ");
-			addGuidebook("chapter.othermachines.p8l4", "duplicate items (we have made  ");
-			addGuidebook("chapter.othermachines.p8l5", "sure you can't dupe items with ");
-			addGuidebook("chapter.othermachines.p8l6", "inventories, so no dupe bugs   ");
-			addGuidebook("chapter.othermachines.p8l7", "this time (: ). It requires    ");
-			addGuidebook("chapter.othermachines.p8l8", "72 kW at 480 V to run. If it   ");
-			addGuidebook("chapter.othermachines.p8l9", "loses power, all progress is   ");
-			addGuidebook("chapter.othermachines.p8l10", "lost!                          ");
-			addGuidebook("chapter.othermachines.p8l11", "    To use it, take an item of ");
-
-			addGuidebook("chapter.othermachines.p9l1", "your desire and place it in    ");
-			addGuidebook("chapter.othermachines.p9l2", "the Assembler. Surround the    ");
-			addGuidebook("chapter.othermachines.p9l3", "item with Dark Matter Cells    ");
-			addGuidebook("chapter.othermachines.p9l4", "like shown. Each duplication   ");
-			addGuidebook("chapter.othermachines.p9l5", "3600 ticks, and will take one  ");
-			addGuidebook("chapter.othermachines.p9l6", "use of the Dark Matter Cells.  ");
-			addGuidebook("chapter.othermachines.p9l7", "Cells have 64 uses in total.   ");
+			addGuidebook("chapter.othermachines.atomicassembler1", 
+					"The Atomic Assembler makes use of the strange properties of Dark Matter, and is able to duplicate items (we have made sure you can't dupe items with inventories, so no dupe bugs this time (: ). It requires 72 kW at 480 V to run. If it loses power, all progress is lost!");
+			addGuidebook("chapter.othermachines.atomicassembler2", "To use it, take an item of your desire and place it in the Assembler. Surround the item with Dark Matter Cells like shown:");
+			addGuidebook("chapter.othermachines.atomicassembler3", "Each duplication takes 3600 ticks, and will take one use of the Dark Matter Cells. Cells have 64 uses in total.");
 
 			addGuidebook("chapter.misc", "Misc");
-			addGuidebook("chapter.misc.p1l1", "Futurum Usui.");
+			addGuidebook("chapter.misc.l1", "Futurum Usui.");
 
 			addJei("gui.reactorcore.info.temp", "Range: 0 C to 1400 C");
 			addJei("gui.gascentrifuge", "Gas Centrifuge");

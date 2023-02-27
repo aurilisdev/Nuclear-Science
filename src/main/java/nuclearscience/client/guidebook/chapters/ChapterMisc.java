@@ -1,27 +1,20 @@
 package nuclearscience.client.guidebook.chapters;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import electrodynamics.client.guidebook.utils.ImageWrapperObject;
-import electrodynamics.client.guidebook.utils.TextWrapperObject;
 import electrodynamics.client.guidebook.utils.components.Chapter;
-import electrodynamics.client.guidebook.utils.components.Page;
+import electrodynamics.client.guidebook.utils.components.Module;
+import electrodynamics.client.guidebook.utils.pagedata.ImageWrapperObject;
+import electrodynamics.client.guidebook.utils.pagedata.TextWrapperObject;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
 import nuclearscience.References;
 import nuclearscience.prefab.utils.TextUtils;
 
 public class ChapterMisc extends Chapter {
 
-	private static final ImageWrapperObject LOGO = new ImageWrapperObject(10, 50, 0, 0, 32, 32, 32, 32, References.ID + ":textures/item/cellempty.png");
+	private static final ImageWrapperObject LOGO = new ImageWrapperObject(0, 0, 0, 0, 32, 32, 32, 32, new ResourceLocation(References.ID, "textures/item/cellempty.png"));
 
-	@Override
-	protected List<Page> genPages() {
-		List<Page> pages = new ArrayList<>();
-
-		pages.add(new Page(new TextWrapperObject[] { new TextWrapperObject(10, 40, 4210752, TextUtils.guidebook("chapter.misc.p1l1")), }));
-
-		return pages;
+	public ChapterMisc(Module module) {
+		super(module);
 	}
 
 	@Override
@@ -32,6 +25,12 @@ public class ChapterMisc extends Chapter {
 	@Override
 	public MutableComponent getTitle() {
 		return TextUtils.guidebook("chapter.misc");
+	}
+
+	@Override
+	public void addData() {
+		pageData.add(new TextWrapperObject(TextUtils.guidebook("chapter.misc.l1")));
+		
 	}
 
 }

@@ -98,7 +98,7 @@ public class TileHeatExchanger extends GenericTile {
 										cachedTurbines[i][j][k] = null;
 									}
 								}
-							} else if (level.isClientSide && level.random.nextFloat() < temperature.get() / (TileMSRReactorCore.MELTDOWN_TEMPERATURE / 2)) {
+							} else if (level.isClientSide && level.random.nextFloat() < temperature.get() / (TileMSRReactorCore.MELTDOWN_TEMPERATURE * 3)) {
 								double offsetFX = offsetX + level.random.nextDouble() / 2.0 * (level.random.nextBoolean() ? -1 : 1);
 								double offsetFY = offsetY + level.random.nextDouble() / 2.0 * (level.random.nextBoolean() ? -1 : 1);
 								double offsetFZ = offsetZ + level.random.nextDouble() / 2.0 * (level.random.nextBoolean() ? -1 : 1);

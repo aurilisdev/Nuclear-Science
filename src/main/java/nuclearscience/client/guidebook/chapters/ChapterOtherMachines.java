@@ -1,243 +1,26 @@
 package nuclearscience.client.guidebook.chapters;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import electrodynamics.client.guidebook.utils.ImageWrapperObject;
-import electrodynamics.client.guidebook.utils.ItemWrapperObject;
-import electrodynamics.client.guidebook.utils.TextWrapperObject;
+import electrodynamics.client.guidebook.ScreenGuidebook;
 import electrodynamics.client.guidebook.utils.components.Chapter;
-import electrodynamics.client.guidebook.utils.components.Page;
-import electrodynamics.prefab.utilities.ItemUtils;
+import electrodynamics.client.guidebook.utils.components.Module;
+import electrodynamics.client.guidebook.utils.pagedata.ImageWrapperObject;
+import electrodynamics.client.guidebook.utils.pagedata.ItemWrapperObject;
+import electrodynamics.client.guidebook.utils.pagedata.TextWrapperObject;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
 import nuclearscience.References;
 import nuclearscience.prefab.utils.TextUtils;
 import nuclearscience.registers.NuclearScienceBlocks;
 
 public class ChapterOtherMachines extends Chapter {
 
-	private static final ItemWrapperObject LOGO = new ItemWrapperObject(17, 60, 2.0F, ItemUtils.fromBlock(NuclearScienceBlocks.blockAtomicAssembler));
+	private static final ItemWrapperObject LOGO = new ItemWrapperObject(7, 10, 2.0F, 32, 32, NuclearScienceBlocks.blockAtomicAssembler.asItem());
 
-	@Override
-	protected List<Page> genPages() {
-		List<Page> pages = new ArrayList<>();
-
-		pages.add(new Page(new TextWrapperObject[] {
-				//
-				new TextWrapperObject(45, 53, 4210752, TextUtils.guidebook("chapter.othermachines.radiogentitle").withStyle(ChatFormatting.UNDERLINE)),
-				//
-				new TextWrapperObject(10, 80, 4210752, TextUtils.guidebook("chapter.othermachines.p1l1")),
-				//
-				new TextWrapperObject(10, 90, 4210752, TextUtils.guidebook("chapter.othermachines.p1l2")),
-				//
-				new TextWrapperObject(10, 100, 4210752, TextUtils.guidebook("chapter.othermachines.p1l3")),
-				//
-				new TextWrapperObject(10, 110, 4210752, TextUtils.guidebook("chapter.othermachines.p1l4")),
-				//
-				new TextWrapperObject(10, 120, 4210752, TextUtils.guidebook("chapter.othermachines.p1l5")),
-				//
-				new TextWrapperObject(10, 130, 4210752, TextUtils.guidebook("chapter.othermachines.p1l6")),
-				//
-				new TextWrapperObject(10, 140, 4210752, TextUtils.guidebook("chapter.othermachines.p1l7")),
-				//
-				new TextWrapperObject(10, 150, 4210752, TextUtils.guidebook("chapter.othermachines.p1l8")),
-				//
-				new TextWrapperObject(10, 160, 4210752, TextUtils.guidebook("chapter.othermachines.p1l9")),
-				//
-				new TextWrapperObject(10, 170, 4210752, TextUtils.guidebook("chapter.othermachines.p1l10")),
-				//
-				new TextWrapperObject(10, 180, 4210752, TextUtils.guidebook("chapter.othermachines.p1l11")) },
-				new ItemWrapperObject[] {
-						//
-						new ItemWrapperObject(17, 50, 2.0F, ItemUtils.fromBlock(NuclearScienceBlocks.blockRadioisotopeGenerator)) }));
-
-		pages.add(new Page(new TextWrapperObject[] {
-				//
-				new TextWrapperObject(45, 53, 4210752, TextUtils.guidebook("chapter.othermachines.gascenttitle").withStyle(ChatFormatting.UNDERLINE)),
-				//
-				new TextWrapperObject(10, 80, 4210752, TextUtils.guidebook("chapter.othermachines.p2l1")),
-				//
-				new TextWrapperObject(10, 90, 4210752, TextUtils.guidebook("chapter.othermachines.p2l2")),
-				//
-				new TextWrapperObject(10, 100, 4210752, TextUtils.guidebook("chapter.othermachines.p2l3")),
-				//
-				new TextWrapperObject(10, 110, 4210752, TextUtils.guidebook("chapter.othermachines.p2l4")),
-				//
-				new TextWrapperObject(10, 120, 4210752, TextUtils.guidebook("chapter.othermachines.p2l5")),
-				//
-				new TextWrapperObject(10, 130, 4210752, TextUtils.guidebook("chapter.othermachines.p2l6")),
-				//
-				new TextWrapperObject(10, 140, 4210752, TextUtils.guidebook("chapter.othermachines.p2l7")),
-				//
-				new TextWrapperObject(10, 150, 4210752, TextUtils.guidebook("chapter.othermachines.p2l8")),
-				//
-				new TextWrapperObject(10, 160, 4210752, TextUtils.guidebook("chapter.othermachines.p2l9")),
-				//
-				new TextWrapperObject(10, 170, 4210752, TextUtils.guidebook("chapter.othermachines.p2l10")),
-				//
-				new TextWrapperObject(10, 180, 4210752, TextUtils.guidebook("chapter.othermachines.p2l11")) },
-				new ItemWrapperObject[] {
-						//
-						new ItemWrapperObject(17, 50, 2.0F, ItemUtils.fromBlock(NuclearScienceBlocks.blockGasCentrifuge)) }));
-
-		pages.add(new Page(new TextWrapperObject[] { new TextWrapperObject(10, 40, 4210752, TextUtils.guidebook("chapter.othermachines.p3l1")),
-				//
-				new TextWrapperObject(10, 50, 4210752, TextUtils.guidebook("chapter.othermachines.p3l2")),
-				//
-				new TextWrapperObject(10, 60, 4210752, TextUtils.guidebook("chapter.othermachines.p3l3")),
-				//
-				new TextWrapperObject(10, 70, 4210752, TextUtils.guidebook("chapter.othermachines.p3l4")),
-				//
-				new TextWrapperObject(10, 80, 4210752, TextUtils.guidebook("chapter.othermachines.p3l5")),
-				//
-				new TextWrapperObject(10, 90, 4210752, TextUtils.guidebook("chapter.othermachines.p3l6")),
-				//
-				new TextWrapperObject(10, 100, 4210752, TextUtils.guidebook("chapter.othermachines.p3l7")),
-				//
-				new TextWrapperObject(10, 110, 4210752, TextUtils.guidebook("chapter.othermachines.p3l8")),
-				//
-				new TextWrapperObject(10, 120, 4210752, TextUtils.guidebook("chapter.othermachines.p3l9")),
-				//
-				new TextWrapperObject(10, 130, 4210752, TextUtils.guidebook("chapter.othermachines.p3l10")),
-				//
-				new TextWrapperObject(10, 140, 4210752, TextUtils.guidebook("chapter.othermachines.p3l11")),
-				//
-				new TextWrapperObject(10, 150, 4210752, TextUtils.guidebook("chapter.othermachines.p3l12")),
-				//
-				new TextWrapperObject(10, 160, 4210752, TextUtils.guidebook("chapter.othermachines.p3l13")),
-				//
-				new TextWrapperObject(10, 170, 4210752, TextUtils.guidebook("chapter.othermachines.p3l14")),
-				//
-				new TextWrapperObject(10, 180, 4210752, TextUtils.guidebook("chapter.othermachines.p3l15")), }));
-
-		pages.add(new Page(new ImageWrapperObject[] {
-				//
-				new ImageWrapperObject(12, 38, 0, 0, 150, 79, 150, 79, References.ID + ":textures/screen/guidebook/gascentrifuge1.png"),
-				//
-				new ImageWrapperObject(12, 117, 0, 0, 150, 79, 150, 79, References.ID + ":textures/screen/guidebook/gascentrifuge2.png") }));
-
-		pages.add(new Page(new TextWrapperObject[] {
-				//
-				new TextWrapperObject(45, 53, 4210752, TextUtils.guidebook("chapter.othermachines.quantumcaptitle").withStyle(ChatFormatting.UNDERLINE)),
-				//
-				new TextWrapperObject(10, 80, 4210752, TextUtils.guidebook("chapter.othermachines.p5l1")),
-				//
-				new TextWrapperObject(10, 90, 4210752, TextUtils.guidebook("chapter.othermachines.p5l2")),
-				//
-				new TextWrapperObject(10, 100, 4210752, TextUtils.guidebook("chapter.othermachines.p5l3")),
-				//
-				new TextWrapperObject(10, 110, 4210752, TextUtils.guidebook("chapter.othermachines.p5l4")),
-				//
-				new TextWrapperObject(10, 120, 4210752, TextUtils.guidebook("chapter.othermachines.p5l5")),
-				//
-				new TextWrapperObject(10, 130, 4210752, TextUtils.guidebook("chapter.othermachines.p5l6")),
-				//
-				new TextWrapperObject(10, 140, 4210752, TextUtils.guidebook("chapter.othermachines.p5l7")),
-				//
-				new TextWrapperObject(10, 150, 4210752, TextUtils.guidebook("chapter.othermachines.p5l8")),
-				//
-				new TextWrapperObject(10, 160, 4210752, TextUtils.guidebook("chapter.othermachines.p5l9")),
-				//
-				new TextWrapperObject(10, 170, 4210752, TextUtils.guidebook("chapter.othermachines.p5l10")),
-				//
-				new TextWrapperObject(10, 180, 4210752, TextUtils.guidebook("chapter.othermachines.p5l11")) },
-				new ItemWrapperObject[] {
-						//
-						new ItemWrapperObject(17, 50, 2.0F, ItemUtils.fromBlock(NuclearScienceBlocks.blockQuantumCapacitor)) }));
-
-		pages.add(new Page(new TextWrapperObject[] {
-				//
-				new TextWrapperObject(45, 53, 4210752, TextUtils.guidebook("chapter.othermachines.teleportertitle").withStyle(ChatFormatting.UNDERLINE)),
-				//
-				new TextWrapperObject(10, 80, 4210752, TextUtils.guidebook("chapter.othermachines.p6l1")),
-				//
-				new TextWrapperObject(10, 90, 4210752, TextUtils.guidebook("chapter.othermachines.p6l2")),
-				//
-				new TextWrapperObject(10, 100, 4210752, TextUtils.guidebook("chapter.othermachines.p6l3")),
-				//
-				new TextWrapperObject(10, 110, 4210752, TextUtils.guidebook("chapter.othermachines.p6l4")),
-				//
-				new TextWrapperObject(10, 120, 4210752, TextUtils.guidebook("chapter.othermachines.p6l5")),
-				//
-				new TextWrapperObject(10, 130, 4210752, TextUtils.guidebook("chapter.othermachines.p6l6")),
-				//
-				new TextWrapperObject(10, 140, 4210752, TextUtils.guidebook("chapter.othermachines.p6l7")),
-				//
-				new TextWrapperObject(10, 150, 4210752, TextUtils.guidebook("chapter.othermachines.p6l8")),
-				//
-				new TextWrapperObject(10, 160, 4210752, TextUtils.guidebook("chapter.othermachines.p6l9")),
-				//
-				new TextWrapperObject(10, 170, 4210752, TextUtils.guidebook("chapter.othermachines.p6l10")),
-				//
-				new TextWrapperObject(10, 180, 4210752, TextUtils.guidebook("chapter.othermachines.p6l11")) },
-				new ItemWrapperObject[] {
-						//
-						new ItemWrapperObject(17, 50, 2.0F, ItemUtils.fromBlock(NuclearScienceBlocks.blockTeleporter)) }));
-
-		pages.add(new Page(new TextWrapperObject[] { new TextWrapperObject(10, 40, 4210752, TextUtils.guidebook("chapter.othermachines.p7l1")),
-				//
-				new TextWrapperObject(10, 50, 4210752, TextUtils.guidebook("chapter.othermachines.p7l2")),
-				//
-				new TextWrapperObject(10, 60, 4210752, TextUtils.guidebook("chapter.othermachines.p7l3")),
-				//
-				new TextWrapperObject(10, 70, 4210752, TextUtils.guidebook("chapter.othermachines.p7l4")),
-				//
-				new TextWrapperObject(10, 80, 4210752, TextUtils.guidebook("chapter.othermachines.p7l5")),
-				//
-				new TextWrapperObject(10, 90, 4210752, TextUtils.guidebook("chapter.othermachines.p7l6")),
-				//
-				new TextWrapperObject(10, 100, 4210752, TextUtils.guidebook("chapter.othermachines.p7l7")) }));
-
-		pages.add(new Page(new TextWrapperObject[] {
-				//
-				new TextWrapperObject(45, 53, 4210752, TextUtils.guidebook("chapter.othermachines.atomicasstitle").withStyle(ChatFormatting.UNDERLINE)),
-				//
-				new TextWrapperObject(10, 80, 4210752, TextUtils.guidebook("chapter.othermachines.p8l1")),
-				//
-				new TextWrapperObject(10, 90, 4210752, TextUtils.guidebook("chapter.othermachines.p8l2")),
-				//
-				new TextWrapperObject(10, 100, 4210752, TextUtils.guidebook("chapter.othermachines.p8l3")),
-				//
-				new TextWrapperObject(10, 110, 4210752, TextUtils.guidebook("chapter.othermachines.p8l4")),
-				//
-				new TextWrapperObject(10, 120, 4210752, TextUtils.guidebook("chapter.othermachines.p8l5")),
-				//
-				new TextWrapperObject(10, 130, 4210752, TextUtils.guidebook("chapter.othermachines.p8l6")),
-				//
-				new TextWrapperObject(10, 140, 4210752, TextUtils.guidebook("chapter.othermachines.p8l7")),
-				//
-				new TextWrapperObject(10, 150, 4210752, TextUtils.guidebook("chapter.othermachines.p8l8")),
-				//
-				new TextWrapperObject(10, 160, 4210752, TextUtils.guidebook("chapter.othermachines.p8l9")),
-				//
-				new TextWrapperObject(10, 170, 4210752, TextUtils.guidebook("chapter.othermachines.p8l10")),
-				//
-				new TextWrapperObject(10, 180, 4210752, TextUtils.guidebook("chapter.othermachines.p8l11")) },
-				new ItemWrapperObject[] {
-						//
-						new ItemWrapperObject(17, 50, 2.0F, ItemUtils.fromBlock(NuclearScienceBlocks.blockAtomicAssembler)) }));
-
-		pages.add(new Page(new ImageWrapperObject[] {
-				//
-				new ImageWrapperObject(12, 115, 0, 0, 150, 79, 150, 79, References.ID + ":textures/screen/guidebook/atomicassembler1.png") },
-				new TextWrapperObject[] { new TextWrapperObject(10, 40, 4210752, TextUtils.guidebook("chapter.othermachines.p9l1")),
-						//
-						new TextWrapperObject(10, 50, 4210752, TextUtils.guidebook("chapter.othermachines.p9l2")),
-						//
-						new TextWrapperObject(10, 60, 4210752, TextUtils.guidebook("chapter.othermachines.p9l3")),
-						//
-						new TextWrapperObject(10, 70, 4210752, TextUtils.guidebook("chapter.othermachines.p9l4")),
-						//
-						new TextWrapperObject(10, 80, 4210752, TextUtils.guidebook("chapter.othermachines.p9l5")),
-						//
-						new TextWrapperObject(10, 90, 4210752, TextUtils.guidebook("chapter.othermachines.p9l6")),
-						//
-						new TextWrapperObject(10, 100, 4210752, TextUtils.guidebook("chapter.othermachines.p9l7")), }));
-
-		return pages;
+	public ChapterOtherMachines(Module module) {
+		super(module);
 	}
-
+	
 	@Override
 	public ItemWrapperObject getLogo() {
 		return LOGO;
@@ -246,6 +29,29 @@ public class ChapterOtherMachines extends Chapter {
 	@Override
 	public MutableComponent getTitle() {
 		return TextUtils.guidebook("chapter.othermachines");
+	}
+
+	@Override
+	public void addData() {
+		
+		//QUantum Capacitor
+		pageData.add(new TextWrapperObject(NuclearScienceBlocks.blockQuantumCapacitor.asItem().getDescription().copy().withStyle(ChatFormatting.BOLD)).setCentered().setSeparateStart());
+		pageData.add(new ItemWrapperObject(7 + ScreenGuidebook.TEXT_WIDTH / 2 - 16, 5, 2.0F, 32, 30, NuclearScienceBlocks.blockQuantumCapacitor.asItem()));
+		pageData.add(new TextWrapperObject(TextUtils.guidebook("chapter.othermachines.quantumcapacitor1")).setIndentions(1).setSeparateStart());
+		
+		//Teleporter
+		pageData.add(new TextWrapperObject(NuclearScienceBlocks.blockTeleporter.asItem().getDescription().copy().withStyle(ChatFormatting.BOLD)).setCentered().setNewPage());
+		pageData.add(new ItemWrapperObject(7 + ScreenGuidebook.TEXT_WIDTH / 2 - 16, 5, 2.0F, 32, 30, NuclearScienceBlocks.blockTeleporter.asItem()));
+		pageData.add(new TextWrapperObject(TextUtils.guidebook("chapter.othermachines.teleporter1")).setIndentions(1).setSeparateStart());
+		pageData.add(new TextWrapperObject(TextUtils.guidebook("chapter.othermachines.teleporter2")).setIndentions(1).setSeparateStart());
+		
+		//Atomic Assembler
+		pageData.add(new TextWrapperObject(NuclearScienceBlocks.blockAtomicAssembler.asItem().getDescription().copy().withStyle(ChatFormatting.BOLD)).setCentered().setNewPage());
+		pageData.add(new ItemWrapperObject(7 + ScreenGuidebook.TEXT_WIDTH / 2 - 16, 5, 2.0F, 32, 30, NuclearScienceBlocks.blockAtomicAssembler.asItem()));
+		pageData.add(new TextWrapperObject(TextUtils.guidebook("chapter.othermachines.atomicassembler1")).setIndentions(1).setSeparateStart());
+		pageData.add(new TextWrapperObject(TextUtils.guidebook("chapter.othermachines.atomicassembler2")).setIndentions(1).setSeparateStart());
+		pageData.add(new ImageWrapperObject(0, 0, 0, 0, 150, 79, 150, 79, new ResourceLocation(References.ID, "textures/screen/guidebook/atomicassembler1.png")));
+		pageData.add(new TextWrapperObject(TextUtils.guidebook("chapter.othermachines.atomicassembler3")).setSeparateStart());
 	}
 
 }

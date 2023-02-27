@@ -27,10 +27,20 @@ public class BlockControlRodAssembly extends GenericMachineBlock {
 	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
 		BlockEntity tile = worldIn.getBlockEntity(pos);
 		if (tile instanceof TileControlRodAssembly assembly) {
-			assembly.insertion.set(assembly.insertion.get() + 10);
-			if (assembly.insertion.get() > 100) {
-				assembly.insertion.set(0);
+			
+			if(player.isShiftKeyDown()) {
+				assembly.insertion.set(assembly.insertion.get() - 10);
+				if (assembly.insertion.get() < 0) {
+					assembly.insertion.set(100);
+				}
+			} else {
+				assembly.insertion.set(assembly.insertion.get() + 10);
+				if (assembly.insertion.get() > 100) {
+					assembly.insertion.set(0);
+				}
 			}
+			
+			
 		}
 		return super.use(state, worldIn, pos, player, handIn, hit);
 	}

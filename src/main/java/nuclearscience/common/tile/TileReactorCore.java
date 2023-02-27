@@ -15,6 +15,7 @@ import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
+import electrodynamics.prefab.tile.components.type.ComponentInventory.InventoryBuilder;
 import electrodynamics.prefab.utilities.object.Location;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -71,7 +72,7 @@ public class TileReactorCore extends GenericTile {
 		addComponent(new ComponentDirection());
 		addComponent(new ComponentTickable().tickCommon(this::tickCommon).tickServer(this::tickServer));
 		addComponent(new ComponentPacketHandler());
-		addComponent(new ComponentInventory(this).inputs(5).outputs(1).size(6).faceSlots(Direction.UP, 0, 1, 2, 3, 4).faceSlots(Direction.DOWN, 5));
+		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().inputs(5).outputs(1)).faceSlots(Direction.UP, 0, 1, 2, 3, 4).faceSlots(Direction.DOWN, 5));
 		addComponent(new ComponentContainerProvider("container.reactorcore").createMenu((id, player) -> new ContainerReactorCore(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 	}
 

@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import electrodynamics.prefab.screen.GenericScreen;
 import electrodynamics.prefab.screen.component.ScreenComponentElectricInfo;
-import electrodynamics.prefab.screen.component.ScreenComponentFluid;
+import electrodynamics.prefab.screen.component.ScreenComponentFluidInput;
 import electrodynamics.prefab.screen.component.utils.AbstractScreenComponentInfo;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
@@ -22,7 +22,7 @@ public class ScreenGasCentrifuge extends GenericScreen<ContainerGasCentrifuge> {
 	public ScreenGasCentrifuge(ContainerGasCentrifuge container, Inventory playerInventory, Component title) {
 		super(container, playerInventory, title);
 
-		components.add(new ScreenComponentFluid(() -> {
+		components.add(new ScreenComponentFluidInput(() -> {
 			TileGasCentrifuge boiler = container.getHostFromIntArray();
 			if (boiler != null) {
 				return boiler.<ComponentFluidHandlerMulti>getComponent(ComponentType.FluidHandler).getInputTanks()[0];
