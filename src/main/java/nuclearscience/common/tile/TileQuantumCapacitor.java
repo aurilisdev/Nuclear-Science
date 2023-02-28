@@ -27,6 +27,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 import nuclearscience.common.inventory.container.ContainerQuantumCapacitor;
 import nuclearscience.common.world.QuantumCapacitorData;
 import nuclearscience.registers.NuclearScienceBlockTypes;
+import org.jetbrains.annotations.NotNull;
 
 public class TileQuantumCapacitor extends GenericTile implements IEnergyStorage {
 	public static final double DEFAULT_MAX_JOULES = Double.MAX_VALUE;
@@ -75,7 +76,7 @@ public class TileQuantumCapacitor extends GenericTile implements IEnergyStorage 
 	}
 
 	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction facing) {
+	public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> capability, Direction facing) {
 		if (capability == ForgeCapabilities.ENERGY) {
 			lastDir = facing;
 			return (LazyOptional<T>) LazyOptional.of(() -> this);

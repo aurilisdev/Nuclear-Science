@@ -20,6 +20,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import nuclearscience.common.item.ItemFrequencyCard;
 import nuclearscience.registers.NuclearScienceBlockTypes;
+import org.jetbrains.annotations.NotNull;
 
 public class TileTeleporter extends GenericTile {
 	public int xCoord;
@@ -68,7 +69,7 @@ public class TileTeleporter extends GenericTile {
 	}
 
 	@Override
-	public void saveAdditional(CompoundTag compound) { // TODO: Maybe sent information to the client?
+	public void saveAdditional(@NotNull CompoundTag compound) { // TODO: Maybe sent information to the client?
 		if (world != null) {
 			compound.putInt("xCoord", xCoord);
 			compound.putInt("yCoord", yCoord);
@@ -79,7 +80,7 @@ public class TileTeleporter extends GenericTile {
 	}
 
 	@Override
-	public void load(CompoundTag compound) {
+	public void load(@NotNull CompoundTag compound) {
 		super.load(compound);
 		if (compound.contains("world")) {
 			xCoord = compound.getInt("xCoord");

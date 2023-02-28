@@ -6,6 +6,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.registers.NuclearScienceBlockTypes;
+import org.jetbrains.annotations.NotNull;
 
 public class TileElectromagneticSwitch extends GenericTile {
 	public Direction lastDirection;
@@ -15,7 +16,7 @@ public class TileElectromagneticSwitch extends GenericTile {
 	}
 
 	@Override
-	public void saveAdditional(CompoundTag compound) {
+	public void saveAdditional(@NotNull CompoundTag compound) {
 		if (lastDirection != null) {
 			compound.putInt("lastDirectionOrdinal", lastDirection.ordinal());
 		}
@@ -23,7 +24,7 @@ public class TileElectromagneticSwitch extends GenericTile {
 	}
 
 	@Override
-	public void load(CompoundTag compound) {
+	public void load(@NotNull CompoundTag compound) {
 		super.load(compound);
 		if (compound.contains("lastDirectionOrdinal")) {
 			lastDirection = Direction.from3DDataValue(compound.getInt("lastDirectionOrdinal"));

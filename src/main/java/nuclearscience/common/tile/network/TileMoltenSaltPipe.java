@@ -9,6 +9,7 @@ import nuclearscience.common.block.connect.BlockMoltenSaltPipe;
 import nuclearscience.common.block.subtype.SubtypeMoltenSaltPipe;
 import nuclearscience.common.tile.generic.GenericTileMoltenSaltPipe;
 import nuclearscience.registers.NuclearScienceBlockTypes;
+import org.jetbrains.annotations.NotNull;
 
 public class TileMoltenSaltPipe extends GenericTileMoltenSaltPipe {
 	public Property<Double> transmit = property(new Property<>(PropertyType.Double, "transmit", 0.0));
@@ -28,13 +29,13 @@ public class TileMoltenSaltPipe extends GenericTileMoltenSaltPipe {
 	}
 
 	@Override
-	public void saveAdditional(CompoundTag compound) {
+	public void saveAdditional(@NotNull CompoundTag compound) {
 		compound.putInt("ord", getPipeType().ordinal());
 		super.saveAdditional(compound);
 	}
 
 	@Override
-	public void load(CompoundTag compound) {
+	public void load(@NotNull CompoundTag compound) {
 		super.load(compound);
 		pipe = SubtypeMoltenSaltPipe.values()[compound.getInt("ord")];
 	}
