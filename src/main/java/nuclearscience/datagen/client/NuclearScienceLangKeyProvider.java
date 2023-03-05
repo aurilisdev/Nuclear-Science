@@ -203,7 +203,7 @@ public class NuclearScienceLangKeyProvider extends ElectrodynamicsLangKeyProvide
 			addGuidebook("chapter.fissionreactor.l3", "To make steam, you will need a source of heat. This is where the Fission part of the name comes into play. The following fuel rods can be used to heat the reactor:");
 			addGuidebook("chapter.fissionreactor.maxtemp", "Max Temp: %s C");
 			addGuidebook("chapter.fissionreactor.cycles", "Cycles: %s");
-			addGuidebook("chapter.fissionreactor.l4", "The temperature associated with each fuel type is the temperature the reactor core will reach when 4 rods of that type are used. The Core has a temperature limit of 1417 C at which point it will begin overheating placing it at risk of melting down. The longer it runs in an overheated state, the greater "
+			addGuidebook("chapter.fissionreactor.l4", "The temperature associated with each fuel type is the temperature the reactor core will reach when 4 rods of that type are used. The Core has a temperature limit of 1417 C, at which point it going above said temperature will begin overheating the core and placing it at risk of melting down. The longer it runs in an overheated state, the greater "
 					+ "the risk of meltdown becomes. Also, the hotter a reactor runs, the quicker the fuel source degrades! When a fuel rod is expended, it will leave behind a Spent Fuel Rod which can be processed into other valuable materials.");
 			addGuidebook("chapter.fissionreactor.l5", "As you can see, some fuel types will actually cause the reactor to melt down if a set of 4 is used in their entirety. You have two methods of dealing with this. This first is to mix and match certain fuel types. However, this method is mostly a trial-by-error approach, and does not leave a large ammount " + "of room for error.");
 			addGuidebook("chapter.fissionreactor.l6", "The second and more reliable approach is to use a ");
@@ -220,7 +220,7 @@ public class NuclearScienceLangKeyProvider extends ElectrodynamicsLangKeyProvide
 			
 			addGuidebook("chapter.msreactor", "MS Reactor");
 			addGuidebook("chapter.msreactor.l1", "The Molton Salt Reactor is a far more refined version of the crude Fission Reactor, but is also far more expensive. Instead of being directly cooled by water, the reactor core is cooled by molten salt, which is then ran through a water-cooled heat sink network to itself be cooled. This has the added "
-					+ "benefit of not needing to have the reactor core submessed in water and allowiong you to be flexable with turbine placement.");
+					+ "benefit of not needing to have the reactor core submersed in water and allowiong you to be flexable with turbine placement.");
 			addGuidebook("chapter.msreactor.l2", "To build a Molten Salt Reactor, you will need 3 components:");
 			addGuidebook("chapter.msreactor.l3", "Place a Freeze Plug, and then place a Reactor Core on top of it. Facing the green port on the core, place a Molten Salt Supplier so that its green port faces the Core's.");
 
@@ -250,11 +250,11 @@ public class NuclearScienceLangKeyProvider extends ElectrodynamicsLangKeyProvide
 					+ "and its chance of being created increases the closer the resulting value gets to 0.999.");
 
 			addGuidebook("chapter.particleaccelerator.l3", "In order to collide particles, you will first need to create particles. For this, you will need a Particle Injector. The Injector uses matter to make a particle. Any block or item can be used to supply the matter. Place the matter in its respective slot in the Injector. To catch the result of the collision, "
-					+ "you will need to craft an Electromagnetic Cell and place it in its respective slot in the Injector as well. The Injector uses 20 MJ per particle at 960 V. This means you will need 40 MJ for each collision.");
+					+ "you will need to craft an Electromagnetic Cell and place it in its respective slot in the Injector as well. The Injector uses 200 MJ per particle at 960 V. This means you will need 400 MJ for each collision.");
 
 			addGuidebook("chapter.particleaccelerator.l4",
 					"While the Injector creates particles, it spawns them at very low speeds. In order to facilitate a collision, both particles will need to be moving at very high speeds. This can be accomplished by passing a Particle through an Electromagnetic Booster. If the Particle and Booster are facing the "
-							+ "same direction, the Booster will increase the Particle's speed by 0.33% for every tick the Particle is inside the Booster. If the Booster is a corner, it will increase the Particle's speed by 0.17% for every tick the Particle is inside the Booster. This means that the fasteer a Particle moves, "
+							+ "same direction, the Booster will increase the Particle's speed by 0.33% for every tick the Particle is inside the Booster. If the Booster is a corner, it will increase the Particle's speed by 0.17% for every tick the Particle is inside the Booster. This means that the faster a Particle moves, "
 							+ "the less effective each successive Booster becomes. It is important to note that moving particles emit radiation.");
 
 			addGuidebook("chapter.particleaccelerator.l5", "To reach 100% speed, it will take 200 Boosters in a straight line. However, this would require a very large amount of room. Fortunately, Boosters can be set up in a snake pattern to help compact them by converting a placed Booster to a corner variant. To make one a corner variant, stand on top "
@@ -280,7 +280,7 @@ public class NuclearScienceLangKeyProvider extends ElectrodynamicsLangKeyProvide
 					+ 
 					"same card to link the two teleporters.");
 
-			addGuidebook("chapter.othermachines.teleporter2", "After each teleport, there is 4 second cooldown applied to the sending end. Note, it is itself, so be careful! To wipe a Frequency Card, simply craft it in your inventory.");
+			addGuidebook("chapter.othermachines.teleporter2", "After each teleport, there is 4 second cooldown applied to the sending end. Note, it is possible to link a teleporter to itself, so be careful! To wipe a Frequency Card, simply craft it in your inventory.");
 
 			addGuidebook("chapter.othermachines.atomicassembler1", 
 					"The Atomic Assembler makes use of the strange properties of Dark Matter, and is able to duplicate items (we have made sure you can't dupe items with inventories, so no dupe bugs this time (: ). It requires 72 kW at 480 V to run. If it loses power, all progress is lost!");

@@ -36,6 +36,7 @@ public class ChapterRadiation extends Chapter {
 	@Override
 	public void addData() {
 		pageData.add(new TextWrapperObject(TextUtils.guidebook("chapter.radiation.l1")).setIndentions(1));
+		blankLine();
 		for(Item item : RadiationRegister.getRadioactiveItems()) {
 			pageData.add(new TextWrapperObject(item.getDescription()).setSeparateStart());
 			pageData.add(new TextWrapperObject(TextUtils.guidebook("chapter.radiation.radrating", RadiationRegister.get(item).getRadiationStrength())).setSeparateStart().setIndentions(1));
