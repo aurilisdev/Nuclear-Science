@@ -36,6 +36,10 @@ public class BlockTurbine extends GenericEntityBlockWaterloggable {
 
 	@Override
 	public void onRotate(ItemStack stack, BlockPos pos, Player player) {
+		super.onRotate(stack, pos, player);
+		if(player.level.isClientSide()) {
+			return;
+		}
 		TileTurbine turbine = (TileTurbine) player.level.getBlockEntity(pos);
 		if (turbine != null) {
 			if (turbine.isCore.get()) {
@@ -48,19 +52,18 @@ public class BlockTurbine extends GenericEntityBlockWaterloggable {
 
 	@Override
 	public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-		if (state.getBlock() != newState.getBlock()) {
+		if (state.getBlock() != newState.getBlock() && !worldIn.isClientSide) {
 			TileTurbine turbine = (TileTurbine) worldIn.getBlockEntity(pos);
 			if (turbine != null) {
 				turbine.deconstructStructure();
 			}
-			super.onRemove(state, worldIn, pos, newState, isMoving);
 		}
+		super.onRemove(state, worldIn, pos, newState, isMoving);
 	}
 
 	@Override
 	public RenderShape getRenderShape(BlockState state) {
-		super.getRenderShape(state);
-		if (state.getValue(RENDER) != Boolean.TRUE) {
+		if (!state.getValue(RENDER)) {
 			return RenderShape.INVISIBLE;
 		}
 		return super.getRenderShape(state);
@@ -75,7 +78,9 @@ public class BlockTurbine extends GenericEntityBlockWaterloggable {
 	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
 		if (worldIn.isClientSide) {
 			return InteractionResult.SUCCESS;
-		} else if (!(player.getItemInHand(handIn).getItem() instanceof IWrenchItem)) {
+		} 
+		
+		if(!(player.getItemInHand(handIn).getItem() instanceof IWrenchItem)) {
 			return InteractionResult.CONSUME;
 		}
 		return InteractionResult.FAIL;
