@@ -33,10 +33,10 @@ public class TileTurbine extends GenericTile implements ITickableSound {
 	public Property<Boolean> hasCore = property(new Property<>(PropertyType.Boolean, "hasCore", false));
 	public Property<Boolean> isCore = property(new Property<>(PropertyType.Boolean, "isCore", false));
 	public Property<BlockPos> coreLocation = property(new Property<>(PropertyType.BlockPos, "coreLocation", TileQuarry.OUT_OF_REACH));
+	public Property<Integer> currentVoltage = property(new Property<>(PropertyType.Integer, "turbinecurvoltage", 0));
+	public Property<Integer> steam = property(new Property<>(PropertyType.Integer, "steam", 0));
+	public Property<Integer> wait = property(new Property<>(PropertyType.Integer, "wait", 30));
 	protected CachedTileOutput output;
-	protected int currentVoltage = 0;
-	protected int steam;
-	protected int wait = 30;
 
 	private boolean isSoundPlaying = false;
 
@@ -96,7 +96,7 @@ public class TileTurbine extends GenericTile implements ITickableSound {
 			}
 			isCore.set(false);
 			hasCore.set(false);
-			coreLocation.set(BlockPos.ZERO);
+			coreLocation.set(TileQuarry.OUT_OF_REACH);
 			BlockState state = getBlockState();
 			if (state.hasProperty(BlockTurbine.RENDER)) {
 				level.setBlockAndUpdate(worldPosition, getBlockState().setValue(BlockTurbine.RENDER, true));
@@ -116,47 +116,46 @@ public class TileTurbine extends GenericTile implements ITickableSound {
 	}
 
 	public void addSteam(int steam, int temp) {
-		this.steam = Math.min(MAX_STEAM * (isCore.get() ? 9 : 1), this.steam + steam);
+		this.steam.set(Math.min(MAX_STEAM * (isCore.get() ? 9 : 1), this.steam.get() + steam));
 		if (temp < 4300) {
-			currentVoltage = 120;
+			currentVoltage.set(120);
 		} else if (temp < 6000) {
-			currentVoltage = 240;
+			currentVoltage.set(240);
 		} else {
-			currentVoltage = 480;
+			currentVoltage.set(480);
 		}
 		if (!isCore.get() && hasCore.get()) {
 			BlockEntity core = level.getBlockEntity(coreLocation.get());
 			if (core instanceof TileTurbine turbine && ((TileTurbine) core).isCore.get()) {
-				turbine.addSteam(this.steam, temp);
-				this.steam = 0;
+				turbine.addSteam(this.steam.get(), temp);
+				this.steam.set(0);
 			}
 		}
 	}
 
 	public void tickServer(ComponentTickable tickable) {
-		this.<ComponentElectrodynamic>getComponent(ComponentType.Electrodynamic).voltage(currentVoltage);
+		this.<ComponentElectrodynamic>getComponent(ComponentType.Electrodynamic).voltage(currentVoltage.get());
 		if (output == null) {
 			output = new CachedTileOutput(level, worldPosition.relative(Direction.UP));
 		}
-		spinSpeed.set(currentVoltage / 120);
+		spinSpeed.set(currentVoltage.get() / 120);
 		output.update(worldPosition.relative(Direction.UP));
 		if (hasCore.get() && !isCore.get()) {
-			currentVoltage = 0;
+			currentVoltage.set(0);
 			return;
 		}
-		if (steam > 0 && currentVoltage > 0) {
-			wait = 30;
+		if (steam.get() > 0 && currentVoltage.get() > 0) {
+			wait.set(30);
 			if (output.valid()) {
-				TransferPack transfer = TransferPack.joulesVoltage(steam * (hasCore.get() ? 1.111 : 1), currentVoltage);
+				TransferPack transfer = TransferPack.joulesVoltage(steam.get() * (hasCore.get() ? 1.111 : 1), currentVoltage.get());
 				ElectricityUtils.receivePower(output.getSafe(), Direction.DOWN, transfer, false);
-				steam = Math.max(steam - Math.max(75, steam), 0);
-			}
+				steam.set(Math.max(steam.get() - Math.max(75, steam.get()), 0));			}
 		} else {
-			if (wait <= 0) {
-				currentVoltage = 0;
-				wait = 30;
+			if (wait.get() <= 0) {
+				currentVoltage.set(0);
+				wait.set(30);
 			}
-			wait--;
+			wait.set(wait.get() - 1);
 		}
 
 	}
