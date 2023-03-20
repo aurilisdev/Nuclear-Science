@@ -10,6 +10,7 @@ import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import electrodynamics.prefab.utilities.ElectricityUtils;
 import electrodynamics.prefab.utilities.object.CachedTileOutput;
+import electrodynamics.prefab.utilities.object.Location;
 import electrodynamics.prefab.utilities.object.TransferPack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -17,12 +18,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.api.radiation.IRadioactiveObject;
 import nuclearscience.api.radiation.RadiationRegister;
+import nuclearscience.api.radiation.RadiationSystem;
 import nuclearscience.common.inventory.container.ContainerRadioisotopeGenerator;
 import nuclearscience.common.settings.Constants;
 import nuclearscience.registers.NuclearScienceBlockTypes;
 
 public class TileRadioisotopeGenerator extends GenericTile {
 
+	public static final double RAD_RADIUS = 10;
+	
 	protected CachedTileOutput output1;
 	protected CachedTileOutput output2;
 
@@ -49,6 +53,9 @@ public class TileRadioisotopeGenerator extends GenericTile {
 		ItemStack in = this.<ComponentInventory>getComponent(ComponentType.Inventory).getItem(0);
 		IRadioactiveObject rad = RadiationRegister.get(in.getItem());
 		double currentOutput = in.getCount() * Constants.RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER * rad.getRadiationStrength();
+		
+		RadiationSystem.emitRadiationFromLocation(getLevel(), new Location(getBlockPos()), ((double) in.getCount() / (double) in.getMaxStackSize()) * RAD_RADIUS, rad.getRadiationStrength());
+		
 		if (currentOutput > 0) {
 			TransferPack transfer = TransferPack.ampsVoltage(currentOutput / (Constants.RADIOISOTOPEGENERATOR_VOLTAGE * 2.0), Constants.RADIOISOTOPEGENERATOR_VOLTAGE);
 			if (output1.valid()) {
@@ -59,4 +66,17 @@ public class TileRadioisotopeGenerator extends GenericTile {
 			}
 		}
 	}
+	
+	@Override
+	public int getComparatorSignal() {
+		
+		ItemStack stack = this.<ComponentInventory>getComponent(ComponentType.Inventory).getItem(0);
+		
+		if(stack.isEmpty()) {
+			return 0;
+		}
+		
+		return (int) (((double) stack.getCount() / (double) stack.getMaxStackSize()) * 15.0);
+	}
+	
 }

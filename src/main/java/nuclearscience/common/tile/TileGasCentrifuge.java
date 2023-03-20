@@ -179,4 +179,9 @@ public class TileGasCentrifuge extends GenericTile implements ITickableSound {
 	public boolean shouldPlaySound() {
 		return spinSpeed.get() > 0;
 	}
+	
+	@Override
+	public int getComparatorSignal() {
+		return isRunning.get() ? 15 : 0;
+	}
 }

@@ -44,5 +44,10 @@ public class TileRadioactiveProcessor extends GenericTile {
 		}
 		return canProcess;
 	}
+	
+	@Override
+	public int getComparatorSignal() {
+		return this.<ComponentProcessor>getComponent(ComponentType.Processor).isActive() ? 15 : 0;
+	}
 
 }

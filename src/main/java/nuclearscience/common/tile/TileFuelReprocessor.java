@@ -138,6 +138,11 @@ public class TileFuelReprocessor extends GenericTile implements ITickableSound {
 
 	@Override
 	public boolean shouldPlaySound() {
-		return getProcessor(0).operatingTicks.get() > 0;
+		return isProcessorActive();
+	}
+	
+	@Override
+	public int getComparatorSignal() {
+		return isProcessorActive() ? 15 : 0;
 	}
 }
