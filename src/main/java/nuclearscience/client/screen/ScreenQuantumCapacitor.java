@@ -15,7 +15,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import nuclearscience.common.inventory.container.ContainerQuantumCapacitor;
 import nuclearscience.common.packet.NetworkHandler;
-import nuclearscience.common.packet.PacketSetQuantumCapacitorData;
+import nuclearscience.common.packet.type.PacketSetQuantumCapacitorData;
 import nuclearscience.common.tile.TileQuantumCapacitor;
 import nuclearscience.prefab.utils.TextUtils;
 

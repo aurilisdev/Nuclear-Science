@@ -1,4 +1,4 @@
-package nuclearscience.common.packet;
+package nuclearscience.common.packet.type;
 
 import java.util.function.Supplier;
 
