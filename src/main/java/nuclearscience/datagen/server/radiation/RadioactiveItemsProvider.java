@@ -5,6 +5,7 @@ import java.nio.file.Path;
 
 import com.google.gson.JsonObject;
 
+import electrodynamics.common.tags.ElectrodynamicsTags;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
@@ -58,6 +59,15 @@ public class RadioactiveItemsProvider implements DataProvider {
 		addTag(NuclearScienceTags.Items.DUST_FISSILE, 2000, json);
 		addTag(NuclearScienceTags.Items.OXIDE_PLUTONIUM, 4000, json);
 		addTag(NuclearScienceTags.Items.DUST_THORIUM, 2000, json);
+		
+		addTag(ElectrodynamicsTags.Items.ORE_THORIUM, 500, json);
+		addTag(ElectrodynamicsTags.Items.ORE_URANIUM, 100, json);
+		
+		addTag(ElectrodynamicsTags.Items.RAW_ORE_THORIUM, 150, json);
+		addTag(ElectrodynamicsTags.Items.RAW_ORE_URANIUM, 50, json);
+		
+		addTag(ElectrodynamicsTags.Items.BLOCK_RAW_ORE_THORIUM, 500, json);
+		addTag(ElectrodynamicsTags.Items.BLOCK_RAW_ORE_URANIUM, 450, json);
 
 	}
 

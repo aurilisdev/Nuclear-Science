@@ -6,10 +6,16 @@
   "#forge:fuel_rods/plutonium": 2500.0,
   "#forge:fuel_rods/spent": 3500.0,
   "#forge:nuggets/polonium": 1500.0,
+  "#forge:ores/thorium": 500.0,
+  "#forge:ores/uranium": 100.0,
   "#forge:oxide/plutonium": 4000.0,
   "#forge:pellets/plutonium": 4500.0,
   "#forge:pellets/polonium": 2500.0,
   "#forge:pellets/uranium235": 1000.0,
   "#forge:pellets/uranium238": 500.0,
+  "#forge:raw_materials/thorium": 150.0,
+  "#forge:raw_materials/uranium": 50.0,
+  "#forge:storage_blocks/rawthorium": 500.0,
+  "#forge:storage_blocks/rawuranium": 450.0,
   "#forge:yellow_cake_uranium": 300.0
 }
