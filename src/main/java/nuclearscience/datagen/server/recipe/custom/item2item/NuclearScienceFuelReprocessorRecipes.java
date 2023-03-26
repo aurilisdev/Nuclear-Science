@@ -38,7 +38,7 @@ public class NuclearScienceFuelReprocessorRecipes extends AbstractRecipeGenerato
 				//
 				.addItemTagInput(NuclearScienceTags.Items.FUELROD_SPENT, 1)
 				//
-				.addItemBiproduct(new ProbableItem(NuclearScienceItems.ITEM_POLONIUM210_CHUNK.get(), 1, 0.5D))
+				.addItemBiproduct(new ProbableItem(new ItemStack(NuclearScienceItems.ITEM_POLONIUM210_CHUNK.get()), 0.5D))
 				//
 				.complete(consumer);
 
@@ -46,7 +46,7 @@ public class NuclearScienceFuelReprocessorRecipes extends AbstractRecipeGenerato
 				//
 				.addItemTagInput(NuclearScienceTags.Items.OXIDE_PLUTONIUM, 1)
 				//
-				.addItemBiproduct(new ProbableItem(NuclearScienceItems.ITEM_POLONIUM210_CHUNK.get(), 3, 1.0D))
+				.addItemBiproduct(new ProbableItem(new ItemStack(NuclearScienceItems.ITEM_POLONIUM210_CHUNK.get(), 3), 1.0D))
 				//
 				.complete(consumer);
 
@@ -54,7 +54,7 @@ public class NuclearScienceFuelReprocessorRecipes extends AbstractRecipeGenerato
 				//
 				.addItemStackInput(new ItemStack(NuclearScienceBlocks.blockMeltedReactor))
 				//
-				.addItemBiproduct(new ProbableItem(NuclearScienceItems.ITEM_PLUTONIUM239.get(), 1, 1.0D))
+				.addItemBiproduct(new ProbableItem(new ItemStack(NuclearScienceItems.ITEM_PLUTONIUM239.get()), 1.0D))
 				//
 				.complete(consumer);
 

@@ -14,6 +14,7 @@ import nuclearscience.datagen.server.NuclearScienceBlockTagsProvider;
 import nuclearscience.datagen.server.NuclearScienceFluidTagsProvider;
 import nuclearscience.datagen.server.NuclearScienceItemTagsProvider;
 import nuclearscience.datagen.server.NuclearScienceLootTablesProvider;
+import nuclearscience.datagen.server.radiation.RadioactiveItemsProvider;
 import nuclearscience.datagen.server.recipe.NuclearScienceRecipeProvider;
 
 @Mod.EventBusSubscriber(modid = References.ID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -31,6 +32,7 @@ public class DataGenerators {
 			generator.addProvider(true, new NuclearScienceFluidTagsProvider(generator, event.getExistingFileHelper()));
 			generator.addProvider(true, new NuclearScienceLootTablesProvider(generator));
 			generator.addProvider(true, new NuclearScienceRecipeProvider(generator));
+			generator.addProvider(true, new RadioactiveItemsProvider(generator));
 
 		}
 		if (event.includeClient()) {

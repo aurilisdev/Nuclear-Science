@@ -29,13 +29,13 @@ public class BlockControlRodAssembly extends GenericMachineBlock {
 		if (tile instanceof TileControlRodAssembly assembly) {
 			
 			if(player.isShiftKeyDown()) {
-				assembly.insertion.set(assembly.insertion.get() - 10);
+				assembly.insertion.set(assembly.insertion.get() - TileControlRodAssembly.EXTENSION_PER_CLICK);
 				if (assembly.insertion.get() < 0) {
-					assembly.insertion.set(100);
+					assembly.insertion.set(TileControlRodAssembly.MAX_EXTENSION);
 				}
 			} else {
-				assembly.insertion.set(assembly.insertion.get() + 10);
-				if (assembly.insertion.get() > 100) {
+				assembly.insertion.set(assembly.insertion.get() + TileControlRodAssembly.EXTENSION_PER_CLICK);
+				if (assembly.insertion.get() > TileControlRodAssembly.MAX_EXTENSION) {
 					assembly.insertion.set(0);
 				}
 			}

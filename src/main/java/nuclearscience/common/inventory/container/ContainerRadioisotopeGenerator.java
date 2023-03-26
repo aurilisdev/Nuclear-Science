@@ -27,7 +27,7 @@ public class ContainerRadioisotopeGenerator extends GenericContainerBlockEntity<
 		addSlot(new SlotRestricted(inv, nextIndex(), 25, 42) {
 			@Override
 			public boolean mayPlace(ItemStack stack) {
-				return RadiationRegister.get(stack.getItem()) != RadiationRegister.NULL;
+				return !RadiationRegister.get(stack.getItem()).isNull();
 			}
 		});
 	}
