@@ -41,7 +41,9 @@ public class NuclearScience {
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
 	public static void onClientSetup(FMLClientSetupEvent event) {
-		ClientRegister.setup();
+		event.enqueueWork(() -> {
+			ClientRegister.setup();
+		});
 	}
 
 	@SubscribeEvent
