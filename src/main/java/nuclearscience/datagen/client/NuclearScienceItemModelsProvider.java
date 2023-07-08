@@ -25,9 +25,12 @@ public class NuclearScienceItemModelsProvider extends ElectrodynamicsItemModelsP
 		layeredItem(NuclearScienceItems.ITEM_POLONIUM210_CHUNK, Parent.GENERATED, itemLoc("polonium210chunk"));
 		layeredItem(NuclearScienceItems.ITEM_LIFHT4PUF3, Parent.GENERATED, itemLoc("lifthf4uf4"));
 		layeredItem(NuclearScienceItems.ITEM_FLINAK, Parent.GENERATED, itemLoc("flinak"));
+		layeredItem(NuclearScienceItems.ITEM_ACTINIUM225, Parent.GENERATED, itemLoc("actinium225"));
 		layeredItem(NuclearScienceItems.ITEM_YELLOWCAKE, Parent.GENERATED, itemLoc("yellowcake"));
 		layeredItem(NuclearScienceItems.ITEM_FISSILEDUST, Parent.GENERATED, itemLoc("fissiledust"));
 		layeredItem(NuclearScienceItems.ITEM_PLUTONIUMOXIDE, Parent.GENERATED, itemLoc("plutoniumoxide"));
+		layeredItem(NuclearScienceItems.ITEM_ACTINIUMOXIDE, Parent.GENERATED, itemLoc("actiniumoxide"));
+		layeredItem(NuclearScienceItems.ITEM_FISSILE_SALT, Parent.GENERATED, itemLoc("fissilesalt"));
 		layeredItem(NuclearScienceItems.ITEM_THORIANITEDUST, Parent.GENERATED, itemLoc("thorianitedust"));
 
 		layeredItem(NuclearScienceItems.ITEM_CELLEMPTY, Parent.GENERATED, itemLoc("cellempty"));

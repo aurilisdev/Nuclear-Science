@@ -58,6 +58,14 @@ public class NuclearScienceFuelReprocessorRecipes extends AbstractRecipeGenerato
 				//
 				.complete(consumer);
 
+		newRecipe(new ItemStack(NuclearScienceItems.ITEM_ACTINIUMOXIDE.get()), 0.0F, FUELREPROCESSOR_REQUIRED_TICKS, FUELREPROCESSOR_USAGE_PER_TICK, "actinium_oxide")
+				//
+				.addItemTagInput(NuclearScienceTags.Items.SALT_FISSILE, 1)
+				//
+				.addItemBiproduct(new ProbableItem(new ItemStack(NuclearScienceItems.ITEM_POLONIUM210_CHUNK.get(), 3), 1.0D))
+				//
+				.complete(consumer);
+
 	}
 
 	public FinishedRecipeItemOutput newRecipe(ItemStack stack, float xp, int ticks, double usagePerTick, String name) {

@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.api.fusion.IElectromagnet;
+import nuclearscience.api.turbine.ISteamReceiver;
 import nuclearscience.common.settings.Constants;
 import nuclearscience.registers.NuclearScienceBlockTypes;
 import nuclearscience.registers.NuclearScienceBlocks;
@@ -20,7 +21,7 @@ public class TilePlasma extends GenericTile {
 
 	public TilePlasma(BlockPos pos, BlockState state) {
 		super(NuclearScienceBlockTypes.TILE_PLASMA.get(), pos, state);
-		addComponent(new ComponentTickable().tickServer(this::tickServer));
+		addComponent(new ComponentTickable(this).tickServer(this::tickServer));
 	}
 
 	protected void tickServer(ComponentTickable tickable) {
@@ -53,9 +54,9 @@ public class TilePlasma extends GenericTile {
 		if (ticksExisted > 1 && level.getBlockState(getBlockPos().relative(Direction.UP)).getBlock() instanceof IElectromagnet && level.getBlockState(getBlockPos().relative(Direction.UP, 2)).getBlock() == Blocks.WATER) {
 			if (output == null) {
 				output = new CachedTileOutput(level, getBlockPos().relative(Direction.UP, 3));
-			} else if (output.getSafe() instanceof TileTurbine) {
-				TileTurbine turbine = output.getSafe();
-				turbine.addSteam((int) (Constants.FUSIONREACTOR_MAXENERGYTARGET / (113.0 * 20.0)), Integer.MAX_VALUE);
+			} else if (output.getSafe() instanceof ISteamReceiver) {
+				ISteamReceiver turbine = output.getSafe();
+				turbine.receiveSteam(Constants.FUSIONREACTOR_MAXENERGYTARGET / (113.0 * 20.0), Double.MAX_VALUE);
 			}
 		}
 	}

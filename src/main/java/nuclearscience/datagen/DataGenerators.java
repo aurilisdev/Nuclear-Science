@@ -12,6 +12,7 @@ import nuclearscience.datagen.client.NuclearScienceLangKeyProvider;
 import nuclearscience.datagen.client.NuclearScienceSoundProvider;
 import nuclearscience.datagen.server.NuclearScienceBlockTagsProvider;
 import nuclearscience.datagen.server.NuclearScienceFluidTagsProvider;
+import nuclearscience.datagen.server.NuclearScienceGasTagsProvider;
 import nuclearscience.datagen.server.NuclearScienceItemTagsProvider;
 import nuclearscience.datagen.server.NuclearScienceLootTablesProvider;
 import nuclearscience.datagen.server.radiation.RadioactiveItemsProvider;
@@ -33,6 +34,7 @@ public class DataGenerators {
 			generator.addProvider(true, new NuclearScienceLootTablesProvider(generator));
 			generator.addProvider(true, new NuclearScienceRecipeProvider(generator));
 			generator.addProvider(true, new RadioactiveItemsProvider(generator));
+			generator.addProvider(true, new NuclearScienceGasTagsProvider(generator, event.getExistingFileHelper()));
 
 		}
 		if (event.includeClient()) {

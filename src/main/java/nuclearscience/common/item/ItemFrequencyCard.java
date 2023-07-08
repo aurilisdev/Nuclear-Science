@@ -13,7 +13,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import nuclearscience.common.tile.TileTeleporter;
-import nuclearscience.prefab.utils.TextUtils;
+import nuclearscience.prefab.utils.NuclearTextUtils;
 
 public class ItemFrequencyCard extends Item {
 
@@ -31,7 +31,7 @@ public class ItemFrequencyCard extends Item {
 				tel.yCoord = nbt.getInt("yCoord");
 				tel.zCoord = nbt.getInt("zCoord");
 				tel.world = nbt.getString("world");
-				context.getPlayer().sendSystemMessage(TextUtils.tooltip("frequencycard.linked", tel.world + ", " + tel.xCoord + ", " + tel.yCoord + ", " + tel.zCoord));
+				context.getPlayer().sendSystemMessage(NuclearTextUtils.tooltip("frequencycard.linked", tel.world + ", " + tel.xCoord + ", " + tel.yCoord + ", " + tel.zCoord));
 			} else {
 				nbt.putInt("xCoord", ent.getBlockPos().getX());
 				nbt.putInt("yCoord", ent.getBlockPos().getY());
@@ -60,9 +60,9 @@ public class ItemFrequencyCard extends Item {
 			int y = nbt.getInt("yCoord");
 			int z = nbt.getInt("zCoord");
 			String world = nbt.getString("world");
-			tooltip.add(TextUtils.tooltip("frequencycard.linked", world + ", " + x + ", " + y + ", " + z));
+			tooltip.add(NuclearTextUtils.tooltip("frequencycard.linked", world + ", " + x + ", " + y + ", " + z));
 		} else {
-			tooltip.add(TextUtils.tooltip("frequencycard.notag"));
+			tooltip.add(NuclearTextUtils.tooltip("frequencycard.notag"));
 		}
 	}
 }

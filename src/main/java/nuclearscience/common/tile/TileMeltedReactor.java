@@ -22,7 +22,7 @@ public class TileMeltedReactor extends GenericTile {
 
 	public TileMeltedReactor(BlockPos pos, BlockState state) {
 		super(NuclearScienceBlockTypes.TILE_MELTEDREACTOR.get(), pos, state);
-		addComponent(new ComponentTickable().tickServer(this::tickServer));
+		addComponent(new ComponentTickable(this).tickServer(this::tickServer));
 	}
 
 	protected void tickServer(ComponentTickable tickable) {

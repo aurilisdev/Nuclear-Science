@@ -7,8 +7,9 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import nuclearscience.common.recipe.categories.fluiditem2fluid.FluidItem2FluidRecipeTypes;
-import nuclearscience.common.recipe.categories.fluiditem2fluid.specificmachines.NuclearBoilerRecipe;
+import nuclearscience.References;
+import nuclearscience.common.recipe.categories.fluiditem2gas.FluidItem2GasRecipeTypes;
+import nuclearscience.common.recipe.categories.fluiditem2gas.specificmachines.NuclearBoilerRecipe;
 import nuclearscience.common.recipe.categories.fluiditem2item.FluidItem2ItemRecipeTypes;
 import nuclearscience.common.recipe.categories.fluiditem2item.specificmachines.ChemicalExtractorRecipe;
 import nuclearscience.common.recipe.categories.fluiditem2item.specificmachines.MSRFuelPreProcessorRecipe;
@@ -20,8 +21,8 @@ import nuclearscience.common.recipe.categories.item2item.specificmachines.FuelRe
 public class NuclearScienceRecipeInit {
 
 	// Deferred Register
-	public static DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZER = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, nuclearscience.References.ID);
-	public static DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(Registry.RECIPE_TYPE.key(), nuclearscience.References.ID);
+	public static DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZER = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, References.ID);
+	public static DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(Registry.RECIPE_TYPE.key(), References.ID);
 
 	/* RECIPE TYPES */
 
@@ -29,7 +30,7 @@ public class NuclearScienceRecipeInit {
 	public static final RegistryObject<CustomRecipeType<FissionReactorRecipe>> FISSION_REACTOR_TYPE = RECIPE_TYPES.register(FissionReactorRecipe.RECIPE_GROUP, CustomRecipeType::new);
 	public static final RegistryObject<CustomRecipeType<FuelReprocessorRecipe>> FUEL_REPROCESSOR_TYPE = RECIPE_TYPES.register(FuelReprocessorRecipe.RECIPE_GROUP, CustomRecipeType::new);
 
-	// FLUIDITEM2FLUID
+	// FLUIDITEM2GAS
 	public static final RegistryObject<CustomRecipeType<NuclearBoilerRecipe>> NUCLEAR_BOILER_TYPE = RECIPE_TYPES.register(NuclearBoilerRecipe.RECIPE_GROUP, CustomRecipeType::new);
 
 	// FLUIDITEM2ITEM
@@ -43,8 +44,8 @@ public class NuclearScienceRecipeInit {
 	public static final RegistryObject<RecipeSerializer<?>> FISSION_REACTOR_SERIALIZER = RECIPE_SERIALIZER.register(FissionReactorRecipe.RECIPE_GROUP, () -> Item2ItemRecipeTypes.FISSION_REACTOR_JSON_SERIALIZER);
 	public static final RegistryObject<RecipeSerializer<?>> FUEL_REPROCESSOR_SERIALIZER = RECIPE_SERIALIZER.register(FuelReprocessorRecipe.RECIPE_GROUP, () -> Item2ItemRecipeTypes.FUEL_REPROCESSOR_JSON_SERIALIZER);
 
-	// FLUIDITEM2FLUID
-	public static final RegistryObject<RecipeSerializer<?>> NUCLEAR_BOILER_SERIALIZER = RECIPE_SERIALIZER.register(NuclearBoilerRecipe.RECIPE_GROUP, () -> FluidItem2FluidRecipeTypes.NUCLEAR_BOILER_JSON_SERIALIZER);
+	// FLUIDITEM2GAS
+	public static final RegistryObject<RecipeSerializer<?>> NUCLEAR_BOILER_SERIALIZER = RECIPE_SERIALIZER.register(NuclearBoilerRecipe.RECIPE_GROUP, () -> FluidItem2GasRecipeTypes.NUCLEAR_BOILER_JSON_SERIALIZER);
 
 	// FLUIDITEM2ITEM
 	public static final RegistryObject<RecipeSerializer<?>> CHEMICAL_EXTRACTOR_SERIALIZER = RECIPE_SERIALIZER.register(ChemicalExtractorRecipe.RECIPE_GROUP, () -> FluidItem2ItemRecipeTypes.CHEMICAL_EXTRACTOR_JSON_SERIALIZER);

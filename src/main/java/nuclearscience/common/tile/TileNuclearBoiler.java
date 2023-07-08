@@ -1,6 +1,9 @@
 package nuclearscience.common.tile;
 
 import electrodynamics.api.capability.ElectrodynamicsCapabilities;
+import electrodynamics.api.gas.GasAction;
+import electrodynamics.api.gas.GasStack;
+import electrodynamics.api.gas.GasTank;
 import electrodynamics.prefab.sound.SoundBarrierMethods;
 import electrodynamics.prefab.sound.utils.ITickableSound;
 import electrodynamics.prefab.tile.GenericTile;
@@ -9,6 +12,7 @@ import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
 import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
+import electrodynamics.prefab.tile.components.type.ComponentGasHandlerMulti;
 import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentInventory.InventoryBuilder;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
@@ -21,9 +25,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
 import nuclearscience.common.inventory.container.ContainerNuclearBoiler;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 import nuclearscience.registers.NuclearScienceBlockTypes;
@@ -31,20 +32,25 @@ import nuclearscience.registers.NuclearScienceSounds;
 
 public class TileNuclearBoiler extends GenericTile implements ITickableSound {
 
-	public static final int MAX_TANK_CAPACITY = 5000;
+	public static final int MAX_FLUID_TANK_CAPACITY = 5000;
+	
+	public static final double MAX_GAS_TANK_CAPACITY = 5000;
+	public static final double MAX_TEMPERATURE = 1000;
+	public static final int MAX_PRESSURE = 10;
 	
 	private boolean isSoundPlaying = false;
 
 	public TileNuclearBoiler(BlockPos pos, BlockState state) {
 		super(NuclearScienceBlockTypes.TILE_CHEMICALBOILER.get(), pos, state);
-		addComponent(new ComponentTickable().tickServer(this::tickServer).tickClient(this::tickClient));
-		addComponent(new ComponentDirection());
-		addComponent(new ComponentPacketHandler());
+		addComponent(new ComponentTickable(this).tickServer(this::tickServer).tickClient(this::tickClient));
+		addComponent(new ComponentDirection(this));
+		addComponent(new ComponentPacketHandler(this));
 		addComponent(new ComponentElectrodynamic(this).input(Direction.DOWN).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 2));
-		addComponent(new ComponentFluidHandlerMulti(this).setTanks(1, 1, new int[] { MAX_TANK_CAPACITY }, new int[] { MAX_TANK_CAPACITY }).setInputDirections(Direction.EAST).setOutputDirections(Direction.WEST).setRecipeType(NuclearScienceRecipeInit.NUCLEAR_BOILER_TYPE.get()));
-		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().processors(1, 1, 0, 0).bucketInputs(1).bucketOutputs(1).upgrades(3)).relativeSlotFaces(0, Direction.EAST, Direction.UP).relativeSlotFaces(1, Direction.DOWN).validUpgrades(ContainerNuclearBoiler.VALID_UPGRADES).valid(machineValidator()));
-		addComponent(new ComponentProcessor(this).canProcess(component -> component.outputToPipe().consumeBucket().dispenseBucket().canProcessFluidItem2FluidRecipe(component, NuclearScienceRecipeInit.NUCLEAR_BOILER_TYPE.get())).process(component -> component.processFluidItem2FluidRecipe(component)));
-		addComponent(new ComponentContainerProvider("container.nuclearboiler").createMenu((id, player) -> new ContainerNuclearBoiler(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
+		addComponent(new ComponentFluidHandlerMulti(this).setInputTanks(1, new int[] { MAX_FLUID_TANK_CAPACITY }).setInputDirections(Direction.EAST).setRecipeType(NuclearScienceRecipeInit.NUCLEAR_BOILER_TYPE.get()));
+		addComponent(new ComponentGasHandlerMulti(this).setOutputTanks(1, arr(MAX_GAS_TANK_CAPACITY), arr(MAX_TEMPERATURE), arr(MAX_PRESSURE)).setOutputDirections(Direction.WEST).setRecipeType(NuclearScienceRecipeInit.NUCLEAR_BOILER_TYPE.get()));
+		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().processors(1, 1, 0, 0).bucketInputs(1).gasOutputs(1).upgrades(3)).relativeSlotFaces(0, Direction.EAST, Direction.UP).relativeSlotFaces(1, Direction.DOWN).validUpgrades(ContainerNuclearBoiler.VALID_UPGRADES).valid(machineValidator()));
+		addComponent(new ComponentProcessor(this).canProcess(component -> component.outputToGasPipe().consumeBucket().dispenseGasCylinder().canProcessFluidItem2GasRecipe(component, NuclearScienceRecipeInit.NUCLEAR_BOILER_TYPE.get())).process(component -> component.processFluidItem2GasRecipe(component)));
+		addComponent(new ComponentContainerProvider("container.nuclearboiler", this).createMenu((id, player) -> new ContainerNuclearBoiler(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 	}
 
 	@Override
@@ -58,16 +64,16 @@ public class TileNuclearBoiler extends GenericTile implements ITickableSound {
 		Direction centrifugeDir = boilerComponentDir.getDirection().getCounterClockWise();
 		BlockEntity tile = world.getBlockEntity(getBlockPos().relative(centrifugeDir));
 		if (tile != null && tile instanceof TileGasCentrifuge centrifuge) {
-			ComponentFluidHandlerMulti centrifugeHandler = centrifuge.getComponent(ComponentType.FluidHandler);
+			ComponentGasHandlerMulti centrifugeHandler = centrifuge.getComponent(ComponentType.GasHandler);
 			if (centrifugeHandler != null) {
 				ComponentDirection centrifugeComponentDir = centrifuge.getComponent(ComponentType.Direction);
 				if (centrifugeComponentDir.getDirection() == centrifugeDir) {
-					ComponentFluidHandlerMulti boilerHandler = getComponent(ComponentType.FluidHandler);
-					FluidTank boilerTank = boilerHandler.getOutputTanks()[0];
-					FluidTank centrifugeTank = centrifugeHandler.getInputTanks()[0];
-					int accepted = centrifugeTank.fill(boilerTank.getFluid(), FluidAction.SIMULATE);
-					centrifugeTank.fill(new FluidStack(boilerTank.getFluid().getFluid(), accepted), FluidAction.EXECUTE);
-					boilerTank.drain(accepted, FluidAction.EXECUTE);
+					ComponentGasHandlerMulti boilerHandler = getComponent(ComponentType.GasHandler);
+					GasTank boilerTank = boilerHandler.getOutputTanks()[0];
+					GasTank centrifugeTank = centrifugeHandler.getInputTanks()[0];
+					double accepted = centrifugeTank.fill(boilerTank.getGas(), GasAction.SIMULATE);
+					centrifugeTank.fill(new GasStack(boilerTank.getGas().getGas(), accepted, boilerTank.getGas().getTemperature(), boilerTank.getGas().getPressure()), GasAction.EXECUTE);
+					boilerTank.drain(accepted, GasAction.EXECUTE);
 				}
 			}
 		}

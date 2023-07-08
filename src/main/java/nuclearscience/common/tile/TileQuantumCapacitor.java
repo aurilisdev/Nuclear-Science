@@ -41,12 +41,12 @@ public class TileQuantumCapacitor extends GenericTile implements IEnergyStorage 
 
 	public TileQuantumCapacitor(BlockPos pos, BlockState state) {
 		super(NuclearScienceBlockTypes.TILE_QUANTUMCAPACITOR.get(), pos, state);
-		addComponent(new ComponentTickable().tickServer(this::tickServer));
-		addComponent(new ComponentPacketHandler());
+		addComponent(new ComponentTickable(this).tickServer(this::tickServer));
+		addComponent(new ComponentPacketHandler(this));
 		addComponent(new ComponentElectrodynamic(this).voltage(16 * ElectrodynamicsCapabilities.DEFAULT_VOLTAGE).output(Direction.DOWN).output(Direction.UP).input(Direction.WEST).input(Direction.EAST).input(Direction.SOUTH).input(Direction.NORTH)
 				.receivePower(this::receivePower).setJoules(this::setJoulesStored).getJoules(this::getJoulesStored));
 		addComponent(new ComponentInventory(this));
-		addComponent(new ComponentContainerProvider("container.quantumcapacitor").createMenu((id, player) -> new ContainerQuantumCapacitor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
+		addComponent(new ComponentContainerProvider("container.quantumcapacitor", this).createMenu((id, player) -> new ContainerQuantumCapacitor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 
 	}
 

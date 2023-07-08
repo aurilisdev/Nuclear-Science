@@ -58,6 +58,14 @@ public class NuclearScienceRadioactiveProcessorRecipes extends AbstractRecipeGen
 				//
 				.complete(consumer);
 
+		newRecipe(new ItemStack(NuclearScienceItems.ITEM_ACTINIUM225.get()), 0.0F, RADIOACTIVEPROCESSOR_REQUIRED_TICKS, RADIOACTIVEPROCESSOR_USAGE_PER_TICK, "actinium225")
+				//
+				.addItemTagInput(NuclearScienceTags.Items.OXIDE_ACTINIUM, 1)
+				//
+				.addFluidTagInput(ElectrodynamicsTags.Fluids.HYDROGEN_FLUORIDE, 100)
+				//
+				.complete(consumer);
+
 	}
 
 	public FinishedRecipeItemOutput newRecipe(ItemStack stack, float xp, int ticks, double usagePerTick, String name) {

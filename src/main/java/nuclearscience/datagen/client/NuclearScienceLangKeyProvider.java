@@ -4,8 +4,15 @@ import electrodynamics.datagen.client.ElectrodynamicsLangKeyProvider;
 import net.minecraft.data.DataGenerator;
 import nuclearscience.References;
 import nuclearscience.common.block.subtype.SubtypeMoltenSaltPipe;
+import nuclearscience.common.recipe.categories.fluiditem2gas.specificmachines.NuclearBoilerRecipe;
+import nuclearscience.common.recipe.categories.fluiditem2item.specificmachines.ChemicalExtractorRecipe;
+import nuclearscience.common.recipe.categories.fluiditem2item.specificmachines.MSRFuelPreProcessorRecipe;
+import nuclearscience.common.recipe.categories.fluiditem2item.specificmachines.RadioactiveProcessorRecipe;
+import nuclearscience.common.recipe.categories.item2item.specificmachines.FissionReactorRecipe;
+import nuclearscience.common.recipe.categories.item2item.specificmachines.FuelReprocessorRecipe;
 import nuclearscience.registers.NuclearScienceBlocks;
 import nuclearscience.registers.NuclearScienceFluids;
+import nuclearscience.registers.NuclearScienceGases;
 import nuclearscience.registers.NuclearScienceItems;
 import nuclearscience.registers.NuclearScienceSounds;
 
@@ -29,12 +36,15 @@ public class NuclearScienceLangKeyProvider extends ElectrodynamicsLangKeyProvide
 			addItem(NuclearScienceItems.ITEM_PLUTONIUM239, "Plutonium-239");
 			addItem(NuclearScienceItems.ITEM_POLONIUM210, "Polonium-210");
 			addItem(NuclearScienceItems.ITEM_POLONIUM210_CHUNK, "Polonium-210 Chunk");
+			addItem(NuclearScienceItems.ITEM_ACTINIUM225, "Actinium-225");
+			addItem(NuclearScienceItems.ITEM_ACTINIUMOXIDE, "Actinium Trioxide");
 			addItem(NuclearScienceItems.ITEM_LIFHT4PUF3, "LiF-ThF4-UF4 Salt");
 			addItem(NuclearScienceItems.ITEM_FLINAK, "FLiNaK Salt");
 			addItem(NuclearScienceItems.ITEM_YELLOWCAKE, "Yellowcake");
 			addItem(NuclearScienceItems.ITEM_FISSILEDUST, "Fissile Dust");
 			addItem(NuclearScienceItems.ITEM_PLUTONIUMOXIDE, "Plutonium Tetroxide");
 			addItem(NuclearScienceItems.ITEM_THORIANITEDUST, "Thorianite Dust");
+			addItem(NuclearScienceItems.ITEM_FISSILE_SALT, "Fissile Salt");
 
 			addItem(NuclearScienceItems.ITEM_CELLEMPTY, "Empty Cell");
 			addItem(NuclearScienceItems.ITEM_CELLDEUTERIUM, "Deuterium Cell");
@@ -71,7 +81,8 @@ public class NuclearScienceLangKeyProvider extends ElectrodynamicsLangKeyProvide
 			addBlock(NuclearScienceBlocks.blockChemicalExtractor, "Chemical Extractor");
 			addBlock(NuclearScienceBlocks.blockRadioisotopeGenerator, "Radioisotope Generator");
 			addBlock(NuclearScienceBlocks.blockTurbine, "Steam Turbine");
-			addBlock(NuclearScienceBlocks.blockReactorCore, "Fission Reactor Core");
+			addBlock(NuclearScienceBlocks.blockSteamFunnel, "Steam Funnel");
+			addBlock(NuclearScienceBlocks.blockFissionReactorCore, "Fission Reactor Core");
 			addBlock(NuclearScienceBlocks.blockElectromagnet, "Electromagnet");
 			addBlock(NuclearScienceBlocks.blockElectromagneticGlass, "Electromagnetic Glass");
 			addBlock(NuclearScienceBlocks.blockElectromagneticBooster, "Electromagnetic Booster");
@@ -87,7 +98,7 @@ public class NuclearScienceLangKeyProvider extends ElectrodynamicsLangKeyProvide
 			addBlock(NuclearScienceBlocks.blockRadioactiveProcessor, "Radioactive Processor");
 			addBlock(NuclearScienceBlocks.blockMSRFuelPreProcessor, "MSR Fuel Pre-Processor");
 			addBlock(NuclearScienceBlocks.blockFreezePlug, "MSR Freeze Plug");
-			addBlock(NuclearScienceBlocks.blockMsrReactorCore, "MSR Reactor Core");
+			addBlock(NuclearScienceBlocks.blockMSReactorCore, "MS Reactor Core");
 			addBlock(NuclearScienceBlocks.blockHeatExchanger, "Heat Exchanger");
 			addBlock(NuclearScienceBlocks.blockSiren, "Siren");
 			addBlock(NuclearScienceBlocks.blockAtomicAssembler, "Atomic Assembler");
@@ -98,8 +109,10 @@ public class NuclearScienceLangKeyProvider extends ElectrodynamicsLangKeyProvide
 
 			addBlock(NuclearScienceBlocks.getBlock(SubtypeMoltenSaltPipe.vanadiumsteelceramic), "VS-Ceramic Pipe");
 
-			addFluid(NuclearScienceFluids.fluidUraniumHexafluoride, "Uranium Hexafluoride");
+			//addFluid(NuclearScienceFluids.fluidUraniumHexafluoride, "Uranium Hexafluoride");
 			addFluid(NuclearScienceFluids.fluidAmmonia, "Ammonia");
+			
+			addGas(NuclearScienceGases.URANIUM_HEXAFLUORIDE, "Uranium Hexafluoride");
 
 			addContainer("gascentrifuge", "Gas Centrifuge");
 			addContainer("nuclearboiler", "Nuclear Boiler");
@@ -125,13 +138,26 @@ public class NuclearScienceLangKeyProvider extends ElectrodynamicsLangKeyProvide
 			addGuiLabel("particleinjector.charge", "Charge: %s");
 			addGuiLabel("particleinjector.matter", "Matter");
 			addGuiLabel("particleinjector.cells", "Cells");
-			addGuiLabel("reactorcore.deuterium", "Deuterium");
-			addGuiLabel("reactorcore.temperature", "Temp: %s");
-			addGuiLabel("reactorcore.warning", "OVERHEATING!");
-			addGuiLabel("msrreactorcore.fuel", "Fuel: %s mB");
-			addGuiLabel("msrreactorcore.nofreezeplug", "Freeze Plug Missing");
+			addGuiLabel("fissionreactor.deuterium", "Deuterium");
+			addGuiLabel("fissionreactor.temperature", "Temp: %s");
+			addGuiLabel("fissionreactor.warning", "OVERHEATING!");
 			addGuiLabel("quantumcapacitor.joulesinput", "Joules");
 			addGuiLabel("quantumcapacitor.frequency", "Frequency");
+			addGuiLabel("msreactor.status", "Status:");
+			addGuiLabel("msreactor.status.good", "Good");
+			addGuiLabel("msreactor.status.nofreezeplug", "Freeze Plug Missing");
+			addGuiLabel("msreactor.status.wastefull", "Waste Full");
+			addGuiLabel("msreactor.warning", "Warning:");
+			addGuiLabel("msreactor.warning.none", "None");
+			addGuiLabel("msreactor.warning.freezeoff", "Freeze Plug Off");
+			addGuiLabel("msreactor.warning.overheat", "OVERHEATING");
+			addGuiLabel("saltsupplier.waste", "Waste");
+			addGuiLabel("saltsupplier.wastecont", "Waste: %s");
+			
+			addGuiLabel("freezeplug.status", "Status: %s");
+			addGuiLabel("freezeplug.frozen", "FROZEN");
+			addGuiLabel("freezeplug.off", "OFF");
+			addGuiLabel("freezeplug.saltbonus", "Thermal Bonus: %s");
 
 			addChatMessage("geigercounter.text", "%s Rads/hour");
 
@@ -139,21 +165,27 @@ public class NuclearScienceLangKeyProvider extends ElectrodynamicsLangKeyProvide
 			add("death.attack.plasma", "%s was ionized!");
 			add("effect.nuclearscience.radiation", "Radiation");
 
-			addTooltip("machine.voltage.120", "Voltage: 120 Volts");
-			addTooltip("machine.voltage.240", "Voltage: 240 Volts");
-			addTooltip("machine.voltage.480", "Voltage: 480 Volts");
-			addTooltip("machine.voltage.960", "Voltage: 960 Volts");
-			addTooltip("machine.voltage.1920", "Voltage: 1.92 kV");
 			addTooltip("frequencycard.linked", "Linked to %s");
 			addTooltip("frequencycard.notag", "No Link");
 			addTooltip("deuteriumlevel", "Deuterium: %s");
 			addTooltip("tritiumlevel", "Tritium: %s");
+			addTooltip("steamfunneluse", "Collects and emits steam");
 
 			addSubtitle(NuclearScienceSounds.SOUND_GASCENTRIFUGE, "Gas Centrifuge spins");
 			addSubtitle(NuclearScienceSounds.SOUND_NUCLEARBOILER, "Nuclear Boiler boils");
 			addSubtitle(NuclearScienceSounds.SOUND_TURBINE, "Steam Turbine spins");
 			addSubtitle(NuclearScienceSounds.SOUND_SIREN, "Siren blares!");
 			addSubtitle(NuclearScienceSounds.SOUND_GEIGER, "Geiger Counter ticks!");
+			
+			addJei(NuclearBoilerRecipe.RECIPE_GROUP, "Nuclear Boiler");
+			addJei(ChemicalExtractorRecipe.RECIPE_GROUP, "Chemical Extractor");
+			addJei(MSRFuelPreProcessorRecipe.RECIPE_GROUP, "MSR Fuel Pre-Processor");
+			addJei(RadioactiveProcessorRecipe.RECIPE_GROUP, "Radioactive Processor");
+			addJei(FissionReactorRecipe.RECIPE_GROUP, "Fission Reactor");
+			addJei(FuelReprocessorRecipe.RECIPE_GROUP, "Fuel Reprocessor");
+			addJei("gascentrifuge", "Gas Centrifuge");
+			addJei("particalacceleratorantimatter", "Particle Collision");
+			addJei("particalacceleratordarkmatter", "Particle Collision");
 
 			addGuidebook(References.ID, "Nuclear Science");
 
@@ -225,8 +257,8 @@ public class NuclearScienceLangKeyProvider extends ElectrodynamicsLangKeyProvide
 			addGuidebook("chapter.msreactor.l3", "Place a Freeze Plug, and then place a Reactor Core on top of it. Facing the green port on the core, place a Molten Salt Supplier so that its green port faces the Core's.");
 
 			addGuidebook("chapter.msreactor.l4", "The MS Reactor isn't cooled by water and is instead cooled by FLiNaK salt, which the Freeze Plug supplies. Simply make the salt and place it in the Plug. The salt is not consumed by the reactor, but the more salt you add, the more heat it will be able to remove.");
-			addGuidebook("chapter.msreactor.l5", "Unlike the Fission Reactor which uses fuel rods to power its fission reaction, Molten Salt Reactor uses a specially prepared radioactive salt, LiF-ThF4-UF4 Salt. However, as the name of the reactor implies, this salt must be molten in order to be used. Place the salt pellet in the Molten Salt "
-					+ "Supplier to melt it. Each salt pellet melts to 250 mB, and the core has an internal capacity of 1000 mB. The salt is slowly consumed over time, and just like the Fission Reactor, the hotter the reactor, the faster the fuel is consumed.");
+			addGuidebook("chapter.msreactor.l5", "Unlike the Fission Reactor which uses solid fuel rods to produce heat, the Molten Salt Reactor uses a specially prepared radioactive salt, LiF-ThF4-UF4 Salt. However, as the name of the reactor implies, this salt must be molten in order to be used. Place the salt pellet "
+					+ "in the Molten Salt Supplier to melt it. Each salt pellet melts to %s mB, and the core has an internal capacity of 1000 mB. The salt is slowly consumed over time and produces waste which is also collected by the supplier. Just like the Fission Reactor, the hotter the reactor, the faster the fuel is consumed.");
 
 			addGuidebook("chapter.msreactor.l6", "Now that the reactor is hot, you need to disperse the heat from the coolant. The MS Reactor has a melt-down temperature of 1000 C. To do this, you will need:");
 			addGuidebook("chapter.msreactor.l7", "The VS Pipe is connected to the top of the Reactor Core and fed into the bottom of the Heat Exchanger. The Heat Exchanger is incredibally efficient, and very few are needed to keep the reactor cool. In fact, a single Heat Exchanger can almost keep a MS Reactor cool by itself! To effectively do this, "
@@ -291,16 +323,10 @@ public class NuclearScienceLangKeyProvider extends ElectrodynamicsLangKeyProvide
 			addGuidebook("chapter.misc.l1", "Futurum Usui.");
 
 			addJei("gui.reactorcore.info.temp", "Range: 0 C to 1400 C");
-			addJei("gui.gascentrifuge", "Gas Centrifuge");
 
-			addJei("gui.gascentrifuge.info.power_usage", "240V 30kW");
-			addJei("gui.gascentrifuge.info.percent_u235", "17.2%");
-			addJei("gui.gascentrifuge.info.percent_u238", "72.8%");
-			addJei("gui.gascentrifuge.info.percent_biproduct", "10.0%");
-			addJei("gui.particalaccelerator.antimatter", "Particle Collision");
-			addJei("gui.particalaccelerator.antimatter.info.power", "Charge:100% Speed<100%");
-			addJei("gui.particalaccelerator.darkmatter", "Particle Collision");
-			addJei("gui.particalaccelerator.darkmatter.info.power", "Charge:100% Speed:100%");
+			addJei("gascentrifuge.info.power_usage", "240V 30kW");
+			addJei("particalaccelerator.antimatter.collision", "Charge:100% Speed<100%");
+			addJei("particalaccelerator.darkmatter.collision", "Charge:100% Speed:100%");
 
 		}
 
