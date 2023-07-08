@@ -59,7 +59,7 @@ public class TileGasCentrifuge extends GenericTile implements ITickableSound {
 		addComponent(new ComponentTickable(this).tickClient(this::tickClient).tickServer(this::tickServer));
 		addComponent(new ComponentDirection(this));
 		addComponent(new ComponentPacketHandler(this));
-		addComponent(new ComponentGasHandlerMulti(this).setInputTanks(1, arr(TANKCAPACITY), arr(273.0), arr(1)).setInputGasTags(NuclearScienceTags.Gases.URANIUM_HEXAFLUORIDE).setInputDirections(Direction.NORTH));
+		addComponent(new ComponentGasHandlerMulti(this).setInputTanks(1, arr(TANKCAPACITY), arr(293.1), arr(1)).setInputGasTags(NuclearScienceTags.Gases.URANIUM_HEXAFLUORIDE).setInputDirections(Direction.NORTH));
 		addComponent(new ComponentElectrodynamic(this).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 2).input(Direction.DOWN).maxJoules(Constants.GASCENTRIFUGE_USAGE_PER_TICK * 10));
 		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().outputs(3).upgrades(3)).universalSlots(0, 1, 2).validUpgrades(ContainerGasCentrifuge.VALID_UPGRADES).valid(machineValidator()));
 		addComponent(new ComponentProcessor(this).usage(Constants.GASCENTRIFUGE_USAGE_PER_TICK).requiredTicks(Constants.GASCENTRIFUGE_REQUIRED_TICKS_PER_PROCESSING).canProcess(this::canProcess).process(this::process));

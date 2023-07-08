@@ -3,6 +3,8 @@ package nuclearscience.client.screen;
 import electrodynamics.prefab.screen.component.types.ScreenComponentMultiLabel;
 import electrodynamics.prefab.screen.component.types.gauges.ScreenComponentGasGaugeInput;
 import electrodynamics.prefab.screen.component.types.guitab.ScreenComponentElectricInfo;
+import electrodynamics.prefab.screen.component.types.guitab.ScreenComponentGasPressure;
+import electrodynamics.prefab.screen.component.types.guitab.ScreenComponentGasTemperature;
 import electrodynamics.prefab.screen.component.utils.AbstractScreenComponentInfo;
 import electrodynamics.prefab.screen.types.GenericMaterialScreen;
 import electrodynamics.prefab.tile.components.ComponentType;
@@ -54,7 +56,12 @@ public class ScreenGasCentrifuge extends GenericMaterialScreen<ContainerGasCentr
 			}
 			return 0;
 		}, 34, 14));
+		
+		addComponent(new ScreenComponentGasPressure(-AbstractScreenComponentInfo.SIZE + 1, 2 + 2 * AbstractScreenComponentInfo.SIZE));
+		addComponent(new ScreenComponentGasTemperature(-AbstractScreenComponentInfo.SIZE + 1, 2 + AbstractScreenComponentInfo.SIZE));
 		addComponent(new ScreenComponentElectricInfo(-AbstractScreenComponentInfo.SIZE + 1, 2));
+		
+		
 		
 		addComponent(new ScreenComponentMultiLabel(0, 0, stack -> {
 			TileGasCentrifuge centrifuge = menu.getHostFromIntArray();
@@ -63,7 +70,7 @@ public class ScreenGasCentrifuge extends GenericMaterialScreen<ContainerGasCentr
 			}
 			font.draw(stack, Component.literal("U235 " + getIntString(centrifuge.stored235.get()) + "%"), 54, 17, 4210752);
 			font.draw(stack, Component.literal("U238 " + getIntString(centrifuge.stored238.get()) + "%"), 54, 37, 4210752);
-			font.draw(stack, Component.literal("DUST " + centrifuge.storedWaste.get() + "%"), 54, 58, 4210752);
+			font.draw(stack, Component.literal("DUST " + getIntString(centrifuge.storedWaste.get()) + "%"), 54, 58, 4210752);
 		}));
 	}
 

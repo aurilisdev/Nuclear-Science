@@ -7,6 +7,8 @@ import electrodynamics.prefab.screen.component.types.ScreenComponentProgress.Pro
 import electrodynamics.prefab.screen.component.types.gauges.ScreenComponentFluidGaugeInput;
 import electrodynamics.prefab.screen.component.types.gauges.ScreenComponentGasGauge;
 import electrodynamics.prefab.screen.component.types.guitab.ScreenComponentElectricInfo;
+import electrodynamics.prefab.screen.component.types.guitab.ScreenComponentGasPressure;
+import electrodynamics.prefab.screen.component.types.guitab.ScreenComponentGasTemperature;
 import electrodynamics.prefab.screen.component.utils.AbstractScreenComponentInfo;
 import electrodynamics.prefab.screen.types.GenericMaterialScreen;
 import electrodynamics.prefab.tile.GenericTile;
@@ -60,6 +62,8 @@ public class ScreenNuclearBoiler extends GenericMaterialScreen<ContainerNuclearB
 			}
 			return null;
 		}, 127, 18));
+		addComponent(new ScreenComponentGasPressure(-AbstractScreenComponentInfo.SIZE + 1, 2 + 2 * AbstractScreenComponentInfo.SIZE));
+		addComponent(new ScreenComponentGasTemperature(-AbstractScreenComponentInfo.SIZE + 1, 2 + AbstractScreenComponentInfo.SIZE));
 		addComponent(new ScreenComponentElectricInfo(-AbstractScreenComponentInfo.SIZE + 1, 2));
 	}
 
