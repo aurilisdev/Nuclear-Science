@@ -7,7 +7,6 @@ import com.google.common.collect.Sets;
 
 import electrodynamics.prefab.network.AbstractNetwork;
 import electrodynamics.prefab.tile.GenericTile;
-import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.utilities.Scheduler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -29,7 +28,6 @@ public abstract class GenericTileMoltenSaltPipe extends GenericTile implements I
 
 	protected GenericTileMoltenSaltPipe(BlockEntityType<?> tileEntityTypeIn, BlockPos pos, BlockState state) {
 		super(tileEntityTypeIn, pos, state);
-		addComponent(new ComponentPacketHandler());
 	}
 
 	private HashSet<IMoltenSaltPipe> getConnectedConductors() {

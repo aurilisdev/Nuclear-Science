@@ -1,6 +1,8 @@
 package nuclearscience.common.tile;
 
 import electrodynamics.api.capability.ElectrodynamicsCapabilities;
+import electrodynamics.api.gas.GasAction;
+import electrodynamics.api.gas.GasTank;
 import electrodynamics.common.block.VoxelShapes;
 import electrodynamics.prefab.properties.Property;
 import electrodynamics.prefab.properties.PropertyType;
@@ -11,13 +13,14 @@ import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
 import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
-import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
+import electrodynamics.prefab.tile.components.type.ComponentGasHandlerMulti;
 import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import electrodynamics.prefab.tile.components.type.ComponentInventory.InventoryBuilder;
 import electrodynamics.prefab.utilities.object.Location;
+import electrodynamics.registers.ElectrodynamicsRegistries;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
@@ -25,28 +28,25 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
 import nuclearscience.api.radiation.RadiationSystem;
 import nuclearscience.common.inventory.container.ContainerGasCentrifuge;
 import nuclearscience.common.settings.Constants;
 import nuclearscience.common.tags.NuclearScienceTags;
 import nuclearscience.registers.NuclearScienceBlockTypes;
 import nuclearscience.registers.NuclearScienceBlocks;
-import nuclearscience.registers.NuclearScienceFluids;
 import nuclearscience.registers.NuclearScienceItems;
 import nuclearscience.registers.NuclearScienceSounds;
 
 public class TileGasCentrifuge extends GenericTile implements ITickableSound {
 
-	public static final int TANKCAPACITY = 5000;
-	public static final int REQUIRED = 2500;
-	private static final double PERCENT_U235 = 0.172;
-	private static final double WASTE_MULTIPLIER = 0.1;
+	public static final double TANKCAPACITY = 5000;
+	public static final double REQUIRED = 2500;
+	public static final double PERCENT_U235 = 0.172;
+	public static final double WASTE_MULTIPLIER = 0.1;
 	public Property<Integer> spinSpeed = property(new Property<>(PropertyType.Integer, "spinSpeed", 0));
-	public Property<Integer> stored235 = property(new Property<>(PropertyType.Integer, "stored235", 0));
-	public Property<Integer> stored238 = property(new Property<>(PropertyType.Integer, "stored238", 0));
-	public Property<Integer> storedWaste = property(new Property<>(PropertyType.Integer, "storedWaste", 0));
+	public Property<Double> stored235 = property(new Property<>(PropertyType.Double, "stored235", 0.0));
+	public Property<Double> stored238 = property(new Property<>(PropertyType.Double, "stored238", 0.0));
+	public Property<Double> storedWaste = property(new Property<>(PropertyType.Double, "storedWaste", 0.0));
 	public Property<Boolean> isRunning = property(new Property<>(PropertyType.Boolean, "isRunning", false));
 
 	private static final int RADATION_RADIUS_BLOCKS = 5;
@@ -56,22 +56,22 @@ public class TileGasCentrifuge extends GenericTile implements ITickableSound {
 
 	public TileGasCentrifuge(BlockPos pos, BlockState state) {
 		super(NuclearScienceBlockTypes.TILE_GASCENTRIFUGE.get(), pos, state);
-		addComponent(new ComponentTickable().tickClient(this::tickClient).tickServer(this::tickServer));
-		addComponent(new ComponentDirection());
-		addComponent(new ComponentPacketHandler());
-		addComponent(new ComponentFluidHandlerMulti(this).setInputTanks(1, TANKCAPACITY).setInputFluids(NuclearScienceFluids.fluidUraniumHexafluoride).setInputDirections(Direction.NORTH));
+		addComponent(new ComponentTickable(this).tickClient(this::tickClient).tickServer(this::tickServer));
+		addComponent(new ComponentDirection(this));
+		addComponent(new ComponentPacketHandler(this));
+		addComponent(new ComponentGasHandlerMulti(this).setInputTanks(1, arr(TANKCAPACITY), arr(293.1), arr(1)).setInputGasTags(NuclearScienceTags.Gases.URANIUM_HEXAFLUORIDE).setInputDirections(Direction.NORTH));
 		addComponent(new ComponentElectrodynamic(this).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 2).input(Direction.DOWN).maxJoules(Constants.GASCENTRIFUGE_USAGE_PER_TICK * 10));
 		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().outputs(3).upgrades(3)).universalSlots(0, 1, 2).validUpgrades(ContainerGasCentrifuge.VALID_UPGRADES).valid(machineValidator()));
 		addComponent(new ComponentProcessor(this).usage(Constants.GASCENTRIFUGE_USAGE_PER_TICK).requiredTicks(Constants.GASCENTRIFUGE_REQUIRED_TICKS_PER_PROCESSING).canProcess(this::canProcess).process(this::process));
-		addComponent(new ComponentContainerProvider("container.gascentrifuge").createMenu((id, player) -> new ContainerGasCentrifuge(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
+		addComponent(new ComponentContainerProvider("container.gascentrifuge", this).createMenu((id, player) -> new ContainerGasCentrifuge(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 	}
 
 	public boolean canProcess(ComponentProcessor processor) {
 		ComponentElectrodynamic electro = getComponent(ComponentType.Electrodynamic);
 		ComponentInventory inv = getComponent(ComponentType.Inventory);
-		ComponentFluidHandlerMulti tank = getComponent(ComponentType.FluidHandler);
-		boolean hasFluid = tank.getInputTanks()[0].getFluidAmount() >= REQUIRED / 60.0;
-		boolean val = electro.getJoulesStored() >= processor.getUsage() && hasFluid && inv.getItem(0).getCount() < inv.getItem(0).getMaxStackSize() && inv.getItem(1).getCount() < inv.getItem(1).getMaxStackSize() && inv.getItem(2).getCount() < inv.getItem(2).getMaxStackSize();
+		ComponentGasHandlerMulti gasHandler = getComponent(ComponentType.GasHandler);
+		boolean hasGas = gasHandler.getInputTanks()[0].getGasAmount() >= REQUIRED / 60.0;
+		boolean val = electro.getJoulesStored() >= processor.getUsage() && hasGas && inv.getItem(0).getCount() < inv.getItem(0).getMaxStackSize() && inv.getItem(1).getCount() < inv.getItem(1).getMaxStackSize() && inv.getItem(2).getCount() < inv.getItem(2).getMaxStackSize();
 		if (!val && spinSpeed.get() > 0) {
 			spinSpeed.set(0);
 		}
@@ -83,18 +83,19 @@ public class TileGasCentrifuge extends GenericTile implements ITickableSound {
 
 	public void process(ComponentProcessor processor) {
 		ComponentInventory inv = getComponent(ComponentType.Inventory);
-		ComponentFluidHandlerMulti multi = getComponent(ComponentType.FluidHandler);
+		ComponentGasHandlerMulti multi = getComponent(ComponentType.GasHandler);
+		//ComponentFluidHandlerMulti multi = getComponent(ComponentType.FluidHandler);
 		spinSpeed.set(processor.operatingSpeed.get().intValue());
-		int processed = (int) (REQUIRED / 60.0);
-		FluidTank tank = multi.getInputTanks()[0];
+		double processed = REQUIRED / 60.0;
+		GasTank tank = multi.getInputTanks()[0];
 		
-		if(tank.getFluid().getFluid().is(NuclearScienceTags.Fluids.URANIUM_HEXAFLUORIDE) && tank.getFluidAmount() >= processed) {
-			tank.drain(processed, FluidAction.EXECUTE);
+		if(ElectrodynamicsRegistries.gasRegistry().tags().getTag(NuclearScienceTags.Gases.URANIUM_HEXAFLUORIDE).contains(tank.getGas().getGas()) && tank.getGasAmount() >= processed) {
+			tank.drain(processed, GasAction.EXECUTE);
 		}
 
-		stored235.set((int) (stored235.get() + processed * PERCENT_U235));
-		stored238.set((int) (stored238.get() + processed * (1 - PERCENT_U235 - WASTE_MULTIPLIER)));
-		storedWaste.set((int) (stored235.get() + processed * WASTE_MULTIPLIER));
+		stored235.set(stored235.get() + processed * PERCENT_U235);
+		stored238.set(stored238.get() + processed * (1 - PERCENT_U235 - WASTE_MULTIPLIER));
+		storedWaste.set(stored235.get() + processed * WASTE_MULTIPLIER);
 		if (stored235.get() > REQUIRED) {
 			ItemStack stack = inv.getItem(0);
 			if (!stack.isEmpty()) {

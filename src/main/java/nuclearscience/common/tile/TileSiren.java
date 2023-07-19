@@ -14,7 +14,7 @@ public class TileSiren extends GenericTile {
 
 	public TileSiren(BlockPos worldPos, BlockState blockState) {
 		super(NuclearScienceBlockTypes.TILE_SIREN.get(), worldPos, blockState);
-		addComponent(new ComponentTickable().tickClient(this::tickClient));
+		addComponent(new ComponentTickable(this).tickClient(this::tickClient));
 	}
 
 	public void tickClient(ComponentTickable tick) {

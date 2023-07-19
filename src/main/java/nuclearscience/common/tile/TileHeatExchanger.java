@@ -21,19 +21,20 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import nuclearscience.api.turbine.ISteamReceiver;
 import nuclearscience.common.settings.Constants;
 import nuclearscience.registers.NuclearScienceBlockTypes;
 
 public class TileHeatExchanger extends GenericTile {
 	public static final int STEAM_GEN_DIAMETER = 5;
 	public static final int STEAM_GEN_HEIGHT = 2;
-	private TileTurbine[][][] cachedTurbines = new TileTurbine[STEAM_GEN_DIAMETER][STEAM_GEN_HEIGHT][STEAM_GEN_DIAMETER];
+	private ISteamReceiver[][][] cachedReceivers = new ISteamReceiver[STEAM_GEN_DIAMETER][STEAM_GEN_HEIGHT][STEAM_GEN_DIAMETER];
 	public Property<Double> temperature = property(new Property<>(PropertyType.Double, "temperature", 0.0));
 
 	public TileHeatExchanger(BlockPos pos, BlockState state) {
 		super(NuclearScienceBlockTypes.TILE_HEATEXCHANGER.get(), pos, state);
-		addComponent(new ComponentTickable().tickCommon(this::tickCommon));
-		addComponent(new ComponentPacketHandler());
+		addComponent(new ComponentTickable(this).tickCommon(this::tickCommon));
+		addComponent(new ComponentPacketHandler(this));
 	}
 
 	protected void tickCommon(ComponentTickable tickable) {
@@ -44,7 +45,7 @@ public class TileHeatExchanger extends GenericTile {
 	}
 
 	/**
-	 * Mostly copied from {@link TileReactorCore#produceSteam()} with some changes to fit the exchanger
+	 * Mostly copied from {@link TileFissionReactorCore#produceSteam()} with some changes to fit the exchanger
 	 */
 	protected void produceSteam() {
 		if (temperature.get() > 100) {
@@ -63,7 +64,7 @@ public class TileHeatExchanger extends GenericTile {
 				for (int k = 0; k < STEAM_GEN_DIAMETER; k++) {
 					boolean isReactor2d = i - STEAM_GEN_DIAMETER / 2 == 0 && k - STEAM_GEN_DIAMETER / 2 == 0;
 					if (isReactor2d && j == 0) {
-						if (!level.isClientSide && level.random.nextFloat() < temperature.get() / (TileMSRReactorCore.MELTDOWN_TEMPERATURE * 20.0 * STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * STEAM_GEN_HEIGHT)) {
+						if (!level.isClientSide && level.random.nextFloat() < temperature.get() / (TileMSReactorCore.MELTDOWN_TEMPERATURE * 20.0 * STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * STEAM_GEN_HEIGHT)) {
 							if (level.getBlockState(worldPosition).hasProperty(BlockStateProperties.WATERLOGGED)) {
 								level.setBlockAndUpdate(worldPosition, getBlockState().setValue(BlockStateProperties.WATERLOGGED, false));
 							}
@@ -79,26 +80,26 @@ public class TileHeatExchanger extends GenericTile {
 						boolean isFaceWater = level.getBlockState(new BlockPos(offsetX, worldPosition.getY(), worldPosition.getZ())).getBlock() == Blocks.WATER || level.getBlockState(new BlockPos(worldPosition.getX(), worldPosition.getY(), offsetZ)).getBlock() == Blocks.WATER || isReactor2d;
 						if (isFaceWater) {
 							if (!level.isClientSide) {
-								TileTurbine turbine = cachedTurbines[i][j][k];
+								ISteamReceiver turbine = cachedReceivers[i][j][k];
 								if (turbine != null) {
-									if (turbine.isRemoved()) {
-										cachedTurbines[i][j][k] = null;
+									if (turbine.isStillValid()) {
+										cachedReceivers[i][j][k] = null;
 									}
-									turbine.addSteam((int) (Constants.MSRREACTOR_MAXENERGYTARGET / (STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * 20.0 * (TileMSRReactorCore.MELTDOWN_TEMPERATURE / temperature.get()))), temperature.get().intValue());
+									turbine.receiveSteam(Constants.MSRREACTOR_MAXENERGYTARGET / (STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * 20.0 * (TileMSReactorCore.MELTDOWN_TEMPERATURE / temperature.get())), temperature.get());
 								}
-								if (level.random.nextFloat() < temperature.get() / (TileMSRReactorCore.MELTDOWN_TEMPERATURE * 20.0 * STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * STEAM_GEN_HEIGHT)) {
+								if (level.random.nextFloat() < temperature.get() / (TileMSReactorCore.MELTDOWN_TEMPERATURE * 20.0 * STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * STEAM_GEN_HEIGHT)) {
 									level.setBlockAndUpdate(offpos, Blocks.AIR.defaultBlockState());
 									continue;
 								}
-								if (turbine == null || turbine.isRemoved()) {
+								if (turbine == null || turbine.isStillValid()) {
 									BlockEntity above = level.getBlockEntity(new BlockPos(offsetX, offsetY + 1, offsetZ));
-									if (above instanceof TileTurbine ab) {
-										cachedTurbines[i][j][k] = ab;
+									if (above instanceof ISteamReceiver ab) {
+										cachedReceivers[i][j][k] = ab;
 									} else {
-										cachedTurbines[i][j][k] = null;
+										cachedReceivers[i][j][k] = null;
 									}
 								}
-							} else if (level.isClientSide && level.random.nextFloat() < temperature.get() / (TileMSRReactorCore.MELTDOWN_TEMPERATURE * 3)) {
+							} else if (level.isClientSide && level.random.nextFloat() < temperature.get() / (TileMSReactorCore.MELTDOWN_TEMPERATURE * 3)) {
 								double offsetFX = offsetX + level.random.nextDouble() / 2.0 * (level.random.nextBoolean() ? -1 : 1);
 								double offsetFY = offsetY + level.random.nextDouble() / 2.0 * (level.random.nextBoolean() ? -1 : 1);
 								double offsetFZ = offsetZ + level.random.nextDouble() / 2.0 * (level.random.nextBoolean() ? -1 : 1);

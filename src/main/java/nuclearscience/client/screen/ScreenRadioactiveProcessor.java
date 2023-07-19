@@ -1,12 +1,12 @@
 package nuclearscience.client.screen;
 
 import electrodynamics.prefab.screen.GenericScreen;
-import electrodynamics.prefab.screen.component.ScreenComponentElectricInfo;
-import electrodynamics.prefab.screen.component.ScreenComponentFluidInput;
-import electrodynamics.prefab.screen.component.ScreenComponentGeneric;
-import electrodynamics.prefab.screen.component.ScreenComponentProgress;
-import electrodynamics.prefab.screen.component.ScreenComponentProgress.ProgressBars;
-import electrodynamics.prefab.screen.component.ScreenComponentProgress.ProgressTextures;
+import electrodynamics.prefab.screen.component.types.ScreenComponentGeneric;
+import electrodynamics.prefab.screen.component.types.ScreenComponentProgress;
+import electrodynamics.prefab.screen.component.types.ScreenComponentProgress.ProgressBars;
+import electrodynamics.prefab.screen.component.types.ScreenComponentProgress.ProgressTextures;
+import electrodynamics.prefab.screen.component.types.gauges.ScreenComponentFluidGaugeInput;
+import electrodynamics.prefab.screen.component.types.guitab.ScreenComponentElectricInfo;
 import electrodynamics.prefab.screen.component.utils.AbstractScreenComponentInfo;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
@@ -21,7 +21,7 @@ public class ScreenRadioactiveProcessor extends GenericScreen<ContainerRadioacti
 
 	public ScreenRadioactiveProcessor(ContainerRadioactiveProcessor container, Inventory playerInventory, Component title) {
 		super(container, playerInventory, title);
-		components.add(new ScreenComponentProgress(ProgressBars.PROGRESS_ARROW_RIGHT, () -> {
+		addComponent(new ScreenComponentProgress(ProgressBars.PROGRESS_ARROW_RIGHT, () -> {
 			GenericTile furnace = container.getHostFromIntArray();
 			if (furnace != null) {
 				ComponentProcessor processor = furnace.getComponent(ComponentType.Processor);
@@ -30,8 +30,8 @@ public class ScreenRadioactiveProcessor extends GenericScreen<ContainerRadioacti
 				}
 			}
 			return 0;
-		}, this, 42, 30));
-		components.add(new ScreenComponentProgress(ProgressBars.PROGRESS_ARROW_RIGHT, () -> {
+		}, 42, 30));
+		addComponent(new ScreenComponentProgress(ProgressBars.PROGRESS_ARROW_RIGHT, () -> {
 			GenericTile furnace = container.getHostFromIntArray();
 			if (furnace != null) {
 				ComponentProcessor processor = furnace.getComponent(ComponentType.Processor);
@@ -40,15 +40,15 @@ public class ScreenRadioactiveProcessor extends GenericScreen<ContainerRadioacti
 				}
 			}
 			return 0;
-		}, this, 98, 30));
-		components.add(new ScreenComponentGeneric(ProgressTextures.ARROW_LEFT_OFF, this, 46, 50));
-		components.add(new ScreenComponentFluidInput(() -> {
+		}, 98, 30));
+		addComponent(new ScreenComponentGeneric(ProgressTextures.ARROW_LEFT_OFF, 46, 50));
+		addComponent(new ScreenComponentFluidGaugeInput(() -> {
 			TileRadioactiveProcessor boiler = container.getHostFromIntArray();
 			if (boiler != null) {
 				return boiler.<ComponentFluidHandlerMulti>getComponent(ComponentType.FluidHandler).getInputTanks()[0];
 			}
 			return null;
-		}, this, 21, 18));
-		components.add(new ScreenComponentElectricInfo(this, -AbstractScreenComponentInfo.SIZE + 1, 2));
+		}, 21, 18));
+		addComponent(new ScreenComponentElectricInfo(-AbstractScreenComponentInfo.SIZE + 1, 2));
 	}
 }

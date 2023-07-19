@@ -1,5 +1,7 @@
 package nuclearscience.common.tags;
 
+import electrodynamics.api.gas.Gas;
+import electrodynamics.registers.ElectrodynamicsRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ItemTags;
@@ -7,13 +9,13 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.material.Fluid;
 import nuclearscience.common.fluid.types.FluidAmmonia;
-import nuclearscience.common.fluid.types.FluidUraniumHexafluoride;
 
 public class NuclearScienceTags {
 
 	public static void init() {
 		Fluids.init();
 		Items.init();
+		Gases.init();
 	}
 
 	public static class Items {
@@ -34,8 +36,11 @@ public class NuclearScienceTags {
 
 		public static final TagKey<Item> DUST_THORIUM = forgeTag("dusts/thorium");
 		public static final TagKey<Item> DUST_FISSILE = forgeTag("dusts/fissile");
+		
+		public static final TagKey<Item> SALT_FISSILE = forgeTag("salts/fissile");
 
 		public static final TagKey<Item> OXIDE_PLUTONIUM = forgeTag("oxide/plutonium");
+		public static final TagKey<Item> OXIDE_ACTINIUM = forgeTag("oxide/actinium");
 
 		public static final TagKey<Item> NUGGET_POLONIUM = forgeTag("nuggets/polonium");
 
@@ -45,6 +50,7 @@ public class NuclearScienceTags {
 		public static final TagKey<Item> PELLET_POLONIUM = forgeTag("pellets/polonium");
 		public static final TagKey<Item> PELLET_LIFHT4PUF3 = forgeTag("pellets/lifht4puf3");
 		public static final TagKey<Item> PELLET_FLINAK = forgeTag("pellets/flinak");
+		public static final TagKey<Item> PELLET_ACTINIUM225 = forgeTag("pellets/actinium225");
 
 		public static final TagKey<Item> YELLOW_CAKE = forgeTag("yellow_cake_uranium");
 
@@ -59,7 +65,6 @@ public class NuclearScienceTags {
 
 	public static class Fluids {
 
-		public static final TagKey<Fluid> URANIUM_HEXAFLUORIDE = forgeTag(FluidUraniumHexafluoride.FORGE_TAG);
 		public static final TagKey<Fluid> AMMONIA = forgeTag(FluidAmmonia.FORGE_TAG);
 
 		private static void init() {
@@ -68,6 +73,24 @@ public class NuclearScienceTags {
 
 		private static TagKey<Fluid> forgeTag(String name) {
 			return FluidTags.create(new ResourceLocation("forge", name));
+		}
+	}
+	
+	public static class Gases {
+		
+		public static final TagKey<Gas> URANIUM_HEXAFLUORIDE = forgeTag("uranium_hexafluoride");
+		
+		
+		private static void init() {
+			
+		}
+		
+		private static TagKey<Gas> forgeTag(String name) {
+			return create(new ResourceLocation("forge", name));
+		}
+		
+		public static TagKey<Gas> create(ResourceLocation loc) {
+			return TagKey.create(ElectrodynamicsRegistries.GAS_REGISTRY_KEY, loc);
 		}
 	}
 

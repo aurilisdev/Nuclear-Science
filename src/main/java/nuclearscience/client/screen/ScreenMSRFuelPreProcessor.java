@@ -1,11 +1,11 @@
 package nuclearscience.client.screen;
 
-import electrodynamics.prefab.screen.GenericScreen;
-import electrodynamics.prefab.screen.component.ScreenComponentElectricInfo;
-import electrodynamics.prefab.screen.component.ScreenComponentFluidInput;
-import electrodynamics.prefab.screen.component.ScreenComponentProgress;
-import electrodynamics.prefab.screen.component.ScreenComponentProgress.ProgressBars;
+import electrodynamics.prefab.screen.component.types.ScreenComponentProgress;
+import electrodynamics.prefab.screen.component.types.ScreenComponentProgress.ProgressBars;
+import electrodynamics.prefab.screen.component.types.gauges.ScreenComponentFluidGaugeInput;
+import electrodynamics.prefab.screen.component.types.guitab.ScreenComponentElectricInfo;
 import electrodynamics.prefab.screen.component.utils.AbstractScreenComponentInfo;
+import electrodynamics.prefab.screen.types.GenericMaterialScreen;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
@@ -18,10 +18,10 @@ import nuclearscience.common.inventory.container.ContainerMSRFuelPreProcessor;
 import nuclearscience.common.tile.TileMSRFuelPreProcessor;
 
 @OnlyIn(Dist.CLIENT)
-public class ScreenMSRFuelPreProcessor extends GenericScreen<ContainerMSRFuelPreProcessor> {
+public class ScreenMSRFuelPreProcessor extends GenericMaterialScreen<ContainerMSRFuelPreProcessor> {
 	public ScreenMSRFuelPreProcessor(ContainerMSRFuelPreProcessor container, Inventory playerInventory, Component title) {
 		super(container, playerInventory, title);
-		components.add(new ScreenComponentProgress(ProgressBars.PROGRESS_ARROW_RIGHT, () -> {
+		addComponent(new ScreenComponentProgress(ProgressBars.PROGRESS_ARROW_RIGHT, () -> {
 			GenericTile furnace = container.getHostFromIntArray();
 			if (furnace != null) {
 				ComponentProcessor processor = furnace.getComponent(ComponentType.Processor);
@@ -30,8 +30,8 @@ public class ScreenMSRFuelPreProcessor extends GenericScreen<ContainerMSRFuelPre
 				}
 			}
 			return 0;
-		}, this, 42, 30));
-		components.add(new ScreenComponentProgress(ProgressBars.PROGRESS_ARROW_RIGHT, () -> {
+		}, 42, 30));
+		addComponent(new ScreenComponentProgress(ProgressBars.PROGRESS_ARROW_RIGHT, () -> {
 			GenericTile furnace = container.getHostFromIntArray();
 			if (furnace != null) {
 				ComponentProcessor processor = furnace.getComponent(ComponentType.Processor);
@@ -40,14 +40,14 @@ public class ScreenMSRFuelPreProcessor extends GenericScreen<ContainerMSRFuelPre
 				}
 			}
 			return 0;
-		}, this, 98, 40));
-		components.add(new ScreenComponentFluidInput(() -> {
+		}, 98, 40));
+		addComponent(new ScreenComponentFluidGaugeInput(() -> {
 			TileMSRFuelPreProcessor boiler = container.getHostFromIntArray();
 			if (boiler != null) {
 				return boiler.<ComponentFluidHandlerMulti>getComponent(ComponentType.FluidHandler).getInputTanks()[0];
 			}
 			return null;
-		}, this, 21, 18));
-		components.add(new ScreenComponentElectricInfo(this, -AbstractScreenComponentInfo.SIZE + 1, 2));
+		}, 21, 18));
+		addComponent(new ScreenComponentElectricInfo(-AbstractScreenComponentInfo.SIZE + 1, 2));
 	}
 }

@@ -3,16 +3,24 @@ package nuclearscience.client.render.tile;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
+import electrodynamics.api.gas.GasStack;
+import electrodynamics.api.gas.GasTank;
+import electrodynamics.client.ClientRegister;
 import electrodynamics.client.render.tile.AbstractTileRenderer;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
+import electrodynamics.prefab.tile.components.type.ComponentGasHandlerMulti;
 import electrodynamics.prefab.utilities.RenderingUtils;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.phys.AABB;
+import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import nuclearscience.common.tile.TileNuclearBoiler;
@@ -31,14 +39,13 @@ public class RenderNuclearBoiler extends AbstractTileRenderer<TileNuclearBoiler>
 		matrix.pushPose();
 
 		Direction facing = tile.<ComponentDirection>getComponent(ComponentType.Direction).getDirection();
-		ComponentFluidHandlerMulti multi = tile.getComponent(ComponentType.FluidHandler);
 		VertexConsumer builder = buffer.getBuffer(Sheets.translucentCullBlockSheet());
 
-		FluidTank input = multi.getInputTanks()[0];
+		FluidTank input = tile.<ComponentFluidHandlerMulti>getComponent(ComponentType.FluidHandler).getInputTanks()[0];
 
 		if (!input.isEmpty()) {
 
-			drawFluidInput(matrix, builder, input.getFluid(), facing, (float) input.getFluidAmount() / (float) TileNuclearBoiler.MAX_TANK_CAPACITY, light, overlay);
+			drawFluidInput(matrix, builder, input.getFluid(), facing, (float) input.getFluidAmount() / (float) TileNuclearBoiler.MAX_FLUID_TANK_CAPACITY, light, overlay);
 
 		}
 
@@ -46,11 +53,11 @@ public class RenderNuclearBoiler extends AbstractTileRenderer<TileNuclearBoiler>
 
 		matrix.pushPose();
 
-		FluidTank output = multi.getOutputTanks()[0];
+		GasTank output = tile.<ComponentGasHandlerMulti>getComponent(ComponentType.GasHandler).getOutputTanks()[0];
 
 		if (!output.isEmpty()) {
 
-			drawFluidOutput(matrix, builder, output.getFluid(), facing, (float) output.getFluidAmount() / (float) TileNuclearBoiler.MAX_TANK_CAPACITY, light, overlay);
+			drawGasOutput(matrix, builder, output.getGas(), facing, (float) output.getGasAmount() / (float) TileNuclearBoiler.MAX_GAS_TANK_CAPACITY, light, overlay);
 
 		}
 
@@ -85,7 +92,7 @@ public class RenderNuclearBoiler extends AbstractTileRenderer<TileNuclearBoiler>
 		RenderingUtils.renderFluidBox(stack, minecraft(), builder, box, fluid, light, overlay);
 	}
 
-	private void drawFluidOutput(PoseStack stack, VertexConsumer builder, FluidStack fluid, Direction facing, float height, int light, int overlay) {
+	private void drawGasOutput(PoseStack stack, VertexConsumer builder, GasStack fluid, Direction facing, float height, int light, int overlay) {
 
 		AABB box = null;
 
@@ -108,7 +115,13 @@ public class RenderNuclearBoiler extends AbstractTileRenderer<TileNuclearBoiler>
 
 		}
 
-		RenderingUtils.renderFluidBox(stack, minecraft(), builder, box, fluid, light, overlay);
+		ResourceLocation texture = ClientRegister.TEXTURE_GAS;
+
+		TextureAtlasSprite sprite = ClientRegister.CACHED_TEXTUREATLASSPRITES.get(texture);
+		
+		float[] colors = RenderingUtils.getColorArray(sprite.getPixelRGBA(0, 10, 10));
+		
+		RenderingUtils.renderFilledBox(stack, builder, box, colors[0], colors[1], colors[2], colors[3], sprite.getU0(), sprite.getV0(), sprite.getU1(), sprite.getV1(), light, overlay);
 	}
 
 }

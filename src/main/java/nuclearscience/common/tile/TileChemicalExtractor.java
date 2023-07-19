@@ -28,14 +28,14 @@ public class TileChemicalExtractor extends GenericTile {
 
 	public TileChemicalExtractor(BlockPos pos, BlockState state) {
 		super(NuclearScienceBlockTypes.TILE_CHEMICALEXTRACTOR.get(), pos, state);
-		addComponent(new ComponentTickable().tickClient(this::tickClient));
-		addComponent(new ComponentDirection());
-		addComponent(new ComponentPacketHandler());
+		addComponent(new ComponentTickable(this).tickClient(this::tickClient));
+		addComponent(new ComponentDirection(this));
+		addComponent(new ComponentPacketHandler(this));
 		addComponent(new ComponentElectrodynamic(this).universalInput().voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 2));
 		addComponent(new ComponentFluidHandlerMulti(this).setInputTanks(1, MAX_TANK_CAPACITY).universalInput().setRecipeType(NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE.get()));
 		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().processors(1, 1, 1, 0).bucketInputs(1).upgrades(3)).faceSlots(Direction.UP, 0).faceSlots(Direction.DOWN, 1).slotFaces(2, Direction.SOUTH, Direction.NORTH, Direction.EAST, Direction.WEST).validUpgrades(ContainerChemicalExtractor.VALID_UPGRADES).valid(machineValidator()));
 		addComponent(new ComponentProcessor(this).canProcess(component -> component.consumeBucket().canProcessFluidItem2ItemRecipe(component, NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE.get())).process(component -> component.processFluidItem2ItemRecipe(component)));
-		addComponent(new ComponentContainerProvider("container.chemicalextractor").createMenu((id, player) -> new ContainerChemicalExtractor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
+		addComponent(new ComponentContainerProvider("container.chemicalextractor", this).createMenu((id, player) -> new ContainerChemicalExtractor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 	}
 
 	protected void tickClient(ComponentTickable tickable) {

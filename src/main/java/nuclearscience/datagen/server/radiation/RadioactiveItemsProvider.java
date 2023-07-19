@@ -47,6 +47,7 @@ public class RadioactiveItemsProvider implements DataProvider {
 		addTag(NuclearScienceTags.Items.PELLET_URANIUM238, 500, json);
 		addTag(NuclearScienceTags.Items.PELLET_PLUTONIUM, 4500, json);
 		addTag(NuclearScienceTags.Items.PELLET_POLONIUM, 2500, json);
+		addTag(NuclearScienceTags.Items.PELLET_ACTINIUM225, 5000, json);
 		
 		addTag(NuclearScienceTags.Items.NUGGET_POLONIUM, 1500, json);
 		
@@ -57,8 +58,10 @@ public class RadioactiveItemsProvider implements DataProvider {
 		
 		addTag(NuclearScienceTags.Items.YELLOW_CAKE, 300, json);
 		addTag(NuclearScienceTags.Items.DUST_FISSILE, 2000, json);
+		addTag(NuclearScienceTags.Items.SALT_FISSILE, 200, json);
 		addTag(NuclearScienceTags.Items.OXIDE_PLUTONIUM, 4000, json);
 		addTag(NuclearScienceTags.Items.DUST_THORIUM, 2000, json);
+		addTag(NuclearScienceTags.Items.OXIDE_ACTINIUM, 400, json);
 		
 		addTag(ElectrodynamicsTags.Items.ORE_THORIUM, 500, json);
 		addTag(ElectrodynamicsTags.Items.ORE_URANIUM, 100, json);

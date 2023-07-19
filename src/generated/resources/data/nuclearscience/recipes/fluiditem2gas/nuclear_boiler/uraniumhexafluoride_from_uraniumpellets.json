@@ -1,0 +1,26 @@
+{
+  "type": "nuclearscience:nuclear_boiler_recipe",
+  "experience": 0.0,
+  "fluidinputs": {
+    "0": {
+      "amount": 1600,
+      "tag": "forge:hydrofluoric_acid"
+    },
+    "count": 1
+  },
+  "iteminputs": {
+    "0": {
+      "count": 1,
+      "tag": "forge:pellets/uranium238"
+    },
+    "count": 1
+  },
+  "output": {
+    "amount": 2000.0,
+    "gas": "nuclearscience:uraniumhexafluoride",
+    "pressure": 1,
+    "temp": 293.0
+  },
+  "ticks": 800,
+  "usagepertick": 750.0
+}

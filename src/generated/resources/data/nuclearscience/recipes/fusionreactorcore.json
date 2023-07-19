@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "key": {
     "C": {
-      "item": "nuclearscience:msrreactorcore"
+      "item": "nuclearscience:msreactorcore"
     },
     "E": {
       "item": "nuclearscience:electromagnet"

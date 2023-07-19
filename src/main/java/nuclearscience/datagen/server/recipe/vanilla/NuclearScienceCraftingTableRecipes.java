@@ -536,7 +536,7 @@ public class NuclearScienceCraftingTableRecipes extends AbstractRecipeGenerator 
 				//
 				.complete(References.ID, "fuelreprocessor", consumer);
 
-		ElectrodynamicsShapedCraftingRecipe.start(NuclearScienceBlocks.blockReactorCore.asItem(), 1)
+		ElectrodynamicsShapedCraftingRecipe.start(NuclearScienceBlocks.blockFissionReactorCore.asItem(), 1)
 				//
 				.addPattern("PCP")
 				//
@@ -566,7 +566,7 @@ public class NuclearScienceCraftingTableRecipes extends AbstractRecipeGenerator 
 				//
 				.addKey('E', NuclearScienceBlocks.blockElectromagnet.asItem())
 				//
-				.addKey('C', NuclearScienceBlocks.blockMsrReactorCore.asItem())
+				.addKey('C', NuclearScienceBlocks.blockMSReactorCore.asItem())
 				//
 				.complete(References.ID, "fusionreactorcore", consumer);
 
@@ -642,7 +642,7 @@ public class NuclearScienceCraftingTableRecipes extends AbstractRecipeGenerator 
 				//
 				.complete(References.ID, "msrfuelpreprocessor", consumer);
 
-		ElectrodynamicsShapedCraftingRecipe.start(NuclearScienceBlocks.blockMsrReactorCore.asItem(), 1)
+		ElectrodynamicsShapedCraftingRecipe.start(NuclearScienceBlocks.blockMSReactorCore.asItem(), 1)
 				//
 				.addPattern("SVS")
 				//
@@ -654,7 +654,7 @@ public class NuclearScienceCraftingTableRecipes extends AbstractRecipeGenerator 
 				//
 				.addKey('V', ElectrodynamicsTags.Items.PLATE_VANADIUMSTEEL)
 				//
-				.addKey('R', NuclearScienceBlocks.blockReactorCore.asItem())
+				.addKey('R', NuclearScienceBlocks.blockFissionReactorCore.asItem())
 				//
 				.addKey('P', NuclearScienceTags.Items.PELLET_PLUTONIUM)
 				//
@@ -759,6 +759,30 @@ public class NuclearScienceCraftingTableRecipes extends AbstractRecipeGenerator 
 				.addKey('P', ElectrodynamicsTags.Items.PLATE_BRONZE)
 				//
 				.complete(References.ID, "siren", consumer);
+
+		ElectrodynamicsShapedCraftingRecipe.start(NuclearScienceBlocks.blockSteamFunnel.asItem(), 1)
+				//
+				.addPattern(" P ")
+				//
+				.addPattern("P P")
+				//
+				.addPattern("P P")
+				//
+				.addKey('P', ElectrodynamicsTags.Items.PLATE_BRONZE)
+				//
+				.complete(References.ID, "steamfunnel_bronze", consumer);
+
+		ElectrodynamicsShapedCraftingRecipe.start(NuclearScienceBlocks.blockSteamFunnel.asItem(), 1)
+				//
+				.addPattern(" P ")
+				//
+				.addPattern("P P")
+				//
+				.addPattern("P P")
+				//
+				.addKey('P', ElectrodynamicsTags.Items.PLATE_STEEL)
+				//
+				.complete(References.ID, "steamfunnel_steel", consumer);
 
 		ElectrodynamicsShapedCraftingRecipe.start(NuclearScienceBlocks.blockTeleporter.asItem(), 1)
 				//

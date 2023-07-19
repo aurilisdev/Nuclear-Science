@@ -5,7 +5,7 @@
       "tag": "forge:pellets/plutonium"
     },
     "R": {
-      "item": "nuclearscience:reactorcore"
+      "item": "nuclearscience:fissionreactorcore"
     },
     "S": {
       "tag": "forge:plates/stainlesssteel"
@@ -20,6 +20,6 @@
     "SPS"
   ],
   "result": {
-    "item": "nuclearscience:msrreactorcore"
+    "item": "nuclearscience:msreactorcore"
   }
 }

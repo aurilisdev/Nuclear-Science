@@ -18,14 +18,14 @@ public class TileControlRodAssembly extends GenericTile {
 
 	public static final Direction[] HORIZONTAL_DIRECTIONS = { Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST };
 
-	public Property<Integer> direction = property(new Property<>(PropertyType.Integer, "direction", Direction.DOWN.ordinal()));
+	public final Property<Integer> direction = property(new Property<>(PropertyType.Integer, "direction", Direction.DOWN.ordinal()));
 	public final Property<Integer> insertion = property(new Property<>(PropertyType.Integer, "insertion", 0));
 	public final Property<Boolean> isMSR = property(new Property<>(PropertyType.Boolean, "isMSR", false));
 
 	public TileControlRodAssembly(BlockPos pos, BlockState state) {
 		super(NuclearScienceBlockTypes.TILE_CONTROLRODASSEMBLY.get(), pos, state);
-		addComponent(new ComponentTickable());
-		addComponent(new ComponentPacketHandler());
+		addComponent(new ComponentTickable(this));
+		addComponent(new ComponentPacketHandler(this));
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class TileControlRodAssembly extends GenericTile {
 		isMSR.set(false);
 		for (Direction dir : HORIZONTAL_DIRECTIONS) {
 			BlockEntity tile = level.getBlockEntity(getBlockPos().relative(dir));
-			if (tile instanceof TileMSRReactorCore) {
+			if (tile instanceof TileMSReactorCore) {
 				isMSR.set(true);
 				direction.set(dir.ordinal());
 				break;
@@ -50,7 +50,7 @@ public class TileControlRodAssembly extends GenericTile {
 		isMSR.set(false);
 		for (Direction dir : HORIZONTAL_DIRECTIONS) {
 			BlockEntity tile = level.getBlockEntity(getBlockPos().relative(dir));
-			if (tile instanceof TileMSRReactorCore) {
+			if (tile instanceof TileMSReactorCore) {
 				isMSR.set(true);
 				direction.set(dir.ordinal());
 				break;

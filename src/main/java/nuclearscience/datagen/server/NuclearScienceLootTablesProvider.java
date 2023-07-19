@@ -15,32 +15,32 @@ public class NuclearScienceLootTablesProvider extends ElectrodynamicsLootTablesP
 	@Override
 	protected void addTables() {
 
-		addIETable(NuclearScienceBlocks.blockAtomicAssembler, NuclearScienceBlockTypes.TILE_ATOMICASSEMBLER);
-		addIEFTable(NuclearScienceBlocks.blockChemicalExtractor, NuclearScienceBlockTypes.TILE_CHEMICALEXTRACTOR);
+		addMachineTable(NuclearScienceBlocks.blockAtomicAssembler, NuclearScienceBlockTypes.TILE_ATOMICASSEMBLER, true, false, false, true, false);
+		addMachineTable(NuclearScienceBlocks.blockChemicalExtractor, NuclearScienceBlockTypes.TILE_CHEMICALEXTRACTOR, true, true, false, true, false);
 		addSimpleBlock(NuclearScienceBlocks.blockControlRodAssembly);
 		addSimpleBlock(NuclearScienceBlocks.blockElectromagnet);
 		addSimpleBlock(NuclearScienceBlocks.blockElectromagneticBooster);
 		addSimpleBlock(NuclearScienceBlocks.blockElectromagneticGlass);
 		addSimpleBlock(NuclearScienceBlocks.blockElectromagneticSwitch);
-		addIETable(NuclearScienceBlocks.blockFreezePlug, NuclearScienceBlockTypes.TILE_FREEZEPLUG);
-		addIETable(NuclearScienceBlocks.blockFuelReprocessor, NuclearScienceBlockTypes.TILE_FUELREPROCESSOR);
+		addMachineTable(NuclearScienceBlocks.blockFreezePlug, NuclearScienceBlockTypes.TILE_FREEZEPLUG, true, false, false, false, false);
+		addMachineTable(NuclearScienceBlocks.blockFuelReprocessor, NuclearScienceBlockTypes.TILE_FUELREPROCESSOR, true, false, false, true, false);
 		addSimpleBlock(NuclearScienceBlocks.blockFusionReactorCore);
-		addIEFTable(NuclearScienceBlocks.blockGasCentrifuge, NuclearScienceBlockTypes.TILE_GASCENTRIFUGE);
+		addMachineTable(NuclearScienceBlocks.blockGasCentrifuge, NuclearScienceBlockTypes.TILE_GASCENTRIFUGE, true, true, false, true, false);
 		addSimpleBlock(NuclearScienceBlocks.blockHeatExchanger);
 		addSimpleBlock(NuclearScienceBlocks.blocklead);
 		addSimpleBlock(NuclearScienceBlocks.blockMeltedReactor);
-		addIETable(NuclearScienceBlocks.blockMoltenSaltSupplier, NuclearScienceBlockTypes.TILE_MOLTENSALTSUPPLIER);
-		addIEFTable(NuclearScienceBlocks.blockMSRFuelPreProcessor, NuclearScienceBlockTypes.TILE_MSRFUELPREPROCESSOR);
-		addSimpleBlock(NuclearScienceBlocks.blockMsrReactorCore);
-		addIEFTable(NuclearScienceBlocks.blockNuclearBoiler, NuclearScienceBlockTypes.TILE_CHEMICALBOILER);
-		addIETable(NuclearScienceBlocks.blockParticleInjector, NuclearScienceBlockTypes.TILE_PARTICLEINJECTOR);
-		addETable(NuclearScienceBlocks.blockQuantumCapacitor, NuclearScienceBlockTypes.TILE_QUANTUMCAPACITOR);
-		addIEFTable(NuclearScienceBlocks.blockRadioactiveProcessor, NuclearScienceBlockTypes.TILE_RADIOACTIVEPROCESSOR);
+		addMachineTable(NuclearScienceBlocks.blockMoltenSaltSupplier, NuclearScienceBlockTypes.TILE_MOLTENSALTSUPPLIER, true, false, false, false, false);
+		addMachineTable(NuclearScienceBlocks.blockMSRFuelPreProcessor, NuclearScienceBlockTypes.TILE_MSRFUELPREPROCESSOR, true, true, false, true, false);
+		addSimpleBlock(NuclearScienceBlocks.blockMSReactorCore);
+		addMachineTable(NuclearScienceBlocks.blockNuclearBoiler, NuclearScienceBlockTypes.TILE_CHEMICALBOILER, true, true, false, true, false);
+		addMachineTable(NuclearScienceBlocks.blockParticleInjector, NuclearScienceBlockTypes.TILE_PARTICLEINJECTOR, true, false, false, true, false);
+		addMachineTable(NuclearScienceBlocks.blockQuantumCapacitor, NuclearScienceBlockTypes.TILE_QUANTUMCAPACITOR, false, false, false, true, false);
+		addMachineTable(NuclearScienceBlocks.blockRadioactiveProcessor, NuclearScienceBlockTypes.TILE_RADIOACTIVEPROCESSOR, true, true, false, false, false);
 		addSimpleBlock(NuclearScienceBlocks.blockRadioactiveSoil);
-		addITable(NuclearScienceBlocks.blockRadioisotopeGenerator, NuclearScienceBlockTypes.TILE_RADIOISOTOPEGENERATOR);
-		addITable(NuclearScienceBlocks.blockReactorCore, NuclearScienceBlockTypes.TILE_REACTORCORE);
+		addMachineTable(NuclearScienceBlocks.blockRadioisotopeGenerator, NuclearScienceBlockTypes.TILE_RADIOISOTOPEGENERATOR, true, false, false, false, false);
+		addMachineTable(NuclearScienceBlocks.blockFissionReactorCore, NuclearScienceBlockTypes.TILE_REACTORCORE, true, false, false, false, false);
 		addSimpleBlock(NuclearScienceBlocks.blockSiren);
-		addETable(NuclearScienceBlocks.blockTeleporter, NuclearScienceBlockTypes.TILE_TELEPORTER);
+		addMachineTable(NuclearScienceBlocks.blockTeleporter, NuclearScienceBlockTypes.TILE_TELEPORTER, false, false, false, true, false);
 		addSimpleBlock(NuclearScienceBlocks.blockTurbine);
 		addSimpleBlock(NuclearScienceBlocks.getBlock(SubtypeMoltenSaltPipe.vanadiumsteelceramic));
 

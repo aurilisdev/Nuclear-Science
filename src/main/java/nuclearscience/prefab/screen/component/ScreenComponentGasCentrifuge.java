@@ -4,9 +4,8 @@ import java.util.function.DoubleSupplier;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import electrodynamics.api.screen.IScreenWrapper;
 import electrodynamics.api.screen.ITexture;
-import electrodynamics.prefab.screen.component.ScreenComponentGeneric;
+import electrodynamics.prefab.screen.component.types.ScreenComponentGeneric;
 import electrodynamics.prefab.utilities.RenderingUtils;
 import net.minecraft.resources.ResourceLocation;
 import nuclearscience.References;
@@ -20,8 +19,8 @@ public class ScreenComponentGasCentrifuge extends ScreenComponentGeneric {
 	private final DoubleSupplier progressInfoHandlerProgressMiddle;
 	private final DoubleSupplier progressInfoHandlerProgressBottom;
 
-	public ScreenComponentGasCentrifuge(final DoubleSupplier progressInfoHandlerBulbs, final DoubleSupplier progressInfoHandlerProgressTop, final DoubleSupplier progressInfoHandlerProgressMiddle, DoubleSupplier progressInfoHandlerProgressBottom, final IScreenWrapper gui, final int x, final int y) {
-		super(GasCentrifugeTextures.OFF, gui, x, y);
+	public ScreenComponentGasCentrifuge(DoubleSupplier progressInfoHandlerBulbs, DoubleSupplier progressInfoHandlerProgressTop, DoubleSupplier progressInfoHandlerProgressMiddle, DoubleSupplier progressInfoHandlerProgressBottom, int x, int y) {
+		super(GasCentrifugeTextures.OFF, x, y);
 		this.progressInfoHandlerBulbs = progressInfoHandlerBulbs;
 		this.progressInfoHandlerProgressTop = progressInfoHandlerProgressTop;
 		this.progressInfoHandlerProgressMiddle = progressInfoHandlerProgressMiddle;

@@ -9,7 +9,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import nuclearscience.datagen.server.recipe.custom.fluiditem2fluid.NuclearScienceChemicalMixerRecipes;
-import nuclearscience.datagen.server.recipe.custom.fluiditem2fluid.NuclearScienceNuclaerBoilerRecipes;
+import nuclearscience.datagen.server.recipe.custom.fluiditem2gas.NuclearScienceNuclaerBoilerRecipes;
 import nuclearscience.datagen.server.recipe.custom.fluiditem2item.NuclearScienceChemicalExtractorRecipes;
 import nuclearscience.datagen.server.recipe.custom.fluiditem2item.NuclearScienceMSRFuelPreprocessorRecipes;
 import nuclearscience.datagen.server.recipe.custom.fluiditem2item.NuclearScienceRadioactiveProcessorRecipes;

@@ -49,52 +49,64 @@ public class MoltenSaltNetwork extends AbstractNetwork<IMoltenSaltPipe, SubtypeM
 
 	@Override
 	public Double emit(Double transfer, ArrayList<BlockEntity> ignored, boolean debug) {
-		if (transfer > 0) {
-			Set<BlockEntity> availableAcceptors = Sets.newHashSet(acceptorSet);
-			double heat = 0.0;
-			availableAcceptors.removeAll(ignored);
-			if (!availableAcceptors.isEmpty()) {
-				double perReceiver = transfer / availableAcceptors.size();
-				for (BlockEntity receiver : availableAcceptors) {
-					if (acceptorInputMap.containsKey(receiver)) {
-						Double rec = ((TileHeatExchanger) receiver).receiveHeat(perReceiver - getSize() * 5);
-						heat += rec;
-						transmittedThisTick += rec;
-						checkForOverload((int) transmittedThisTick);
-					}
-				}
-			}
-			return heat;
+		if (transfer <= 0) {
+			return 0.0;
 		}
-		return 0.0;
+		Set<BlockEntity> availableAcceptors = Sets.newHashSet(acceptorSet);
+
+		double heat = 0.0;
+
+		availableAcceptors.removeAll(ignored);
+
+		if (availableAcceptors.isEmpty()) {
+			return 0.0;
+		}
+
+		double perReceiver = transfer / availableAcceptors.size();
+		for (BlockEntity receiver : availableAcceptors) {
+			if (acceptorInputMap.containsKey(receiver)) {
+				Double rec = ((TileHeatExchanger) receiver).receiveHeat(perReceiver - getSize() * 5);
+				heat += rec;
+				transmittedThisTick += rec;
+				checkForOverload((int) transmittedThisTick);
+			}
+		}
+
+		return heat;
 	}
 
 	private boolean checkForOverload(int attemptSend) {
-		if (attemptSend >= networkMaxTransfer) {
-			HashSet<SubtypeMoltenSaltPipe> checkList = new HashSet<>();
-			for (SubtypeMoltenSaltPipe type : SubtypeMoltenSaltPipe.values()) {
-				if (type.maxTransfer <= attemptSend) {
-					checkList.add(type);
-				}
-			}
-			for (SubtypeMoltenSaltPipe index : checkList) {
-				for (IMoltenSaltPipe conductor : conductorTypeMap.get(index)) {
-					conductor.destroyViolently();
-				}
-			}
-			return true;
+		if (attemptSend <= networkMaxTransfer) {
+			return false;
 		}
-		return false;
+
+		HashSet<SubtypeMoltenSaltPipe> checkList = new HashSet<>();
+		for (SubtypeMoltenSaltPipe type : SubtypeMoltenSaltPipe.values()) {
+			if (type.maxTransfer <= attemptSend) {
+				checkList.add(type);
+			}
+		}
+		for (SubtypeMoltenSaltPipe index : checkList) {
+			for (IMoltenSaltPipe conductor : conductorTypeMap.get(index)) {
+				conductor.destroyViolently();
+			}
+		}
+		return true;
 	}
 
 	@Override
-	public boolean isConductor(BlockEntity tile) {
+	public boolean isConductor(BlockEntity tile, IMoltenSaltPipe requesterCable) {
 		return tile instanceof IMoltenSaltPipe;
 	}
 
 	@Override
 	public boolean isAcceptor(BlockEntity acceptor, Direction orientation) {
-		return acceptor instanceof TileHeatExchanger || isConductor(acceptor);
+		return acceptor instanceof TileHeatExchanger || isConductorClass(acceptor);
+	}
+
+	@Override
+	public boolean isConductorClass(BlockEntity tile) {
+		return tile instanceof IMoltenSaltPipe;
 	}
 
 	@Override
@@ -120,6 +132,7 @@ public class MoltenSaltNetwork extends AbstractNetwork<IMoltenSaltPipe, SubtypeM
 
 	@Override
 	public boolean canConnect(BlockEntity acceptor, Direction orientation) {
-		return acceptor instanceof TileHeatExchanger && orientation == Direction.UP || isConductor(acceptor);
+		return acceptor instanceof TileHeatExchanger && orientation == Direction.UP || isConductorClass(acceptor);
 	}
+
 }

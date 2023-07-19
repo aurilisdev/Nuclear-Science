@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import nuclearscience.common.tile.TileFusionReactorCore;
-import nuclearscience.prefab.utils.TextUtils;
+import nuclearscience.prefab.utils.NuclearTextUtils;
 
 public class RenderFusionReactorCore extends AbstractTileRenderer<TileFusionReactorCore> {
 
@@ -24,8 +24,8 @@ public class RenderFusionReactorCore extends AbstractTileRenderer<TileFusionReac
 		BlockPos pos = tileEntityIn.getBlockPos();
 		if (Minecraft.getInstance().player.distanceToSqr(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) <= 32) {
 
-			renderFloatingText(matrixStackIn, bufferIn, TextUtils.tooltip("deuteriumlevel", tileEntityIn.deuterium), 0.6f, 0.7f, 0.6f, 16777215, combinedLightIn);
-			renderFloatingText(matrixStackIn, bufferIn, TextUtils.tooltip("tritiumlevel", tileEntityIn.tritium), 0.6f, 0.3f, 0.6f, 16777215, combinedLightIn);
+			renderFloatingText(matrixStackIn, bufferIn, NuclearTextUtils.tooltip("deuteriumlevel", tileEntityIn.deuterium), 0.6f, 0.7f, 0.6f, 16777215, combinedLightIn);
+			renderFloatingText(matrixStackIn, bufferIn, NuclearTextUtils.tooltip("tritiumlevel", tileEntityIn.tritium), 0.6f, 0.3f, 0.6f, 16777215, combinedLightIn);
 		}
 	}
 

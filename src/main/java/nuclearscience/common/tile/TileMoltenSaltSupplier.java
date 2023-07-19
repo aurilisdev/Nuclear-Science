@@ -1,6 +1,8 @@
 package nuclearscience.common.tile;
 
 import electrodynamics.common.block.VoxelShapes;
+import electrodynamics.prefab.properties.Property;
+import electrodynamics.prefab.properties.PropertyType;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
@@ -28,16 +30,24 @@ import nuclearscience.registers.NuclearScienceItems;
 
 public class TileMoltenSaltSupplier extends GenericTile {
 
+	public static final double AMT_PER_SALT = 250;
+	public static final double AMT_PER_WASTE = 300;
+
 	protected CachedTileOutput output;
 
+	public final Property<Double> reactorWaste = property(new Property<>(PropertyType.Double, "reactorwaste", 0.0).setNoSave());
+
 	public TileMoltenSaltSupplier(BlockPos pos, BlockState state) {
+
 		super(NuclearScienceBlockTypes.TILE_MOLTENSALTSUPPLIER.get(), pos, state);
-		addComponent(new ComponentDirection());
-		addComponent(new ComponentTickable().tickServer(this::tickServer));
-		addComponent(new ComponentPacketHandler());
+		addComponent(new ComponentDirection(this));
+		addComponent(new ComponentTickable(this).tickServer(this::tickServer));
+		addComponent(new ComponentPacketHandler(this));
 		addComponent(new ComponentElectrodynamic(this).voltage(Constants.MOLTENSALTSUPPLIER_VOLTAGE).extractPower((x, y) -> TransferPack.EMPTY).input(Direction.UP).input(Direction.DOWN).maxJoules(Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK * 20));
-		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().inputs(1)).slotFaces(0, Direction.values()).valid((slot, stack, i) -> stack.getItem() == NuclearScienceItems.ITEM_LIFHT4PUF3.get()));
-		addComponent(new ComponentContainerProvider("container.moltensaltsupplier").createMenu((id, player) -> new ContainerMoltenSaltSupplier(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
+		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().inputs(1).outputs(1)).slotFaces(0, Direction.values()).slotFaces(1, Direction.values()).valid((slot, stack, i) -> stack.getItem() == NuclearScienceItems.ITEM_LIFHT4PUF3.get()));
+		addComponent(new ComponentContainerProvider("container.moltensaltsupplier", this).createMenu((id, player) -> new ContainerMoltenSaltSupplier(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
+
+		reactorWaste.setNoSave();
 	}
 
 	public void tickServer(ComponentTickable tickable) {
@@ -57,19 +67,55 @@ public class TileMoltenSaltSupplier extends GenericTile {
 
 		electro.joules(electro.getJoulesStored() - Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK);
 
-		if (tickable.getTicks() % 40 != 0) {
+		if (tickable.getTicks() % 40 == 0) {
+			output.update(worldPosition.relative(dir.getOpposite()));
+		}
+
+		ComponentInventory inv = getComponent(ComponentType.Inventory);
+
+		ItemStack fuel = inv.getItem(0);
+
+		if (!output.valid() || !(output.getSafe() instanceof TileMSReactorCore)) {
+			reactorWaste.set(0);
 			return;
 		}
-		output.update(worldPosition.relative(dir.getOpposite()));
-		ItemStack in = this.<ComponentInventory>getComponent(ComponentType.Inventory).getItem(0);
-		if (in.getCount() > 0 && output.valid() && output.getSafe() instanceof TileMSRReactorCore core) {
-			if (core.<ComponentDirection>getComponent(ComponentType.Direction).getDirection() == dir) {
-				if (TileMSRReactorCore.FUEL_CAPACITY - core.currentFuel.get() >= 250) {
-					in.shrink(1);
-					core.currentFuel.set(core.currentFuel.get() + 250);
-				}
-			}
+		
+		TileMSReactorCore core = output.getSafe();
+		reactorWaste.set(core.currentWaste.get());
+		
+		if(fuel.isEmpty()) {
+			return;
 		}
+
+		if (core.<ComponentDirection>getComponent(ComponentType.Direction).getDirection() != dir) {
+			return;
+		}
+
+		if (TileMSReactorCore.FUEL_CAPACITY - core.currentFuel.get() >= AMT_PER_SALT) {
+			fuel.shrink(1);
+			core.currentFuel.set(core.currentFuel.get() + AMT_PER_SALT);
+		}
+
+		
+
+		if (core.currentWaste.get() < AMT_PER_WASTE) {
+			return;
+		}
+
+		ItemStack waste = inv.getItem(1);
+
+		if (waste.getCount() >= waste.getMaxStackSize()) {
+			return;
+		}
+
+		if (waste.isEmpty()) {
+			inv.setItem(1, new ItemStack(NuclearScienceItems.ITEM_FISSILE_SALT.get()));
+		} else {
+			waste.grow(1);
+			inv.setItem(1, waste);
+		}
+
+		core.currentWaste.set(core.currentWaste.get() - AMT_PER_WASTE);
 
 	}
 

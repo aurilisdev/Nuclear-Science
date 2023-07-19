@@ -2,12 +2,12 @@ package nuclearscience.client.guidebook.chapters;
 
 import electrodynamics.client.guidebook.utils.components.Chapter;
 import electrodynamics.client.guidebook.utils.components.Module;
-import electrodynamics.client.guidebook.utils.pagedata.ImageWrapperObject;
-import electrodynamics.client.guidebook.utils.pagedata.TextWrapperObject;
+import electrodynamics.client.guidebook.utils.pagedata.graphics.ImageWrapperObject;
+import electrodynamics.client.guidebook.utils.pagedata.text.TextWrapperObject;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import nuclearscience.References;
-import nuclearscience.prefab.utils.TextUtils;
+import nuclearscience.prefab.utils.NuclearTextUtils;
 
 public class ChapterMisc extends Chapter {
 
@@ -24,12 +24,12 @@ public class ChapterMisc extends Chapter {
 
 	@Override
 	public MutableComponent getTitle() {
-		return TextUtils.guidebook("chapter.misc");
+		return NuclearTextUtils.guidebook("chapter.misc");
 	}
 
 	@Override
 	public void addData() {
-		pageData.add(new TextWrapperObject(TextUtils.guidebook("chapter.misc.l1")));
+		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.misc.l1")));
 		
 	}
 

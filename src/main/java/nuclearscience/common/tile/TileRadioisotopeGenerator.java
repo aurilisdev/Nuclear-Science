@@ -32,11 +32,11 @@ public class TileRadioisotopeGenerator extends GenericTile {
 
 	public TileRadioisotopeGenerator(BlockPos pos, BlockState state) {
 		super(NuclearScienceBlockTypes.TILE_RADIOISOTOPEGENERATOR.get(), pos, state);
-		addComponent(new ComponentTickable().tickServer(this::tickServer));
-		addComponent(new ComponentPacketHandler());
+		addComponent(new ComponentTickable(this).tickServer(this::tickServer));
+		addComponent(new ComponentPacketHandler(this));
 		addComponent(new ComponentElectrodynamic(this).voltage(Constants.RADIOISOTOPEGENERATOR_VOLTAGE).extractPower((x, y) -> TransferPack.EMPTY).output(Direction.UP).output(Direction.DOWN));
 		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().inputs(1)).slotFaces(0, Direction.values()).valid((slot, stack, i) -> !RadiationRegister.get(stack.getItem()).isNull()));
-		addComponent(new ComponentContainerProvider("container.radioisotopegenerator").createMenu((id, player) -> new ContainerRadioisotopeGenerator(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
+		addComponent(new ComponentContainerProvider("container.radioisotopegenerator", this).createMenu((id, player) -> new ContainerRadioisotopeGenerator(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 	}
 
 	public void tickServer(ComponentTickable tickable) {

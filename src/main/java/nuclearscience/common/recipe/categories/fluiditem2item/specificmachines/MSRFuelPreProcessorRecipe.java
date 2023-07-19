@@ -10,12 +10,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
+import nuclearscience.References;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 
 public class MSRFuelPreProcessorRecipe extends FluidItem2ItemRecipe {
 
 	public static final String RECIPE_GROUP = "msrfuel_preprocessor_recipe";
-	public static final String MOD_ID = nuclearscience.References.ID;
+	public static final String MOD_ID = References.ID;
 	public static final ResourceLocation RECIPE_ID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
 
 	public MSRFuelPreProcessorRecipe(ResourceLocation location, CountableIngredient[] inputItems, FluidIngredient[] inputFluids, ItemStack outputItem, double experience, int ticks, double usagePerTick, ProbableItem[] itemBiproducts, ProbableFluid[] fluidBiproudcts, ProbableGas[] gasBiproducts) {
