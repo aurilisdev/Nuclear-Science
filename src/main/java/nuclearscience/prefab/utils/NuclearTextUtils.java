@@ -11,8 +11,6 @@ import static electrodynamics.prefab.utilities.ElectroTextUtils.GAS_BASE;
 import static electrodynamics.prefab.utilities.ElectroTextUtils.TOOLTIP_BASE;
 import static electrodynamics.prefab.utilities.ElectroTextUtils.ADVANCEMENT_BASE;
 
-import java.text.DecimalFormat;
-
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -25,8 +23,6 @@ import nuclearscience.References;
  *
  */
 public class NuclearTextUtils {
-
-	public static final DecimalFormat FORMATTER = new DecimalFormat("0.0##");
 
 	public static MutableComponent tooltip(String key, Object... additional) {
 		return translated(TOOLTIP_BASE, key, additional);

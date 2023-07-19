@@ -2,16 +2,20 @@ package nuclearscience.common.item;
 
 import java.util.List;
 
+import electrodynamics.prefab.utilities.ElectroTextUtils;
+import electrodynamics.prefab.utilities.NBTUtils;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import nuclearscience.common.tile.TileTeleporter;
 import nuclearscience.prefab.utils.NuclearTextUtils;
 
@@ -23,46 +27,67 @@ public class ItemFrequencyCard extends Item {
 
 	@Override
 	public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
-		BlockEntity ent = context.getLevel().getBlockEntity(context.getClickedPos());
-		if (ent instanceof TileTeleporter tel && !ent.getLevel().isClientSide) {
-			CompoundTag nbt = stack.getOrCreateTag();
-			if (nbt.contains("world")) {
-				tel.xCoord = nbt.getInt("xCoord");
-				tel.yCoord = nbt.getInt("yCoord");
-				tel.zCoord = nbt.getInt("zCoord");
-				tel.world = nbt.getString("world");
-				context.getPlayer().sendSystemMessage(NuclearTextUtils.tooltip("frequencycard.linked", tel.world + ", " + tel.xCoord + ", " + tel.yCoord + ", " + tel.zCoord));
-			} else {
-				nbt.putInt("xCoord", ent.getBlockPos().getX());
-				nbt.putInt("yCoord", ent.getBlockPos().getY());
-				nbt.putInt("zCoord", ent.getBlockPos().getZ());
-				nbt.putString("world", ent.getLevel().dimension().location().getPath());
-			}
+		
+		Level level = context.getLevel();
+		
+		if (level.isClientSide) {
+			return super.onItemUseFirst(stack, context);
 		}
-		return super.onItemUseFirst(stack, context);
-	}
 
-	public static ServerLevel getFromNBT(ServerLevel base, String str) {
-		for (ServerLevel world : base.getLevel().getServer().getAllLevels()) {
-			if (world.dimension().location().getPath().equalsIgnoreCase(str)) {
-				return world;
+		if (context.getLevel().getBlockEntity(context.getClickedPos()) instanceof TileTeleporter teleporter) {
+
+			CompoundTag nbt = stack.getOrCreateTag();
+			if (nbt.contains(NBTUtils.DIMENSION)) {
+
+				BlockPos pos = readBlockPos(stack);
+				ResourceKey<Level> world = readDimension(stack);
+				
+				teleporter.destination.set(pos);
+				teleporter.dimension = world;
+				
+				MutableComponent worldKey = ElectroTextUtils.dimensionExists(world) ? ElectroTextUtils.dimension(world) : Component.literal(world.location().getPath());
+				
+				context.getPlayer().sendSystemMessage(NuclearTextUtils.tooltip("frequencycard.linked", worldKey.append(" " + pos.toShortString())));
+				
+			} else {
+				writeBlockPos(stack, teleporter.getBlockPos());
+				writeDimension(stack, teleporter.getLevel().dimension());
 			}
+
 		}
-		return null;
+
+		return super.onItemUseFirst(stack, context);
 	}
 
 	@Override
 	public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 		if (stack.hasTag()) {
-			CompoundTag nbt = stack.getTag();
-			int x = nbt.getInt("xCoord");
-			int y = nbt.getInt("yCoord");
-			int z = nbt.getInt("zCoord");
-			String world = nbt.getString("world");
-			tooltip.add(NuclearTextUtils.tooltip("frequencycard.linked", world + ", " + x + ", " + y + ", " + z));
+			BlockPos pos = readBlockPos(stack);
+			ResourceKey<Level> world = readDimension(stack);
+			
+			MutableComponent worldKey = ElectroTextUtils.dimensionExists(world) ? ElectroTextUtils.dimension(world) : Component.literal(world.location().getPath());
+			
+			tooltip.add(NuclearTextUtils.tooltip("frequencycard.linked", worldKey.append(" " + pos.toShortString())));
 		} else {
 			tooltip.add(NuclearTextUtils.tooltip("frequencycard.notag"));
 		}
 	}
+
+	public static void writeBlockPos(ItemStack item, BlockPos pos) {
+		item.getOrCreateTag().put(NBTUtils.LOCATION, NbtUtils.writeBlockPos(pos));
+	}
+
+	public static BlockPos readBlockPos(ItemStack item) {
+		return NbtUtils.readBlockPos(item.getOrCreateTag().getCompound(NBTUtils.LOCATION));
+	}
+
+	public static void writeDimension(ItemStack stack, ResourceKey<Level> dim) {
+		stack.getOrCreateTag().put(NBTUtils.DIMENSION, NBTUtils.writeDimensionToTag(dim));
+	}
+
+	public static ResourceKey<Level> readDimension(ItemStack stack) {
+		return NBTUtils.readDimensionFromTag(stack.getOrCreateTag().getCompound(NBTUtils.DIMENSION));
+	}
+
 }

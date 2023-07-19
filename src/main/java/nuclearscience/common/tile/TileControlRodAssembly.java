@@ -18,7 +18,7 @@ public class TileControlRodAssembly extends GenericTile {
 
 	public static final Direction[] HORIZONTAL_DIRECTIONS = { Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST };
 
-	public Property<Integer> direction = property(new Property<>(PropertyType.Integer, "direction", Direction.DOWN.ordinal()));
+	public final Property<Integer> direction = property(new Property<>(PropertyType.Integer, "direction", Direction.DOWN.ordinal()));
 	public final Property<Integer> insertion = property(new Property<>(PropertyType.Integer, "insertion", 0));
 	public final Property<Boolean> isMSR = property(new Property<>(PropertyType.Boolean, "isMSR", false));
 

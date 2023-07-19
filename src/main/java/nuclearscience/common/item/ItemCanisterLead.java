@@ -11,7 +11,7 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import nuclearscience.api.radiation.RadiationSystem;
-import nuclearscience.common.tags.NuclearScienceTags;
+import nuclearscience.common.fluid.IRadioactiveFluid;
 import nuclearscience.registers.NuclearScienceItems;
 
 public class ItemCanisterLead extends ItemCanister {
@@ -38,14 +38,14 @@ public class ItemCanisterLead extends ItemCanister {
 			
 			FluidStack fluidStack = cap.getFluidInTank(0);
 			
-			if(!fluidStack.getFluid().is(NuclearScienceTags.Fluids.URANIUM_HEXAFLUORIDE)) {
-				return;
-			}
+			if(fluidStack.getFluid() instanceof IRadioactiveFluid radioactive) {
 			
-			double radiationMultiplier = (double) fluidStack.getAmount() / (double) cap.getTankCapacity(0);
-			
-			RadiationSystem.emitRadiationFromLocation(world, new Location(entity.getX(), entity.getY(), entity.getZ()), radiationMultiplier * RAD_RANGE, radiationMultiplier * RAD_STRENGTH);
-			
+				double radiationMultiplier = (double) fluidStack.getAmount() / (double) cap.getTankCapacity(0);
+				
+				RadiationSystem.emitRadiationFromLocation(world, new Location(entity.getX(), entity.getY(), entity.getZ()), radiationMultiplier * RAD_RANGE, radiationMultiplier * RAD_STRENGTH);
+				
+			}	
+		
 		});
 	}
 

@@ -1,5 +1,7 @@
 package nuclearscience.common.tile;
 
+import electrodynamics.prefab.properties.Property;
+import electrodynamics.prefab.properties.PropertyType;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import electrodynamics.prefab.utilities.object.CachedTileOutput;
@@ -15,8 +17,10 @@ import nuclearscience.registers.NuclearScienceBlockTypes;
 import nuclearscience.registers.NuclearScienceBlocks;
 
 public class TilePlasma extends GenericTile {
-	public int ticksExisted;
-	public int spread = 6;
+	
+	public final Property<Integer> ticksExisted = property(new Property<>(PropertyType.Integer, "existed", 0).setNoUpdateClient());
+	public final Property<Integer> spread = property(new Property<>(PropertyType.Integer, "spread", 6).setNoUpdateClient());
+	
 	private CachedTileOutput output;
 
 	public TilePlasma(BlockPos pos, BlockState state) {
@@ -24,12 +28,16 @@ public class TilePlasma extends GenericTile {
 		addComponent(new ComponentTickable(this).tickServer(this::tickServer));
 	}
 
-	protected void tickServer(ComponentTickable tickable) {
-		ticksExisted++;
-		if (ticksExisted > 80) {
+	public void tickServer(ComponentTickable tickable) {
+		
+		ticksExisted.set(ticksExisted.get() + 1);
+		
+		if(ticksExisted.get() > 80) {
 			level.setBlockAndUpdate(worldPosition, Blocks.AIR.defaultBlockState());
+			return;
 		}
-		if (ticksExisted == 1 && spread > 0) {
+		
+		if (ticksExisted.get() == 1 && spread.get() > 0) {
 			for (Direction dir : Direction.values()) {
 				BlockPos offset = worldPosition.relative(dir);
 				BlockState state = level.getBlockState(offset);
@@ -42,16 +50,16 @@ public class TilePlasma extends GenericTile {
 				}
 				BlockEntity tile = level.getBlockEntity(offset);
 				if (tile instanceof TilePlasma plasma) {
-					if (plasma.ticksExisted > 1 && plasma.spread < spread) {
-						plasma.ticksExisted = ticksExisted - 1;
+					if (plasma.ticksExisted.get() > 1 && plasma.spread.get() < spread.get()) {
+						plasma.ticksExisted.set(ticksExisted.get() - 1);
 					}
 					if (didntExist) {
-						plasma.spread = spread - 1;
+						plasma.spread.set(spread.get() - 1);
 					}
 				}
 			}
 		}
-		if (ticksExisted > 1 && level.getBlockState(getBlockPos().relative(Direction.UP)).getBlock() instanceof IElectromagnet && level.getBlockState(getBlockPos().relative(Direction.UP, 2)).getBlock() == Blocks.WATER) {
+		if (ticksExisted.get() > 1 && level.getBlockState(getBlockPos().relative(Direction.UP)).getBlock() instanceof IElectromagnet && level.getBlockState(getBlockPos().relative(Direction.UP, 2)).getBlock() == Blocks.WATER) {
 			if (output == null) {
 				output = new CachedTileOutput(level, getBlockPos().relative(Direction.UP, 3));
 			} else if (output.getSafe() instanceof ISteamReceiver) {

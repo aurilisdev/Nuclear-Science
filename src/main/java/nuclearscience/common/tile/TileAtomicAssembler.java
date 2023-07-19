@@ -26,7 +26,8 @@ import nuclearscience.registers.NuclearScienceBlocks;
 import nuclearscience.registers.NuclearScienceItems;
 
 public class TileAtomicAssembler extends GenericTile {
-	public Property<Integer> progress = property(new Property<>(PropertyType.Integer, "progress", 0));
+	
+	public final Property<Integer> progress = property(new Property<>(PropertyType.Integer, "progress", 0));
 
 	public TileAtomicAssembler(BlockPos pos, BlockState state) {
 		super(NuclearScienceBlockTypes.TILE_ATOMICASSEMBLER.get(), pos, state);

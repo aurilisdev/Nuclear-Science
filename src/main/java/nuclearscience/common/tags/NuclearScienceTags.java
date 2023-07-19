@@ -9,7 +9,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.material.Fluid;
 import nuclearscience.common.fluid.types.FluidAmmonia;
-import nuclearscience.common.fluid.types.FluidUraniumHexafluoride;
 
 public class NuclearScienceTags {
 
@@ -66,7 +65,6 @@ public class NuclearScienceTags {
 
 	public static class Fluids {
 
-		public static final TagKey<Fluid> URANIUM_HEXAFLUORIDE = forgeTag(FluidUraniumHexafluoride.FORGE_TAG);
 		public static final TagKey<Fluid> AMMONIA = forgeTag(FluidAmmonia.FORGE_TAG);
 
 		private static void init() {
