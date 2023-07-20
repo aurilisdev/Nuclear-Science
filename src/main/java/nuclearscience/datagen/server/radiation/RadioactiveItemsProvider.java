@@ -74,6 +74,7 @@ public class RadioactiveItemsProvider implements DataProvider {
 
 	}
 
+	@SuppressWarnings("unused")
 	private void addItem(Item item, double radiationStrength, JsonObject json) {
 		json.addProperty(ForgeRegistries.ITEMS.getKey(item).toString(), radiationStrength);
 	}
