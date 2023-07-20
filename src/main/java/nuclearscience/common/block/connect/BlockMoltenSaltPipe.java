@@ -61,9 +61,8 @@ public class BlockMoltenSaltPipe extends AbstractRefreshingConnectBlock {
 		}
 		if (state.hasProperty(property)) {
 			return state.setValue(property, EnumConnectType.NONE);
-		} else {
-			return state;
 		}
+		return state;
 	}
 
 }
