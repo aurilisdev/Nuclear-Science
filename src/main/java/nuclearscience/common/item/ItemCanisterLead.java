@@ -15,7 +15,7 @@ import nuclearscience.common.fluid.IRadioactiveFluid;
 import nuclearscience.registers.NuclearScienceItems;
 
 public class ItemCanisterLead extends ItemCanister {
-	
+
 	public static final double RAD_RANGE = 10.0;
 	public static final double RAD_STRENGTH = 4.0;
 
@@ -23,29 +23,29 @@ public class ItemCanisterLead extends ItemCanister {
 
 	public ItemCanisterLead(Properties itemProperty) {
 		super(itemProperty);
-		//The regular canister now emits radiation if it has radioactive fluids in it
+		// The regular canister now emits radiation if it has radioactive fluids in it
 		INVENTORY_TICK_CONSUMERS.add((stack, world, entity, slot, isSelected) -> {
-			
-			if(ItemUtils.testItems(stack.getItem(), NuclearScienceItems.ITEM_CANISTERLEAD.get())) {
+
+			if (ItemUtils.testItems(stack.getItem(), NuclearScienceItems.ITEM_CANISTERLEAD.get())) {
 				return;
 			}
-			
+
 			IFluidHandlerItem cap = (IFluidHandlerItem) stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).cast().resolve().get();
-			
-			if(cap == null) {
+
+			if (cap == null) {
 				return;
 			}
-			
+
 			FluidStack fluidStack = cap.getFluidInTank(0);
-			
-			if(fluidStack.getFluid() instanceof IRadioactiveFluid radioactive) {
-			
+
+			if (fluidStack.getFluid() instanceof IRadioactiveFluid radioactive) {
+
 				double radiationMultiplier = (double) fluidStack.getAmount() / (double) cap.getTankCapacity(0);
-				
+
 				RadiationSystem.emitRadiationFromLocation(world, new Location(entity.getX(), entity.getY(), entity.getZ()), radiationMultiplier * RAD_RANGE, radiationMultiplier * RAD_STRENGTH);
-				
-			}	
-		
+
+			}
+
 		});
 	}
 

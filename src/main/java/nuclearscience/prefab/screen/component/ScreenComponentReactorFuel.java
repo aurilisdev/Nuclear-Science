@@ -29,11 +29,11 @@ public class ScreenComponentReactorFuel extends AbstractScreenComponentGauge {
 
 	@Override
 	protected int getScaledLevel() {
-		TileMSReactorCore core = ((GenericContainerBlockEntity<TileMSReactorCore>)((GenericScreen<?>) gui).getMenu()).getHostFromIntArray();
-		if(core == null) {
+		TileMSReactorCore core = ((GenericContainerBlockEntity<TileMSReactorCore>) ((GenericScreen<?>) gui).getMenu()).getHostFromIntArray();
+		if (core == null) {
 			return 0;
 		}
-		
+
 		return (int) ((GaugeTextures.BACKGROUND_DEFAULT.textureHeight() - 2) * (core.currentFuel.get()) / TileMSReactorCore.FUEL_CAPACITY);
 	}
 
@@ -45,8 +45,8 @@ public class ScreenComponentReactorFuel extends AbstractScreenComponentGauge {
 	@Override
 	protected List<? extends FormattedCharSequence> getTooltips() {
 		List<FormattedCharSequence> list = new ArrayList<>();
-		TileMSReactorCore core = ((GenericContainerBlockEntity<TileMSReactorCore>)((GenericScreen<?>) gui).getMenu()).getHostFromIntArray();
-		if(core == null) {
+		TileMSReactorCore core = ((GenericContainerBlockEntity<TileMSReactorCore>) ((GenericScreen<?>) gui).getMenu()).getHostFromIntArray();
+		if (core == null) {
 			return list;
 		}
 		list.add(ElectroTextUtils.ratio(ChatFormatter.formatFluidMilibuckets(core.currentFuel.get()), ChatFormatter.formatFluidMilibuckets(TileMSReactorCore.FUEL_CAPACITY)).withStyle(ChatFormatting.GRAY).getVisualOrderText());

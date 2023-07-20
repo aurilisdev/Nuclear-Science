@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.registers.NuclearScienceBlockTypes;
 
 public class TileControlRodAssembly extends GenericTile {
-	
+
 	public static final int MAX_EXTENSION = 100;
 	public static final int EXTENSION_PER_CLICK = 10;
 
@@ -58,7 +58,7 @@ public class TileControlRodAssembly extends GenericTile {
 
 		}
 	}
-	
+
 	@Override
 	public int getComparatorSignal() {
 		return (int) (((double) insertion.get() / (double) MAX_EXTENSION) * 15);

@@ -27,8 +27,8 @@ public class BlockControlRodAssembly extends GenericMachineBlock {
 	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
 		BlockEntity tile = worldIn.getBlockEntity(pos);
 		if (tile instanceof TileControlRodAssembly assembly) {
-			
-			if(player.isShiftKeyDown()) {
+
+			if (player.isShiftKeyDown()) {
 				assembly.insertion.set(assembly.insertion.get() - TileControlRodAssembly.EXTENSION_PER_CLICK);
 				if (assembly.insertion.get() < 0) {
 					assembly.insertion.set(TileControlRodAssembly.MAX_EXTENSION);
@@ -39,8 +39,7 @@ public class BlockControlRodAssembly extends GenericMachineBlock {
 					assembly.insertion.set(0);
 				}
 			}
-			
-			
+
 		}
 		return super.use(state, worldIn, pos, player, handIn, hit);
 	}

@@ -10,13 +10,13 @@ public enum NuclearArrows implements ITexture {
 	PARTICLE_INJECTOR_ARROWS(0, 0, 86, 48, 86, 48, new ResourceLocation(References.ID, "textures/screen/component/particleinjectorarrows.png"));
 
 	private final int textU;
-	private final int textV; 
-	private final int textWidth; 
+	private final int textV;
+	private final int textWidth;
 	private final int textHeight;
 	private final int imgWidth;
 	private final int imgHeight;
 	private final ResourceLocation loc;
-	
+
 	private NuclearArrows(int textU, int textV, int textWidth, int textHeight, int imgWidth, int imgHeight, ResourceLocation loc) {
 		this.textU = textU;
 		this.textV = textV;
@@ -26,8 +26,7 @@ public enum NuclearArrows implements ITexture {
 		this.imgHeight = imgHeight;
 		this.loc = loc;
 	}
-	
-	
+
 	@Override
 	public ResourceLocation getLocation() {
 		return loc;

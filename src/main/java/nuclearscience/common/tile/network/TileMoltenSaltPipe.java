@@ -1,5 +1,7 @@
 package nuclearscience.common.tile.network;
 
+import org.jetbrains.annotations.NotNull;
+
 import electrodynamics.prefab.properties.Property;
 import electrodynamics.prefab.properties.PropertyType;
 import net.minecraft.core.BlockPos;
@@ -9,7 +11,6 @@ import nuclearscience.common.block.connect.BlockMoltenSaltPipe;
 import nuclearscience.common.block.subtype.SubtypeMoltenSaltPipe;
 import nuclearscience.common.tile.generic.GenericTileMoltenSaltPipe;
 import nuclearscience.registers.NuclearScienceBlockTypes;
-import org.jetbrains.annotations.NotNull;
 
 public class TileMoltenSaltPipe extends GenericTileMoltenSaltPipe {
 	public Property<Double> transmit = property(new Property<>(PropertyType.Double, "transmit", 0.0));

@@ -27,18 +27,18 @@ import nuclearscience.registers.NuclearScienceBlockTypes;
 import nuclearscience.registers.NuclearScienceBlocks;
 
 public class TileMSReactorCore extends GenericTile {
-	
+
 	public static final int MELTDOWN_TEMPERATURE = 1000;
 	public static final double FUEL_CAPACITY = 1000;
 	public static final double FUEL_USAGE_RATE = 0.01;
-	
+
 	public static final double WASTE_CAP = 1000;
 	public static final double WASTE_PER_MB = 0.01;
-	
+
 	public Property<Double> temperature = property(new Property<>(PropertyType.Double, "temperature", TileFissionReactorCore.AIR_TEMPERATURE));
 	public Property<Double> currentFuel = property(new Property<>(PropertyType.Double, "currentfuel", 0.0));
 	public Property<Double> currentWaste = property(new Property<>(PropertyType.Double, "currentwaste", 0.0));
-	
+
 	public Property<Boolean> wasteIsFull = property(new Property<>(PropertyType.Boolean, "wasteisfull", false));
 
 	public int ticksOverheating = 0;
@@ -54,7 +54,7 @@ public class TileMSReactorCore extends GenericTile {
 	}
 
 	public void tickServer(ComponentTickable tick) {
-		
+
 		if (outputCache == null) {
 			outputCache = new CachedTileOutput(level, new BlockPos(worldPosition).relative(Direction.UP));
 		}
@@ -65,7 +65,7 @@ public class TileMSReactorCore extends GenericTile {
 			outputCache.update(new BlockPos(worldPosition).relative(Direction.UP));
 			plugCache.update(new BlockPos(worldPosition).relative(Direction.DOWN));
 		}
-		
+
 		double change = (temperature.get() - TileFissionReactorCore.AIR_TEMPERATURE) / 3000.0 + (temperature.get() - TileFissionReactorCore.AIR_TEMPERATURE) / 5000.0;
 		if (change != 0) {
 			temperature.set(temperature.get() - (change < 0.001 && change > 0 ? 0.001 : change > -0.001 && change < 0 ? -0.001 : change));
@@ -77,7 +77,7 @@ public class TileMSReactorCore extends GenericTile {
 		if (currentFuel.get() < FUEL_USAGE_RATE) {
 			return;
 		}
-		
+
 		int insertion = 0;
 		for (Direction dir : Direction.values()) {
 			if (dir != Direction.UP && dir != Direction.DOWN) {
@@ -95,22 +95,22 @@ public class TileMSReactorCore extends GenericTile {
 			double range = Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 2;
 			RadiationSystem.emitRadiationFromLocation(level, new Location(worldPosition), range, totstrength);
 		}
-		
+
 		double insertDecimal = (100 - insertion) / 100.0;
-		
+
 		double fuelUse = Math.min(currentFuel.get(), FUEL_USAGE_RATE * insertDecimal * Math.pow(2, Math.pow(temperature.get() / (MELTDOWN_TEMPERATURE - 100), 4)));
-		
+
 		double wasteProduced = Math.min(currentFuel.get(), WASTE_PER_MB * insertDecimal * Math.pow(2, Math.pow(temperature.get() / (MELTDOWN_TEMPERATURE - 100), 4)));
-		
-		if(currentWaste.get() > WASTE_CAP - wasteProduced) {
+
+		if (currentWaste.get() > WASTE_CAP - wasteProduced) {
 			wasteIsFull.set(true);
 			return;
 		}
-		
+
 		wasteIsFull.set(false);
-		
+
 		currentWaste.set(currentWaste.get() + wasteProduced);
-		
+
 		currentFuel.set(currentFuel.get() - fuelUse);
 		temperature.set((temperature.get() + (MELTDOWN_TEMPERATURE * insertDecimal * (1.2 + level.random.nextDouble() / 5.0) - temperature.get()) / 600.0));
 		if (outputCache.valid() && outputCache.getSafe() instanceof IMoltenSaltPipe) {

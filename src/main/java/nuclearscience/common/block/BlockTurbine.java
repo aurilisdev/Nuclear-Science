@@ -37,7 +37,7 @@ public class BlockTurbine extends GenericEntityBlockWaterloggable {
 	@Override
 	public void onRotate(ItemStack stack, BlockPos pos, Player player) {
 		super.onRotate(stack, pos, player);
-		if(player.level.isClientSide()) {
+		if (player.level.isClientSide()) {
 			return;
 		}
 		TileTurbine turbine = (TileTurbine) player.level.getBlockEntity(pos);
@@ -78,9 +78,9 @@ public class BlockTurbine extends GenericEntityBlockWaterloggable {
 	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
 		if (worldIn.isClientSide) {
 			return InteractionResult.SUCCESS;
-		} 
-		
-		if(!(player.getItemInHand(handIn).getItem() instanceof IWrenchItem)) {
+		}
+
+		if (!(player.getItemInHand(handIn).getItem() instanceof IWrenchItem)) {
 			return InteractionResult.CONSUME;
 		}
 		return InteractionResult.FAIL;

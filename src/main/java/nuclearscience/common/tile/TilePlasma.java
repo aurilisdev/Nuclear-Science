@@ -17,10 +17,10 @@ import nuclearscience.registers.NuclearScienceBlockTypes;
 import nuclearscience.registers.NuclearScienceBlocks;
 
 public class TilePlasma extends GenericTile {
-	
+
 	public final Property<Integer> ticksExisted = property(new Property<>(PropertyType.Integer, "existed", 0).setNoUpdateClient());
 	public final Property<Integer> spread = property(new Property<>(PropertyType.Integer, "spread", 6).setNoUpdateClient());
-	
+
 	private CachedTileOutput output;
 
 	public TilePlasma(BlockPos pos, BlockState state) {
@@ -29,14 +29,14 @@ public class TilePlasma extends GenericTile {
 	}
 
 	public void tickServer(ComponentTickable tickable) {
-		
+
 		ticksExisted.set(ticksExisted.get() + 1);
-		
-		if(ticksExisted.get() > 80) {
+
+		if (ticksExisted.get() > 80) {
 			level.setBlockAndUpdate(worldPosition, Blocks.AIR.defaultBlockState());
 			return;
 		}
-		
+
 		if (ticksExisted.get() == 1 && spread.get() > 0) {
 			for (Direction dir : Direction.values()) {
 				BlockPos offset = worldPosition.relative(dir);

@@ -4,22 +4,22 @@ import static nuclearscience.registers.NuclearScienceBlocks.blockAtomicAssembler
 import static nuclearscience.registers.NuclearScienceBlocks.blockChemicalExtractor;
 import static nuclearscience.registers.NuclearScienceBlocks.blockControlRodAssembly;
 import static nuclearscience.registers.NuclearScienceBlocks.blockElectromagneticSwitch;
+import static nuclearscience.registers.NuclearScienceBlocks.blockFissionReactorCore;
 import static nuclearscience.registers.NuclearScienceBlocks.blockFreezePlug;
 import static nuclearscience.registers.NuclearScienceBlocks.blockFuelReprocessor;
 import static nuclearscience.registers.NuclearScienceBlocks.blockFusionReactorCore;
 import static nuclearscience.registers.NuclearScienceBlocks.blockGasCentrifuge;
 import static nuclearscience.registers.NuclearScienceBlocks.blockHeatExchanger;
 import static nuclearscience.registers.NuclearScienceBlocks.blockMSRFuelPreProcessor;
+import static nuclearscience.registers.NuclearScienceBlocks.blockMSReactorCore;
 import static nuclearscience.registers.NuclearScienceBlocks.blockMeltedReactor;
 import static nuclearscience.registers.NuclearScienceBlocks.blockMoltenSaltSupplier;
-import static nuclearscience.registers.NuclearScienceBlocks.blockMSReactorCore;
 import static nuclearscience.registers.NuclearScienceBlocks.blockNuclearBoiler;
 import static nuclearscience.registers.NuclearScienceBlocks.blockParticleInjector;
 import static nuclearscience.registers.NuclearScienceBlocks.blockPlasma;
 import static nuclearscience.registers.NuclearScienceBlocks.blockQuantumCapacitor;
 import static nuclearscience.registers.NuclearScienceBlocks.blockRadioactiveProcessor;
 import static nuclearscience.registers.NuclearScienceBlocks.blockRadioisotopeGenerator;
-import static nuclearscience.registers.NuclearScienceBlocks.blockFissionReactorCore;
 import static nuclearscience.registers.NuclearScienceBlocks.blockSiren;
 import static nuclearscience.registers.NuclearScienceBlocks.blockTeleporter;
 import static nuclearscience.registers.NuclearScienceBlocks.blockTurbine;
@@ -36,6 +36,7 @@ import nuclearscience.common.tile.TileAtomicAssembler;
 import nuclearscience.common.tile.TileChemicalExtractor;
 import nuclearscience.common.tile.TileControlRodAssembly;
 import nuclearscience.common.tile.TileElectromagneticSwitch;
+import nuclearscience.common.tile.TileFissionReactorCore;
 import nuclearscience.common.tile.TileFreezePlug;
 import nuclearscience.common.tile.TileFuelReprocessor;
 import nuclearscience.common.tile.TileFusionReactorCore;
@@ -51,7 +52,6 @@ import nuclearscience.common.tile.TilePlasma;
 import nuclearscience.common.tile.TileQuantumCapacitor;
 import nuclearscience.common.tile.TileRadioactiveProcessor;
 import nuclearscience.common.tile.TileRadioisotopeGenerator;
-import nuclearscience.common.tile.TileFissionReactorCore;
 import nuclearscience.common.tile.TileSiren;
 import nuclearscience.common.tile.TileSteamFunnel;
 import nuclearscience.common.tile.TileTeleporter;
@@ -85,7 +85,7 @@ public class NuclearScienceBlockTypes {
 	public static final RegistryObject<BlockEntityType<TileMoltenSaltPipe>> TILE_MOLTENSALTPIPE = BLOCK_ENTITY_TYPES.register("moltensaltpipegenerictile", () -> new BlockEntityType<>(TileMoltenSaltPipe::new, BlockMoltenSaltPipe.PIPESET, null));
 	public static final RegistryObject<BlockEntityType<TileSiren>> TILE_SIREN = BLOCK_ENTITY_TYPES.register("siren", () -> new BlockEntityType<>(TileSiren::new, Sets.newHashSet(blockSiren), null));
 	public static final RegistryObject<BlockEntityType<TileAtomicAssembler>> TILE_ATOMICASSEMBLER = BLOCK_ENTITY_TYPES.register("atomicassembler", () -> new BlockEntityType<>(TileAtomicAssembler::new, Sets.newHashSet(blockAtomicAssembler), null));
-	
+
 	public static final RegistryObject<BlockEntityType<TileSteamFunnel>> TILE_STEAMFUNNEL = BLOCK_ENTITY_TYPES.register("steamfunnel", () -> new BlockEntityType<>(TileSteamFunnel::new, Sets.newHashSet(NuclearScienceBlocks.blockSteamFunnel), null));
 
 }

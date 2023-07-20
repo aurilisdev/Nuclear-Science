@@ -30,7 +30,7 @@ import nuclearscience.registers.NuclearScienceBlocks;
 public class ParticleAcceleratorAntiMatterRecipeCategory extends AbstractRecipeCategory<PsuedoItem2ItemRecipe> {
 
 	public static final BackgroundObject BACK_WRAP = new BackgroundObject(132, 66);
-	
+
 	public static final ItemSlotObject MATTER_SLOT = new ItemSlotObject(SlotType.NORMAL, 12, 2, RecipeIngredientRole.INPUT);
 	public static final ItemSlotObject CELL_SLOT = new ItemSlotObject(SlotType.NORMAL, 12, 39, RecipeIngredientRole.INPUT);
 	public static final ItemSlotObject OUTPUT_SLOT = new ItemSlotObject(SlotType.NORMAL, 101, 20, RecipeIngredientRole.OUTPUT);
@@ -38,45 +38,45 @@ public class ParticleAcceleratorAntiMatterRecipeCategory extends AbstractRecipeC
 	public static final ArrowAnimatedObject ANIM_RIGHT_ARROW = new ArrowAnimatedObject(NuclearJeiTextures.PARTICLEACCELERATOR_AMARROW_OFF, NuclearJeiTextures.PARTICLEACCELERATOR_AMARROW_ON, 17, 6, StartDirection.LEFT);
 
 	public static final LabelWrapperGeneric POWER_LABEL = new LabelWrapperGeneric(0xFF808080, 58, 2, false, ChatFormatter.getChatDisplayShort(960, DisplayUnit.VOLTAGE).append(" ").append(ChatFormatter.getChatDisplayShort(Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE, DisplayUnit.JOULES)));
-	//public static final LabelWrapperGeneric COLLISION_LABEL = new LabelWrapperGeneric(0xFF808080, 58, 132, true, NuclearTextUtils.jeiTranslated("particalaccelerator.antimatter.collision"));
+	// public static final LabelWrapperGeneric COLLISION_LABEL = new LabelWrapperGeneric(0xFF808080, 58, 132, true, NuclearTextUtils.jeiTranslated("particalaccelerator.antimatter.collision"));
 
 	public static final int ANIM_TIME = 50;
 
 	public static ItemStack INPUT_MACHINE = new ItemStack(NuclearScienceBlocks.blockParticleInjector);
 
 	public static final String RECIPE_GROUP = "particalacceleratorantimatter";
-	
+
 	public static final RecipeType<PsuedoItem2ItemRecipe> RECIPE_TYPE = RecipeType.create(References.ID, RECIPE_GROUP, PsuedoItem2ItemRecipe.class);
 
 	public ParticleAcceleratorAntiMatterRecipeCategory(IGuiHelper guiHelper) {
 		super(guiHelper, NuclearTextUtils.jeiTranslated(RECIPE_GROUP), INPUT_MACHINE, BACK_WRAP, RECIPE_TYPE, ANIM_TIME);
-		
+
 		setInputSlots(guiHelper, MATTER_SLOT, CELL_SLOT);
 		setOutputSlots(guiHelper, OUTPUT_SLOT);
 		setAnimatedArrows(guiHelper, ANIM_RIGHT_ARROW);
 		setLabels(POWER_LABEL);
 	}
-	
+
 	@Override
 	public List<List<ItemStack>> getItemInputs(PsuedoItem2ItemRecipe recipe) {
 		List<List<ItemStack>> inputs = new ArrayList<>();
-		
+
 		inputs.add(getMatterItems());
 		inputs.add(Arrays.asList(recipe.INPUTS.get(0).getItems()));
-		
+
 		return inputs;
 	}
-	
+
 	public static List<ItemStack> getMatterItems() {
 		List<Item> items = new ArrayList<>(ForgeRegistries.ITEMS.getValues());
 		List<ItemStack> matter = new ArrayList<>();
-		
+
 		items.forEach(item -> {
-			if(!(item instanceof AirItem)) {
+			if (!(item instanceof AirItem)) {
 				matter.add(new ItemStack(item));
 			}
 		});
-		
+
 		return matter;
 	}
 

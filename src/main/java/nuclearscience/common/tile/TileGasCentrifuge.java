@@ -15,10 +15,10 @@ import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentGasHandlerMulti;
 import electrodynamics.prefab.tile.components.type.ComponentInventory;
+import electrodynamics.prefab.tile.components.type.ComponentInventory.InventoryBuilder;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import electrodynamics.prefab.tile.components.type.ComponentInventory.InventoryBuilder;
 import electrodynamics.prefab.utilities.object.Location;
 import electrodynamics.registers.ElectrodynamicsRegistries;
 import net.minecraft.core.BlockPos;
@@ -84,12 +84,12 @@ public class TileGasCentrifuge extends GenericTile implements ITickableSound {
 	public void process(ComponentProcessor processor) {
 		ComponentInventory inv = getComponent(ComponentType.Inventory);
 		ComponentGasHandlerMulti multi = getComponent(ComponentType.GasHandler);
-		//ComponentFluidHandlerMulti multi = getComponent(ComponentType.FluidHandler);
+		// ComponentFluidHandlerMulti multi = getComponent(ComponentType.FluidHandler);
 		spinSpeed.set(processor.operatingSpeed.get().intValue());
 		double processed = REQUIRED / 60.0;
 		GasTank tank = multi.getInputTanks()[0];
-		
-		if(ElectrodynamicsRegistries.gasRegistry().tags().getTag(NuclearScienceTags.Gases.URANIUM_HEXAFLUORIDE).contains(tank.getGas().getGas()) && tank.getGasAmount() >= processed) {
+
+		if (ElectrodynamicsRegistries.gasRegistry().tags().getTag(NuclearScienceTags.Gases.URANIUM_HEXAFLUORIDE).contains(tank.getGas().getGas()) && tank.getGasAmount() >= processed) {
 			tank.drain(processed, GasAction.EXECUTE);
 		}
 
@@ -180,7 +180,7 @@ public class TileGasCentrifuge extends GenericTile implements ITickableSound {
 	public boolean shouldPlaySound() {
 		return spinSpeed.get() > 0;
 	}
-	
+
 	@Override
 	public int getComparatorSignal() {
 		return isRunning.get() ? 15 : 0;

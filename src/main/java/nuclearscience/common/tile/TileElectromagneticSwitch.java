@@ -1,12 +1,13 @@
 package nuclearscience.common.tile;
 
+import org.jetbrains.annotations.NotNull;
+
 import electrodynamics.prefab.tile.GenericTile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.registers.NuclearScienceBlockTypes;
-import org.jetbrains.annotations.NotNull;
 
 public class TileElectromagneticSwitch extends GenericTile {
 	public Direction lastDirection;

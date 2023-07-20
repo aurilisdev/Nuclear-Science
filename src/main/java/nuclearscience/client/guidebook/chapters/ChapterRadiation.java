@@ -18,7 +18,7 @@ import nuclearscience.registers.NuclearScienceItems;
 public class ChapterRadiation extends Chapter {
 
 	private static final ImageWrapperObject LOGO = new ImageWrapperObject(0, 0, 0, 0, 32, 32, 32, 32, new ResourceLocation(References.ID, "textures/item/uranium235.png"));
-	
+
 	public ChapterRadiation(Module module) {
 		super(module);
 	}
@@ -37,7 +37,7 @@ public class ChapterRadiation extends Chapter {
 	public void addData() {
 		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.radiation.l1")).setIndentions(1));
 		blankLine();
-		for(Item item : RadiationRegister.getRadioactiveItems()) {
+		for (Item item : RadiationRegister.getRadioactiveItems()) {
 			pageData.add(new TextWrapperObject(item.getDescription()).setSeparateStart());
 			pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.radiation.radrating", RadiationRegister.get(item).getRadiationStrength())).setSeparateStart().setIndentions(1));
 		}
@@ -51,7 +51,7 @@ public class ChapterRadiation extends Chapter {
 		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.radiation.l6")).setIndentions(1).setSeparateStart());
 		pageData.add(new TextWrapperObject(NuclearScienceItems.ITEM_ANTIDOTE.get().getDescription().copy().withStyle(ChatFormatting.BOLD)));
 		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.radiation.l7")));
-		
+
 	}
 
 }

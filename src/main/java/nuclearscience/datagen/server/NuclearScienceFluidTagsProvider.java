@@ -17,7 +17,7 @@ public class NuclearScienceFluidTagsProvider extends FluidTagsProvider {
 	protected void addTags() {
 
 		tag(NuclearScienceTags.Fluids.AMMONIA).add(NuclearScienceFluids.fluidAmmonia);
-		//tag(NuclearScienceTags.Fluids.URANIUM_HEXAFLUORIDE).add(NuclearScienceFluids.fluidUraniumHexafluoride);
+		// tag(NuclearScienceTags.Fluids.URANIUM_HEXAFLUORIDE).add(NuclearScienceFluids.fluidUraniumHexafluoride);
 
 	}
 

@@ -36,7 +36,7 @@ public class NuclearScienceTags {
 
 		public static final TagKey<Item> DUST_THORIUM = forgeTag("dusts/thorium");
 		public static final TagKey<Item> DUST_FISSILE = forgeTag("dusts/fissile");
-		
+
 		public static final TagKey<Item> SALT_FISSILE = forgeTag("salts/fissile");
 
 		public static final TagKey<Item> OXIDE_PLUTONIUM = forgeTag("oxide/plutonium");
@@ -68,27 +68,26 @@ public class NuclearScienceTags {
 		public static final TagKey<Fluid> AMMONIA = forgeTag(FluidAmmonia.FORGE_TAG);
 
 		private static void init() {
-			
+
 		}
 
 		private static TagKey<Fluid> forgeTag(String name) {
 			return FluidTags.create(new ResourceLocation("forge", name));
 		}
 	}
-	
+
 	public static class Gases {
-		
+
 		public static final TagKey<Gas> URANIUM_HEXAFLUORIDE = forgeTag("uranium_hexafluoride");
-		
-		
+
 		private static void init() {
-			
+
 		}
-		
+
 		private static TagKey<Gas> forgeTag(String name) {
 			return create(new ResourceLocation("forge", name));
 		}
-		
+
 		public static TagKey<Gas> create(ResourceLocation loc) {
 			return TagKey.create(ElectrodynamicsRegistries.GAS_REGISTRY_KEY, loc);
 		}

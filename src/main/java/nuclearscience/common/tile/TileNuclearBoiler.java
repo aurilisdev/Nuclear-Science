@@ -33,11 +33,11 @@ import nuclearscience.registers.NuclearScienceSounds;
 public class TileNuclearBoiler extends GenericTile implements ITickableSound {
 
 	public static final int MAX_FLUID_TANK_CAPACITY = 5000;
-	
+
 	public static final double MAX_GAS_TANK_CAPACITY = 5000;
 	public static final double MAX_TEMPERATURE = 1000;
 	public static final int MAX_PRESSURE = 10;
-	
+
 	private boolean isSoundPlaying = false;
 
 	public TileNuclearBoiler(BlockPos pos, BlockState state) {

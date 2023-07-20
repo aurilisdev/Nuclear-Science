@@ -8,15 +8,15 @@ package nuclearscience.api.turbine;
  *
  */
 public interface ISteamReceiver {
-	
+
 	/**
 	 * 
 	 * @param temperature: The temperature of the steam
-	 * @param amount: The amount of steam
+	 * @param amount:      The amount of steam
 	 * @return How much steam was accepted
 	 */
 	public double receiveSteam(double temperature, double amount);
-	
+
 	public boolean isStillValid();
 
 }

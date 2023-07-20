@@ -132,7 +132,8 @@ public class TileTurbine extends GenericTile implements ITickableSound, ISteamRe
 			if (output.valid()) {
 				TransferPack transfer = TransferPack.joulesVoltage(steam.get() * (hasCore.get() ? 1.111 : 1), currentVoltage.get());
 				ElectricityUtils.receivePower(output.getSafe(), Direction.DOWN, transfer, false);
-				steam.set(Math.max(steam.get() - Math.max(75, steam.get()), 0));			}
+				steam.set(Math.max(steam.get() - Math.max(75, steam.get()), 0));
+			}
 		} else {
 			if (wait.get() <= 0) {
 				currentVoltage.set(0);

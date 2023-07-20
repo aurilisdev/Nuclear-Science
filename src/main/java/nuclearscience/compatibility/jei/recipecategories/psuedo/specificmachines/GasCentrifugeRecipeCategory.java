@@ -30,7 +30,7 @@ import nuclearscience.registers.NuclearScienceBlocks;
 public class GasCentrifugeRecipeCategory extends AbstractRecipeCategory<PsuedoGasCentrifugeRecipe> {
 
 	public static final BackgroundObject BACK_WRAP = new BackgroundObject(132, 68);
-	
+
 	public static final ScreenObject GASCENTRIFUGE_ARROW_STATIC = new ScreenObject(NuclearJeiTextures.GASCENTRIFUGE_ARROW_STATIC, 19, 5);
 
 	public static final ItemSlotObject OUTPUT_SLOT_1 = new ItemSlotObject(SlotType.NORMAL, 113, 2, RecipeIngredientRole.OUTPUT);
@@ -44,7 +44,7 @@ public class GasCentrifugeRecipeCategory extends AbstractRecipeCategory<PsuedoGa
 	public static final LabelWrapperGeneric U235 = new LabelWrapperGeneric(0xFF616161, 7, 36, false, ChatFormatter.getChatDisplayShort(TileGasCentrifuge.PERCENT_U235 * 100, DisplayUnit.PERCENTAGE));
 	public static final LabelWrapperGeneric U238 = new LabelWrapperGeneric(0xFF616161, 28, 36, false, ChatFormatter.getChatDisplayShort((1 - TileGasCentrifuge.PERCENT_U235) * 100, DisplayUnit.PERCENTAGE));
 	public static final LabelWrapperGeneric BIPROD = new LabelWrapperGeneric(0xFF616161, 49, 36, false, ChatFormatter.getChatDisplayShort(TileGasCentrifuge.WASTE_MULTIPLIER * 100, DisplayUnit.PERCENTAGE));
-	
+
 	public static final LabelWrapperGeneric POWER_LABEL = new LabelWrapperGeneric(0xFF808080, 58, 2, false, ChatFormatter.getChatDisplayShort(960, DisplayUnit.VOLTAGE).append(" ").append(ChatFormatter.getChatDisplayShort(Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE, DisplayUnit.JOULES)));
 
 	public static final int ANIM_TIME = 100;
@@ -52,18 +52,18 @@ public class GasCentrifugeRecipeCategory extends AbstractRecipeCategory<PsuedoGa
 	public static ItemStack INPUT_MACHINE = new ItemStack(NuclearScienceBlocks.blockGasCentrifuge);
 
 	public static final String RECIPE_GROUP = "gascentrifuge";
-	
+
 	public static final RecipeType<PsuedoGasCentrifugeRecipe> RECIPE_TYPE = RecipeType.create(References.ID, RECIPE_GROUP, PsuedoGasCentrifugeRecipe.class);
 
 	public GasCentrifugeRecipeCategory(IGuiHelper guiHelper) {
 		super(guiHelper, NuclearTextUtils.jeiTranslated(RECIPE_GROUP), INPUT_MACHINE, BACK_WRAP, RECIPE_TYPE, ANIM_TIME);
-		
+
 		setOutputSlots(guiHelper, OUTPUT_SLOT_1, OUTPUT_SLOT_2, BIPRODUCT_SLOT);
 		setGasInputs(guiHelper, IN_GAUGE);
 		setAnimatedArrows(guiHelper, ANIM_RIGHT_ARROW);
 		setScreenObjects(guiHelper, GASCENTRIFUGE_ARROW_STATIC);
 		setLabels(U235, U238, BIPROD, POWER_LABEL);
-		
+
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class GasCentrifugeRecipeCategory extends AbstractRecipeCategory<PsuedoGa
 		outputs.add(recipe.biproduct);
 		return outputs;
 	}
-	
+
 	@Override
 	public List<List<GasStack>> getGasInputs(PsuedoGasCentrifugeRecipe recipe) {
 		List<List<GasStack>> inputs = new ArrayList<>();

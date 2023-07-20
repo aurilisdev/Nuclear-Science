@@ -163,15 +163,14 @@ public class EntityParticle extends Entity {
 							} else {
 								checkRot = direction.getClockWise().getOpposite();
 								testNextBlock = level.getBlockState(getPos.relative(checkRot));
-								if (testNextBlock.getBlock() == Blocks.AIR || testNextBlock.getBlock() == NuclearScienceBlocks.blockElectromagneticSwitch) {
-									BlockPos floor = blockPosition();
-									direction = checkRot;
-									setPos(floor.getX() + 0.5, floor.getY() + 0.5, floor.getZ() + 0.5);
-								} else {
+								if ((testNextBlock.getBlock() != Blocks.AIR) && (testNextBlock.getBlock() != NuclearScienceBlocks.blockElectromagneticSwitch)) {
 									level.explode(this, getX(), getY(), getZ(), speed, BlockInteraction.DESTROY);
 									removeAfterChangingDimensions();
 									break;
 								}
+								BlockPos floor = blockPosition();
+								direction = checkRot;
+								setPos(floor.getX() + 0.5, floor.getY() + 0.5, floor.getZ() + 0.5);
 							}
 						}
 					} else {

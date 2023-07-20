@@ -30,7 +30,7 @@ public class ChapterMisc extends Chapter {
 	@Override
 	public void addData() {
 		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.misc.l1")));
-		
+
 	}
 
 }

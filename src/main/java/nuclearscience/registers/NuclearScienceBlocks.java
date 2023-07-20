@@ -19,6 +19,7 @@ import nuclearscience.common.block.BlockControlRodAssembly;
 import nuclearscience.common.block.BlockElectromagnet;
 import nuclearscience.common.block.BlockElectromagneticBooster;
 import nuclearscience.common.block.BlockElectromagneticSwitch;
+import nuclearscience.common.block.BlockFissionReactorCore;
 import nuclearscience.common.block.BlockFuelReprocessor;
 import nuclearscience.common.block.BlockFusionReactorCore;
 import nuclearscience.common.block.BlockMSRFuelPreprocessor;
@@ -29,7 +30,6 @@ import nuclearscience.common.block.BlockQuantumCapacitor;
 import nuclearscience.common.block.BlockRadioactiveAir;
 import nuclearscience.common.block.BlockRadioactiveProcessor;
 import nuclearscience.common.block.BlockRadioactiveSoil;
-import nuclearscience.common.block.BlockFissionReactorCore;
 import nuclearscience.common.block.BlockTeleporter;
 import nuclearscience.common.block.BlockTurbine;
 import nuclearscience.common.block.connect.BlockMoltenSaltPipe;
@@ -80,7 +80,7 @@ public class NuclearScienceBlocks {
 	public static BlockRadioactiveSoil blockRadioactiveSoil;
 	public static BlockRadioactiveAir blockRadioactiveAir;
 	public static Block blocklead;
-	
+
 	public static GenericMachineBlock blockSteamFunnel;
 
 	static {

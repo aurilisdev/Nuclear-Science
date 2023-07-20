@@ -14,7 +14,7 @@ import nuclearscience.registers.NuclearScienceBlocks;
 public class ChapterGasCentrifuge extends Chapter {
 
 	private static final ItemWrapperObject LOGO = new ItemWrapperObject(7, 10, 32, 32, 32, 2.0F, NuclearScienceBlocks.blockGasCentrifuge.asItem());
-	
+
 	public ChapterGasCentrifuge(Module module) {
 		super(module);
 	}
@@ -28,7 +28,7 @@ public class ChapterGasCentrifuge extends Chapter {
 	public MutableComponent getTitle() {
 		return NuclearTextUtils.guidebook("chapter.centrifuge");
 	}
-	
+
 	@Override
 	public void addData() {
 		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.centrifuge.l1")).setIndentions(1));

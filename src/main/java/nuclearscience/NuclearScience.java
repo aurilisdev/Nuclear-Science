@@ -55,7 +55,7 @@ public class NuclearScience {
 
 	@SubscribeEvent
 	public static void onLoadEvent(FMLLoadCompleteEvent event) {
-		
+
 	}
 
 	@SubscribeEvent

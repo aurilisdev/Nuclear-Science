@@ -140,7 +140,7 @@ public class TileFuelReprocessor extends GenericTile implements ITickableSound {
 	public boolean shouldPlaySound() {
 		return isProcessorActive();
 	}
-	
+
 	@Override
 	public int getComparatorSignal() {
 		return isProcessorActive() ? 15 : 0;

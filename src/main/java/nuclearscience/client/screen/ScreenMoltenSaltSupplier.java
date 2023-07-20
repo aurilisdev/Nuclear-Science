@@ -46,15 +46,14 @@ public class ScreenMoltenSaltSupplier extends GenericScreen<ContainerMoltenSaltS
 			}
 		});
 		/*
-		addComponent(new ScreenComponentMultiLabel(0, 0, stack -> {
-			Component label = NuclearTextUtils.gui("saltsupplier.waste");
-			
-			int width = font.width(label) / 2;
-			
-			font.draw(stack, label, 88 - width, 23, 0);
-			
-			
-		}));
-		*/
+		 * addComponent(new ScreenComponentMultiLabel(0, 0, stack -> { Component label = NuclearTextUtils.gui("saltsupplier.waste");
+		 * 
+		 * int width = font.width(label) / 2;
+		 * 
+		 * font.draw(stack, label, 88 - width, 23, 0);
+		 * 
+		 * 
+		 * }));
+		 */
 	}
 }

@@ -24,7 +24,7 @@ public class ScreenParticleInjector extends GenericScreen<ContainerParticleInjec
 
 	public ScreenParticleInjector(ContainerParticleInjector container, Inventory playerInventory, Component title) {
 		super(container, playerInventory, title);
-		
+
 		imageHeight += 10;
 		inventoryLabelY += 10;
 

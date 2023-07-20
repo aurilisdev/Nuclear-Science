@@ -9,9 +9,9 @@ import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
 import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentInventory;
+import electrodynamics.prefab.tile.components.type.ComponentInventory.InventoryBuilder;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import electrodynamics.prefab.tile.components.type.ComponentInventory.InventoryBuilder;
 import electrodynamics.prefab.utilities.BlockEntityUtils;
 import electrodynamics.prefab.utilities.object.CachedTileOutput;
 import electrodynamics.prefab.utilities.object.TransferPack;
@@ -79,11 +79,11 @@ public class TileMoltenSaltSupplier extends GenericTile {
 			reactorWaste.set(0);
 			return;
 		}
-		
+
 		TileMSReactorCore core = output.getSafe();
 		reactorWaste.set(core.currentWaste.get());
-		
-		if(fuel.isEmpty()) {
+
+		if (fuel.isEmpty()) {
 			return;
 		}
 
@@ -95,8 +95,6 @@ public class TileMoltenSaltSupplier extends GenericTile {
 			fuel.shrink(1);
 			core.currentFuel.set(core.currentFuel.get() + AMT_PER_SALT);
 		}
-
-		
 
 		if (core.currentWaste.get() < AMT_PER_WASTE) {
 			return;

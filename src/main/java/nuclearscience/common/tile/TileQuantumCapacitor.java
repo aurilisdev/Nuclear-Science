@@ -2,6 +2,8 @@ package nuclearscience.common.tile;
 
 import java.util.UUID;
 
+import org.jetbrains.annotations.NotNull;
+
 import electrodynamics.api.capability.ElectrodynamicsCapabilities;
 import electrodynamics.prefab.properties.Property;
 import electrodynamics.prefab.properties.PropertyType;
@@ -27,14 +29,13 @@ import net.minecraftforge.energy.IEnergyStorage;
 import nuclearscience.common.inventory.container.ContainerQuantumCapacitor;
 import nuclearscience.common.world.QuantumCapacitorData;
 import nuclearscience.registers.NuclearScienceBlockTypes;
-import org.jetbrains.annotations.NotNull;
 
 public class TileQuantumCapacitor extends GenericTile implements IEnergyStorage {
 	public static final double DEFAULT_MAX_JOULES = Double.MAX_VALUE;
 	public static final double DEFAULT_VOLTAGE = 1920.0;
 	public Property<Double> outputJoules = property(new Property<>(PropertyType.Double, "outputJoules", 359.0));
 	public Property<Integer> frequency = property(new Property<>(PropertyType.Integer, "frequency", 0));
-	public Property<Double> storedJoules = property(new Property<>(PropertyType.Double, "capjoules", 0.0));//Work around for now until we make a capability for the overworld
+	public Property<Double> storedJoules = property(new Property<>(PropertyType.Double, "capjoules", 0.0));// Work around for now until we make a capability for the overworld
 	public Property<UUID> uuid = property(new Property<>(PropertyType.UUID, "uuid", UUID.randomUUID()));
 	private CachedTileOutput outputCache;
 	private CachedTileOutput outputCache2;
@@ -43,8 +44,7 @@ public class TileQuantumCapacitor extends GenericTile implements IEnergyStorage 
 		super(NuclearScienceBlockTypes.TILE_QUANTUMCAPACITOR.get(), pos, state);
 		addComponent(new ComponentTickable(this).tickServer(this::tickServer));
 		addComponent(new ComponentPacketHandler(this));
-		addComponent(new ComponentElectrodynamic(this).voltage(16 * ElectrodynamicsCapabilities.DEFAULT_VOLTAGE).output(Direction.DOWN).output(Direction.UP).input(Direction.WEST).input(Direction.EAST).input(Direction.SOUTH).input(Direction.NORTH)
-				.receivePower(this::receivePower).setJoules(this::setJoulesStored).getJoules(this::getJoulesStored));
+		addComponent(new ComponentElectrodynamic(this).voltage(16 * ElectrodynamicsCapabilities.DEFAULT_VOLTAGE).output(Direction.DOWN).output(Direction.UP).input(Direction.WEST).input(Direction.EAST).input(Direction.SOUTH).input(Direction.NORTH).receivePower(this::receivePower).setJoules(this::setJoulesStored).getJoules(this::getJoulesStored));
 		addComponent(new ComponentInventory(this));
 		addComponent(new ComponentContainerProvider("container.quantumcapacitor", this).createMenu((id, player) -> new ContainerQuantumCapacitor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 
@@ -96,7 +96,7 @@ public class TileQuantumCapacitor extends GenericTile implements IEnergyStorage 
 			if (!debug) {
 				if (transfer.getVoltage() == DEFAULT_VOLTAGE) {
 					joules += received;
-					
+
 				}
 				QuantumCapacitorData.get(level).setJoules(uuid.get(), frequency.get(), joules);
 				if (transfer.getVoltage() > DEFAULT_VOLTAGE) {

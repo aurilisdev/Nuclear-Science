@@ -11,7 +11,7 @@ import nuclearscience.registers.NuclearScienceBlocks;
 public class ChapterTurbines extends Chapter {
 
 	private static final ItemWrapperObject LOGO = new ItemWrapperObject(7, 10, 32, 32, 32, 2.0F, NuclearScienceBlocks.blockTurbine.asItem());
-	
+
 	public ChapterTurbines(Module module) {
 		super(module);
 	}
@@ -25,7 +25,7 @@ public class ChapterTurbines extends Chapter {
 	public MutableComponent getTitle() {
 		return NuclearTextUtils.guidebook("chapter.turbines");
 	}
-	
+
 	@Override
 	public void addData() {
 		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.turbines.l1")).setIndentions(1));
@@ -34,7 +34,7 @@ public class ChapterTurbines extends Chapter {
 		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.turbines.tempvoltage", ">1515", 480)).setIndentions(1).setSeparateStart());
 		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.turbines.l2")).setSeparateStart());
 		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.turbines.l3")).setIndentions(1).setSeparateStart());
-		
+
 	}
 
 }
