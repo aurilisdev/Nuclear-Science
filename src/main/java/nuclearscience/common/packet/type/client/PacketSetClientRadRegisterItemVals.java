@@ -1,4 +1,4 @@
-package nuclearscience.common.packet.type;
+package nuclearscience.common.packet.type.client;
 
 import java.util.HashMap;
 import java.util.function.Supplier;

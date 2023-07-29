@@ -20,6 +20,7 @@ import nuclearscience.api.radiation.RadiationRegister;
 import nuclearscience.client.ClientRegister;
 import nuclearscience.common.packet.NetworkHandler;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
+import nuclearscience.common.reloadlistener.AtomicAssemblerBlacklistRegister;
 import nuclearscience.common.reloadlistener.RadioactiveItemLoader;
 import nuclearscience.common.settings.Constants;
 import nuclearscience.common.tags.NuclearScienceTags;
@@ -51,6 +52,7 @@ public class NuclearScience {
 		NetworkHandler.init();
 		NuclearScienceTags.init();
 		RadioactiveItemLoader.INSTANCE = new RadioactiveItemLoader().subscribeAsSyncable(NetworkHandler.CHANNEL);
+		AtomicAssemblerBlacklistRegister.INSTANCE = new AtomicAssemblerBlacklistRegister().subscribeAsSyncable(NetworkHandler.CHANNEL);
 	}
 
 	@SubscribeEvent
