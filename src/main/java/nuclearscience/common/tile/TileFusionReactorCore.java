@@ -11,12 +11,19 @@ import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import nuclearscience.common.settings.Constants;
 import nuclearscience.registers.NuclearScienceBlockTypes;
 import nuclearscience.registers.NuclearScienceBlocks;
+import nuclearscience.registers.NuclearScienceItems;
 
 public class TileFusionReactorCore extends GenericTile {
 
@@ -65,4 +72,39 @@ public class TileFusionReactorCore extends GenericTile {
 		}
 		electro.joules(electro.getJoulesStored() - Constants.FUSIONREACTOR_USAGE_PER_TICK);
 	}
+
+	@Override
+	public InteractionResult use(Player player, InteractionHand hand, BlockHitResult result) {
+
+		ItemStack inHand = player.getItemInHand(hand);
+
+		Item itemInHand = inHand.getItem();
+
+		if (itemInHand == NuclearScienceItems.ITEM_CELLDEUTERIUM.get() || itemInHand == NuclearScienceItems.ITEM_CELLTRITIUM.get()) {
+
+			boolean isTritium = itemInHand == NuclearScienceItems.ITEM_CELLTRITIUM.get();
+
+			int count = isTritium ? tritium.get() : deuterium.get();
+
+			int added = Math.min(inHand.getCount(), Constants.FUSIONREACTOR_MAXSTORAGE - count);
+
+			if (added > 0) {
+				if (!level.isClientSide()) {
+					inHand.setCount(inHand.getCount() - added);
+
+					if (isTritium) {
+						tritium.set(tritium.get() + added);
+					} else {
+						deuterium.set(deuterium.get() + added);
+					}
+				}
+
+				return InteractionResult.CONSUME;
+			}
+
+		}
+
+		return InteractionResult.FAIL;
+	}
+
 }

@@ -7,9 +7,13 @@ import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import electrodynamics.prefab.utilities.object.CachedTileOutput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import nuclearscience.api.fusion.IElectromagnet;
 import nuclearscience.api.turbine.ISteamReceiver;
 import nuclearscience.common.settings.Constants;
@@ -68,4 +72,10 @@ public class TilePlasma extends GenericTile {
 			}
 		}
 	}
+	
+	@Override
+	public InteractionResult use(Player arg0, InteractionHand arg1, BlockHitResult arg2) {
+		return InteractionResult.FAIL;
+	}
+
 }

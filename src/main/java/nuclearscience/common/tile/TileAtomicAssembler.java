@@ -140,4 +140,11 @@ public class TileAtomicAssembler extends GenericTile {
 		return true;
 
 	}
+	
+	@Override
+	public void onInventoryChange(ComponentInventory inv, int index) {
+		// TODO Auto-generated method stub
+		super.onInventoryChange(inv, index);
+	}
+	
 }

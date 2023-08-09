@@ -100,8 +100,8 @@ public class TileParticleInjector extends GenericTile {
 	}
 
 	public void process(ComponentProcessor processor) {
-		ComponentElectrodynamic electro = getComponent(ComponentType.Electrodynamic);
-		electro.joules(electro.getJoulesStored() - Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE);
+		//ComponentElectrodynamic electro = getComponent(ComponentType.Electrodynamic);
+		//electro.joules(electro.getJoulesStored() - Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE);
 		timeSinceSpawn = 100;
 		Direction dir = this.<ComponentDirection>getComponent(ComponentType.Direction).getDirection();
 		ItemStack stack = this.<ComponentInventory>getComponent(ComponentType.Inventory).getItem(0);
