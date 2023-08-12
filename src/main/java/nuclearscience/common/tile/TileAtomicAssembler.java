@@ -16,7 +16,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.ShulkerBoxBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import nuclearscience.common.inventory.container.ContainerAtomicAssembler;
@@ -45,8 +44,7 @@ public class TileAtomicAssembler extends GenericTile {
 		ComponentElectrodynamic electro = getComponent(ComponentType.Electrodynamic);
 		ItemStack input = inv.getItem(6);
 		ItemStack output = inv.getItem(7);
-		boolean validItem = (ItemStack.isSame(input, output) && output.getCount() + 1 <= output.getMaxStackSize() || output.isEmpty()) && !input.isEmpty() && !ItemUtils.testItems(input.getItem(), NuclearScienceItems.ITEM_CELLDARKMATTER.get()) && !input.getCapability(ForgeCapabilities.ITEM_HANDLER).isPresent();
-		validItem = validItem && !(input.getItem() instanceof BlockItem bitem && bitem.getBlock() instanceof ShulkerBoxBlock) && input.getItem() != NuclearScienceBlocks.blockQuantumCapacitor.asItem();
+		boolean validItem = (ItemStack.isSame(input, output) && output.getCount() + 1 <= output.getMaxStackSize() || output.isEmpty()) && !input.isEmpty() && validateDupeItem(input);
 		boolean canProcess = electro.getJoulesStored() >= Constants.ATOMICASSEMBLER_USAGE_PER_TICK && validItem;
 		if (canProcess) {
 			for (int index = 0; index < 6; index++) {
@@ -88,5 +86,27 @@ public class TileAtomicAssembler extends GenericTile {
 				output.setCount(output.getCount() + 1);
 			}
 		}
+	}
+
+	private boolean validateDupeItem(ItemStack stack) {
+
+		if (stack.hasTag()) { // this should filter out shulker boxes with items
+			return false;
+		}
+
+		if (ItemUtils.testItems(stack.getItem(), NuclearScienceItems.ITEM_CELLDARKMATTER.get()) && !stack.getCapability(ForgeCapabilities.ITEM_HANDLER).isPresent()) {
+			return false;
+		}
+
+		if (stack.getItem() instanceof BlockItem blockItem) {
+
+			if (blockItem.getBlock() == NuclearScienceBlocks.blockQuantumCapacitor) {
+				return false;
+			}
+
+		}
+
+		return true;
+
 	}
 }
