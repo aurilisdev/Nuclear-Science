@@ -6,7 +6,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import nuclearscience.prefab.utils.NuclearTextUtils;
 
 public class UnifiedNuclearScienceRegister {
-	
+
 	public static void register(IEventBus bus) {
 		NuclearScienceBlocks.BLOCKS.register(bus);
 		NuclearScienceItems.ITEMS.register(bus);
@@ -39,8 +39,8 @@ public class UnifiedNuclearScienceRegister {
 
 		// Misc
 		BlockItemDescriptable.addDescription(() -> NuclearScienceBlocks.blockQuantumCapacitor, ElectroTextUtils.voltageTooltip(1920));
-		
+
 		BlockItemDescriptable.addDescription(() -> NuclearScienceBlocks.blockSteamFunnel, NuclearTextUtils.tooltip("steamfunneluse"));
 	}
-	
+
 }

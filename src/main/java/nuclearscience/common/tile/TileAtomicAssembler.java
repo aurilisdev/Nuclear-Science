@@ -8,9 +8,9 @@ import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
 import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentInventory;
+import electrodynamics.prefab.tile.components.type.ComponentInventory.InventoryBuilder;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import electrodynamics.prefab.tile.components.type.ComponentInventory.InventoryBuilder;
 import electrodynamics.prefab.utilities.ItemUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -140,11 +140,5 @@ public class TileAtomicAssembler extends GenericTile {
 		return true;
 
 	}
-	
-	@Override
-	public void onInventoryChange(ComponentInventory inv, int index) {
-		// TODO Auto-generated method stub
-		super.onInventoryChange(inv, index);
-	}
-	
+
 }

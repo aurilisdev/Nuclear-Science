@@ -21,13 +21,13 @@ public class ScreenFissionReactorCore extends GenericScreen<ContainerReactorCore
 
 	public ScreenFissionReactorCore(ContainerReactorCore container, Inventory playerInventory, Component title) {
 		super(container, playerInventory, title);
-		
+
 		imageHeight += 10;
 		inventoryLabelY += 10;
-		
+
 		addComponent(new ScreenComponentGeneric(NuclearArrows.FISSION_REACTOR_ARROW_LR, 59, 29));
 		addComponent(new ScreenComponentGeneric(NuclearArrows.FISSION_REACTOR_ARROW_DOWN, 117, 53));
-		
+
 		addComponent(new ScreenComponentSimpleLabel(titleLabelX, titleLabelY + 24, height, 4210752, NuclearTextUtils.gui("fissionreactor.deuterium")));
 		addComponent(new ScreenComponentMultiLabel(0, 0, stack -> {
 			TileFissionReactorCore core = menu.getHostFromIntArray();
@@ -39,7 +39,7 @@ public class ScreenFissionReactorCore extends GenericScreen<ContainerReactorCore
 				font.draw(stack, NuclearTextUtils.gui("fissionreactor.warning"), titleLabelX, (float) titleLabelY + 65, 16711680);
 			}
 		}));
-		
+
 	}
 
 }

@@ -15,5 +15,5 @@ public class BlockControlRodAssembly extends GenericMachineBlock {
 	public RenderShape getRenderShape(BlockState state) {
 		return RenderShape.ENTITYBLOCK_ANIMATED;
 	}
-	
+
 }

@@ -123,10 +123,10 @@ public class RadioactiveItemLoader extends SimplePreparableReloadListener<JsonOb
 		tags.forEach((tag, value) -> {
 			ForgeRegistries.ITEMS.tags().getTag(tag).forEach(item -> {
 
-				if(RadiationRegister.get(item).isNull()) {
+				if (RadiationRegister.get(item).isNull()) {
 					RadiationRegister.register(item, new FieldRadioactiveObject(value));
 				}
-				
+
 			});
 		});
 
@@ -144,9 +144,9 @@ public class RadioactiveItemLoader extends SimplePreparableReloadListener<JsonOb
 			ServerPlayer player = event.getPlayer();
 			HashMap<Item, Double> items = new HashMap<>();
 			RadiationRegister.getMapForType(RadioactiveSource.ITEM).forEach((item, radSource) -> {
-				
+
 				items.put((Item) item, radSource.getRadiationStrength());
-				
+
 			});
 			PacketSetClientRadRegisterItemVals packet = new PacketSetClientRadRegisterItemVals(items);
 			PacketTarget target = player == null ? PacketDistributor.ALL.noArg() : PacketDistributor.PLAYER.with(() -> player);
@@ -157,5 +157,5 @@ public class RadioactiveItemLoader extends SimplePreparableReloadListener<JsonOb
 	private static boolean isJson(final ResourceLocation filename) {
 		return filename.getPath().contains(FILE_NAME + JSON_EXTENSION);
 	}
-	
+
 }

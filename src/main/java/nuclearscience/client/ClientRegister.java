@@ -13,8 +13,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.event.ModelEvent.RegisterAdditional;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
@@ -23,16 +23,17 @@ import nuclearscience.client.guidebook.ModuleNuclearScience;
 import nuclearscience.client.render.entity.RenderParticle;
 import nuclearscience.client.render.tile.RenderAtomicAssembler;
 import nuclearscience.client.render.tile.RenderChemicalExtractor;
+import nuclearscience.client.render.tile.RenderFissionReactorCore;
 import nuclearscience.client.render.tile.RenderFusionReactorCore;
 import nuclearscience.client.render.tile.RenderGasCentrifuge;
 import nuclearscience.client.render.tile.RenderNuclearBoiler;
 import nuclearscience.client.render.tile.RenderQuantumCapacitor;
-import nuclearscience.client.render.tile.RenderFissionReactorCore;
 import nuclearscience.client.render.tile.RenderRodAssembly;
 import nuclearscience.client.render.tile.RenderTeleporter;
 import nuclearscience.client.render.tile.RenderTurbine;
 import nuclearscience.client.screen.ScreenAtomicAssembler;
 import nuclearscience.client.screen.ScreenChemicalExtractor;
+import nuclearscience.client.screen.ScreenFissionReactorCore;
 import nuclearscience.client.screen.ScreenFreezePlug;
 import nuclearscience.client.screen.ScreenGasCentrifuge;
 import nuclearscience.client.screen.ScreenMSRFuelPreProcessor;
@@ -43,7 +44,6 @@ import nuclearscience.client.screen.ScreenParticleInjector;
 import nuclearscience.client.screen.ScreenQuantumCapacitor;
 import nuclearscience.client.screen.ScreenRadioactiveProcessor;
 import nuclearscience.client.screen.ScreenRadioisotopeGenerator;
-import nuclearscience.client.screen.ScreenFissionReactorCore;
 import nuclearscience.registers.NuclearScienceBlockTypes;
 import nuclearscience.registers.NuclearScienceEntities;
 import nuclearscience.registers.NuclearScienceMenuTypes;
@@ -54,7 +54,7 @@ public class ClientRegister {
 
 	public static HashMap<ResourceLocation, TextureAtlasSprite> CACHED_TEXTUREATLASSPRITES = new HashMap<>();
 	private static final List<ResourceLocation> CUSTOM_TEXTURES = new ArrayList<>();
-	
+
 	@SubscribeEvent
 	public static void onModelEvent(RegisterAdditional event) {
 		event.register(MODEL_GASCENTRIFUGECENTER);
@@ -75,8 +75,8 @@ public class ClientRegister {
 	public static final ResourceLocation MODEL_FISSIONREACTORDEUTERIUM = new ResourceLocation(References.ID + ":block/fissionreactordeuterium");
 	public static final ResourceLocation MODEL_CONTROLRODASSEMBLYSTRUCTURE = new ResourceLocation(References.ID + ":block/controlrodassemblystructure");
 	public static final ResourceLocation MODEL_CONTROLRODASSEMBLYSROD = new ResourceLocation(References.ID + ":block/controlrodassemblyrod");
-	//public static final ResourceLocation TEXTURE_REACTORCOREEMPTY = new ResourceLocation(References.ID + ":textures/model/fissionreactorcore.png");
-	
+	// public static final ResourceLocation TEXTURE_REACTORCOREEMPTY = new ResourceLocation(References.ID + ":textures/model/fissionreactorcore.png");
+
 	public static final ResourceLocation TEXTURE_JEIBLACKHOLE = new ResourceLocation(References.ID + ":screen/jei/particleaccelerator_dmblackhole");
 
 	public static void setup() {
@@ -117,11 +117,11 @@ public class ClientRegister {
 	public static boolean shouldMultilayerRender(RenderType type) {
 		return type == RenderType.translucent() || type == RenderType.solid();
 	}
-	
+
 	static {
 		CUSTOM_TEXTURES.add(ClientRegister.TEXTURE_JEIBLACKHOLE);
 	}
-	
+
 	@SubscribeEvent
 	public static void addCustomTextureAtlases(TextureStitchEvent.Pre event) {
 		if (event.getAtlas().location().equals(TextureAtlas.LOCATION_BLOCKS)) {

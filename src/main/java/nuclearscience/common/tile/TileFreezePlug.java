@@ -10,9 +10,9 @@ import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
 import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentInventory;
+import electrodynamics.prefab.tile.components.type.ComponentInventory.InventoryBuilder;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import electrodynamics.prefab.tile.components.type.ComponentInventory.InventoryBuilder;
 import electrodynamics.prefab.utilities.object.TransferPack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -64,7 +64,7 @@ public class TileFreezePlug extends GenericTile {
 
 		isFrozen.set(true);
 
-		double bonus = 1.0 + ((double) (stack.getCount() - 1) / 63.0);
+		double bonus = 1.0 + ((stack.getCount() - 1) / 63.0);
 
 		saltBonus.set(bonus);
 
@@ -73,7 +73,7 @@ public class TileFreezePlug extends GenericTile {
 	public boolean isFrozen() {
 		return isFrozen.get();
 	}
-	
+
 	public double getSaltBonus() {
 		return saltBonus.get();
 	}

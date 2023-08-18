@@ -18,7 +18,7 @@ public class ChapterFusionReactor extends Chapter {
 	public ChapterFusionReactor(Module module) {
 		super(module);
 	}
-	
+
 	@Override
 	public ItemWrapperObject getLogo() {
 		return LOGO;
@@ -51,7 +51,7 @@ public class ChapterFusionReactor extends Chapter {
 		pageData.add(new ImageWrapperObject(0, 0, 0, 0, 150, 75, 150, 75, new ResourceLocation(References.ID, "textures/screen/guidebook/fusionreactor12.png")));
 		pageData.add(new ImageWrapperObject(0, 0, 0, 0, 150, 75, 150, 75, new ResourceLocation(References.ID, "textures/screen/guidebook/fusionreactor13.png")));
 		pageData.add(new ImageWrapperObject(0, 0, 0, 0, 150, 75, 150, 75, new ResourceLocation(References.ID, "textures/screen/guidebook/fusionreactor14.png")));
-		
+
 	}
 
 }

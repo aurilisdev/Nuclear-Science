@@ -20,7 +20,7 @@ public class ChapterOtherMachines extends Chapter {
 	public ChapterOtherMachines(Module module) {
 		super(module);
 	}
-	
+
 	@Override
 	public ItemWrapperObject getLogo() {
 		return LOGO;
@@ -33,19 +33,19 @@ public class ChapterOtherMachines extends Chapter {
 
 	@Override
 	public void addData() {
-		
-		//QUantum Capacitor
+
+		// QUantum Capacitor
 		pageData.add(new TextWrapperObject(NuclearScienceBlocks.blockQuantumCapacitor.asItem().getDescription().copy().withStyle(ChatFormatting.BOLD)).setCentered().setSeparateStart());
 		pageData.add(new ItemWrapperObject(7 + ScreenGuidebook.TEXT_WIDTH / 2 - 16, 5, 32, 32, 32, 2.0F, NuclearScienceBlocks.blockQuantumCapacitor.asItem()));
 		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.othermachines.quantumcapacitor1")).setIndentions(1).setSeparateStart());
-		
-		//Teleporter
+
+		// Teleporter
 		pageData.add(new TextWrapperObject(NuclearScienceBlocks.blockTeleporter.asItem().getDescription().copy().withStyle(ChatFormatting.BOLD)).setCentered().setNewPage());
 		pageData.add(new ItemWrapperObject(7 + ScreenGuidebook.TEXT_WIDTH / 2 - 16, 5, 32, 32, 32, 2.0F, NuclearScienceBlocks.blockTeleporter.asItem()));
 		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.othermachines.teleporter1")).setIndentions(1).setSeparateStart());
 		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.othermachines.teleporter2")).setIndentions(1).setSeparateStart());
-		
-		//Atomic Assembler
+
+		// Atomic Assembler
 		pageData.add(new TextWrapperObject(NuclearScienceBlocks.blockAtomicAssembler.asItem().getDescription().copy().withStyle(ChatFormatting.BOLD)).setCentered().setNewPage());
 		pageData.add(new ItemWrapperObject(7 + ScreenGuidebook.TEXT_WIDTH / 2 - 16, 5, 32, 32, 32, 2.0F, NuclearScienceBlocks.blockAtomicAssembler.asItem()));
 		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.othermachines.atomicassembler1")).setIndentions(1).setSeparateStart());

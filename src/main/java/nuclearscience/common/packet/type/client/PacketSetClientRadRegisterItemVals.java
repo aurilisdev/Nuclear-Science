@@ -11,7 +11,7 @@ import nuclearscience.api.radiation.FieldRadioactiveObject;
 import nuclearscience.api.radiation.RadiationRegister;
 
 public class PacketSetClientRadRegisterItemVals {
-	
+
 	private final HashMap<Item, Double> items;
 
 	public PacketSetClientRadRegisterItemVals(HashMap<Item, Double> items) {
@@ -21,11 +21,11 @@ public class PacketSetClientRadRegisterItemVals {
 	public static void handle(PacketSetClientRadRegisterItemVals message, Supplier<Context> context) {
 		Context ctx = context.get();
 		ctx.enqueueWork(() -> {
-			
+
 			message.items.forEach((item, value) -> {
 				RadiationRegister.register(item, new FieldRadioactiveObject(value));
 			});
-			
+
 		});
 		ctx.setPacketHandled(true);
 	}

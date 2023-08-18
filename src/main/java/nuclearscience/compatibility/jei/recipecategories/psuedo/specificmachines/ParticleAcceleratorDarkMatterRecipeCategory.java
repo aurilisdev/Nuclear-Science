@@ -78,30 +78,30 @@ public class ParticleAcceleratorDarkMatterRecipeCategory extends AbstractRecipeC
 		builder.addInvisibleIngredients(RecipeIngredientRole.INPUT).addItemStacks(Arrays.asList(recipe.INPUTS.get(0).getItems()));
 		super.setRecipe(builder, recipe, focuses);
 	}
-	
+
 	@Override
 	public void drawPre(PoseStack stack, PsuedoItem2ItemRecipe recipe) {
-		
+
 		stack.pushPose();
-		
+
 		NuclearJeiTextures texture = NuclearJeiTextures.PARTICLEACCELERATOR_DMBLACKHOLE;
 
 		TextureAtlasSprite blackHole = ClientRegister.CACHED_TEXTUREATLASSPRITES.get(texture.getLocation());
 
 		RenderSystem.setShaderTexture(0, blackHole.atlas().getId());
-		
+
 		RenderSystem.enableBlend();
-		
+
 		RenderingUtils.resetColor();
-		
+
 		RenderSystem.blendFuncSeparate(SourceFactor.ONE_MINUS_SRC_COLOR, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
-		
+
 		GuiComponent.blit(stack, 28, 28, 0, texture.textureWidth(), texture.textureHeight(), blackHole);
-		
+
 		RenderSystem.disableBlend();
-		
+
 		stack.popPose();
-		
+
 	}
 
 }

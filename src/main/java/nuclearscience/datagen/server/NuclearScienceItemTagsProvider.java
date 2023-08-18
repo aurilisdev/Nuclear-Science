@@ -33,7 +33,7 @@ public class NuclearScienceItemTagsProvider extends ItemTagsProvider {
 
 		tag(NuclearScienceTags.Items.DUST_THORIUM).add(NuclearScienceItems.ITEM_THORIANITEDUST.get());
 		tag(NuclearScienceTags.Items.DUST_FISSILE).add(NuclearScienceItems.ITEM_FISSILEDUST.get());
-		
+
 		tag(NuclearScienceTags.Items.SALT_FISSILE).add(NuclearScienceItems.ITEM_FISSILE_SALT.get());
 
 		tag(NuclearScienceTags.Items.OXIDE_PLUTONIUM).add(NuclearScienceItems.ITEM_PLUTONIUMOXIDE.get());

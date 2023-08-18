@@ -2,6 +2,8 @@ package nuclearscience.common.tile;
 
 import java.util.UUID;
 
+import org.jetbrains.annotations.NotNull;
+
 import electrodynamics.api.capability.ElectrodynamicsCapabilities;
 import electrodynamics.prefab.properties.Property;
 import electrodynamics.prefab.properties.PropertyType;
@@ -27,7 +29,6 @@ import net.minecraftforge.energy.IEnergyStorage;
 import nuclearscience.common.inventory.container.ContainerQuantumCapacitor;
 import nuclearscience.common.world.QuantumCapacitorData;
 import nuclearscience.registers.NuclearScienceBlockTypes;
-import org.jetbrains.annotations.NotNull;
 
 public class TileQuantumCapacitor extends GenericTile implements IEnergyStorage {
 	public static final double DEFAULT_MAX_JOULES = Double.MAX_VALUE;

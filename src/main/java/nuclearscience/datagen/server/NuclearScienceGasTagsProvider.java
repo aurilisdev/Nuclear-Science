@@ -12,12 +12,12 @@ public class NuclearScienceGasTagsProvider extends ElectrodynamicsGasTagsProvide
 	public NuclearScienceGasTagsProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
 		super(generator, References.ID, existingFileHelper);
 	}
-	
+
 	@Override
 	public void addTags() {
-	
+
 		tag(NuclearScienceTags.Gases.URANIUM_HEXAFLUORIDE).add(NuclearScienceGases.URANIUM_HEXAFLUORIDE.get());
-		
+
 	}
 
 }

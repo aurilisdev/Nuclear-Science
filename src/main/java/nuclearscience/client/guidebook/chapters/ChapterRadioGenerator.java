@@ -11,7 +11,7 @@ import nuclearscience.registers.NuclearScienceBlocks;
 public class ChapterRadioGenerator extends Chapter {
 
 	private static final ItemWrapperObject LOGO = new ItemWrapperObject(7, 10, 32, 32, 32, 2.0F, NuclearScienceBlocks.blockRadioisotopeGenerator.asItem());
-	
+
 	public ChapterRadioGenerator(Module module) {
 		super(module);
 	}
@@ -25,7 +25,7 @@ public class ChapterRadioGenerator extends Chapter {
 	public MutableComponent getTitle() {
 		return NuclearTextUtils.guidebook("chapter.radiogen");
 	}
-	
+
 	@Override
 	public void addData() {
 		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.radiogen.l1")).setIndentions(1));

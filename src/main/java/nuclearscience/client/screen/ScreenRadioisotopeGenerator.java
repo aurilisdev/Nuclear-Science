@@ -40,7 +40,7 @@ public class ScreenRadioisotopeGenerator extends GenericScreen<ContainerRadioiso
 			return 0;
 		}, 25, 24));
 		addComponent(new ScreenComponentElectricInfo(this::getEnergyInformation, -AbstractScreenComponentInfo.SIZE + 1, 2));
-		
+
 		addComponent(new ScreenComponentMultiLabel(0, 0, stack -> {
 			ItemStack in = menu.getSlot(0).getItem();
 			IRadioactiveObject rad = RadiationRegister.get(in.getItem());

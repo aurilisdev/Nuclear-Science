@@ -1,15 +1,15 @@
 package nuclearscience.prefab.utils;
 
+import static electrodynamics.prefab.utilities.ElectroTextUtils.ADVANCEMENT_BASE;
 import static electrodynamics.prefab.utilities.ElectroTextUtils.BLOCK_BASE;
+import static electrodynamics.prefab.utilities.ElectroTextUtils.GAS_BASE;
 import static electrodynamics.prefab.utilities.ElectroTextUtils.GUIDEBOOK_BASE;
 import static electrodynamics.prefab.utilities.ElectroTextUtils.GUI_BASE;
 import static electrodynamics.prefab.utilities.ElectroTextUtils.JEI_BASE;
 import static electrodynamics.prefab.utilities.ElectroTextUtils.JEI_INFO_FLUID;
 import static electrodynamics.prefab.utilities.ElectroTextUtils.JEI_INFO_ITEM;
 import static electrodynamics.prefab.utilities.ElectroTextUtils.MESSAGE_BASE;
-import static electrodynamics.prefab.utilities.ElectroTextUtils.GAS_BASE;
 import static electrodynamics.prefab.utilities.ElectroTextUtils.TOOLTIP_BASE;
-import static electrodynamics.prefab.utilities.ElectroTextUtils.ADVANCEMENT_BASE;
 
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
@@ -55,12 +55,12 @@ public class NuclearTextUtils {
 	public static MutableComponent block(String key, Object... additional) {
 		return translated(BLOCK_BASE, key, additional);
 	}
-	
-	public static MutableComponent gas(String key, Object...additional) {
+
+	public static MutableComponent gas(String key, Object... additional) {
 		return translated(GAS_BASE, key, additional);
 	}
-	
-	public static MutableComponent advancement(String key, Object...additional) {
+
+	public static MutableComponent advancement(String key, Object... additional) {
 		return translated(ADVANCEMENT_BASE, key, additional);
 	}
 

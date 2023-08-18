@@ -9,13 +9,13 @@ public enum NuclearIconTypes implements ITexture {
 	FUEL_CELL_DARK(0, 0, 12, 12, 12, 12, new ResourceLocation(References.ID, "textures/screen/component/icon/fuelcelldark.png"));
 
 	private final int textU;
-	private final int textV; 
-	private final int textWidth; 
+	private final int textV;
+	private final int textWidth;
 	private final int textHeight;
 	private final int imgWidth;
 	private final int imgHeight;
 	private final ResourceLocation loc;
-	
+
 	private NuclearIconTypes(int textU, int textV, int textWidth, int textHeight, int imgWidth, int imgHeight, ResourceLocation loc) {
 		this.textU = textU;
 		this.textV = textV;
@@ -25,8 +25,7 @@ public enum NuclearIconTypes implements ITexture {
 		this.imgHeight = imgHeight;
 		this.loc = loc;
 	}
-	
-	
+
 	@Override
 	public ResourceLocation getLocation() {
 		return loc;

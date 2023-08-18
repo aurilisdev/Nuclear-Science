@@ -55,13 +55,14 @@ public class BlockMoltenSaltPipe extends AbstractRefreshingConnectBlock {
 		EnumProperty<EnumConnectType> property = FACING_TO_PROPERTY_MAP.get(dir);
 		if (tile instanceof IMoltenSaltPipe) {
 			return state.setValue(property, EnumConnectType.WIRE);
-		} else if (tile instanceof TileMSReactorCore && dir.getOpposite() == Direction.UP || tile instanceof TileHeatExchanger && dir.getOpposite() == Direction.DOWN) {
-			return state.setValue(property, EnumConnectType.INVENTORY);
-		} else if (state.hasProperty(property)) {
-			return state.setValue(property, EnumConnectType.NONE);
-		} else {
-			return state;
 		}
+		if (tile instanceof TileMSReactorCore && dir.getOpposite() == Direction.UP || tile instanceof TileHeatExchanger && dir.getOpposite() == Direction.DOWN) {
+			return state.setValue(property, EnumConnectType.INVENTORY);
+		}
+		if (state.hasProperty(property)) {
+			return state.setValue(property, EnumConnectType.NONE);
+		}
+		return state;
 	}
 
 }

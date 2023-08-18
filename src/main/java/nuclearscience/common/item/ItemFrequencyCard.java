@@ -27,9 +27,9 @@ public class ItemFrequencyCard extends Item {
 
 	@Override
 	public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
-		
+
 		Level level = context.getLevel();
-		
+
 		if (level.isClientSide) {
 			return super.onItemUseFirst(stack, context);
 		}
@@ -41,14 +41,14 @@ public class ItemFrequencyCard extends Item {
 
 				BlockPos pos = readBlockPos(stack);
 				ResourceKey<Level> world = readDimension(stack);
-				
+
 				teleporter.destination.set(pos);
 				teleporter.dimension = world;
-				
+
 				MutableComponent worldKey = ElectroTextUtils.dimensionExists(world) ? ElectroTextUtils.dimension(world) : Component.literal(world.location().getPath());
-				
+
 				context.getPlayer().sendSystemMessage(NuclearTextUtils.tooltip("frequencycard.linked", worldKey.append(" " + pos.toShortString())));
-				
+
 			} else {
 				writeBlockPos(stack, teleporter.getBlockPos());
 				writeDimension(stack, teleporter.getLevel().dimension());
@@ -65,9 +65,9 @@ public class ItemFrequencyCard extends Item {
 		if (stack.hasTag()) {
 			BlockPos pos = readBlockPos(stack);
 			ResourceKey<Level> world = readDimension(stack);
-			
+
 			MutableComponent worldKey = ElectroTextUtils.dimensionExists(world) ? ElectroTextUtils.dimension(world) : Component.literal(world.location().getPath());
-			
+
 			tooltip.add(NuclearTextUtils.tooltip("frequencycard.linked", worldKey.append(" " + pos.toShortString())));
 		} else {
 			tooltip.add(NuclearTextUtils.tooltip("frequencycard.notag"));

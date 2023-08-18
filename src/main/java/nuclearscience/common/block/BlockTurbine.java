@@ -37,7 +37,7 @@ public class BlockTurbine extends GenericEntityBlockWaterloggable {
 	@Override
 	public void onRotate(ItemStack stack, BlockPos pos, Player player) {
 		super.onRotate(stack, pos, player);
-		if(player.level.isClientSide()) {
+		if (player.level.isClientSide()) {
 			return;
 		}
 		TileTurbine turbine = (TileTurbine) player.level.getBlockEntity(pos);

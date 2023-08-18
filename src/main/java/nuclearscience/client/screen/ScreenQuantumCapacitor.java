@@ -95,11 +95,11 @@ public class ScreenQuantumCapacitor extends GenericScreen<ContainerQuantumCapaci
 		if (cap == null) {
 			return;
 		}
-		
+
 		cap.outputJoules.set(output);
-		
+
 		cap.outputJoules.updateServer();
-		
+
 	}
 
 	@Override

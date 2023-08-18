@@ -3,6 +3,9 @@ package nuclearscience.common.tile;
 import java.util.List;
 import java.util.function.Function;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import electrodynamics.api.capability.ElectrodynamicsCapabilities;
 import electrodynamics.prefab.properties.Property;
 import electrodynamics.prefab.properties.PropertyType;
@@ -34,13 +37,11 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.ITeleporter;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import nuclearscience.registers.NuclearScienceBlockTypes;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class TileTeleporter extends GenericTile {
 
 	private static final DimensionManager MANAGER = new DimensionManager();
-	
+
 	public final Property<BlockPos> destination = property(new Property<>(PropertyType.BlockPos, "location", getBlockPos()));
 	public final Property<Integer> cooldown = property(new Property<>(PropertyType.Integer, "cooldown", 0));
 
@@ -89,17 +90,17 @@ public class TileTeleporter extends GenericTile {
 		}
 
 		ServerLevel destinationLevel = getDestinationLevel();
-		
+
 		Player player = players.get(0);
-			
+
 		player.changeDimension(destinationLevel, MANAGER);
-		
+
 		BlockPos destPos = destination.get();
-		
-		player.teleportToWithTicket(destPos.getX() + 0.5, destPos.getY() + 1.0, destPos.getZ() + 0.5);	
-			
+
+		player.teleportToWithTicket(destPos.getX() + 0.5, destPos.getY() + 1.0, destPos.getZ() + 0.5);
+
 		cooldown.set(80);
-		
+
 		electro.joules(0);
 
 	}
@@ -111,14 +112,14 @@ public class TileTeleporter extends GenericTile {
 	
 	private ServerLevel getDestinationLevel() {
 		ServerLevel level = ServerLifecycleHooks.getCurrentServer().getLevel(dimension);
-		if(level == null) {
+		if (level == null) {
 			return (ServerLevel) getLevel();
 		}
 		return level;
 	}
 
 	@Override
-	public void saveAdditional(@NotNull CompoundTag compound) { 
+	public void saveAdditional(@NotNull CompoundTag compound) {
 		compound.put(NBTUtils.DIMENSION, NBTUtils.writeDimensionToTag(dimension));
 		super.saveAdditional(compound);
 	}

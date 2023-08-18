@@ -17,7 +17,7 @@ import nuclearscience.registers.NuclearScienceItems;
 public class ChapterFissionReactor extends Chapter {
 
 	private static final ItemWrapperObject LOGO = new ItemWrapperObject(7, 10, 32, 32, 32, 2.0F, NuclearScienceBlocks.blockFissionReactorCore.asItem());
-	
+
 	public ChapterFissionReactor(Module module) {
 		super(module);
 	}
@@ -59,7 +59,7 @@ public class ChapterFissionReactor extends Chapter {
 		pageData.add(new ImageWrapperObject(0, 0, 0, 0, 150, 75, 150, 75, new ResourceLocation(References.ID, "textures/screen/guidebook/fissionreactor6.png")));
 		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.fissionreactor.l8")).setIndentions(1).setSeparateStart());
 		pageData.add(new ImageWrapperObject(0, 0, 0, 0, 150, 79, 150, 79, new ResourceLocation(References.ID, "textures/screen/guidebook/fissionreactor7.png")));
-		
+
 	}
 
 }

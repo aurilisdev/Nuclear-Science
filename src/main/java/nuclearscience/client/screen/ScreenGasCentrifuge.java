@@ -56,13 +56,11 @@ public class ScreenGasCentrifuge extends GenericMaterialScreen<ContainerGasCentr
 			}
 			return 0;
 		}, 34, 14));
-		
+
 		addComponent(new ScreenComponentGasPressure(-AbstractScreenComponentInfo.SIZE + 1, 2 + 2 * AbstractScreenComponentInfo.SIZE));
 		addComponent(new ScreenComponentGasTemperature(-AbstractScreenComponentInfo.SIZE + 1, 2 + AbstractScreenComponentInfo.SIZE));
 		addComponent(new ScreenComponentElectricInfo(-AbstractScreenComponentInfo.SIZE + 1, 2));
-		
-		
-		
+
 		addComponent(new ScreenComponentMultiLabel(0, 0, stack -> {
 			TileGasCentrifuge centrifuge = menu.getHostFromIntArray();
 			if (centrifuge == null) {
