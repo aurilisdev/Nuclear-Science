@@ -10,8 +10,11 @@ import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import electrodynamics.prefab.utilities.object.Location;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -20,6 +23,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import nuclearscience.api.turbine.ISteamReceiver;
 import nuclearscience.common.settings.Constants;
@@ -119,4 +123,10 @@ public class TileHeatExchanger extends GenericTile {
 		temperature.set(perReceiver);
 		return perReceiver;
 	}
+	
+	@Override
+	public InteractionResult use(Player arg0, InteractionHand arg1, BlockHitResult arg2) {
+		return InteractionResult.FAIL;
+	}
+
 }

@@ -7,8 +7,12 @@ import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import nuclearscience.registers.NuclearScienceBlockTypes;
 
 public class TileControlRodAssembly extends GenericTile {
@@ -62,6 +66,28 @@ public class TileControlRodAssembly extends GenericTile {
 	@Override
 	public int getComparatorSignal() {
 		return (int) (((double) insertion.get() / (double) MAX_EXTENSION) * 15);
+	}
+
+	@Override
+	public InteractionResult use(Player player, InteractionHand hand, BlockHitResult result) {
+
+		if (level.isClientSide()) {
+			return InteractionResult.CONSUME;
+		}
+
+		if (player.isShiftKeyDown()) {
+			insertion.set(insertion.get() - TileControlRodAssembly.EXTENSION_PER_CLICK);
+			if (insertion.get() < 0) {
+				insertion.set(TileControlRodAssembly.MAX_EXTENSION);
+			}
+		} else {
+			insertion.set(insertion.get() + TileControlRodAssembly.EXTENSION_PER_CLICK);
+			if (insertion.get() > TileControlRodAssembly.MAX_EXTENSION) {
+				insertion.set(0);
+			}
+		}
+
+		return InteractionResult.CONSUME;
 	}
 
 }

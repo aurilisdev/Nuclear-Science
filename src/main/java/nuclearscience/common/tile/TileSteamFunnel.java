@@ -15,7 +15,11 @@ import electrodynamics.registers.ElectrodynamicsGases;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import nuclearscience.api.turbine.ISteamReceiver;
 import nuclearscience.registers.NuclearScienceBlockTypes;
 
@@ -67,6 +71,11 @@ public class TileSteamFunnel extends GenericTile implements ISteamReceiver {
 	@Override
 	public boolean isStillValid() {
 		return isRemoved();
+	}
+	
+	@Override
+	public InteractionResult use(Player arg0, InteractionHand arg1, BlockHitResult arg2) {
+		return InteractionResult.FAIL;
 	}
 
 }

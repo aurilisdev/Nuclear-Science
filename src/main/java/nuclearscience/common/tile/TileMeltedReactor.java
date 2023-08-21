@@ -4,12 +4,16 @@ import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import electrodynamics.prefab.utilities.object.Location;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.BlockHitResult;
 import nuclearscience.api.radiation.RadiationSystem;
 import nuclearscience.registers.NuclearScienceBlockTypes;
 import nuclearscience.registers.NuclearScienceBlocks;
@@ -94,4 +98,10 @@ public class TileMeltedReactor extends GenericTile {
 			RadiationSystem.emitRadiationFromLocation(level, new Location(worldPosition), range, totstrength);
 		}
 	}
+	
+	@Override
+	public InteractionResult use(Player arg0, InteractionHand arg1, BlockHitResult arg2) {
+		return InteractionResult.FAIL;
+	}
+
 }

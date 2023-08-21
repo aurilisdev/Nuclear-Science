@@ -19,6 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import nuclearscience.common.inventory.container.ContainerAtomicAssembler;
+import nuclearscience.common.reloadlistener.AtomicAssemblerBlacklistRegister;
 import nuclearscience.common.settings.Constants;
 import nuclearscience.registers.NuclearScienceBlockTypes;
 import nuclearscience.registers.NuclearScienceBlocks;
@@ -31,7 +32,7 @@ public class TileAtomicAssembler extends GenericTile {
 	public TileAtomicAssembler(BlockPos pos, BlockState state) {
 		super(NuclearScienceBlockTypes.TILE_ATOMICASSEMBLER.get(), pos, state);
 		addComponent(new ComponentDirection(this));
-		addComponent(new ComponentTickable(this).tickCommon(this::tickCommon));
+		addComponent(new ComponentTickable(this).tickCommon(this::tickServer));
 		addComponent(new ComponentPacketHandler(this));
 		addComponent(new ComponentElectrodynamic(this).maxJoules(Constants.ATOMICASSEMBLER_USAGE_PER_TICK * 20).voltage(Constants.ATOMICASSEMBLER_VOLTAGE).input(Direction.DOWN));
 		// The slot == 6 has to be there to allow items into the input slot.
@@ -39,52 +40,78 @@ public class TileAtomicAssembler extends GenericTile {
 		addComponent(new ComponentContainerProvider("container.atomicassembler", this).createMenu((id, player) -> new ContainerAtomicAssembler(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
 	}
 
-	private void tickCommon(ComponentTickable tickable) {
+	private void tickServer(ComponentTickable tickable) {
+
 		ComponentInventory inv = getComponent(ComponentType.Inventory);
-		ComponentElectrodynamic electro = getComponent(ComponentType.Electrodynamic);
+
 		ItemStack input = inv.getItem(6);
-		ItemStack output = inv.getItem(7);
-		boolean validItem = (ItemStack.isSame(input, output) && output.getCount() + 1 <= output.getMaxStackSize() || output.isEmpty()) && !input.isEmpty() && validateDupeItem(input);
-		boolean canProcess = electro.getJoulesStored() >= Constants.ATOMICASSEMBLER_USAGE_PER_TICK && validItem;
-		if (canProcess) {
-			for (int index = 0; index < 6; index++) {
-				ItemStack dmSlot = inv.getItem(index);
-				if (dmSlot.is(NuclearScienceItems.ITEM_CELLDARKMATTER.get())) {
-					if (dmSlot.getDamageValue() >= dmSlot.getMaxDamage()) {
-						inv.setItem(index, ItemStack.EMPTY);
-					}
-				} else {
-					canProcess = false;
-				}
-			}
-		} else {
+
+		if (input.isEmpty()) {
 			progress.set(0);
+			return;
 		}
 
-		boolean canProduce = false;
-		if (canProcess) {
-			if (progress.set(progress.get() + 1).get() >= Constants.ATOMICASSEMBLER_REQUIRED_TICKS) {
-				canProduce = true;
-			}
-			electro.joules(electro.getJoulesStored() - Constants.ATOMICASSEMBLER_USAGE_PER_TICK);
-		}
-		if (canProduce) {
+		ItemStack output = inv.getItem(7);
+
+		boolean validItem = validateDupeItem(input) && (output.isEmpty() || ItemStack.isSame(input, output) && output.getCount() + 1 <= output.getMaxStackSize());
+
+		if (!validItem) {
 			progress.set(0);
-			for (int index = 0; index < 6; index++) {
-				ItemStack dmSlot = inv.getItem(index);
-				if (dmSlot.is(NuclearScienceItems.ITEM_CELLDARKMATTER.get())) {
-					if (dmSlot.getDamageValue() >= dmSlot.getMaxDamage()) {
-						inv.setItem(index, ItemStack.EMPTY);
-					}
-					dmSlot.setDamageValue(dmSlot.getDamageValue() + 1);
-				}
+			return;
+		}
+
+		for (int index = 0; index < 6; index++) {
+
+			ItemStack dmCell = inv.getItem(index);
+
+			if (dmCell.isEmpty() || dmCell.getItem() != NuclearScienceItems.ITEM_CELLDARKMATTER.get()) {
+				progress.set(0);
+				return;
 			}
-			if (output.isEmpty()) {
-				inv.setItem(7, input.copy());
-				inv.getItem(7).setCount(1);
-			} else {
-				output.setCount(output.getCount() + 1);
+
+			if (dmCell.getDamageValue() >= dmCell.getMaxDamage()) {
+				progress.set(0);
+				inv.setItem(index, ItemStack.EMPTY);
+				return;
 			}
+
+		}
+
+		ComponentElectrodynamic electro = getComponent(ComponentType.Electrodynamic);
+
+		if (electro.getJoulesStored() < Constants.ATOMICASSEMBLER_USAGE_PER_TICK) {
+			return;
+		}
+
+		progress.set(progress.get() + 1);
+
+		electro.joules(electro.getJoulesStored() - Constants.ATOMICASSEMBLER_USAGE_PER_TICK);
+
+		if (progress.get() < Constants.ATOMICASSEMBLER_REQUIRED_TICKS) {
+			return;
+		}
+
+		progress.set(0);
+
+		for (int index = 0; index < 6; index++) {
+
+			ItemStack dmCell = inv.getItem(index);
+
+			dmCell.setDamageValue(dmCell.getDamageValue() + 1);
+
+			if (dmCell.getDamageValue() >= dmCell.getMaxDamage()) {
+				inv.setItem(index, ItemStack.EMPTY);
+			}
+		}
+
+		if (output.isEmpty()) {
+
+			inv.setItem(7, new ItemStack(input.getItem()));
+
+		} else {
+
+			output.setCount(output.getCount() + 1);
+
 		}
 	}
 
@@ -105,8 +132,13 @@ public class TileAtomicAssembler extends GenericTile {
 			}
 
 		}
+		
+		if(AtomicAssemblerBlacklistRegister.INSTANCE.isBlacklisted(stack.getItem())) {
+			return false;
+		}
 
 		return true;
 
 	}
+
 }

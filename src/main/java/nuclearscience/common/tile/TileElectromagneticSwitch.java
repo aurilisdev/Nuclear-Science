@@ -6,7 +6,11 @@ import electrodynamics.prefab.tile.GenericTile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import nuclearscience.registers.NuclearScienceBlockTypes;
 
 public class TileElectromagneticSwitch extends GenericTile {
@@ -31,4 +35,10 @@ public class TileElectromagneticSwitch extends GenericTile {
 			lastDirection = Direction.from3DDataValue(compound.getInt("lastDirectionOrdinal"));
 		}
 	}
+	
+	@Override
+	public InteractionResult use(Player arg0, InteractionHand arg1, BlockHitResult arg2) {
+		return InteractionResult.FAIL;
+	}
+
 }
