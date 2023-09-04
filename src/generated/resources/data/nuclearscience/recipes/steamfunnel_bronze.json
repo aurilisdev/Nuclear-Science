@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "P": {
       "tag": "forge:plates/bronze"
@@ -12,5 +13,6 @@
   ],
   "result": {
     "item": "nuclearscience:steamfunnel"
-  }
+  },
+  "show_notification": false
 }

@@ -1,21 +1,24 @@
 package nuclearscience.common.item;
 
+import java.util.function.Supplier;
+
 import electrodynamics.api.sound.SoundAPI;
+import electrodynamics.common.item.ItemElectrodynamics;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import nuclearscience.api.radiation.RadiationSystem;
 import nuclearscience.prefab.utils.NuclearTextUtils;
 import nuclearscience.registers.NuclearScienceSounds;
 
-public class ItemGeigerCounter extends Item {
+public class ItemGeigerCounter extends ItemElectrodynamics {
 
-	public ItemGeigerCounter(Properties properties) {
-		super(properties);
+	public ItemGeigerCounter(Properties properties, Supplier<CreativeModeTab> creativeTab) {
+		super(properties, creativeTab);
 	}
 
 	@Override

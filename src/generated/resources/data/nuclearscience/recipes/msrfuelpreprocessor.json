@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "C": {
       "item": "electrodynamics:chemicalmixer"
@@ -21,5 +22,6 @@
   ],
   "result": {
     "item": "nuclearscience:msrfuelpreprocessor"
-  }
+  },
+  "show_notification": false
 }

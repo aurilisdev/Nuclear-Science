@@ -1,6 +1,6 @@
 package nuclearscience.registers;
 
-import electrodynamics.common.blockitem.BlockItemDescriptable;
+import electrodynamics.common.blockitem.types.BlockItemDescriptable;
 import electrodynamics.prefab.utilities.ElectroTextUtils;
 import net.minecraftforge.eventbus.api.IEventBus;
 import nuclearscience.prefab.utils.NuclearTextUtils;
@@ -17,6 +17,8 @@ public class UnifiedNuclearScienceRegister {
 		NuclearScienceEntities.ENTITIES.register(bus);
 		NuclearScienceSounds.SOUNDS.register(bus);
 		NuclearScienceGases.GASES.register(bus);
+		NuclearScienceCreativeTabs.CREATIVE_TABS.register(bus);
+		NuclearScienceEffects.EFFECTS.register(bus);
 	}
 
 	static {

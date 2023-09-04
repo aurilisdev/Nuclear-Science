@@ -1,26 +1,29 @@
 package nuclearscience.common.item;
 
+import java.util.function.Supplier;
+
+import electrodynamics.common.item.gear.armor.ItemElectrodynamicsArmor;
 import electrodynamics.common.item.subtype.SubtypePlate;
 import electrodynamics.registers.ElectrodynamicsItems;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import nuclearscience.References;
 
-public class ItemHazmatArmor extends ArmorItem {
+public class ItemHazmatArmor extends ItemElectrodynamicsArmor {
 
-	public ItemHazmatArmor(ArmorMaterial materialIn, EquipmentSlot slot, Properties builderIn) {
-		super(materialIn, slot, builderIn);
+	public ItemHazmatArmor(ArmorMaterial materialIn, Type slot, Properties properties, Supplier<CreativeModeTab> creativeTab) {
+		super(materialIn, slot, properties, creativeTab);
 	}
 
-	public ItemHazmatArmor(EquipmentSlot slot, Properties builderIn) {
-		this(ArmorMaterialHazmat.hazmat, slot, builderIn);
+	public ItemHazmatArmor(Type slot, Properties properties, Supplier<CreativeModeTab> creativeTab) {
+		this(ArmorMaterialHazmat.hazmat, slot, properties, creativeTab);
 	}
 
 	@Override
@@ -33,12 +36,12 @@ public class ItemHazmatArmor extends ArmorItem {
 		reinforcedhazmat;
 
 		@Override
-		public int getDurabilityForSlot(EquipmentSlot slotIn) {
+		public int getDurabilityForType(Type type) {
 			return this == hazmat ? 37500 : 37500 * 5;
 		}
 
 		@Override
-		public int getDefenseForSlot(EquipmentSlot slotIn) {
+		public int getDefenseForType(Type type) {
 			return this == hazmat ? 2 : 4;
 		}
 

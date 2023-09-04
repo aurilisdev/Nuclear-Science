@@ -61,14 +61,14 @@ public class ScreenGasCentrifuge extends GenericMaterialScreen<ContainerGasCentr
 		addComponent(new ScreenComponentGasTemperature(-AbstractScreenComponentInfo.SIZE + 1, 2 + AbstractScreenComponentInfo.SIZE));
 		addComponent(new ScreenComponentElectricInfo(-AbstractScreenComponentInfo.SIZE + 1, 2));
 
-		addComponent(new ScreenComponentMultiLabel(0, 0, stack -> {
+		addComponent(new ScreenComponentMultiLabel(0, 0, graphics -> {
 			TileGasCentrifuge centrifuge = menu.getHostFromIntArray();
 			if (centrifuge == null) {
 				return;
 			}
-			font.draw(stack, Component.literal("U235 " + getIntString(centrifuge.stored235.get()) + "%"), 54, 17, 4210752);
-			font.draw(stack, Component.literal("U238 " + getIntString(centrifuge.stored238.get()) + "%"), 54, 37, 4210752);
-			font.draw(stack, Component.literal("DUST " + getIntString(centrifuge.storedWaste.get()) + "%"), 54, 58, 4210752);
+			graphics.drawString(font, Component.literal("U235 " + getIntString(centrifuge.stored235.get()) + "%"), 54, 17, 4210752, false);
+			graphics.drawString(font, Component.literal("U238 " + getIntString(centrifuge.stored238.get()) + "%"), 54, 37, 4210752, false);
+			graphics.drawString(font, Component.literal("DUST " + getIntString(centrifuge.storedWaste.get()) + "%"), 54, 58, 4210752, false);
 		}));
 	}
 

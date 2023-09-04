@@ -8,13 +8,12 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import nuclearscience.registers.NuclearScienceDamageTypes;
 import nuclearscience.registers.NuclearScienceItems;
 
 public class EffectRadiation extends MobEffect {
 
-	public static final EffectRadiation INSTANCE = new EffectRadiation();
-
-	protected EffectRadiation(MobEffectCategory typeIn, int liquidColorIn) {
+	public EffectRadiation(MobEffectCategory typeIn, int liquidColorIn) {
 		super(typeIn, liquidColorIn);
 	}
 
@@ -23,10 +22,10 @@ public class EffectRadiation extends MobEffect {
 	}
 
 	@Override
-	public void applyEffectTick(LivingEntity entityLivingBaseIn, int amplifier) {
-		if (entityLivingBaseIn.level.random.nextFloat() < 0.033) {
-			entityLivingBaseIn.hurt(DamageSourceRadiation.INSTANCE, (float) (Math.pow(amplifier, 1.3) + 1));
-			if (entityLivingBaseIn instanceof Player pl) {
+	public void applyEffectTick(LivingEntity entity, int amplifier) {
+		if (entity.level().random.nextFloat() < 0.033) {
+			entity.hurt(entity.damageSources().source(NuclearScienceDamageTypes.RADIATION, entity), (float) (Math.pow(amplifier, 1.3) + 1));
+			if (entity instanceof Player pl) {
 				pl.causeFoodExhaustion(0.05F * (amplifier + 1));
 			}
 		}

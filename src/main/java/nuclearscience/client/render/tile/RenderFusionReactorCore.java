@@ -1,11 +1,13 @@
 package nuclearscience.client.render.tile;
 
+import org.joml.Matrix4f;
+
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Matrix4f;
 
 import electrodynamics.client.render.tile.AbstractTileRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.Font.DisplayMode;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
@@ -39,7 +41,7 @@ public class RenderFusionReactorCore extends AbstractTileRenderer<TileFusionReac
 		int j = (int) (f1 * 50.0F) << 24;
 		Font fontrenderer = Minecraft.getInstance().font;
 		float f2 = -fontrenderer.width(text) / 2f;
-		fontrenderer.drawInBatch(text, f2, 0, color, false, matrix4f, bufferIn, true, j, combinedLightIn);
+		fontrenderer.drawInBatch(text, f2, 0, color, false, matrix4f, bufferIn, DisplayMode.NORMAL, j, combinedLightIn);
 		matrixStackIn.popPose();
 	}
 }

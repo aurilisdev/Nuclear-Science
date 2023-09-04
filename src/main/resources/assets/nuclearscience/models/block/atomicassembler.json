@@ -2,7 +2,7 @@
   "credit" : "aurilisdev",
   "parent" : "block/cube_all",
   "textures" : {
-    "0" : "nuclearscience:model/atomicassembler",
+    "0" : "nuclearscience:block/model/atomicassembler",
     "particle" : "electrodynamics:block/steelcasing"
   },
   "loader" : "forge:composite",
@@ -10,7 +10,7 @@
     "solid" : {
       "render_type" : "minecraft:solid",
       "textures" : {
-        "0" : "nuclearscience:model/atomicassembler",
+        "0" : "nuclearscience:block/model/atomicassembler",
         "particle" : "electrodynamics:block/steelcasing"
       },
       "elements" : [ {
@@ -588,8 +588,8 @@
     "translucent" : {
       "render_type": "minecraft:translucent",
       "textures" : {
-        "0" : "nuclearscience:model/atomicassembler",
-        "particle" : "nuclearscience:model/atomicassembler"
+        "0" : "nuclearscience:block/model/atomicassembler",
+        "particle" : "electrodynamics:block/steelcasing"
       },
       "elements" : [ {
         "from" : [ 2, 2, 0 ],

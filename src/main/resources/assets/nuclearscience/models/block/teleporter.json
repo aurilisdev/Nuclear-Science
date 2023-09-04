@@ -3,8 +3,8 @@
 	"texture_size": [64, 64],
 	"parent": "block/cube_all",
 	"textures": {
-		"0": "nuclearscience:model/teleporter",
-		"particle": "nuclearscience:model/teleporter"
+		"0": "nuclearscience:block/model/teleporter",
+		"particle": "electrodynamics:block/steelcasing"
 	},
 	"elements": [
 		{

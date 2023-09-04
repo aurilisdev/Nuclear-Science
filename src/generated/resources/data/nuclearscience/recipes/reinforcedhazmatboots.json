@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "B": {
       "item": "nuclearscience:hazmatboots"
@@ -18,5 +19,6 @@
   ],
   "result": {
     "item": "nuclearscience:reinforcedhazmatboots"
-  }
+  },
+  "show_notification": false
 }

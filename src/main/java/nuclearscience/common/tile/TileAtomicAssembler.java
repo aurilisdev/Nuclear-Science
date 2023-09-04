@@ -53,7 +53,7 @@ public class TileAtomicAssembler extends GenericTile {
 
 		ItemStack output = inv.getItem(7);
 
-		boolean validItem = validateDupeItem(input) && (output.isEmpty() || ItemStack.isSame(input, output) && output.getCount() + 1 <= output.getMaxStackSize());
+		boolean validItem = validateDupeItem(input) && (output.isEmpty() || ItemStack.isSameItem(input, output) && output.getCount() + 1 <= output.getMaxStackSize());
 
 		if (!validItem) {
 			progress.set(0);

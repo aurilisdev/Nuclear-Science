@@ -1,18 +1,21 @@
 package nuclearscience.common.item;
 
+import java.util.function.Supplier;
+
+import electrodynamics.common.item.ItemElectrodynamics;
 import electrodynamics.prefab.utilities.object.Location;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import nuclearscience.api.radiation.RadiationRegister;
 import nuclearscience.api.radiation.RadiationSystem;
 
-public class ItemRadioactive extends Item {
+public class ItemRadioactive extends ItemElectrodynamics {
 
-	public ItemRadioactive(Properties properties) {
-		super(properties);
+	public ItemRadioactive(Properties properties, Supplier<CreativeModeTab> creativeTab) {
+		super(properties, creativeTab);
 	}
 
 	@Override

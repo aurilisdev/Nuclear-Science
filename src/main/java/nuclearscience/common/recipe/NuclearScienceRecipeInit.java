@@ -1,7 +1,6 @@
 package nuclearscience.common.recipe;
 
 import electrodynamics.common.recipe.ElectrodynamicsRecipeInit.CustomRecipeType;
-import net.minecraft.core.Registry;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.registries.DeferredRegister;
@@ -22,7 +21,7 @@ public class NuclearScienceRecipeInit {
 
 	// Deferred Register
 	public static DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZER = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, References.ID);
-	public static DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(Registry.RECIPE_TYPE.key(), References.ID);
+	public static DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, References.ID);
 
 	/* RECIPE TYPES */
 

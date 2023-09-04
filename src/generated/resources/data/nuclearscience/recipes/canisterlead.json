@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "C": {
       "item": "electrodynamics:canisterreinforced"
@@ -18,5 +19,6 @@
   ],
   "result": {
     "item": "nuclearscience:canisterlead"
-  }
+  },
+  "show_notification": false
 }

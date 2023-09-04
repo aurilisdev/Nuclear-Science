@@ -3,8 +3,8 @@
 	"parent": "block/cube_all",
 	"texture_size": [64, 64],
 	"textures": {
-		"0": "nuclearscience:model/controlrods",
-		"particle": "nuclearscience:model/controlrods"
+		"0": "nuclearscience:block/model/controlrods",
+		"particle": "electrodynamics:block/steelcasing"
 	},
 	"elements": [
 		{

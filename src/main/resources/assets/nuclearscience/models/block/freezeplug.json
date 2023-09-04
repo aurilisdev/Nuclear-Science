@@ -6,7 +6,7 @@
 		128
 	],
 	"textures": {
-		"0": "nuclearscience:model/freezeplug",
+		"0": "nuclearscience:block/model/freezeplug",
 		"particle":"electrodynamics:block/steelcasing"
 	},
 	"elements": [

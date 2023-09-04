@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import electrodynamics.api.References;
 import electrodynamics.common.recipe.categories.item2item.Item2ItemRecipe;
 import electrodynamics.common.recipe.recipeutils.CountableIngredient;
 import electrodynamics.compatibility.jei.recipecategories.item2item.Item2ItemRecipeCategory;
@@ -19,6 +18,7 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.world.item.ItemStack;
+import nuclearscience.References;
 import nuclearscience.common.recipe.categories.item2item.specificmachines.FissionReactorRecipe;
 import nuclearscience.prefab.utils.NuclearTextUtils;
 import nuclearscience.registers.NuclearScienceBlocks;

@@ -11,13 +11,13 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import nuclearscience.common.tile.TileTurbine;
 
@@ -25,7 +25,7 @@ public class BlockTurbine extends GenericEntityBlockWaterloggable {
 	public static final BooleanProperty RENDER = BooleanProperty.create("render");
 
 	public BlockTurbine() {
-		super(Properties.of(Material.METAL).strength(3.5F).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion());
+		super(Properties.copy(Blocks.IRON_BLOCK).strength(3.5F).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion());
 		registerDefaultState(stateDefinition.any().setValue(RENDER, true));
 	}
 
@@ -37,10 +37,10 @@ public class BlockTurbine extends GenericEntityBlockWaterloggable {
 	@Override
 	public void onRotate(ItemStack stack, BlockPos pos, Player player) {
 		super.onRotate(stack, pos, player);
-		if (player.level.isClientSide()) {
+		if (player.level().isClientSide()) {
 			return;
 		}
-		TileTurbine turbine = (TileTurbine) player.level.getBlockEntity(pos);
+		TileTurbine turbine = (TileTurbine) player.level().getBlockEntity(pos);
 		if (turbine != null) {
 			if (turbine.isCore.get()) {
 				turbine.deconstructStructure();

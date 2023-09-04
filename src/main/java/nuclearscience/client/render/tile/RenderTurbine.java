@@ -1,10 +1,10 @@
 package nuclearscience.client.render.tile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Quaternion;
 
 import electrodynamics.client.render.tile.AbstractTileRenderer;
 import electrodynamics.prefab.utilities.RenderingUtils;
+import electrodynamics.prefab.utilities.math.MathUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -28,36 +28,42 @@ public class RenderTurbine extends AbstractTileRenderer<TileTurbine> {
 		if (!isCore && tileEntityIn.getBlockState().getValue(BlockTurbine.RENDER)) {
 			matrixStackIn.pushPose();
 			matrixStackIn.translate(8 / 16.0, 4.75 / 16.0, 8 / 16.0);
-			matrixStackIn.mulPose(new Quaternion(0, (float) (daytime * 20 % 360), 0, true));
+			matrixStackIn.mulPose(MathUtils.rotQuaternionDeg(0, (float) (daytime * 20 % 360), 0));
+			//matrixStackIn.mulPose(new Quaternion(0, (float) (daytime * 20 % 360), 0, true));
 			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
 			matrixStackIn.popPose();
 			matrixStackIn.pushPose();
 			matrixStackIn.translate(8 / 16.0, 7.75 / 16.0, 8 / 16.0);
-			matrixStackIn.mulPose(new Quaternion(0, (float) (daytime * 20 % 360 + 22.5f), 0, true));
+			matrixStackIn.mulPose(MathUtils.rotQuaternionDeg(0, (float) (daytime * 20 % 360 + 22.5f), 0));
+			//matrixStackIn.mulPose(new Quaternion(0, (float) (daytime * 20 % 360 + 22.5f), 0, true));
 			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
 			matrixStackIn.popPose();
 			matrixStackIn.pushPose();
 			matrixStackIn.translate(8 / 16.0, 10.75 / 16.0, 8 / 16.0);
-			matrixStackIn.mulPose(new Quaternion(0, (float) (daytime * 20 % 360 + 45.0f), 0, true));
+			matrixStackIn.mulPose(MathUtils.rotQuaternionDeg(0, (float) (daytime * 20 % 360 + 45.0f), 0));
+			//matrixStackIn.mulPose(new Quaternion(0, (float) (daytime * 20 % 360 + 45.0f), 0, true));
 			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
 			matrixStackIn.popPose();
 		} else if (isCore) {
 			float size = 3;
 			matrixStackIn.pushPose();
 			matrixStackIn.translate(8 / 16.0, 4.75 / 16.0, 8 / 16.0);
-			matrixStackIn.mulPose(new Quaternion(0, (float) (daytime * 20 % 360), 0, true));
+			matrixStackIn.mulPose(MathUtils.rotQuaternionDeg(0, (float) (daytime * 20 % 360), 0));
+			//matrixStackIn.mulPose(new Quaternion(0, (float) (daytime * 20 % 360), 0, true));
 			matrixStackIn.scale(size, 1, size);
 			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
 			matrixStackIn.popPose();
 			matrixStackIn.pushPose();
 			matrixStackIn.translate(8 / 16.0, 7.75 / 16.0, 8 / 16.0);
-			matrixStackIn.mulPose(new Quaternion(0, (float) (daytime * 20 % 360 + 22.5f), 0, true));
+			matrixStackIn.mulPose(MathUtils.rotQuaternionDeg(0, (float) (daytime * 20 % 360 + 22.5f), 0));
+			//matrixStackIn.mulPose(new Quaternion(0, (float) (daytime * 20 % 360 + 22.5f), 0, true));
 			matrixStackIn.scale(size, 1, size);
 			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
 			matrixStackIn.popPose();
 			matrixStackIn.pushPose();
 			matrixStackIn.translate(8 / 16.0, 10.75 / 16.0, 8 / 16.0);
-			matrixStackIn.mulPose(new Quaternion(0, (float) (daytime * 20 % 360 + 45.0f), 0, true));
+			matrixStackIn.mulPose(MathUtils.rotQuaternionDeg(0, (float) (daytime * 20 % 360 + 45.0f), 0));
+			//matrixStackIn.mulPose(new Quaternion(0, (float) (daytime * 20 % 360 + 45.0f), 0, true));
 			matrixStackIn.scale(size, 1, size);
 			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
 			matrixStackIn.popPose();

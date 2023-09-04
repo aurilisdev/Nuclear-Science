@@ -3,7 +3,7 @@
 	"parent": "block/cube_all",
 	"ambientocclusion": "false",
 	"textures": {
-		"1": "nuclearscience:model/chemicalextractor",
+		"1": "nuclearscience:block/model/chemicalextractor",
 		"particle": "electrodynamics:block/steelcasing"
 	},
 	"groups": [
@@ -24,7 +24,7 @@
 			"render_type": "minecraft:solid",
 			"parent": "block/cube_all",
 			"textures": {
-				"1": "nuclearscience:model/chemicalextractor",
+				"1": "nuclearscience:block/model/chemicalextractor",
 				"particle": "electrodynamics:block/steelcasing"
 			},
 			"elements": [
@@ -682,8 +682,8 @@
 			"render_type": "minecraft:translucent",
 			"parent": "block/cube_all",
 			"textures": {
-				"1": "nuclearscience:model/chemicalextractor",
-				"particle": "nuclearscience:model/chemicalextractor"
+				"1": "nuclearscience:block/model/chemicalextractor",
+				"particle": "electrodynamics:block/steelcasing"
 			},
 			"elements": [
 				{

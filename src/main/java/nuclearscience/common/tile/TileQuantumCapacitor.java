@@ -19,7 +19,7 @@ import electrodynamics.prefab.utilities.object.CachedTileOutput;
 import electrodynamics.prefab.utilities.object.TransferPack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.Explosion.BlockInteraction;
+import net.minecraft.world.level.Level.ExplosionInteraction;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -101,7 +101,7 @@ public class TileQuantumCapacitor extends GenericTile implements IEnergyStorage 
 				QuantumCapacitorData.get(level).setJoules(uuid.get(), frequency.get(), joules);
 				if (transfer.getVoltage() > DEFAULT_VOLTAGE) {
 					level.setBlockAndUpdate(worldPosition, Blocks.AIR.defaultBlockState());
-					level.explode(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), (float) Math.log10(10 + transfer.getVoltage() / DEFAULT_VOLTAGE), BlockInteraction.DESTROY);
+					level.explode(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), (float) Math.log10(10 + transfer.getVoltage() / DEFAULT_VOLTAGE), ExplosionInteraction.BLOCK);
 					return TransferPack.EMPTY;
 				}
 			}

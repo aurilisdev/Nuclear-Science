@@ -1,7 +1,6 @@
 package nuclearscience;
 
 import electrodynamics.prefab.configuration.ConfigurationHandler;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -11,11 +10,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegisterEvent;
-import nuclearscience.api.radiation.EffectRadiation;
 import nuclearscience.api.radiation.RadiationRegister;
 import nuclearscience.client.ClientRegister;
 import nuclearscience.common.packet.NetworkHandler;
@@ -55,13 +50,4 @@ public class NuclearScience {
 		AtomicAssemblerBlacklistRegister.INSTANCE = new AtomicAssemblerBlacklistRegister().subscribeAsSyncable(NetworkHandler.CHANNEL);
 	}
 
-	@SubscribeEvent
-	public static void onLoadEvent(FMLLoadCompleteEvent event) {
-
-	}
-
-	@SubscribeEvent
-	public static void registerEffects(RegisterEvent event) {
-		event.<MobEffect>register(ForgeRegistries.Keys.MOB_EFFECTS, helper -> helper.register("radiation", EffectRadiation.INSTANCE));
-	}
 }

@@ -1,44 +1,36 @@
-buildscript {
-    repositories {
-        maven { url = 'https://files.minecraftforge.net/maven' }
-        maven { url = 'https://maven.parchmentmc.org' }
-        jcenter()
-        mavenCentral()
-    }
-    dependencies {
-		classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-        classpath 'org.parchmentmc:librarian:1.+'
-    }
-}
 plugins {
-    id "com.matthewprenger.cursegradle" version '1.4.0'
+	id 'eclipse'
+	id 'maven-publish'
+	id 'net.minecraftforge.gradle' version "${forge_gradle_version}"
+	id 'org.parchmentmc.librarian.forgegradle' version "${parchent_librarian_version}.+"
+    id 'com.matthewprenger.cursegradle' version "${cursegradle_version}"
 }
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'org.parchmentmc.librarian.forgegradle'
+//apply plugin: 'net.minecraftforge.gradle'
+//apply plugin: 'org.parchmentmc.librarian.forgegradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
-apply plugin: 'eclipse'
-apply plugin: 'maven-publish'
-apply from: 'https://raw.githubusercontent.com/SizableShrimp/Forge-Class-Remapper/main/classremapper.gradle'
+//apply plugin: 'eclipse'
+//apply plugin: 'maven-publish'
+//apply from: 'https://raw.githubusercontent.com/SizableShrimp/Forge-Class-Remapper/main/classremapper.gradle'
 
 libsDirName = "../output"
 distsDirName = "../output"
 
-def version_minor='5'
-def version_revision='2'
-def	minecraft_version='1.19.2'
-def version_build='4'
-def version_major='0'
+group = nuclearscience_group
+version = nuclearscience_version
 
-version = minecraft_version+'-'+version_major+'.'+version_minor+'.'+version_revision+'-'+version_build
-group = 'nuclearscience' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'Nuclear Science'
+base {
+
+	archivesName = nuclearscience_name
+
+}
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
     //mappings channel: 'official', version: '1.18.1' 
-    mappings channel: 'parchment', version: '2022.11.06-1.19.2'
+    mappings channel: 'parchment', version: "${parchment_version}-${minecraft_version}"
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
     runs {
         client {
             workingDirectory project.file('run')
@@ -101,43 +93,65 @@ dependencies {
     if(Folder2.exists()) {
         implementation fileTree(Folder2)
     }
-	minecraft 'net.minecraftforge:forge:1.19.2-43.1.52'
-    compileOnly(fg.deobf("mezz.jei:jei-1.19.2-common-api:11.3.0.271"))
-    compileOnly(fg.deobf("mezz.jei:jei-1.19.2-forge-api:11.3.0.271"))
-    runtimeOnly(fg.deobf("mezz.jei:jei-1.19.2-forge:11.3.0.271"))
-    annotationProcessor 'org.spongepowered:mixin:0.8.4:processor'
+	minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
+    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
+}
+
+repositories {
+	mavenCentral()
+	maven {
+	    // location of the maven that hosts JEI files since January 2023
+	    name = "Jared's maven"
+	    url = "https://maven.blamejared.com/"
+	}
+	maven {
+   		// location of a maven mirror for JEI files, as a fallback
+    	name = "ModMaven"
+    	url = "https://modmaven.dev"
+  	}
+
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
-jar {
+tasks.named('jar', Jar).configure {
     manifest {
         attributes([
             "Specification-Title": "nuclearscience",
             "Specification-Vendor": "aurilisdev",
             "Specification-Version": "1", // We are version 1 of ourselves
             "Implementation-Title": project.name,
-            "Implementation-Version": "${version}",
+            "Implementation-Version": project.jar.archiveVersion,
             "Implementation-Vendor" :"aurilisdev",
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
+    
+    finalizedBy('reobfJar') 
+    
 }
 
-jar.finalizedBy('reobfJar') 
-
-task sourcesJar(type: Jar, dependsOn: classes) {
+tasks.register('sourcesJar', Jar).configure {
+	dependsOn classes
 	from sourceSets.main.allSource
-	classifier = 'sources'
+	archiveClassifier = 'sources'
 }
-task deobfJar(type: Jar) {
+
+tasks.register('deobfJar', Jar).configure {
 	from sourceSets.main.output
-	classifier = 'deobf'
+	archiveClassifier = 'deobf'
+}
+
+tasks.named('publish').configure {
+	dependsOn 'reobfJar'
 }
 
 artifacts {
 	archives sourcesJar
 	archives deobfJar
 }
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
@@ -149,21 +163,6 @@ publishing {
             url "file:///${project.projectDir}/mcmodsrepo"
         }
     }
-}
-
-/*
-This needs to stay. It's the Maven repository for JEI along with a fallback!
-*/
-repositories{
-		mavenCentral()
-	  	maven {
-	   	    name = "Progwml6 maven"
-	   	    url = "https://dvs1.progwml6.com/files/maven/"
-	  	}
-	    maven {
-	       name = "ModMaven"
-	       url = "https://modmaven.k-4u.nl"
-	    }
 }
 
 tasks.curseforge.dependsOn jar

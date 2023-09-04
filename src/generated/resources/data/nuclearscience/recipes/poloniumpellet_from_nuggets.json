@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "P": {
       "tag": "forge:nuggets/polonium"
@@ -11,5 +12,6 @@
   ],
   "result": {
     "item": "nuclearscience:polonium210"
-  }
+  },
+  "show_notification": false
 }

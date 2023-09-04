@@ -9,7 +9,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AirBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import nuclearscience.References;
@@ -19,7 +18,7 @@ import nuclearscience.api.radiation.RadiationSystem;
 public class BlockRadioactiveAir extends AirBlock {
 
 	public BlockRadioactiveAir() {
-		super(Properties.of(Material.AIR).noCollission().air());
+		super(Properties.copy(Blocks.AIR).noCollission().air());
 	}
 
 	@Override

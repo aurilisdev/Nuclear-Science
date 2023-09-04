@@ -9,11 +9,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.material.Material;
 import nuclearscience.api.network.moltensalt.IMoltenSaltPipe;
 import nuclearscience.common.block.subtype.SubtypeMoltenSaltPipe;
 import nuclearscience.common.tile.TileHeatExchanger;
@@ -27,7 +27,7 @@ public class BlockMoltenSaltPipe extends AbstractRefreshingConnectBlock {
 	public final SubtypeMoltenSaltPipe pipe;
 
 	public BlockMoltenSaltPipe(SubtypeMoltenSaltPipe pipe) {
-		super(Properties.of(Material.METAL).sound(SoundType.METAL).strength(0.15f).dynamicShape(), 3);
+		super(Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.METAL).strength(0.15f).dynamicShape(), 3);
 		this.pipe = pipe;
 		PIPESET.add(this);
 	}

@@ -1,19 +1,22 @@
 package nuclearscience.datagen.server;
 
+import java.util.List;
+
 import electrodynamics.datagen.server.ElectrodynamicsLootTablesProvider;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.world.level.block.Block;
+import nuclearscience.References;
 import nuclearscience.common.block.subtype.SubtypeMoltenSaltPipe;
 import nuclearscience.registers.NuclearScienceBlockTypes;
 import nuclearscience.registers.NuclearScienceBlocks;
 
 public class NuclearScienceLootTablesProvider extends ElectrodynamicsLootTablesProvider {
 
-	public NuclearScienceLootTablesProvider(DataGenerator generator) {
-		super(generator);
+	public NuclearScienceLootTablesProvider() {
+		super(References.ID);
 	}
 
 	@Override
-	protected void addTables() {
+	protected void generate() {
 
 		addMachineTable(NuclearScienceBlocks.blockAtomicAssembler, NuclearScienceBlockTypes.TILE_ATOMICASSEMBLER, true, false, false, true, false);
 		addMachineTable(NuclearScienceBlocks.blockChemicalExtractor, NuclearScienceBlockTypes.TILE_CHEMICALEXTRACTOR, true, true, false, true, false);
@@ -43,7 +46,13 @@ public class NuclearScienceLootTablesProvider extends ElectrodynamicsLootTablesP
 		addMachineTable(NuclearScienceBlocks.blockTeleporter, NuclearScienceBlockTypes.TILE_TELEPORTER, false, false, false, true, false);
 		addSimpleBlock(NuclearScienceBlocks.blockTurbine);
 		addSimpleBlock(NuclearScienceBlocks.getBlock(SubtypeMoltenSaltPipe.vanadiumsteelceramic));
+		addSimpleBlock(NuclearScienceBlocks.blockSteamFunnel);
 
+	}
+	
+	@Override
+	public List<Block> getExcludedBlocks() {
+		return List.of(NuclearScienceBlocks.blockPlasma, NuclearScienceBlocks.blockRadioactiveAir);
 	}
 
 }
