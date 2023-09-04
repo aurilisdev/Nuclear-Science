@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "B": {
       "tag": "forge:storage_blocks/vanadiumsteel"
@@ -18,5 +19,6 @@
   ],
   "result": {
     "item": "nuclearscience:freezeplug"
-  }
+  },
+  "show_notification": false
 }

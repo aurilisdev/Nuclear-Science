@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import electrodynamics.datagen.utils.recipe.AbstractRecipeGenerator;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import nuclearscience.datagen.server.recipe.custom.fluiditem2fluid.NuclearScienceChemicalMixerRecipes;
@@ -21,8 +21,8 @@ public class NuclearScienceRecipeProvider extends RecipeProvider {
 
 	public final List<AbstractRecipeGenerator> GENERATORS = new ArrayList<>();
 
-	public NuclearScienceRecipeProvider(DataGenerator gen) {
-		super(gen);
+	public NuclearScienceRecipeProvider(PackOutput output) {
+		super(output);
 		addRecipes();
 	}
 
@@ -38,10 +38,12 @@ public class NuclearScienceRecipeProvider extends RecipeProvider {
 	}
 
 	@Override
-	protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
+	protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
 		for (AbstractRecipeGenerator generator : GENERATORS) {
 			generator.addRecipes(consumer);
 		}
 	}
+
+	
 
 }

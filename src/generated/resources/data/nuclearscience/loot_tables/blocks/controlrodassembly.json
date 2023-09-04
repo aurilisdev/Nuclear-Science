@@ -12,5 +12,6 @@
       "name": "controlrodassembly",
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "nuclearscience:blocks/controlrodassembly"
 }

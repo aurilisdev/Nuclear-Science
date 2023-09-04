@@ -3,7 +3,7 @@ package nuclearscience.datagen.client;
 import electrodynamics.datagen.client.ElectrodynamicsBlockStateProvider;
 import electrodynamics.prefab.block.GenericEntityBlock;
 import net.minecraft.core.Direction;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
@@ -17,8 +17,8 @@ import nuclearscience.registers.NuclearScienceBlocks;
 
 public class NuclearScienceBlockStateProvider extends ElectrodynamicsBlockStateProvider {
 
-	public NuclearScienceBlockStateProvider(DataGenerator gen, ExistingFileHelper exFileHelper) {
-		super(gen, exFileHelper, References.ID);
+	public NuclearScienceBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
+		super(output, exFileHelper, References.ID);
 	}
 
 	@Override

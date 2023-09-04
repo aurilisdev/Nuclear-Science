@@ -1,7 +1,5 @@
 package nuclearscience.client.screen;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import electrodynamics.api.electricity.formatting.ChatFormatter;
 import electrodynamics.prefab.screen.GenericScreen;
 import electrodynamics.prefab.screen.component.types.ScreenComponentProgress;
@@ -10,6 +8,7 @@ import electrodynamics.prefab.screen.component.types.guitab.ScreenComponentElect
 import electrodynamics.prefab.screen.component.utils.AbstractScreenComponentInfo;
 import electrodynamics.prefab.utilities.ElectroTextUtils;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
@@ -33,7 +32,7 @@ public class ScreenMoltenSaltSupplier extends GenericScreen<ContainerMoltenSaltS
 			return supplier.reactorWaste.get() / TileMoltenSaltSupplier.AMT_PER_WASTE;
 		}, 77, 35) {
 			@Override
-			public void renderForeground(PoseStack stack, int xAxis, int yAxis, int guiWidth, int guiHeight) {
+			public void renderForeground(GuiGraphics graphics, int xAxis, int yAxis, int guiWidth, int guiHeight) {
 				if (!isHoveredOrFocused()) {
 					return;
 				}
@@ -41,7 +40,7 @@ public class ScreenMoltenSaltSupplier extends GenericScreen<ContainerMoltenSaltS
 				if (supplier == null) {
 					return;
 				}
-				displayTooltip(stack, NuclearTextUtils.gui("saltsupplier.wastecont", ElectroTextUtils.ratio(ChatFormatter.formatFluidMilibuckets(supplier.reactorWaste.get()), ChatFormatter.formatFluidMilibuckets(TileMoltenSaltSupplier.AMT_PER_WASTE)).withStyle(ChatFormatting.DARK_GRAY)).withStyle(ChatFormatting.GRAY), xAxis, yAxis);
+				graphics.renderTooltip(font, NuclearTextUtils.gui("saltsupplier.wastecont", ElectroTextUtils.ratio(ChatFormatter.formatFluidMilibuckets(supplier.reactorWaste.get()), ChatFormatter.formatFluidMilibuckets(TileMoltenSaltSupplier.AMT_PER_WASTE)).withStyle(ChatFormatting.DARK_GRAY)).withStyle(ChatFormatting.GRAY), xAxis, yAxis);
 
 			}
 		});

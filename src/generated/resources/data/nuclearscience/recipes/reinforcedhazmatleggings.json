@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "L": {
       "tag": "forge:plates/lead"
@@ -18,5 +19,6 @@
   ],
   "result": {
     "item": "nuclearscience:reinforcedhazmatlegs"
-  }
+  },
+  "show_notification": false
 }

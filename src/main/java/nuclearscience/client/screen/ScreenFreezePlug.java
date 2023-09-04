@@ -22,18 +22,18 @@ public class ScreenFreezePlug extends GenericScreen<ContainerFreezePlug> {
 	public ScreenFreezePlug(ContainerFreezePlug container, Inventory playerInventory, Component title) {
 		super(container, playerInventory, title);
 		addComponent(new ScreenComponentElectricInfo(-AbstractScreenComponentInfo.SIZE + 1, 2).wattage(Constants.FREEZEPLUG_USAGE_PER_TICK * 20));
-		addComponent(new ScreenComponentMultiLabel(0, 0, stack -> {
+		addComponent(new ScreenComponentMultiLabel(0, 0, graphics -> {
 			TileFreezePlug plug = menu.getHostFromIntArray();
 			if (plug == null) {
 				return;
 			}
 			if (plug.isFrozen()) {
-				font.draw(stack, NuclearTextUtils.gui("freezeplug.status", NuclearTextUtils.gui("freezeplug.frozen").withStyle(ChatFormatting.GREEN)).withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText(), 40, 30, 0);
+				graphics.drawString(font, NuclearTextUtils.gui("freezeplug.status", NuclearTextUtils.gui("freezeplug.frozen").withStyle(ChatFormatting.GREEN)).withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText(), 40, 30, 0, false);
 
 			} else {
-				font.draw(stack, NuclearTextUtils.gui("freezeplug.status", NuclearTextUtils.gui("freezeplug.off").withStyle(ChatFormatting.RED)).withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText(), 40, 30, 0);
+				graphics.drawString(font, NuclearTextUtils.gui("freezeplug.status", NuclearTextUtils.gui("freezeplug.off").withStyle(ChatFormatting.RED)).withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText(), 40, 30, 0, false);
 			}
-			font.draw(stack, NuclearTextUtils.gui("freezeplug.saltbonus", ChatFormatter.getChatDisplayShort(plug.getSaltBonus() * 100.0, DisplayUnit.PERCENTAGE).withStyle(ChatFormatting.BLACK)).withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText(), 40, 50, 0);
+			graphics.drawString(font, NuclearTextUtils.gui("freezeplug.saltbonus", ChatFormatter.getChatDisplayShort(plug.getSaltBonus() * 100.0, DisplayUnit.PERCENTAGE).withStyle(ChatFormatting.BLACK)).withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText(), 40, 50, 0, false);
 		}));
 
 	}

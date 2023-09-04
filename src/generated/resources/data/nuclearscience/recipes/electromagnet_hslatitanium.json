@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "H": {
       "tag": "forge:plates/hslasteel"
@@ -19,5 +20,6 @@
   "result": {
     "count": 15,
     "item": "nuclearscience:electromagnet"
-  }
+  },
+  "show_notification": false
 }

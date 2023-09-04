@@ -29,14 +29,14 @@ public class ScreenFissionReactorCore extends GenericScreen<ContainerReactorCore
 		addComponent(new ScreenComponentGeneric(NuclearArrows.FISSION_REACTOR_ARROW_DOWN, 117, 53));
 
 		addComponent(new ScreenComponentSimpleLabel(titleLabelX, titleLabelY + 24, height, 4210752, NuclearTextUtils.gui("fissionreactor.deuterium")));
-		addComponent(new ScreenComponentMultiLabel(0, 0, stack -> {
+		addComponent(new ScreenComponentMultiLabel(0, 0, graphics -> {
 			TileFissionReactorCore core = menu.getHostFromIntArray();
 			if (core == null) {
 				return;
 			}
-			font.draw(stack, NuclearTextUtils.gui("fissionreactor.temperature", core.temperature.get().intValue() / 4 + 15 + " C"), titleLabelX, (float) titleLabelY + 55, 4210752);
+			graphics.drawString(font, NuclearTextUtils.gui("fissionreactor.temperature", core.temperature.get().intValue() / 4 + 15 + " C"), titleLabelX, titleLabelY + 55, 4210752, false);
 			if (core.temperature.get() > TileFissionReactorCore.MELTDOWN_TEMPERATURE_ACTUAL && System.currentTimeMillis() % 1000 < 500) {
-				font.draw(stack, NuclearTextUtils.gui("fissionreactor.warning"), titleLabelX, (float) titleLabelY + 65, 16711680);
+				graphics.drawString(font, NuclearTextUtils.gui("fissionreactor.warning"), titleLabelX, titleLabelY + 65, 16711680, false);
 			}
 		}));
 

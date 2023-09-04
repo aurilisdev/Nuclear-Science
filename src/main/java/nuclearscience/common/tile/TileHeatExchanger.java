@@ -12,7 +12,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
@@ -59,7 +58,7 @@ public class TileHeatExchanger extends GenericTile {
 			for (LivingEntity living : list) {
 				FluidState state = level.getBlockState(living.getOnPos()).getFluidState();
 				if (state.is(Fluids.WATER) || state.is(Fluids.FLOWING_WATER)) {
-					living.hurt(DamageSource.DROWN, 3);
+					living.hurt(living.damageSources().drown(), 3);
 				}
 			}
 		}

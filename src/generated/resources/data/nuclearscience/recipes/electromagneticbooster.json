@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "E": {
       "item": "nuclearscience:electromagnet"
@@ -13,5 +14,6 @@
   ],
   "result": {
     "item": "nuclearscience:electromagneticbooster"
-  }
+  },
+  "show_notification": false
 }

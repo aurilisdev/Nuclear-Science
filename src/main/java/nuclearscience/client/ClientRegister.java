@@ -1,20 +1,13 @@
 package nuclearscience.client;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import electrodynamics.client.guidebook.ScreenGuidebook;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelEvent.RegisterAdditional;
-import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
@@ -52,9 +45,6 @@ import nuclearscience.registers.NuclearScienceMenuTypes;
 @EventBusSubscriber(modid = References.ID, bus = Bus.MOD, value = { Dist.CLIENT })
 public class ClientRegister {
 
-	public static HashMap<ResourceLocation, TextureAtlasSprite> CACHED_TEXTUREATLASSPRITES = new HashMap<>();
-	private static final List<ResourceLocation> CUSTOM_TEXTURES = new ArrayList<>();
-
 	@SubscribeEvent
 	public static void onModelEvent(RegisterAdditional event) {
 		event.register(MODEL_GASCENTRIFUGECENTER);
@@ -75,9 +65,8 @@ public class ClientRegister {
 	public static final ResourceLocation MODEL_FISSIONREACTORDEUTERIUM = new ResourceLocation(References.ID + ":block/fissionreactordeuterium");
 	public static final ResourceLocation MODEL_CONTROLRODASSEMBLYSTRUCTURE = new ResourceLocation(References.ID + ":block/controlrodassemblystructure");
 	public static final ResourceLocation MODEL_CONTROLRODASSEMBLYSROD = new ResourceLocation(References.ID + ":block/controlrodassemblyrod");
-	// public static final ResourceLocation TEXTURE_REACTORCOREEMPTY = new ResourceLocation(References.ID + ":textures/model/fissionreactorcore.png");
 
-	public static final ResourceLocation TEXTURE_JEIBLACKHOLE = new ResourceLocation(References.ID + ":screen/jei/particleaccelerator_dmblackhole");
+	public static final ResourceLocation TEXTURE_JEIBLACKHOLE = new ResourceLocation(References.ID, "custom/particleaccelerator_dmblackhole");
 
 	public static void setup() {
 		MenuScreens.register(NuclearScienceMenuTypes.CONTAINER_GASCENTRIFUGE.get(), ScreenGasCentrifuge::new);
@@ -116,26 +105,6 @@ public class ClientRegister {
 
 	public static boolean shouldMultilayerRender(RenderType type) {
 		return type == RenderType.translucent() || type == RenderType.solid();
-	}
-
-	static {
-		CUSTOM_TEXTURES.add(ClientRegister.TEXTURE_JEIBLACKHOLE);
-	}
-
-	@SubscribeEvent
-	public static void addCustomTextureAtlases(TextureStitchEvent.Pre event) {
-		if (event.getAtlas().location().equals(TextureAtlas.LOCATION_BLOCKS)) {
-			CUSTOM_TEXTURES.forEach(event::addSprite);
-		}
-	}
-
-	@SubscribeEvent
-	public static void cacheCustomTextureAtlases(TextureStitchEvent.Post event) {
-		if (event.getAtlas().location().equals(TextureAtlas.LOCATION_BLOCKS)) {
-			for (ResourceLocation loc : CUSTOM_TEXTURES) {
-				ClientRegister.CACHED_TEXTUREATLASSPRITES.put(loc, event.getAtlas().getSprite(loc));
-			}
-		}
 	}
 
 }

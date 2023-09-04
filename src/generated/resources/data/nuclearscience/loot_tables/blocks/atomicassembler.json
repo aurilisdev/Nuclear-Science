@@ -49,5 +49,6 @@
       "name": "atomicassembler",
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "nuclearscience:blocks/atomicassembler"
 }

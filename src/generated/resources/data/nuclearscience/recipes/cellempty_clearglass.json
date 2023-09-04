@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "G": {
       "item": "electrodynamics:glassclear"
@@ -16,5 +17,6 @@
   "result": {
     "count": 6,
     "item": "nuclearscience:cellempty"
-  }
+  },
+  "show_notification": false
 }

@@ -1,7 +1,7 @@
 package nuclearscience.datagen.client;
 
 import electrodynamics.datagen.client.ElectrodynamicsLangKeyProvider;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import nuclearscience.References;
 import nuclearscience.common.block.subtype.SubtypeMoltenSaltPipe;
 import nuclearscience.common.recipe.categories.fluiditem2gas.specificmachines.NuclearBoilerRecipe;
@@ -18,8 +18,8 @@ import nuclearscience.registers.NuclearScienceSounds;
 
 public class NuclearScienceLangKeyProvider extends ElectrodynamicsLangKeyProvider {
 
-	public NuclearScienceLangKeyProvider(DataGenerator gen, Locale locale) {
-		super(gen, locale, References.ID);
+	public NuclearScienceLangKeyProvider(PackOutput output, Locale locale) {
+		super(output, locale, References.ID);
 	}
 
 	@Override
@@ -29,7 +29,7 @@ public class NuclearScienceLangKeyProvider extends ElectrodynamicsLangKeyProvide
 		case EN_US:
 		default:
 
-			add("itemGroup.itemgroup" + References.ID, "Nuclear Science");
+			addCreativeTab("main", "Nuclear Science");
 
 			addItem(NuclearScienceItems.ITEM_URANIUM235, "Uranium-235");
 			addItem(NuclearScienceItems.ITEM_URANIUM238, "Uranium-238");
@@ -161,8 +161,8 @@ public class NuclearScienceLangKeyProvider extends ElectrodynamicsLangKeyProvide
 
 			addChatMessage("geigercounter.text", "%s Rads/hour");
 
-			add("death.attack.radiation", "%s just did a speedrun of evolution!");
-			add("death.attack.plasma", "%s was ionized!");
+			addDamageSource("radiation", "%s just did a speedrun of evolution!");
+			addDamageSource("plasma", "%s was ionized!");
 			add("effect.nuclearscience.radiation", "Radiation");
 
 			addTooltip("frequencycard.linked", "Linked to %s");

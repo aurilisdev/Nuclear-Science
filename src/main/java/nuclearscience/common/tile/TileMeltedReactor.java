@@ -12,7 +12,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import nuclearscience.api.radiation.RadiationSystem;
 import nuclearscience.registers.NuclearScienceBlockTypes;
@@ -33,7 +32,7 @@ public class TileMeltedReactor extends GenericTile {
 		long ticks = tickable.getTicks();
 		if (ticks % 3 == 0) {
 			BlockState state = level.getBlockState(worldPosition.below());
-			if (state.getMaterial() == Material.AIR || state.getBlock() instanceof LiquidBlock) {
+			if (state.isAir() || state.getBlock() instanceof LiquidBlock) {
 				level.setBlockAndUpdate(worldPosition.below(), getBlockState());
 				level.setBlockAndUpdate(worldPosition, Blocks.AIR.defaultBlockState());
 				BlockEntity tile = level.getBlockEntity(worldPosition.below());
@@ -54,11 +53,11 @@ public class TileMeltedReactor extends GenericTile {
 			double d5 = worldPosition.getZ() - z2;
 			double distanceSq = d3 * d3 + d4 * d4 + d5 * d5;
 			if (distanceSq < RADIATION_RADIUS * RADIATION_RADIUS && level.random.nextDouble() > distanceSq / (RADIATION_RADIUS * RADIATION_RADIUS)) {
-				BlockPos p = new BlockPos(Math.floor(x2), Math.floor(y2), Math.floor(z2));
+				BlockPos p = new BlockPos((int) Math.floor(x2), (int) Math.floor(y2), (int) Math.floor(z2));
 				BlockState st = level.getBlockState(p);
 				Block block = st.getBlock();
-				if (st.getMaterial() == Material.AIR) {
-					if (level.getBlockState(p.below()).getMaterial() != Material.AIR) {
+				if (st.isAir()) {
+					if (!level.getBlockState(p.below()).isAir()) {
 						level.setBlockAndUpdate(p, Blocks.AIR.defaultBlockState());
 					}
 				} else if (block == Blocks.STONE) {
@@ -84,7 +83,7 @@ public class TileMeltedReactor extends GenericTile {
 			double d5 = worldPosition.getZ() - z2;
 			double distanceSq = d3 * d3 + d4 * d4 + d5 * d5;
 			if (distanceSq < RADIATION_RADIUS * RADIATION_RADIUS && level.random.nextDouble() > distanceSq / (RADIATION_RADIUS * RADIATION_RADIUS)) {
-				BlockPos p = new BlockPos(Math.floor(x2), Math.floor(y2), Math.floor(z2));
+				BlockPos p = new BlockPos((int) Math.floor(x2), (int) Math.floor(y2), (int) Math.floor(z2));
 				BlockState st = level.getBlockState(p);
 				Block block = st.getBlock();
 				if (block == Blocks.GRASS_BLOCK || block == Blocks.DIRT) {

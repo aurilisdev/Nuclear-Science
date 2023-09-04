@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "H": {
       "item": "nuclearscience:hazmathelmet"
@@ -18,5 +19,6 @@
   ],
   "result": {
     "item": "nuclearscience:reinforcedhazmathelmet"
-  }
+  },
+  "show_notification": false
 }

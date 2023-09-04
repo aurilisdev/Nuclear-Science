@@ -34,7 +34,9 @@ public class TileControlRodAssembly extends GenericTile {
 
 	@Override
 	public void onNeightborChanged(BlockPos neighbor) {
-		super.onNeightborChanged(neighbor);
+		if(level.isClientSide) {
+			return;
+		}
 		isMSR.set(false);
 		for (Direction dir : HORIZONTAL_DIRECTIONS) {
 			BlockEntity tile = level.getBlockEntity(getBlockPos().relative(dir));
@@ -50,7 +52,9 @@ public class TileControlRodAssembly extends GenericTile {
 
 	@Override
 	public void onPlace(BlockState oldState, boolean isMoving) {
-		super.onPlace(oldState, isMoving);
+		if(level.isClientSide) {
+			return;
+		}
 		isMSR.set(false);
 		for (Direction dir : HORIZONTAL_DIRECTIONS) {
 			BlockEntity tile = level.getBlockEntity(getBlockPos().relative(dir));

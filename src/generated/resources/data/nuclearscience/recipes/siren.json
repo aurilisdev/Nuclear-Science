@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "N": {
       "item": "minecraft:note_block"
@@ -13,5 +14,6 @@
   ],
   "result": {
     "item": "nuclearscience:siren"
-  }
+  },
+  "show_notification": false
 }

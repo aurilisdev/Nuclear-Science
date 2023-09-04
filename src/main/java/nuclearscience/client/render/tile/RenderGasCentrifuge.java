@@ -1,10 +1,10 @@
 package nuclearscience.client.render.tile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Quaternion;
 
 import electrodynamics.client.render.tile.AbstractTileRenderer;
 import electrodynamics.prefab.utilities.RenderingUtils;
+import electrodynamics.prefab.utilities.math.MathUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -20,12 +20,13 @@ public class RenderGasCentrifuge extends AbstractTileRenderer<TileGasCentrifuge>
 	}
 
 	@Override
-	public void render(TileGasCentrifuge tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
+	public void render(TileGasCentrifuge tile, float partialTicks, PoseStack poseStack, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
 		BakedModel ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_GASCENTRIFUGECENTER);
-		matrixStackIn.translate(0.5, 0.5, 0.5);
-		double daytime = System.currentTimeMillis() / 5.0 * (tileEntityIn.spinSpeed.get() / 20.0);
-		matrixStackIn.mulPose(new Quaternion(0, (float) (daytime * 20 % 360), 0, true));
-		RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
+		poseStack.translate(0.5, 0.5, 0.5);
+		double daytime = System.currentTimeMillis() / 5.0 * (tile.spinSpeed.get() / 20.0);
+		poseStack.mulPose(MathUtils.rotQuaternionDeg(0, (float) (daytime * 20 % 360), 0));
+		//poseStack.mulPose(new Quaternion(0, (float) (daytime * 20 % 360), 0, true));
+		RenderingUtils.renderModel(ibakedmodel, tile, RenderType.solid(), poseStack, bufferIn, combinedLightIn, combinedOverlayIn);
 	}
 
 }

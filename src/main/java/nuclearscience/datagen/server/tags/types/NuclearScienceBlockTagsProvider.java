@@ -1,21 +1,25 @@
-package nuclearscience.datagen.server;
+package nuclearscience.datagen.server.tags.types;
 
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.tags.BlockTagsProvider;
+import java.util.concurrent.CompletableFuture;
+
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import nuclearscience.References;
 import nuclearscience.registers.NuclearScienceBlocks;
 
 public class NuclearScienceBlockTagsProvider extends BlockTagsProvider {
 
-	public NuclearScienceBlockTagsProvider(DataGenerator pGenerator, ExistingFileHelper existingFileHelper) {
-		super(pGenerator, References.ID, existingFileHelper);
+	public NuclearScienceBlockTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
+		super(output, lookupProvider, References.ID, existingFileHelper);
 	}
 
 	@Override
-	protected void addTags() {
+	protected void addTags(Provider provider) {
 
 		tag(BlockTags.MINEABLE_WITH_PICKAXE).add(NuclearScienceBlocks.blockAtomicAssembler, NuclearScienceBlocks.blockChemicalExtractor, NuclearScienceBlocks.blockControlRodAssembly, NuclearScienceBlocks.blockElectromagnet, NuclearScienceBlocks.blockElectromagneticBooster, NuclearScienceBlocks.blockElectromagneticGlass, NuclearScienceBlocks.blockElectromagneticSwitch, NuclearScienceBlocks.blockFreezePlug, NuclearScienceBlocks.blockFuelReprocessor, NuclearScienceBlocks.blockFusionReactorCore, NuclearScienceBlocks.blockGasCentrifuge, NuclearScienceBlocks.blockHeatExchanger, NuclearScienceBlocks.blocklead, NuclearScienceBlocks.blockMeltedReactor, NuclearScienceBlocks.blockMoltenSaltSupplier, NuclearScienceBlocks.blockMSRFuelPreProcessor, NuclearScienceBlocks.blockMSReactorCore, NuclearScienceBlocks.blockNuclearBoiler, NuclearScienceBlocks.blockParticleInjector, NuclearScienceBlocks.blockQuantumCapacitor, NuclearScienceBlocks.blockRadioactiveProcessor, NuclearScienceBlocks.blockRadioisotopeGenerator, NuclearScienceBlocks.blockFissionReactorCore, NuclearScienceBlocks.blockSiren, NuclearScienceBlocks.blockTeleporter, NuclearScienceBlocks.blockTurbine);
 

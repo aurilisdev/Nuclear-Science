@@ -12,5 +12,6 @@
       "name": "turbine",
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "nuclearscience:blocks/turbine"
 }

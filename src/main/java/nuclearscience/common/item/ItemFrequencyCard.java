@@ -1,7 +1,9 @@
 package nuclearscience.common.item;
 
 import java.util.List;
+import java.util.function.Supplier;
 
+import electrodynamics.common.item.ItemElectrodynamics;
 import electrodynamics.prefab.utilities.ElectroTextUtils;
 import electrodynamics.prefab.utilities.NBTUtils;
 import net.minecraft.core.BlockPos;
@@ -11,7 +13,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
@@ -19,10 +21,10 @@ import net.minecraft.world.level.Level;
 import nuclearscience.common.tile.TileTeleporter;
 import nuclearscience.prefab.utils.NuclearTextUtils;
 
-public class ItemFrequencyCard extends Item {
+public class ItemFrequencyCard extends ItemElectrodynamics {
 
-	public ItemFrequencyCard(Properties properties) {
-		super(properties.stacksTo(1));
+	public ItemFrequencyCard(Properties properties, Supplier<CreativeModeTab> creativeTab) {
+		super(properties.stacksTo(1), creativeTab);
 	}
 
 	@Override

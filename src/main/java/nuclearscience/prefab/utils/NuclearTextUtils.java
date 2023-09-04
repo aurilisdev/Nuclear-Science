@@ -10,6 +10,7 @@ import static electrodynamics.prefab.utilities.ElectroTextUtils.JEI_INFO_FLUID;
 import static electrodynamics.prefab.utilities.ElectroTextUtils.JEI_INFO_ITEM;
 import static electrodynamics.prefab.utilities.ElectroTextUtils.MESSAGE_BASE;
 import static electrodynamics.prefab.utilities.ElectroTextUtils.TOOLTIP_BASE;
+import static electrodynamics.prefab.utilities.ElectroTextUtils.CREATIVE_TAB;
 
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
@@ -62,6 +63,10 @@ public class NuclearTextUtils {
 
 	public static MutableComponent advancement(String key, Object... additional) {
 		return translated(ADVANCEMENT_BASE, key, additional);
+	}
+
+	public static MutableComponent creativeTab(String key, Object... additional) {
+		return translated(CREATIVE_TAB, key, additional);
 	}
 
 	public static MutableComponent translated(String base, String key, Object... additional) {

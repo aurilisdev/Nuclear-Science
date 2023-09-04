@@ -20,11 +20,11 @@ import electrodynamics.prefab.utilities.object.Location;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Explosion.BlockInteraction;
+import net.minecraft.world.level.Level.ExplosionInteraction;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -37,7 +37,6 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import nuclearscience.api.radiation.DamageSourceRadiation;
 import nuclearscience.api.radiation.RadiationSystem;
 import nuclearscience.api.turbine.ISteamReceiver;
 import nuclearscience.common.inventory.container.ContainerReactorCore;
@@ -45,6 +44,7 @@ import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 import nuclearscience.common.settings.Constants;
 import nuclearscience.registers.NuclearScienceBlockTypes;
 import nuclearscience.registers.NuclearScienceBlocks;
+import nuclearscience.registers.NuclearScienceDamageTypes;
 import nuclearscience.registers.NuclearScienceItems;
 
 public class TileFissionReactorCore extends GenericTile {
@@ -149,7 +149,7 @@ public class TileFissionReactorCore extends GenericTile {
 					for (LivingEntity living : list) {
 						FluidState state = level.getBlockState(living.getOnPos()).getFluidState();
 						if (state.is(Fluids.WATER) || state.is(Fluids.FLOWING_WATER)) {
-							living.hurt(DamageSource.DROWN, 3);
+							living.hurt(living.damageSources().drown(), 3);
 						}
 					}
 				}
@@ -179,7 +179,7 @@ public class TileFissionReactorCore extends GenericTile {
 			// switch to false if you don't want fire
 			// for the final null, you can pass in a ExplosionCalculator if you want to do a
 			// custom explosion
-			Explosion actual = new Explosion(level, null, DamageSourceRadiation.INSTANCE, null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), 20, true, BlockInteraction.BREAK);
+			Explosion actual = new Explosion(level, null, level.damageSources().source(NuclearScienceDamageTypes.RADIATION), null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), 20, true, BlockInteraction.KEEP);
 			// Explosion actual = new Explosion(level, null, worldPosition.getX(),
 			// worldPosition.getY(), worldPosition.getZ(), 20, new ArrayList<>());
 			radius = 3 * fuelCount.get();
@@ -197,7 +197,7 @@ public class TileFissionReactorCore extends GenericTile {
 					}
 				}
 			}
-			level.explode(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), 20, BlockInteraction.DESTROY);
+			level.explode(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), 20, ExplosionInteraction.BLOCK);
 			level.setBlockAndUpdate(worldPosition, NuclearScienceBlocks.blockMeltedReactor.defaultBlockState());
 		}
 	}
@@ -279,10 +279,10 @@ public class TileFissionReactorCore extends GenericTile {
 				for (CountableIngredient ing : recipe.getCountedIngredients()) {
 					if (ing.testStack(input)) {
 						if (output.isEmpty()) {
-							inv.setItem(outputSlot, recipe.getResultItem().copy());
+							inv.setItem(outputSlot, recipe.getItemOutputNoAccess().copy());
 							input.shrink(recipe.getCountedIngredients().get(0).getStackSize());
-						} else if (output.getCount() <= output.getMaxStackSize() + recipe.getResultItem().getCount()) {
-							output.grow(recipe.getResultItem().getCount());
+						} else if (output.getCount() <= output.getMaxStackSize() + recipe.getItemOutputNoAccess().getCount()) {
+							output.grow(recipe.getItemOutputNoAccess().getCount());
 							input.shrink(recipe.getCountedIngredients().get(0).getStackSize());
 						}
 					}

@@ -5,8 +5,8 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import electrodynamics.api.gas.GasStack;
 import electrodynamics.api.gas.GasTank;
-import electrodynamics.client.ClientRegister;
 import electrodynamics.client.render.tile.AbstractTileRenderer;
+import electrodynamics.client.texture.atlas.AtlasHolderElectrodynamicsCustom;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
@@ -17,7 +17,6 @@ import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
@@ -113,9 +112,7 @@ public class RenderNuclearBoiler extends AbstractTileRenderer<TileNuclearBoiler>
 
 		}
 
-		ResourceLocation texture = ClientRegister.TEXTURE_GAS;
-
-		TextureAtlasSprite sprite = ClientRegister.CACHED_TEXTUREATLASSPRITES.get(texture);
+		TextureAtlasSprite sprite = AtlasHolderElectrodynamicsCustom.get(AtlasHolderElectrodynamicsCustom.TEXTURE_GAS);
 
 		float[] colors = RenderingUtils.getColorArray(sprite.getPixelRGBA(0, 10, 10));
 

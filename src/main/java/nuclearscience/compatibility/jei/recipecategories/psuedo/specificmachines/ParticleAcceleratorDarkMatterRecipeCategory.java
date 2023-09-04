@@ -6,10 +6,10 @@ import java.util.List;
 import com.mojang.blaze3d.platform.GlStateManager.DestFactor;
 import com.mojang.blaze3d.platform.GlStateManager.SourceFactor;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 
 import electrodynamics.api.electricity.formatting.ChatFormatter;
 import electrodynamics.api.electricity.formatting.DisplayUnit;
+import electrodynamics.client.texture.atlas.AtlasHolderElectrodynamicsCustom;
 import electrodynamics.compatibility.jei.recipecategories.utils.AbstractRecipeCategory;
 import electrodynamics.compatibility.jei.recipecategories.utils.psuedorecipes.types.PsuedoItem2ItemRecipe;
 import electrodynamics.compatibility.jei.utils.gui.ScreenObject;
@@ -25,7 +25,7 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.world.item.ItemStack;
 import nuclearscience.References;
@@ -80,15 +80,13 @@ public class ParticleAcceleratorDarkMatterRecipeCategory extends AbstractRecipeC
 	}
 
 	@Override
-	public void drawPre(PoseStack stack, PsuedoItem2ItemRecipe recipe) {
+	public void drawPre(GuiGraphics graphics, PsuedoItem2ItemRecipe recipe) {
 
-		stack.pushPose();
+		graphics.pose().pushPose();
 
 		NuclearJeiTextures texture = NuclearJeiTextures.PARTICLEACCELERATOR_DMBLACKHOLE;
 
-		TextureAtlasSprite blackHole = ClientRegister.CACHED_TEXTUREATLASSPRITES.get(texture.getLocation());
-
-		RenderSystem.setShaderTexture(0, blackHole.atlas().getId());
+		TextureAtlasSprite blackHole = AtlasHolderElectrodynamicsCustom.get(ClientRegister.TEXTURE_JEIBLACKHOLE);
 
 		RenderSystem.enableBlend();
 
@@ -96,11 +94,11 @@ public class ParticleAcceleratorDarkMatterRecipeCategory extends AbstractRecipeC
 
 		RenderSystem.blendFuncSeparate(SourceFactor.ONE_MINUS_SRC_COLOR, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
 
-		GuiComponent.blit(stack, 28, 28, 0, texture.textureWidth(), texture.textureHeight(), blackHole);
+		graphics.blit(28, 28, 0, texture.textureWidth(), texture.textureHeight(), blackHole);
 
 		RenderSystem.disableBlend();
 
-		stack.popPose();
+		graphics.pose().popPose();
 
 	}
 

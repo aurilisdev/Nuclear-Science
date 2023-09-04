@@ -1,10 +1,10 @@
 package nuclearscience.client.render.tile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Quaternion;
 
 import electrodynamics.client.render.tile.AbstractTileRenderer;
 import electrodynamics.prefab.utilities.RenderingUtils;
+import electrodynamics.prefab.utilities.math.MathUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -27,7 +27,8 @@ public class RenderRodAssembly extends AbstractTileRenderer<TileControlRodAssemb
 		stack.translate(0.5, 0.5, 0.5);
 		if (tileEntityIn.isMSR.get()) {
 			Direction dir = Direction.values()[tileEntityIn.direction.get()];
-			stack.mulPose(new Quaternion(90, 0, dir.toYRot(), true));
+			stack.mulPose(MathUtils.rotQuaternionDeg(90, 0, dir.toYRot()));
+			//stack.mulPose(new Quaternion(90, 0, dir.toYRot(), true));
 		}
 		RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), stack, bufferIn, combinedLightIn, combinedOverlayIn);
 		int insertion = tileEntityIn.insertion.get() - 100;

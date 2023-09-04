@@ -50,36 +50,36 @@ public class ScreenMSReactorCore extends GenericScreen<ContainerMSRReactorCore> 
 
 			return list;
 		}, -AbstractScreenComponentInfo.SIZE + 1, 2));
-		addComponent(new ScreenComponentMultiLabel(0, 0, stack -> {
+		addComponent(new ScreenComponentMultiLabel(0, 0, graphics -> {
 			TileMSReactorCore core = menu.getHostFromIntArray();
 			if (core == null) {
 				return;
 			}
 
-			font.draw(stack, NuclearTextUtils.gui("msreactor.status"), titleLabelX, (float) titleLabelY + 14, 0);
+			graphics.drawString(font, NuclearTextUtils.gui("msreactor.status"), titleLabelX, titleLabelY + 14, 0, false);
 
 			if (!(core.plugCache.getSafe() instanceof TileFreezePlug)) {
-				font.draw(stack, NuclearTextUtils.gui("msreactor.status.nofreezeplug"), titleLabelX + 5, (float) titleLabelY + 24, 4210752);
+				graphics.drawString(font, NuclearTextUtils.gui("msreactor.status.nofreezeplug"), titleLabelX + 5, titleLabelY + 24, 4210752, false);
 			} else if (core.wasteIsFull.get()) {
-				font.draw(stack, NuclearTextUtils.gui("msreactor.status.wastefull"), titleLabelX + 5, (float) titleLabelY + 24, 4210752);
+				graphics.drawString(font, NuclearTextUtils.gui("msreactor.status.wastefull"), titleLabelX + 5, titleLabelY + 24, 4210752, false);
 			} else {
-				font.draw(stack, NuclearTextUtils.gui("msreactor.status.good").withStyle(ChatFormatting.GREEN), titleLabelX + 5, (float) titleLabelY + 24, -1);
+				graphics.drawString(font, NuclearTextUtils.gui("msreactor.status.good").withStyle(ChatFormatting.GREEN), titleLabelX + 5, titleLabelY + 24, -1, false);
 
 			}
-			font.draw(stack, NuclearTextUtils.gui("msreactor.warning"), titleLabelX, (float) titleLabelY + 38, 0);
+			graphics.drawString(font, NuclearTextUtils.gui("msreactor.warning"), titleLabelX, titleLabelY + 38, 0);
 
 			if (core.temperature.get() > TileMSReactorCore.MELTDOWN_TEMPERATURE) {
 
 				if (System.currentTimeMillis() % 1000 < 500) {
-					font.draw(stack, NuclearTextUtils.gui("msreactor.warning.overheat"), titleLabelX + 5, (float) titleLabelY + 48, 16711680);
+					graphics.drawString(font, NuclearTextUtils.gui("msreactor.warning.overheat"), titleLabelX + 5, titleLabelY + 48, 16711680, false);
 				} else {
-					font.draw(stack, NuclearTextUtils.gui("msreactor.warning.overheat"), titleLabelX + 5, (float) titleLabelY + 48, 4210752);
+					graphics.drawString(font, NuclearTextUtils.gui("msreactor.warning.overheat"), titleLabelX + 5, titleLabelY + 48, 4210752, false);
 				}
 
 			} else if (core.plugCache.getSafe() instanceof TileFreezePlug plug && !plug.isFrozen()) {
-				font.draw(stack, NuclearTextUtils.gui("msreactor.warning.freezeoff").withStyle(ChatFormatting.YELLOW), titleLabelX + 5, (float) titleLabelY + 48, -1);
+				graphics.drawString(font, NuclearTextUtils.gui("msreactor.warning.freezeoff").withStyle(ChatFormatting.YELLOW), titleLabelX + 5, titleLabelY + 48, -1, false);
 			} else {
-				font.draw(stack, NuclearTextUtils.gui("msreactor.warning.none").withStyle(ChatFormatting.GREEN), titleLabelX + 5, (float) titleLabelY + 48, -1);
+				graphics.drawString(font, NuclearTextUtils.gui("msreactor.warning.none").withStyle(ChatFormatting.GREEN), titleLabelX + 5, titleLabelY + 48, -1, false);
 			}
 
 		}));

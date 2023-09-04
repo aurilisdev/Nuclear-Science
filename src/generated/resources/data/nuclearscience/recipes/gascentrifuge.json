@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "B": {
       "tag": "forge:plates/bronze"
@@ -27,5 +28,6 @@
   ],
   "result": {
     "item": "nuclearscience:gascentrifuge"
-  }
+  },
+  "show_notification": false
 }

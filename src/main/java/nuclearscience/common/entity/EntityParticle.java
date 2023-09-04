@@ -2,7 +2,7 @@ package nuclearscience.common.entity;
 
 import java.util.HashSet;
 
-import com.mojang.math.Vector3f;
+import org.joml.Vector3f;
 
 import electrodynamics.prefab.block.GenericEntityBlock;
 import electrodynamics.prefab.utilities.object.Location;
@@ -12,13 +12,14 @@ import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.level.Explosion.BlockInteraction;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.Level.ExplosionInteraction;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -56,8 +57,8 @@ public class EntityParticle extends Entity {
 
 	@Override
 	public void tick() {
-		BlockEntity tile = level.getBlockEntity(source);
-		if (!level.isClientSide) {
+		BlockEntity tile = level().getBlockEntity(source);
+		if (!level().isClientSide) {
 			if (!(tile instanceof TileParticleInjector)) {
 				remove(RemovalReason.DISCARDED);
 				return;
@@ -73,19 +74,19 @@ public class EntityParticle extends Entity {
 			direction = entityData.get(DIRECTION);
 			speed = entityData.get(SPEED);
 		}
-		RadiationSystem.emitRadiationFromLocation(level, new Location(blockPosition()), 1.5, 1000);
+		RadiationSystem.emitRadiationFromLocation(level(), new Location(blockPosition()), 1.5, 1000);
 		if (direction != null && direction != Direction.UP) {
 			int checks = (int) (Math.ceil(speed) * 2);
 			float localSpeed = speed / checks;
 			for (int i = 0; i < checks; i++) {
-				if (!level.isClientSide) {
+				if (!level().isClientSide) {
 					TileParticleInjector injector = (TileParticleInjector) tile;
 					injector.checkCollision();
 				} else {
-					level.addParticle(new DustParticleOptions(new Vector3f(1, 1, 1), 5), getX(), getY(), getZ(), 0, 0, 0);
+					level().addParticle(new DustParticleOptions(new Vector3f(1, 1, 1), 5), getX(), getY(), getZ(), 0, 0, 0);
 				}
 				BlockPos next = blockPosition();
-				BlockState oldState = level.getBlockState(next);
+				BlockState oldState = level().getBlockState(next);
 				boolean isBooster = false;
 				if (oldState.getBlock() == NuclearScienceBlocks.blockElectromagneticBooster) {
 					Direction dir = oldState.getValue(GenericEntityBlock.FACING).getOpposite();
@@ -114,18 +115,18 @@ public class EntityParticle extends Entity {
 				setPos(getX() + direction.getStepX() * localSpeed, getY(), getZ() + direction.getStepZ() * localSpeed);
 				if (isBooster) {
 					BlockPos positionNow = blockPosition();
-					if (level.getBlockState(positionNow).getBlock() == NuclearScienceBlocks.blockElectromagneticSwitch) {
+					if (level().getBlockState(positionNow).getBlock() == NuclearScienceBlocks.blockElectromagneticSwitch) {
 						HashSet<Direction> directions = new HashSet<>();
 						for (Direction dir : Direction.values()) {
-							if (dir != Direction.UP && dir != Direction.DOWN && dir != direction.getOpposite() && level.getBlockState(positionNow.relative(dir)).getBlock() == Blocks.AIR) {
+							if (dir != Direction.UP && dir != Direction.DOWN && dir != direction.getOpposite() && level().getBlockState(positionNow.relative(dir)).getBlock() == Blocks.AIR) {
 								directions.add(dir);
 							}
 						}
-						BlockEntity te = level.getBlockEntity(positionNow);
+						BlockEntity te = level().getBlockEntity(positionNow);
 						if (te instanceof TileElectromagneticSwitch switchte) {
 							directions.remove(switchte.lastDirection);
 							if (directions.size() > (switchte.lastDirection == null ? 2 : 1)) {
-								level.explode(this, getX(), getY(), getZ(), speed, BlockInteraction.DESTROY);
+								level().explode(this, getX(), getY(), getZ(), speed, ExplosionInteraction.BLOCK);
 								removeAfterChangingDimensions();
 								break;
 							}
@@ -137,34 +138,34 @@ public class EntityParticle extends Entity {
 						}
 					}
 				}
-				if (!level.isClientSide) {
+				if (!level().isClientSide) {
 					BlockPos getPos = blockPosition();
-					BlockState nextState = level.getBlockState(getPos);
+					BlockState nextState = level().getBlockState(getPos);
 					if (nextState.getBlock() == Blocks.AIR || nextState.getBlock() == NuclearScienceBlocks.blockElectromagneticSwitch) {
 						int amount = 0;
 						for (Direction of : Direction.values()) {
-							if (level.getBlockState(blockPosition().relative(of)).getBlock() instanceof IElectromagnet) {
+							if (level().getBlockState(blockPosition().relative(of)).getBlock() instanceof IElectromagnet) {
 								amount++;
 							}
 						}
 						if (amount < 4) {
-							level.explode(this, getX(), getY(), getZ(), speed, BlockInteraction.DESTROY);
+							level().explode(this, getX(), getY(), getZ(), speed, ExplosionInteraction.BLOCK);
 							removeAfterChangingDimensions();
 							break;
 						}
-						BlockState testNextBlock = level.getBlockState(getPos.relative(direction));
+						BlockState testNextBlock = level().getBlockState(getPos.relative(direction));
 						if (testNextBlock.getBlock() instanceof IElectromagnet && testNextBlock.getBlock() != NuclearScienceBlocks.blockElectromagneticSwitch) {
 							Direction checkRot = direction.getClockWise();
-							testNextBlock = level.getBlockState(getPos.relative(checkRot));
+							testNextBlock = level().getBlockState(getPos.relative(checkRot));
 							if (testNextBlock.getBlock() == Blocks.AIR || testNextBlock.getBlock() == NuclearScienceBlocks.blockElectromagneticSwitch) {
 								BlockPos floor = blockPosition();
 								direction = checkRot;
 								setPos(floor.getX() + 0.5, floor.getY() + 0.5, floor.getZ() + 0.5);
 							} else {
 								checkRot = direction.getClockWise().getOpposite();
-								testNextBlock = level.getBlockState(getPos.relative(checkRot));
+								testNextBlock = level().getBlockState(getPos.relative(checkRot));
 								if ((testNextBlock.getBlock() != Blocks.AIR) && (testNextBlock.getBlock() != NuclearScienceBlocks.blockElectromagneticSwitch)) {
-									level.explode(this, getX(), getY(), getZ(), speed, BlockInteraction.DESTROY);
+									level().explode(this, getX(), getY(), getZ(), speed, ExplosionInteraction.BLOCK);
 									removeAfterChangingDimensions();
 									break;
 								}
@@ -194,7 +195,7 @@ public class EntityParticle extends Entity {
 							explode = true;
 						}
 						if (explode) {
-							level.explode(this, getX(), getY(), getZ(), speed, BlockInteraction.DESTROY);
+							level().explode(this, getX(), getY(), getZ(), speed, ExplosionInteraction.BLOCK);
 							removeAfterChangingDimensions();
 							break;
 						}
@@ -239,7 +240,7 @@ public class EntityParticle extends Entity {
 	}
 
 	@Override
-	public Packet<?> getAddEntityPacket() {
+	public Packet<ClientGamePacketListener> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

@@ -1,14 +1,14 @@
 package nuclearscience.datagen.server;
 
-import java.io.IOException;
 import java.nio.file.Path;
+import java.util.concurrent.CompletableFuture;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import net.minecraft.data.CachedOutput;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -22,25 +22,20 @@ public class AtomicAssemblerBlacklistProvider implements DataProvider {
 
 	public static final String LOC = "data/" + References.ID + "/" + AtomicAssemblerBlacklistRegister.FOLDER + "/" + AtomicAssemblerBlacklistRegister.FILE_NAME;
 
-	private final DataGenerator dataGenerator;
-
-	public AtomicAssemblerBlacklistProvider(DataGenerator gen) {
-		dataGenerator = gen;
+	private final PackOutput output;
+	
+	public AtomicAssemblerBlacklistProvider(PackOutput output) {
+		this.output = output;
 	}
 
 	@Override
-	public void run(CachedOutput cache) throws IOException {
+	public CompletableFuture<?> run(CachedOutput cache) {
 		JsonObject json = new JsonObject();
 		getFuels(json);
 
-		Path parent = dataGenerator.getOutputFolder().resolve(LOC + ".json");
-		try {
-
-			DataProvider.saveStable(cache, json, parent);
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		Path parent = output.getOutputFolder().resolve(LOC + ".json");
+		
+		return CompletableFuture.allOf(DataProvider.saveStable(cache, json, parent));
 	}
 
 	private void getFuels(JsonObject object) {
