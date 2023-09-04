@@ -1,6 +1,5 @@
 package nuclearscience.compatibility.jei.recipecategories.item2item;
 
-import electrodynamics.api.References;
 import electrodynamics.compatibility.jei.ElectrodynamicsJEIPlugin;
 import electrodynamics.compatibility.jei.recipecategories.item2item.Item2ItemRecipeCategory;
 import electrodynamics.compatibility.jei.utils.gui.types.ArrowAnimatedObject;
@@ -16,6 +15,7 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.world.item.ItemStack;
+import nuclearscience.References;
 import nuclearscience.common.recipe.categories.item2item.specificmachines.FuelReprocessorRecipe;
 import nuclearscience.prefab.utils.NuclearTextUtils;
 import nuclearscience.registers.NuclearScienceBlocks;

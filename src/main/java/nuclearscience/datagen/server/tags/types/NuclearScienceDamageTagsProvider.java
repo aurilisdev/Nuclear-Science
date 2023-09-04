@@ -2,12 +2,12 @@ package nuclearscience.datagen.server.tags.types;
 
 import java.util.concurrent.CompletableFuture;
 
-import electrodynamics.api.References;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.DamageTypeTagsProvider;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import nuclearscience.References;
 import nuclearscience.registers.NuclearScienceDamageTypes;
 
 public class NuclearScienceDamageTagsProvider extends DamageTypeTagsProvider {
