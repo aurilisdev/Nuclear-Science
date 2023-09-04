@@ -3,7 +3,7 @@
 	"parent": "block/cube_all",
 	"texture_size": [128, 128],
 	"textures": {
-		"0": "nuclearscience:model/nuclearboiler",
+		"0": "nuclearscience:block/model/nuclearboiler",
 		"particle": "electrodynamics:block/steelcasing"
 	},
 	"groups": [
@@ -24,7 +24,7 @@
 			"render_type": "minecraft:solid",
 			"parent": "block/cube_all",
 			"textures": {
-				"0": "nuclearscience:model/nuclearboiler",
+				"0": "nuclearscience:block/model/nuclearboiler",
 				"particle": "electrodynamics:block/steelcasing"
 			},
 			"elements": [
@@ -388,8 +388,8 @@
 			"render_type": "minecraft:translucent",
 			"parent": "block/cube_all",
 			"textures": {
-				"0": "nuclearscience:model/nuclearboiler",
-				"particle": "nuclearscience:model/nuclearboiler"
+				"0": "nuclearscience:block/model/nuclearboiler",
+				"particle": "electrodynamics:block/steelcasing"
 			},
 			"elements": [
 				{

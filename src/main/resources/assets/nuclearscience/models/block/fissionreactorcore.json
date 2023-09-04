@@ -4,8 +4,8 @@
 	"texture_size": [64, 64],
 	"ambientocclusion": "false",
 	"textures": {
-		"0": "nuclearscience:model/reactorcore",
-		"particle": "nuclearscience:model/reactorcore"
+		"0": "nuclearscience:block/model/reactorcore",
+		"particle": "electrodynamics:block/steelcasing"
 	},
 	"groups": [
 		{
@@ -41,7 +41,7 @@
 			"render_type": "minecraft:solid",
 			"parent": "block/cube_all",
 			"textures": {
-				"0": "nuclearscience:model/reactorcore"
+				"0": "nuclearscience:block/model/reactorcore"
 			},
 			"elements": [
 				{
@@ -440,7 +440,7 @@
 			"render_type": "minecraft:translucent",
 			"parent": "block/cube_all",
 			"textures": {
-				"0": "nuclearscience:model/reactorcore"
+				"0": "nuclearscience:block/model/reactorcore"
 			},
 			"elements": [
 				{

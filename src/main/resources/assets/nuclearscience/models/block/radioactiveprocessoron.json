@@ -6,7 +6,7 @@
 		128
 	],
 	"textures": {
-		"0": "nuclearscience:model/radioactiveprocessoron",
+		"0": "nuclearscience:block/model/radioactiveprocessoron",
 		"particle": "electrodynamics:block/steelcasing"
 	},
 	"elements": [

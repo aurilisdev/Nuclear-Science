@@ -6,7 +6,7 @@
 		64
 	],
 	"textures": {
-		"0": "nuclearscience:model/msrfuelpreprocessor",
+		"0": "nuclearscience:block/model/msrfuelpreprocessor",
 		"particle": "electrodynamics:block/steelcasing"
 	},
 	"elements": [

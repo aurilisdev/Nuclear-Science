@@ -6,7 +6,7 @@
 		128
 	],
 	"textures": {
-		"0": "nuclearscience:model/moltensaltsupplier",
+		"0": "nuclearscience:block/model/moltensaltsupplier",
 		"particle": "electrodynamics:block/steelcasing"
 	},
 	"elements": [
