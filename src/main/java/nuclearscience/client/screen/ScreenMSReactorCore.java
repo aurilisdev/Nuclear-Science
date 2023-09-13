@@ -66,7 +66,7 @@ public class ScreenMSReactorCore extends GenericScreen<ContainerMSRReactorCore> 
 				graphics.drawString(font, NuclearTextUtils.gui("msreactor.status.good").withStyle(ChatFormatting.GREEN), titleLabelX + 5, titleLabelY + 24, -1, false);
 
 			}
-			graphics.drawString(font, NuclearTextUtils.gui("msreactor.warning"), titleLabelX, titleLabelY + 38, 0);
+			graphics.drawString(font, NuclearTextUtils.gui("msreactor.warning"), titleLabelX, titleLabelY + 38, 0, false);
 
 			if (core.temperature.get() > TileMSReactorCore.MELTDOWN_TEMPERATURE) {
 
