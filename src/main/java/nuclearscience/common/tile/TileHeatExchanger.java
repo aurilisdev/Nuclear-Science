@@ -1,14 +1,18 @@
 package nuclearscience.common.tile;
 
 import java.util.List;
+import java.util.stream.Stream;
 
+import electrodynamics.common.block.VoxelShapes;
 import electrodynamics.prefab.properties.Property;
 import electrodynamics.prefab.properties.PropertyType;
 import electrodynamics.prefab.tile.GenericTile;
+import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import electrodynamics.prefab.utilities.object.Location;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -24,9 +28,13 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import nuclearscience.api.turbine.ISteamReceiver;
 import nuclearscience.common.settings.Constants;
 import nuclearscience.registers.NuclearScienceBlockTypes;
+import nuclearscience.registers.NuclearScienceBlocks;
 
 public class TileHeatExchanger extends GenericTile {
 	public static final int STEAM_GEN_DIAMETER = 5;
@@ -36,6 +44,7 @@ public class TileHeatExchanger extends GenericTile {
 
 	public TileHeatExchanger(BlockPos pos, BlockState state) {
 		super(NuclearScienceBlockTypes.TILE_HEATEXCHANGER.get(), pos, state);
+		addComponent(new ComponentDirection(this));
 		addComponent(new ComponentTickable(this).tickCommon(this::tickCommon));
 		addComponent(new ComponentPacketHandler(this));
 	}
@@ -122,10 +131,22 @@ public class TileHeatExchanger extends GenericTile {
 		temperature.set(perReceiver);
 		return perReceiver;
 	}
-	
+
 	@Override
 	public InteractionResult use(Player arg0, InteractionHand arg1, BlockHitResult arg2) {
 		return InteractionResult.FAIL;
+	}
+
+	static {
+
+		VoxelShape shape = Shapes.empty();
+		shape = Shapes.join(shape, Block.box(0, 1, 0, 16, 3, 16), BooleanOp.OR);
+		shape = Shapes.join(shape, Block.box(1, 4, 1, 15, 16, 15), BooleanOp.OR);
+		shape = Shapes.join(shape, Block.box(0.5, 3, 0.5, 15.5, 4, 15.5), BooleanOp.OR);
+		shape = Shapes.join(shape, Block.box(4, 0, 4, 12, 1, 12), BooleanOp.OR);
+		
+		VoxelShapes.registerShape(NuclearScienceBlocks.blockHeatExchanger, shape, Direction.WEST);
+
 	}
 
 }

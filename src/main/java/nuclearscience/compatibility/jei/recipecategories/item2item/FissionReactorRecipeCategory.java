@@ -34,9 +34,9 @@ public class FissionReactorRecipeCategory extends Item2ItemRecipeCategory<Fissio
 	public static final ItemSlotObject CELL_SLOT_2 = new ItemSlotObject(SlotType.NORMAL, 15, 99, RecipeIngredientRole.INPUT);
 	public static final ItemSlotObject CELL_SLOT_3 = new ItemSlotObject(SlotType.NORMAL, 99, 15, RecipeIngredientRole.INPUT);
 	public static final ItemSlotObject CELL_SLOT_4 = new ItemSlotObject(SlotType.NORMAL, 99, 99, RecipeIngredientRole.INPUT);
-	public static final ItemSlotObject OUTPUT_SLOT = new ItemSlotObject(SlotType.NORMAL, 57, 88, RecipeIngredientRole.OUTPUT);
+	public static final ItemSlotObject OUTPUT_SLOT = new ItemSlotObject(SlotType.NORMAL, 57, 89, RecipeIngredientRole.OUTPUT);
 
-	public static final ArrowAnimatedObject ARROW = new ArrowAnimatedObject(ProgressTextures.FEYNMAN_DIAGRAM_OFF, ProgressTextures.FEYNMAN_DIAGRAM_ON, 35, 40, StartDirection.TOP);
+	public static final ArrowAnimatedObject ARROW = new ArrowAnimatedObject(ProgressTextures.FEYNMAN_DIAGRAM_OFF, ProgressTextures.FEYNMAN_DIAGRAM_ON, 35, 43, StartDirection.TOP);
 
 	public static final LabelWrapperGeneric POWER_LABEL = new LabelWrapperGeneric(0xFF808080, 122, 2, false, NuclearTextUtils.jeiTranslated("gui.reactorcore.info.temp"));
 
