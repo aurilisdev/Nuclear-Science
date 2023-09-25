@@ -9,6 +9,7 @@ import electrodynamics.prefab.screen.GenericScreen;
 import electrodynamics.prefab.screen.component.types.gauges.AbstractScreenComponentGauge;
 import electrodynamics.prefab.utilities.ElectroTextUtils;
 import electrodynamics.prefab.utilities.RenderingUtils;
+import electrodynamics.prefab.utilities.math.Color;
 import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
@@ -24,7 +25,7 @@ public class ScreenComponentReactorFuel extends AbstractScreenComponentGauge {
 
 	@Override
 	protected void applyColor() {
-		RenderingUtils.color(IClientFluidTypeExtensions.of(Fluids.LAVA).getTintColor());
+		RenderingUtils.setShaderColor(new Color(IClientFluidTypeExtensions.of(Fluids.LAVA).getTintColor()));
 	}
 
 	@Override

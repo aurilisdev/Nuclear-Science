@@ -90,7 +90,7 @@ public class ParticleAcceleratorDarkMatterRecipeCategory extends AbstractRecipeC
 
 		RenderSystem.enableBlend();
 
-		RenderingUtils.resetColor();
+		RenderingUtils.resetShaderColor();
 
 		RenderSystem.blendFuncSeparate(SourceFactor.ONE_MINUS_SRC_COLOR, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
 

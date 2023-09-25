@@ -12,6 +12,7 @@ import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
 import electrodynamics.prefab.tile.components.type.ComponentGasHandlerMulti;
 import electrodynamics.prefab.utilities.RenderingUtils;
+import electrodynamics.prefab.utilities.math.Color;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -114,7 +115,7 @@ public class RenderNuclearBoiler extends AbstractTileRenderer<TileNuclearBoiler>
 
 		TextureAtlasSprite sprite = AtlasHolderElectrodynamicsCustom.get(AtlasHolderElectrodynamicsCustom.TEXTURE_GAS);
 
-		float[] colors = RenderingUtils.getColorArray(sprite.getPixelRGBA(0, 10, 10));
+		float[] colors = new Color(sprite.getPixelRGBA(0, 10, 10)).colorFloatArr();
 
 		RenderingUtils.renderFilledBox(stack, builder, box, colors[0], colors[1], colors[2], colors[3], sprite.getU0(), sprite.getV0(), sprite.getU1(), sprite.getV1(), light, overlay);
 	}

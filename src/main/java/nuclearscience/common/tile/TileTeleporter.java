@@ -45,7 +45,7 @@ public class TileTeleporter extends GenericTile {
 	public final Property<BlockPos> destination = property(new Property<>(PropertyType.BlockPos, "location", getBlockPos()));
 	public final Property<Integer> cooldown = property(new Property<>(PropertyType.Integer, "cooldown", 0));
 
-	public ResourceKey<Level> dimension = getLevel().dimension();
+	public ResourceKey<Level> dimension = Level.OVERWORLD;
 
 	public TileTeleporter(BlockPos pos, BlockState state) {
 		super(NuclearScienceBlockTypes.TILE_TELEPORTER.get(), pos, state);
@@ -104,12 +104,12 @@ public class TileTeleporter extends GenericTile {
 		electro.joules(0);
 
 	}
-	
+
 	@Override
 	public InteractionResult use(Player arg0, InteractionHand arg1, BlockHitResult arg2) {
 		return InteractionResult.FAIL;
 	}
-	
+
 	private ServerLevel getDestinationLevel() {
 		ServerLevel level = ServerLifecycleHooks.getCurrentServer().getLevel(dimension);
 		if (level == null) {

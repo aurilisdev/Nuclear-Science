@@ -93,7 +93,7 @@ public class NuclearSciencePlugin implements IModPlugin {
 		List<PsuedoItem2ItemRecipe> antiMatterRecipes = new ArrayList<>(NuclearSciencePsuedoRecipes.ANTI_MATTER_RECIPES);
 		registration.addRecipes(ParticleAcceleratorAntiMatterRecipeCategory.RECIPE_TYPE, antiMatterRecipes);
 
-		// Dark Matter
+		// Dark Mattere
 		List<PsuedoItem2ItemRecipe> darkMatterRecipes = new ArrayList<>(NuclearSciencePsuedoRecipes.DARK_MATTER_RECIPES);
 		registration.addRecipes(ParticleAcceleratorDarkMatterRecipeCategory.RECIPE_TYPE, darkMatterRecipes);
 
@@ -136,7 +136,7 @@ public class NuclearSciencePlugin implements IModPlugin {
 		registry.addRecipeClickArea(ScreenRadioactiveProcessor.class, 97, 31, 22, 15, RadioactiveProcessorRecipeCategory.RECIPE_TYPE);
 		registry.addRecipeClickArea(ScreenChemicalExtractor.class, 97, 31, 22, 15, ChemicalExtractorRecipeCategory.RECIPE_TYPE);
 		registry.addRecipeClickArea(ScreenGasCentrifuge.class, 105, 13, 20, 54, GasCentrifugeRecipeCategory.RECIPE_TYPE);
-		registry.addRecipeClickArea(ScreenFissionReactorCore.class, 117, 43, 14, 13, FissionReactorRecipeCategory.RECIPE_TYPE);
+		registry.addRecipeClickArea(ScreenFissionReactorCore.class, 117, 53, 14, 13, FissionReactorRecipeCategory.RECIPE_TYPE);
 		registry.addRecipeClickArea(ScreenParticleInjector.class, 102, 43, 28, 14, ParticleAcceleratorAntiMatterRecipeCategory.RECIPE_TYPE, ParticleAcceleratorDarkMatterRecipeCategory.RECIPE_TYPE);
 		registry.addRecipeClickArea(ScreenMSRFuelPreProcessor.class, 98, 40, 16, 16, MSRProcessorRecipeCategory.RECIPE_TYPE);
 	}
