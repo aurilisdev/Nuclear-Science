@@ -13,7 +13,7 @@ import nuclearscience.datagen.server.tags.types.NuclearScienceGasTagsProvider;
 import nuclearscience.datagen.server.tags.types.NuclearScienceItemTagsProvider;
 
 public class NuclearScienceTagsProvider {
-	
+
 	public static void addTagProviders(DataGenerator generator, PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper helper) {
 		NuclearScienceBlockTagsProvider blockProvider = new NuclearScienceBlockTagsProvider(output, lookupProvider, helper);
 		generator.addProvider(true, blockProvider);

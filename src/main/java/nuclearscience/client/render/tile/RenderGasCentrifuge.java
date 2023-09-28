@@ -25,7 +25,7 @@ public class RenderGasCentrifuge extends AbstractTileRenderer<TileGasCentrifuge>
 		poseStack.translate(0.5, 0.5, 0.5);
 		double daytime = System.currentTimeMillis() / 5.0 * (tile.spinSpeed.get() / 20.0);
 		poseStack.mulPose(MathUtils.rotQuaternionDeg(0, (float) (daytime * 20 % 360), 0));
-		//poseStack.mulPose(new Quaternion(0, (float) (daytime * 20 % 360), 0, true));
+		// poseStack.mulPose(new Quaternion(0, (float) (daytime * 20 % 360), 0, true));
 		RenderingUtils.renderModel(ibakedmodel, tile, RenderType.solid(), poseStack, bufferIn, combinedLightIn, combinedOverlayIn);
 	}
 

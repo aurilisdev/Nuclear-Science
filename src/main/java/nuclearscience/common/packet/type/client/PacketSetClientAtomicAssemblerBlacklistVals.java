@@ -10,7 +10,7 @@ import net.minecraftforge.network.NetworkEvent.Context;
 import nuclearscience.common.reloadlistener.AtomicAssemblerBlacklistRegister;
 
 public class PacketSetClientAtomicAssemblerBlacklistVals {
-	
+
 	private final HashSet<Item> items;
 
 	public PacketSetClientAtomicAssemblerBlacklistVals(HashSet<Item> items) {
@@ -20,11 +20,11 @@ public class PacketSetClientAtomicAssemblerBlacklistVals {
 	public static void handle(PacketSetClientAtomicAssemblerBlacklistVals message, Supplier<Context> context) {
 		Context ctx = context.get();
 		ctx.enqueueWork(() -> {
-			
+
 			message.items.forEach(item -> {
 				AtomicAssemblerBlacklistRegister.INSTANCE.setClientValues(message.items);
 			});
-			
+
 		});
 		ctx.setPacketHandled(true);
 	}

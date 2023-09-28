@@ -49,7 +49,7 @@ public class NuclearScienceLootTablesProvider extends ElectrodynamicsLootTablesP
 		addSimpleBlock(NuclearScienceBlocks.blockSteamFunnel);
 
 	}
-	
+
 	@Override
 	public List<Block> getExcludedBlocks() {
 		return List.of(NuclearScienceBlocks.blockPlasma, NuclearScienceBlocks.blockRadioactiveAir);

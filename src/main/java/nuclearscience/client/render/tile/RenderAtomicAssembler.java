@@ -30,7 +30,7 @@ public class RenderAtomicAssembler extends AbstractTileRenderer<TileAtomicAssemb
 			poseStack.scale(0.35f, 0.35f, 0.35f);
 			if (!(stack.getItem() instanceof BlockItem)) {
 				poseStack.mulPose(MathUtils.rotVectorQuaternionDeg(90, MathUtils.XN));
-				//matrixStackIn.mulPose(Vector3f.XN.rotationDegrees(90));
+				// matrixStackIn.mulPose(Vector3f.XN.rotationDegrees(90));
 			} else {
 				poseStack.scale(0.3f, 0.3f, 0.3f);
 				poseStack.translate(0, -0.5, 0);

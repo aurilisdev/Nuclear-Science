@@ -76,8 +76,8 @@ public class BlockTurbine extends GenericEntityBlockWaterloggable {
 
 	@Override
 	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-		
-		if(!(player.getItemInHand(handIn).getItem() instanceof IWrenchItem)) {
+
+		if (!(player.getItemInHand(handIn).getItem() instanceof IWrenchItem)) {
 			return InteractionResult.CONSUME;
 		}
 		return InteractionResult.FAIL;

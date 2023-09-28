@@ -72,7 +72,7 @@ public class TileSteamFunnel extends GenericTile implements ISteamReceiver {
 	public boolean isStillValid() {
 		return isRemoved();
 	}
-	
+
 	@Override
 	public InteractionResult use(Player arg0, InteractionHand arg1, BlockHitResult arg2) {
 		return InteractionResult.FAIL;

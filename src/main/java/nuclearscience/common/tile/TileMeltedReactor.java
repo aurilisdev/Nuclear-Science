@@ -97,7 +97,7 @@ public class TileMeltedReactor extends GenericTile {
 			RadiationSystem.emitRadiationFromLocation(level, new Location(worldPosition), range, totstrength);
 		}
 	}
-	
+
 	@Override
 	public InteractionResult use(Player arg0, InteractionHand arg1, BlockHitResult arg2) {
 		return InteractionResult.FAIL;

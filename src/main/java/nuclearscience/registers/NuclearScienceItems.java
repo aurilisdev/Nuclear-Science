@@ -151,7 +151,7 @@ public class NuclearScienceItems {
 	public static Item getItem(ISubtype value) {
 		return SUBTYPEITEMREGISTER_MAPPINGS.get(value).get();
 	}
-	
+
 	@Mod.EventBusSubscriber(value = Dist.CLIENT, modid = References.ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 	private static class ElectroCreativeRegistry {
 

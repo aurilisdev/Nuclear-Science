@@ -23,7 +23,7 @@ public class AtomicAssemblerBlacklistProvider implements DataProvider {
 	public static final String LOC = "data/" + References.ID + "/" + AtomicAssemblerBlacklistRegister.FOLDER + "/" + AtomicAssemblerBlacklistRegister.FILE_NAME;
 
 	private final PackOutput output;
-	
+
 	public AtomicAssemblerBlacklistProvider(PackOutput output) {
 		this.output = output;
 	}
@@ -34,7 +34,7 @@ public class AtomicAssemblerBlacklistProvider implements DataProvider {
 		getFuels(json);
 
 		Path parent = output.getOutputFolder().resolve(LOC + ".json");
-		
+
 		return CompletableFuture.allOf(DataProvider.saveStable(cache, json, parent));
 	}
 
