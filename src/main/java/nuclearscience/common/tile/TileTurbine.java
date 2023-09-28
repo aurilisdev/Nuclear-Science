@@ -1,6 +1,6 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.common.tile.quarry.TileQuarry;
+import electrodynamics.common.tile.machines.quarry.TileQuarry;
 import electrodynamics.prefab.properties.Property;
 import electrodynamics.prefab.properties.PropertyType;
 import electrodynamics.prefab.sound.SoundBarrierMethods;
