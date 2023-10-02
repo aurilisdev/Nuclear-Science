@@ -29,7 +29,7 @@ import nuclearscience.registers.NuclearScienceSounds;
 
 public class TileTurbine extends GenericTile implements ITickableSound, ISteamReceiver {
 
-	public static final double MAX_STEAM = 3000000;
+	public static final double MAX_STEAM = 1300885;
 	public Property<Integer> spinSpeed = property(new Property<>(PropertyType.Integer, "spinSpeed", 0));
 	public Property<Boolean> hasCore = property(new Property<>(PropertyType.Boolean, "hasCore", false));
 	public Property<Boolean> isCore = property(new Property<>(PropertyType.Boolean, "isCore", false));
