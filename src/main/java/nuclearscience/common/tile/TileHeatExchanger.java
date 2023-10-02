@@ -1,7 +1,6 @@
 package nuclearscience.common.tile;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 import electrodynamics.common.block.VoxelShapes;
 import electrodynamics.prefab.properties.Property;
@@ -144,7 +143,7 @@ public class TileHeatExchanger extends GenericTile {
 		shape = Shapes.join(shape, Block.box(1, 4, 1, 15, 16, 15), BooleanOp.OR);
 		shape = Shapes.join(shape, Block.box(0.5, 3, 0.5, 15.5, 4, 15.5), BooleanOp.OR);
 		shape = Shapes.join(shape, Block.box(4, 0, 4, 12, 1, 12), BooleanOp.OR);
-		
+
 		VoxelShapes.registerShape(NuclearScienceBlocks.blockHeatExchanger, shape, Direction.WEST);
 
 	}

@@ -44,6 +44,4 @@ public class NuclearScienceRecipeProvider extends RecipeProvider {
 		}
 	}
 
-	
-
 }

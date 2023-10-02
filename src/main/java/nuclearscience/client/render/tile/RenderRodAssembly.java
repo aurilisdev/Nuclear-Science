@@ -28,7 +28,7 @@ public class RenderRodAssembly extends AbstractTileRenderer<TileControlRodAssemb
 		if (tileEntityIn.isMSR.get()) {
 			Direction dir = Direction.values()[tileEntityIn.direction.get()];
 			stack.mulPose(MathUtils.rotQuaternionDeg(90, 0, dir.toYRot()));
-			//stack.mulPose(new Quaternion(90, 0, dir.toYRot(), true));
+			// stack.mulPose(new Quaternion(90, 0, dir.toYRot(), true));
 		}
 		RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), stack, bufferIn, combinedLightIn, combinedOverlayIn);
 		int insertion = tileEntityIn.insertion.get() - 100;

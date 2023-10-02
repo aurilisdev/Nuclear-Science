@@ -38,9 +38,9 @@ public class NuclearScienceMenuTypes {
 	public static final RegistryObject<MenuType<ContainerMSRReactorCore>> CONTAINER_MSRREACTORCORE = register("msrreactorcore", ContainerMSRReactorCore::new);
 	public static final RegistryObject<MenuType<ContainerMoltenSaltSupplier>> CONTAINER_MOLTENSALTSUPPLIER = register("moltensaltsupplier", ContainerMoltenSaltSupplier::new);
 	public static final RegistryObject<MenuType<ContainerAtomicAssembler>> CONTAINER_ATOMICASSEMBLER = register("atomicassembler", ContainerAtomicAssembler::new);
-	
+
 	private static <T extends AbstractContainerMenu> RegistryObject<MenuType<T>> register(String id, MenuSupplier<T> supplier) {
-		return MENU_TYPES.register(id, () -> new MenuType<T>(supplier, FeatureFlags.VANILLA_SET));
+		return MENU_TYPES.register(id, () -> new MenuType<>(supplier, FeatureFlags.VANILLA_SET));
 	}
 
 }

@@ -8,9 +8,9 @@ import nuclearscience.References;
 import nuclearscience.api.radiation.EffectRadiation;
 
 public class NuclearScienceEffects {
-	
+
 	public static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, References.ID);
-	
-	public static final RegistryObject<MobEffect> RADIATION = EFFECTS.register("radiation", () -> new EffectRadiation());
+
+	public static final RegistryObject<MobEffect> RADIATION = EFFECTS.register("radiation", EffectRadiation::new);
 
 }

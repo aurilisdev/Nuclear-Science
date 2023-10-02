@@ -132,8 +132,8 @@ public class TileAtomicAssembler extends GenericTile {
 			}
 
 		}
-		
-		if(AtomicAssemblerBlacklistRegister.INSTANCE.isBlacklisted(stack.getItem())) {
+
+		if (AtomicAssemblerBlacklistRegister.INSTANCE.isBlacklisted(stack.getItem())) {
 			return false;
 		}
 

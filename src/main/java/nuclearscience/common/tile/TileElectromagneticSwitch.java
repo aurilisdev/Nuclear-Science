@@ -35,7 +35,7 @@ public class TileElectromagneticSwitch extends GenericTile {
 			lastDirection = Direction.from3DDataValue(compound.getInt("lastDirectionOrdinal"));
 		}
 	}
-	
+
 	@Override
 	public InteractionResult use(Player arg0, InteractionHand arg1, BlockHitResult arg2) {
 		return InteractionResult.FAIL;

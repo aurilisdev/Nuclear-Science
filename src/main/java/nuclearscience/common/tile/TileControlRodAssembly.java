@@ -34,7 +34,7 @@ public class TileControlRodAssembly extends GenericTile {
 
 	@Override
 	public void onNeightborChanged(BlockPos neighbor) {
-		if(level.isClientSide) {
+		if (level.isClientSide) {
 			return;
 		}
 		isMSR.set(false);
@@ -52,7 +52,7 @@ public class TileControlRodAssembly extends GenericTile {
 
 	@Override
 	public void onPlace(BlockState oldState, boolean isMoving) {
-		if(level.isClientSide) {
+		if (level.isClientSide) {
 			return;
 		}
 		isMSR.set(false);

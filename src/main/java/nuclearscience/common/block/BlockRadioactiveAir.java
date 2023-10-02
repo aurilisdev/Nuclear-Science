@@ -27,11 +27,11 @@ public class BlockRadioactiveAir extends AirBlock {
 			RadiationSystem.emitRadiationFromLocation(lvl, new Location(pos), 3, 500);
 		}
 	}
-	
+
 	@Override
 	public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
 		super.randomTick(state, level, pos, random);
-		if(random.nextFloat() < 0.01F) {
+		if (random.nextFloat() < 0.01F) {
 			level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 		}
 	}
