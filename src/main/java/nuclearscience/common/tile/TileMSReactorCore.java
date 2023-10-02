@@ -48,23 +48,12 @@ public class TileMSReactorCore extends GenericTile {
 	public TileMSReactorCore(BlockPos pos, BlockState state) {
 		super(NuclearScienceBlockTypes.TILE_MSRREACTORCORE.get(), pos, state);
 		addComponent(new ComponentDirection(this));
-		addComponent(new ComponentTickable(this).tickServer(this::tickServer).tickClient(this::tickClient));
+		addComponent(new ComponentTickable(this).tickServer(this::tickServer).tickCommon(this::tickCommon));
 		addComponent(new ComponentPacketHandler(this));
 		addComponent(new ComponentContainerProvider("container.msrreactorcore", this).createMenu((id, player) -> new ContainerMSRReactorCore(id, player, null, getCoordsArray())));
 	}
 
 	public void tickServer(ComponentTickable tick) {
-
-		if (outputCache == null) {
-			outputCache = new CachedTileOutput(level, new BlockPos(worldPosition).relative(Direction.UP));
-		}
-		if (plugCache == null) {
-			plugCache = new CachedTileOutput(level, new BlockPos(worldPosition).relative(Direction.DOWN));
-		}
-		if (tick.getTicks() % 40 == 0) {
-			outputCache.update(new BlockPos(worldPosition).relative(Direction.UP));
-			plugCache.update(new BlockPos(worldPosition).relative(Direction.DOWN));
-		}
 
 		double change = (temperature.get() - TileFissionReactorCore.AIR_TEMPERATURE) / 3000.0 + (temperature.get() - TileFissionReactorCore.AIR_TEMPERATURE) / 5000.0;
 		if (change != 0) {
@@ -89,11 +78,6 @@ public class TileMSReactorCore extends GenericTile {
 					}
 				}
 			}
-		}
-		if (tick.getTicks() % 10 == 0) {
-			double totstrength = temperature.get() * Math.pow(3, Math.pow(temperature.get() / MELTDOWN_TEMPERATURE, 9));
-			double range = Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 2;
-			RadiationSystem.emitRadiationFromLocation(level, new Location(worldPosition), range, totstrength);
 		}
 
 		double insertDecimal = (100 - insertion) / 100.0;
@@ -121,9 +105,29 @@ public class TileMSReactorCore extends GenericTile {
 
 	}
 
-	protected void tickClient(ComponentTickable tick) {
+	protected void tickCommon(ComponentTickable tick) {
+		if (outputCache == null) {
+			outputCache = new CachedTileOutput(level, new BlockPos(worldPosition).relative(Direction.UP));
+		}
 		if (plugCache == null) {
 			plugCache = new CachedTileOutput(level, new BlockPos(worldPosition).relative(Direction.DOWN));
+		}
+		if (tick.getTicks() % 40 == 0) {
+			outputCache.update(new BlockPos(worldPosition).relative(Direction.UP));
+			plugCache.update(new BlockPos(worldPosition).relative(Direction.DOWN));
+		}
+
+		if (!plugCache.valid() || !(plugCache.getSafe() instanceof TileFreezePlug freeze && freeze.isFrozen())) {
+			return;
+		}
+
+		if (currentFuel.get() < FUEL_USAGE_RATE) {
+			return;
+		}
+		if (level.getLevelData().getGameTime() % 10 == 0) {
+			double totstrength = temperature.get() * Math.pow(3, Math.pow(temperature.get() / MELTDOWN_TEMPERATURE, 9));
+			double range = Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 2;
+			RadiationSystem.emitRadiationFromLocation(level, new Location(worldPosition), range, totstrength);
 		}
 	}
 
