@@ -2,6 +2,7 @@ package nuclearscience.common.item;
 
 import java.util.function.Supplier;
 
+import electrodynamics.api.electricity.formatting.ChatFormatter;
 import electrodynamics.api.sound.SoundAPI;
 import electrodynamics.common.item.ItemElectrodynamics;
 import net.minecraft.sounds.SoundSource;
@@ -27,7 +28,7 @@ public class ItemGeigerCounter extends ItemElectrodynamics {
 		if (entityIn instanceof Player player) {
 			if (!worldIn.isClientSide) {
 				if ((isSelected || player.getItemBySlot(EquipmentSlot.OFFHAND).getItem() instanceof ItemGeigerCounter) && RadiationSystem.radiationMap.get().containsKey(entityIn)) {
-					player.displayClientMessage(NuclearTextUtils.chatMessage("geigercounter.text", RadiationSystem.radiationMap.get().get(entityIn)), true);
+					player.displayClientMessage(NuclearTextUtils.chatMessage("geigercounter.text", ChatFormatter.formatDecimals(RadiationSystem.radiationMap.get().get(entityIn), 3)), true);
 				}
 			}
 			if (worldIn.isClientSide && RadiationSystem.radiationMap.get().containsKey(entityIn) && (isSelected || player.getItemBySlot(EquipmentSlot.OFFHAND).getItem() instanceof ItemGeigerCounter)) {

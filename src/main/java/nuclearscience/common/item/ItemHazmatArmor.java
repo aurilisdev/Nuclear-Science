@@ -28,7 +28,7 @@ public class ItemHazmatArmor extends ItemElectrodynamicsArmor {
 
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-		return References.ID + ":textures/model/" + (material == ArmorMaterialHazmat.hazmat ? "" : "reinforced") + "hazmatarmor.png";
+		return References.ID + ":textures/block/model/" + (material == ArmorMaterialHazmat.hazmat ? "" : "reinforced") + "hazmatarmor.png";
 	}
 
 	public enum ArmorMaterialHazmat implements ArmorMaterial {

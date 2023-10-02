@@ -48,6 +48,12 @@ import nuclearscience.registers.NuclearScienceDamageTypes;
 import nuclearscience.registers.NuclearScienceItems;
 
 public class TileFissionReactorCore extends GenericTile {
+
+	public static final int FUEL_ROD_COUNT = 4;
+
+	public static final int DUETERIUM_SLOT = 4;
+	public static final int OUTPUT_SLOT = 5;
+
 	public static final int MELTDOWN_TEMPERATURE_ACTUAL = 5611;
 	public static final int MELTDOWN_TEMPERATURE_CALC = 4407;
 	// NB! THE VALUES ABOVE ARE USED FROM THE VERY OLD CALCULATION CODE I MADE BACK
@@ -78,56 +84,99 @@ public class TileFissionReactorCore extends GenericTile {
 	}
 
 	protected void tickServer(ComponentTickable tickable) {
-		ComponentInventory inv = getComponent(ComponentType.Inventory);
-		fuelCount.set(0);
-		for (int i = 0; i < 4; i++) {
-			ItemStack stack = inv.getItem(i);
-			fuelCount.set(fuelCount.get() + (stack.getItem() == NuclearScienceItems.ITEM_FUELLEUO2.get() ? 2 : stack.getItem() == NuclearScienceItems.ITEM_FUELHEUO2.get() ? 3 : stack.getItem() == NuclearScienceItems.ITEM_FUELPLUTONIUM.get() ? 2 : 0));
-		}
-		hasDeuterium.set(!inv.getItem(4).isEmpty());
+
+//		fuelCount.set(0);
+//		for (int i = 0; i < 4; i++) {
+//			ItemStack stack = inv.getItem(i);
+//			fuelCount.set(fuelCount.get() + (stack.getItem() == NuclearScienceItems.ITEM_FUELLEUO2.get() ? 2 : stack.getItem() == NuclearScienceItems.ITEM_FUELHEUO2.get() ? 3 : stack.getItem() == NuclearScienceItems.ITEM_FUELPLUTONIUM.get() ? 2 : 0));
+//		}
+//		hasDeuterium.set(!inv.getItem(4).isEmpty());
 
 		double decrease = (temperature.get() - AIR_TEMPERATURE) / 3000.0;
+
 		if (fuelCount.get() == 0) {
+
 			decrease *= 25;
+
 		}
+
 		boolean hasWater = !getBlockState().getFluidState().isEmpty();
+
 		if (hasWater) {
+
 			decrease += (temperature.get() - WATER_TEMPERATURE) / 5000.0;
+
 		}
+
 		if (decrease != 0) {
+
 			temperature.set(temperature.get() - (decrease < 0.001 && decrease > 0 ? 0.001 : decrease > -0.001 && decrease < 0 ? -0.001 : decrease));
+
 		}
+
+		ComponentInventory inv = getComponent(ComponentType.Inventory);
+
 		if (fuelCount.get() > 0 && ticks > 50) {
+
 			BlockEntity tile = level.getBlockEntity(worldPosition.below());
+
 			int insertion = 0;
+
 			if (tile instanceof TileControlRodAssembly assembly) {
+
 				insertion = assembly.isMSR.get() ? 0 : assembly.insertion.get();
+
 			}
+
 			double insertDecimal = (100 - insertion) / 100.0;
+
 			if (level.random.nextFloat() < insertDecimal) {
-				for (int slot = 0; slot < 4; slot++) {
+
+				for (int slot = 0; slot < FUEL_ROD_COUNT; slot++) {
+
 					ItemStack fuelRod = inv.getItem(slot);
-					if (fuelRod != ItemStack.EMPTY && fuelRod.getDamageValue() >= fuelRod.getMaxDamage()) {
-						inv.setItem(slot, new ItemStack(NuclearScienceItems.ITEM_FUELSPENT.get()));
-					}
+
 					fuelRod.setDamageValue((int) (fuelRod.getDamageValue() + 1 + Math.round(temperature.get()) / MELTDOWN_TEMPERATURE_CALC));
+
+					if (!fuelRod.isEmpty() && fuelRod.getDamageValue() >= fuelRod.getMaxDamage()) {
+
+						inv.setItem(slot, new ItemStack(NuclearScienceItems.ITEM_FUELSPENT.get()));
+
+					}
+
 				}
+
 			}
+
 			temperature.set(temperature.get() + (MELTDOWN_TEMPERATURE_CALC * insertDecimal * (0.25 * (fuelCount.get() / 2.0) + level.random.nextDouble() / 5.0) - temperature.get()) / (200 + 20 * (hasWater ? 4.0 : 1)));
+
 			if (temperature.get() > MELTDOWN_TEMPERATURE_ACTUAL + level.random.nextInt(50) && fuelCount.get() > 0) {
+
 				ticksOverheating++;
+
 				// Implement some alarm sounds at this time
 				if (ticksOverheating > 10 * 20) {
+
 					meltdown();
+
 				}
+
 			}
+
 		} else {
+
 			ticksOverheating = 0;
+
 		}
+
 		temperature.set(Math.max(AIR_TEMPERATURE, temperature.get()));
-		if (fuelCount.get() > 0 && level.random.nextFloat() < 1 / (1200.0 * MELTDOWN_TEMPERATURE_CALC / temperature.get())) {
+
+		if (hasDeuterium.get() && fuelCount.get() > 0 && level.random.nextFloat() < 1 / (1200.0 * MELTDOWN_TEMPERATURE_CALC / temperature.get())) {
+
 			processFissReact(inv);
+
 		}
+
 	}
 
 	protected void tickCommon(ComponentTickable tickable) {
@@ -264,32 +313,91 @@ public class TileFissionReactorCore extends GenericTile {
 
 	public void processFissReact(ComponentInventory inv) {
 
-		int inputSlot = 4;
-		int outputSlot = 5;
+		ItemStack input = inv.getItem(DUETERIUM_SLOT);
+		ItemStack output = inv.getItem(OUTPUT_SLOT);
 
-		ItemStack input = inv.getItem(inputSlot);
-		ItemStack output = inv.getItem(outputSlot);
+		if (input.isEmpty()) {
 
-		if (input != null && !input.isEmpty()) {
-			if (cachedRecipes == null || cachedRecipes.isEmpty()) {
-				cachedRecipes = ElectrodynamicsRecipe.findRecipesbyType(NuclearScienceRecipeInit.FISSION_REACTOR_TYPE.get(), level);
-			}
-			for (ElectrodynamicsRecipe iRecipe : cachedRecipes) {
-				Item2ItemRecipe recipe = (Item2ItemRecipe) iRecipe;
-				for (CountableIngredient ing : recipe.getCountedIngredients()) {
-					if (ing.testStack(input)) {
-						if (output.isEmpty()) {
-							inv.setItem(outputSlot, recipe.getItemOutputNoAccess().copy());
-							input.shrink(recipe.getCountedIngredients().get(0).getStackSize());
-						} else if (output.getCount() <= output.getMaxStackSize() + recipe.getItemOutputNoAccess().getCount()) {
-							output.grow(recipe.getItemOutputNoAccess().getCount());
-							input.shrink(recipe.getCountedIngredients().get(0).getStackSize());
-						}
+			return;
+
+		}
+
+		if (cachedRecipes == null || cachedRecipes.isEmpty()) {
+
+			cachedRecipes = ElectrodynamicsRecipe.findRecipesbyType(NuclearScienceRecipeInit.FISSION_REACTOR_TYPE.get(), level);
+		}
+
+		for (ElectrodynamicsRecipe iRecipe : cachedRecipes) {
+
+			Item2ItemRecipe recipe = (Item2ItemRecipe) iRecipe;
+
+			for (CountableIngredient ing : recipe.getCountedIngredients()) {
+
+				if (ing.testStack(input)) {
+
+					if (output.isEmpty()) {
+
+						inv.setItem(OUTPUT_SLOT, recipe.getItemOutputNoAccess().copy());
+
+						input.shrink(recipe.getCountedIngredients().get(0).getStackSize());
+
+					} else if (output.getCount() <= output.getMaxStackSize() + recipe.getItemOutputNoAccess().getCount()) {
+
+						output.grow(recipe.getItemOutputNoAccess().getCount());
+
+						input.shrink(recipe.getCountedIngredients().get(0).getStackSize());
+
 					}
+
 				}
 
 			}
+
 		}
+
+	}
+
+	@Override
+	public void onInventoryChange(ComponentInventory inv, int slot) {
+		if (level.isClientSide()) {
+			return;
+		}
+		
+		if (slot == -1 || slot < FUEL_ROD_COUNT) {
+
+			fuelCount.set(0);
+			
+			for (int i = 0; i < FUEL_ROD_COUNT; i++) {
+
+				ItemStack stack = inv.getItem(i);
+
+				int fuelValue = 0;
+
+				if (stack.getItem() == NuclearScienceItems.ITEM_FUELLEUO2.get()) {
+
+					fuelValue = 2;
+
+				} else if (stack.getItem() == NuclearScienceItems.ITEM_FUELHEUO2.get()) {
+
+					fuelValue = 3;
+
+				} else if (stack.getItem() == NuclearScienceItems.ITEM_FUELPLUTONIUM.get()) {
+
+					fuelValue = 2;
+
+				}
+
+				fuelCount.set(fuelCount.get() + fuelValue);
+			}
+
+		}
+
+		if (slot == -1 || slot == DUETERIUM_SLOT) {
+
+			hasDeuterium.set(!inv.getItem(DUETERIUM_SLOT).isEmpty());
+
+		}
+
 	}
 
 	static {
