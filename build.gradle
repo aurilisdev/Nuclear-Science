@@ -16,7 +16,7 @@ libsDirName = "../output"
 distsDirName = "../output"
 
 group = nuclearscience_group
-version = nuclearscience_version
+version = "${minecraft_version}-" + nuclearscience_version
 
 base {
 

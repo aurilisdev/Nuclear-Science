@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import electrodynamics.api.gas.GasStack;
 import electrodynamics.api.gas.GasTank;
+import electrodynamics.client.ClientRegister;
 import electrodynamics.client.render.tile.AbstractTileRenderer;
 import electrodynamics.client.texture.atlas.AtlasHolderElectrodynamicsCustom;
 import electrodynamics.prefab.tile.components.ComponentType;
@@ -113,7 +114,7 @@ public class RenderNuclearBoiler extends AbstractTileRenderer<TileNuclearBoiler>
 
 		}
 
-		TextureAtlasSprite sprite = AtlasHolderElectrodynamicsCustom.get(AtlasHolderElectrodynamicsCustom.TEXTURE_GAS);
+		TextureAtlasSprite sprite = ClientRegister.CACHED_TEXTUREATLASSPRITES.get(ClientRegister.TEXTURE_GAS);
 
 		float[] colors = new Color(sprite.getPixelRGBA(0, 10, 10)).colorFloatArr();
 

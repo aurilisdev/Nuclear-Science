@@ -68,7 +68,7 @@ public class TilePlasma extends GenericTile {
 				output = new CachedTileOutput(level, getBlockPos().relative(Direction.UP, 3));
 			} else if (output.getSafe() instanceof ISteamReceiver) {
 				ISteamReceiver turbine = output.getSafe();
-				turbine.receiveSteam(Constants.FUSIONREACTOR_MAXENERGYTARGET / (113.0 * 20.0), Double.MAX_VALUE);
+				turbine.receiveSteam(6100, Constants.FUSIONREACTOR_MAXENERGYTARGET / (85.0 * 20));
 			}
 		}
 	}
