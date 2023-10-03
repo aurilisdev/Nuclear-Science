@@ -7,7 +7,6 @@ import electrodynamics.api.gas.GasStack;
 import electrodynamics.api.gas.GasTank;
 import electrodynamics.client.ClientRegister;
 import electrodynamics.client.render.tile.AbstractTileRenderer;
-import electrodynamics.client.texture.atlas.AtlasHolderElectrodynamicsCustom;
 import electrodynamics.prefab.tile.components.ComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
