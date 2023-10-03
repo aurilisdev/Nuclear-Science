@@ -83,7 +83,7 @@ public class RadiationSystem {
 				}
 			}
 		}
-		Location end = new Location(entity.position());
+		Location end = new Location(entity.position().add(0, entity.getEyeHeight() / 2.0, 0));
 		double radiation = 0;
 		if (entity instanceof Player pl && (pl.getItemBySlot(EquipmentSlot.MAINHAND).getItem() instanceof ItemGeigerCounter || pl.getItemBySlot(EquipmentSlot.OFFHAND).getItem() instanceof ItemGeigerCounter)) {
 			double already = radiationMap.get().containsKey(entity) ? radiationMap.get().get(entity) : 0;
