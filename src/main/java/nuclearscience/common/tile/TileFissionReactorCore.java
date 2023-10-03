@@ -281,7 +281,7 @@ public class TileFissionReactorCore extends GenericTile {
 									if (turbine.isStillValid()) {
 										cachedReceivers[i][j][k] = null;
 									}
-									turbine.receiveSteam(Constants.FISSIONREACTOR_MAXENERGYTARGET / (STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * 20.0 * (MELTDOWN_TEMPERATURE_ACTUAL / temperature.get())), temperature.get());
+									turbine.receiveSteam(temperature.get(), Constants.FISSIONREACTOR_MAXENERGYTARGET / (STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * 20.0 * (MELTDOWN_TEMPERATURE_ACTUAL / temperature.get())));
 								}
 								if (level.random.nextFloat() < temperature.get() / (MELTDOWN_TEMPERATURE_CALC * 20.0 * STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * STEAM_GEN_HEIGHT)) {
 									level.setBlockAndUpdate(offpos, Blocks.AIR.defaultBlockState());
@@ -362,11 +362,11 @@ public class TileFissionReactorCore extends GenericTile {
 		if (level.isClientSide()) {
 			return;
 		}
-		
+
 		if (slot == -1 || slot < FUEL_ROD_COUNT) {
 
 			fuelCount.set(0);
-			
+
 			for (int i = 0; i < FUEL_ROD_COUNT; i++) {
 
 				ItemStack stack = inv.getItem(i);
