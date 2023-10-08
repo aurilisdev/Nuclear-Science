@@ -1,0 +1,5 @@
+> update to 1.20.1
+> update to new Electrodynamics formatting
+> polish GUIs for Molten Salt Reactor and surrounding machines
+> add waste product to MSR process; waste is functionally similar to Polonium
+> clean and improve internal code
