@@ -1,9 +1,6 @@
 package nuclearscience.common.tile;
 
-import java.util.stream.Stream;
-
 import electrodynamics.api.capability.ElectrodynamicsCapabilities;
-import electrodynamics.common.block.VoxelShapes;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.IComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
@@ -18,16 +15,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity.RemovalReason;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.phys.shapes.VoxelShape;
 import nuclearscience.common.entity.EntityParticle;
 import nuclearscience.common.inventory.container.ContainerParticleInjector;
 import nuclearscience.common.settings.Constants;
 import nuclearscience.registers.NuclearScienceBlockTypes;
-import nuclearscience.registers.NuclearScienceBlocks;
 import nuclearscience.registers.NuclearScienceItems;
 
 public class TileParticleInjector extends GenericTile {
@@ -131,42 +124,6 @@ public class TileParticleInjector extends GenericTile {
 	@Override
 	public AABB getRenderBoundingBox() {
 		return INFINITE_EXTENT_AABB;
-	}
-
-	static {
-
-		VoxelShape shape = Stream.of(
-				//
-				Block.box(15, 4, 4, 16, 12, 12),
-				//
-				Block.box(12, 0, 0, 15, 16, 16),
-				//
-				Block.box(15, 0, 15, 16, 16, 16),
-				//
-				Block.box(15, 0, 0, 16, 16, 1),
-				//
-				Block.box(15, 15, 1, 16, 16, 15),
-				//
-				Block.box(15, 0, 1, 16, 1, 15),
-				//
-				Block.box(9, 1, 1, 12, 15, 15),
-				//
-				Block.box(4, 1, 1, 5, 15, 15),
-				//
-				Block.box(1.5, 3, 3, 4, 13, 13),
-				//
-				Block.box(0, 0, 0, 0.5, 16, 16),
-				//
-				Block.box(0.5, 0.5, 0.5, 1, 15.5, 15.25),
-				//
-				Block.box(1, 1.5, 1.5, 1.5, 14.5, 14.25),
-				//
-				Block.box(5, 0, 0, 9, 16, 16)
-		//
-		).reduce((v1, v2) -> Shapes.or(v1, v2)).get();
-		
-		VoxelShapes.registerShape(NuclearScienceBlocks.blockParticleInjector, shape, Direction.WEST);
-
 	}
 
 }

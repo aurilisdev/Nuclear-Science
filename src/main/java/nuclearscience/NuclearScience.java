@@ -13,6 +13,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import nuclearscience.api.radiation.RadiationRegister;
 import nuclearscience.client.ClientRegister;
+import nuclearscience.common.block.voxelshapes.NuclearScienceVoxelShapeRegistry;
 import nuclearscience.common.packet.NetworkHandler;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 import nuclearscience.common.reloadlistener.AtomicAssemblerBlacklistRegister;
@@ -48,6 +49,7 @@ public class NuclearScience {
 		NuclearScienceTags.init();
 		RadioactiveItemLoader.INSTANCE = new RadioactiveItemLoader().subscribeAsSyncable(NetworkHandler.CHANNEL);
 		AtomicAssemblerBlacklistRegister.INSTANCE = new AtomicAssemblerBlacklistRegister().subscribeAsSyncable(NetworkHandler.CHANNEL);
+		NuclearScienceVoxelShapeRegistry.init();
 	}
 
 }

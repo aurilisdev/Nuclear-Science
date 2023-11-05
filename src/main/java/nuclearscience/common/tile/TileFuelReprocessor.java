@@ -1,7 +1,6 @@
 package nuclearscience.common.tile;
 
 import electrodynamics.api.capability.ElectrodynamicsCapabilities;
-import electrodynamics.common.block.VoxelShapes;
 import electrodynamics.common.inventory.container.tile.ContainerO2OProcessor;
 import electrodynamics.prefab.sound.SoundBarrierMethods;
 import electrodynamics.prefab.sound.utils.ITickableSound;
@@ -19,12 +18,8 @@ import electrodynamics.registers.ElectrodynamicsSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.shapes.BooleanOp;
-import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.phys.shapes.VoxelShape;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 import nuclearscience.registers.NuclearScienceBlockTypes;
-import nuclearscience.registers.NuclearScienceBlocks;
 
 public class TileFuelReprocessor extends GenericTile implements ITickableSound {
 
@@ -54,80 +49,6 @@ public class TileFuelReprocessor extends GenericTile implements ITickableSound {
 			isSoundPlaying = true;
 			SoundBarrierMethods.playTileSound(ElectrodynamicsSounds.SOUND_MINERALCRUSHER.get(), this, true);
 		}
-	}
-
-	static {
-		VoxelShape shape = Shapes.empty();
-		shape = Shapes.join(shape, Shapes.box(0.875, 0, 0.9375, 1, 1, 1), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.875, 0, 0, 1, 1, 0.0625), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0, 0, 0, 0.125, 1, 0.0625), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0, 0, 0.9375, 0.125, 1, 1), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0, 0, 0.875, 0.0625, 1, 0.9375), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0, 0, 0.0625, 0.0625, 1, 0.125), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.9375, 0, 0.0625, 1, 1, 0.125), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.9375, 0, 0.875, 1, 1, 0.9375), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.0625, 0.4375, 0.8125, 0.1875, 0.5625, 0.9375), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.125, 0.4375, 0.75, 0.25, 0.5625, 0.875), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.1875, 0.4375, 0.6875, 0.25, 0.5625, 0.75), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.25, 0.4375, 0.75, 0.3125, 0.5625, 0.8125), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.0625, 0.4375, 0.0625, 0.1875, 0.5625, 0.1875), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.125, 0.4375, 0.125, 0.25, 0.5625, 0.25), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.25, 0.4375, 0.1875, 0.3125, 0.5625, 0.25), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.1875, 0.4375, 0.25, 0.25, 0.5625, 0.3125), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.8125, 0.4375, 0.8125, 0.9375, 0.5625, 0.9375), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.75, 0.4375, 0.75, 0.875, 0.5625, 0.875), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.75, 0.4375, 0.6875, 0.8125, 0.5625, 0.75), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.6875, 0.4375, 0.75, 0.75, 0.5625, 0.8125), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.8125, 0.4375, 0.0625, 0.9375, 0.5625, 0.1875), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.75, 0.4375, 0.125, 0.875, 0.5625, 0.25), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.6875, 0.4375, 0.1875, 0.75, 0.5625, 0.25), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.75, 0.4375, 0.25, 0.8125, 0.5625, 0.3125), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.1875, 0.125, 0.3125, 0.8125, 0.875, 0.6875), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.25, 0.125, 0.6875, 0.3125, 0.875, 0.75), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.25, 0.125, 0.25, 0.3125, 0.875, 0.3125), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.6875, 0.125, 0.25, 0.75, 0.875, 0.3125), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.6875, 0.125, 0.6875, 0.75, 0.875, 0.75), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.3125, 0.125, 0.6875, 0.6875, 0.875, 0.8125), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.3125, 0.125, 0.1875, 0.6875, 0.875, 0.3125), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.25, 0.9375, 0.25, 0.75, 1, 0.75), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.3125, 0.875, 0.3125, 0.6875, 0.9375, 0.6875), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.9375, 0.25, 0.25, 1, 0.75, 0.75), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.8125, 0.3125, 0.3125, 0.9375, 0.6875, 0.6875), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.3125, 0.1875, 0.125, 0.6875, 0.25, 0.1875), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.8125, 0.1875, 0.3125, 0.875, 0.25, 0.6875), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.75, 0.1875, 0.6875, 0.8125, 0.25, 0.75), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.6875, 0.1875, 0.75, 0.75, 0.25, 0.8125), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.6875, 0.1875, 0.1875, 0.75, 0.25, 0.25), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.75, 0.1875, 0.25, 0.8125, 0.25, 0.3125), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.1875, 0.1875, 0.25, 0.25, 0.25, 0.3125), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.25, 0.1875, 0.1875, 0.3125, 0.25, 0.25), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.25, 0.1875, 0.75, 0.3125, 0.25, 0.8125), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.1875, 0.1875, 0.6875, 0.25, 0.25, 0.75), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.125, 0.1875, 0.3125, 0.1875, 0.25, 0.6875), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.3125, 0.1875, 0.8125, 0.6875, 0.25, 0.875), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.3125, 0.75, 0.125, 0.6875, 0.8125, 0.1875), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.8125, 0.75, 0.3125, 0.875, 0.8125, 0.6875), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.75, 0.75, 0.6875, 0.8125, 0.8125, 0.75), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.6875, 0.75, 0.75, 0.75, 0.8125, 0.8125), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.6875, 0.75, 0.1875, 0.75, 0.8125, 0.25), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.75, 0.75, 0.25, 0.8125, 0.8125, 0.3125), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.1875, 0.75, 0.25, 0.25, 0.8125, 0.3125), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.25, 0.75, 0.1875, 0.3125, 0.8125, 0.25), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.25, 0.75, 0.75, 0.3125, 0.8125, 0.8125), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.1875, 0.75, 0.6875, 0.25, 0.8125, 0.75), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.125, 0.75, 0.3125, 0.1875, 0.8125, 0.6875), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.3125, 0.75, 0.8125, 0.6875, 0.8125, 0.875), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.125, 0.25, 0.375, 0.1875, 0.75, 0.4375), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.5625, 0.25, 0.125, 0.625, 0.75, 0.1875), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.375, 0.25, 0.125, 0.4375, 0.75, 0.1875), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.375, 0.25, 0.8125, 0.4375, 0.75, 0.875), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.5625, 0.25, 0.8125, 0.625, 0.75, 0.875), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.125, 0.25, 0.5625, 0.1875, 0.75, 0.625), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.8125, 0.6875, 0.5625, 0.875, 0.75, 0.625), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.8125, 0.6875, 0.375, 0.875, 0.75, 0.4375), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.8125, 0.25, 0.375, 0.875, 0.3125, 0.4375), BooleanOp.OR);
-		shape = Shapes.join(shape, Shapes.box(0.8125, 0.25, 0.5625, 0.875, 0.3125, 0.625), BooleanOp.OR);
-		VoxelShapes.registerShape(NuclearScienceBlocks.blockFuelReprocessor, shape, Direction.WEST);
 	}
 
 	@Override
