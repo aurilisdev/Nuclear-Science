@@ -3,9 +3,8 @@ package nuclearscience.common.tile;
 import electrodynamics.prefab.properties.Property;
 import electrodynamics.prefab.properties.PropertyType;
 import electrodynamics.prefab.tile.GenericTile;
-import electrodynamics.prefab.tile.components.ComponentType;
+import electrodynamics.prefab.tile.components.IComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
-import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentInventory.InventoryBuilder;
@@ -31,18 +30,18 @@ public class TileAtomicAssembler extends GenericTile {
 
 	public TileAtomicAssembler(BlockPos pos, BlockState state) {
 		super(NuclearScienceBlockTypes.TILE_ATOMICASSEMBLER.get(), pos, state);
-		addComponent(new ComponentDirection(this));
+
 		addComponent(new ComponentTickable(this).tickCommon(this::tickServer));
 		addComponent(new ComponentPacketHandler(this));
-		addComponent(new ComponentElectrodynamic(this).maxJoules(Constants.ATOMICASSEMBLER_USAGE_PER_TICK * 20).voltage(Constants.ATOMICASSEMBLER_VOLTAGE).input(Direction.DOWN));
+		addComponent(new ComponentElectrodynamic(this, false, true).maxJoules(Constants.ATOMICASSEMBLER_USAGE_PER_TICK * 20).voltage(Constants.ATOMICASSEMBLER_VOLTAGE).setInputDirections(Direction.DOWN));
 		// The slot == 6 has to be there to allow items into the input slot.
-		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().inputs(7).outputs(1)).faceSlots(Direction.UP, 0, 1, 2, 3, 4, 5, 6).slotFaces(6, Direction.DOWN, Direction.WEST, Direction.SOUTH, Direction.NORTH, Direction.EAST).valid((slot, stack, i) -> slot == 6 || slot < 6 && stack.is(NuclearScienceItems.ITEM_CELLDARKMATTER.get())));
-		addComponent(new ComponentContainerProvider("container.atomicassembler", this).createMenu((id, player) -> new ContainerAtomicAssembler(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
+		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().inputs(7).outputs(1)).setSlotsByDirection(Direction.UP, 0, 1, 2, 3, 4, 5).setDirectionsBySlot(6, Direction.EAST, Direction.SOUTH).setDirectionsBySlot(7, Direction.WEST, Direction.NORTH).valid((slot, stack, i) -> slot == 6 || slot < 6 && stack.is(NuclearScienceItems.ITEM_CELLDARKMATTER.get())));
+		addComponent(new ComponentContainerProvider("container.atomicassembler", this).createMenu((id, player) -> new ContainerAtomicAssembler(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
 	}
 
 	private void tickServer(ComponentTickable tickable) {
 
-		ComponentInventory inv = getComponent(ComponentType.Inventory);
+		ComponentInventory inv = getComponent(IComponentType.Inventory);
 
 		ItemStack input = inv.getItem(6);
 
@@ -77,7 +76,7 @@ public class TileAtomicAssembler extends GenericTile {
 
 		}
 
-		ComponentElectrodynamic electro = getComponent(ComponentType.Electrodynamic);
+		ComponentElectrodynamic electro = getComponent(IComponentType.Electrodynamic);
 
 		if (electro.getJoulesStored() < Constants.ATOMICASSEMBLER_USAGE_PER_TICK) {
 			return;

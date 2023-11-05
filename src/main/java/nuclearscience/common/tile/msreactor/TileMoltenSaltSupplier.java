@@ -1,12 +1,11 @@
-package nuclearscience.common.tile;
+package nuclearscience.common.tile.msreactor;
 
 import electrodynamics.common.block.VoxelShapes;
 import electrodynamics.prefab.properties.Property;
 import electrodynamics.prefab.properties.PropertyType;
 import electrodynamics.prefab.tile.GenericTile;
-import electrodynamics.prefab.tile.components.ComponentType;
+import electrodynamics.prefab.tile.components.IComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
-import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentInventory.InventoryBuilder;
@@ -40,22 +39,22 @@ public class TileMoltenSaltSupplier extends GenericTile {
 	public TileMoltenSaltSupplier(BlockPos pos, BlockState state) {
 
 		super(NuclearScienceBlockTypes.TILE_MOLTENSALTSUPPLIER.get(), pos, state);
-		addComponent(new ComponentDirection(this));
+
 		addComponent(new ComponentTickable(this).tickServer(this::tickServer));
 		addComponent(new ComponentPacketHandler(this));
-		addComponent(new ComponentElectrodynamic(this).voltage(Constants.MOLTENSALTSUPPLIER_VOLTAGE).extractPower((x, y) -> TransferPack.EMPTY).input(Direction.UP).input(Direction.DOWN).maxJoules(Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK * 20));
-		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().inputs(1).outputs(1)).slotFaces(0, Direction.values()).slotFaces(1, Direction.values()).valid((slot, stack, i) -> stack.getItem() == NuclearScienceItems.ITEM_LIFHT4PUF3.get()));
-		addComponent(new ComponentContainerProvider("container.moltensaltsupplier", this).createMenu((id, player) -> new ContainerMoltenSaltSupplier(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
+		addComponent(new ComponentElectrodynamic(this, false, true).voltage(Constants.MOLTENSALTSUPPLIER_VOLTAGE).extractPower((x, y) -> TransferPack.EMPTY).setInputDirections(Direction.DOWN).maxJoules(Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK * 20));
+		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().inputs(1).outputs(1)).setDirectionsBySlot(0, Direction.NORTH, Direction.UP).setDirectionsBySlot(1, Direction.EAST, Direction.WEST).valid((slot, stack, i) -> stack.getItem() == NuclearScienceItems.ITEM_LIFHT4PUF3.get()));
+		addComponent(new ComponentContainerProvider("container.moltensaltsupplier", this).createMenu((id, player) -> new ContainerMoltenSaltSupplier(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
 
 		reactorWaste.setNoSave();
 	}
 
 	public void tickServer(ComponentTickable tickable) {
-		Direction dir = this.<ComponentDirection>getComponent(ComponentType.Direction).getDirection();
+		Direction dir = getFacing();
 		if (output == null) {
 			output = new CachedTileOutput(level, worldPosition.relative(dir.getOpposite()));
 		}
-		ComponentElectrodynamic electro = getComponent(ComponentType.Electrodynamic);
+		ComponentElectrodynamic electro = getComponent(IComponentType.Electrodynamic);
 		boolean enoughPower = electro.getJoulesStored() >= Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK;
 		if (!enoughPower) {
 			return;
@@ -71,7 +70,7 @@ public class TileMoltenSaltSupplier extends GenericTile {
 			output.update(worldPosition.relative(dir.getOpposite()));
 		}
 
-		ComponentInventory inv = getComponent(ComponentType.Inventory);
+		ComponentInventory inv = getComponent(IComponentType.Inventory);
 
 		ItemStack fuel = inv.getItem(0);
 
@@ -87,7 +86,7 @@ public class TileMoltenSaltSupplier extends GenericTile {
 			return;
 		}
 
-		if (core.<ComponentDirection>getComponent(ComponentType.Direction).getDirection() != dir) {
+		if (core.getFacing() != dir) {
 			return;
 		}
 

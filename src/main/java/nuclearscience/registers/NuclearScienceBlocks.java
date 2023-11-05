@@ -35,16 +35,16 @@ import nuclearscience.common.block.connect.BlockMoltenSaltPipe;
 import nuclearscience.common.block.subtype.SubtypeMoltenSaltPipe;
 import nuclearscience.common.tile.TileAtomicAssembler;
 import nuclearscience.common.tile.TileChemicalExtractor;
-import nuclearscience.common.tile.TileFreezePlug;
 import nuclearscience.common.tile.TileGasCentrifuge;
-import nuclearscience.common.tile.TileHeatExchanger;
-import nuclearscience.common.tile.TileMSRFuelPreProcessor;
-import nuclearscience.common.tile.TileMSReactorCore;
 import nuclearscience.common.tile.TileNuclearBoiler;
 import nuclearscience.common.tile.TileParticleInjector;
 import nuclearscience.common.tile.TileRadioisotopeGenerator;
 import nuclearscience.common.tile.TileSiren;
 import nuclearscience.common.tile.TileSteamFunnel;
+import nuclearscience.common.tile.msreactor.TileFreezePlug;
+import nuclearscience.common.tile.msreactor.TileHeatExchanger;
+import nuclearscience.common.tile.msreactor.TileMSRFuelPreProcessor;
+import nuclearscience.common.tile.msreactor.TileMSReactorCore;
 
 public class NuclearScienceBlocks {
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, References.ID);

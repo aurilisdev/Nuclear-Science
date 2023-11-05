@@ -6,7 +6,7 @@ import electrodynamics.prefab.properties.PropertyType;
 import electrodynamics.prefab.sound.SoundBarrierMethods;
 import electrodynamics.prefab.sound.utils.ITickableSound;
 import electrodynamics.prefab.tile.GenericTile;
-import electrodynamics.prefab.tile.components.ComponentType;
+import electrodynamics.prefab.tile.components.IComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
@@ -50,7 +50,7 @@ public class TileTurbine extends GenericTile implements ITickableSound, ISteamRe
 		super(NuclearScienceBlockTypes.TILE_TURBINE.get(), pos, state);
 		addComponent(new ComponentTickable(this).tickServer(this::tickServer).tickClient(this::tickClient));
 		addComponent(new ComponentPacketHandler(this));
-		addComponent(new ComponentElectrodynamic(this).output(Direction.UP).setCapabilityTest(() -> (!hasCore.get() || isCore.get())));
+		addComponent(new ComponentElectrodynamic(this, true, false).setOutputDirections(Direction.UP).setCapabilityTest(() -> (!hasCore.get() || isCore.get())));
 	}
 
 	public void constructStructure() {
@@ -117,7 +117,7 @@ public class TileTurbine extends GenericTile implements ITickableSound, ISteamRe
 	}
 
 	public void tickServer(ComponentTickable tickable) {
-		this.<ComponentElectrodynamic>getComponent(ComponentType.Electrodynamic).voltage(currentVoltage.get());
+		this.<ComponentElectrodynamic>getComponent(IComponentType.Electrodynamic).voltage(currentVoltage.get());
 		if (output == null) {
 			output = new CachedTileOutput(level, worldPosition.relative(Direction.UP));
 		}

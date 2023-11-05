@@ -3,7 +3,7 @@ package nuclearscience.client.render.tile;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import electrodynamics.client.render.tile.AbstractTileRenderer;
-import electrodynamics.prefab.tile.components.ComponentType;
+import electrodynamics.prefab.tile.components.IComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.utilities.math.MathUtils;
 import net.minecraft.client.Minecraft;
@@ -22,7 +22,7 @@ public class RenderAtomicAssembler extends AbstractTileRenderer<TileAtomicAssemb
 
 	@Override
 	public void render(TileAtomicAssembler tile, float partialTicks, PoseStack poseStack, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
-		ComponentInventory inv = tile.getComponent(ComponentType.Inventory);
+		ComponentInventory inv = tile.getComponent(IComponentType.Inventory);
 		ItemStack stack = inv.getItem(6);
 		if (!stack.isEmpty()) {
 			poseStack.pushPose();

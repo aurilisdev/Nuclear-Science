@@ -1,4 +1,4 @@
-package nuclearscience.common.tile.network;
+package nuclearscience.common.tile.saltpipe;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -9,7 +9,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.common.block.connect.BlockMoltenSaltPipe;
 import nuclearscience.common.block.subtype.SubtypeMoltenSaltPipe;
-import nuclearscience.common.tile.generic.GenericTileMoltenSaltPipe;
 import nuclearscience.registers.NuclearScienceBlockTypes;
 
 public class TileMoltenSaltPipe extends GenericTileMoltenSaltPipe {

@@ -9,9 +9,8 @@ import electrodynamics.prefab.properties.PropertyType;
 import electrodynamics.prefab.sound.SoundBarrierMethods;
 import electrodynamics.prefab.sound.utils.ITickableSound;
 import electrodynamics.prefab.tile.GenericTile;
-import electrodynamics.prefab.tile.components.ComponentType;
+import electrodynamics.prefab.tile.components.IComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
-import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentGasHandlerMulti;
 import electrodynamics.prefab.tile.components.type.ComponentInventory;
@@ -57,19 +56,19 @@ public class TileGasCentrifuge extends GenericTile implements ITickableSound {
 	public TileGasCentrifuge(BlockPos pos, BlockState state) {
 		super(NuclearScienceBlockTypes.TILE_GASCENTRIFUGE.get(), pos, state);
 		addComponent(new ComponentTickable(this).tickClient(this::tickClient).tickServer(this::tickServer));
-		addComponent(new ComponentDirection(this));
+
 		addComponent(new ComponentPacketHandler(this));
 		addComponent(new ComponentGasHandlerMulti(this).setInputTanks(1, arr(TANKCAPACITY), arr(293.1), arr(1)).setInputGasTags(NuclearScienceTags.Gases.URANIUM_HEXAFLUORIDE).setInputDirections(Direction.NORTH));
-		addComponent(new ComponentElectrodynamic(this).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 2).input(Direction.DOWN).maxJoules(Constants.GASCENTRIFUGE_USAGE_PER_TICK * 10));
-		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().outputs(3).upgrades(3)).universalSlots(0, 1, 2).validUpgrades(ContainerGasCentrifuge.VALID_UPGRADES).valid(machineValidator()));
+		addComponent(new ComponentElectrodynamic(this, false, true).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 2).setInputDirections(Direction.DOWN).maxJoules(Constants.GASCENTRIFUGE_USAGE_PER_TICK * 10));
+		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().outputs(3).upgrades(3)).setSlotsByDirection(Direction.UP, 0, 1, 2).setSlotsByDirection(Direction.EAST, 0, 1, 2).setSlotsByDirection(Direction.WEST, 0, 1, 2).setSlotsByDirection(Direction.SOUTH, 0, 1, 2).validUpgrades(ContainerGasCentrifuge.VALID_UPGRADES).valid(machineValidator()));
 		addComponent(new ComponentProcessor(this).usage(Constants.GASCENTRIFUGE_USAGE_PER_TICK).requiredTicks(Constants.GASCENTRIFUGE_REQUIRED_TICKS_PER_PROCESSING).canProcess(this::canProcess).process(this::process));
-		addComponent(new ComponentContainerProvider("container.gascentrifuge", this).createMenu((id, player) -> new ContainerGasCentrifuge(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
+		addComponent(new ComponentContainerProvider("container.gascentrifuge", this).createMenu((id, player) -> new ContainerGasCentrifuge(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
 	}
 
 	public boolean canProcess(ComponentProcessor processor) {
-		ComponentElectrodynamic electro = getComponent(ComponentType.Electrodynamic);
-		ComponentInventory inv = getComponent(ComponentType.Inventory);
-		ComponentGasHandlerMulti gasHandler = getComponent(ComponentType.GasHandler);
+		ComponentElectrodynamic electro = getComponent(IComponentType.Electrodynamic);
+		ComponentInventory inv = getComponent(IComponentType.Inventory);
+		ComponentGasHandlerMulti gasHandler = getComponent(IComponentType.GasHandler);
 		boolean hasGas = gasHandler.getInputTanks()[0].getGasAmount() >= REQUIRED / 60.0;
 		boolean val = electro.getJoulesStored() >= processor.getUsage() && hasGas && inv.getItem(0).getCount() < inv.getItem(0).getMaxStackSize() && inv.getItem(1).getCount() < inv.getItem(1).getMaxStackSize() && inv.getItem(2).getCount() < inv.getItem(2).getMaxStackSize();
 		if (!val && spinSpeed.get() > 0) {
@@ -82,8 +81,8 @@ public class TileGasCentrifuge extends GenericTile implements ITickableSound {
 	}
 
 	public void process(ComponentProcessor processor) {
-		ComponentInventory inv = getComponent(ComponentType.Inventory);
-		ComponentGasHandlerMulti multi = getComponent(ComponentType.GasHandler);
+		ComponentInventory inv = getComponent(IComponentType.Inventory);
+		ComponentGasHandlerMulti multi = getComponent(IComponentType.GasHandler);
 		// ComponentFluidHandlerMulti multi = getComponent(ComponentType.FluidHandler);
 		spinSpeed.set(processor.operatingSpeed.get().intValue());
 		double processed = REQUIRED / 60.0;

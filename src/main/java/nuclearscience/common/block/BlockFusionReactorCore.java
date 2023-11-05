@@ -3,7 +3,7 @@ package nuclearscience.common.block;
 import electrodynamics.prefab.block.GenericMachineBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
-import nuclearscience.common.tile.TileFusionReactorCore;
+import nuclearscience.common.tile.fusionreactor.TileFusionReactorCore;
 
 public class BlockFusionReactorCore extends GenericMachineBlock {
 

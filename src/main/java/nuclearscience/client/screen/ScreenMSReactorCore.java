@@ -17,8 +17,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import nuclearscience.common.inventory.container.ContainerMSRReactorCore;
-import nuclearscience.common.tile.TileFreezePlug;
-import nuclearscience.common.tile.TileMSReactorCore;
+import nuclearscience.common.tile.msreactor.TileFreezePlug;
+import nuclearscience.common.tile.msreactor.TileMSReactorCore;
 import nuclearscience.prefab.screen.component.ScreenComponentReactorFuel;
 import nuclearscience.prefab.utils.NuclearTextUtils;
 

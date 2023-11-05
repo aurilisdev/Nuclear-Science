@@ -1,4 +1,4 @@
-package nuclearscience.common.tile;
+package nuclearscience.common.tile.fissionreactor;
 
 import java.util.List;
 
@@ -9,9 +9,8 @@ import electrodynamics.common.recipe.recipeutils.CountableIngredient;
 import electrodynamics.prefab.properties.Property;
 import electrodynamics.prefab.properties.PropertyType;
 import electrodynamics.prefab.tile.GenericTile;
-import electrodynamics.prefab.tile.components.ComponentType;
+import electrodynamics.prefab.tile.components.IComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
-import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentInventory.InventoryBuilder;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
@@ -42,6 +41,7 @@ import nuclearscience.api.turbine.ISteamReceiver;
 import nuclearscience.common.inventory.container.ContainerReactorCore;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 import nuclearscience.common.settings.Constants;
+import nuclearscience.common.tile.TileControlRodAssembly;
 import nuclearscience.registers.NuclearScienceBlockTypes;
 import nuclearscience.registers.NuclearScienceBlocks;
 import nuclearscience.registers.NuclearScienceDamageTypes;
@@ -76,21 +76,14 @@ public class TileFissionReactorCore extends GenericTile {
 
 	public TileFissionReactorCore(BlockPos pos, BlockState state) {
 		super(NuclearScienceBlockTypes.TILE_REACTORCORE.get(), pos, state);
-		addComponent(new ComponentDirection(this));
+
 		addComponent(new ComponentTickable(this).tickCommon(this::tickCommon).tickServer(this::tickServer));
 		addComponent(new ComponentPacketHandler(this));
-		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().inputs(5).outputs(1)).faceSlots(Direction.UP, 0, 1, 2, 3, 4).faceSlots(Direction.DOWN, 5));
-		addComponent(new ComponentContainerProvider("container.reactorcore", this).createMenu((id, player) -> new ContainerReactorCore(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
+		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().inputs(5).outputs(1)).setSlotsByDirection(Direction.UP, 0, 1, 2, 3, 4).setSlotsByDirection(Direction.DOWN, 5));
+		addComponent(new ComponentContainerProvider("container.reactorcore", this).createMenu((id, player) -> new ContainerReactorCore(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
 	}
 
 	protected void tickServer(ComponentTickable tickable) {
-
-//		fuelCount.set(0);
-//		for (int i = 0; i < 4; i++) {
-//			ItemStack stack = inv.getItem(i);
-//			fuelCount.set(fuelCount.get() + (stack.getItem() == NuclearScienceItems.ITEM_FUELLEUO2.get() ? 2 : stack.getItem() == NuclearScienceItems.ITEM_FUELHEUO2.get() ? 3 : stack.getItem() == NuclearScienceItems.ITEM_FUELPLUTONIUM.get() ? 2 : 0));
-//		}
-//		hasDeuterium.set(!inv.getItem(4).isEmpty());
 
 		double decrease = (temperature.get() - AIR_TEMPERATURE) / 3000.0;
 
@@ -114,7 +107,7 @@ public class TileFissionReactorCore extends GenericTile {
 
 		}
 
-		ComponentInventory inv = getComponent(ComponentType.Inventory);
+		ComponentInventory inv = getComponent(IComponentType.Inventory);
 
 		if (fuelCount.get() > 0 && ticks > 50) {
 

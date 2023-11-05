@@ -1,4 +1,4 @@
-package nuclearscience.common.tile;
+package nuclearscience.common.tile.fusionreactor;
 
 import electrodynamics.prefab.properties.Property;
 import electrodynamics.prefab.properties.PropertyType;

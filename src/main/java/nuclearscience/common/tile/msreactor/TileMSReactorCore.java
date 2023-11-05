@@ -1,4 +1,4 @@
-package nuclearscience.common.tile;
+package nuclearscience.common.tile.msreactor;
 
 import java.util.ArrayList;
 
@@ -7,7 +7,6 @@ import electrodynamics.prefab.properties.Property;
 import electrodynamics.prefab.properties.PropertyType;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
-import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import electrodynamics.prefab.utilities.object.CachedTileOutput;
@@ -23,6 +22,8 @@ import nuclearscience.api.network.moltensalt.IMoltenSaltPipe;
 import nuclearscience.api.radiation.RadiationSystem;
 import nuclearscience.common.inventory.container.ContainerMSRReactorCore;
 import nuclearscience.common.network.MoltenSaltNetwork;
+import nuclearscience.common.tile.TileControlRodAssembly;
+import nuclearscience.common.tile.fissionreactor.TileFissionReactorCore;
 import nuclearscience.registers.NuclearScienceBlockTypes;
 import nuclearscience.registers.NuclearScienceBlocks;
 
@@ -47,7 +48,7 @@ public class TileMSReactorCore extends GenericTile {
 
 	public TileMSReactorCore(BlockPos pos, BlockState state) {
 		super(NuclearScienceBlockTypes.TILE_MSRREACTORCORE.get(), pos, state);
-		addComponent(new ComponentDirection(this));
+
 		addComponent(new ComponentTickable(this).tickServer(this::tickServer).tickCommon(this::tickCommon));
 		addComponent(new ComponentPacketHandler(this));
 		addComponent(new ComponentContainerProvider("container.msrreactorcore", this).createMenu((id, player) -> new ContainerMSRReactorCore(id, player, null, getCoordsArray())));

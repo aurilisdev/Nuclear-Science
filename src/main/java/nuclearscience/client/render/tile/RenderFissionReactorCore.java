@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.block.ModelBlockRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.BakedModel;
 import nuclearscience.client.ClientRegister;
-import nuclearscience.common.tile.TileFissionReactorCore;
+import nuclearscience.common.tile.fissionreactor.TileFissionReactorCore;
 
 public class RenderFissionReactorCore extends AbstractTileRenderer<TileFissionReactorCore> {
 

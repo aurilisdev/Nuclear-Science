@@ -1,4 +1,4 @@
-package nuclearscience.common.tile;
+package nuclearscience.common.tile.msreactor;
 
 import java.util.List;
 
@@ -6,7 +6,6 @@ import electrodynamics.common.block.VoxelShapes;
 import electrodynamics.prefab.properties.Property;
 import electrodynamics.prefab.properties.PropertyType;
 import electrodynamics.prefab.tile.GenericTile;
-import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import electrodynamics.prefab.utilities.object.Location;
@@ -32,6 +31,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import nuclearscience.api.turbine.ISteamReceiver;
 import nuclearscience.common.settings.Constants;
+import nuclearscience.common.tile.fissionreactor.TileFissionReactorCore;
 import nuclearscience.registers.NuclearScienceBlockTypes;
 import nuclearscience.registers.NuclearScienceBlocks;
 
@@ -43,7 +43,7 @@ public class TileHeatExchanger extends GenericTile {
 
 	public TileHeatExchanger(BlockPos pos, BlockState state) {
 		super(NuclearScienceBlockTypes.TILE_HEATEXCHANGER.get(), pos, state);
-		addComponent(new ComponentDirection(this));
+
 		addComponent(new ComponentTickable(this).tickCommon(this::tickCommon));
 		addComponent(new ComponentPacketHandler(this));
 	}

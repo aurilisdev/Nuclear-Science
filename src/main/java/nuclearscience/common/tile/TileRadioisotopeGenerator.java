@@ -2,11 +2,9 @@ package nuclearscience.common.tile;
 
 import java.util.stream.Stream;
 
-import electrodynamics.common.block.VoxelShapes;
 import electrodynamics.prefab.tile.GenericTile;
-import electrodynamics.prefab.tile.components.ComponentType;
+import electrodynamics.prefab.tile.components.IComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
-import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentInventory.InventoryBuilder;
@@ -29,7 +27,6 @@ import nuclearscience.api.radiation.RadiationSystem;
 import nuclearscience.common.inventory.container.ContainerRadioisotopeGenerator;
 import nuclearscience.common.settings.Constants;
 import nuclearscience.registers.NuclearScienceBlockTypes;
-import nuclearscience.registers.NuclearScienceBlocks;
 
 public class TileRadioisotopeGenerator extends GenericTile {
 
@@ -40,12 +37,12 @@ public class TileRadioisotopeGenerator extends GenericTile {
 
 	public TileRadioisotopeGenerator(BlockPos pos, BlockState state) {
 		super(NuclearScienceBlockTypes.TILE_RADIOISOTOPEGENERATOR.get(), pos, state);
-		addComponent(new ComponentDirection(this));
+
 		addComponent(new ComponentTickable(this).tickServer(this::tickServer));
 		addComponent(new ComponentPacketHandler(this));
-		addComponent(new ComponentElectrodynamic(this).voltage(Constants.RADIOISOTOPEGENERATOR_VOLTAGE).extractPower((x, y) -> TransferPack.EMPTY).output(Direction.UP).output(Direction.DOWN));
-		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().inputs(1)).slotFaces(0, Direction.values()).valid((slot, stack, i) -> !RadiationRegister.get(stack.getItem()).isNull()));
-		addComponent(new ComponentContainerProvider("container.radioisotopegenerator", this).createMenu((id, player) -> new ContainerRadioisotopeGenerator(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
+		addComponent(new ComponentElectrodynamic(this, true, false).voltage(Constants.RADIOISOTOPEGENERATOR_VOLTAGE).extractPower((x, y) -> TransferPack.EMPTY).setOutputDirections(Direction.DOWN, Direction.UP));
+		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().inputs(1)).setDirectionsBySlot(0, Direction.values()).valid((slot, stack, i) -> !RadiationRegister.get(stack.getItem()).isNull()));
+		addComponent(new ComponentContainerProvider("container.radioisotopegenerator", this).createMenu((id, player) -> new ContainerRadioisotopeGenerator(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
 	}
 
 	public void tickServer(ComponentTickable tickable) {
@@ -59,7 +56,7 @@ public class TileRadioisotopeGenerator extends GenericTile {
 			output1.update(worldPosition.relative(Direction.UP));
 			output2.update(worldPosition.relative(Direction.DOWN));
 		}
-		ItemStack in = this.<ComponentInventory>getComponent(ComponentType.Inventory).getItem(0);
+		ItemStack in = this.<ComponentInventory>getComponent(IComponentType.Inventory).getItem(0);
 		IRadioactiveObject rad = RadiationRegister.get(in.getItem());
 		double currentOutput = in.getCount() * Constants.RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER * rad.getRadiationStrength();
 
@@ -79,7 +76,7 @@ public class TileRadioisotopeGenerator extends GenericTile {
 	@Override
 	public int getComparatorSignal() {
 
-		ItemStack stack = this.<ComponentInventory>getComponent(ComponentType.Inventory).getItem(0);
+		ItemStack stack = this.<ComponentInventory>getComponent(IComponentType.Inventory).getItem(0);
 
 		if (stack.isEmpty()) {
 			return 0;

@@ -13,6 +13,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import nuclearscience.common.tile.msreactor.TileMSReactorCore;
 import nuclearscience.registers.NuclearScienceBlockTypes;
 
 public class TileControlRodAssembly extends GenericTile {

@@ -7,8 +7,7 @@ import electrodynamics.api.gas.GasStack;
 import electrodynamics.api.gas.GasTank;
 import electrodynamics.client.ClientRegister;
 import electrodynamics.client.render.tile.AbstractTileRenderer;
-import electrodynamics.prefab.tile.components.ComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentDirection;
+import electrodynamics.prefab.tile.components.IComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
 import electrodynamics.prefab.tile.components.type.ComponentGasHandlerMulti;
 import electrodynamics.prefab.utilities.RenderingUtils;
@@ -36,10 +35,10 @@ public class RenderNuclearBoiler extends AbstractTileRenderer<TileNuclearBoiler>
 
 		matrix.pushPose();
 
-		Direction facing = tile.<ComponentDirection>getComponent(ComponentType.Direction).getDirection();
+		Direction facing = tile.getFacing();
 		VertexConsumer builder = buffer.getBuffer(Sheets.translucentCullBlockSheet());
 
-		FluidTank input = tile.<ComponentFluidHandlerMulti>getComponent(ComponentType.FluidHandler).getInputTanks()[0];
+		FluidTank input = tile.<ComponentFluidHandlerMulti>getComponent(IComponentType.FluidHandler).getInputTanks()[0];
 
 		if (!input.isEmpty()) {
 
@@ -51,7 +50,7 @@ public class RenderNuclearBoiler extends AbstractTileRenderer<TileNuclearBoiler>
 
 		matrix.pushPose();
 
-		GasTank output = tile.<ComponentGasHandlerMulti>getComponent(ComponentType.GasHandler).getOutputTanks()[0];
+		GasTank output = tile.<ComponentGasHandlerMulti>getComponent(IComponentType.GasHandler).getOutputTanks()[0];
 
 		if (!output.isEmpty()) {
 
