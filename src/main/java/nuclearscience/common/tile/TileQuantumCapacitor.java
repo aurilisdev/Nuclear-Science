@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.jetbrains.annotations.NotNull;
 
 import electrodynamics.api.capability.ElectrodynamicsCapabilities;
+import electrodynamics.api.capability.types.electrodynamic.ICapabilityElectrodynamic.LoadProfile;
 import electrodynamics.prefab.properties.Property;
 import electrodynamics.prefab.properties.PropertyType;
 import electrodynamics.prefab.tile.GenericTile;
@@ -44,7 +45,8 @@ public class TileQuantumCapacitor extends GenericTile implements IEnergyStorage 
 		super(NuclearScienceBlockTypes.TILE_QUANTUMCAPACITOR.get(), pos, state);
 		addComponent(new ComponentTickable(this).tickServer(this::tickServer));
 		addComponent(new ComponentPacketHandler(this));
-		addComponent(new ComponentElectrodynamic(this, true, true).voltage(16 * ElectrodynamicsCapabilities.DEFAULT_VOLTAGE).setOutputDirections(Direction.UP, Direction.DOWN).setInputDirections(Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST).receivePower(this::receivePower).setJoules(this::setJoulesStored).getJoules(this::getJoulesStored));
+		addComponent(new ComponentElectrodynamic(this, true, true).voltage(16 * ElectrodynamicsCapabilities.DEFAULT_VOLTAGE).setOutputDirections(Direction.UP, Direction.DOWN).setInputDirections(Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST).receivePower(this::receivePower).setJoules(this::setJoulesStored)
+				.getJoules(this::getJoulesStored).getConnectedLoad(this::getConnectedLoad));
 		addComponent(new ComponentInventory(this));
 		addComponent(new ComponentContainerProvider("container.quantumcapacitor", this).createMenu((id, player) -> new ContainerQuantumCapacitor(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
 
@@ -152,6 +154,10 @@ public class TileQuantumCapacitor extends GenericTile implements IEnergyStorage 
 
 	public double getMaxJoulesStored() {
 		return DEFAULT_MAX_JOULES;
+	}
+	
+	public TransferPack getConnectedLoad(LoadProfile loadProfile, Direction dir) {
+		return TransferPack.joulesVoltage(getMaxJoulesStored() - getJoulesStored(), this.<ComponentElectrodynamic>getComponent(IComponentType.Electrodynamic).getVoltage());
 	}
 
 }
