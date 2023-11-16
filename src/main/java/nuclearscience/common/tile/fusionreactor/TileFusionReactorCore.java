@@ -32,7 +32,7 @@ public class TileFusionReactorCore extends GenericTile {
 
 	public TileFusionReactorCore(BlockPos pos, BlockState state) {
 		super(NuclearScienceBlockTypes.TILE_FUSIONREACTORCORE.get(), pos, state);
-		
+
 		addComponent(new ComponentTickable(this).tickServer(this::tickServer));
 		addComponent(new ComponentPacketHandler(this));
 		addComponent(new ComponentElectrodynamic(this, false, true).setInputDirections(Direction.DOWN, Direction.UP).maxJoules(Constants.FUSIONREACTOR_USAGE_PER_TICK * 20.0).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 4));

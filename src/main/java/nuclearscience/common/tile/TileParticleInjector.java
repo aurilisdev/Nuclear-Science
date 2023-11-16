@@ -49,8 +49,7 @@ public class TileParticleInjector extends GenericTile {
 		timeSinceSpawn--;
 
 		/**
-		 * This is a far simpler check to perform. It can use any item, so all you have to do is check if the thing in the input slot is
-		 * an item and is not air.
+		 * This is a far simpler check to perform. It can use any item, so all you have to do is check if the thing in the input slot is an item and is not air.
 		 */
 		boolean isItem = false;
 		ItemStack inputItem = inv.getItem(0);

@@ -29,7 +29,7 @@ public class ScreenAtomicAssembler extends GenericScreen<ContainerAtomicAssemble
 			}
 			return 0;
 		}, 84, 71));
-		
+
 		new InventoryIOWrapper(this, -AbstractScreenComponentInfo.SIZE + 1, AbstractScreenComponentInfo.SIZE + 2, 75, 82 + 64, 8, 72 + 64);
 	}
 }

@@ -100,14 +100,14 @@ public class BlockTurbine extends GenericEntityBlockWaterloggable {
 
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-		if(state.getValue(RENDER)) {
+		if (state.getValue(RENDER)) {
 			VoxelShape turbine = Block.box(1.25, 2.5, 6, 14.75, 13.5, 10);
 			turbine = Shapes.or(turbine, Block.box(6, 2.5, 1.25, 10, 13.5, 14.75));
-			
+
 			turbine = Shapes.or(turbine, Block.box(2, 2.5, 4, 14, 13.5, 12));
 			turbine = Shapes.or(turbine, Block.box(4, 2.5, 2, 12, 13.5, 14));
 			turbine = Shapes.or(turbine, Block.box(3, 2.5, 3, 13, 13.5, 13));
-			
+
 			turbine = Shapes.or(turbine, Block.box(4.65, 0.75, 4.65, 11.35, 2.5, 11.35));
 			turbine = Shapes.or(turbine, Block.box(4.3, 13.5, 4.3, 11.7, 15, 11.7));
 			turbine = Shapes.or(turbine, Block.box(5.7, 15, 5.7, 10.3, 16, 10.3));

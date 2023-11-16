@@ -41,7 +41,7 @@ public class ScreenParticleInjector extends GenericScreen<ContainerParticleInjec
 			return NuclearTextUtils.gui("particleinjector.charge", ChatFormatter.getChatDisplayShort((int) (electro.getJoulesStored() / Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE * 100.0), DisplayUnit.PERCENTAGE));
 		}));
 		addComponent(new ScreenComponentElectricInfo(-AbstractScreenComponentInfo.SIZE + 1, 2).wattage(Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE));
-		
+
 		new InventoryIOWrapper(this, -AbstractScreenComponentInfo.SIZE + 1, AbstractScreenComponentInfo.SIZE + 2, 75, 82, 8, 72);
 	}
 

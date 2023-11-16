@@ -457,19 +457,19 @@ public class NuclearScienceVoxelShapeRegistry {
 				//
 				Block.box(5, 0, 0, 9, 16, 16)
 		//
-		).reduce((v1, v2) -> Shapes.or(v1, v2)).get();
+		).reduce(Shapes::or).get();
 
 		VoxelShapes.registerShape(NuclearScienceBlocks.blockParticleInjector, particleinjector, Direction.WEST);
-		
+
 		/* RADIOISOTROPIC GENERATOR */
-		
+
 		VoxelShape radiogenerator = Block.box(6, 0.25, 4, 10, 15.75, 12);
 		radiogenerator = Shapes.or(radiogenerator, Block.box(4, 0.25, 6, 12, 15.75, 10));
 		radiogenerator = Shapes.or(radiogenerator, Block.box(5, 0.25, 5, 11, 15.75, 11));
 
 		radiogenerator = Shapes.or(radiogenerator, Block.box(5.25, 0, 5.25, 10.75, 0.25, 10.75));
 		radiogenerator = Shapes.or(radiogenerator, Block.box(5.25, 15.75, 5.25, 10.75, 16, 10.75));
-		
+
 		VoxelShapes.registerShape(NuclearScienceBlocks.blockRadioisotopeGenerator, radiogenerator, Direction.EAST);
 
 		/* TELEPORTER */
@@ -591,8 +591,6 @@ public class NuclearScienceVoxelShapeRegistry {
 		).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
 
 		VoxelShapes.registerShape(NuclearScienceBlocks.blockTeleporter, teleporter, Direction.UP);
-		
-		
 
 	}
 

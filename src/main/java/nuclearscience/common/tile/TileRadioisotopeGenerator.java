@@ -99,7 +99,7 @@ public class TileRadioisotopeGenerator extends GenericTile {
 						//
 						Block.box(1, 1, 7.4087, 15, 15, 8.5913)
 				//
-				).reduce((v1, v2) -> Shapes.or(v1, v2)).get(),
+				).reduce(Shapes::or).get(),
 				//
 				Stream.of(
 						//
@@ -119,7 +119,7 @@ public class TileRadioisotopeGenerator extends GenericTile {
 						//
 						Block.box(4, 1.5, 7.20435, 12, 14.5, 8.79565)
 				//
-				).reduce((v1, v2) -> Shapes.or(v1, v2)).get(),
+				).reduce(Shapes::or).get(),
 				//
 				Stream.of(
 						//
@@ -139,7 +139,7 @@ public class TileRadioisotopeGenerator extends GenericTile {
 						//
 						Block.box(4, 15, 7.20435, 12, 15.75, 8.79565)
 				//
-				).reduce((v1, v2) -> Shapes.or(v1, v2)).get(),
+				).reduce(Shapes::or).get(),
 				//
 				Stream.of(
 						//
@@ -159,15 +159,15 @@ public class TileRadioisotopeGenerator extends GenericTile {
 						//
 						Block.box(4, 0.25, 7.20435, 12, 1, 8.79565)
 				//
-				).reduce((v1, v2) -> Shapes.or(v1, v2)).get(),
+				).reduce(Shapes::or).get(),
 				//
 				Block.box(5.25, 0, 5.25, 10.75, 0.75, 10.75),
 				//
 				Block.box(5.25, 15.25, 5.25, 10.75, 16, 10.75)
 		//
-		).reduce((v1, v2) -> Shapes.or(v1, v2)).get();
-		
-		//VoxelShapes.registerShape(NuclearScienceBlocks.blockRadioisotopeGenerator, shape, Direction.NORTH);
+		).reduce(Shapes::or).get();
+
+		// VoxelShapes.registerShape(NuclearScienceBlocks.blockRadioisotopeGenerator, shape, Direction.NORTH);
 
 	}
 

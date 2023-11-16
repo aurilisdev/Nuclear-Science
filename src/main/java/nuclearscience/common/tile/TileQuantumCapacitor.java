@@ -45,8 +45,7 @@ public class TileQuantumCapacitor extends GenericTile implements IEnergyStorage 
 		super(NuclearScienceBlockTypes.TILE_QUANTUMCAPACITOR.get(), pos, state);
 		addComponent(new ComponentTickable(this).tickServer(this::tickServer));
 		addComponent(new ComponentPacketHandler(this));
-		addComponent(new ComponentElectrodynamic(this, true, true).voltage(16 * ElectrodynamicsCapabilities.DEFAULT_VOLTAGE).setOutputDirections(Direction.UP, Direction.DOWN).setInputDirections(Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST).receivePower(this::receivePower).setJoules(this::setJoulesStored)
-				.getJoules(this::getJoulesStored).getConnectedLoad(this::getConnectedLoad));
+		addComponent(new ComponentElectrodynamic(this, true, true).voltage(16 * ElectrodynamicsCapabilities.DEFAULT_VOLTAGE).setOutputDirections(Direction.UP, Direction.DOWN).setInputDirections(Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST).receivePower(this::receivePower).setJoules(this::setJoulesStored).getJoules(this::getJoulesStored).getConnectedLoad(this::getConnectedLoad));
 		addComponent(new ComponentInventory(this));
 		addComponent(new ComponentContainerProvider("container.quantumcapacitor", this).createMenu((id, player) -> new ContainerQuantumCapacitor(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
 
@@ -155,7 +154,7 @@ public class TileQuantumCapacitor extends GenericTile implements IEnergyStorage 
 	public double getMaxJoulesStored() {
 		return DEFAULT_MAX_JOULES;
 	}
-	
+
 	public TransferPack getConnectedLoad(LoadProfile loadProfile, Direction dir) {
 		return TransferPack.joulesVoltage(getMaxJoulesStored() - getJoulesStored(), this.<ComponentElectrodynamic>getComponent(IComponentType.Electrodynamic).getVoltage());
 	}
