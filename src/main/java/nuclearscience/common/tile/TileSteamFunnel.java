@@ -6,8 +6,7 @@ import electrodynamics.api.gas.GasStack;
 import electrodynamics.common.network.utils.GasUtilities;
 import electrodynamics.common.tags.ElectrodynamicsTags;
 import electrodynamics.prefab.tile.GenericTile;
-import electrodynamics.prefab.tile.components.ComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentDirection;
+import electrodynamics.prefab.tile.components.IComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentGasHandlerSimple;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
@@ -31,14 +30,14 @@ public class TileSteamFunnel extends GenericTile implements ISteamReceiver {
 
 	public TileSteamFunnel(BlockPos worldPos, BlockState blockState) {
 		super(NuclearScienceBlockTypes.TILE_STEAMFUNNEL.get(), worldPos, blockState);
-		addComponent(new ComponentDirection(this));
+
 		addComponent(new ComponentTickable(this).tickServer(this::tickServer).tickClient(this::tickClient));
 		addComponent(new ComponentPacketHandler(this));
 		addComponent(new ComponentGasHandlerSimple(this, "storedsteam", INTERNAL_CAPACITY, MAX_TEMPERATURE, MAX_PRESSURE).setInputDirections(Direction.DOWN).setOutputDirections(Direction.UP).setValidFluidTags(ElectrodynamicsTags.Gases.STEAM));
 	}
 
 	private void tickServer(ComponentTickable tickable) {
-		ComponentGasHandlerSimple handler = getComponent(ComponentType.GasHandler);
+		ComponentGasHandlerSimple handler = getComponent(IComponentType.GasHandler);
 		if (handler.isEmpty()) {
 			return;
 		}
@@ -49,7 +48,7 @@ public class TileSteamFunnel extends GenericTile implements ISteamReceiver {
 	}
 
 	private void tickClient(ComponentTickable tickable) {
-		ComponentGasHandlerSimple handler = getComponent(ComponentType.GasHandler);
+		ComponentGasHandlerSimple handler = getComponent(IComponentType.GasHandler);
 		BlockPos above = getBlockPos().above();
 		if (!handler.isEmpty() && level.getBlockEntity(above) instanceof ISteamReceiver receiver && level.random.nextInt(3) == 0) {
 			double offsetFX = above.getX() + level.random.nextDouble() / 2.0 * (level.random.nextBoolean() ? -1 : 1);
@@ -65,7 +64,7 @@ public class TileSteamFunnel extends GenericTile implements ISteamReceiver {
 		if (level.isClientSide()) {
 			return 0;
 		}
-		return ((ComponentGasHandlerSimple) getComponent(ComponentType.GasHandler)).fill(new GasStack(ElectrodynamicsGases.STEAM.get(), amount, temperature, Gas.PRESSURE_AT_SEA_LEVEL), GasAction.EXECUTE);
+		return ((ComponentGasHandlerSimple) getComponent(IComponentType.GasHandler)).fill(new GasStack(ElectrodynamicsGases.STEAM.get(), amount, temperature, Gas.PRESSURE_AT_SEA_LEVEL), GasAction.EXECUTE);
 	}
 
 	@Override

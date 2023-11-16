@@ -13,7 +13,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import nuclearscience.common.inventory.container.ContainerFreezePlug;
 import nuclearscience.common.settings.Constants;
-import nuclearscience.common.tile.TileFreezePlug;
+import nuclearscience.common.tile.msreactor.TileFreezePlug;
 import nuclearscience.prefab.utils.NuclearTextUtils;
 
 @OnlyIn(Dist.CLIENT)

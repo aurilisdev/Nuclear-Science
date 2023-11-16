@@ -15,7 +15,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import nuclearscience.common.tile.TilePlasma;
+import nuclearscience.common.tile.fusionreactor.TilePlasma;
 import nuclearscience.registers.NuclearScienceDamageTypes;
 
 public class BlockPlasma extends GenericEntityBlock {

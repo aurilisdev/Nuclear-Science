@@ -5,7 +5,7 @@ import java.util.List;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import electrodynamics.client.render.tile.AbstractTileRenderer;
-import electrodynamics.prefab.tile.components.ComponentType;
+import electrodynamics.prefab.tile.components.IComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -25,7 +25,7 @@ public class RenderTeleporter extends AbstractTileRenderer<TileTeleporter> {
 		stack.pushPose();
 
 		stack.translate(0.5, 0.5, 0.5);
-		ComponentElectrodynamic electro = tileEntityIn.getComponent(ComponentType.Electrodynamic);
+		ComponentElectrodynamic electro = tileEntityIn.getComponent(IComponentType.Electrodynamic);
 
 		if (electro.getJoulesStored() > 0) {
 			AABB bb = new AABB(tileEntityIn.getBlockPos(), tileEntityIn.getBlockPos().offset(1, 2, 1));

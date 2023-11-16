@@ -4,6 +4,8 @@ import electrodynamics.prefab.screen.GenericScreen;
 import electrodynamics.prefab.screen.component.types.ScreenComponentGeneric;
 import electrodynamics.prefab.screen.component.types.ScreenComponentMultiLabel;
 import electrodynamics.prefab.screen.component.types.ScreenComponentSimpleLabel;
+import electrodynamics.prefab.screen.component.types.wrapper.InventoryIOWrapper;
+import electrodynamics.prefab.screen.component.utils.AbstractScreenComponentInfo;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -11,7 +13,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import nuclearscience.References;
 import nuclearscience.common.inventory.container.ContainerReactorCore;
-import nuclearscience.common.tile.TileFissionReactorCore;
+import nuclearscience.common.tile.fissionreactor.TileFissionReactorCore;
 import nuclearscience.prefab.screen.component.NuclearArrows;
 import nuclearscience.prefab.utils.NuclearTextUtils;
 
@@ -39,6 +41,7 @@ public class ScreenFissionReactorCore extends GenericScreen<ContainerReactorCore
 				graphics.drawString(font, NuclearTextUtils.gui("fissionreactor.warning"), titleLabelX, titleLabelY + 65, 16711680, false);
 			}
 		}));
+		new InventoryIOWrapper(this, -AbstractScreenComponentInfo.SIZE + 1, 2, 75, 82 + 10, 8, 72 + 10);
 
 	}
 

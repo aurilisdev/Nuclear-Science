@@ -19,9 +19,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import nuclearscience.common.tile.TileTurbine;
 
 public class BlockTurbine extends GenericEntityBlockWaterloggable {
+
 	public static final BooleanProperty RENDER = BooleanProperty.create("render");
 
 	public BlockTurbine() {
@@ -80,7 +84,7 @@ public class BlockTurbine extends GenericEntityBlockWaterloggable {
 		if (!(player.getItemInHand(handIn).getItem() instanceof IWrenchItem)) {
 			return InteractionResult.CONSUME;
 		}
-		return InteractionResult.FAIL;
+		return super.use(state, worldIn, pos, player, handIn, hit);
 	}
 
 	@Override
@@ -92,5 +96,25 @@ public class BlockTurbine extends GenericEntityBlockWaterloggable {
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		super.createBlockStateDefinition(builder);
 		builder.add(RENDER);
+	}
+
+	@Override
+	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+		if(state.getValue(RENDER)) {
+			VoxelShape turbine = Block.box(1.25, 2.5, 6, 14.75, 13.5, 10);
+			turbine = Shapes.or(turbine, Block.box(6, 2.5, 1.25, 10, 13.5, 14.75));
+			
+			turbine = Shapes.or(turbine, Block.box(2, 2.5, 4, 14, 13.5, 12));
+			turbine = Shapes.or(turbine, Block.box(4, 2.5, 2, 12, 13.5, 14));
+			turbine = Shapes.or(turbine, Block.box(3, 2.5, 3, 13, 13.5, 13));
+			
+			turbine = Shapes.or(turbine, Block.box(4.65, 0.75, 4.65, 11.35, 2.5, 11.35));
+			turbine = Shapes.or(turbine, Block.box(4.3, 13.5, 4.3, 11.7, 15, 11.7));
+			turbine = Shapes.or(turbine, Block.box(5.7, 15, 5.7, 10.3, 16, 10.3));
+
+			return turbine;
+		}
+
+		return Shapes.block();
 	}
 }

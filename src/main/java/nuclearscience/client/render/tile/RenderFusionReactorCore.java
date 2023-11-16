@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import nuclearscience.common.tile.TileFusionReactorCore;
+import nuclearscience.common.tile.fusionreactor.TileFusionReactorCore;
 import nuclearscience.prefab.utils.NuclearTextUtils;
 
 public class RenderFusionReactorCore extends AbstractTileRenderer<TileFusionReactorCore> {

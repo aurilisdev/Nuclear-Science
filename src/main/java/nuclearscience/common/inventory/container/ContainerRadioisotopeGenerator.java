@@ -2,6 +2,7 @@ package nuclearscience.common.inventory.container;
 
 import electrodynamics.prefab.inventory.container.GenericContainerBlockEntity;
 import electrodynamics.prefab.inventory.container.slot.item.type.SlotRestricted;
+import electrodynamics.prefab.utilities.math.Color;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -29,6 +30,6 @@ public class ContainerRadioisotopeGenerator extends GenericContainerBlockEntity<
 			public boolean mayPlace(ItemStack stack) {
 				return !RadiationRegister.get(stack.getItem()).isNull();
 			}
-		});
+		}.setIOColor(new Color(0, 240, 255, 255)));
 	}
 }

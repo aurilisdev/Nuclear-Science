@@ -2,9 +2,8 @@ package nuclearscience.common.tile;
 
 import electrodynamics.api.capability.ElectrodynamicsCapabilities;
 import electrodynamics.prefab.tile.GenericTile;
-import electrodynamics.prefab.tile.components.ComponentType;
+import electrodynamics.prefab.tile.components.IComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
-import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
 import electrodynamics.prefab.tile.components.type.ComponentInventory;
@@ -27,13 +26,12 @@ public class TileRadioactiveProcessor extends GenericTile {
 	public TileRadioactiveProcessor(BlockPos pos, BlockState state) {
 		super(NuclearScienceBlockTypes.TILE_RADIOACTIVEPROCESSOR.get(), pos, state);
 		addComponent(new ComponentTickable(this));
-		addComponent(new ComponentDirection(this));
 		addComponent(new ComponentPacketHandler(this));
-		addComponent(new ComponentElectrodynamic(this).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 4).relativeInput(Direction.NORTH));
+		addComponent(new ComponentElectrodynamic(this, false, true).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 4).setInputDirections(Direction.NORTH));
 		addComponent(new ComponentFluidHandlerMulti(this).setInputTanks(1, MAX_TANK_CAPACITY).setInputDirections(Direction.UP).setRecipeType(NuclearScienceRecipeInit.RADIOACTIVE_PROCESSOR_TYPE.get()));
-		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().processors(1, 1, 1, 0).bucketInputs(1).upgrades(3)).validUpgrades(ContainerRadioactiveProcessor.VALID_UPGRADES).valid(machineValidator()).faceSlots(Direction.UP, 0).faceSlots(Direction.DOWN, 1).slotFaces(2, Direction.SOUTH, Direction.NORTH, Direction.EAST, Direction.WEST));
+		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().processors(1, 1, 1, 0).bucketInputs(1).upgrades(3)).validUpgrades(ContainerRadioactiveProcessor.VALID_UPGRADES).valid(machineValidator()).setDirectionsBySlot(0, Direction.EAST).setDirectionsBySlot(1, Direction.WEST, Direction.DOWN));
 		addComponent(new ComponentProcessor(this).canProcess(this::shouldProcessRecipe).process(component -> component.processFluidItem2ItemRecipe(component)));
-		addComponent(new ComponentContainerProvider("container.radioactiveprocessor", this).createMenu((id, player) -> new ContainerRadioactiveProcessor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
+		addComponent(new ComponentContainerProvider("container.radioactiveprocessor", this).createMenu((id, player) -> new ContainerRadioactiveProcessor(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
 	}
 
 	private boolean shouldProcessRecipe(ComponentProcessor component) {
@@ -47,7 +45,7 @@ public class TileRadioactiveProcessor extends GenericTile {
 
 	@Override
 	public int getComparatorSignal() {
-		return this.<ComponentProcessor>getComponent(ComponentType.Processor).isActive() ? 15 : 0;
+		return this.<ComponentProcessor>getComponent(IComponentType.Processor).isActive() ? 15 : 0;
 	}
 
 }

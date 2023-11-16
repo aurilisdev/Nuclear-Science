@@ -4,6 +4,7 @@ import electrodynamics.prefab.inventory.container.GenericContainerBlockEntity;
 import electrodynamics.prefab.inventory.container.slot.item.SlotGeneric;
 import electrodynamics.prefab.inventory.container.slot.item.type.SlotRestricted;
 import electrodynamics.prefab.screen.component.types.ScreenComponentSlot.SlotType;
+import electrodynamics.prefab.utilities.math.Color;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -28,8 +29,8 @@ public class ContainerParticleInjector extends GenericContainerBlockEntity<TileP
 	public void addInventorySlots(Container inv, Inventory playerinv) {
 		playerInvOffset += 10;
 
-		addSlot(new SlotGeneric(inv, nextIndex(), 98, 22));
-		addSlot(new SlotRestricted(SlotType.NORMAL, NuclearIconTypes.FUEL_CELL_DARK, inv, nextIndex(), 98, 58).setRestriction(NuclearScienceItems.ITEM_CELLELECTROMAGNETIC.get()));
-		addSlot(new SlotRestricted(SlotType.NORMAL, NuclearIconTypes.FUEL_CELL_DARK, inv, nextIndex(), 133, 40));
+		addSlot(new SlotGeneric(inv, nextIndex(), 98, 22).setIOColor(new Color(0, 240, 255, 255)));
+		addSlot(new SlotRestricted(SlotType.NORMAL, NuclearIconTypes.FUEL_CELL_DARK, inv, nextIndex(), 98, 58).setRestriction(NuclearScienceItems.ITEM_CELLELECTROMAGNETIC.get()).setIOColor(new Color(0, 255, 30, 255)));
+		addSlot(new SlotRestricted(SlotType.NORMAL, NuclearIconTypes.FUEL_CELL_DARK, inv, nextIndex(), 133, 40).setIOColor(new Color(255, 0, 0, 255)));
 	}
 }

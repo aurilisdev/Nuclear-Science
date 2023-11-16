@@ -16,9 +16,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import nuclearscience.api.network.moltensalt.IMoltenSaltPipe;
 import nuclearscience.common.block.subtype.SubtypeMoltenSaltPipe;
-import nuclearscience.common.tile.TileHeatExchanger;
-import nuclearscience.common.tile.TileMSReactorCore;
-import nuclearscience.common.tile.network.TileMoltenSaltPipe;
+import nuclearscience.common.tile.msreactor.TileHeatExchanger;
+import nuclearscience.common.tile.msreactor.TileMSReactorCore;
+import nuclearscience.common.tile.saltpipe.TileMoltenSaltPipe;
 
 public class BlockMoltenSaltPipe extends AbstractRefreshingConnectBlock {
 

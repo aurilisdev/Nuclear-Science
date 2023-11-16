@@ -5,6 +5,7 @@ import electrodynamics.prefab.screen.GenericScreen;
 import electrodynamics.prefab.screen.component.types.ScreenComponentProgress;
 import electrodynamics.prefab.screen.component.types.ScreenComponentProgress.ProgressBars;
 import electrodynamics.prefab.screen.component.types.guitab.ScreenComponentElectricInfo;
+import electrodynamics.prefab.screen.component.types.wrapper.InventoryIOWrapper;
 import electrodynamics.prefab.screen.component.utils.AbstractScreenComponentInfo;
 import electrodynamics.prefab.utilities.ElectroTextUtils;
 import net.minecraft.ChatFormatting;
@@ -15,7 +16,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import nuclearscience.common.inventory.container.ContainerMoltenSaltSupplier;
 import nuclearscience.common.settings.Constants;
-import nuclearscience.common.tile.TileMoltenSaltSupplier;
+import nuclearscience.common.tile.msreactor.TileMoltenSaltSupplier;
 import nuclearscience.prefab.utils.NuclearTextUtils;
 
 @OnlyIn(Dist.CLIENT)
@@ -44,15 +45,6 @@ public class ScreenMoltenSaltSupplier extends GenericScreen<ContainerMoltenSaltS
 
 			}
 		});
-		/*
-		 * addComponent(new ScreenComponentMultiLabel(0, 0, stack -> { Component label = NuclearTextUtils.gui("saltsupplier.waste");
-		 * 
-		 * int width = font.width(label) / 2;
-		 * 
-		 * font.draw(stack, label, 88 - width, 23, 0);
-		 * 
-		 * 
-		 * }));
-		 */
+		new InventoryIOWrapper(this, -AbstractScreenComponentInfo.SIZE + 1, AbstractScreenComponentInfo.SIZE + 2, 75, 82, 8, 72);
 	}
 }

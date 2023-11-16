@@ -7,7 +7,7 @@ import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import nuclearscience.common.tile.TileFissionReactorCore;
+import nuclearscience.common.tile.fissionreactor.TileFissionReactorCore;
 
 public class BlockFissionReactorCore extends GenericMachineBlock {
 	public BlockFissionReactorCore() {
