@@ -2,6 +2,7 @@ package nuclearscience.common.tile;
 
 import java.util.stream.Stream;
 
+import electrodynamics.common.block.voxelshapes.VoxelShapes;
 import electrodynamics.prefab.tile.GenericTile;
 import electrodynamics.prefab.tile.components.IComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
@@ -27,6 +28,7 @@ import nuclearscience.api.radiation.RadiationSystem;
 import nuclearscience.common.inventory.container.ContainerRadioisotopeGenerator;
 import nuclearscience.common.settings.Constants;
 import nuclearscience.registers.NuclearScienceBlockTypes;
+import nuclearscience.registers.NuclearScienceBlocks;
 
 public class TileRadioisotopeGenerator extends GenericTile {
 
@@ -167,7 +169,7 @@ public class TileRadioisotopeGenerator extends GenericTile {
 		//
 		).reduce(Shapes::or).get();
 
-		// VoxelShapes.registerShape(NuclearScienceBlocks.blockRadioisotopeGenerator, shape, Direction.NORTH);
+		VoxelShapes.registerShape(NuclearScienceBlocks.blockRadioisotopeGenerator, shape, Direction.NORTH);
 
 	}
 

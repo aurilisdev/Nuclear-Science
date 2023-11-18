@@ -1,0 +1,4 @@
+* update to new Electrodynamics formatting
+* fix bug with Quantum Capacitor not charging properly
+* fix lag spike caused by VoxelShapes when placed in world
+* polish VoxelShapes
