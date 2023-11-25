@@ -17,7 +17,8 @@ public enum NuclearJeiTextures implements ITexture {
 	PARTICLEACCELERATOR_DMARROWOFF_RIGHT(34, 72, 0, 0, 34, 72, new ResourceLocation(References.ID + ":textures/screen/jei/particleaccelerator_dmarrowoff_right.png")),
 	PARTICLEACCELERATOR_DMARROWON_LEFT(34, 72, 0, 0, 34, 72, new ResourceLocation(References.ID + ":textures/screen/jei/particleaccelerator_dmarrowon_left.png")),
 	PARTICLEACCELERATOR_DMARROWON_RIGHT(34, 72, 0, 0, 34, 72, new ResourceLocation(References.ID + ":textures/screen/jei/particleaccelerator_dmarrowon_right.png")),
-	PARTICLEACCELERATOR_DMATOM(16, 16, 0, 0, 16, 16, new ResourceLocation(References.ID + ":textures/screen/jei/particleaccelerator_dmatom.png"));
+	PARTICLEACCELERATOR_DMATOM(16, 16, 0, 0, 16, 16, new ResourceLocation(References.ID + ":textures/screen/jei/particleaccelerator_dmatom.png")),
+	PARTICLEACCELERATOR_DMBLACKHOLE(77, 76, 0, 0, 77, 76, new ResourceLocation(References.ID + ":textures/custom/particleaccelerator_dmblackhole.png"));
 
 	private final int textureWidth;
 	private final int textureHeight;

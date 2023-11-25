@@ -3,14 +3,11 @@ package nuclearscience.compatibility.jei.recipecategories.psuedo.specificmachine
 import java.util.Arrays;
 import java.util.List;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.platform.GlStateManager.DestFactor;
-import com.mojang.blaze3d.platform.GlStateManager.SourceFactor;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import electrodynamics.api.electricity.formatting.ChatFormatter;
 import electrodynamics.api.electricity.formatting.DisplayUnit;
+import electrodynamics.api.screen.ITexture;
 import electrodynamics.compatibility.jei.recipecategories.utils.AbstractRecipeCategory;
 import electrodynamics.compatibility.jei.recipecategories.utils.psuedorecipes.types.PsuedoItem2ItemRecipe;
 import electrodynamics.compatibility.jei.utils.gui.ScreenObject;
@@ -27,10 +24,8 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.world.item.ItemStack;
 import nuclearscience.References;
-import nuclearscience.client.ClientRegister;
 import nuclearscience.common.settings.Constants;
 import nuclearscience.compatibility.jei.utils.NuclearJeiTextures;
 import nuclearscience.prefab.utils.NuclearTextUtils;
@@ -85,18 +80,13 @@ public class ParticleAcceleratorDarkMatterRecipeCategory extends AbstractRecipeC
 
 		stack.pushPose();
 
-		//TODO fix
-		TextureAtlasSprite blackHole = ClientRegister.CACHED_TEXTUREATLASSPRITES.get(ClientRegister.TEXTURE_JEIBLACKHOLE);
-
-		RenderSystem.enableBlend();
+		ITexture texture = NuclearJeiTextures.PARTICLEACCELERATOR_DMBLACKHOLE;
+		
+		RenderingUtils.bindTexture(texture.getLocation());
+		
+		Screen.blit(stack, 28, 28, texture.textureU(), texture.textureV(), texture.textureWidth(), texture.textureHeight(), texture.imageWidth(), texture.imageHeight());
 
 		RenderingUtils.resetShaderColor();
-
-		RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-		
-		Screen.blit(stack, 28, 28, 0, 77, 76, blackHole);
-
-		RenderSystem.disableBlend();
 
 		stack.popPose();
 
