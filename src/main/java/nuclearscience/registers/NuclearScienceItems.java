@@ -96,15 +96,15 @@ public class NuclearScienceItems {
 	public static final RegistryObject<Item> ITEM_PLUTONIUM239 = ITEMS.register("plutonium239", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
 	public static final RegistryObject<Item> ITEM_POLONIUM210 = ITEMS.register("polonium210", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
 	public static final RegistryObject<Item> ITEM_POLONIUM210_CHUNK = ITEMS.register("polonium210chunk", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
-	public static final RegistryObject<Item> ITEM_ACTINIUM225 = ITEMS.register("actinium225", () -> new ItemRadioactive(new Item.Properties()));
+	public static final RegistryObject<Item> ITEM_ACTINIUM225 = ITEMS.register("actinium225", () -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB)));
 	public static final RegistryObject<Item> ITEM_LIFHT4PUF3 = ITEMS.register("lifthf4uf4", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
 	public static final RegistryObject<Item> ITEM_FLINAK = ITEMS.register("flinak", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
 	public static final RegistryObject<Item> ITEM_YELLOWCAKE = ITEMS.register("yellowcake", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
 	public static final RegistryObject<Item> ITEM_FISSILEDUST = ITEMS.register("fissiledust", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
-	public static final RegistryObject<Item> ITEM_FISSILE_SALT = ITEMS.register("fissilesalt", () -> new ItemRadioactive(new Item.Properties()));
+	public static final RegistryObject<Item> ITEM_FISSILE_SALT = ITEMS.register("fissilesalt", () -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB)));
 	public static final RegistryObject<Item> ITEM_PLUTONIUMOXIDE = ITEMS.register("plutoniumoxide", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
 	public static final RegistryObject<Item> ITEM_THORIANITEDUST = ITEMS.register("thorianitedust", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
-	public static final RegistryObject<Item> ITEM_ACTINIUMOXIDE = ITEMS.register("actiniumoxide", () -> new ItemRadioactive(new Item.Properties()));
+	public static final RegistryObject<Item> ITEM_ACTINIUMOXIDE = ITEMS.register("actiniumoxide", () -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB)));
 
 	public static final RegistryObject<Item> ITEM_CELLEMPTY = ITEMS.register("cellempty", supplier(() -> new Item(new Item.Properties().tab(References.NUCLEARTAB))));
 	public static final RegistryObject<Item> ITEM_CELLDEUTERIUM = ITEMS.register("celldeuterium", supplier(() -> new Item(new Item.Properties().tab(References.NUCLEARTAB))));
