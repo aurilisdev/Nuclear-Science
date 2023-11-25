@@ -8,7 +8,9 @@ import javax.annotation.Nullable;
 
 import com.google.common.collect.Maps;
 
-import electrodynamics.common.block.connect.EnumConnectType;
+import electrodynamics.api.network.cable.IRefreshableCable;
+import electrodynamics.common.block.connect.util.AbstractRefreshingConnectBlock;
+import electrodynamics.common.block.connect.util.EnumConnectType;
 import electrodynamics.prefab.block.GenericEntityBlockWaterloggable;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -20,6 +22,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -34,56 +37,20 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import nuclearscience.api.network.moltensalt.IMoltenSaltPipe;
 import nuclearscience.common.block.subtype.SubtypeMoltenSaltPipe;
-import nuclearscience.common.tile.TileHeatExchanger;
-import nuclearscience.common.tile.TileMSRReactorCore;
-import nuclearscience.common.tile.network.TileMoltenSaltPipe;
+import nuclearscience.common.tile.msreactor.TileHeatExchanger;
+import nuclearscience.common.tile.msreactor.TileMSReactorCore;
+import nuclearscience.common.tile.saltpipe.TileMoltenSaltPipe;
 
-public class BlockMoltenSaltPipe extends GenericEntityBlockWaterloggable {
-
-	public static final Map<Direction, EnumProperty<EnumConnectType>> FACING_TO_PROPERTY_MAP = Util.make(Maps.newEnumMap(Direction.class), p -> {
-		p.put(Direction.NORTH, EnumConnectType.NORTH);
-		p.put(Direction.EAST, EnumConnectType.EAST);
-		p.put(Direction.SOUTH, EnumConnectType.SOUTH);
-		p.put(Direction.WEST, EnumConnectType.WEST);
-		p.put(Direction.UP, EnumConnectType.UP);
-		p.put(Direction.DOWN, EnumConnectType.DOWN);
-	});
+public class BlockMoltenSaltPipe extends AbstractRefreshingConnectBlock {
 
 	public static final HashSet<Block> PIPESET = new HashSet<>();
-
-	protected final VoxelShape cube;
-	protected final VoxelShape cubeup;
-	protected final VoxelShape cubedown;
-	protected final VoxelShape cubenorth;
-	protected final VoxelShape cubesouth;
-	protected final VoxelShape cubewest;
-	protected final VoxelShape cubeeast;
-
-	protected HashMap<HashSet<Direction>, VoxelShape> shapestates = new HashMap<>();
-	protected boolean locked = false;
 
 	public final SubtypeMoltenSaltPipe pipe;
 
 	public BlockMoltenSaltPipe(SubtypeMoltenSaltPipe pipe) {
-		super(Properties.of(Material.METAL).sound(SoundType.METAL).strength(0.15f).dynamicShape());
+		super(Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.METAL).strength(0.15f).dynamicShape(), 3);
 		this.pipe = pipe;
-		double w = 3;
-		double sm = 8 - w;
-		double lg = 8 + w;
-		cube = Block.box(sm, sm, sm, lg, lg, lg);
-		cubeup = Block.box(sm, sm, sm, lg, 16, lg);
-		cubedown = Block.box(sm, 0, sm, lg, lg, lg);
-		cubenorth = Block.box(sm, sm, 0, lg, lg, lg);
-		cubesouth = Block.box(sm, sm, sm, lg, lg, 16);
-		cubewest = Block.box(0, sm, sm, lg, lg, lg);
-		cubeeast = Block.box(sm, sm, sm, 16, lg, lg);
 		PIPESET.add(this);
-	}
-
-	@Override
-	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-		super.createBlockStateDefinition(builder);
-		builder.add(EnumConnectType.UP, EnumConnectType.DOWN, EnumConnectType.NORTH, EnumConnectType.EAST, EnumConnectType.SOUTH, EnumConnectType.WEST);
 	}
 
 	@Override
@@ -92,122 +59,31 @@ public class BlockMoltenSaltPipe extends GenericEntityBlockWaterloggable {
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-		VoxelShape shape = cube;
-		HashSet<Direction> checked = new HashSet<>();
-		if (!EnumConnectType.NONE.equals(state.getValue(EnumConnectType.UP))) {
-			checked.add(Direction.UP);
-		}
-		if (!EnumConnectType.NONE.equals(state.getValue(EnumConnectType.DOWN))) {
-			checked.add(Direction.DOWN);
-		}
-		if (!EnumConnectType.NONE.equals(state.getValue(EnumConnectType.WEST))) {
-			checked.add(Direction.WEST);
-		}
-		if (!EnumConnectType.NONE.equals(state.getValue(EnumConnectType.EAST))) {
-			checked.add(Direction.EAST);
-		}
-		if (!EnumConnectType.NONE.equals(state.getValue(EnumConnectType.NORTH))) {
-			checked.add(Direction.NORTH);
-		}
-		if (!EnumConnectType.NONE.equals(state.getValue(EnumConnectType.SOUTH))) {
-			checked.add(Direction.SOUTH);
-		}
-		locked = true;
-		if (shapestates.containsKey(checked)) {
-			locked = false;
-			return shapestates.get(checked);
-		}
-		locked = false;
-		for (Direction dir : checked) {
-			switch (dir) {
-			case DOWN:
-				shape = Shapes.join(shape, cubedown, BooleanOp.OR);
-				break;
-			case EAST:
-				shape = Shapes.join(shape, cubeeast, BooleanOp.OR);
-				break;
-			case NORTH:
-				shape = Shapes.join(shape, cubenorth, BooleanOp.OR);
-				break;
-			case SOUTH:
-				shape = Shapes.join(shape, cubesouth, BooleanOp.OR);
-				break;
-			case UP:
-				shape = Shapes.join(shape, cubeup, BooleanOp.OR);
-				break;
-			case WEST:
-				shape = Shapes.join(shape, cubewest, BooleanOp.OR);
-				break;
-			default:
-				break;
-			}
-		}
-		while (locked) {
-			System.out.println("Wire bounding boxes locked. This should never happen!");
-		}
-		shapestates.put(checked, shape);
-		if (shape == null) {
-			return Shapes.empty();
-		}
-		return shape;
-	}
-
-	@Override
-	public void setPlacedBy(Level worldIn, BlockPos pos, BlockState stateIn, @Nullable LivingEntity placer, ItemStack stack) {
-		BlockState acc = stateIn;
-		for (Direction d : Direction.values()) {
-			BlockEntity facingTile = worldIn.getBlockEntity(pos.relative(d));
-			if (facingTile instanceof IMoltenSaltPipe) {
-				acc = acc.setValue(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.WIRE);
-			} else if (facingTile instanceof TileMSRReactorCore && d.getOpposite() == Direction.UP || facingTile instanceof TileHeatExchanger && d.getOpposite() == Direction.DOWN) {
-				acc = acc.setValue(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.INVENTORY);
-			}
-		}
-		worldIn.setBlockAndUpdate(pos, acc);
-	}
-
-	@Override
-	public void onPlace(BlockState state, Level worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
-		super.onPlace(state, worldIn, pos, oldState, isMoving);
-		if (!worldIn.isClientSide) {
-			BlockEntity tile = worldIn.getBlockEntity(pos);
-			if (tile instanceof IMoltenSaltPipe s) {
-				s.refreshNetwork();
-			}
-		}
-	}
-
-	@Override
-	public void onNeighborChange(BlockState state, LevelReader world, BlockPos pos, BlockPos neighbor) {
-		super.onNeighborChange(state, world, pos, neighbor);
-		if (!world.isClientSide()) {
-			BlockEntity tile = world.getBlockEntity(pos);
-			if (tile instanceof IMoltenSaltPipe s) {
-				s.refreshNetworkIfChange();
-			}
-		}
-	}
-
-	@Override
-	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
-		if (stateIn.getValue(BlockStateProperties.WATERLOGGED) == Boolean.TRUE) {
-			world.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
-		}
-		EnumProperty<EnumConnectType> property = FACING_TO_PROPERTY_MAP.get(facing);
-		BlockEntity tile = world.getBlockEntity(facingPos);
-		if (tile instanceof IMoltenSaltPipe) {
-			return stateIn.setValue(property, EnumConnectType.WIRE);
-		} else if (tile instanceof TileMSRReactorCore && facing.getOpposite() == Direction.UP || tile instanceof TileHeatExchanger && facing.getOpposite() == Direction.DOWN) {
-			return stateIn.setValue(property, EnumConnectType.INVENTORY);
-		} else {
-			return stateIn.setValue(property, EnumConnectType.NONE);
-		}
-	}
-
-	@Override
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
 		return new TileMoltenSaltPipe(pos, state);
+	}
+
+	@Override
+	public IRefreshableCable getCableIfValid(BlockEntity tile) {
+		if (tile instanceof IMoltenSaltPipe pipe) {
+			return pipe;
+		}
+		return null;
+	}
+
+	@Override
+	public BlockState refreshConnections(BlockState otherState, BlockEntity tile, BlockState state, Direction dir) {
+		EnumProperty<EnumConnectType> property = FACING_TO_PROPERTY_MAP.get(dir);
+		if (tile instanceof IMoltenSaltPipe) {
+			return state.setValue(property, EnumConnectType.WIRE);
+		}
+		if (tile instanceof TileMSReactorCore && dir.getOpposite() == Direction.UP || tile instanceof TileHeatExchanger && dir.getOpposite() == Direction.DOWN) {
+			return state.setValue(property, EnumConnectType.INVENTORY);
+		}
+		if (state.hasProperty(property)) {
+			return state.setValue(property, EnumConnectType.NONE);
+		}
+		return state;
 	}
 
 }

@@ -16,7 +16,7 @@ import static nuclearscience.registers.NuclearScienceBlocks.blockHeatExchanger;
 import static nuclearscience.registers.NuclearScienceBlocks.blockMSRFuelPreProcessor;
 import static nuclearscience.registers.NuclearScienceBlocks.blockMeltedReactor;
 import static nuclearscience.registers.NuclearScienceBlocks.blockMoltenSaltSupplier;
-import static nuclearscience.registers.NuclearScienceBlocks.blockMsrReactorCore;
+import static nuclearscience.registers.NuclearScienceBlocks.blockMSReactorCore;
 import static nuclearscience.registers.NuclearScienceBlocks.blockNuclearBoiler;
 import static nuclearscience.registers.NuclearScienceBlocks.blockParticleInjector;
 import static nuclearscience.registers.NuclearScienceBlocks.blockPlasma;
@@ -24,7 +24,7 @@ import static nuclearscience.registers.NuclearScienceBlocks.blockQuantumCapacito
 import static nuclearscience.registers.NuclearScienceBlocks.blockRadioactiveProcessor;
 import static nuclearscience.registers.NuclearScienceBlocks.blockRadioactiveSoil;
 import static nuclearscience.registers.NuclearScienceBlocks.blockRadioisotopeGenerator;
-import static nuclearscience.registers.NuclearScienceBlocks.blockReactorCore;
+import static nuclearscience.registers.NuclearScienceBlocks.blockFissionReactorCore;
 import static nuclearscience.registers.NuclearScienceBlocks.blockSiren;
 import static nuclearscience.registers.NuclearScienceBlocks.blockTeleporter;
 import static nuclearscience.registers.NuclearScienceBlocks.blockTurbine;
@@ -64,7 +64,7 @@ public class NuclearScienceItems {
 		ITEMS.register("radioisotopegenerator", supplier(() -> new BlockItemDescriptable(() -> blockRadioisotopeGenerator, new Item.Properties().tab(References.NUCLEARTAB))));
 		ITEMS.register("freezeplug", supplier(() -> new BlockItemDescriptable(() -> blockFreezePlug, new Item.Properties().tab(References.NUCLEARTAB))));
 		ITEMS.register("turbine", supplier(() -> new BlockItemDescriptable(() -> blockTurbine, new Item.Properties().tab(References.NUCLEARTAB))));
-		ITEMS.register("reactorcore", supplier(() -> new BlockItemDescriptable(() -> blockReactorCore, new Item.Properties().tab(References.NUCLEARTAB))));
+		ITEMS.register("reactorcore", supplier(() -> new BlockItemDescriptable(() -> blockFissionReactorCore, new Item.Properties().tab(References.NUCLEARTAB))));
 		ITEMS.register("fuelreprocessor", supplier(() -> new BlockItemDescriptable(() -> blockFuelReprocessor, new Item.Properties().tab(References.NUCLEARTAB))));
 		ITEMS.register("radioactiveprocessor", supplier(() -> new BlockItemDescriptable(() -> blockRadioactiveProcessor, new Item.Properties().tab(References.NUCLEARTAB))));
 		ITEMS.register("msrfuelpreprocessor", supplier(() -> new BlockItemDescriptable(() -> blockMSRFuelPreProcessor, new Item.Properties().tab(References.NUCLEARTAB))));
@@ -79,7 +79,7 @@ public class NuclearScienceItems {
 		ITEMS.register("quantumcapacitor", supplier(() -> new BlockItemDescriptable(() -> blockQuantumCapacitor, new Item.Properties().tab(References.NUCLEARTAB))));
 		ITEMS.register("teleporter", supplier(() -> new BlockItemDescriptable(() -> blockTeleporter, new Item.Properties().tab(References.NUCLEARTAB))));
 		ITEMS.register("controlrodassembly", supplier(() -> new BlockItemDescriptable(() -> blockControlRodAssembly, new Item.Properties().tab(References.NUCLEARTAB))));
-		ITEMS.register("msrreactorcore", supplier(() -> new BlockItemDescriptable(() -> blockMsrReactorCore, new Item.Properties().tab(References.NUCLEARTAB))));
+		ITEMS.register("msrreactorcore", supplier(() -> new BlockItemDescriptable(() -> blockMSReactorCore, new Item.Properties().tab(References.NUCLEARTAB))));
 		ITEMS.register("heatexchanger", supplier(() -> new BlockItemDescriptable(() -> blockHeatExchanger, new Item.Properties().tab(References.NUCLEARTAB))));
 		ITEMS.register("moltensaltsupplier", supplier(() -> new BlockItemDescriptable(() -> blockMoltenSaltSupplier, new Item.Properties().tab(References.NUCLEARTAB))));
 		ITEMS.register("siren", supplier(() -> new BlockItemDescriptable(() -> blockSiren, new Item.Properties().tab(References.NUCLEARTAB))));
@@ -96,12 +96,15 @@ public class NuclearScienceItems {
 	public static final RegistryObject<Item> ITEM_PLUTONIUM239 = ITEMS.register("plutonium239", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
 	public static final RegistryObject<Item> ITEM_POLONIUM210 = ITEMS.register("polonium210", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
 	public static final RegistryObject<Item> ITEM_POLONIUM210_CHUNK = ITEMS.register("polonium210chunk", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
+	public static final RegistryObject<Item> ITEM_ACTINIUM225 = ITEMS.register("actinium225", () -> new ItemRadioactive(new Item.Properties()));
 	public static final RegistryObject<Item> ITEM_LIFHT4PUF3 = ITEMS.register("lifthf4uf4", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
 	public static final RegistryObject<Item> ITEM_FLINAK = ITEMS.register("flinak", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
 	public static final RegistryObject<Item> ITEM_YELLOWCAKE = ITEMS.register("yellowcake", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
 	public static final RegistryObject<Item> ITEM_FISSILEDUST = ITEMS.register("fissiledust", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
+	public static final RegistryObject<Item> ITEM_FISSILE_SALT = ITEMS.register("fissilesalt", () -> new ItemRadioactive(new Item.Properties()));
 	public static final RegistryObject<Item> ITEM_PLUTONIUMOXIDE = ITEMS.register("plutoniumoxide", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
 	public static final RegistryObject<Item> ITEM_THORIANITEDUST = ITEMS.register("thorianitedust", supplier(() -> new ItemRadioactive(new Item.Properties().tab(References.NUCLEARTAB))));
+	public static final RegistryObject<Item> ITEM_ACTINIUMOXIDE = ITEMS.register("actiniumoxide", () -> new ItemRadioactive(new Item.Properties()));
 
 	public static final RegistryObject<Item> ITEM_CELLEMPTY = ITEMS.register("cellempty", supplier(() -> new Item(new Item.Properties().tab(References.NUCLEARTAB))));
 	public static final RegistryObject<Item> ITEM_CELLDEUTERIUM = ITEMS.register("celldeuterium", supplier(() -> new Item(new Item.Properties().tab(References.NUCLEARTAB))));

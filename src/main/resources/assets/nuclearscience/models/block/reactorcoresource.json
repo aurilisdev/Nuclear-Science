@@ -3,7 +3,8 @@
 	"parent": "block/cube_all",
 	"texture_size": [64, 64],
 	"textures": {
-		"0": "nuclearscience:model/reactorcore"
+		"0": "nuclearscience:block/model/reactorcore",
+		"particle" : "electrodynamics:block/steelcasing" 
 	},
 	"elements": [
 		{

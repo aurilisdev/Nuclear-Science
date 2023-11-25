@@ -1,12 +1,12 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.common.tile.quarry.TileQuarry;
+import electrodynamics.common.tile.machines.quarry.TileQuarry;
 import electrodynamics.prefab.properties.Property;
 import electrodynamics.prefab.properties.PropertyType;
 import electrodynamics.prefab.sound.SoundBarrierMethods;
 import electrodynamics.prefab.sound.utils.ITickableSound;
 import electrodynamics.prefab.tile.GenericTile;
-import electrodynamics.prefab.tile.components.ComponentType;
+import electrodynamics.prefab.tile.components.IComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
@@ -22,19 +22,20 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
+import nuclearscience.api.turbine.ISteamReceiver;
 import nuclearscience.common.block.BlockTurbine;
 import nuclearscience.registers.NuclearScienceBlockTypes;
 import nuclearscience.registers.NuclearScienceSounds;
 
-public class TileTurbine extends GenericTile implements ITickableSound {
+public class TileTurbine extends GenericTile implements ITickableSound, ISteamReceiver {
 
-	public static final int MAX_STEAM = 3000000;
+	public static final double MAX_STEAM = 3000000;
 	public Property<Integer> spinSpeed = property(new Property<>(PropertyType.Integer, "spinSpeed", 0));
 	public Property<Boolean> hasCore = property(new Property<>(PropertyType.Boolean, "hasCore", false));
 	public Property<Boolean> isCore = property(new Property<>(PropertyType.Boolean, "isCore", false));
 	public Property<BlockPos> coreLocation = property(new Property<>(PropertyType.BlockPos, "coreLocation", TileQuarry.OUT_OF_REACH));
 	public Property<Integer> currentVoltage = property(new Property<>(PropertyType.Integer, "turbinecurvoltage", 0));
-	public Property<Integer> steam = property(new Property<>(PropertyType.Integer, "steam", 0));
+	public Property<Double> steam = property(new Property<>(PropertyType.Double, "steam", 0.0));
 	public Property<Integer> wait = property(new Property<>(PropertyType.Integer, "wait", 30));
 	protected CachedTileOutput output;
 
@@ -47,9 +48,9 @@ public class TileTurbine extends GenericTile implements ITickableSound {
 
 	public TileTurbine(BlockPos pos, BlockState state) {
 		super(NuclearScienceBlockTypes.TILE_TURBINE.get(), pos, state);
-		addComponent(new ComponentTickable().tickServer(this::tickServer).tickClient(this::tickClient));
-		addComponent(new ComponentPacketHandler());
-		addComponent(new ComponentElectrodynamic(this).output(Direction.UP).setCapabilityTest(() -> (!hasCore.get() || isCore.get())));
+		addComponent(new ComponentTickable(this).tickServer(this::tickServer).tickClient(this::tickClient));
+		addComponent(new ComponentPacketHandler(this));
+		addComponent(new ComponentElectrodynamic(this, true, false).setOutputDirections(Direction.UP).setCapabilityTest(() -> (!hasCore.get() || isCore.get())));
 	}
 
 	public void constructStructure() {
@@ -115,26 +116,8 @@ public class TileTurbine extends GenericTile implements ITickableSound {
 		hasCore.set(true);
 	}
 
-	public void addSteam(int steam, int temp) {
-		this.steam.set(Math.min(MAX_STEAM * (isCore.get() ? 9 : 1), this.steam.get() + steam));
-		if (temp < 4300) {
-			currentVoltage.set(120);
-		} else if (temp < 6000) {
-			currentVoltage.set(240);
-		} else {
-			currentVoltage.set(480);
-		}
-		if (!isCore.get() && hasCore.get()) {
-			BlockEntity core = level.getBlockEntity(coreLocation.get());
-			if (core instanceof TileTurbine turbine && ((TileTurbine) core).isCore.get()) {
-				turbine.addSteam(this.steam.get(), temp);
-				this.steam.set(0);
-			}
-		}
-	}
-
 	public void tickServer(ComponentTickable tickable) {
-		this.<ComponentElectrodynamic>getComponent(ComponentType.Electrodynamic).voltage(currentVoltage.get());
+		this.<ComponentElectrodynamic>getComponent(IComponentType.Electrodynamic).voltage(currentVoltage.get());
 		if (output == null) {
 			output = new CachedTileOutput(level, worldPosition.relative(Direction.UP));
 		}
@@ -149,7 +132,8 @@ public class TileTurbine extends GenericTile implements ITickableSound {
 			if (output.valid()) {
 				TransferPack transfer = TransferPack.joulesVoltage(steam.get() * (hasCore.get() ? 1.111 : 1), currentVoltage.get());
 				ElectricityUtils.receivePower(output.getSafe(), Direction.DOWN, transfer, false);
-				steam.set(Math.max(steam.get() - Math.max(75, steam.get()), 0));			}
+				steam.set(Math.max(steam.get() - Math.max(75, steam.get()), 0));
+			}
 		} else {
 			if (wait.get() <= 0) {
 				currentVoltage.set(0);
@@ -180,5 +164,32 @@ public class TileTurbine extends GenericTile implements ITickableSound {
 	@Override
 	public InteractionResult use(Player arg0, InteractionHand arg1, BlockHitResult arg2) {
 		return InteractionResult.FAIL;
+	}
+
+	@Override
+	public double receiveSteam(double temperature, double amount) {
+		double room = MAX_STEAM * (isCore.get() ? 9 : 1) - steam.get();
+		double accepted = room < amount ? room : amount;
+		this.steam.set(steam.get() + accepted);
+		if (temperature < 4300) {
+			currentVoltage.set(120);
+		} else if (temperature < 6000) {
+			currentVoltage.set(240);
+		} else {
+			currentVoltage.set(480);
+		}
+		if (!isCore.get() && hasCore.get()) {
+			BlockEntity core = level.getBlockEntity(coreLocation.get());
+			if (core instanceof TileTurbine turbine && ((TileTurbine) core).isCore.get()) {
+				accepted = turbine.receiveSteam(temperature, amount);
+				this.steam.set(0);
+			}
+		}
+		return accepted;
+	}
+
+	@Override
+	public boolean isStillValid() {
+		return isRemoved();
 	}
 }

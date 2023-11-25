@@ -4,8 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import electrodynamics.client.render.tile.AbstractTileRenderer;
-import electrodynamics.prefab.tile.components.ComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentDirection;
+import electrodynamics.prefab.tile.components.IComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
 import electrodynamics.prefab.utilities.RenderingUtils;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -30,15 +29,15 @@ public class RenderNuclearBoiler extends AbstractTileRenderer<TileNuclearBoiler>
 
 		matrix.pushPose();
 
-		Direction facing = tile.<ComponentDirection>getComponent(ComponentType.Direction).getDirection();
-		ComponentFluidHandlerMulti multi = tile.getComponent(ComponentType.FluidHandler);
+		Direction facing = tile.getFacing();
+		ComponentFluidHandlerMulti multi = tile.getComponent(IComponentType.FluidHandler);
 		VertexConsumer builder = buffer.getBuffer(Sheets.translucentCullBlockSheet());
 
 		FluidTank input = multi.getInputTanks()[0];
 
 		if (!input.isEmpty()) {
 
-			drawFluidInput(matrix, builder, input.getFluid(), facing, (float) input.getFluidAmount() / (float) TileNuclearBoiler.MAX_TANK_CAPACITY, light, overlay);
+			drawFluidInput(matrix, builder, input.getFluid(), facing, (float) input.getFluidAmount() / (float) TileNuclearBoiler.MAX_FLUID_TANK_CAPACITY, light, overlay);
 
 		}
 
@@ -50,7 +49,7 @@ public class RenderNuclearBoiler extends AbstractTileRenderer<TileNuclearBoiler>
 
 		if (!output.isEmpty()) {
 
-			drawFluidOutput(matrix, builder, output.getFluid(), facing, (float) output.getFluidAmount() / (float) TileNuclearBoiler.MAX_TANK_CAPACITY, light, overlay);
+			drawFluidOutput(matrix, builder, output.getFluid(), facing, (float) output.getFluidAmount() / (float) TileNuclearBoiler.MAX_FLUID_TANK_CAPACITY, light, overlay);
 
 		}
 

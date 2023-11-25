@@ -31,14 +31,14 @@ public class NuclearScienceLootTablesProvider extends ElectrodynamicsLootTablesP
 		addSimpleBlock(NuclearScienceBlocks.blockMeltedReactor);
 		addIETable(NuclearScienceBlocks.blockMoltenSaltSupplier, NuclearScienceBlockTypes.TILE_MOLTENSALTSUPPLIER);
 		addIEFTable(NuclearScienceBlocks.blockMSRFuelPreProcessor, NuclearScienceBlockTypes.TILE_MSRFUELPREPROCESSOR);
-		addSimpleBlock(NuclearScienceBlocks.blockMsrReactorCore);
+		addSimpleBlock(NuclearScienceBlocks.blockMSReactorCore);
 		addIEFTable(NuclearScienceBlocks.blockNuclearBoiler, NuclearScienceBlockTypes.TILE_CHEMICALBOILER);
 		addIETable(NuclearScienceBlocks.blockParticleInjector, NuclearScienceBlockTypes.TILE_PARTICLEINJECTOR);
 		addETable(NuclearScienceBlocks.blockQuantumCapacitor, NuclearScienceBlockTypes.TILE_QUANTUMCAPACITOR);
 		addIEFTable(NuclearScienceBlocks.blockRadioactiveProcessor, NuclearScienceBlockTypes.TILE_RADIOACTIVEPROCESSOR);
 		addSimpleBlock(NuclearScienceBlocks.blockRadioactiveSoil);
 		addITable(NuclearScienceBlocks.blockRadioisotopeGenerator, NuclearScienceBlockTypes.TILE_RADIOISOTOPEGENERATOR);
-		addITable(NuclearScienceBlocks.blockReactorCore, NuclearScienceBlockTypes.TILE_REACTORCORE);
+		addITable(NuclearScienceBlocks.blockFissionReactorCore, NuclearScienceBlockTypes.TILE_REACTORCORE);
 		addSimpleBlock(NuclearScienceBlocks.blockSiren);
 		addETable(NuclearScienceBlocks.blockTeleporter, NuclearScienceBlockTypes.TILE_TELEPORTER);
 		addSimpleBlock(NuclearScienceBlocks.blockTurbine);

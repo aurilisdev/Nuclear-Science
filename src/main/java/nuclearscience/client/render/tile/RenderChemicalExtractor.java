@@ -4,8 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import electrodynamics.client.render.tile.AbstractTileRenderer;
-import electrodynamics.prefab.tile.components.ComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentDirection;
+import electrodynamics.prefab.tile.components.IComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
 import electrodynamics.prefab.utilities.RenderingUtils;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -29,8 +28,8 @@ public class RenderChemicalExtractor extends AbstractTileRenderer<TileChemicalEx
 
 		matrix.pushPose();
 
-		Direction facing = tile.<ComponentDirection>getComponent(ComponentType.Direction).getDirection();
-		ComponentFluidHandlerMulti multi = tile.getComponent(ComponentType.FluidHandler);
+		Direction facing = tile.getFacing();
+		ComponentFluidHandlerMulti multi = tile.getComponent(IComponentType.FluidHandler);
 		VertexConsumer builder = buffer.getBuffer(Sheets.translucentCullBlockSheet());
 
 		FluidTank input = multi.getInputTanks()[0];

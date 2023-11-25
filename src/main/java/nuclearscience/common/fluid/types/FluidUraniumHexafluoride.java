@@ -4,9 +4,10 @@ import electrodynamics.common.fluid.FluidNonPlaceable;
 import electrodynamics.common.fluid.types.SimpleWaterBasedFluidType;
 import net.minecraftforge.fluids.FluidType;
 import nuclearscience.References;
+import nuclearscience.common.fluid.IRadioactiveFluid;
 import nuclearscience.registers.NuclearScienceItems;
 
-public class FluidUraniumHexafluoride extends FluidNonPlaceable {
+public class FluidUraniumHexafluoride extends FluidNonPlaceable implements IRadioactiveFluid {
 
 	public static final String FORGE_TAG = "uranium_hexafluoride";
 
@@ -20,5 +21,15 @@ public class FluidUraniumHexafluoride extends FluidNonPlaceable {
 	@Override
 	public FluidType getFluidType() {
 		return type;
+	}
+
+	@Override
+	public double getRadiationRange() {
+		return 10;
+	}
+
+	@Override
+	public double getRadiationStrength() {
+		return 1;
 	}
 }

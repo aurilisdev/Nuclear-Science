@@ -74,7 +74,7 @@ public class RadiationSystem {
 						float damage = (float) (strength * 2.15f) / 2169.9975f;
 						if (Math.random() < damage) {
 							int integerDamage = Math.round(damage);
-							if (next.getDamageValue() > next.getMaxDamage() || next.hurt(integerDamage, entity.level.random, player instanceof ServerPlayer s ? s : null)) {
+							if (next.getDamageValue() > next.getMaxDamage() || next.hurt(integerDamage, entity.getLevel().random, player instanceof ServerPlayer s ? s : null)) {
 								player.getInventory().armor.set(i, ItemStack.EMPTY);
 							}
 						}
@@ -82,16 +82,16 @@ public class RadiationSystem {
 				}
 			}
 		}
-		Location end = new Location(entity.position());
+		Location end = new Location(entity.position().add(0, entity.getEyeHeight() / 2.0, 0));
 		double radiation = 0;
 		if (entity instanceof Player pl && (pl.getItemBySlot(EquipmentSlot.MAINHAND).getItem() instanceof ItemGeigerCounter || pl.getItemBySlot(EquipmentSlot.OFFHAND).getItem() instanceof ItemGeigerCounter)) {
 			double already = radiationMap.get().containsKey(entity) ? radiationMap.get().get(entity) : 0;
-			radiation = getRadiation(entity.level, source, end, strength);
+			radiation = getRadiation(entity.getLevel(), source, end, strength);
 			radiationMap.get().put((Player) entity, already + radiation);
 		}
 		if (!(entity instanceof Player pl && pl.isCreative()) && protection < 5 && radiationMap.get().getOrDefault(entity, 11.0) > 4) {
 			if (radiation == 0) {
-				radiation = getRadiation(entity.level, source, end, strength);
+				radiation = getRadiation(entity.getLevel(), source, end, strength);
 			}
 			double distance = 1 + source.distance(end);
 			double modifier = strength / (radiation * distance * distance);

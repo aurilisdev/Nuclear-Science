@@ -4,12 +4,12 @@ import java.util.function.DoubleSupplier;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import electrodynamics.api.screen.IScreenWrapper;
 import electrodynamics.api.screen.ITexture;
-import electrodynamics.prefab.screen.component.ScreenComponentGeneric;
+import electrodynamics.prefab.screen.component.types.ScreenComponentGeneric;
 import electrodynamics.prefab.utilities.RenderingUtils;
 import net.minecraft.resources.ResourceLocation;
 import nuclearscience.References;
+
 
 public class ScreenComponentGasCentrifuge extends ScreenComponentGeneric {
 
@@ -20,8 +20,8 @@ public class ScreenComponentGasCentrifuge extends ScreenComponentGeneric {
 	private final DoubleSupplier progressInfoHandlerProgressMiddle;
 	private final DoubleSupplier progressInfoHandlerProgressBottom;
 
-	public ScreenComponentGasCentrifuge(final DoubleSupplier progressInfoHandlerBulbs, final DoubleSupplier progressInfoHandlerProgressTop, final DoubleSupplier progressInfoHandlerProgressMiddle, DoubleSupplier progressInfoHandlerProgressBottom, final IScreenWrapper gui, final int x, final int y) {
-		super(GasCentrifugeTextures.OFF, gui, x, y);
+	public ScreenComponentGasCentrifuge(DoubleSupplier progressInfoHandlerBulbs, DoubleSupplier progressInfoHandlerProgressTop, DoubleSupplier progressInfoHandlerProgressMiddle, DoubleSupplier progressInfoHandlerProgressBottom, int x, int y) {
+		super(GasCentrifugeTextures.OFF, x, y);
 		this.progressInfoHandlerBulbs = progressInfoHandlerBulbs;
 		this.progressInfoHandlerProgressTop = progressInfoHandlerProgressTop;
 		this.progressInfoHandlerProgressMiddle = progressInfoHandlerProgressMiddle;
@@ -32,20 +32,23 @@ public class ScreenComponentGasCentrifuge extends ScreenComponentGeneric {
 	public void renderBackground(PoseStack stack, final int xAxis, final int yAxis, final int guiWidth, final int guiHeight) {
 		super.renderBackground(stack, xAxis, yAxis, guiWidth, guiHeight);
 
-		RenderingUtils.bindTexture(texture.getLocation());
-
 		ITexture texture = GasCentrifugeTextures.BULB;
+		
+		RenderingUtils.bindTexture(TEXTURE);
+		
 		int progressBulbs = (int) (progressInfoHandlerBulbs.getAsDouble() * texture.textureWidth());
-		gui.drawTexturedRect(stack, guiWidth + xLocation, guiHeight + yLocation + 3, texture.textureU(), texture.textureV(), progressBulbs, texture.textureHeight(), texture.imageWidth(), texture.imageHeight());
+		blit(stack, guiWidth + xLocation, guiHeight + yLocation + 3, texture.textureU(), texture.textureV(), progressBulbs, texture.textureHeight(), texture.imageWidth(), texture.imageHeight());
 
 		texture = GasCentrifugeTextures.ARROW;
 		int topProgress = (int) (progressInfoHandlerProgressTop.getAsDouble() * texture.textureWidth());
 		int middleProgress = (int) (progressInfoHandlerProgressMiddle.getAsDouble() * texture.textureWidth());
 		int bottomProgress = (int) (progressInfoHandlerProgressBottom.getAsDouble() * texture.textureWidth());
 
-		gui.drawTexturedRect(stack, guiWidth + xLocation + 72, guiHeight + yLocation, texture.textureU(), texture.textureV(), topProgress, texture.textureHeight(), texture.imageWidth(), texture.imageHeight());
-		gui.drawTexturedRect(stack, guiWidth + xLocation + 72, guiHeight + yLocation + 20, texture.textureU(), texture.textureV(), middleProgress, texture.textureHeight(), texture.imageWidth(), texture.imageHeight());
-		gui.drawTexturedRect(stack, guiWidth + xLocation + 72, guiHeight + yLocation + 41, texture.textureU(), texture.textureV(), bottomProgress, texture.textureHeight(), texture.imageWidth(), texture.imageHeight());
+		blit(stack, guiWidth + xLocation + 72, guiHeight + yLocation, texture.textureU(), texture.textureV(), topProgress, texture.textureHeight(), texture.imageWidth(), texture.imageHeight());
+		blit(stack, guiWidth + xLocation + 72, guiHeight + yLocation + 20, texture.textureU(), texture.textureV(), middleProgress, texture.textureHeight(), texture.imageWidth(), texture.imageHeight());
+		blit(stack, guiWidth + xLocation + 72, guiHeight + yLocation + 41, texture.textureU(), texture.textureV(), bottomProgress, texture.textureHeight(), texture.imageWidth(), texture.imageHeight());
+		
+		RenderingUtils.resetShaderColor();
 
 	}
 

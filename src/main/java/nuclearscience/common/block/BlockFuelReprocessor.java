@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import nuclearscience.common.tile.TileFuelReprocessor;
 
+
 public class BlockFuelReprocessor extends GenericMachineBlock {
 
 	public BlockFuelReprocessor() {

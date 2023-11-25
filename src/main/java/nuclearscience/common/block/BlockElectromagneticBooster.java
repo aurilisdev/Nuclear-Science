@@ -10,11 +10,11 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -28,7 +28,7 @@ public class BlockElectromagneticBooster extends Block implements IElectromagnet
 	public static final FacingDirectionProperty FACINGDIRECTION = FacingDirectionProperty.create("side", FacingDirection.values());
 
 	public BlockElectromagneticBooster() {
-		super(Properties.of(Material.GLASS).strength(3.5f, 20).requiresCorrectToolForDrops().noOcclusion().isRedstoneConductor((x, y, z) -> false));
+		super(Properties.copy(Blocks.GLASS).strength(3.5f, 20).requiresCorrectToolForDrops().noOcclusion().isRedstoneConductor((x, y, z) -> false));
 		registerDefaultState(stateDefinition.any().setValue(GenericEntityBlock.FACING, Direction.NORTH).setValue(FACINGDIRECTION, FacingDirection.NONE));
 	}
 
@@ -67,12 +67,12 @@ public class BlockElectromagneticBooster extends Block implements IElectromagnet
 
 	@Override
 	public void onRotate(ItemStack stack, BlockPos pos, Player player) {
-		player.level.setBlockAndUpdate(pos, rotate(player.level.getBlockState(pos), Rotation.CLOCKWISE_90));
+		player.getLevel().setBlockAndUpdate(pos, rotate(player.getLevel().getBlockState(pos), Rotation.CLOCKWISE_90));
 	}
 
 	@Override
 	public void onPickup(ItemStack stack, BlockPos pos, Player player) {
-		Level world = player.level;
+		Level world = player.getLevel();
 		BlockState current = world.getBlockState(pos);
 		FacingDirection face = current.getValue(FACINGDIRECTION);
 		if (face != FacingDirection.NONE) {

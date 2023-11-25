@@ -3,9 +3,9 @@ package nuclearscience.common.block;
 import electrodynamics.prefab.block.GenericEntityBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -21,7 +21,7 @@ public class BlockElectromagneticSwitch extends GenericEntityBlock implements IE
 	}
 
 	public BlockElectromagneticSwitch() {
-		super(Properties.of(Material.METAL).strength(3.5f, 20).requiresCorrectToolForDrops().noOcclusion().isRedstoneConductor((p1, p2, p3) -> false));
+		super(Properties.copy(Blocks.IRON_BLOCK).strength(3.5f, 20).requiresCorrectToolForDrops().noOcclusion().isRedstoneConductor((p1, p2, p3) -> false));
 	}
 
 	@Override

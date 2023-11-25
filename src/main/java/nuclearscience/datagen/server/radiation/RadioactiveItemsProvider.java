@@ -47,25 +47,28 @@ public class RadioactiveItemsProvider implements DataProvider {
 		addTag(NuclearScienceTags.Items.PELLET_URANIUM238, 500, json);
 		addTag(NuclearScienceTags.Items.PELLET_PLUTONIUM, 4500, json);
 		addTag(NuclearScienceTags.Items.PELLET_POLONIUM, 2500, json);
-		
+		addTag(NuclearScienceTags.Items.PELLET_ACTINIUM225, 5000, json);
+
 		addTag(NuclearScienceTags.Items.NUGGET_POLONIUM, 1500, json);
-		
+
 		addTag(NuclearScienceTags.Items.FUELROD_URANIUM_HIGH_EN, 3000, json);
 		addTag(NuclearScienceTags.Items.FUELROD_URANIUM_LOW_EN, 2000, json);
 		addTag(NuclearScienceTags.Items.FUELROD_SPENT, 3500, json);
 		addTag(NuclearScienceTags.Items.FUELROD_PLUTONIUM, 2500, json);
-		
+
 		addTag(NuclearScienceTags.Items.YELLOW_CAKE, 300, json);
 		addTag(NuclearScienceTags.Items.DUST_FISSILE, 2000, json);
+		addTag(NuclearScienceTags.Items.SALT_FISSILE, 200, json);
 		addTag(NuclearScienceTags.Items.OXIDE_PLUTONIUM, 4000, json);
 		addTag(NuclearScienceTags.Items.DUST_THORIUM, 2000, json);
-		
+		addTag(NuclearScienceTags.Items.OXIDE_ACTINIUM, 400, json);
+
 		addTag(ElectrodynamicsTags.Items.ORE_THORIUM, 500, json);
 		addTag(ElectrodynamicsTags.Items.ORE_URANIUM, 100, json);
-		
+
 		addTag(ElectrodynamicsTags.Items.RAW_ORE_THORIUM, 150, json);
 		addTag(ElectrodynamicsTags.Items.RAW_ORE_URANIUM, 50, json);
-		
+
 		addTag(ElectrodynamicsTags.Items.BLOCK_RAW_ORE_THORIUM, 500, json);
 		addTag(ElectrodynamicsTags.Items.BLOCK_RAW_ORE_URANIUM, 450, json);
 
@@ -74,7 +77,7 @@ public class RadioactiveItemsProvider implements DataProvider {
 	private void addItem(Item item, double radiationStrength, JsonObject json) {
 		json.addProperty(ForgeRegistries.ITEMS.getKey(item).toString(), radiationStrength);
 	}
-	
+
 	private void addTag(TagKey<Item> fluid, double radiationStrength, JsonObject json) {
 		json.addProperty("#" + fluid.location().toString(), radiationStrength);
 	}
@@ -82,6 +85,6 @@ public class RadioactiveItemsProvider implements DataProvider {
 	@Override
 	public String getName() {
 		return "Nuclear Science Radioactive Items Provider";
-	} 
+	}
 
 }

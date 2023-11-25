@@ -16,9 +16,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 public class RadiationRegister {
 
 	/*
-	 * This allows us to better categorize what is radioactive in case we need to
-	 * reference all types of an object, and also makes way for things like datapack
-	 * support for radioactive items and what not
+	 * This allows us to better categorize what is radioactive in case we need to reference all types of an object, and also makes way
+	 * for things like datapack support for radioactive items and what not
 	 */
 	private static final HashMap<RadioactiveSource, HashMap<Object, IRadioactiveObject>> MASTER_REGISTER = new HashMap<>();
 

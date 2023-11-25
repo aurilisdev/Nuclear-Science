@@ -34,8 +34,11 @@ public class NuclearScienceTags {
 
 		public static final TagKey<Item> DUST_THORIUM = forgeTag("dusts/thorium");
 		public static final TagKey<Item> DUST_FISSILE = forgeTag("dusts/fissile");
+		
+		public static final TagKey<Item> SALT_FISSILE = forgeTag("salts/fissile");
 
 		public static final TagKey<Item> OXIDE_PLUTONIUM = forgeTag("oxide/plutonium");
+		public static final TagKey<Item> OXIDE_ACTINIUM = forgeTag("oxide/actinium");
 
 		public static final TagKey<Item> NUGGET_POLONIUM = forgeTag("nuggets/polonium");
 
@@ -45,6 +48,7 @@ public class NuclearScienceTags {
 		public static final TagKey<Item> PELLET_POLONIUM = forgeTag("pellets/polonium");
 		public static final TagKey<Item> PELLET_LIFHT4PUF3 = forgeTag("pellets/lifht4puf3");
 		public static final TagKey<Item> PELLET_FLINAK = forgeTag("pellets/flinak");
+		public static final TagKey<Item> PELLET_ACTINIUM225 = forgeTag("pellets/actinium225");
 
 		public static final TagKey<Item> YELLOW_CAKE = forgeTag("yellow_cake_uranium");
 

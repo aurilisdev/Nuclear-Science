@@ -39,7 +39,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import nuclearscience.api.radiation.FieldRadioactiveObject;
 import nuclearscience.api.radiation.RadiationRegister;
 import nuclearscience.api.radiation.RadiationRegister.RadioactiveSource;
-import nuclearscience.common.packet.type.PacketSetClientRadRegisterItemVals;
+import nuclearscience.common.packet.type.client.PacketSetClientRadRegisterItemVals;
 
 public class RadioactiveItemLoader extends SimplePreparableReloadListener<JsonObject> {
 

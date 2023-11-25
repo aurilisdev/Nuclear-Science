@@ -47,12 +47,12 @@ public class NuclearScienceBlockStateProvider extends ElectrodynamicsBlockStateP
 		horrRotatedBlock(NuclearScienceBlocks.blockHeatExchanger, existingBlock(NuclearScienceBlocks.blockHeatExchanger), true);
 		horrRotatedLitBlock(NuclearScienceBlocks.blockMoltenSaltSupplier, existingBlock(NuclearScienceBlocks.blockMoltenSaltSupplier), existingBlock(blockLoc("moltensaltsupplieron")), true);
 		horrRotatedBlock(NuclearScienceBlocks.blockMSRFuelPreProcessor, existingBlock(NuclearScienceBlocks.blockMSRFuelPreProcessor), true);
-		horrRotatedBlock(NuclearScienceBlocks.blockMsrReactorCore, existingBlock(NuclearScienceBlocks.blockMsrReactorCore), 180, 0, true);
+		horrRotatedBlock(NuclearScienceBlocks.blockMSReactorCore, existingBlock(NuclearScienceBlocks.blockMSReactorCore), 180, 0, true);
 		horrRotatedBlock(NuclearScienceBlocks.blockNuclearBoiler, existingBlock(NuclearScienceBlocks.blockNuclearBoiler), 180, 0, true);
 		horrRotatedBlock(NuclearScienceBlocks.blockParticleInjector, existingBlock(NuclearScienceBlocks.blockParticleInjector), 180, 0, false);
 		horrRotatedBlock(NuclearScienceBlocks.blockQuantumCapacitor, existingBlock(NuclearScienceBlocks.blockQuantumCapacitor), true);
 		horrRotatedLitBlock(NuclearScienceBlocks.blockRadioactiveProcessor, existingBlock(NuclearScienceBlocks.blockRadioactiveProcessor), existingBlock(blockLoc("radioactiveprocessoron")), true);
-		horrRotatedBlock(NuclearScienceBlocks.blockReactorCore, existingBlock(NuclearScienceBlocks.blockReactorCore), true);
+		horrRotatedBlock(NuclearScienceBlocks.blockFissionReactorCore, existingBlock(NuclearScienceBlocks.blockFissionReactorCore), true);
 		horrRotatedLitBlock(NuclearScienceBlocks.blockTeleporter, existingBlock(NuclearScienceBlocks.blockTeleporter), existingBlock(blockLoc("teleporteron")), true);
 
 		genPipes();

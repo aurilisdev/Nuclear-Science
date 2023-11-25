@@ -31,22 +31,22 @@ import nuclearscience.common.block.BlockQuantumCapacitor;
 import nuclearscience.common.block.BlockRadioactiveAir;
 import nuclearscience.common.block.BlockRadioactiveProcessor;
 import nuclearscience.common.block.BlockRadioactiveSoil;
-import nuclearscience.common.block.BlockReactorCore;
+import nuclearscience.common.block.BlockFissionReactorCore;
 import nuclearscience.common.block.BlockTeleporter;
 import nuclearscience.common.block.BlockTurbine;
 import nuclearscience.common.block.connect.BlockMoltenSaltPipe;
 import nuclearscience.common.block.subtype.SubtypeMoltenSaltPipe;
 import nuclearscience.common.tile.TileAtomicAssembler;
 import nuclearscience.common.tile.TileChemicalExtractor;
-import nuclearscience.common.tile.TileFreezePlug;
 import nuclearscience.common.tile.TileGasCentrifuge;
-import nuclearscience.common.tile.TileHeatExchanger;
-import nuclearscience.common.tile.TileMSRFuelPreProcessor;
-import nuclearscience.common.tile.TileMSRReactorCore;
 import nuclearscience.common.tile.TileNuclearBoiler;
 import nuclearscience.common.tile.TileParticleInjector;
 import nuclearscience.common.tile.TileRadioisotopeGenerator;
 import nuclearscience.common.tile.TileSiren;
+import nuclearscience.common.tile.msreactor.TileFreezePlug;
+import nuclearscience.common.tile.msreactor.TileHeatExchanger;
+import nuclearscience.common.tile.msreactor.TileMSRFuelPreProcessor;
+import nuclearscience.common.tile.msreactor.TileMSReactorCore;
 
 public class NuclearScienceBlocks {
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, References.ID);
@@ -57,7 +57,7 @@ public class NuclearScienceBlocks {
 	public static GenericMachineBlock blockChemicalExtractor;
 	public static GenericMachineBlock blockRadioisotopeGenerator;
 	public static BlockTurbine blockTurbine;
-	public static BlockReactorCore blockReactorCore;
+	public static BlockFissionReactorCore blockFissionReactorCore;
 	public static BlockElectromagnet blockElectromagnet;
 	public static BlockElectromagnet blockElectromagneticGlass;
 	public static BlockElectromagneticBooster blockElectromagneticBooster;
@@ -73,7 +73,7 @@ public class NuclearScienceBlocks {
 	public static BlockRadioactiveProcessor blockRadioactiveProcessor;
 	public static BlockMSRFuelPreprocessor blockMSRFuelPreProcessor;
 	public static GenericMachineBlock blockFreezePlug;
-	public static GenericMachineBlock blockMsrReactorCore;
+	public static GenericMachineBlock blockMSReactorCore;
 	public static GenericMachineBlock blockHeatExchanger;
 	public static GenericMachineBlock blockSiren;
 	public static GenericMachineBlock blockAtomicAssembler;
@@ -89,7 +89,7 @@ public class NuclearScienceBlocks {
 		BLOCKS.register("radioisotopegenerator", supplier(() -> blockRadioisotopeGenerator = new GenericMachineBlock(TileRadioisotopeGenerator::new)));
 		BLOCKS.register("freezeplug", supplier(() -> blockFreezePlug = new GenericMachineBlock(TileFreezePlug::new)));
 		BLOCKS.register("turbine", supplier(() -> blockTurbine = new BlockTurbine()));
-		BLOCKS.register("reactorcore", supplier(() -> blockReactorCore = new BlockReactorCore()));
+		BLOCKS.register("reactorcore", supplier(() -> blockFissionReactorCore = new BlockFissionReactorCore()));
 		BLOCKS.register("electromagnet", supplier(() -> blockElectromagnet = new BlockElectromagnet(false)));
 		BLOCKS.register("electromagneticglass", supplier(() -> blockElectromagneticGlass = new BlockElectromagnet(true)));
 		BLOCKS.register("electromagneticbooster", supplier(() -> blockElectromagneticBooster = new BlockElectromagneticBooster()));
@@ -104,7 +104,7 @@ public class NuclearScienceBlocks {
 		BLOCKS.register("radioactiveprocessor", supplier(() -> blockRadioactiveProcessor = new BlockRadioactiveProcessor()));
 		BLOCKS.register("msrfuelpreprocessor", supplier(() -> blockMSRFuelPreProcessor = new BlockMSRFuelPreprocessor(TileMSRFuelPreProcessor::new)));
 		BLOCKS.register("blocklead", supplier(() -> blocklead = new Block(Properties.of(Material.METAL, MaterialColor.COLOR_BLACK).strength(5.0f, 3.0f).sound(SoundType.METAL).requiresCorrectToolForDrops())));
-		BLOCKS.register("msrreactorcore", supplier(() -> blockMsrReactorCore = new GenericMachineBlock(TileMSRReactorCore::new)));
+		BLOCKS.register("msrreactorcore", supplier(() -> blockMSReactorCore = new GenericMachineBlock(TileMSReactorCore::new)));
 		BLOCKS.register("heatexchanger", supplier(() -> blockHeatExchanger = new GenericMachineBlock(TileHeatExchanger::new)));
 		BLOCKS.register("siren", supplier(() -> blockSiren = new GenericMachineBlock(TileSiren::new)));
 		BLOCKS.register("atomicassembler", supplier(() -> blockAtomicAssembler = new GenericMachineBlock(TileAtomicAssembler::new)));

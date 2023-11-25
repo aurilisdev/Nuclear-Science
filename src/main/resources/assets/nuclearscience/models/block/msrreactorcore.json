@@ -6,7 +6,7 @@
 	],
 	"parent": "block/cube_all",
 	"textures": {
-		"0": "nuclearscience:model/msrreactorcore",
+		"0": "nuclearscience:block/model/msreactorcore",
 		"particle": "electrodynamics:block/steelcasing"
 	},
 	"elements": [

@@ -2,20 +2,14 @@ package nuclearscience.common.block;
 
 import electrodynamics.prefab.block.GenericMachineBlock;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.BlockHitResult;
-import nuclearscience.common.settings.Constants;
-import nuclearscience.common.tile.TileFusionReactorCore;
-import nuclearscience.registers.NuclearScienceItems;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import nuclearscience.common.tile.fusionreactor.TileFusionReactorCore;
 
 public class BlockFusionReactorCore extends GenericMachineBlock {
 
@@ -29,26 +23,18 @@ public class BlockFusionReactorCore extends GenericMachineBlock {
 	}
 
 	@Override
-	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-		if (!worldIn.isClientSide) {
-			ItemStack inHand = player.getItemBySlot(handIn == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
-			Item itemInHand = inHand.getItem();
-			if (itemInHand == NuclearScienceItems.ITEM_CELLDEUTERIUM.get() || itemInHand == NuclearScienceItems.ITEM_CELLTRITIUM.get()) {
-				BlockEntity tile = worldIn.getBlockEntity(pos);
-				if (tile instanceof TileFusionReactorCore core) {
-					boolean tritium = itemInHand == NuclearScienceItems.ITEM_CELLTRITIUM.get();
-					int count = tritium ? core.tritium.get() : core.deuterium.get();
-					int added = Math.min(inHand.getCount(), Constants.FUSIONREACTOR_MAXSTORAGE - count);
-					inHand.setCount(inHand.getCount() - added);
-					if (tritium) {
-						core.tritium.set(core.tritium.get() + added);
-					} else {
-						core.deuterium.set(core.deuterium.get() + added);
-					}
-				}
-				return InteractionResult.CONSUME;
-			}
-		}
-		return super.use(state, worldIn, pos, player, handIn, hit);
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+		VoxelShape reactor = Block.box(6, 0, 6, 10, 16, 10);
+
+		reactor = Shapes.or(reactor, Block.box(5, 1, 5, 11, 15, 11));
+
+		reactor = Shapes.or(reactor, Block.box(4, 2, 4, 12, 14, 12));
+
+		reactor = Shapes.or(reactor, Block.box(3, 4, 3, 13, 12, 13));
+
+		reactor = Shapes.or(reactor, Block.box(2, 6, 2, 14, 10, 14));
+
+		return reactor;
 	}
+
 }

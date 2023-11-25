@@ -7,10 +7,10 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.SimpleContainerData;
-import nuclearscience.common.tile.TileMSRReactorCore;
+import nuclearscience.common.tile.msreactor.TileMSReactorCore;
 import nuclearscience.registers.NuclearScienceMenuTypes;
 
-public class ContainerMSRReactorCore extends GenericContainerBlockEntity<TileMSRReactorCore> {
+public class ContainerMSRReactorCore extends GenericContainerBlockEntity<TileMSReactorCore> {
 
 	public ContainerMSRReactorCore(int id, Inventory playerinv) {
 		this(id, playerinv, new SimpleContainer(0), new SimpleContainerData(3));

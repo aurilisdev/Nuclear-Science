@@ -3,8 +3,8 @@
 	"parent": "block/cube_all",
 	"ambientocclusion": "false",
 	"textures": {
-		"0": "nuclearscience:model/gascentrifuge",
-		"particle": "nuclearscience:model/gascentrifuge"
+		"0": "nuclearscience:block/model/gascentrifuge",
+		"particle": "electrodynamics:block/steelcasing"
 	},
 	"elements": [
 		{

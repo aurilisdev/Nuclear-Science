@@ -3,18 +3,16 @@ package nuclearscience.compatibility.jei.utils.psuedorecipes;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import electrodynamics.compatibility.jei.recipecategories.psuedo.PsuedoItem2ItemRecipe;
+import electrodynamics.common.recipe.recipeutils.FluidIngredient;
+import electrodynamics.compatibility.jei.recipecategories.utils.psuedorecipes.types.PsuedoItem2ItemRecipe;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.fluids.FluidStack;
-import nuclearscience.registers.NuclearScienceFluids;
+import nuclearscience.common.tags.NuclearScienceTags;
 import nuclearscience.registers.NuclearScienceItems;
 
 public class NuclearSciencePsuedoRecipes {
 
 	private static ArrayList<ArrayList<ItemStack>> NUCLEAR_SCIENCE_ITEMS = new ArrayList<>();
-	private static ArrayList<Fluid> NUCLEAR_SCIENCE_FLUIDS = new ArrayList<>();
 
 	public static ArrayList<PsuedoGasCentrifugeRecipe> GAS_CENTRIFUGE_RECIPES = new ArrayList<>();
 	public static ArrayList<PsuedoItem2ItemRecipe> ANTI_MATTER_RECIPES = new ArrayList<>();
@@ -22,18 +20,13 @@ public class NuclearSciencePsuedoRecipes {
 
 	public static void addNuclearScienceRecipes() {
 
-		addNuclearScienceFluids();
 		addNuclearScienceItems();
 
-		GAS_CENTRIFUGE_RECIPES.add(new PsuedoGasCentrifugeRecipe(new FluidStack(NUCLEAR_SCIENCE_FLUIDS.get(0), 5000), NUCLEAR_SCIENCE_ITEMS.get(0).get(2), NUCLEAR_SCIENCE_ITEMS.get(0).get(1), new ItemStack(NuclearScienceItems.ITEM_FISSILEDUST.get())));
+		GAS_CENTRIFUGE_RECIPES.add(new PsuedoGasCentrifugeRecipe(new FluidIngredient(NuclearScienceTags.Fluids.URANIUM_HEXAFLUORIDE, 5000), NUCLEAR_SCIENCE_ITEMS.get(0).get(2), NUCLEAR_SCIENCE_ITEMS.get(0).get(1), new ItemStack(NuclearScienceItems.ITEM_FISSILEDUST.get())));
 
 		ANTI_MATTER_RECIPES.add(new PsuedoItem2ItemRecipe(Arrays.asList(NUCLEAR_SCIENCE_ITEMS.get(1).get(4)), NUCLEAR_SCIENCE_ITEMS.get(1).get(5)));
 
 		DARK_MATTER_RECIPES.add(new PsuedoItem2ItemRecipe(Arrays.asList(NUCLEAR_SCIENCE_ITEMS.get(1).get(4)), NUCLEAR_SCIENCE_ITEMS.get(1).get(7)));
-	}
-
-	private static void addNuclearScienceFluids() {
-		NUCLEAR_SCIENCE_FLUIDS.add(NuclearScienceFluids.fluidUraniumHexafluoride);
 	}
 
 	private static void addNuclearScienceItems() {
