@@ -79,8 +79,6 @@ public class RadioactiveItemLoader extends SimplePreparableReloadListener<JsonOb
 					try (final InputStream inputStream = resource.getInputStream(); final Reader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));) {
 						
 						final JsonObject json = (JsonObject) GsonHelper.fromJson(GSON, reader, JsonElement.class);
-						
-						logger.debug(json);
 
 						json.entrySet().forEach(set -> {
 
