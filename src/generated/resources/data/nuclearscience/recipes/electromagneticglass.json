@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "nuclearscience:electromagnet"
+    },
+    {
+      "tag": "forge:glass"
+    }
+  ],
+  "result": {
+    "item": "nuclearscience:electromagneticglass"
+  }
+}

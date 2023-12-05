@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SCS",
+    "SCS",
+    "SBS"
+  ],
+  "key": {
+    "B": {
+      "tag": "forge:storage_blocks/vanadiumsteel"
+    },
+    "S": {
+      "tag": "forge:plates/stainlesssteel"
+    },
+    "C": {
+      "tag": "forge:storage_blocks/copper"
+    }
+  },
+  "result": {
+    "item": "nuclearscience:freezeplug"
+  }
+}

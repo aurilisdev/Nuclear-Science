@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SVS",
+    "VRV",
+    "SPS"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:pellets/plutonium"
+    },
+    "R": {
+      "item": "nuclearscience:reactorcore"
+    },
+    "S": {
+      "tag": "forge:plates/stainlesssteel"
+    },
+    "V": {
+      "tag": "forge:plates/vanadiumsteel"
+    }
+  },
+  "result": {
+    "item": "nuclearscience:msrreactorcore"
+  }
+}

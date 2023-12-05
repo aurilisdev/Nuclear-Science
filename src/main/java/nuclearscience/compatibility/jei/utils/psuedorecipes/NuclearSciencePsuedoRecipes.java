@@ -3,17 +3,16 @@ package nuclearscience.compatibility.jei.utils.psuedorecipes;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import electrodynamics.compatibility.jei.recipecategories.psuedo.PsuedoItem2ItemRecipe;
+import electrodynamics.common.recipe.recipeutils.FluidIngredient;
+import electrodynamics.compatibility.jei.recipecategories.utils.psuedorecipes.types.PsuedoItem2ItemRecipe;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.fluids.FluidStack;
-import nuclearscience.DeferredRegisters;
+import nuclearscience.common.tags.NuclearScienceTags;
+import nuclearscience.registers.NuclearScienceItems;
 
 public class NuclearSciencePsuedoRecipes {
 
 	private static ArrayList<ArrayList<ItemStack>> NUCLEAR_SCIENCE_ITEMS = new ArrayList<>();
-	private static ArrayList<Fluid> NUCLEAR_SCIENCE_FLUIDS = new ArrayList<>();
 
 	public static ArrayList<PsuedoGasCentrifugeRecipe> GAS_CENTRIFUGE_RECIPES = new ArrayList<>();
 	public static ArrayList<PsuedoItem2ItemRecipe> ANTI_MATTER_RECIPES = new ArrayList<>();
@@ -21,29 +20,24 @@ public class NuclearSciencePsuedoRecipes {
 
 	public static void addNuclearScienceRecipes() {
 
-		addNuclearScienceFluids();
 		addNuclearScienceItems();
 
-		GAS_CENTRIFUGE_RECIPES.add(new PsuedoGasCentrifugeRecipe(new FluidStack(NUCLEAR_SCIENCE_FLUIDS.get(0), 5000), NUCLEAR_SCIENCE_ITEMS.get(0).get(2), NUCLEAR_SCIENCE_ITEMS.get(0).get(1), new ItemStack(DeferredRegisters.ITEM_FISSILEDUST.get())));
+		GAS_CENTRIFUGE_RECIPES.add(new PsuedoGasCentrifugeRecipe(new FluidIngredient(NuclearScienceTags.Fluids.URANIUM_HEXAFLUORIDE, 5000), NUCLEAR_SCIENCE_ITEMS.get(0).get(2), NUCLEAR_SCIENCE_ITEMS.get(0).get(1), new ItemStack(NuclearScienceItems.ITEM_FISSILEDUST.get())));
 
-		ANTI_MATTER_RECIPES.add(new PsuedoItem2ItemRecipe(Arrays.asList(new ItemStack[] { NUCLEAR_SCIENCE_ITEMS.get(1).get(4) }), NUCLEAR_SCIENCE_ITEMS.get(1).get(5)));
+		ANTI_MATTER_RECIPES.add(new PsuedoItem2ItemRecipe(Arrays.asList(NUCLEAR_SCIENCE_ITEMS.get(1).get(4)), NUCLEAR_SCIENCE_ITEMS.get(1).get(5)));
 
-		DARK_MATTER_RECIPES.add(new PsuedoItem2ItemRecipe(Arrays.asList(new ItemStack[] { NUCLEAR_SCIENCE_ITEMS.get(1).get(4) }), NUCLEAR_SCIENCE_ITEMS.get(1).get(7)));
-	}
-
-	private static void addNuclearScienceFluids() {
-		NUCLEAR_SCIENCE_FLUIDS.add(nuclearscience.DeferredRegisters.fluidUraniumHexafluoride);
+		DARK_MATTER_RECIPES.add(new PsuedoItem2ItemRecipe(Arrays.asList(NUCLEAR_SCIENCE_ITEMS.get(1).get(4)), NUCLEAR_SCIENCE_ITEMS.get(1).get(7)));
 	}
 
 	private static void addNuclearScienceItems() {
 
 		// Uranium and Derivatives : 0
-		Item[] uraniumMisc = { nuclearscience.DeferredRegisters.ITEM_YELLOWCAKE.get(), nuclearscience.DeferredRegisters.ITEM_URANIUM238.get(), nuclearscience.DeferredRegisters.ITEM_URANIUM235.get() };
+		Item[] uraniumMisc = { NuclearScienceItems.ITEM_YELLOWCAKE.get(), NuclearScienceItems.ITEM_URANIUM238.get(), NuclearScienceItems.ITEM_URANIUM235.get() };
 
 		NUCLEAR_SCIENCE_ITEMS.add(formItemStacks(uraniumMisc, 1));
 
 		// Cells : 1
-		Item[] cells = { nuclearscience.DeferredRegisters.ITEM_CELLEMPTY.get(), nuclearscience.DeferredRegisters.ITEM_CELLHEAVYWATER.get(), nuclearscience.DeferredRegisters.ITEM_CELLDEUTERIUM.get(), nuclearscience.DeferredRegisters.ITEM_CELLTRITIUM.get(), nuclearscience.DeferredRegisters.ITEM_CELLELECTROMAGNETIC.get(), nuclearscience.DeferredRegisters.ITEM_CELLANTIMATTERSMALL.get(), nuclearscience.DeferredRegisters.ITEM_CELLANTIMATTERLARGE.get(), nuclearscience.DeferredRegisters.ITEM_CELLDARKMATTER.get() };
+		Item[] cells = { NuclearScienceItems.ITEM_CELLEMPTY.get(), NuclearScienceItems.ITEM_CELLHEAVYWATER.get(), NuclearScienceItems.ITEM_CELLDEUTERIUM.get(), NuclearScienceItems.ITEM_CELLTRITIUM.get(), NuclearScienceItems.ITEM_CELLELECTROMAGNETIC.get(), NuclearScienceItems.ITEM_CELLANTIMATTERSMALL.get(), NuclearScienceItems.ITEM_CELLANTIMATTERLARGE.get(), NuclearScienceItems.ITEM_CELLDARKMATTER.get() };
 
 		NUCLEAR_SCIENCE_ITEMS.add(formItemStacks(cells, 1));
 

@@ -1,175 +1,25 @@
 package nuclearscience.client.guidebook.chapters;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import electrodynamics.api.item.ItemUtils;
-import electrodynamics.client.guidebook.utils.ImageWrapperObject;
-import electrodynamics.client.guidebook.utils.ItemWrapperObject;
-import electrodynamics.client.guidebook.utils.TextWrapperObject;
 import electrodynamics.client.guidebook.utils.components.Chapter;
-import electrodynamics.client.guidebook.utils.components.Page;
-import nuclearscience.DeferredRegisters;
+import electrodynamics.client.guidebook.utils.components.Module;
+import electrodynamics.client.guidebook.utils.pagedata.graphics.ImageWrapperObject;
+import electrodynamics.client.guidebook.utils.pagedata.graphics.ItemWrapperObject;
+import electrodynamics.client.guidebook.utils.pagedata.text.TextWrapperObject;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import nuclearscience.References;
+import nuclearscience.prefab.utils.NuclearTextUtils;
+import nuclearscience.registers.NuclearScienceBlocks;
+import nuclearscience.registers.NuclearScienceItems;
 
 public class ChapterFissionReactor extends Chapter {
 
-	private static final ItemWrapperObject LOGO = new ItemWrapperObject(17, 60, 2.0F, ItemUtils.fromBlock(DeferredRegisters.blockReactorCore));
+	private static final ItemWrapperObject LOGO = new ItemWrapperObject(7, 10, 32, 32, 32, 2.0F, NuclearScienceBlocks.blockFissionReactorCore.asItem());
 
-	@Override
-	protected List<Page> genPages() {
-		List<Page> pages = new ArrayList<>();
-		pages.add(new Page(new TextWrapperObject[] { new TextWrapperObject(10, 40, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p1l1"),
-				//
-				new TextWrapperObject(10, 50, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p1l2"),
-				//
-				new TextWrapperObject(10, 60, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p1l3"),
-				//
-				new TextWrapperObject(10, 70, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p1l4"),
-				//
-				new TextWrapperObject(10, 80, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p1l5"),
-				//
-				new TextWrapperObject(10, 90, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p1l6"),
-				//
-				new TextWrapperObject(10, 100, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p1l7"),
-				//
-				new TextWrapperObject(10, 110, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p1l8"),
-				//
-				new TextWrapperObject(10, 120, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p1l9"),
-				//
-				new TextWrapperObject(10, 130, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p1l10"),
-				//
-				new TextWrapperObject(10, 140, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p1l11"),
-				//
-				new TextWrapperObject(10, 150, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p1l12") }));
-
-		pages.add(new Page(new ImageWrapperObject[] {
-				//
-				new ImageWrapperObject(12, 38, 0, 0, 150, 79, 150, 79, References.ID + ":textures/screen/guidebook/fissionreactor1.png"),
-				//
-				new ImageWrapperObject(12, 117, 0, 0, 150, 79, 150, 79, References.ID + ":textures/screen/guidebook/fissionreactor2.png") }));
-
-		pages.add(new Page(new TextWrapperObject[] { new TextWrapperObject(10, 40, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p3l1"),
-				//
-				new TextWrapperObject(10, 50, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p3l2"),
-				//
-				new TextWrapperObject(10, 60, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p3l3"),
-				//
-				new TextWrapperObject(10, 70, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p3l4"),
-				//
-				new TextWrapperObject(10, 80, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p3l5"),
-				//
-				new TextWrapperObject(10, 90, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p3l6"),
-				//
-				new TextWrapperObject(10, 100, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p3l7"),
-				//
-				new TextWrapperObject(10, 110, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p3l8"),
-				//
-				new TextWrapperObject(10, 120, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p3l9") }));
-
-		pages.add(new Page(new ImageWrapperObject[] {
-				//
-				new ImageWrapperObject(12, 38, 0, 0, 150, 79, 150, 79, References.ID + ":textures/screen/guidebook/fissionreactor3.png"),
-				//
-				new ImageWrapperObject(12, 117, 0, 0, 150, 79, 150, 79, References.ID + ":textures/screen/guidebook/fissionreactor4.png") }));
-
-		pages.add(new Page(new TextWrapperObject[] { new TextWrapperObject(10, 40, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p5l1"),
-				//
-				new TextWrapperObject(10, 50, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p5l2"),
-				//
-				new TextWrapperObject(10, 60, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p5l3"),
-				//
-				new TextWrapperObject(10, 70, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p5l4"),
-				//
-				new TextWrapperObject(10, 80, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p5l5"),
-				//
-				new TextWrapperObject(10, 90, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p5l6"),
-				//
-				new TextWrapperObject(10, 100, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p5l7"),
-				//
-				new TextWrapperObject(10, 110, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p5l8"),
-				//
-				new TextWrapperObject(10, 120, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p5l9"),
-				//
-				new TextWrapperObject(10, 130, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p5l10"),
-				//
-				new TextWrapperObject(10, 140, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p5l11"),
-				//
-				new TextWrapperObject(10, 150, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p5l12"),
-				//
-				new TextWrapperObject(10, 160, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p5l13"),
-				//
-				new TextWrapperObject(10, 170, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p5l14"),
-				//
-				new TextWrapperObject(10, 180, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p5l15"), }));
-
-		pages.add(new Page(new TextWrapperObject[] { new TextWrapperObject(10, 40, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p6l1"),
-				//
-				new TextWrapperObject(10, 50, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p6l2"),
-				//
-				new TextWrapperObject(10, 60, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p6l3"),
-				//
-				new TextWrapperObject(10, 70, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p6l4"),
-				//
-				new TextWrapperObject(10, 80, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p6l5"),
-				//
-				new TextWrapperObject(10, 90, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p6l6"),
-				//
-				new TextWrapperObject(10, 100, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p6l7"),
-				//
-				new TextWrapperObject(10, 110, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p6l8"),
-				//
-				new TextWrapperObject(10, 120, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p6l9"),
-				//
-				new TextWrapperObject(10, 130, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p6l10"),
-				//
-				new TextWrapperObject(10, 140, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p6l11"),
-				//
-				new TextWrapperObject(10, 150, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p6l12"),
-				//
-				new TextWrapperObject(10, 160, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p6l13"),
-				//
-				new TextWrapperObject(10, 170, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p6l14"),
-				//
-				new TextWrapperObject(10, 180, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p6l15"), }));
-
-		pages.add(new Page(new TextWrapperObject[] { new TextWrapperObject(10, 40, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p7l1"),
-				//
-				new TextWrapperObject(10, 50, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p7l2"),
-				//
-				new TextWrapperObject(10, 60, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p7l3"),
-				//
-				new TextWrapperObject(10, 70, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p7l4"),
-				//
-				new TextWrapperObject(10, 80, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p7l5"),
-				//
-				new TextWrapperObject(10, 90, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p7l6"),
-				//
-				new TextWrapperObject(10, 100, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p7l7"),
-				//
-				new TextWrapperObject(10, 110, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p7l8"),
-				//
-				new TextWrapperObject(10, 120, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p7l9"),
-				//
-				new TextWrapperObject(10, 130, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p7l10"),
-				//
-				new TextWrapperObject(10, 140, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p7l11"),
-				//
-				new TextWrapperObject(10, 150, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p7l12"),
-				//
-				new TextWrapperObject(10, 160, 4210752, "guidebook.nuclearscience.chapter.fissionreactor.p7l13") }));
-
-		pages.add(new Page(new ImageWrapperObject[] {
-				//
-				new ImageWrapperObject(12, 38, 0, 0, 150, 79, 150, 79, References.ID + ":textures/screen/guidebook/fissionreactor5.png"),
-				//
-				new ImageWrapperObject(12, 117, 0, 0, 150, 79, 150, 79, References.ID + ":textures/screen/guidebook/fissionreactor6.png") }));
-
-		pages.add(new Page(new ImageWrapperObject[] {
-				//
-				new ImageWrapperObject(12, 38, 0, 0, 150, 79, 150, 79, References.ID + ":textures/screen/guidebook/fissionreactor7.png") }));
-
-		return pages;
+	public ChapterFissionReactor(Module module) {
+		super(module);
 	}
 
 	@Override
@@ -178,8 +28,38 @@ public class ChapterFissionReactor extends Chapter {
 	}
 
 	@Override
-	public String getTitleKey() {
-		return "guidebook.nuclearscience.chapter.fissionreactor";
+	public MutableComponent getTitle() {
+		return NuclearTextUtils.guidebook("chapter.fissionreactor");
+	}
+
+	@Override
+	public void addData() {
+		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.fissionreactor.l1")).setIndentions(1));
+		pageData.add(new ImageWrapperObject(0, 0, 0, 0, 150, 75, 150, 75, new ResourceLocation(References.ID, "textures/screen/guidebook/fissionreactor1.png")));
+		pageData.add(new ImageWrapperObject(0, 0, 0, 0, 150, 75, 150, 75, new ResourceLocation(References.ID, "textures/screen/guidebook/fissionreactor2.png")));
+		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.fissionreactor.l2")).setIndentions(1).setSeparateStart());
+		pageData.add(new ImageWrapperObject(0, 0, 0, 0, 150, 75, 150, 75, new ResourceLocation(References.ID, "textures/screen/guidebook/fissionreactor3.png")));
+		pageData.add(new ImageWrapperObject(0, 0, 0, 0, 150, 75, 150, 75, new ResourceLocation(References.ID, "textures/screen/guidebook/fissionreactor4.png")));
+		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.fissionreactor.l3")).setIndentions(1).setSeparateStart());
+		pageData.add(new TextWrapperObject(NuclearScienceItems.ITEM_FUELLEUO2.get().getDescription()).setSeparateStart());
+		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.fissionreactor.maxtemp", 1075)).setIndentions(1).setSeparateStart());
+		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.fissionreactor.cycles", new ItemStack(NuclearScienceItems.ITEM_FUELLEUO2.get()).getMaxDamage())).setIndentions(1).setSeparateStart());
+		pageData.add(new TextWrapperObject(NuclearScienceItems.ITEM_FUELHEUO2.get().getDescription()).setSeparateStart());
+		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.fissionreactor.maxtemp", 1417)).setIndentions(1).setSeparateStart());
+		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.fissionreactor.cycles", new ItemStack(NuclearScienceItems.ITEM_FUELHEUO2.get()).getMaxDamage())).setIndentions(1).setSeparateStart());
+		pageData.add(new TextWrapperObject(NuclearScienceItems.ITEM_FUELPLUTONIUM.get().getDescription()).setSeparateStart());
+		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.fissionreactor.maxtemp", 1075)).setIndentions(1).setSeparateStart());
+		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.fissionreactor.cycles", new ItemStack(NuclearScienceItems.ITEM_FUELPLUTONIUM.get()).getMaxDamage())).setIndentions(1).setSeparateStart());
+		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.fissionreactor.l4")).setSeparateStart());
+		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.fissionreactor.l5")).setIndentions(1).setSeparateStart());
+		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.fissionreactor.l6")).setIndentions(1).setSeparateStart());
+		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.fissionreactor.controlrod").withStyle(ChatFormatting.BOLD)));
+		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.fissionreactor.l7")));
+		pageData.add(new ImageWrapperObject(0, 0, 0, 0, 150, 75, 150, 75, new ResourceLocation(References.ID, "textures/screen/guidebook/fissionreactor5.png")));
+		pageData.add(new ImageWrapperObject(0, 0, 0, 0, 150, 75, 150, 75, new ResourceLocation(References.ID, "textures/screen/guidebook/fissionreactor6.png")));
+		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.fissionreactor.l8")).setIndentions(1).setSeparateStart());
+		pageData.add(new ImageWrapperObject(0, 0, 0, 0, 150, 79, 150, 79, new ResourceLocation(References.ID, "textures/screen/guidebook/fissionreactor7.png")));
+
 	}
 
 }

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "LLL",
+    "CCC",
+    "LLL"
+  ],
+  "key": {
+    "C": {
+      "item": "electrodynamics:ceramicplate"
+    },
+    "L": {
+      "tag": "forge:plates/lead"
+    }
+  },
+  "result": {
+    "item": "nuclearscience:blocklead",
+    "count": 2
+  }
+}

@@ -33,8 +33,8 @@ public class BlockQuantumCapacitor extends GenericMachineBlock {
 			}
 		}
 		if (tile instanceof TileQuantumCapacitor cap) {
-			addstack.getOrCreateTag().putInt("frequency", cap.frequency);
-			addstack.getOrCreateTag().putUUID("uuid", cap.uuid);
+			addstack.getOrCreateTag().putInt("frequency", cap.frequency.get());
+			addstack.getOrCreateTag().putUUID("uuid", cap.uuid.get());
 		}
 		return Arrays.asList(addstack);
 	}
@@ -43,11 +43,11 @@ public class BlockQuantumCapacitor extends GenericMachineBlock {
 	public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
 		BlockEntity tile = worldIn.getBlockEntity(pos);
 		if (tile instanceof TileQuantumCapacitor cap) {
-			cap.frequency = stack.getOrCreateTag().getInt("frequency");
+			cap.frequency.set(stack.getOrCreateTag().getInt("frequency"));
 			if (stack.getOrCreateTag().contains("uuid")) {
-				cap.uuid = stack.getOrCreateTag().getUUID("uuid");
+				cap.uuid.set(stack.getOrCreateTag().getUUID("uuid"));
 			} else if (placer instanceof Player pl) {
-				cap.uuid = pl.getGameProfile().getId();
+				cap.uuid.set(pl.getGameProfile().getId());
 			}
 		} else {
 			super.setPlacedBy(worldIn, pos, state, placer, stack);

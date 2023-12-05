@@ -4,8 +4,8 @@
 	"texture_size": [64, 64],
 	"ambientocclusion": "false",
 	"textures": {
-		"0": "nuclearscience:model/reactorcore",
-		"particle": "nuclearscience:model/reactorcore"
+		"0": "nuclearscience:block/model/reactorcore",
+		"particle": "nuclearscience:block/model/reactorcore"
 	},
 	"elements": [
 		{

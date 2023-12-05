@@ -6,8 +6,8 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.common.tile.TileQuantumCapacitor;
+import nuclearscience.registers.NuclearScienceMenuTypes;
 
 public class ContainerQuantumCapacitor extends GenericContainerBlockEntity<TileQuantumCapacitor> {
 
@@ -16,7 +16,7 @@ public class ContainerQuantumCapacitor extends GenericContainerBlockEntity<TileQ
 	}
 
 	public ContainerQuantumCapacitor(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
-		super(DeferredRegisters.CONTAINER_QUANTUMCAPACITOR.get(), id, playerinv, inventory, inventorydata);
+		super(NuclearScienceMenuTypes.CONTAINER_QUANTUMCAPACITOR.get(), id, playerinv, inventory, inventorydata);
 	}
 
 	@Override

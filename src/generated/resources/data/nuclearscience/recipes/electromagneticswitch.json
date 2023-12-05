@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "nuclearscience:electromagneticbooster"
+    },
+    {
+      "item": "electrodynamics:motor"
+    }
+  ],
+  "result": {
+    "item": "nuclearscience:electromagneticswitch"
+  }
+}

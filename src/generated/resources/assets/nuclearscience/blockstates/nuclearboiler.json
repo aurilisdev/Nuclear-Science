@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "nuclearscience:block/nuclearboiler",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "nuclearscience:block/nuclearboiler",
+      "y": 270
+    },
+    "facing=west": {
+      "model": "nuclearscience:block/nuclearboiler"
+    },
+    "facing=east": {
+      "model": "nuclearscience:block/nuclearboiler",
+      "y": 180
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "DCD",
+    "RDR",
+    "DCD"
+  ],
+  "key": {
+    "R": {
+      "item": "nuclearscience:fusionreactorcore"
+    },
+    "C": {
+      "tag": "forge:circuits/ultimate"
+    },
+    "D": {
+      "tag": "forge:cells/dark_matter"
+    }
+  },
+  "result": {
+    "item": "nuclearscience:quantumcapacitor"
+  }
+}

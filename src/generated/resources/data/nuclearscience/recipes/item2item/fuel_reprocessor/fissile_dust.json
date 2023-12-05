@@ -1,0 +1,25 @@
+{
+  "type": "nuclearscience:fuel_reprocessor_recipe",
+  "ticks": 200,
+  "usagepertick": 480.0,
+  "iteminputs": {
+    "count": 1,
+    "0": {
+      "tag": "forge:fuel_rods/spent",
+      "count": 1
+    }
+  },
+  "output": {
+    "item": "nuclearscience:fissiledust",
+    "count": 1
+  },
+  "experience": 0.0,
+  "itembi": {
+    "count": 1,
+    "0": {
+      "item": "nuclearscience:polonium210chunk",
+      "count": 1,
+      "chance": 0.5
+    }
+  }
+}

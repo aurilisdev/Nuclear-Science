@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "nuclearscience:block/chemicalextractor",
+      "y": 270
+    },
+    "facing=south": {
+      "model": "nuclearscience:block/chemicalextractor",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "nuclearscience:block/chemicalextractor",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "nuclearscience:block/chemicalextractor"
+    }
+  }
+}
