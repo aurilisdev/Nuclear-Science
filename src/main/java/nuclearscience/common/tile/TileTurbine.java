@@ -40,6 +40,8 @@ public class TileTurbine extends GenericTile implements ITickableSound, ISteamRe
 	protected CachedTileOutput output;
 
 	private boolean isSoundPlaying = false;
+	
+	private boolean destroyed = false;
 
 	@Override
 	public AABB getRenderBoundingBox() {
@@ -99,7 +101,7 @@ public class TileTurbine extends GenericTile implements ITickableSound, ISteamRe
 			hasCore.set(false);
 			coreLocation.set(TileQuarry.OUT_OF_REACH);
 			BlockState state = getBlockState();
-			if (state.hasProperty(BlockTurbine.RENDER)) {
+			if (state.hasProperty(BlockTurbine.RENDER) && !destroyed) {
 				level.setBlockAndUpdate(worldPosition, getBlockState().setValue(BlockTurbine.RENDER, true));
 			}
 		} else if (hasCore.get()) {
@@ -191,5 +193,16 @@ public class TileTurbine extends GenericTile implements ITickableSound, ISteamRe
 	@Override
 	public boolean isStillValid() {
 		return isRemoved();
+	}
+	
+	@Override
+	public void onBlockDestroyed() {
+		super.onBlockDestroyed();
+		if(level.isClientSide) {
+			return;
+		}
+		destroyed = true;
+		deconstructStructure();
+		
 	}
 }
