@@ -3,6 +3,8 @@ package nuclearscience.common.recipe.categories.fluiditem2fluid.specificmachines
 import electrodynamics.common.recipe.categories.fluiditem2fluid.FluidItem2FluidRecipe;
 import electrodynamics.common.recipe.recipeutils.CountableIngredient;
 import electrodynamics.common.recipe.recipeutils.FluidIngredient;
+import electrodynamics.common.recipe.recipeutils.ProbableFluid;
+import electrodynamics.common.recipe.recipeutils.ProbableItem;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -15,8 +17,8 @@ public class NuclearBoilerRecipe extends FluidItem2FluidRecipe {
 	public static final String MOD_ID = electrodynamics.api.References.ID;
 	public static final ResourceLocation RECIPE_ID = new ResourceLocation(MOD_ID, RECIPE_GROUP);
 
-	public NuclearBoilerRecipe(ResourceLocation recipeID, CountableIngredient[] inputItems, FluidIngredient[] inputFluids, FluidStack outputFluid, double experience) {
-		super(recipeID, inputItems, inputFluids, outputFluid, experience);
+	public NuclearBoilerRecipe(ResourceLocation recipeID, CountableIngredient[] inputItems, FluidIngredient[] inputFluids, FluidStack outputFluid, double experience, int ticks, double usagePerTick, ProbableItem[] itemBiproducts, ProbableFluid[] fluidBiproudcts) {
+		super(recipeID, inputItems, inputFluids, outputFluid, experience, ticks, usagePerTick, itemBiproducts, fluidBiproudcts);
 	}
 
 	@Override

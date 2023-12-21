@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PCP",
+    "MEM",
+    "PCP"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:plates/steel"
+    },
+    "C": {
+      "tag": "forge:circuits/elite"
+    },
+    "E": {
+      "tag": "forge:cells/empty"
+    },
+    "M": {
+      "item": "electrodynamics:motor"
+    }
+  },
+  "result": {
+    "item": "nuclearscience:reactorcore"
+  }
+}

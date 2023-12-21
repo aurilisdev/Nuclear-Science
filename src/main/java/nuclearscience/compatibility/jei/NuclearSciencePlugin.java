@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import electrodynamics.client.screen.tile.ScreenO2OProcessor;
 import electrodynamics.compatibility.jei.ElectrodynamicsJEIPlugin;
-import electrodynamics.compatibility.jei.recipecategories.psuedo.PsuedoItem2ItemRecipe;
+import electrodynamics.compatibility.jei.recipecategories.utils.psuedorecipes.types.PsuedoItem2ItemRecipe;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -20,12 +20,12 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeManager;
 import nuclearscience.client.screen.ScreenChemicalExtractor;
+import nuclearscience.client.screen.ScreenFissionReactorCore;
 import nuclearscience.client.screen.ScreenGasCentrifuge;
 import nuclearscience.client.screen.ScreenMSRFuelPreProcessor;
 import nuclearscience.client.screen.ScreenNuclearBoiler;
 import nuclearscience.client.screen.ScreenParticleInjector;
 import nuclearscience.client.screen.ScreenRadioactiveProcessor;
-import nuclearscience.client.screen.ScreenReactorCore;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
 import nuclearscience.common.recipe.categories.fluiditem2fluid.specificmachines.NuclearBoilerRecipe;
 import nuclearscience.common.recipe.categories.fluiditem2item.specificmachines.ChemicalExtractorRecipe;
@@ -93,7 +93,7 @@ public class NuclearSciencePlugin implements IModPlugin {
 		List<PsuedoItem2ItemRecipe> antiMatterRecipes = new ArrayList<>(NuclearSciencePsuedoRecipes.ANTI_MATTER_RECIPES);
 		registration.addRecipes(ParticleAcceleratorAntiMatterRecipeCategory.RECIPE_TYPE, antiMatterRecipes);
 
-		// Dark Matter
+		// Dark Mattere
 		List<PsuedoItem2ItemRecipe> darkMatterRecipes = new ArrayList<>(NuclearSciencePsuedoRecipes.DARK_MATTER_RECIPES);
 		registration.addRecipes(ParticleAcceleratorDarkMatterRecipeCategory.RECIPE_TYPE, darkMatterRecipes);
 
@@ -136,8 +136,8 @@ public class NuclearSciencePlugin implements IModPlugin {
 		registry.addRecipeClickArea(ScreenRadioactiveProcessor.class, 97, 31, 22, 15, RadioactiveProcessorRecipeCategory.RECIPE_TYPE);
 		registry.addRecipeClickArea(ScreenChemicalExtractor.class, 97, 31, 22, 15, ChemicalExtractorRecipeCategory.RECIPE_TYPE);
 		registry.addRecipeClickArea(ScreenGasCentrifuge.class, 105, 13, 20, 54, GasCentrifugeRecipeCategory.RECIPE_TYPE);
-		registry.addRecipeClickArea(ScreenReactorCore.class, 117, 43, 14, 13, FissionReactorRecipeCategory.RECIPE_TYPE);
-		registry.addRecipeClickArea(ScreenParticleInjector.class, 102, 33, 28, 14, ParticleAcceleratorAntiMatterRecipeCategory.RECIPE_TYPE, ParticleAcceleratorDarkMatterRecipeCategory.RECIPE_TYPE);
+		registry.addRecipeClickArea(ScreenFissionReactorCore.class, 117, 53, 14, 13, FissionReactorRecipeCategory.RECIPE_TYPE);
+		registry.addRecipeClickArea(ScreenParticleInjector.class, 102, 43, 28, 14, ParticleAcceleratorAntiMatterRecipeCategory.RECIPE_TYPE, ParticleAcceleratorDarkMatterRecipeCategory.RECIPE_TYPE);
 		registry.addRecipeClickArea(ScreenMSRFuelPreProcessor.class, 98, 40, 16, 16, MSRProcessorRecipeCategory.RECIPE_TYPE);
 	}
 

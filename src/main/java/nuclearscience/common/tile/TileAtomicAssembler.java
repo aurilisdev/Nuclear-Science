@@ -1,101 +1,143 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.api.item.ItemUtils;
+import electrodynamics.prefab.properties.Property;
+import electrodynamics.prefab.properties.PropertyType;
 import electrodynamics.prefab.tile.GenericTile;
-import electrodynamics.prefab.tile.components.ComponentType;
+import electrodynamics.prefab.tile.components.IComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
-import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentInventory;
+import electrodynamics.prefab.tile.components.type.ComponentInventory.InventoryBuilder;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
+import electrodynamics.prefab.utilities.ItemUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.ShulkerBoxBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.CapabilityItemHandler;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerAtomicAssembler;
+import nuclearscience.common.reloadlistener.AtomicAssemblerBlacklistRegister;
 import nuclearscience.common.settings.Constants;
+import nuclearscience.registers.NuclearScienceBlockTypes;
+import nuclearscience.registers.NuclearScienceBlocks;
+import nuclearscience.registers.NuclearScienceItems;
 
 public class TileAtomicAssembler extends GenericTile {
-	public int progress = 0;
+
+	public final Property<Integer> progress = property(new Property<>(PropertyType.Integer, "progress", 0));
 
 	public TileAtomicAssembler(BlockPos pos, BlockState state) {
-		super(DeferredRegisters.TILE_ATOMICASSEMBLER.get(), pos, state);
-		addComponent(new ComponentDirection());
-		addComponent(new ComponentTickable().tickServer(this::tickServer).tickCommon(this::tickCommon));
-		addComponent(new ComponentPacketHandler().guiPacketWriter(this::writeGuiPacket).guiPacketReader(this::readGuiPacket));
-		addComponent(new ComponentElectrodynamic(this).maxJoules(Constants.ATOMICASSEMBLER_USAGE_PER_TICK * 20).voltage(Constants.ATOMICASSEMBLER_VOLTAGE).input(Direction.DOWN));
+		super(NuclearScienceBlockTypes.TILE_ATOMICASSEMBLER.get(), pos, state);
+
+		addComponent(new ComponentTickable(this).tickCommon(this::tickServer));
+		addComponent(new ComponentPacketHandler(this));
+		addComponent(new ComponentElectrodynamic(this, false, true).maxJoules(Constants.ATOMICASSEMBLER_USAGE_PER_TICK * 20).voltage(Constants.ATOMICASSEMBLER_VOLTAGE).setInputDirections(Direction.DOWN));
 		// The slot == 6 has to be there to allow items into the input slot.
-		addComponent(new ComponentInventory(this).size(8).faceSlots(Direction.UP, 0, 1, 2, 3, 4, 5, 6).slotFaces(6, Direction.DOWN, Direction.WEST, Direction.SOUTH, Direction.NORTH, Direction.EAST).valid((slot, stack, i) -> slot == 6 || slot < 6 && stack.is(DeferredRegisters.ITEM_CELLDARKMATTER.get())).shouldSendInfo());
-		addComponent(new ComponentContainerProvider("container.atomicassembler").createMenu((id, player) -> new ContainerAtomicAssembler(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
-	}
-
-	private void tickCommon(ComponentTickable tickable) {
-		ComponentInventory inv = getComponent(ComponentType.Inventory);
-		ComponentElectrodynamic electro = getComponent(ComponentType.Electrodynamic);
-		ItemStack input = inv.getItem(6);
-		ItemStack output = inv.getItem(7);
-		boolean validItem = (ItemStack.isSame(input, output) && output.getCount() + 1 <= output.getMaxStackSize() || output.isEmpty()) && !input.isEmpty() && !ItemUtils.testItems(input.getItem(), DeferredRegisters.ITEM_CELLDARKMATTER.get()) && !input.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).isPresent();
-		validItem = validItem && !(input.getItem() instanceof BlockItem bitem && bitem.getBlock() instanceof ShulkerBoxBlock) && input.getItem() != DeferredRegisters.blockQuantumCapacitor.asItem();
-		boolean canProcess = electro.getJoulesStored() >= Constants.ATOMICASSEMBLER_USAGE_PER_TICK && validItem;
-		if (canProcess) {
-			for (int index = 0; index < 6; index++) {
-				ItemStack dmSlot = inv.getItem(index);
-				if (dmSlot.is(DeferredRegisters.ITEM_CELLDARKMATTER.get())) {
-					if (dmSlot.getDamageValue() >= dmSlot.getMaxDamage()) {
-						inv.setItem(index, ItemStack.EMPTY);
-					}
-				} else {
-					canProcess = false;
-				}
-			}
-		} else {
-			progress = 0;
-		}
-
-		boolean canProduce = false;
-		if (canProcess) {
-			if (progress++ >= Constants.ATOMICASSEMBLER_REQUIRED_TICKS) {
-				canProduce = true;
-			}
-			electro.joules(electro.getJoulesStored() - Constants.ATOMICASSEMBLER_USAGE_PER_TICK);
-		}
-		if (canProduce) {
-			progress = 0;
-			for (int index = 0; index < 6; index++) {
-				ItemStack dmSlot = inv.getItem(index);
-				if (dmSlot.is(DeferredRegisters.ITEM_CELLDARKMATTER.get())) {
-					if (dmSlot.getDamageValue() >= dmSlot.getMaxDamage()) {
-						inv.setItem(index, ItemStack.EMPTY);
-					}
-					dmSlot.setDamageValue(dmSlot.getDamageValue() + 1);
-				}
-			}
-			if (output.isEmpty()) {
-				inv.setItem(7, input.copy());
-				inv.getItem(7).setCount(1);
-			} else {
-				output.setCount(output.getCount() + 1);
-			}
-		}
+		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().inputs(7).outputs(1)).setSlotsByDirection(Direction.UP, 0, 1, 2, 3, 4, 5).setDirectionsBySlot(6, Direction.EAST, Direction.SOUTH).setDirectionsBySlot(7, Direction.WEST, Direction.NORTH).valid((slot, stack, i) -> slot == 6 || slot < 6 && stack.is(NuclearScienceItems.ITEM_CELLDARKMATTER.get())));
+		addComponent(new ComponentContainerProvider("container.atomicassembler", this).createMenu((id, player) -> new ContainerAtomicAssembler(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
 	}
 
 	private void tickServer(ComponentTickable tickable) {
-		if (tickable.getTicks() % 20 == 0) {
-			this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendGuiPacketToTracking();
+
+		ComponentInventory inv = getComponent(IComponentType.Inventory);
+
+		ItemStack input = inv.getItem(6);
+
+		if (input.isEmpty()) {
+			progress.set(0);
+			return;
+		}
+
+		ItemStack output = inv.getItem(7);
+
+		boolean validItem = validateDupeItem(input) && (output.isEmpty() || ItemStack.isSame(input, output) && output.getCount() + 1 <= output.getMaxStackSize());
+
+		if (!validItem) {
+			progress.set(0);
+			return;
+		}
+
+		for (int index = 0; index < 6; index++) {
+
+			ItemStack dmCell = inv.getItem(index);
+
+			if (dmCell.isEmpty() || dmCell.getItem() != NuclearScienceItems.ITEM_CELLDARKMATTER.get()) {
+				progress.set(0);
+				return;
+			}
+
+			if (dmCell.getDamageValue() >= dmCell.getMaxDamage()) {
+				progress.set(0);
+				inv.setItem(index, ItemStack.EMPTY);
+				return;
+			}
+
+		}
+
+		ComponentElectrodynamic electro = getComponent(IComponentType.Electrodynamic);
+
+		if (electro.getJoulesStored() < Constants.ATOMICASSEMBLER_USAGE_PER_TICK) {
+			return;
+		}
+
+		progress.set(progress.get() + 1);
+
+		electro.joules(electro.getJoulesStored() - Constants.ATOMICASSEMBLER_USAGE_PER_TICK);
+
+		if (progress.get() < Constants.ATOMICASSEMBLER_REQUIRED_TICKS) {
+			return;
+		}
+
+		progress.set(0);
+
+		for (int index = 0; index < 6; index++) {
+
+			ItemStack dmCell = inv.getItem(index);
+
+			dmCell.setDamageValue(dmCell.getDamageValue() + 1);
+
+			if (dmCell.getDamageValue() >= dmCell.getMaxDamage()) {
+				inv.setItem(index, ItemStack.EMPTY);
+			}
+		}
+
+		if (output.isEmpty()) {
+
+			inv.setItem(7, new ItemStack(input.getItem()));
+
+		} else {
+
+			output.setCount(output.getCount() + 1);
+
 		}
 	}
 
-	private void writeGuiPacket(CompoundTag compound) {
-		compound.putInt("progress", progress);
+	private boolean validateDupeItem(ItemStack stack) {
+
+		if (stack.hasTag()) { // this should filter out shulker boxes with items
+			return false;
+		}
+
+		if (ItemUtils.testItems(stack.getItem(), NuclearScienceItems.ITEM_CELLDARKMATTER.get()) && !stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).isPresent()) {
+			return false;
+		}
+
+		if (stack.getItem() instanceof BlockItem blockItem) {
+
+			if (blockItem.getBlock() == NuclearScienceBlocks.blockQuantumCapacitor) {
+				return false;
+			}
+
+		}
+
+		if (AtomicAssemblerBlacklistRegister.INSTANCE.isBlacklisted(stack.getItem())) {
+			return false;
+		}
+
+		return true;
+
 	}
 
-	private void readGuiPacket(CompoundTag compound) {
-		progress = compound.getInt("progress");
-	}
 }

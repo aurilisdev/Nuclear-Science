@@ -1,0 +1,32 @@
+{
+  "gascentrifuge": {
+    "subtitle": "subtitles.nuclearscience.gascentrifuge",
+    "sounds": [
+      "nuclearscience:gascentrifuge"
+    ]
+  },
+  "geiger": {
+    "subtitle": "subtitles.nuclearscience.geiger",
+    "sounds": [
+      "nuclearscience:geiger"
+    ]
+  },
+  "nuclearboiler": {
+    "subtitle": "subtitles.nuclearscience.nuclearboiler",
+    "sounds": [
+      "nuclearscience:nuclearboiler"
+    ]
+  },
+  "siren": {
+    "subtitle": "subtitles.nuclearscience.siren",
+    "sounds": [
+      "nuclearscience:siren"
+    ]
+  },
+  "turbine": {
+    "subtitle": "subtitles.nuclearscience.turbine",
+    "sounds": [
+      "nuclearscience:turbine"
+    ]
+  }
+}

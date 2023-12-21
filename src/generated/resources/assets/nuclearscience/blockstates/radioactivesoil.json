@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "snowy=false": {
+      "model": "nuclearscience:block/radioactivesoil"
+    },
+    "snowy=true": {
+      "model": "minecraft:block/grass_block_snow"
+    }
+  }
+}

@@ -4,11 +4,11 @@ import java.util.List;
 
 import electrodynamics.api.capability.ElectrodynamicsCapabilities;
 import electrodynamics.prefab.tile.GenericTile;
-import electrodynamics.prefab.tile.components.ComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentDirection;
+import electrodynamics.prefab.tile.components.IComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
+import electrodynamics.prefab.utilities.BlockEntityUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -17,8 +17,9 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.common.item.ItemFrequencyCard;
+import nuclearscience.registers.NuclearScienceBlockTypes;
+import org.jetbrains.annotations.NotNull;
 
 public class TileTeleporter extends GenericTile {
 	public int xCoord;
@@ -28,11 +29,11 @@ public class TileTeleporter extends GenericTile {
 	public String world;
 
 	public TileTeleporter(BlockPos pos, BlockState state) {
-		super(DeferredRegisters.TILE_TELEPORTER.get(), pos, state);
-		addComponent(new ComponentDirection());
-		addComponent(new ComponentTickable().tickServer(this::tickServer));
-		addComponent(new ComponentPacketHandler());
-		addComponent(new ComponentElectrodynamic(this).maxJoules(5000000).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 4).input(Direction.DOWN));
+		super(NuclearScienceBlockTypes.TILE_TELEPORTER.get(), pos, state);
+
+		addComponent(new ComponentTickable(this).tickServer(this::tickServer));
+		addComponent(new ComponentPacketHandler(this));
+		addComponent(new ComponentElectrodynamic(this, false, true).maxJoules(5000000).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 4).setInputDirections(Direction.DOWN));
 
 	}
 
@@ -42,9 +43,10 @@ public class TileTeleporter extends GenericTile {
 	}
 
 	protected void tickServer(ComponentTickable tickable) {
-		ComponentElectrodynamic electro = getComponent(ComponentType.Electrodynamic);
-		if (tickable.getTicks() % (electro.getJoulesStored() == 0 ? 40 : 15) == 0) {
-			this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendGuiPacketToTracking();
+		ComponentElectrodynamic electro = getComponent(IComponentType.Electrodynamic);
+		boolean powered = electro.getJoulesStored() > 0;
+		if (BlockEntityUtils.isLit(this) ^ powered) {
+			BlockEntityUtils.updateLit(this, powered);
 		}
 		if (cooldown <= 0) {
 			cooldown = 20;
@@ -66,7 +68,7 @@ public class TileTeleporter extends GenericTile {
 	}
 
 	@Override
-	public void saveAdditional(CompoundTag compound) {
+	public void saveAdditional(@NotNull CompoundTag compound) { // TODO: Maybe sent information to the client?
 		if (world != null) {
 			compound.putInt("xCoord", xCoord);
 			compound.putInt("yCoord", yCoord);
@@ -77,7 +79,7 @@ public class TileTeleporter extends GenericTile {
 	}
 
 	@Override
-	public void load(CompoundTag compound) {
+	public void load(@NotNull CompoundTag compound) {
 		super.load(compound);
 		if (compound.contains("world")) {
 			xCoord = compound.getInt("xCoord");

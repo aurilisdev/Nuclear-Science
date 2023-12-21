@@ -1,0 +1,24 @@
+{
+  "type": "nuclearscience:nuclear_boiler_recipe",
+  "ticks": 800,
+  "usagepertick": 750.0,
+  "iteminputs": {
+    "count": 1,
+    "0": {
+      "tag": "forge:yellow_cake_uranium",
+      "count": 1
+    }
+  },
+  "fluidinputs": {
+    "count": 1,
+    "0": {
+      "tag": "forge:hydrofluoric_acid",
+      "amount": 800
+    }
+  },
+  "output": {
+    "fluid": "nuclearscience:fluiduraniumhexafluoride",
+    "amount": 2500
+  },
+  "experience": 0.25
+}

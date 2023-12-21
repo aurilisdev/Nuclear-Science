@@ -3,8 +3,8 @@
 	"parent": "minecraft:block/cube_all",
 	"texture_size": [64,64],
 	"textures": {
-		"0": "nuclearscience:model/meltedreactor",
-		"particle": "nuclearscience:model/meltedreactor"
+		"0": "nuclearscience:block/model/meltedreactor",
+		"particle": "electrodynamics:block/steelcasing"
 	},
 	"elements": [
 		{

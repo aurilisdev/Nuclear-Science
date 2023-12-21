@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "nuclearscience:block/quantumcapacitor",
+      "y": 270
+    },
+    "facing=south": {
+      "model": "nuclearscience:block/quantumcapacitor",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "nuclearscience:block/quantumcapacitor",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "nuclearscience:block/quantumcapacitor"
+    }
+  }
+}
