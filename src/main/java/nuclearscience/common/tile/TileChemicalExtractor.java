@@ -30,8 +30,9 @@ public class TileChemicalExtractor extends GenericTile {
 		addComponent(new ComponentTickable(this).tickClient(this::tickClient));
 		addComponent(new ComponentPacketHandler(this));
 		addComponent(new ComponentElectrodynamic(this, false, true).setInputDirections(Direction.DOWN).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 2));
-		addComponent(new ComponentFluidHandlerMulti(this).setInputTanks(1, MAX_TANK_CAPACITY).setInputDirections(Direction.values()).setRecipeType(NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE.get()));
-		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().processors(1, 1, 1, 0).bucketInputs(1).upgrades(3)).setSlotsByDirection(Direction.UP, 0).setSlotsByDirection(Direction.DOWN, 1).validUpgrades(ContainerChemicalExtractor.VALID_UPGRADES).valid(machineValidator()));
+		addComponent(new ComponentFluidHandlerMulti(this).setInputTanks(1, MAX_TANK_CAPACITY).setInputDirections(Direction.UP, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST).setRecipeType(NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE.get()));
+		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().processors(1, 1, 1, 0).bucketInputs(1).upgrades(3)).setDirectionsBySlot(0, Direction.UP, Direction.EAST, Direction.WEST, Direction.NORTH, Direction.SOUTH).setDirectionsBySlot(1, Direction.UP, Direction.EAST, Direction.WEST, Direction.NORTH, Direction.SOUTH).validUpgrades(ContainerChemicalExtractor.VALID_UPGRADES)
+				.valid(machineValidator()));
 		addComponent(new ComponentProcessor(this).canProcess(component -> component.consumeBucket().canProcessFluidItem2ItemRecipe(component, NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE.get())).process(component -> component.processFluidItem2ItemRecipe(component)));
 		addComponent(new ComponentContainerProvider("container.chemicalextractor", this).createMenu((id, player) -> new ContainerChemicalExtractor(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
 	}
