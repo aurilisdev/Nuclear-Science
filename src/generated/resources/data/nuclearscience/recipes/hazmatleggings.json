@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WWW",
+    "LlL",
+    "WCW"
+  ],
+  "key": {
+    "C": {
+      "tag": "forge:circuits/basic"
+    },
+    "W": {
+      "tag": "minecraft:wool"
+    },
+    "L": {
+      "tag": "forge:plates/lead"
+    },
+    "l": {
+      "item": "minecraft:leather_leggings"
+    }
+  },
+  "result": {
+    "item": "nuclearscience:hazmatlegs"
+  }
+}

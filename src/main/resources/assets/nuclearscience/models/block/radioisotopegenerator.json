@@ -3,8 +3,8 @@
 	"parent": "block/cube_all",
 	"ambientocclusion": "false",
 	"textures": {
-		"0": "nuclearscience:model/radioisotopegenerator",
-		"particle": "nuclearscience:model/radioisotopegenerator"
+		"0": "nuclearscience:block/model/radioisotopegenerator",
+		"particle": "electrodynamics:block/steelcasing"
 	},
 	"elements": [
 		{

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GLG",
+    "GLG",
+    "GLG"
+  ],
+  "key": {
+    "G": {
+      "tag": "forge:glass"
+    },
+    "L": {
+      "tag": "forge:pellets/uranium238"
+    }
+  },
+  "result": {
+    "item": "nuclearscience:fuelleuo2"
+  }
+}

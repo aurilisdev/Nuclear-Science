@@ -1,0 +1,24 @@
+{
+  "type": "nuclearscience:radioactive_processor_recipe",
+  "ticks": 300,
+  "usagepertick": 480.0,
+  "iteminputs": {
+    "count": 1,
+    "0": {
+      "tag": "forge:oxide/actinium",
+      "count": 1
+    }
+  },
+  "fluidinputs": {
+    "count": 1,
+    "0": {
+      "tag": "forge:hydrofluoric_acid",
+      "amount": 100
+    }
+  },
+  "output": {
+    "item": "nuclearscience:actinium225",
+    "count": 1
+  },
+  "experience": 0.0
+}

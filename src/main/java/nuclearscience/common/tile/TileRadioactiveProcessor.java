@@ -1,51 +1,49 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.api.electricity.CapabilityElectrodynamic;
-import electrodynamics.common.recipe.categories.fluiditem2item.FluidItem2ItemRecipe;
-import electrodynamics.prefab.tile.GenericTileTicking;
-import electrodynamics.prefab.tile.components.ComponentType;
+import electrodynamics.api.capability.ElectrodynamicsCapabilities;
+import electrodynamics.prefab.tile.GenericTile;
+import electrodynamics.prefab.tile.components.IComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
-import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
 import electrodynamics.prefab.tile.components.type.ComponentInventory;
+import electrodynamics.prefab.tile.components.type.ComponentInventory.InventoryBuilder;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
-import electrodynamics.prefab.tile.components.type.ComponentProcessorType;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
+import electrodynamics.prefab.utilities.BlockEntityUtils;
 import net.minecraft.util.Direction;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerRadioactiveProcessor;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
-import nuclearscience.common.settings.Constants;
+import nuclearscience.registers.NuclearScienceBlockTypes;
 
-public class TileRadioactiveProcessor extends GenericTileTicking {
+public class TileRadioactiveProcessor extends GenericTile {
 
-    public static final int MAX_TANK_CAPACITY = 5000;
+	public static final int MAX_TANK_CAPACITY = 5000;
 
-    public TileRadioactiveProcessor() {
-	super(DeferredRegisters.TILE_RADIOACTIVEPROCESSOR.get());
-	addComponent(new ComponentTickable().tickClient(this::tickClient));
-	addComponent(new ComponentDirection());
-	addComponent(new ComponentPacketHandler());
-	addComponent(new ComponentElectrodynamic(this).voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 4)
-		.maxJoules(Constants.RADIOACTIVEPROCESSOR_USAGE_PER_TICK * 10).relativeInput(Direction.NORTH));
-	addComponent(new ComponentFluidHandlerMulti(this)
-		.setAddFluidsValues(FluidItem2ItemRecipe.class, NuclearScienceRecipeInit.RADIOACTIVE_PROCESSOR_TYPE, MAX_TANK_CAPACITY, true, false)
-		.input(Direction.UP));
-	addComponent(new ComponentInventory(this).size(6).faceSlots(Direction.UP, 0).faceSlots(Direction.DOWN, 1).slotFaces(2, Direction.SOUTH,
-		Direction.NORTH, Direction.EAST, Direction.WEST));
-	addComponent(new ComponentProcessor(this).upgradeSlots(3, 4, 5).type(ComponentProcessorType.ObjectToObject)
-		.usage(Constants.RADIOACTIVEPROCESSOR_USAGE_PER_TICK).requiredTicks((long) Constants.RADIOACTIVEPROCESSOR_REQUIRED_TICKS)
-		.canProcess(component -> component.consumeBucket(2).canProcessFluidItem2ItemRecipe(component, FluidItem2ItemRecipe.class,
-			NuclearScienceRecipeInit.RADIOACTIVE_PROCESSOR_TYPE))
-		.process(component -> component.processFluidItem2ItemRecipe(component, FluidItem2ItemRecipe.class)));
-	addComponent(new ComponentContainerProvider("container.radioactiveprocessor")
-		.createMenu((id, player) -> new ContainerRadioactiveProcessor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
-    }
+	public TileRadioactiveProcessor() {
+		super(NuclearScienceBlockTypes.TILE_RADIOACTIVEPROCESSOR.get());
+		addComponent(new ComponentTickable(this));
+		addComponent(new ComponentPacketHandler(this));
+		addComponent(new ComponentElectrodynamic(this, false, true).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 4).setInputDirections(Direction.NORTH));
+		addComponent(new ComponentFluidHandlerMulti(this).setInputTanks(1, MAX_TANK_CAPACITY).setInputDirections(Direction.UP).setRecipeType(NuclearScienceRecipeInit.RADIOACTIVE_PROCESSOR_TYPE));
+		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().processors(1, 1, 1, 0).bucketInputs(1).upgrades(3)).validUpgrades(ContainerRadioactiveProcessor.VALID_UPGRADES).valid(machineValidator()).setDirectionsBySlot(0, Direction.EAST).setDirectionsBySlot(1, Direction.WEST, Direction.DOWN));
+		addComponent(new ComponentProcessor(this).canProcess(this::shouldProcessRecipe).process(component -> component.processFluidItem2ItemRecipe(component)));
+		addComponent(new ComponentContainerProvider("container.radioactiveprocessor", this).createMenu((id, player) -> new ContainerRadioactiveProcessor(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
+	}
 
-    protected void tickClient(ComponentTickable tickable) {
+	private boolean shouldProcessRecipe(ComponentProcessor component) {
+		component.consumeBucket();
+		boolean canProcess = component.canProcessFluidItem2ItemRecipe(component, NuclearScienceRecipeInit.RADIOACTIVE_PROCESSOR_TYPE);
+		if (BlockEntityUtils.isLit(this) ^ canProcess) {
+			BlockEntityUtils.updateLit(this, canProcess);
+		}
+		return canProcess;
+	}
 
-    }
+	@Override
+	public int getComparatorSignal() {
+		return this.<ComponentProcessor>getComponent(IComponentType.Processor).isActive() ? 15 : 0;
+	}
 
 }

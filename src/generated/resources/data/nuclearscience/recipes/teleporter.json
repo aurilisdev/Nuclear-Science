@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "TCT",
+    "HEH",
+    "PDP"
+  ],
+  "key": {
+    "P": {
+      "item": "minecraft:ender_pearl"
+    },
+    "C": {
+      "item": "electrodynamics:ceramicfuse"
+    },
+    "T": {
+      "tag": "forge:plates/titaniumcarbide"
+    },
+    "D": {
+      "tag": "forge:cells/dark_matter"
+    },
+    "E": {
+      "tag": "forge:circuits/elite"
+    },
+    "H": {
+      "tag": "forge:plates/hslasteel"
+    }
+  },
+  "result": {
+    "item": "nuclearscience:teleporter"
+  }
+}

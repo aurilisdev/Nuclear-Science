@@ -2,20 +2,21 @@ package nuclearscience.common.tile;
 
 import java.util.UUID;
 
-import electrodynamics.api.electricity.CapabilityElectrodynamic;
-import electrodynamics.common.network.ElectricityUtilities;
-import electrodynamics.prefab.tile.GenericTileTicking;
-import electrodynamics.prefab.tile.components.ComponentType;
+import electrodynamics.api.capability.ElectrodynamicsCapabilities;
+import electrodynamics.api.capability.types.electrodynamic.ICapabilityElectrodynamic.LoadProfile;
+import electrodynamics.prefab.properties.Property;
+import electrodynamics.prefab.properties.PropertyType;
+import electrodynamics.prefab.tile.GenericTile;
+import electrodynamics.prefab.tile.components.IComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
+import electrodynamics.prefab.utilities.ElectricityUtils;
 import electrodynamics.prefab.utilities.object.CachedTileOutput;
 import electrodynamics.prefab.utilities.object.TransferPack;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion.Mode;
@@ -23,186 +24,136 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerQuantumCapacitor;
 import nuclearscience.common.world.QuantumCapacitorData;
+import nuclearscience.registers.NuclearScienceBlockTypes;
 
-public class TileQuantumCapacitor extends GenericTileTicking implements IEnergyStorage {
-    public static final double DEFAULT_MAX_JOULES = Double.MAX_VALUE;
-    public static final double DEFAULT_VOLTAGE = 1920.0;
-    public double outputJoules = 359.0;
-    public int frequency = 0;
-    public UUID uuid = UUID.randomUUID();
-    private CachedTileOutput outputCache;
-    private CachedTileOutput outputCache2;
+public class TileQuantumCapacitor extends GenericTile implements IEnergyStorage {
+	public static final double DEFAULT_MAX_JOULES = Double.MAX_VALUE;
+	public static final double DEFAULT_VOLTAGE = 1920.0;
+	public Property<Double> outputJoules = property(new Property<>(PropertyType.Double, "outputJoules", 359.0));
+	public Property<Integer> frequency = property(new Property<>(PropertyType.Integer, "frequency", 0));
+	public Property<Double> storedJoules = property(new Property<>(PropertyType.Double, "capjoules", 0.0));// Work around for now until we make a capability for the overworld
+	public Property<UUID> uuid = property(new Property<>(PropertyType.UUID, "uuid", UUID.randomUUID()));
+	private CachedTileOutput outputCache;
+	private CachedTileOutput outputCache2;
 
-    public TileQuantumCapacitor() {
-	super(DeferredRegisters.TILE_QUANTUMCAPACITOR.get());
-	addComponent(new ComponentTickable().tickServer(this::tickServer));
-	addComponent(new ComponentPacketHandler().guiPacketReader(this::readGUIPacket).guiPacketWriter(this::writeGUIPacket));
-	addComponent(new ComponentElectrodynamic(this).voltage(16 * CapabilityElectrodynamic.DEFAULT_VOLTAGE).output(Direction.DOWN)
-		.output(Direction.UP).input(Direction.WEST).input(Direction.EAST).input(Direction.SOUTH).input(Direction.NORTH)
-		.receivePower(this::receivePower).setJoules(this::setJoulesStored).getJoules(this::getJoulesStored));
-	addComponent(new ComponentInventory(this));
-	addComponent(new ComponentContainerProvider("container.quantumcapacitor")
-		.createMenu((id, player) -> new ContainerQuantumCapacitor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
+	public TileQuantumCapacitor() {
+		super(NuclearScienceBlockTypes.TILE_QUANTUMCAPACITOR.get());
+		addComponent(new ComponentTickable(this).tickServer(this::tickServer));
+		addComponent(new ComponentPacketHandler(this));
+		addComponent(new ComponentElectrodynamic(this, true, true).voltage(16 * ElectrodynamicsCapabilities.DEFAULT_VOLTAGE).setOutputDirections(Direction.UP, Direction.DOWN).setInputDirections(Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST).receivePower(this::receivePower).setJoules(this::setJoulesStored).getJoules(this::getJoulesStored).getConnectedLoad(this::getConnectedLoad));
+		addComponent(new ComponentInventory(this));
+		addComponent(new ComponentContainerProvider("container.quantumcapacitor", this).createMenu((id, player) -> new ContainerQuantumCapacitor(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
 
-    }
-
-    public double getOutputJoules() {
-	return outputJoules;
-    }
-
-    public void tickServer(ComponentTickable tickable) {
-	if (outputCache == null) {
-	    outputCache = new CachedTileOutput(world, new BlockPos(pos).offset(Direction.UP));
 	}
-	if (outputCache2 == null) {
-	    outputCache2 = new CachedTileOutput(world, new BlockPos(pos).offset(Direction.DOWN));
+
+	public double getOutputJoules() {
+		return outputJoules.get();
 	}
-	if (tickable.getTicks() % 40 == 0) {
-	    outputCache.update();
-	    outputCache2.update();
-	}
-	double joules = getJoulesStored();
-	if (joules > 0 && outputCache.valid()) {
-	    double sent = ElectricityUtilities.receivePower(outputCache.getSafe(), Direction.DOWN,
-		    TransferPack.joulesVoltage(Math.min(joules, outputJoules), DEFAULT_VOLTAGE), false).getJoules();
-	    QuantumCapacitorData.get(world).setJoules(uuid, frequency, getJoulesStored() - sent);
-	}
-	joules = getJoulesStored();
-	if (joules > 0 && outputCache2.valid()) {
-	    double sent = ElectricityUtilities.receivePower(outputCache2.getSafe(), Direction.UP,
-		    TransferPack.joulesVoltage(Math.min(joules, outputJoules), DEFAULT_VOLTAGE), false).getJoules();
-	    QuantumCapacitorData.get(world).setJoules(uuid, frequency, getJoulesStored() - sent);
-	}
-	if (tickable.getTicks() % 50 == 0) {
-	    this.<ComponentPacketHandler>getComponent(ComponentType.PacketHandler).sendGuiPacketToTracking();
-	}
-    }
 
-    public double joulesClient = 0;
-
-    public void writeGUIPacket(CompoundNBT nbt) {
-	nbt.putDouble("joulesClient", getJoulesStored());
-	nbt.putInt("frequency", frequency);
-	nbt.putUniqueId("uuid", uuid);
-	nbt.putDouble("outputJoules", outputJoules);
-    }
-
-    public void readGUIPacket(CompoundNBT nbt) {
-	joulesClient = nbt.getDouble("joulesClient");
-	frequency = nbt.getInt("frequency");
-	uuid = nbt.getUniqueId("uuid");
-	outputJoules = nbt.getDouble("outputJoules");
-    }
-
-    @Override
-    public CompoundNBT write(CompoundNBT compound) {
-	super.write(compound);
-	compound.putInt("frequency", frequency);
-	compound.putDouble("outputJoules", outputJoules);
-	compound.putUniqueId("uuid", uuid);
-	return compound;
-    }
-
-    @Override
-    public void read(BlockState state, CompoundNBT compound) {
-	super.read(state, compound);
-	outputJoules = compound.getDouble("outputJoules");
-	frequency = compound.getInt("frequency");
-	if (compound.hasUniqueId("uuid")) {
-	    uuid = compound.getUniqueId("uuid");
-	}
-    }
-
-    @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction facing) {
-	if (capability == CapabilityEnergy.ENERGY) {
-	    lastDir = facing;
-	    return (LazyOptional<T>) LazyOptional.of(() -> this);
-	}
-	return super.getCapability(capability, facing);
-    }
-
-    private Direction lastDir = null;
-
-    public TransferPack receivePower(TransferPack transfer, boolean debug) {
-	double joules = getJoulesStored();
-	if (lastDir != Direction.UP && lastDir != Direction.DOWN) {
-	    double received = Math.min(Math.min(DEFAULT_MAX_JOULES, transfer.getJoules()), DEFAULT_MAX_JOULES - joules);
-	    if (!debug) {
-		if (transfer.getVoltage() == DEFAULT_VOLTAGE) {
-		    joules += received;
+	public void tickServer(ComponentTickable tickable) {
+		if (outputCache == null) {
+			outputCache = new CachedTileOutput(level, new BlockPos(worldPosition).relative(Direction.UP));
 		}
-		QuantumCapacitorData.get(world).setJoules(uuid, frequency, joules);
-		if (transfer.getVoltage() > DEFAULT_VOLTAGE) {
-		    world.setBlockState(pos, Blocks.AIR.getDefaultState());
-		    world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), (float) Math.log10(10 + transfer.getVoltage() / DEFAULT_VOLTAGE),
-			    Mode.DESTROY);
-		    return TransferPack.EMPTY;
+		if (outputCache2 == null) {
+			outputCache2 = new CachedTileOutput(level, new BlockPos(worldPosition).relative(Direction.DOWN));
 		}
-	    }
-	    return TransferPack.joulesVoltage(received, transfer.getVoltage());
+		if (tickable.getTicks() % 40 == 0) {
+			outputCache.update(new BlockPos(worldPosition).relative(Direction.UP));
+			outputCache2.update(new BlockPos(worldPosition).relative(Direction.DOWN));
+		}
+		double joules = getJoulesStored();
+		if (joules > 0 && outputCache.valid()) {
+			double sent = ElectricityUtils.receivePower(outputCache.getSafe(), Direction.DOWN, TransferPack.joulesVoltage(Math.min(joules, outputJoules.get()), DEFAULT_VOLTAGE), false).getJoules();
+			QuantumCapacitorData.get(level).setJoules(uuid.get(), frequency.get(), getJoulesStored() - sent);
+		}
+		joules = getJoulesStored();
+		if (joules > 0 && outputCache2.valid()) {
+			double sent = ElectricityUtils.receivePower(outputCache2.getSafe(), Direction.UP, TransferPack.joulesVoltage(Math.min(joules, outputJoules.get()), DEFAULT_VOLTAGE), false).getJoules();
+			QuantumCapacitorData.get(level).setJoules(uuid.get(), frequency.get(), getJoulesStored() - sent);
+		}
+		storedJoules.set(getJoulesStored());
 	}
-	return TransferPack.EMPTY;
-    }
 
-    @Override
-    @Deprecated
-    public int receiveEnergy(int maxReceive, boolean simulate) {
-	int calVoltage = 120;
-	TransferPack pack = receivePower(TransferPack.joulesVoltage(maxReceive, calVoltage), simulate);
-	return (int) Math.min(Integer.MAX_VALUE, pack.getJoules());
-    }
-
-    @Override
-    @Deprecated
-    public int extractEnergy(int maxExtract, boolean simulate) {
-	int calVoltage = 120;
-	TransferPack pack = this.<ComponentElectrodynamic>getComponent(ComponentType.Electrodynamic)
-		.extractPower(TransferPack.joulesVoltage(maxExtract, calVoltage), simulate);
-	return (int) Math.min(Integer.MAX_VALUE, pack.getJoules());
-    }
-
-    @Override
-    @Deprecated
-    public int getEnergyStored() {
-	return (int) Math.min(Integer.MAX_VALUE, getJoulesStored());
-    }
-
-    @Override
-    @Deprecated
-    public int getMaxEnergyStored() {
-	return (int) Math.min(Integer.MAX_VALUE, DEFAULT_MAX_JOULES);
-    }
-
-    @Override
-    @Deprecated
-    public boolean canExtract() {
-	return true;
-    }
-
-    @Override
-    @Deprecated
-    public boolean canReceive() {
-	return true;
-    }
-
-    public void setJoulesStored(double joules) {
-	QuantumCapacitorData data = QuantumCapacitorData.get(world);
-	if (data != null) {
-	    data.setJoules(uuid, frequency, joules);
+	@Override
+	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction facing) {
+		if (capability == CapabilityEnergy.ENERGY) {
+			return (LazyOptional<T>) LazyOptional.of(() -> this);
+		}
+		return super.getCapability(capability, facing);
 	}
-    }
 
-    public double getJoulesStored() {
-	QuantumCapacitorData data = QuantumCapacitorData.get(world);
-	return data == null ? 0 : data.getJoules(uuid, frequency);
-    }
+	public TransferPack receivePower(TransferPack transfer, boolean debug) {
+		double joules = getJoulesStored();
+		double received = Math.min(Math.min(DEFAULT_MAX_JOULES, transfer.getJoules()), DEFAULT_MAX_JOULES - joules);
+		if (!debug) {
+			if (transfer.getVoltage() == DEFAULT_VOLTAGE) {
+				joules += received;
 
-    public double getMaxJoulesStored() {
-	return DEFAULT_MAX_JOULES;
-    }
+			}
+			QuantumCapacitorData.get(level).setJoules(uuid.get(), frequency.get(), joules);
+			if (transfer.getVoltage() > DEFAULT_VOLTAGE) {
+				level.setBlockAndUpdate(worldPosition, Blocks.AIR.defaultBlockState());
+				level.explode(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), (float) Math.log10(10 + transfer.getVoltage() / DEFAULT_VOLTAGE), Mode.DESTROY);
+				return TransferPack.EMPTY;
+			}
+		}
+		return TransferPack.joulesVoltage(received, transfer.getVoltage());
+	}
+
+	@Override
+	public int receiveEnergy(int maxReceive, boolean simulate) {
+		int calVoltage = 120;
+		TransferPack pack = receivePower(TransferPack.joulesVoltage(maxReceive, calVoltage), simulate);
+		return (int) Math.min(Integer.MAX_VALUE, pack.getJoules());
+	}
+
+	@Override
+	public int extractEnergy(int maxExtract, boolean simulate) {
+		int calVoltage = 120;
+		TransferPack pack = this.<ComponentElectrodynamic>getComponent(IComponentType.Electrodynamic).extractPower(TransferPack.joulesVoltage(maxExtract, calVoltage), simulate);
+		return (int) Math.min(Integer.MAX_VALUE, pack.getJoules());
+	}
+
+	@Override
+	public int getEnergyStored() {
+		return (int) Math.min(Integer.MAX_VALUE, getJoulesStored());
+	}
+
+	@Override
+	public int getMaxEnergyStored() {
+		return (int) Math.min(Integer.MAX_VALUE, DEFAULT_MAX_JOULES);
+	}
+
+	@Override
+	public boolean canExtract() {
+		return true;
+	}
+
+	@Override
+	public boolean canReceive() {
+		return true;
+	}
+
+	public void setJoulesStored(double joules) {
+		QuantumCapacitorData data = QuantumCapacitorData.get(level);
+		if (data != null) {
+			data.setJoules(uuid.get(), frequency.get(), joules);
+		}
+	}
+
+	public double getJoulesStored() {
+		QuantumCapacitorData data = QuantumCapacitorData.get(level);
+		return data == null ? 0 : data.getJoules(uuid.get(), frequency.get());
+	}
+
+	public double getMaxJoulesStored() {
+		return DEFAULT_MAX_JOULES;
+	}
+
+	public TransferPack getConnectedLoad(LoadProfile loadProfile, Direction dir) {
+		return TransferPack.joulesVoltage(getMaxJoulesStored() - getJoulesStored(), this.<ComponentElectrodynamic>getComponent(IComponentType.Electrodynamic).getVoltage());
+	}
 
 }

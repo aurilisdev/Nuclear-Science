@@ -3,8 +3,8 @@
 	"parent": "block/cube_all",
 	"ambientocclusion": "false",
 	"textures": {
-		"0": "nuclearscience:model/turbine",
-		"particle": "nuclearscience:model/turbine"
+		"0": "nuclearscience:block/model/turbine",
+		"particle": "electrodynamics:block/steelcasing"
 	},
 	"elements": [
 		{

@@ -1,48 +1,39 @@
 package nuclearscience.common.inventory.container;
 
-import electrodynamics.common.item.gear.tools.ItemCanister;
-import electrodynamics.common.item.subtype.SubtypeProcessorUpgrade;
-import electrodynamics.prefab.inventory.container.GenericContainer;
-import electrodynamics.prefab.inventory.container.slot.GenericSlot;
-import electrodynamics.prefab.inventory.container.slot.SlotRestricted;
+import electrodynamics.common.item.subtype.SubtypeItemUpgrade;
+import electrodynamics.prefab.inventory.container.GenericContainerBlockEntity;
+import electrodynamics.prefab.inventory.container.slot.item.SlotGeneric;
+import electrodynamics.prefab.inventory.container.slot.item.type.SlotFluid;
+import electrodynamics.prefab.inventory.container.slot.item.type.SlotRestricted;
+import electrodynamics.prefab.inventory.container.slot.item.type.SlotUpgrade;
+import electrodynamics.prefab.utilities.math.Color;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.FurnaceResultSlot;
-import net.minecraft.item.BucketItem;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.IntArray;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.common.tile.TileChemicalExtractor;
+import nuclearscience.registers.NuclearScienceMenuTypes;
 
-public class ContainerChemicalExtractor extends GenericContainer<TileChemicalExtractor> {
+public class ContainerChemicalExtractor extends GenericContainerBlockEntity<TileChemicalExtractor> {
 
-    public ContainerChemicalExtractor(int id, PlayerInventory playerinv) {
-	this(id, playerinv, new Inventory(6), new IntArray(3));
-    }
+	public static final SubtypeItemUpgrade[] VALID_UPGRADES = new SubtypeItemUpgrade[] { SubtypeItemUpgrade.basicspeed, SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.iteminput, SubtypeItemUpgrade.itemoutput, SubtypeItemUpgrade.experience };
 
-    public ContainerChemicalExtractor(int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {
-	super(DeferredRegisters.CONTAINER_CHEMICALEXTRACTOR.get(), id, playerinv, inventory, inventorydata);
-    }
+	public ContainerChemicalExtractor(int id, PlayerInventory playerinv) {
+		this(id, playerinv, new Inventory(6), new IntArray(3));
+	}
 
-    public ContainerChemicalExtractor(ContainerType<?> type, int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {
-	super(type, id, playerinv, inventory, inventorydata);
-    }
+	public ContainerChemicalExtractor(int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {
+		super(NuclearScienceMenuTypes.CONTAINER_CHEMICALEXTRACTOR.get(), id, playerinv, inventory, inventorydata);
+	}
 
-    @Override
-    public void addInventorySlots(IInventory inv, PlayerInventory playerinv) {
-	addSlot(new GenericSlot(inv, nextIndex(), 74, 31));
-	addSlot(new FurnaceResultSlot(playerinv.player, inv, nextIndex(), 133, 31));
-	addSlot(new SlotRestricted(inv, nextIndex(), 74, 51, false, ItemCanister.class, BucketItem.class));
-	addSlot(new SlotRestricted(inv, nextIndex(), 153, 14,
-		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.basicspeed),
-		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.advancedspeed)));
-	addSlot(new SlotRestricted(inv, nextIndex(), 153, 34,
-		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.basicspeed),
-		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.advancedspeed)));
-	addSlot(new SlotRestricted(inv, nextIndex(), 153, 54,
-		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.basicspeed),
-		electrodynamics.DeferredRegisters.SUBTYPEITEM_MAPPINGS.get(SubtypeProcessorUpgrade.advancedspeed)));
-    }
+	@Override
+	public void addInventorySlots(IInventory inv, PlayerInventory playerinv) {
+		addSlot(new SlotGeneric(inv, nextIndex(), 74, 31).setIOColor(new Color(0, 240, 255, 255)));
+		addSlot(new SlotRestricted(inv, nextIndex(), 128, 31).setIOColor(new Color(255, 0, 0, 255)));
+		addSlot(new SlotFluid(inv, nextIndex(), 74, 51));
+		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 14, VALID_UPGRADES));
+		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 34, VALID_UPGRADES));
+		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 54, VALID_UPGRADES));
+	}
 }

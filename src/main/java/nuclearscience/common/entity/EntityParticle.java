@@ -1,261 +1,245 @@
 package nuclearscience.common.entity;
 
 import java.util.HashSet;
-import java.util.List;
 
-import electrodynamics.common.block.BlockGenericMachine;
+import electrodynamics.prefab.block.GenericEntityBlock;
 import electrodynamics.prefab.utilities.object.Location;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.Explosion.Mode;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.api.fusion.IElectromagnet;
 import nuclearscience.api.radiation.RadiationSystem;
 import nuclearscience.common.block.BlockElectromagneticBooster;
 import nuclearscience.common.block.facing.FacingDirection;
 import nuclearscience.common.tile.TileElectromagneticSwitch;
 import nuclearscience.common.tile.TileParticleInjector;
+import nuclearscience.registers.NuclearScienceBlocks;
+import nuclearscience.registers.NuclearScienceEntities;
 
 public class EntityParticle extends Entity {
-    private static final DataParameter<Direction> DIRECTION = EntityDataManager.createKey(EntityParticle.class, DataSerializers.DIRECTION);
-    private static final DataParameter<Float> SPEED = EntityDataManager.createKey(EntityParticle.class, DataSerializers.FLOAT);
-    private Direction direction = Direction.UP;
-    public float speed = 0.02f;
-    public BlockPos source = BlockPos.ZERO;
+	private static final DataParameter<Direction> DIRECTION = EntityDataManager.defineId(EntityParticle.class, DataSerializers.DIRECTION);
+	private static final DataParameter<Float> SPEED = EntityDataManager.defineId(EntityParticle.class, DataSerializers.FLOAT);
+	private Direction direction = Direction.UP;
+	public float speed = 0.02f;
+	public BlockPos source = BlockPos.ZERO;
 
-    public EntityParticle(EntityType<?> entityTypeIn, World worldIn) {
-	super(DeferredRegisters.ENTITY_PARTICLE.get(), worldIn);
-    }
-
-    public EntityParticle(Direction direction, World worldIn, Location pos) {
-	this(DeferredRegisters.ENTITY_PARTICLE.get(), worldIn);
-	forceSetPosition(pos.x(), pos.y(), pos.z());
-	this.direction = direction;
-	ignoreFrustumCheck = true;
-	if (worldIn.isRemote) {
-	    setRenderDistanceWeight(4);
+	public EntityParticle(EntityType<?> entityTypeIn, World worldIn) {
+		super(NuclearScienceEntities.ENTITY_PARTICLE.get(), worldIn);
 	}
-    }
 
-    @Override
-    public void tick() {
-	TileEntity tile = world.getTileEntity(source);
-	if (!world.isRemote) {
-	    if (!(tile instanceof TileParticleInjector)) {
-		remove();
-		return;
-	    }
-	    ((TileParticleInjector) tile).addParticle(this);
-	    if (direction == null) {
-		direction = Direction.UP;
-	    }
-	    dataManager.set(DIRECTION, direction);
+	public EntityParticle(Direction direction, World worldIn, Location pos) {
+		this(NuclearScienceEntities.ENTITY_PARTICLE.get(), worldIn);
+		setPos(pos.x(), pos.y(), pos.z());
+		this.direction = direction;
+		noCulling = true;
+		if (worldIn.isClientSide) {
+			setViewScale(4);
+		}
+	}
 
-	    dataManager.set(SPEED, speed);
-	} else {
-	    if (!dataManager.isEmpty()) {
-		direction = dataManager.get(DIRECTION);
-		speed = dataManager.get(SPEED);
-	    }
-	}
-	Location source = new Location(getPosition());
-	double totstrength = 1000;
-	double range = 1;
-	AxisAlignedBB bb = AxisAlignedBB.withSizeAtOrigin(range, range, range);
-	bb = bb.offset(new Vector3d(source.x(), source.y(), source.z()));
-	List<LivingEntity> list = world.getEntitiesWithinAABB(LivingEntity.class, bb);
-	for (LivingEntity living : list) {
-	    RadiationSystem.applyRadiation(living, source, totstrength);
-	}
-	if (direction != null && direction != Direction.UP) {
-	    int checks = (int) (Math.ceil(speed) * 2);
-	    float localSpeed = speed / checks;
-	    for (int i = 0; i < checks; i++) {
-		if (!world.isRemote) {
-		    TileParticleInjector injector = (TileParticleInjector) tile;
-		    injector.checkCollision();
-		}
-		BlockPos next = getPosition();
-		BlockState oldState = world.getBlockState(next);
-		boolean isBooster = false;
-		if (oldState.getBlock() == DeferredRegisters.blockElectromagneticBooster) {
-		    Direction dir = oldState.get(BlockGenericMachine.FACING).getOpposite();
-		    FacingDirection face = oldState.get(BlockElectromagneticBooster.FACINGDIRECTION);
-		    if (face == FacingDirection.RIGHT) {
-			dir = dir.rotateY();
-		    } else if (face == FacingDirection.LEFT) {
-			dir = dir.rotateYCCW();
-		    }
-		    if (dir == direction) {
-			speed += 0.01 / 3;
-		    } else if (dir == direction.getOpposite()) {
-			speed -= 0.02;
-		    } else {
-			speed += 0.01 / 6;
-			direction = dir;
-			BlockPos floor = getPosition();
-			setPosition(floor.getX() + 0.5, floor.getY() + 0.5, floor.getZ() + 0.5);
-		    }
-		    isBooster = true;
-		}
-		if (speed < 0) {
-		    speed *= -1;
-		    direction = direction.getOpposite();
-		}
-		setPosition(getPosX() + direction.getXOffset() * localSpeed, getPosY(), getPosZ() + direction.getZOffset() * localSpeed);
-		if (isBooster) {
-		    BlockPos positionNow = getPosition();
-		    if (world.getBlockState(positionNow).getBlock() == DeferredRegisters.blockElectromagneticSwitch) {
-			HashSet<Direction> directions = new HashSet<>();
-			for (Direction dir : Direction.values()) {
-			    if (dir != Direction.UP && dir != Direction.DOWN && dir != direction.getOpposite()
-				    && world.getBlockState(positionNow.offset(dir)).getBlock() == Blocks.AIR) {
-				directions.add(dir);
-			    }
+	@Override
+	public void tick() {
+		TileEntity tile = level.getBlockEntity(source);
+		if (!level.isClientSide) {
+			if (!(tile instanceof TileParticleInjector)) {
+				remove(false);
+				return;
 			}
-			TileEntity te = world.getTileEntity(positionNow);
-			if (te instanceof TileElectromagneticSwitch) {
-			    TileElectromagneticSwitch switchte = (TileElectromagneticSwitch) te;
-			    directions.remove(switchte.lastDirection);
-			    if (directions.size() > (switchte.lastDirection == null ? 2 : 1)) {
-				world.createExplosion(this, getPosX(), getPosY(), getPosZ(), speed, Mode.DESTROY);
-				setDead();
-				break;
-			    }
-			    for (Direction dir : directions) {
-				switchte.lastDirection = dir;
-				direction = dir;
-				setPosition(positionNow.getX() + 0.5, positionNow.getY() + 0.5, positionNow.getZ() + 0.5);
-			    }
+			((TileParticleInjector) tile).addParticle(this);
+			if (direction == null) {
+				direction = Direction.UP;
 			}
-		    }
+			entityData.set(DIRECTION, direction);
+
+			entityData.set(SPEED, speed);
+		} else if (!entityData.isEmpty()) {
+			direction = entityData.get(DIRECTION);
+			speed = entityData.get(SPEED);
 		}
-		if (!world.isRemote) {
-		    BlockPos getPos = getPosition();
-		    BlockState nextState = world.getBlockState(getPos);
-		    if (nextState.getBlock() == Blocks.AIR || nextState.getBlock() == DeferredRegisters.blockElectromagneticSwitch) {
-			int amount = 0;
-			for (Direction of : Direction.values()) {
-			    if (world.getBlockState(getPosition().offset(of)).getBlock() instanceof IElectromagnet) {
-				amount++;
-			    }
-			}
-			if (amount < 4) {
-			    world.createExplosion(this, getPosX(), getPosY(), getPosZ(), speed, Mode.DESTROY);
-			    setDead();
-			    break;
-			}
-			BlockState testNextBlock = world.getBlockState(getPos.offset(direction));
-			if (testNextBlock.getBlock() instanceof IElectromagnet
-				&& testNextBlock.getBlock() != DeferredRegisters.blockElectromagneticSwitch) {
-			    Direction checkRot = direction.rotateY();
-			    testNextBlock = world.getBlockState(getPos.offset(checkRot));
-			    if (testNextBlock.getBlock() == Blocks.AIR || testNextBlock.getBlock() == DeferredRegisters.blockElectromagneticSwitch) {
-				BlockPos floor = getPosition();
-				direction = checkRot;
-				setPosition(floor.getX() + 0.5, floor.getY() + 0.5, floor.getZ() + 0.5);
-			    } else {
-				checkRot = direction.rotateY().getOpposite();
-				testNextBlock = world.getBlockState(getPos.offset(checkRot));
-				if (testNextBlock.getBlock() == Blocks.AIR
-					|| testNextBlock.getBlock() == DeferredRegisters.blockElectromagneticSwitch) {
-				    BlockPos floor = getPosition();
-				    direction = checkRot;
-				    setPosition(floor.getX() + 0.5, floor.getY() + 0.5, floor.getZ() + 0.5);
+		RadiationSystem.emitRadiationFromLocation(level, new Location(blockPosition()), 1.5, 1000);
+		if (direction != null && direction != Direction.UP) {
+			int checks = (int) (Math.ceil(speed) * 2);
+			float localSpeed = speed / checks;
+			for (int i = 0; i < checks; i++) {
+				if (!level.isClientSide) {
+					TileParticleInjector injector = (TileParticleInjector) tile;
+					injector.checkCollision();
 				} else {
-				    world.createExplosion(this, getPosX(), getPosY(), getPosZ(), speed, Mode.DESTROY);
-				    setDead();
-				    break;
+					level.addParticle(new RedstoneParticleData(1, 1, 1, 5), getX(), getY(), getZ(), 0, 0, 0);
 				}
-			    }
-			}
-		    } else {
-			boolean checkIsBooster = nextState.getBlock() == DeferredRegisters.blockElectromagneticBooster
-				&& oldState.getBlock() == DeferredRegisters.blockElectromagneticBooster;
-			boolean explode = false;
-			if (checkIsBooster) {
-			    Direction oldDir = oldState.get(BlockGenericMachine.FACING);
-			    Direction nextDir = nextState.get(BlockGenericMachine.FACING);
-			    if (oldDir != nextDir) {
-				FacingDirection face = oldState.get(BlockElectromagneticBooster.FACINGDIRECTION);
-				if (face == FacingDirection.RIGHT) {
-				    oldDir = oldDir.rotateY();
-				} else if (face == FacingDirection.LEFT) {
-				    oldDir = oldDir.rotateYCCW();
+				BlockPos next = blockPosition();
+				BlockState oldState = level.getBlockState(next);
+				boolean isBooster = false;
+				if (oldState.getBlock() == NuclearScienceBlocks.blockElectromagneticBooster) {
+					Direction dir = oldState.getValue(GenericEntityBlock.FACING).getOpposite();
+					FacingDirection face = oldState.getValue(BlockElectromagneticBooster.FACINGDIRECTION);
+					if (face == FacingDirection.RIGHT) {
+						dir = dir.getClockWise();
+					} else if (face == FacingDirection.LEFT) {
+						dir = dir.getCounterClockWise();
+					}
+					if (dir == direction) {
+						speed += 0.01 / 3;
+					} else if (dir == direction.getOpposite()) {
+						speed -= 0.02;
+					} else {
+						speed += 0.01 / 6;
+						direction = dir;
+						BlockPos floor = blockPosition();
+						setPos(floor.getX() + 0.5, floor.getY() + 0.5, floor.getZ() + 0.5);
+					}
+					isBooster = true;
 				}
-				if (oldDir != nextDir) {
-				    explode = true;
+				if (speed < 0) {
+					speed *= -1;
+					direction = direction.getOpposite();
 				}
-			    }
-			} else if (nextState.getBlock() != DeferredRegisters.blockElectromagneticBooster) {
-			    explode = true;
+				setPos(getX() + direction.getStepX() * localSpeed, getY(), getZ() + direction.getStepZ() * localSpeed);
+				if (isBooster) {
+					BlockPos positionNow = blockPosition();
+					if (level.getBlockState(positionNow).getBlock() == NuclearScienceBlocks.blockElectromagneticSwitch) {
+						HashSet<Direction> directions = new HashSet<>();
+						for (Direction dir : Direction.values()) {
+							if (dir != Direction.UP && dir != Direction.DOWN && dir != direction.getOpposite() && level.getBlockState(positionNow.relative(dir)).getBlock() == Blocks.AIR) {
+								directions.add(dir);
+							}
+						}
+						TileEntity te = level.getBlockEntity(positionNow);
+						if (te instanceof TileElectromagneticSwitch) {
+							TileElectromagneticSwitch switchte = (TileElectromagneticSwitch) te;
+							directions.remove(switchte.lastDirection);
+							if (directions.size() > (switchte.lastDirection == null ? 2 : 1)) {
+								level.explode(this, getX(), getY(), getZ(), speed, Mode.DESTROY);
+								removeAfterChangingDimensions();
+								break;
+							}
+							for (Direction dir : directions) {
+								switchte.lastDirection = dir;
+								direction = dir;
+								setPos(positionNow.getX() + 0.5, positionNow.getY() + 0.5, positionNow.getZ() + 0.5);
+							}
+						}
+					}
+				}
+				if (!level.isClientSide) {
+					BlockPos getPos = blockPosition();
+					BlockState nextState = level.getBlockState(getPos);
+					if (nextState.getBlock() == Blocks.AIR || nextState.getBlock() == NuclearScienceBlocks.blockElectromagneticSwitch) {
+						int amount = 0;
+						for (Direction of : Direction.values()) {
+							if (level.getBlockState(blockPosition().relative(of)).getBlock() instanceof IElectromagnet) {
+								amount++;
+							}
+						}
+						if (amount < 4) {
+							level.explode(this, getX(), getY(), getZ(), speed, Mode.DESTROY);
+							removeAfterChangingDimensions();
+							break;
+						}
+						BlockState testNextBlock = level.getBlockState(getPos.relative(direction));
+						if (testNextBlock.getBlock() instanceof IElectromagnet && testNextBlock.getBlock() != NuclearScienceBlocks.blockElectromagneticSwitch) {
+							Direction checkRot = direction.getClockWise();
+							testNextBlock = level.getBlockState(getPos.relative(checkRot));
+							if (testNextBlock.getBlock() == Blocks.AIR || testNextBlock.getBlock() == NuclearScienceBlocks.blockElectromagneticSwitch) {
+								BlockPos floor = blockPosition();
+								direction = checkRot;
+								setPos(floor.getX() + 0.5, floor.getY() + 0.5, floor.getZ() + 0.5);
+							} else {
+								checkRot = direction.getClockWise().getOpposite();
+								testNextBlock = level.getBlockState(getPos.relative(checkRot));
+								if (testNextBlock.getBlock() == Blocks.AIR || testNextBlock.getBlock() == NuclearScienceBlocks.blockElectromagneticSwitch) {
+									BlockPos floor = blockPosition();
+									direction = checkRot;
+									setPos(floor.getX() + 0.5, floor.getY() + 0.5, floor.getZ() + 0.5);
+								} else {
+									level.explode(this, getX(), getY(), getZ(), speed, Mode.DESTROY);
+									removeAfterChangingDimensions();
+									break;
+								}
+							}
+						}
+					} else {
+						boolean checkIsBooster = nextState.getBlock() == NuclearScienceBlocks.blockElectromagneticBooster && oldState.getBlock() == NuclearScienceBlocks.blockElectromagneticBooster;
+						boolean explode = false;
+						if (checkIsBooster) {
+							Direction oldDir = oldState.getValue(GenericEntityBlock.FACING);
+							Direction nextDir = nextState.getValue(GenericEntityBlock.FACING);
+							if (oldDir != nextDir) {
+								FacingDirection face = oldState.getValue(BlockElectromagneticBooster.FACINGDIRECTION);
+								if (face == FacingDirection.RIGHT) {
+									oldDir = oldDir.getClockWise();
+								} else if (face == FacingDirection.LEFT) {
+									oldDir = oldDir.getCounterClockWise();
+								}
+								if (oldDir != nextDir) {
+									explode = true;
+								}
+							}
+						} else if (nextState.getBlock() != NuclearScienceBlocks.blockElectromagneticBooster) {
+							explode = true;
+						}
+						if (explode) {
+							level.explode(this, getX(), getY(), getZ(), speed, Mode.DESTROY);
+							removeAfterChangingDimensions();
+							break;
+						}
+					}
+				}
 			}
-			if (explode) {
-			    world.createExplosion(this, getPosX(), getPosY(), getPosZ(), speed, Mode.DESTROY);
-			    setDead();
-			    break;
-			}
-		    }
+			speed = Math.min(speed, 1.999f);
+		} else if (tickCount > 100) {
+			removeAfterChangingDimensions();
 		}
-	    }
-	    speed = Math.min(speed, 1.999f);
-	} else {
-	    if (ticksExisted > 100) {
-		setDead();
-	    }
 	}
-    }
 
-    @Override
-    protected void registerData() {
-	if (direction == null) {
-	    direction = Direction.UP;
+	@Override
+	protected void defineSynchedData() {
+		if (direction == null) {
+			direction = Direction.UP;
+		}
+		entityData.define(DIRECTION, direction);
+		entityData.define(SPEED, speed);
 	}
-	dataManager.register(DIRECTION, direction);
-	dataManager.register(SPEED, speed);
-    }
 
-    @Override
-    public boolean hasNoGravity() {
-	return true;
-    }
+	@Override
+	public boolean isNoGravity() {
+		return true;
+	}
 
-    @Override
-    protected void readAdditional(CompoundNBT compound) {
-	source = new BlockPos(compound.getInt("sourceX"), compound.getInt("sourceY"), compound.getInt("sourceZ"));
-    }
+	@Override
+	protected void readAdditionalSaveData(CompoundNBT compound) {
+		source = new BlockPos(compound.getInt("sourceX"), compound.getInt("sourceY"), compound.getInt("sourceZ"));
+	}
 
-    @Override
-    public ITextComponent getName() {
-	return new StringTextComponent("entity.particle");
-    }
+	@Override
+	public ITextComponent getName() {
+		return new TranslationTextComponent("entity.particle");
+	}
 
-    @Override
-    protected void writeAdditional(CompoundNBT compound) {
-	compound.putInt("sourceX", source.getX());
-	compound.putInt("sourceY", source.getY());
-	compound.putInt("sourceZ", source.getZ());
-    }
+	@Override
+	protected void addAdditionalSaveData(CompoundNBT compound) {
+		compound.putInt("sourceX", source.getX());
+		compound.putInt("sourceY", source.getY());
+		compound.putInt("sourceZ", source.getZ());
+	}
 
-    @Override
-    public IPacket<?> createSpawnPacket() {
-	return NetworkHooks.getEntitySpawningPacket(this);
-    }
+	@Override
+	public IPacket<?> getAddEntityPacket() {
+		return NetworkHooks.getEntitySpawningPacket(this);
+	}
 }

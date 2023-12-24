@@ -1,15 +1,10 @@
 package nuclearscience.common.block;
 
-import java.util.Arrays;
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.block.material.Material;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext.Builder;
+import net.minecraft.block.Blocks;
 import net.minecraft.state.DirectionProperty;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -22,49 +17,34 @@ import net.minecraftforge.common.ToolType;
 import nuclearscience.api.fusion.IElectromagnet;
 
 public class BlockElectromagnet extends Block implements IElectromagnet {
-    public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
+	public static final DirectionProperty FACING = BlockStateProperties.FACING;
 
-    private final boolean isGlass;
+	private final boolean isGlass;
 
-    @Override
-    @Deprecated
-    public List<ItemStack> getDrops(BlockState state, Builder builder) {
-	return Arrays.asList(new ItemStack(this));
-    }
+	public BlockElectromagnet(boolean isGlass) {
+		super(Properties.copy(isGlass ? Blocks.GLASS : Blocks.IRON_BLOCK).strength(3.5f, 20).requiresCorrectToolForDrops().noOcclusion().isRedstoneConductor((x, y, z) -> false).harvestLevel(1).harvestTool(ToolType.PICKAXE));
+		this.isGlass = isGlass;
+	}
 
-    public BlockElectromagnet(boolean isGlass) {
-	super(Properties.create(isGlass ? Material.GLASS : Material.IRON).hardnessAndResistance(3.5f, 20).harvestLevel(2)
-		.harvestTool(ToolType.PICKAXE).notSolid().setOpaque(BlockElectromagnet::isntSolid));
-	this.isGlass = isGlass;
-    }
+	@Override
+	public VoxelShape getVisualShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext context) {
+		return isGlass ? VoxelShapes.empty() : super.getVisualShape(state, reader, pos, context);
+	}
 
-    private static boolean isntSolid(BlockState state, IBlockReader reader, BlockPos pos) {
-	return false;
-    }
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
+		return !isGlass ? super.skipRendering(state, adjacentBlockState, side) : adjacentBlockState.is(this) || super.skipRendering(state, adjacentBlockState, side);
+	}
 
-    @Override
-    @Deprecated
-    public VoxelShape getRayTraceShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext context) {
-	return isGlass ? VoxelShapes.empty() : super.getRayTraceShape(state, reader, pos, context);
-    }
+	@OnlyIn(Dist.CLIENT)
+	@Override
+	public float getShadeBrightness(BlockState state, IBlockReader worldIn, BlockPos pos) {
+		return isGlass ? 1.0F : super.getShadeBrightness(state, worldIn, pos);
+	}
 
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    @Deprecated
-    public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) {
-	return !isGlass ? super.isSideInvisible(state, adjacentBlockState, side)
-		: adjacentBlockState.isIn(this) ? true : super.isSideInvisible(state, adjacentBlockState, side);
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    @Deprecated
-    public float getAmbientOcclusionLightValue(BlockState state, IBlockReader worldIn, BlockPos pos) {
-	return isGlass ? 1.0F : super.getAmbientOcclusionLightValue(state, worldIn, pos);
-    }
-
-    @Override
-    public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
-	return isGlass ? true : super.propagatesSkylightDown(state, reader, pos);
-    }
+	@Override
+	public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
+		return isGlass || super.propagatesSkylightDown(state, reader, pos);
+	}
 }

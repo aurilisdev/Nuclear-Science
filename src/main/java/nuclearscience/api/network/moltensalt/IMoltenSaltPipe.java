@@ -1,37 +1,20 @@
 package nuclearscience.api.network.moltensalt;
 
-import electrodynamics.api.network.IAbstractConductor;
-import electrodynamics.api.network.INetwork;
-import electrodynamics.prefab.network.AbstractNetwork;
+import electrodynamics.api.network.cable.IRefreshableCable;
 import nuclearscience.common.block.subtype.SubtypeMoltenSaltPipe;
 
-public interface IMoltenSaltPipe extends IAbstractConductor {
-    INetwork getNetwork();
+public interface IMoltenSaltPipe extends IRefreshableCable {
 
-    INetwork getNetwork(boolean createIfNull);
+	SubtypeMoltenSaltPipe getPipeType();
 
-    void refreshNetwork();
+	@Override
+	default Object getConductorType() {
+		return getPipeType();
+	}
 
-    void refreshNetworkIfChange();
-
-    @Override
-    void removeFromNetwork();
-
-    void destroyViolently();
-
-    SubtypeMoltenSaltPipe getPipeType();
-
-    @Override
-    void setNetwork(AbstractNetwork<?, ?, ?, ?> aValueNetwork);
-
-    @Override
-    default Object getConductorType() {
-	return getPipeType();
-    }
-
-    @Override
-    default double getMaxTransfer() {
-	return getPipeType().maxTransfer;
-    }
+	@Override
+	default double getMaxTransfer() {
+		return getPipeType().maxTransfer;
+	}
 
 }

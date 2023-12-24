@@ -2,16 +2,16 @@ package nuclearscience.common.tab;
 
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import nuclearscience.DeferredRegisters;
+import nuclearscience.registers.NuclearScienceBlocks;
 
 public class ItemGroupNuclearScience extends ItemGroup {
 
-    public ItemGroupNuclearScience(String label) {
-	super(label);
-    }
+	public ItemGroupNuclearScience(String label) {
+		super(label);
+	}
 
-    @Override
-    public ItemStack createIcon() {
-	return new ItemStack(DeferredRegisters.blockGasCentrifuge);
-    }
+	@Override
+	public ItemStack makeIcon() {
+		return new ItemStack(NuclearScienceBlocks.blockGasCentrifuge);
+	}
 }
