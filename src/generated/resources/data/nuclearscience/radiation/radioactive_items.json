@@ -16,7 +16,5 @@
   "#forge:dusts/thorium": 2000.0,
   "#forge:oxide/actinium": 400.0,
   "#forge:ores/thorium": 500.0,
-  "#forge:ores/uranium": 100.0,
-  "#forge:storage_blocks/rawthorium": 500.0,
-  "#forge:storage_blocks/rawuranium": 450.0
+  "#forge:ores/uranium": 100.0
 }

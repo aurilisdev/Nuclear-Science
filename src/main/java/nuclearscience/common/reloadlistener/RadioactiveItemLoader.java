@@ -140,8 +140,8 @@ public class RadioactiveItemLoader extends AbstractReloadListener<JsonObject> {
 	public void generateTagValues() {
 
 		tags.forEach((tag, value) -> {
-			ItemTags.getAllTags().getTag(tag.getName()).getValues().forEach(item -> {
 
+			ItemTags.getAllTags().getTag(tag.getName()).getValues().forEach(item -> {
 				if (RadiationRegister.get(item).isNull()) {
 					RadiationRegister.register(item, new FieldRadioactiveObject(value));
 				}
