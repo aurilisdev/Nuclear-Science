@@ -14,6 +14,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
+import net.minecraftforge.common.ToolType;
 import nuclearscience.api.network.moltensalt.IMoltenSaltPipe;
 import nuclearscience.common.block.subtype.SubtypeMoltenSaltPipe;
 import nuclearscience.common.tile.msreactor.TileHeatExchanger;
@@ -27,7 +28,7 @@ public class BlockMoltenSaltPipe extends AbstractRefreshingConnectBlock {
 	public final SubtypeMoltenSaltPipe pipe;
 
 	public BlockMoltenSaltPipe(SubtypeMoltenSaltPipe pipe) {
-		super(Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.METAL).strength(0.15f).dynamicShape(), 3);
+		super(Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.METAL).strength(0.15f).dynamicShape().requiresCorrectToolForDrops().harvestLevel(1).harvestTool(ToolType.PICKAXE), 3);
 		this.pipe = pipe;
 		PIPESET.add(this);
 	}
