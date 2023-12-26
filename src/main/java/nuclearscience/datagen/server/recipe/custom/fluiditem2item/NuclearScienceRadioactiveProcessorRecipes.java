@@ -42,9 +42,17 @@ public class NuclearScienceRadioactiveProcessorRecipes extends AbstractRecipeGen
 				//
 				.complete(consumer);
 
-		newRecipe(new ItemStack(NuclearScienceItems.ITEM_THORIANITEDUST.get()), 0.0F, RADIOACTIVEPROCESSOR_REQUIRED_TICKS, RADIOACTIVEPROCESSOR_USAGE_PER_TICK, "thorianite_dust")
+		newRecipe(new ItemStack(NuclearScienceItems.ITEM_THORIANITEDUST.get()), 0.0F, RADIOACTIVEPROCESSOR_REQUIRED_TICKS, RADIOACTIVEPROCESSOR_USAGE_PER_TICK, "thorianite_dust_thorianite")
 				//
 				.addItemTagInput(ElectrodynamicsTags.Items.ORE_THORIUM, 1)
+				//
+				.addFluidTagInput(ElectrodynamicsTags.Fluids.SULFURIC_ACID, 1000)
+				//
+				.complete(consumer);
+
+		newRecipe(new ItemStack(NuclearScienceItems.ITEM_THORIANITEDUST.get()), 0.0F, RADIOACTIVEPROCESSOR_REQUIRED_TICKS, RADIOACTIVEPROCESSOR_USAGE_PER_TICK, "thorianite_dust_monazite")
+				//
+				.addItemTagInput(ElectrodynamicsTags.Items.ORE_MONAZITE, 1)
 				//
 				.addFluidTagInput(ElectrodynamicsTags.Fluids.SULFURIC_ACID, 1000)
 				//
