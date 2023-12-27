@@ -1,5 +1,7 @@
 package nuclearscience.common.tile;
 
+import org.jetbrains.annotations.NotNull;
+
 import electrodynamics.common.tile.machines.quarry.TileQuarry;
 import electrodynamics.prefab.properties.Property;
 import electrodynamics.prefab.properties.PropertyType;
@@ -22,6 +24,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
 import nuclearscience.api.turbine.ISteamReceiver;
 import nuclearscience.common.block.BlockTurbine;
 import nuclearscience.registers.NuclearScienceBlockTypes;
@@ -165,7 +169,7 @@ public class TileTurbine extends GenericTile implements ITickableSound, ISteamRe
 
 	@Override
 	public InteractionResult use(Player arg0, InteractionHand arg1, BlockHitResult arg2) {
-		return InteractionResult.FAIL;
+		return InteractionResult.PASS;
 	}
 
 	@Override
@@ -204,5 +208,13 @@ public class TileTurbine extends GenericTile implements ITickableSound, ISteamRe
 		destroyed = true;
 		deconstructStructure();
 
+	}
+	
+	@Override
+	public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> cap, Direction side) {
+		if(!getBlockState().getValue(BlockTurbine.RENDER) && !isCore.get()) {
+			return LazyOptional.empty();
+		}
+		return super.getCapability(cap, side);
 	}
 }
