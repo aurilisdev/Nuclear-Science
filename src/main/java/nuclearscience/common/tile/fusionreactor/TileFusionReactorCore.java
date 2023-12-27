@@ -103,7 +103,7 @@ public class TileFusionReactorCore extends GenericTile {
 
 		}
 
-		return InteractionResult.FAIL;
+		return InteractionResult.PASS;
 	}
 
 }

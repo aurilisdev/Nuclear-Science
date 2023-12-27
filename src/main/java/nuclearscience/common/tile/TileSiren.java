@@ -37,7 +37,7 @@ public class TileSiren extends GenericTile {
 
 	@Override
 	public InteractionResult use(Player arg0, InteractionHand arg1, BlockHitResult arg2) {
-		return InteractionResult.FAIL;
+		return InteractionResult.PASS;
 	}
 
 }
