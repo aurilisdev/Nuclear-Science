@@ -1,49 +1,78 @@
 package nuclearscience.common.tags;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import electrodynamics.common.item.gear.tools.ItemCanister;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.item.Item;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.Tags.IOptionalNamedTag;
 import nuclearscience.common.fluid.types.FluidAmmonia;
-import nuclearscience.common.fluid.types.FluidIronSulfamate;
 import nuclearscience.common.fluid.types.FluidUraniumHexafluoride;
-import nuclearscience.common.item.ItemCanisterLead;
 
 public class NuclearScienceTags {
-	
-	public static List<Tags.IOptionalNamedTag<Fluid>> FLUID_TAGS = new ArrayList<>();
-	
+
 	public static void init() {
 		Fluids.init();
+		Items.init();
 	}
-	
-	public static List<Tags.IOptionalNamedTag<Fluid>> getFluidTags(){
-		return FLUID_TAGS;
-	}
-	
-	public static class Fluids {
+
+	public static class Items {
+
+		public static final IOptionalNamedTag<Item> CELL_EMPTY = forgeTag("cells/empty");
+		public static final IOptionalNamedTag<Item> CELL_HEAVYWATER = forgeTag("cells/heavywater");
+		public static final IOptionalNamedTag<Item> CELL_DEUTERIUM = forgeTag("cells/deuterium");
+		public static final IOptionalNamedTag<Item> CELL_TRITIUM = forgeTag("cells/tritium");
+		public static final IOptionalNamedTag<Item> CELL_ANTIMATTER_SMALL = forgeTag("cells/anti_matter_small");
+		public static final IOptionalNamedTag<Item> CELL_ANTIMATTER_LARGE = forgeTag("cells/anti_matter_large");
+		public static final IOptionalNamedTag<Item> CELL_ANTIMATTER_VERY_LARGE = forgeTag("cells/anti_matter_very_large");
+		public static final IOptionalNamedTag<Item> CELL_DARK_MATTER = forgeTag("cells/dark_matter");
+
+		public static final IOptionalNamedTag<Item> FUELROD_URANIUM_LOW_EN = forgeTag("fuel_rods/leuo2");
+		public static final IOptionalNamedTag<Item> FUELROD_URANIUM_HIGH_EN = forgeTag("fuel_rods/heuo2");
+		public static final IOptionalNamedTag<Item> FUELROD_PLUTONIUM = forgeTag("fuel_rods/plutonium");
+		public static final IOptionalNamedTag<Item> FUELROD_SPENT = forgeTag("fuel_rods/spent");
+
+		public static final IOptionalNamedTag<Item> DUST_THORIUM = forgeTag("dusts/thorium");
+		public static final IOptionalNamedTag<Item> DUST_FISSILE = forgeTag("dusts/fissile");
 		
-		public static final Tags.IOptionalNamedTag<Fluid> URANIUM_HEXAFLUORIDE = forgeTag(FluidUraniumHexafluoride.FORGE_TAG);
-		public static final Tags.IOptionalNamedTag<Fluid> IRON_SULFAMATE = forgeTag(FluidIronSulfamate.FORGE_TAG);
-		public static final Tags.IOptionalNamedTag<Fluid> AMMONIA = forgeTag(FluidAmmonia.FORGE_TAG);
-		
+		public static final IOptionalNamedTag<Item> SALT_FISSILE = forgeTag("salts/fissile");
+
+		public static final IOptionalNamedTag<Item> OXIDE_PLUTONIUM = forgeTag("oxide/plutonium");
+		public static final IOptionalNamedTag<Item> OXIDE_ACTINIUM = forgeTag("oxide/actinium");
+
+		public static final IOptionalNamedTag<Item> NUGGET_POLONIUM = forgeTag("nuggets/polonium");
+
+		public static final IOptionalNamedTag<Item> PELLET_URANIUM235 = forgeTag("pellets/uranium235");
+		public static final IOptionalNamedTag<Item> PELLET_URANIUM238 = forgeTag("pellets/uranium238");
+		public static final IOptionalNamedTag<Item> PELLET_PLUTONIUM = forgeTag("pellets/plutonium");
+		public static final IOptionalNamedTag<Item> PELLET_POLONIUM = forgeTag("pellets/polonium");
+		public static final IOptionalNamedTag<Item> PELLET_LIFHT4PUF3 = forgeTag("pellets/lifht4puf3");
+		public static final IOptionalNamedTag<Item> PELLET_FLINAK = forgeTag("pellets/flinak");
+		public static final IOptionalNamedTag<Item> PELLET_ACTINIUM225 = forgeTag("pellets/actinium225");
+
+		public static final IOptionalNamedTag<Item> YELLOW_CAKE = forgeTag("yellow_cake_uranium");
+
 		private static void init() {
-			FLUID_TAGS.add(URANIUM_HEXAFLUORIDE);
-			FLUID_TAGS.add(IRON_SULFAMATE);
-			FLUID_TAGS.add(AMMONIA);
-			
-			ItemCanister.addTag(IRON_SULFAMATE);
-			ItemCanister.addTag(AMMONIA);
-			
-			ItemCanisterLead.addTag(URANIUM_HEXAFLUORIDE);
 		}
-		
-		private static Tags.IOptionalNamedTag<Fluid> forgeTag(String name){
+
+		private static IOptionalNamedTag<Item> forgeTag(String name) {
+			return ItemTags.createOptional(new ResourceLocation("forge", name));
+		}
+
+	}
+
+	public static class Fluids {
+
+		public static final IOptionalNamedTag<Fluid> URANIUM_HEXAFLUORIDE = forgeTag(FluidUraniumHexafluoride.FORGE_TAG);
+		public static final IOptionalNamedTag<Fluid> AMMONIA = forgeTag(FluidAmmonia.FORGE_TAG);
+
+		private static void init() {
+			
+		}
+
+		private static IOptionalNamedTag<Fluid> forgeTag(String name) {
 			return FluidTags.createOptional(new ResourceLocation("forge", name));
 		}
 	}
+
 }

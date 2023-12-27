@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "VLV",
+    "LCL",
+    "VLV"
+  ],
+  "key": {
+    "C": {
+      "item": "electrodynamics:canisterreinforced"
+    },
+    "V": {
+      "tag": "forge:plates/vanadiumsteel"
+    },
+    "L": {
+      "tag": "forge:plates/lead"
+    }
+  },
+  "result": {
+    "item": "nuclearscience:canisterlead"
+  }
+}

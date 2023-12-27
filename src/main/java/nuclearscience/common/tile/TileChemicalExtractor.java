@@ -1,55 +1,48 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.api.electricity.CapabilityElectrodynamic;
-import electrodynamics.common.recipe.categories.fluiditem2item.FluidItem2ItemRecipe;
-import electrodynamics.prefab.tile.GenericTileTicking;
-import electrodynamics.prefab.tile.components.ComponentType;
+import electrodynamics.api.capability.ElectrodynamicsCapabilities;
+import electrodynamics.prefab.tile.GenericTile;
+import electrodynamics.prefab.tile.components.IComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
-import electrodynamics.prefab.tile.components.type.ComponentDirection;
 import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
 import electrodynamics.prefab.tile.components.type.ComponentInventory;
+import electrodynamics.prefab.tile.components.type.ComponentInventory.InventoryBuilder;
 import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import electrodynamics.prefab.tile.components.type.ComponentProcessor;
-import electrodynamics.prefab.tile.components.type.ComponentProcessorType;
 import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.Direction;
-import nuclearscience.DeferredRegisters;
 import nuclearscience.common.inventory.container.ContainerChemicalExtractor;
 import nuclearscience.common.recipe.NuclearScienceRecipeInit;
-import nuclearscience.common.settings.Constants;
+import nuclearscience.registers.NuclearScienceBlockTypes;
 
-public class TileChemicalExtractor extends GenericTileTicking {
+public class TileChemicalExtractor extends GenericTile {
 
-    public static final int MAX_TANK_CAPACITY = 5000;
+	public static final int DEFAULT_RAD_STRENGTH = 300;
+	public static final int RAD_RADIUS = 2;
+	public static final int MAX_TANK_CAPACITY = 5000;
 
-    public TileChemicalExtractor() {
-	super(DeferredRegisters.TILE_CHEMICALEXTRACTOR.get());
-	addComponent(new ComponentTickable().tickClient(this::tickClient));
-	addComponent(new ComponentDirection());
-	addComponent(new ComponentPacketHandler());
-	addComponent(new ComponentElectrodynamic(this).enableUniversalInput().voltage(CapabilityElectrodynamic.DEFAULT_VOLTAGE * 2)
-		.maxJoules(Constants.CHEMICALEXTRACTOR_USAGE_PER_TICK * 10));
-	addComponent(new ComponentFluidHandlerMulti(this)
-		.setAddFluidsValues(FluidItem2ItemRecipe.class, NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE, MAX_TANK_CAPACITY, true, false)
-		.universalInput());
-	addComponent(new ComponentInventory(this).size(6).faceSlots(Direction.UP, 0).faceSlots(Direction.DOWN, 1).slotFaces(2, Direction.SOUTH,
-		Direction.NORTH, Direction.EAST, Direction.WEST));
-	addComponent(new ComponentProcessor(this).upgradeSlots(3, 4, 5).type(ComponentProcessorType.ObjectToObject)
-		.usage(Constants.CHEMICALEXTRACTOR_USAGE_PER_TICK).requiredTicks(Constants.CHEMICALEXTRACTOR_REQUIRED_TICKS)
-		.canProcess(component -> component.consumeBucket(2).canProcessFluidItem2ItemRecipe(component, FluidItem2ItemRecipe.class,
-			NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE))
-		.process(component -> component.processFluidItem2ItemRecipe(component, FluidItem2ItemRecipe.class)));
-	addComponent(new ComponentContainerProvider("container.chemicalextractor")
-		.createMenu((id, player) -> new ContainerChemicalExtractor(id, player, getComponent(ComponentType.Inventory), getCoordsArray())));
-    }
-
-    protected void tickClient(ComponentTickable tickable) {
-	if (this.<ComponentProcessor>getComponent(ComponentType.Processor).operatingTicks > 0 && world.rand.nextDouble() < 0.15) {
-	    world.addParticle(ParticleTypes.SMOKE, pos.getX() + world.rand.nextDouble(), pos.getY() + world.rand.nextDouble() * 0.8 + 0.5,
-		    pos.getZ() + world.rand.nextDouble(), 0.0D, 0.0D, 0.0D);
+	public TileChemicalExtractor() {
+		super(NuclearScienceBlockTypes.TILE_CHEMICALEXTRACTOR.get());
+		addComponent(new ComponentTickable(this).tickClient(this::tickClient));
+		addComponent(new ComponentPacketHandler(this));
+		addComponent(new ComponentElectrodynamic(this, false, true).setInputDirections(Direction.DOWN).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 2));
+		addComponent(new ComponentFluidHandlerMulti(this).setInputTanks(1, MAX_TANK_CAPACITY).setInputDirections(Direction.UP, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST).setRecipeType(NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE));
+		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().processors(1, 1, 1, 0).bucketInputs(1).upgrades(3)).setDirectionsBySlot(0, Direction.UP, Direction.EAST, Direction.WEST, Direction.NORTH, Direction.SOUTH).setDirectionsBySlot(1, Direction.UP, Direction.EAST, Direction.WEST, Direction.NORTH, Direction.SOUTH).validUpgrades(ContainerChemicalExtractor.VALID_UPGRADES)
+				.valid(machineValidator()));
+		addComponent(new ComponentProcessor(this).canProcess(component -> component.consumeBucket().canProcessFluidItem2ItemRecipe(component, NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE)).process(component -> component.processFluidItem2ItemRecipe(component)));
+		addComponent(new ComponentContainerProvider("container.chemicalextractor", this).createMenu((id, player) -> new ContainerChemicalExtractor(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
 	}
-    }
 
+	protected void tickClient(ComponentTickable tickable) {
+		if (this.<ComponentProcessor>getComponent(IComponentType.Processor).isActive() && level.random.nextDouble() < 0.15) {
+			level.addParticle(ParticleTypes.SMOKE, worldPosition.getX() + level.random.nextDouble(), worldPosition.getY() + level.random.nextDouble() * 0.8 + 0.5, worldPosition.getZ() + level.random.nextDouble(), 0.0D, 0.0D, 0.0D);
+		}
+	}
+
+	@Override
+	public int getComparatorSignal() {
+		return this.<ComponentProcessor>getComponent(IComponentType.Processor).isActive() ? 15 : 0;
+	}
 }

@@ -1,128 +1,87 @@
 package nuclearscience.common.block;
 
-import java.util.Arrays;
-import java.util.List;
-
-import electrodynamics.api.IWrenchItem;
-import electrodynamics.prefab.tile.IWrenchable;
+import electrodynamics.prefab.block.GenericEntityBlockWaterloggable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext.Builder;
 import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
+import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import nuclearscience.common.tile.TileTurbine;
 
-public class BlockTurbine extends Block implements IWrenchable {
-    public static final BooleanProperty RENDER = BooleanProperty.create("render");
+public class BlockTurbine extends GenericEntityBlockWaterloggable {
 
-    public BlockTurbine() {
-	super(Properties.create(Material.IRON).hardnessAndResistance(3.5F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).notSolid());
-	setDefaultState(stateContainer.getBaseState().with(RENDER, true));
-    }
+	private static final VoxelShape SHAPE = VoxelShapes.or(Block.box(1.25, 2.5, 6, 14.75, 13.5, 10), Block.box(6, 2.5, 1.25, 10, 13.5, 14.75), Block.box(2, 2.5, 4, 14, 13.5, 12), Block.box(4, 2.5, 2, 12, 13.5, 14), Block.box(3, 2.5, 3, 13, 13.5, 13), Block.box(4.65, 0.75, 4.65, 11.35, 2.5, 11.35), Block.box(4.3, 13.5, 4.3, 11.7, 15, 11.7), Block.box(5.7, 15, 5.7, 10.3, 16, 10.3));
 
-    @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-	return new TileTurbine();
-    }
+	public static final BooleanProperty RENDER = BooleanProperty.create("render");
 
-    @Override
-    public void onRotate(ItemStack stack, BlockPos pos, PlayerEntity player) {
-	TileTurbine turbine = (TileTurbine) player.world.getTileEntity(pos);
-	if (turbine != null) {
-	    if (turbine.isCore) {
-		turbine.deconstructStructure();
-	    } else {
-		turbine.constructStructure();
-	    }
+	public BlockTurbine() {
+		super(Properties.copy(Blocks.IRON_BLOCK).strength(3.5F).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion().harvestLevel(1).harvestTool(ToolType.PICKAXE));
+		registerDefaultState(stateDefinition.any().setValue(RENDER, true));
 	}
-    }
 
-    @Override
-    @Deprecated
-    public List<ItemStack> getDrops(BlockState state, Builder builder) {
-	return Arrays.asList(new ItemStack(this));
-    }
-
-    @Override
-    @Deprecated
-    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-	if (state.getBlock() != newState.getBlock()) {
-	    TileTurbine turbine = (TileTurbine) worldIn.getTileEntity(pos);
-	    if (turbine != null) {
-		turbine.deconstructStructure();
-	    }
-	    super.onReplaced(state, worldIn, pos, newState, isMoving);
+	@Override
+	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+		return new TileTurbine();
 	}
-    }
 
-    @Override
-    @Deprecated
-    public BlockRenderType getRenderType(BlockState state) {
-	BlockRenderType type = super.getRenderType(state);
-	if (state.get(RENDER) != Boolean.TRUE) {
-	    type = BlockRenderType.INVISIBLE;
+	@Override
+	public void onRotate(ItemStack stack, BlockPos pos, PlayerEntity player) {
+		super.onRotate(stack, pos, player);
+		if (player.level.isClientSide()) {
+			return;
+		}
+		TileTurbine turbine = (TileTurbine) player.level.getBlockEntity(pos);
+		if (turbine != null) {
+			if (turbine.isCore.get()) {
+				turbine.deconstructStructure();
+			} else {
+				turbine.constructStructure();
+			}
+		}
 	}
-	return type;
-    }
 
-    @Override
-    public boolean hasTileEntity(BlockState state) {
-	return true;
-    }
-
-    @Override
-    public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
-	return 0;
-    }
-
-    @Override
-    @Deprecated
-    public float getAmbientOcclusionLightValue(BlockState state, IBlockReader worldIn, BlockPos pos) {
-	return 1;
-    }
-
-    @Override
-    @Deprecated
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn,
-	    BlockRayTraceResult hit) {
-	if (worldIn.isRemote) {
-	    return ActionResultType.SUCCESS;
-	} else if (!(player.getHeldItem(handIn).getItem() instanceof IWrenchItem)) {
-	    return ActionResultType.CONSUME;
+	@Override
+	public BlockRenderType getRenderShape(BlockState state) {
+		if (!state.getValue(RENDER)) {
+			return BlockRenderType.INVISIBLE;
+		}
+		return super.getRenderShape(state);
 	}
-	return ActionResultType.FAIL;
-    }
 
-    @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-	return getDefaultState().with(RENDER, true);
-    }
+	@Override
+	public float getShadeBrightness(BlockState state, IBlockReader worldIn, BlockPos pos) {
+		return 1;
+	}
 
-    @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-	builder.add(RENDER);
-    }
+	@Override
+	public BlockState getStateForPlacement(BlockItemUseContext context) {
+		return super.getStateForPlacement(context).setValue(RENDER, true);
+	}
+	
+	@Override
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
+		super.createBlockStateDefinition(builder);
+		builder.add(RENDER);
+	}
 
-    @Override
-    public void onPickup(ItemStack stack, BlockPos pos, PlayerEntity player) {
-	World world = player.world;
-	world.setBlockState(pos, Blocks.AIR.getDefaultState());
-	world.addEntity(new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, new ItemStack(getSelf())));
-    }
+	@Override
+	public VoxelShape getShape(BlockState state, IBlockReader level, BlockPos pos, ISelectionContext context) {
+		if (state.getValue(RENDER)) {
+			return SHAPE;
+		}
+
+		return VoxelShapes.block();
+	}
 }

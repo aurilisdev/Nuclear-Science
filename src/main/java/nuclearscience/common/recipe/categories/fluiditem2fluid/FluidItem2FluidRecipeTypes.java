@@ -6,7 +6,6 @@ import nuclearscience.common.recipe.categories.fluiditem2fluid.specificmachines.
 
 public class FluidItem2FluidRecipeTypes {
 
-    public static final IRecipeSerializer<NuclearBoilerRecipe> NUCLEAR_BOILER_JSON_SERIALIZER = new FluidItem2FluidRecipeSerializer<>(
-	    NuclearBoilerRecipe.class);
+	public static final IRecipeSerializer<NuclearBoilerRecipe> NUCLEAR_BOILER_JSON_SERIALIZER = new FluidItem2FluidRecipeSerializer<>(NuclearBoilerRecipe.class);
 
 }

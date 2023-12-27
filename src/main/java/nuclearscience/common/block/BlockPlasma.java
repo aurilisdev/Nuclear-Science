@@ -1,10 +1,9 @@
 package nuclearscience.common.block;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
+import electrodynamics.prefab.block.GenericEntityBlock;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -17,54 +16,44 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import nuclearscience.api.plasma.DamageSourcePlasma;
-import nuclearscience.common.tile.TilePlasma;
+import nuclearscience.common.tile.fusionreactor.TilePlasma;
 
-public class BlockPlasma extends Block {
+public class BlockPlasma extends GenericEntityBlock {
 
-    public BlockPlasma() {
-	super(AbstractBlock.Properties.create(Material.PORTAL).doesNotBlockMovement().tickRandomly().hardnessAndResistance(-1.0F)
-		.sound(SoundType.GLASS));
-    }
-
-    @Override
-    public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
-	return 11;
-    }
-
-    @Override
-    @Deprecated
-    public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
-	entityIn.attackEntityFrom(DamageSourcePlasma.INSTANCE, 99999);
-    }
-
-    @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-	return new TilePlasma();
-    }
-
-    @Override
-    @Deprecated
-    public VoxelShape getRayTraceShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext context) {
-	return VoxelShapes.empty();
-    }
-
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    @Deprecated
-    public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) {
-	return adjacentBlockState.isIn(this) || super.isSideInvisible(state, adjacentBlockState, side);
-    }
-
-    @Override
-    @Deprecated
-    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-	if (state.getBlock() != newState.getBlock()) {
-	    super.onReplaced(state, worldIn, pos, newState, isMoving);
+	public BlockPlasma() {
+		super(Properties.copy(Blocks.NETHER_PORTAL).noCollission().randomTicks().strength(-1.0F).sound(SoundType.GLASS));
 	}
-    }
 
-    @Override
-    public boolean hasTileEntity(BlockState state) {
-	return true;
-    }
+	@Override
+	public TileEntity createTileEntity(BlockState arg0, IBlockReader arg1) {
+		return new TilePlasma();
+	}
+
+	@Override
+	public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
+		return 11;
+	}
+
+	@Override
+	public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
+		entityIn.hurt(DamageSourcePlasma.INSTANCE, 99999);
+	}
+
+	@Override
+	public VoxelShape getVisualShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext context) {
+		return VoxelShapes.empty();
+	}
+
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
+		return adjacentBlockState.is(this) || super.skipRendering(state, adjacentBlockState, side);
+	}
+
+	@Override
+	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+		if (state.getBlock() != newState.getBlock()) {
+			super.onRemove(state, worldIn, pos, newState, isMoving);
+		}
+	}
 }

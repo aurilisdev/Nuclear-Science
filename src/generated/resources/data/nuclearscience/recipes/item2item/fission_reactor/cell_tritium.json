@@ -1,0 +1,17 @@
+{
+  "type": "nuclearscience:fission_reactor_recipe",
+  "ticks": 1,
+  "usagepertick": 1.0,
+  "iteminputs": {
+    "count": 1,
+    "0": {
+      "tag": "forge:cells/deuterium",
+      "count": 1
+    }
+  },
+  "output": {
+    "item": "nuclearscience:celltritium",
+    "count": 1
+  },
+  "experience": 0.0
+}

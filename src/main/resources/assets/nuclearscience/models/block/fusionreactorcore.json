@@ -4,8 +4,8 @@
 	"parent": "block/cube_all",
 	"ambientocclusion": "false",
 	"textures": {
-		"0": "nuclearscience:model/fusionreactorcore",
-		"particle": "nuclearscience:model/fusionreactorcore"
+		"0": "nuclearscience:block/model/fusionreactorcore",
+		"particle": "electrodynamics:block/steelcasing"
 	},
 	"elements": [
 		{

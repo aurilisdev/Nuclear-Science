@@ -1,45 +1,88 @@
 package nuclearscience.client.render.tile;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 
-import electrodynamics.common.block.BlockGenericMachine;
-import electrodynamics.prefab.tile.components.ComponentType;
+import electrodynamics.client.render.tile.AbstractTileRenderer;
+import electrodynamics.prefab.tile.components.IComponentType;
 import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
-import electrodynamics.prefab.utilities.UtilitiesRendering;
-import net.minecraft.client.Minecraft;
+import electrodynamics.prefab.utilities.RenderingUtils;
+import net.minecraft.client.renderer.Atlases;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.util.Direction;
-import nuclearscience.client.ClientRegister;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 import nuclearscience.common.tile.TileChemicalExtractor;
 
-public class RenderChemicalExtractor extends TileEntityRenderer<TileChemicalExtractor> {
+public class RenderChemicalExtractor extends AbstractTileRenderer<TileChemicalExtractor> {
 
-    public RenderChemicalExtractor(TileEntityRendererDispatcher rendererDispatcherIn) {
-	super(rendererDispatcherIn);
-    }
+	private static final float DELTA_Y = 7.0F / 16.0F;
 
-    @Override
-    @Deprecated
-    public void render(TileChemicalExtractor tileEntityIn, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn,
-	    int combinedLightIn, int combinedOverlayIn) {
-	IBakedModel ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_CHEMICALEXTRACTORWATER);
-	Direction face = tileEntityIn.getBlockState().get(BlockGenericMachine.FACING);
-	matrixStackIn.translate(face.getXOffset(), face.getYOffset(), face.getZOffset());
-	UtilitiesRendering.prepareRotationalTileModel(tileEntityIn, matrixStackIn);
-	matrixStackIn.translate(-0.5, 0, 0.5);
-	float prog = tileEntityIn.<ComponentFluidHandlerMulti>getComponent(ComponentType.FluidHandler).getStackFromFluid(Fluids.WATER, true)
-		.getAmount() / (float) TileChemicalExtractor.MAX_TANK_CAPACITY;
-	if (prog > 0) {
-	    matrixStackIn.scale(1, prog / 16.0f * 5.8f * 2, 1);
-	    matrixStackIn.translate(0, prog / 16.0f * 5.8f, 0);
-	    UtilitiesRendering.renderModel(ibakedmodel, tileEntityIn, RenderType.getCutout(), matrixStackIn, bufferIn, combinedLightIn,
-		    combinedOverlayIn);
+	public RenderChemicalExtractor(TileEntityRendererDispatcher context) {
+		super(context);
 	}
-    }
+
+	@Override
+	public void render(TileChemicalExtractor tile, float partialTicks, MatrixStack matrix, IRenderTypeBuffer buffer, int combinedLight, int overlay) {
+
+		matrix.pushPose();
+
+		Direction facing = tile.getFacing();
+		ComponentFluidHandlerMulti multi = tile.getComponent(IComponentType.FluidHandler);
+		IVertexBuilder builder = buffer.getBuffer(Atlases.translucentCullBlockSheet());
+
+		FluidTank input = multi.getInputTanks()[0];
+
+		if (input.isEmpty()) {
+			matrix.popPose();
+			return;
+		}
+
+		AxisAlignedBB box = null;
+		int i = 0;
+
+		float maxY = DELTA_Y * ((float) input.getFluidAmount() / (float) TileChemicalExtractor.MAX_TANK_CAPACITY) + 5.0F / 16.0F;
+
+		if (facing == Direction.NORTH || facing != Direction.EAST && facing == Direction.SOUTH) {
+
+			box = new AxisAlignedBB(2.7 / 16.0, 5 / 16.0, 2.2 / 16.0, 4.3 / 16.0, maxY, 3.8 / 16.0);
+
+			for (i = 0; i < 4; i++) {
+				RenderingUtils.renderFluidBox(matrix, minecraft(), builder, box, input.getFluid(), combinedLight, overlay);
+
+				box = box.move(3.0 / 16.0, 0, 0);
+			}
+
+			box = new AxisAlignedBB(2.7 / 16.0, 5 / 16.0, 12.2 / 16.0, 4.3 / 16.0, maxY, 13.8 / 16.0);
+
+			for (i = 0; i < 4; i++) {
+				RenderingUtils.renderFluidBox(matrix, minecraft(), builder, box, input.getFluid(), combinedLight, overlay);
+
+				box = box.move(3.0 / 16.0, 0, 0);
+			}
+
+		} else {
+
+			box = new AxisAlignedBB(2.2 / 16.0, 5 / 16.0, 2.7 / 16.0, 3.8 / 16.0, maxY, 4.3 / 16.0);
+
+			for (i = 0; i < 4; i++) {
+				RenderingUtils.renderFluidBox(matrix, minecraft(), builder, box, input.getFluid(), combinedLight, overlay);
+
+				box = box.move(0, 0, 3.0 / 16.0);
+			}
+
+			box = new AxisAlignedBB(12.2 / 16.0, 5 / 16.0, 2.7 / 16.0, 13.8 / 16.0, maxY, 4.3 / 16.0);
+
+			for (i = 0; i < 4; i++) {
+				RenderingUtils.renderFluidBox(matrix, minecraft(), builder, box, input.getFluid(), combinedLight, overlay);
+
+				box = box.move(0, 0, 3.0 / 16.0);
+			}
+
+		}
+
+		matrix.popPose();
+	}
 
 }

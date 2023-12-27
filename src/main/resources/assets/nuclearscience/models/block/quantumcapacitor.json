@@ -3,8 +3,8 @@
 	"parent": "block/cube_all",
 	"texture_size": [64, 64],
 	"textures": {
-		"0": "nuclearscience:model/quantumcapacitor",
-		"particle": "nuclearscience:model/quantumcapacitor"
+		"0": "nuclearscience:block/model/quantumcapacitor",
+		"particle": "electrodynamics:block/steelcasing"
 	},
 	"elements": [
 		{

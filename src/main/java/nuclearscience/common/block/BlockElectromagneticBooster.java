@@ -1,18 +1,14 @@
 package nuclearscience.common.block;
 
-import java.util.Arrays;
-import java.util.List;
-
-import electrodynamics.common.block.BlockGenericMachine;
+import electrodynamics.prefab.block.GenericEntityBlock;
 import electrodynamics.prefab.tile.IWrenchable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext.Builder;
-import net.minecraft.state.StateContainer;
+import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
@@ -30,96 +26,82 @@ import nuclearscience.common.block.facing.FacingDirection;
 import nuclearscience.common.block.facing.FacingDirectionProperty;
 
 public class BlockElectromagneticBooster extends Block implements IElectromagnet, IWrenchable {
-    public static final FacingDirectionProperty FACINGDIRECTION = FacingDirectionProperty.create("side", FacingDirection.values());
+	public static final FacingDirectionProperty FACINGDIRECTION = FacingDirectionProperty.create("side", FacingDirection.values());
 
-    public BlockElectromagneticBooster() {
-	super(Properties.create(Material.GLASS).hardnessAndResistance(3.5f, 20).harvestLevel(2).harvestTool(ToolType.PICKAXE).notSolid()
-		.setOpaque(BlockElectromagneticBooster::isntSolid));
-	setDefaultState(stateContainer.getBaseState().with(BlockGenericMachine.FACING, Direction.NORTH).with(FACINGDIRECTION, FacingDirection.NONE));
-    }
-
-    @Override
-    @Deprecated
-    public List<ItemStack> getDrops(BlockState state, Builder builder) {
-	return Arrays.asList(new ItemStack(this));
-    }
-
-    @Override
-    @Deprecated
-    public BlockState rotate(BlockState state, Rotation rot) {
-	return state.with(BlockGenericMachine.FACING, rot.rotate(state.get(BlockGenericMachine.FACING)));
-    }
-
-    @Deprecated
-    @Override
-    public BlockState mirror(BlockState state, Mirror mirrorIn) {
-	return state.rotate(mirrorIn.toRotation(state.get(BlockGenericMachine.FACING)));
-    }
-
-    @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-	Direction movingdirection = context.getPlacementHorizontalFacing();
-	BlockState state = getDefaultState().with(BlockGenericMachine.FACING, context.getPlacementHorizontalFacing().getOpposite());
-	// left check first in front
-	BlockState check = context.getWorld().getBlockState(context.getPos().offset(movingdirection.rotateY().getOpposite()));
-	if (check.getBlock() == this && check.get(BlockGenericMachine.FACING).getOpposite() == movingdirection.rotateY().getOpposite()) {
-	    state = state.with(FACINGDIRECTION, FacingDirection.LEFT);
-	} else {
-	    check = context.getWorld().getBlockState(context.getPos().offset(movingdirection.rotateY()));
-	    if (check.getBlock() == this && check.get(BlockGenericMachine.FACING).getOpposite() == movingdirection.rotateY()) {
-		state = state.with(FACINGDIRECTION, FacingDirection.RIGHT);
-	    }
+	public BlockElectromagneticBooster() {
+		super(Properties.copy(Blocks.GLASS).strength(3.5f, 20).requiresCorrectToolForDrops().noOcclusion().isRedstoneConductor((x, y, z) -> false).harvestLevel(1).harvestTool(ToolType.PICKAXE));
+		registerDefaultState(stateDefinition.any().setValue(GenericEntityBlock.FACING, Direction.NORTH).setValue(FACINGDIRECTION, FacingDirection.NONE));
 	}
-	return state;
-    }
 
-    @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-	builder.add(BlockGenericMachine.FACING);
-	builder.add(FACINGDIRECTION);
-    }
-
-    @Override
-    public void onRotate(ItemStack stack, BlockPos pos, PlayerEntity player) {
-	player.world.setBlockState(pos, rotate(player.world.getBlockState(pos), Rotation.CLOCKWISE_90));
-    }
-
-    @Override
-    public void onPickup(ItemStack stack, BlockPos pos, PlayerEntity player) {
-	World world = player.world;
-	BlockState current = world.getBlockState(pos);
-	FacingDirection face = current.get(FACINGDIRECTION);
-	if (face != FacingDirection.NONE) {
-	    current = current.with(FACINGDIRECTION, face == FacingDirection.LEFT ? FacingDirection.RIGHT : FacingDirection.LEFT);
-	    if (face == FacingDirection.RIGHT) {
-		current = rotate(current, Rotation.CLOCKWISE_180);
-	    }
-	    current = rotate(current, Rotation.CLOCKWISE_90);
-	} else {
-	    current = rotate(current, Rotation.CLOCKWISE_180);
+	@Override
+	public BlockState rotate(BlockState state, Rotation rot) {
+		return state.setValue(GenericEntityBlock.FACING, rot.rotate(state.getValue(GenericEntityBlock.FACING)));
 	}
-	world.setBlockState(pos, current);
-    }
 
-    private static boolean isntSolid(BlockState state, IBlockReader reader, BlockPos pos) {
-	return false;
-    }
+	@Override
+	public BlockState mirror(BlockState state, Mirror mirrorIn) {
+		return state.rotate(mirrorIn.getRotation(state.getValue(GenericEntityBlock.FACING)));
+	}
 
-    @Override
-    @Deprecated
-    public VoxelShape getRayTraceShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext context) {
-	return VoxelShapes.empty();
-    }
+	@Override
+	public BlockState getStateForPlacement(BlockItemUseContext context) {
+		Direction movingdirection = context.getHorizontalDirection();
+		BlockState state = super.getStateForPlacement(context).setValue(GenericEntityBlock.FACING, context.getHorizontalDirection().getOpposite());
+		// left check first in front
+		BlockState check = context.getLevel().getBlockState(context.getClickedPos().relative(movingdirection.getClockWise().getOpposite()));
+		if (check.getBlock() == this && check.getValue(GenericEntityBlock.FACING).getOpposite() == movingdirection.getClockWise().getOpposite()) {
+			state = state.setValue(FACINGDIRECTION, FacingDirection.LEFT);
+		} else {
+			check = context.getLevel().getBlockState(context.getClickedPos().relative(movingdirection.getClockWise()));
+			if (check.getBlock() == this && check.getValue(GenericEntityBlock.FACING).getOpposite() == movingdirection.getClockWise()) {
+				state = state.setValue(FACINGDIRECTION, FacingDirection.RIGHT);
+			}
+		}
+		return state;
+	}
+	
+	@Override
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
+		builder.add(FACINGDIRECTION);
+		builder.add(GenericEntityBlock.FACING);
+		super.createBlockStateDefinition(builder);
+	}
 
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    @Deprecated
-    public float getAmbientOcclusionLightValue(BlockState state, IBlockReader worldIn, BlockPos pos) {
-	return 1.0F;
-    }
+	@Override
+	public void onRotate(ItemStack stack, BlockPos pos, PlayerEntity player) {
+		player.level.setBlockAndUpdate(pos, rotate(player.level.getBlockState(pos), Rotation.CLOCKWISE_90));
+	}
 
-    @Override
-    public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
-	return true;
-    }
+	@Override
+	public void onPickup(ItemStack stack, BlockPos pos, PlayerEntity player) {
+		World world = player.level;
+		BlockState current = world.getBlockState(pos);
+		FacingDirection face = current.getValue(FACINGDIRECTION);
+		if (face != FacingDirection.NONE) {
+			current = current.setValue(FACINGDIRECTION, face == FacingDirection.LEFT ? FacingDirection.RIGHT : FacingDirection.LEFT);
+			if (face == FacingDirection.RIGHT) {
+				current = rotate(current, Rotation.CLOCKWISE_180);
+			}
+			current = rotate(current, Rotation.CLOCKWISE_90);
+		} else {
+			current = rotate(current, Rotation.CLOCKWISE_180);
+		}
+		world.setBlockAndUpdate(pos, current);
+	}
+
+	@Override
+	public VoxelShape getVisualShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext context) {
+		return VoxelShapes.empty();
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	@Override
+	public float getShadeBrightness(BlockState state, IBlockReader worldIn, BlockPos pos) {
+		return 1.0F;
+	}
+
+	@Override
+	public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
+		return true;
+	}
 }

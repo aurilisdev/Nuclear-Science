@@ -1,29 +1,26 @@
 package nuclearscience.common.block;
 
-import net.minecraft.block.AbstractBlock;
+import electrodynamics.prefab.utilities.object.Location;
 import net.minecraft.block.SnowyDirtBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import nuclearscience.api.radiation.EffectRadiation;
+import net.minecraftforge.common.ToolType;
+import nuclearscience.api.radiation.RadiationSystem;
 
 public class BlockRadioactiveSoil extends SnowyDirtBlock {
 
-    public BlockRadioactiveSoil() {
-	super(AbstractBlock.Properties.create(Material.ORGANIC, MaterialColor.GREEN).tickRandomly().hardnessAndResistance(0.6F)
-		.sound(SoundType.PLANT));
-    }
-
-    @Override
-    public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn) {
-	if (entityIn instanceof LivingEntity) {
-	    LivingEntity living = (LivingEntity) entityIn;
-	    living.addPotionEffect(new EffectInstance(EffectRadiation.INSTANCE, (int) (20 * 40 * worldIn.rand.nextFloat())));
+	public BlockRadioactiveSoil() {
+		super(Properties.of(Material.GRASS, MaterialColor.COLOR_GREEN).randomTicks().strength(0.6F).sound(SoundType.GRASS).harvestLevel(2).harvestTool(ToolType.SHOVEL));
 	}
-    }
+
+	@Override
+	public void stepOn(World lvl, BlockPos pos, Entity entityIn) {
+		if (lvl.getLevelData().getGameTime() % 10 == 0) {
+			RadiationSystem.emitRadiationFromLocation(lvl, new Location(pos), 3, 300);
+		}
+	}
 }
