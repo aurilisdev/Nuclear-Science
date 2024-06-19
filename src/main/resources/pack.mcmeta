@@ -1,7 +1,7 @@
 {
     "pack": {
         "description": "Resources for Nuclear Science",
-        "pack_format": 8,
-        "_comment": "Datapack for Nuclear Science ( french translation by Myuui#6614 )"
+        "pack_format": 15,
+        "_comment": "By aurilisdev"
     }
 }
