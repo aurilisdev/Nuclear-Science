@@ -67,7 +67,7 @@ public class NuclearScienceBlockStateProvider extends ElectrodynamicsBlockStateP
 		String texture = "pipe/";
 
 		for (SubtypeMoltenSaltPipe pipe : SubtypeMoltenSaltPipe.values()) {
-			wire(NuclearScienceBlocks.getBlock(pipe), models().withExistingParent(name + pipe.tag() + "_none", modLoc(parent + "pipe_none")).texture("texture", blockLoc(texture + pipe.tag())).texture("particle", "#texture"), models().withExistingParent(name + pipe.tag() + "_side", modLoc(parent + "pipe_side")).texture("texture", blockLoc(texture + pipe.tag())).texture("particle", "#texture"), false);
+			wire(NuclearScienceBlocks.getBlock(pipe), models().withExistingParent(name + pipe.tag() + "_none", modLoc(parent + "pipe_none")).texture("texture", blockLoc(texture + pipe.tag())).texture("particle", "#texture").renderType("cutout"), models().withExistingParent(name + pipe.tag() + "_side", modLoc(parent + "pipe_side")).texture("texture", blockLoc(texture + pipe.tag())).texture("particle", "#texture").renderType("cutout"), false);
 		}
 
 	}

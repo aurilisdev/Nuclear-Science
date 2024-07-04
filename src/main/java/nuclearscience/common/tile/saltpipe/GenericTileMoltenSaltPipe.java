@@ -5,8 +5,9 @@ import java.util.HashSet;
 
 import com.google.common.collect.Sets;
 
+import electrodynamics.common.block.connect.util.EnumConnectType;
 import electrodynamics.prefab.network.AbstractNetwork;
-import electrodynamics.prefab.tile.GenericTile;
+import electrodynamics.prefab.tile.types.GenericConnectTile;
 import electrodynamics.prefab.utilities.Scheduler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -16,8 +17,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.api.network.moltensalt.IMoltenSaltPipe;
 import nuclearscience.common.network.MoltenSaltNetwork;
 import nuclearscience.common.tile.msreactor.TileHeatExchanger;
+import nuclearscience.common.tile.msreactor.TileMSReactorCore;
 
-public abstract class GenericTileMoltenSaltPipe extends GenericTile implements IMoltenSaltPipe {
+public abstract class GenericTileMoltenSaltPipe extends GenericConnectTile implements IMoltenSaltPipe {
 
 	public MoltenSaltNetwork moltenSaltNetwork;
 
@@ -161,6 +163,20 @@ public abstract class GenericTileMoltenSaltPipe extends GenericTile implements I
 	@Override
 	public void onLoad() {
 		super.onLoad();
+		// TODO remove in next version release; this is a temp hack for now
+		if (super.connections.get() == 0) {
+			for (Direction dir : Direction.values()) {
+				EnumConnectType connection = EnumConnectType.NONE;
+				BlockEntity otherTile = level.getBlockEntity(getBlockPos().relative(dir));
+				if (otherTile instanceof IMoltenSaltPipe) {
+					connection = EnumConnectType.WIRE;
+				} else if ((otherTile instanceof TileMSReactorCore && dir.getOpposite() == Direction.UP) || (otherTile instanceof TileHeatExchanger && dir.getOpposite() == Direction.DOWN)) {
+					connection = EnumConnectType.INVENTORY;
+				}
+				writeConnection(dir, connection);
+			}
+		}
+		// end temp hack
 		Scheduler.schedule(1, this::refreshNetwork);
 	}
 }

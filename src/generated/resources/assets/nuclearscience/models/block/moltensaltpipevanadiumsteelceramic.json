@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:block/cube",
+  "inventory": {
+    "parent": "nuclearscience:block/pipe/moltensaltpipevanadiumsteelceramic_side"
+  },
+  "loader": "electrodynamics:electrodynamicscableloader",
+  "none": {
+    "parent": "nuclearscience:block/pipe/moltensaltpipevanadiumsteelceramic_none"
+  },
+  "render_type": "minecraft:cutout",
+  "wire": {
+    "parent": "nuclearscience:block/pipe/moltensaltpipevanadiumsteelceramic_side"
+  }
+}
