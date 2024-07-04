@@ -1,5 +1,6 @@
 {
   "parent": "nuclearscience:parent/pipe_none",
+  "render_type": "minecraft:cutout",
   "textures": {
     "particle": "#texture",
     "texture": "nuclearscience:block/pipe/moltensaltpipevanadiumsteelceramic"
