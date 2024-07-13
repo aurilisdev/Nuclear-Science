@@ -3,10 +3,207 @@
 	"parent": "block/cube_all",
 	"texture_size": [32, 32],
 	"textures": {
+		"8": "nuclearscience:block/plasma_opaque",
 		"10": "nuclearscience:block/model/fusionreactorcore",
 		"particle": "nuclearscience:block/fusionreactorcore"
 	},
 	"elements": [
+		{
+			"name": "edge plasma",
+			"from": [1, 5, 5],
+			"to": [2, 11, 6],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"south": {"uv": [0, 0, 1, 6], "texture": "#8"},
+				"west": {"uv": [0, 0, 1, 6], "texture": "#8"}
+			}
+		},
+		{
+			"name": "edge plasma",
+			"from": [1, 5, 10],
+			"to": [2, 11, 11],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 1, 6], "texture": "#8"},
+				"west": {"uv": [0, 0, 1, 6], "texture": "#8"}
+			}
+		},
+		{
+			"name": "edge plasma",
+			"from": [1, 10, 6],
+			"to": [2, 11, 10],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"west": {"uv": [0, 0, 4, 1], "texture": "#8"},
+				"down": {"uv": [0, 0, 1, 4], "texture": "#8"}
+			}
+		},
+		{
+			"name": "edge plasma",
+			"from": [1, 5, 6],
+			"to": [2, 6, 10],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, -5, 8]},
+			"faces": {
+				"west": {"uv": [0, 0, 4, 1], "texture": "#8"},
+				"up": {"uv": [0, 0, 1, 4], "texture": "#8"}
+			}
+		},
+		{
+			"name": "edge plasma",
+			"from": [1.5, 6, 6],
+			"to": [2, 10, 10],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, -4, 8]},
+			"faces": {
+				"west": {"uv": [0, 0, 4, 4], "texture": "#8"}
+			}
+		},
+		{
+			"name": "edge plasma",
+			"from": [5, 5, 14],
+			"to": [6, 11, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"east": {"uv": [0, 0, 1, 6], "texture": "#8"},
+				"south": {"uv": [0, 0, 1, 6], "texture": "#8"}
+			}
+		},
+		{
+			"name": "edge plasma",
+			"from": [10, 5, 14],
+			"to": [11, 11, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"south": {"uv": [0, 0, 1, 6], "texture": "#8"},
+				"west": {"uv": [0, 0, 1, 6], "texture": "#8"}
+			}
+		},
+		{
+			"name": "edge plasma",
+			"from": [6, 10, 14],
+			"to": [10, 11, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"south": {"uv": [0, 0, 4, 1], "texture": "#8"},
+				"down": {"uv": [0, 0, 1, 4], "rotation": 90, "texture": "#8"}
+			}
+		},
+		{
+			"name": "edge plasma",
+			"from": [6, 5, 14],
+			"to": [10, 6, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, -5, 8]},
+			"faces": {
+				"south": {"uv": [0, 0, 4, 1], "texture": "#8"},
+				"up": {"uv": [0, 0, 1, 4], "rotation": 270, "texture": "#8"}
+			}
+		},
+		{
+			"name": "edge plasma",
+			"from": [6, 6, 14],
+			"to": [10, 10, 14.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, -4, 8]},
+			"faces": {
+				"south": {"uv": [0, 0, 4, 4], "texture": "#8"}
+			}
+		},
+		{
+			"name": "edge plasma",
+			"from": [14, 5, 10],
+			"to": [15, 11, 11],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 1, 6], "texture": "#8"},
+				"east": {"uv": [0, 0, 1, 6], "texture": "#8"}
+			}
+		},
+		{
+			"name": "edge plasma",
+			"from": [14, 5, 5],
+			"to": [15, 11, 6],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"east": {"uv": [0, 0, 1, 6], "texture": "#8"},
+				"south": {"uv": [0, 0, 1, 6], "texture": "#8"}
+			}
+		},
+		{
+			"name": "edge plasma",
+			"from": [14, 10, 6],
+			"to": [15, 11, 10],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"east": {"uv": [0, 0, 4, 1], "texture": "#8"},
+				"down": {"uv": [0, 0, 1, 4], "rotation": 180, "texture": "#8"}
+			}
+		},
+		{
+			"name": "edge plasma",
+			"from": [14, 5, 6],
+			"to": [15, 6, 10],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, -5, 8]},
+			"faces": {
+				"east": {"uv": [0, 0, 4, 1], "texture": "#8"},
+				"up": {"uv": [0, 0, 1, 4], "rotation": 180, "texture": "#8"}
+			}
+		},
+		{
+			"name": "edge plasma",
+			"from": [14, 6, 6],
+			"to": [14.5, 10, 10],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, -4, 8]},
+			"faces": {
+				"east": {"uv": [0, 0, 4, 4], "texture": "#8"}
+			}
+		},
+		{
+			"name": "edge plasma",
+			"from": [10, 5, 1],
+			"to": [11, 11, 2],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 1, 6], "texture": "#8"},
+				"west": {"uv": [0, 0, 1, 6], "texture": "#8"}
+			}
+		},
+		{
+			"name": "edge plasma",
+			"from": [5, 5, 1],
+			"to": [6, 11, 2],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 1, 6], "texture": "#8"},
+				"east": {"uv": [0, 0, 1, 6], "texture": "#8"}
+			}
+		},
+		{
+			"name": "edge plasma",
+			"from": [6, 10, 1],
+			"to": [10, 11, 2],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 4, 1], "texture": "#8"},
+				"down": {"uv": [0, 0, 1, 4], "rotation": 270, "texture": "#8"}
+			}
+		},
+		{
+			"name": "edge plasma",
+			"from": [6, 5, 1],
+			"to": [10, 6, 2],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, -5, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 4, 1], "texture": "#8"},
+				"up": {"uv": [0, 0, 1, 4], "rotation": 90, "texture": "#8"}
+			}
+		},
+		{
+			"name": "edge plasma",
+			"from": [6, 6, 1.5],
+			"to": [10, 10, 2],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, -4, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 4, 4], "texture": "#8"}
+			}
+		},
 		{
 			"name": "cylinder center",
 			"from": [5, 14, 5],
@@ -817,6 +1014,37 @@
 	],
 	"groups": [
 		{
+			"name": "active components",
+			"origin": [0, 13, 13],
+			"color": 0,
+			"children": [
+				{
+					"name": "edge 1",
+					"origin": [0, 13, 13],
+					"color": 0,
+					"children": [0, 1, 2, 3, 4]
+				},
+				{
+					"name": "edge 2",
+					"origin": [0, 13, 13],
+					"color": 0,
+					"children": [5, 6, 7, 8, 9]
+				},
+				{
+					"name": "edge 3",
+					"origin": [0, 13, 13],
+					"color": 0,
+					"children": [10, 11, 12, 13, 14]
+				},
+				{
+					"name": "edge 4",
+					"origin": [0, 13, 13],
+					"color": 0,
+					"children": [15, 16, 17, 18, 19]
+				}
+			]
+		},
+		{
 			"name": "dead components",
 			"origin": [8, 8, 8],
 			"color": 0,
@@ -830,43 +1058,43 @@
 							"name": "top",
 							"origin": [6, 14, 10],
 							"color": 0,
-							"children": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+							"children": [20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
 						},
 						{
 							"name": "bottom",
 							"origin": [6, 14, 10],
 							"color": 0,
-							"children": [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
+							"children": [33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45]
 						},
-						26,
-						27,
-						28,
-						29,
-						30,
-						31,
-						32,
-						33,
-						34,
-						35,
-						36,
-						37,
-						38,
-						39,
-						40,
-						41
+						46,
+						47,
+						48,
+						49,
+						50,
+						51,
+						52,
+						53,
+						54,
+						55,
+						56,
+						57,
+						58,
+						59,
+						60,
+						61
 					]
 				},
 				{
 					"name": "pylars",
 					"origin": [13, 8, 2],
 					"color": 0,
-					"children": [42, 43, 44, 45, 46, 47, 48, 49]
+					"children": [62, 63, 64, 65, 66, 67, 68, 69]
 				},
 				{
 					"name": "edges",
 					"origin": [8, -4, 8],
 					"color": 0,
-					"children": [50, 51, 52, 53, 54, 55, 56, 57]
+					"children": [70, 71, 72, 73, 74, 75, 76, 77]
 				},
 				{
 					"name": "edges",
@@ -874,12 +1102,12 @@
 					"color": 0,
 					"children": []
 				},
-				58,
+				78,
 				{
 					"name": "corners",
 					"origin": [0, 13, 0],
 					"color": 0,
-					"children": [59, 60, 61, 62, 63, 64, 65, 66]
+					"children": [79, 80, 81, 82, 83, 84, 85, 86]
 				}
 			]
 		}

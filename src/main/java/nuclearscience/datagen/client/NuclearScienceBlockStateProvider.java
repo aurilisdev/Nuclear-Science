@@ -43,7 +43,7 @@ public class NuclearScienceBlockStateProvider extends ElectrodynamicsBlockStateP
 		horrRotatedBlock(NuclearScienceBlocks.blockControlRodAssembly, existingBlock(NuclearScienceBlocks.blockControlRodAssembly), 180, 0, false);
 		rotatedLeftRightBlock(NuclearScienceBlocks.blockElectromagneticBooster, existingBlock(blockLoc("electromagneticbooster")), existingBlock(blockLoc("electromagneticboosterleft")), existingBlock(blockLoc("electromagneticboosterright")), 90, true);
 		horrRotatedLitBlock(NuclearScienceBlocks.blockFuelReprocessor, existingBlock(NuclearScienceBlocks.blockFuelReprocessor), existingBlock(blockLoc("fuelreprocessoron")), true);
-		horrRotatedBlock(NuclearScienceBlocks.blockFusionReactorCore, existingBlock(NuclearScienceBlocks.blockFusionReactorCore), true);
+		horrRotatedLitBlock(NuclearScienceBlocks.blockFusionReactorCore, existingBlock(NuclearScienceBlocks.blockFusionReactorCore), existingBlock(blockLoc("fusionreactorcoreon")), true);
 		horrRotatedBlock(NuclearScienceBlocks.blockGasCentrifuge, existingBlock(blockLoc("gascentrifugeoutline")), 180, 0, false);
 		horrRotatedBlock(NuclearScienceBlocks.blockHeatExchanger, existingBlock(NuclearScienceBlocks.blockHeatExchanger), true);
 		horrRotatedLitBlock(NuclearScienceBlocks.blockMoltenSaltSupplier, existingBlock(NuclearScienceBlocks.blockMoltenSaltSupplier), existingBlock(blockLoc("moltensaltsupplieron")), true);

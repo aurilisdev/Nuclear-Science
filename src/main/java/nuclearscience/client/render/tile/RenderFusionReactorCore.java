@@ -33,7 +33,7 @@ public class RenderFusionReactorCore extends AbstractTileRenderer<TileFusionReac
 
 	public static void renderFloatingText(PoseStack matrixStackIn, MultiBufferSource bufferIn, Component text, float x, float y, float z, int color, int combinedLightIn) {
 		matrixStackIn.pushPose();
-		matrixStackIn.translate(x, y, z);
+		matrixStackIn.translate(x, y-1, z);
 		matrixStackIn.mulPose(Minecraft.getInstance().getEntityRenderDispatcher().cameraOrientation());
 		matrixStackIn.scale(-0.025F, -0.025F, 0.025F);
 		Matrix4f matrix4f = matrixStackIn.last().pose();

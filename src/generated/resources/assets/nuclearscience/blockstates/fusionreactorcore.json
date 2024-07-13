@@ -1,18 +1,33 @@
 {
   "variants": {
-    "facing=east": {
+    "facing=east,lit=false": {
       "model": "nuclearscience:block/fusionreactorcore"
     },
-    "facing=north": {
+    "facing=east,lit=true": {
+      "model": "nuclearscience:block/fusionreactorcoreon"
+    },
+    "facing=north,lit=false": {
       "model": "nuclearscience:block/fusionreactorcore",
       "y": 270
     },
-    "facing=south": {
+    "facing=north,lit=true": {
+      "model": "nuclearscience:block/fusionreactorcoreon",
+      "y": 270
+    },
+    "facing=south,lit=false": {
       "model": "nuclearscience:block/fusionreactorcore",
       "y": 90
     },
-    "facing=west": {
+    "facing=south,lit=true": {
+      "model": "nuclearscience:block/fusionreactorcoreon",
+      "y": 90
+    },
+    "facing=west,lit=false": {
       "model": "nuclearscience:block/fusionreactorcore",
+      "y": 180
+    },
+    "facing=west,lit=true": {
+      "model": "nuclearscience:block/fusionreactorcoreon",
       "y": 180
     }
   }
