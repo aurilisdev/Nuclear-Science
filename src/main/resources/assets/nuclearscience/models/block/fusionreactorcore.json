@@ -4,7 +4,7 @@
 	"texture_size": [32, 32],
 	"textures": {
 		"10": "nuclearscience:block/model/fusionreactorcore",
-		"particle": "nuclearscience:block/fusionreactorcore"
+		"particle": "nuclearscience:block/model/fusionreactorcore"
 	},
 	"elements": [
 		{

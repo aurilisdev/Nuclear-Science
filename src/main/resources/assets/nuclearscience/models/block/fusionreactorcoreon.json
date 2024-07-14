@@ -5,7 +5,7 @@
 	"textures": {
 		"8": "nuclearscience:block/plasma_opaque",
 		"10": "nuclearscience:block/model/fusionreactorcore",
-		"particle": "nuclearscience:block/fusionreactorcore"
+		"particle": "nuclearscience:block/model/fusionreactorcore"
 	},
 	"elements": [
 		{
