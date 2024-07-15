@@ -21,6 +21,7 @@ import nuclearscience.client.render.tile.RenderFusionReactorCore;
 import nuclearscience.client.render.tile.RenderGasCentrifuge;
 import nuclearscience.client.render.tile.RenderNuclearBoiler;
 import nuclearscience.client.render.tile.RenderQuantumCapacitor;
+import nuclearscience.client.render.tile.RenderRadioactiveProcessor;
 import nuclearscience.client.render.tile.RenderRodAssembly;
 import nuclearscience.client.render.tile.RenderTeleporter;
 import nuclearscience.client.render.tile.RenderTurbine;
@@ -98,6 +99,7 @@ public class ClientRegister {
 		event.registerBlockEntityRenderer(NuclearScienceBlockTypes.TILE_TELEPORTER.get(), RenderTeleporter::new);
 		event.registerBlockEntityRenderer(NuclearScienceBlockTypes.TILE_CONTROLRODASSEMBLY.get(), RenderRodAssembly::new);
 		event.registerBlockEntityRenderer(NuclearScienceBlockTypes.TILE_ATOMICASSEMBLER.get(), RenderAtomicAssembler::new);
+		event.registerBlockEntityRenderer(NuclearScienceBlockTypes.TILE_RADIOACTIVEPROCESSOR.get(), RenderRadioactiveProcessor::new);
 
 		event.registerEntityRenderer(NuclearScienceEntities.ENTITY_PARTICLE.get(), RenderParticle::new);
 
