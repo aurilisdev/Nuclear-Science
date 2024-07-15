@@ -4,7 +4,7 @@
 	"ambientocclusion": "false",
 	"textures": {
 		"1": "nuclearscience:block/model/chemicalextractor",
-		"particle": "electrodynamics:block/steelcasing"
+		"particle": "nuclearscience:block/model/chemicalextractor"
 	},
 	"groups": [
 		{
@@ -25,12 +25,12 @@
 			"parent": "block/cube_all",
 			"textures": {
 				"1": "nuclearscience:block/model/chemicalextractor",
-				"particle": "electrodynamics:block/steelcasing"
+				"particle": "nuclearscience:block/model/chemicalextractor"
 			},
 			"elements": [
 				{
-					"from": [5, 2, 0],
-					"to": [11, 14, 16],
+					"from": [5, 2, 0.625],
+					"to": [11, 14, 15.375],
 					"rotation": {"angle": 0, "axis": "y", "origin": [8, 9, 8]},
 					"faces": {
 						"north": {"uv": [7.33333, 5.5, 6.33333, 7.33333], "texture": "#1"},
@@ -59,8 +59,7 @@
 						"north": {"uv": [6.66667, 14, 6.5, 14.16667], "texture": "#1"},
 						"east": {"uv": [6.16667, 14, 6, 14.16667], "texture": "#1"},
 						"south": {"uv": [6.33333, 14, 6.16667, 14.16667], "texture": "#1"},
-						"west": {"uv": [6.5, 14, 6.33333, 14.16667], "texture": "#1"},
-						"up": {"uv": [5.83333, 14, 6, 14.16667], "texture": "#1"}
+						"west": {"uv": [6.5, 14, 6.33333, 14.16667], "texture": "#1"}
 					}
 				},
 				{
@@ -71,8 +70,7 @@
 						"north": {"uv": [7.33333, 14, 7.16667, 14.16667], "texture": "#1"},
 						"east": {"uv": [6.83333, 14, 6.66667, 14.16667], "texture": "#1"},
 						"south": {"uv": [7, 14, 6.83333, 14.16667], "texture": "#1"},
-						"west": {"uv": [7.16667, 14, 7, 14.16667], "texture": "#1"},
-						"up": {"uv": [5.83333, 14, 6, 14.16667], "texture": "#1"}
+						"west": {"uv": [7.16667, 14, 7, 14.16667], "texture": "#1"}
 					}
 				},
 				{
@@ -83,8 +81,7 @@
 						"north": {"uv": [0.66667, 14.5, 0.5, 14.66667], "texture": "#1"},
 						"east": {"uv": [0.16667, 14.5, 0, 14.66667], "texture": "#1"},
 						"south": {"uv": [0.33333, 14.5, 0.16667, 14.66667], "texture": "#1"},
-						"west": {"uv": [0.5, 14.5, 0.33333, 14.66667], "texture": "#1"},
-						"up": {"uv": [5.83333, 14, 6, 14.16667], "texture": "#1"}
+						"west": {"uv": [0.5, 14.5, 0.33333, 14.66667], "texture": "#1"}
 					}
 				},
 				{
@@ -95,8 +92,7 @@
 						"north": {"uv": [1.33333, 14.5, 1.16667, 14.66667], "texture": "#1"},
 						"east": {"uv": [0.83333, 14.5, 0.66667, 14.66667], "texture": "#1"},
 						"south": {"uv": [1, 14.5, 0.83333, 14.66667], "texture": "#1"},
-						"west": {"uv": [1.16667, 14.5, 1, 14.66667], "texture": "#1"},
-						"up": {"uv": [5.83333, 14, 6, 14.16667], "texture": "#1"}
+						"west": {"uv": [1.16667, 14.5, 1, 14.66667], "texture": "#1"}
 					}
 				},
 				{
@@ -277,9 +273,7 @@
 						"north": {"uv": [8, 14, 7.83333, 14.16667], "texture": "#1"},
 						"east": {"uv": [7.5, 14, 7.33333, 14.16667], "texture": "#1"},
 						"south": {"uv": [7.66667, 14, 7.5, 14.16667], "texture": "#1"},
-						"west": {"uv": [8, 14, 7.83333, 14.16667], "texture": "#1"},
-						"up": {"uv": [5.83333, 14, 6, 14.16667], "texture": "#1"},
-						"down": {"uv": [0, 0, 0, 0], "texture": "#1"}
+						"west": {"uv": [8, 14, 7.83333, 14.16667], "texture": "#1"}
 					}
 				},
 				{
@@ -398,8 +392,7 @@
 						"north": {"uv": [4.66667, 14, 4.5, 14.16667], "texture": "#1"},
 						"east": {"uv": [4.16667, 14, 4, 14.16667], "texture": "#1"},
 						"south": {"uv": [4.33333, 14, 4.16667, 14.16667], "texture": "#1"},
-						"west": {"uv": [4.5, 14, 4.33333, 14.16667], "texture": "#1"},
-						"up": {"uv": [5.83333, 14, 6, 14.16667], "texture": "#1"}
+						"west": {"uv": [4.5, 14, 4.33333, 14.16667], "texture": "#1"}
 					}
 				},
 				{
@@ -458,8 +451,7 @@
 						"north": {"uv": [6, 14, 5.83333, 14.16667], "texture": "#1"},
 						"east": {"uv": [5.5, 14, 5.33333, 14.16667], "texture": "#1"},
 						"south": {"uv": [5.66667, 14, 5.5, 14.16667], "texture": "#1"},
-						"west": {"uv": [5.83333, 14, 5.66667, 14.16667], "texture": "#1"},
-						"up": {"uv": [5.83333, 14, 6, 14.16667], "texture": "#1"}
+						"west": {"uv": [5.83333, 14, 5.66667, 14.16667], "texture": "#1"}
 					}
 				},
 				{
@@ -494,8 +486,7 @@
 						"north": {"uv": [5.33333, 14, 5.16667, 14.16667], "texture": "#1"},
 						"east": {"uv": [4.83333, 14, 4.66667, 14.16667], "texture": "#1"},
 						"south": {"uv": [5, 14, 4.83333, 14.16667], "texture": "#1"},
-						"west": {"uv": [5.16667, 14, 5, 14.16667], "texture": "#1"},
-						"up": {"uv": [5.83333, 14, 6, 14.16667], "texture": "#1"}
+						"west": {"uv": [5.16667, 14, 5, 14.16667], "texture": "#1"}
 					}
 				},
 				{
@@ -675,6 +666,44 @@
 						"west": {"uv": [6, 0, 7, 0.125], "texture": "#1"},
 						"down": {"uv": [11, 6.16667, 9.66667, 7.5], "texture": "#1"}
 					}
+				},
+				{
+					"from": [2, 1.25, 2],
+					"to": [14, 2.25, 14],
+					"rotation": {"angle": 0, "axis": "y", "origin": [0, -0.75, 0]},
+					"faces": {
+						"north": {"uv": [14, 15.83333, 16, 16], "texture": "#1"},
+						"east": {"uv": [12, 15.83333, 14, 16], "texture": "#1"},
+						"south": {"uv": [14, 15.83333, 16, 16], "texture": "#1"},
+						"west": {"uv": [12, 15.83333, 14, 16], "texture": "#1"},
+						"up": {"uv": [12, 15.83333, 10, 13.83333], "texture": "#1"}
+					}
+				},
+				{
+					"from": [5, 13.75, 15],
+					"to": [11, 14.25, 16],
+					"rotation": {"angle": 0, "axis": "y", "origin": [6.5, 13.75, 15.5]},
+					"faces": {
+						"north": {"uv": [10.5, 15.16666, 10.33333, 14.16666], "rotation": 90, "texture": "#1"},
+						"east": {"uv": [10, 14.66666, 10.16667, 14.83333], "texture": "#1"},
+						"south": {"uv": [10.5, 15.16666, 10.33333, 14.16666], "rotation": 90, "texture": "#1"},
+						"west": {"uv": [10, 14.66666, 10.16667, 14.83333], "texture": "#1"},
+						"up": {"uv": [10.5, 15.16666, 10.33333, 14.16666], "rotation": 90, "texture": "#1"},
+						"down": {"uv": [10.5, 15.16666, 10.33333, 14.16666], "rotation": 90, "texture": "#1"}
+					}
+				},
+				{
+					"from": [5, 13.75, 0],
+					"to": [11, 14.25, 1],
+					"rotation": {"angle": 0, "axis": "y", "origin": [6.5, 13.75, 0.5]},
+					"faces": {
+						"north": {"uv": [10.5, 15.16666, 10.33333, 14.16666], "rotation": 90, "texture": "#1"},
+						"east": {"uv": [10, 14.66666, 10.16667, 14.83333], "texture": "#1"},
+						"south": {"uv": [10.5, 15.16666, 10.33333, 14.16666], "rotation": 90, "texture": "#1"},
+						"west": {"uv": [10, 14.66666, 10.16667, 14.83333], "texture": "#1"},
+						"up": {"uv": [10.5, 15.16666, 10.33333, 14.16666], "rotation": 90, "texture": "#1"},
+						"down": {"uv": [10.5, 15.16666, 10.33333, 14.16666], "rotation": 90, "texture": "#1"}
+					}
 				}
 			]
 		},
@@ -683,7 +712,7 @@
 			"parent": "block/cube_all",
 			"textures": {
 				"1": "nuclearscience:block/model/chemicalextractor",
-				"particle": "electrodynamics:block/steelcasing"
+				"particle": "nuclearscience:block/model/chemicalextractor"
 			},
 			"elements": [
 				{
