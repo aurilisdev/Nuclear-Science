@@ -12,6 +12,7 @@ import electrodynamics.prefab.utilities.ElectroTextUtils;
 import electrodynamics.prefab.utilities.math.Color;
 import electrodynamics.registers.ElectrodynamicsDataComponentTypes;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -90,7 +91,7 @@ public class ScreenTeleporter extends GenericScreen<ContainerTeleporter> {
             }
 
             tile.destination.set(tile.getBlockPos());
-            tile.dimension.set(getMinecraft().level.OVERWORLD.location());
+            tile.dimension.set(ClientLevel.OVERWORLD.location());
 
             xBox.setValue("" + menu.getSafeHost().destination.get().getX());
             yBox.setValue("" + menu.getSafeHost().destination.get().getY());

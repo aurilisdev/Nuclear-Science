@@ -177,7 +177,7 @@ public class ClientRegister {
         event.registerSpriteSet(NuclearScienceParticles.PARTICLE_SMOKE.get(), ParticleSmoke.Factory::new);
     }
 
-    @SubscribeEvent
+	@SubscribeEvent
     public static void cacheCustomTextureAtlases(TextureAtlasStitchedEvent event) {
         if (event.getAtlas().location().equals(TextureAtlas.LOCATION_BLOCKS)) {
             CACHED_TEXTUREATLASSPRITES.clear();

@@ -81,14 +81,11 @@ public class TileFissionInterface extends GenericTileInterface implements IFissi
 
             ItemStack item;
 
-            int cleared = 0;
-
             for (int i = 0; i < 4; i++) {
 
                 item = coreInv.getItem(i);
 
                 if (item.isEmpty()) {
-                    cleared++;
                 } else if (item.is(NuclearScienceTags.Items.FUELROD_SPENT)) {
 
                     boolean inserted = false;
@@ -100,8 +97,6 @@ public class TileFissionInterface extends GenericTileInterface implements IFissi
                             supplyInv.setItem(j, item.copy());
                             coreInv.setItem(i, ItemStack.EMPTY);
                             inserted = true;
-                            cleared++;
-
                             break;
 
                         }
@@ -182,14 +177,11 @@ public class TileFissionInterface extends GenericTileInterface implements IFissi
             ItemStack item;
             ItemStack supplyItem;
 
-            int taken = 0;
-
             for (int i = 0; i < 4; i++) {
 
                 item = coreInv.getItem(i);
 
                 if (item.is(NuclearScienceTags.Items.FUELROD_URANIUM_LOW_EN) || item.is(NuclearScienceTags.Items.FUELROD_URANIUM_HIGH_EN) || item.is(NuclearScienceTags.Items.FUELROD_PLUTONIUM)) {
-                    taken++;
                     continue;
                 } else if (item.isEmpty()) {
 
@@ -202,7 +194,6 @@ public class TileFissionInterface extends GenericTileInterface implements IFissi
                         if (supplyItem.is(NuclearScienceTags.Items.FUELROD_URANIUM_LOW_EN) || supplyItem.is(NuclearScienceTags.Items.FUELROD_URANIUM_HIGH_EN) || supplyItem.is(NuclearScienceTags.Items.FUELROD_PLUTONIUM)) {
                             coreInv.setItem(i, supplyItem.copy());
                             supplyInv.setItem(j, ItemStack.EMPTY);
-                            taken++;
                             inserted = true;
                             break;
                         }

@@ -61,7 +61,6 @@ public class TileMeltedReactor extends GenericTile {
 			if (distanceSq < RADIATION_RADIUS * RADIATION_RADIUS && level.random.nextDouble() > distanceSq / (RADIATION_RADIUS * RADIATION_RADIUS)) {
 				BlockPos pos = new BlockPos((int) Math.floor(x2), (int) Math.floor(y2), (int) Math.floor(z2));
 				BlockState state = level.getBlockState(pos);
-				Block block = state.getBlock();
 				if (state.isAir()) {
 					if (!level.getBlockState(pos.below()).isAir()) {
 						level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
@@ -91,7 +90,6 @@ public class TileMeltedReactor extends GenericTile {
 			if (distanceSq < RADIATION_RADIUS * RADIATION_RADIUS && level.random.nextDouble() > distanceSq / (RADIATION_RADIUS * RADIATION_RADIUS)) {
 				BlockPos pos = new BlockPos((int) Math.floor(x2), (int) Math.floor(y2), (int) Math.floor(z2));
 				BlockState state = level.getBlockState(pos);
-				Block block = state.getBlock();
 				if (BlockIrradiated.isValidPlacement(state)) {
 					level.setBlockAndUpdate(pos, BlockIrradiated.getIrradiatedBlockstate(state));
 				}

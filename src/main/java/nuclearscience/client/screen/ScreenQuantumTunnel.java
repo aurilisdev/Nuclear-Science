@@ -39,7 +39,8 @@ public class ScreenQuantumTunnel extends GenericScreen<ContainerQuantumTunnel> {
 
     public ScreenComponentVerticalSlider slider;
 
-    public ScreenQuantumTunnel(ContainerQuantumTunnel container, Inventory playerInventory, Component title) {
+    @SuppressWarnings("removal")
+	public ScreenQuantumTunnel(ContainerQuantumTunnel container, Inventory playerInventory, Component title) {
         super(container, playerInventory, title);
 
         imageHeight += 35;

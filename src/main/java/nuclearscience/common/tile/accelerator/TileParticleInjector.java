@@ -164,8 +164,6 @@ public class TileParticleInjector extends GenericTile {
 				double d1 = pos.getY() + random.nextDouble();
 				double d2 = pos.getZ() + random.nextDouble();
 				double d3 = (random.nextFloat() - 0.5) * 0.5;
-				double d4 = (random.nextFloat() - 0.5) * 0.5;
-				double d5 = (random.nextFloat() - 0.5) * 0.5;
 
 				((ServerLevel) level).sendParticles(ParticleTypes.PORTAL, d0, d1, d2, 1, 0, 0, 0, d3);
 			}

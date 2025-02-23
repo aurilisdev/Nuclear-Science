@@ -82,11 +82,11 @@ public enum SubtypeNuclearMachine implements ISubtype, IMachine {
     private final boolean showInItemGroup;
     private final MachineProperties properties;
 
-    private SubtypeNuclearMachine(boolean showInItemGroup, BlockEntityType.BlockEntitySupplier blockEntitySupplier) {
+    private SubtypeNuclearMachine(boolean showInItemGroup, BlockEntityType.BlockEntitySupplier<BlockEntity> blockEntitySupplier) {
         this(showInItemGroup, blockEntitySupplier, MachineProperties.DEFAULT);
     }
 
-    private SubtypeNuclearMachine(boolean showInItemGroup, BlockEntityType.BlockEntitySupplier blockEntitySupplier, MachineProperties properties) {
+    private SubtypeNuclearMachine(boolean showInItemGroup, BlockEntityType.BlockEntitySupplier<BlockEntity> blockEntitySupplier, MachineProperties properties) {
         this.showInItemGroup = showInItemGroup;
         this.blockEntitySupplier = blockEntitySupplier;
         this.properties = properties;

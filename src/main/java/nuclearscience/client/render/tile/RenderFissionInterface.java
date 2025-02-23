@@ -96,7 +96,6 @@ public class RenderFissionInterface extends AbstractTileRenderer<TileFissionInte
             double doublePerc = perc * 2.0;
             double halfPerc = perc - 0.5;
             double doubleHalfPerc = halfPerc * 2.0;
-            double oneMinusPerc = 1.0 - perc;
             double oneMinusHalfPerc = 1.0 - doubleHalfPerc;
 
             AABB pistonRod;

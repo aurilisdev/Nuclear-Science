@@ -36,7 +36,7 @@ public class RenderFusionInterface extends AbstractTileRenderer<TileFusionInterf
             return;
         }
 
-        TileFusionReactorCore core = tile.reactor.getSafe();
+        tile.reactor.getSafe();
 
         Long currTime = tile.<ComponentTickable>getComponent(IComponentType.Tickable).getTicks();
 
@@ -63,11 +63,10 @@ public class RenderFusionInterface extends AbstractTileRenderer<TileFusionInterf
             double doublePerc = perc * 2.0;
             double halfPerc = perc - 0.5;
             double doubleHalfPerc = halfPerc * 2.0;
-            double oneMinusPerc = 1.0 - perc;
             double oneMinusHalfPerc = 1.0 - doubleHalfPerc;
 
             AABB pistonRod;
-            double x, y, z;
+            double y;
 
             switch (animation) {
 
