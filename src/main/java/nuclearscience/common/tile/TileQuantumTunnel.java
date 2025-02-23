@@ -411,7 +411,6 @@ public class TileQuantumTunnel extends GenericTile {
             if (buffered.isEmpty()) {
                 return ItemStack.EMPTY;
             }
-            ItemStack toExtract = buffered.copy();
             buffered.setCount(amount);
             return isReciever ? ItemStack.EMPTY : FrequencyConnectionManager.extractItem(frequency.get(), buffered, simulate);
         }
