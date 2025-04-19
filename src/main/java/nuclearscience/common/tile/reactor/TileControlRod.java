@@ -1,9 +1,5 @@
 package nuclearscience.common.tile.reactor;
 
-import electrodynamics.prefab.properties.Property;
-import electrodynamics.prefab.properties.PropertyTypes;
-import electrodynamics.prefab.tile.GenericTile;
-import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
@@ -14,13 +10,17 @@ import net.minecraft.world.phys.BlockHitResult;
 import nuclearscience.common.tile.reactor.fission.IFissionControlRod;
 import nuclearscience.common.tile.reactor.moltensalt.IMSControlRod;
 import nuclearscience.registers.NuclearScienceTiles;
+import voltaic.prefab.properties.types.PropertyTypes;
+import voltaic.prefab.properties.variant.SingleProperty;
+import voltaic.prefab.tile.GenericTile;
+import voltaic.prefab.tile.components.type.ComponentPacketHandler;
 
 public abstract class TileControlRod extends GenericTile {
 
     public static final int MAX_EXTENSION = 100;
     public static final int EXTENSION_PER_CLICK = 10;
 
-    public final Property<Integer> insertion = property(new Property<>(PropertyTypes.INTEGER, "insertion", 0));
+    public final SingleProperty<Integer> insertion = property(new SingleProperty<>(PropertyTypes.INTEGER, "insertion", 0));
 
     public TileControlRod(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -29,7 +29,7 @@ public abstract class TileControlRod extends GenericTile {
 
     @Override
     public int getComparatorSignal() {
-        return (int) (((double) insertion.get() / (double) MAX_EXTENSION) * 15);
+        return (int) (((double) insertion.getValue() / (double) MAX_EXTENSION) * 15);
     }
 
     @Override
@@ -39,14 +39,14 @@ public abstract class TileControlRod extends GenericTile {
         }
 
         if (player.isShiftKeyDown()) {
-            insertion.set(insertion.get() - TileFissionControlRod.EXTENSION_PER_CLICK);
-            if (insertion.get() < 0) {
-                insertion.set(TileFissionControlRod.MAX_EXTENSION);
+            insertion.setValue(insertion.getValue() - TileFissionControlRod.EXTENSION_PER_CLICK);
+            if (insertion.getValue() < 0) {
+                insertion.setValue(TileFissionControlRod.MAX_EXTENSION);
             }
         } else {
-            insertion.set(insertion.get() + TileFissionControlRod.EXTENSION_PER_CLICK);
-            if (insertion.get() > TileFissionControlRod.MAX_EXTENSION) {
-                insertion.set(0);
+            insertion.setValue(insertion.getValue() + TileFissionControlRod.EXTENSION_PER_CLICK);
+            if (insertion.getValue() > TileFissionControlRod.MAX_EXTENSION) {
+                insertion.setValue(0);
             }
         }
 
@@ -61,7 +61,7 @@ public abstract class TileControlRod extends GenericTile {
 
         @Override
         public int getInsertion() {
-            return insertion.get();
+            return insertion.getValue();
         }
     }
 
@@ -73,7 +73,7 @@ public abstract class TileControlRod extends GenericTile {
 
         @Override
         public int getInsertion() {
-            return insertion.get();
+            return insertion.getValue();
         }
 
         @Override

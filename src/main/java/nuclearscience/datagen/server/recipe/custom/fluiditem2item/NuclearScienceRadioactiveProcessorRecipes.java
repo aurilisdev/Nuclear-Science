@@ -1,19 +1,19 @@
 package nuclearscience.datagen.server.recipe.custom.fluiditem2item;
 
-import electrodynamics.common.tags.ElectrodynamicsTags;
-import electrodynamics.datagen.utils.recipe.AbstractRecipeGenerator;
-import electrodynamics.datagen.utils.recipe.builders.ElectrodynamicsRecipeBuilder;
-import electrodynamics.datagen.utils.recipe.builders.FluidItem2ItemBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import nuclearscience.References;
+import nuclearscience.NuclearScience;
 import nuclearscience.common.block.subtype.SubtypeIrradiatedBlock;
 import nuclearscience.common.recipe.categories.fluiditem2item.RadioactiveProcessorRecipe;
 import nuclearscience.common.tags.NuclearScienceTags;
 import nuclearscience.registers.NuclearScienceBlocks;
 import nuclearscience.registers.NuclearScienceItems;
+import voltaic.common.tags.VoltaicTags;
+import voltaic.datagen.utils.server.recipe.AbstractRecipeGenerator;
+import voltaic.datagen.utils.server.recipe.builders.BaseRecipeBuilder;
+import voltaic.datagen.utils.server.recipe.builders.FluidItem2ItemBuilder;
 
 public class NuclearScienceRadioactiveProcessorRecipes extends AbstractRecipeGenerator {
 
@@ -23,7 +23,7 @@ public class NuclearScienceRadioactiveProcessorRecipes extends AbstractRecipeGen
 	private final String modID;
 
 	public NuclearScienceRadioactiveProcessorRecipes() {
-		this(References.ID);
+		this(NuclearScience.ID);
 	}
 
 	public NuclearScienceRadioactiveProcessorRecipes(String modID) {
@@ -37,15 +37,15 @@ public class NuclearScienceRadioactiveProcessorRecipes extends AbstractRecipeGen
 				//
 				.addItemTagInput(NuclearScienceTags.Items.DUST_FISSILE, 2)
 				//
-				.addFluidTagInput(ElectrodynamicsTags.Fluids.IRON_SULFATE, 3000)
+				.addFluidTagInput(VoltaicTags.Fluids.IRON_SULFATE, 3000)
 				//
 				.save(output);
 
 		newRecipe(new ItemStack(NuclearScienceItems.ITEM_THORIANITEDUST.get()), 0.0F, RADIOACTIVEPROCESSOR_REQUIRED_TICKS, RADIOACTIVEPROCESSOR_USAGE_PER_TICK, "thorianite_dust", modID)
 				//
-				.addItemTagInput(ElectrodynamicsTags.Items.RAW_ORE_THORIUM, 1)
+				.addItemTagInput(VoltaicTags.Items.RAW_ORE_THORIUM, 1)
 				//
-				.addFluidTagInput(ElectrodynamicsTags.Fluids.SULFURIC_ACID, 1000)
+				.addFluidTagInput(VoltaicTags.Fluids.SULFURIC_ACID, 1000)
 				//
 				.save(output);
 
@@ -69,22 +69,22 @@ public class NuclearScienceRadioactiveProcessorRecipes extends AbstractRecipeGen
 				//
 				.addItemTagInput(NuclearScienceTags.Items.OXIDE_ACTINIUM, 1)
 				//
-				.addFluidTagInput(ElectrodynamicsTags.Fluids.HYDROFLUORIC_ACID, 100)
+				.addFluidTagInput(VoltaicTags.Fluids.HYDROFLUORIC_ACID, 100)
 				//
 				.save(output);
 
 		newRecipe(new ItemStack(NuclearScienceItems.ITEM_THORIANITEDUST.get()), 0.0F, RADIOACTIVEPROCESSOR_REQUIRED_TICKS, RADIOACTIVEPROCESSOR_USAGE_PER_TICK, "thorianite_dust_from_monazite", modID)
 				//
-				.addItemTagInput(ElectrodynamicsTags.Items.ORE_MONAZITE, 1)
+				.addItemTagInput(VoltaicTags.Items.ORE_MONAZITE, 1)
 				//
-				.addFluidTagInput(ElectrodynamicsTags.Fluids.SULFURIC_ACID, 1000)
+				.addFluidTagInput(VoltaicTags.Fluids.SULFURIC_ACID, 1000)
 				//
 				.save(output);
 
 	}
 
 	public FluidItem2ItemBuilder<RadioactiveProcessorRecipe> newRecipe(ItemStack stack, float xp, int ticks, double usagePerTick, String name, String group) {
-		return new FluidItem2ItemBuilder<>(RadioactiveProcessorRecipe::new, stack, ElectrodynamicsRecipeBuilder.RecipeCategory.FLUID_ITEM_2_ITEM, modID, "radioactive_processor/" + name, group, xp, ticks, usagePerTick);
+		return new FluidItem2ItemBuilder<>(RadioactiveProcessorRecipe::new, stack, BaseRecipeBuilder.RecipeCategory.FLUID_ITEM_2_ITEM, modID, "radioactive_processor/" + name, group, xp, ticks, usagePerTick);
 	}
 
 }

@@ -1,14 +1,5 @@
 package nuclearscience.common.tile.reactor.fusion;
 
-import electrodynamics.prefab.properties.Property;
-import electrodynamics.prefab.properties.PropertyTypes;
-import electrodynamics.prefab.tile.GenericTile;
-import electrodynamics.prefab.tile.components.IComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
-import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
-import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import electrodynamics.prefab.utilities.BlockEntityUtils;
-import electrodynamics.registers.ElectrodynamicsCapabilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -18,35 +9,44 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import nuclearscience.common.settings.Constants;
+import nuclearscience.common.settings.NuclearConstants;
 import nuclearscience.common.tags.NuclearScienceTags;
 import nuclearscience.registers.NuclearScienceBlocks;
 import nuclearscience.registers.NuclearScienceTiles;
+import voltaic.prefab.properties.types.PropertyTypes;
+import voltaic.prefab.properties.variant.SingleProperty;
+import voltaic.prefab.tile.GenericTile;
+import voltaic.prefab.tile.components.IComponentType;
+import voltaic.prefab.tile.components.type.ComponentElectrodynamic;
+import voltaic.prefab.tile.components.type.ComponentPacketHandler;
+import voltaic.prefab.tile.components.type.ComponentTickable;
+import voltaic.prefab.utilities.BlockEntityUtils;
+import voltaic.registers.VoltaicCapabilities;
 
 public class TileFusionReactorCore extends GenericTile {
 
-    public final Property<Integer> deuterium = property(new Property<>(PropertyTypes.INTEGER, "deuterium", 0));
-    public final Property<Integer> tritium = property(new Property<>(PropertyTypes.INTEGER, "tritium", 0));
-    public final Property<Integer> timeLeft = property(new Property<>(PropertyTypes.INTEGER, "timeleft", 0));
+    public final SingleProperty<Integer> deuterium = property(new SingleProperty<>(PropertyTypes.INTEGER, "deuterium", 0));
+    public final SingleProperty<Integer> tritium = property(new SingleProperty<>(PropertyTypes.INTEGER, "tritium", 0));
+    public final SingleProperty<Integer> timeLeft = property(new SingleProperty<>(PropertyTypes.INTEGER, "timeleft", 0));
 
     public TileFusionReactorCore(BlockPos pos, BlockState state) {
         super(NuclearScienceTiles.TILE_FUSIONREACTORCORE.get(), pos, state);
 
         addComponent(new ComponentTickable(this).tickServer(this::tickServer));
         addComponent(new ComponentPacketHandler(this));
-        addComponent(new ComponentElectrodynamic(this, false, true).setInputDirections(BlockEntityUtils.MachineDirection.TOP, BlockEntityUtils.MachineDirection.BOTTOM).maxJoules(Constants.FUSIONREACTOR_USAGE_PER_TICK * 20.0).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 4));
+        addComponent(new ComponentElectrodynamic(this, false, true).setInputDirections(BlockEntityUtils.MachineDirection.TOP, BlockEntityUtils.MachineDirection.BOTTOM).maxJoules(NuclearConstants.FUSIONREACTOR_USAGE_PER_TICK * 20.0).voltage(VoltaicCapabilities.DEFAULT_VOLTAGE * 4));
     }
 
     public void tickServer(ComponentTickable tick) {
         ComponentElectrodynamic electro = getComponent(IComponentType.Electrodynamic);
 
-        if (tritium.get() > 0 && deuterium.get() > 0 && timeLeft.get() <= 0 && electro.getJoulesStored() > Constants.FUSIONREACTOR_USAGE_PER_TICK) {
-            deuterium.set(deuterium.get() - 1);
-            tritium.set(tritium.get() - 1);
-            timeLeft.set(15 * 20);
+        if (tritium.getValue() > 0 && deuterium.getValue() > 0 && timeLeft.getValue() <= 0 && electro.getJoulesStored() > NuclearConstants.FUSIONREACTOR_USAGE_PER_TICK) {
+            deuterium.setValue(deuterium.getValue() - 1);
+            tritium.setValue(tritium.getValue() - 1);
+            timeLeft.setValue(15 * 20);
         }
 
-        if (timeLeft.get() <= 0) {
+        if (timeLeft.getValue() <= 0) {
             if (BlockEntityUtils.isLit(this)) {
                 BlockEntityUtils.updateLit(this, false);
             }
@@ -55,9 +55,9 @@ public class TileFusionReactorCore extends GenericTile {
         if (!BlockEntityUtils.isLit(this)) {
             BlockEntityUtils.updateLit(this, true);
         }
-        timeLeft.set(timeLeft.get() - 1);
+        timeLeft.setValue(timeLeft.getValue() - 1);
 
-        if (electro.getJoulesStored() < Constants.FUSIONREACTOR_USAGE_PER_TICK) {
+        if (electro.getJoulesStored() < NuclearConstants.FUSIONREACTOR_USAGE_PER_TICK) {
             return;
         }
 
@@ -69,14 +69,14 @@ public class TileFusionReactorCore extends GenericTile {
             offsetState = level.getBlockState(offset);
             if (offsetState.getBlock() == NuclearScienceBlocks.BLOCK_PLASMA.get()) {
                 BlockEntity tile = level.getBlockEntity(offset);
-                if (tile instanceof TilePlasma plasma && plasma.ticksExisted.get() > 30) {
-                    plasma.ticksExisted.set(0);
+                if (tile instanceof TilePlasma plasma && plasma.ticksExisted.getValue() > 30) {
+                    plasma.ticksExisted.setValue(0);
                 }
             } else if (offsetState.isAir()) {
                 level.setBlockAndUpdate(offset, NuclearScienceBlocks.BLOCK_PLASMA.get().defaultBlockState());
             }
         }
-        electro.joules(electro.getJoulesStored() - Constants.FUSIONREACTOR_USAGE_PER_TICK);
+        electro.joules(electro.getJoulesStored() - NuclearConstants.FUSIONREACTOR_USAGE_PER_TICK);
     }
 
     @Override
@@ -111,16 +111,16 @@ public class TileFusionReactorCore extends GenericTile {
         return addCell(tritium, count);
     }
 
-    private int addCell(Property<Integer> property, int count) {
+    private int addCell(SingleProperty<Integer> property, int count) {
 
-        if (property.get() >= Constants.FUSIONREACTOR_MAXSTORAGE) {
+        if (property.getValue() >= NuclearConstants.FUSIONREACTOR_MAXSTORAGE) {
             return 0;
         }
 
-        int added = Math.min(count, Constants.FUSIONREACTOR_MAXSTORAGE - property.get());
+        int added = Math.min(count, NuclearConstants.FUSIONREACTOR_MAXSTORAGE - property.getValue());
 
         if (!level.isClientSide()) {
-            property.set(property.get() + added);
+            property.setValue(property.getValue() + added);
         }
 
         return added;
@@ -128,11 +128,11 @@ public class TileFusionReactorCore extends GenericTile {
     }
 
     public boolean isDeuteriumFull() {
-        return deuterium.get() >= Constants.FUSIONREACTOR_MAXSTORAGE;
+        return deuterium.getValue() >= NuclearConstants.FUSIONREACTOR_MAXSTORAGE;
     }
 
     public boolean isTritiumFull() {
-        return tritium.get() >= Constants.FUSIONREACTOR_MAXSTORAGE;
+        return tritium.getValue() >= NuclearConstants.FUSIONREACTOR_MAXSTORAGE;
     }
 
 }

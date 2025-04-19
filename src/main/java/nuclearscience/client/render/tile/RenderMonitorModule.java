@@ -5,9 +5,6 @@ import org.joml.Matrix4f;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import electrodynamics.client.render.tile.AbstractTileRenderer;
-import electrodynamics.prefab.utilities.math.Color;
-import electrodynamics.prefab.utilities.math.MathUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -15,6 +12,9 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import nuclearscience.common.tile.reactor.logisticsnetwork.TileMonitorModule;
+import voltaic.client.render.AbstractTileRenderer;
+import voltaic.prefab.utilities.math.Color;
+import voltaic.prefab.utilities.math.MathUtils;
 
 public class RenderMonitorModule extends AbstractTileRenderer<TileMonitorModule> {
 
@@ -25,7 +25,7 @@ public class RenderMonitorModule extends AbstractTileRenderer<TileMonitorModule>
     @Override
     public void render(@NotNull TileMonitorModule tile, float partialTicks, PoseStack stack, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
 
-        if(!tile.linked.get()) {
+        if(!tile.linked.getValue()) {
             return;
         }
 

@@ -1,11 +1,11 @@
 package nuclearscience.client.screen;
 
-import electrodynamics.prefab.screen.component.types.wrapper.WrapperInventoryIO;
-import electrodynamics.prefab.screen.component.utils.AbstractScreenComponentInfo;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import nuclearscience.client.screen.util.GenericInterfaceBoundScreen;
 import nuclearscience.common.inventory.container.ContainerSupplyModule;
+import voltaic.prefab.screen.component.types.wrapper.WrapperInventoryIO;
+import voltaic.prefab.screen.component.utils.AbstractScreenComponentInfo;
 
 public class ScreenSupplyModule extends GenericInterfaceBoundScreen<ContainerSupplyModule> {
 

@@ -1,18 +1,18 @@
 package nuclearscience.datagen.server.recipe.custom.item2item;
 
 import electrodynamics.common.item.subtype.SubtypeIngot;
-import electrodynamics.common.recipe.recipeutils.ProbableItem;
-import electrodynamics.datagen.utils.recipe.AbstractRecipeGenerator;
-import electrodynamics.datagen.utils.recipe.builders.ElectrodynamicsRecipeBuilder;
-import electrodynamics.datagen.utils.recipe.builders.Item2ItemBuilder;
 import electrodynamics.registers.ElectrodynamicsItems;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.world.item.ItemStack;
-import nuclearscience.References;
+import nuclearscience.NuclearScience;
 import nuclearscience.common.recipe.categories.item2item.FuelReprocessorRecipe;
 import nuclearscience.common.tags.NuclearScienceTags;
 import nuclearscience.registers.NuclearScienceBlocks;
 import nuclearscience.registers.NuclearScienceItems;
+import voltaic.common.recipe.recipeutils.ProbableItem;
+import voltaic.datagen.utils.server.recipe.AbstractRecipeGenerator;
+import voltaic.datagen.utils.server.recipe.builders.BaseRecipeBuilder;
+import voltaic.datagen.utils.server.recipe.builders.Item2ItemBuilder;
 
 public class NuclearScienceFuelReprocessorRecipes extends AbstractRecipeGenerator {
 
@@ -22,7 +22,7 @@ public class NuclearScienceFuelReprocessorRecipes extends AbstractRecipeGenerato
 	private final String modID;
 
 	public NuclearScienceFuelReprocessorRecipes() {
-		this(References.ID);
+		this(NuclearScience.ID);
 	}
 
 	public NuclearScienceFuelReprocessorRecipes(String modID) {
@@ -67,7 +67,7 @@ public class NuclearScienceFuelReprocessorRecipes extends AbstractRecipeGenerato
 	}
 
 	public Item2ItemBuilder<FuelReprocessorRecipe> newRecipe(ItemStack stack, float xp, int ticks, double usagePerTick, String name, String group) {
-		return new Item2ItemBuilder<>(FuelReprocessorRecipe::new, stack, ElectrodynamicsRecipeBuilder.RecipeCategory.ITEM_2_ITEM, modID, "fuel_reprocessor/" + name, group, xp, ticks, usagePerTick);
+		return new Item2ItemBuilder<>(FuelReprocessorRecipe::new, stack, BaseRecipeBuilder.RecipeCategory.ITEM_2_ITEM, modID, "fuel_reprocessor/" + name, group, xp, ticks, usagePerTick);
 	}
 
 }

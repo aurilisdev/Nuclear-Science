@@ -5,12 +5,6 @@ import org.joml.Matrix4f;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import electrodynamics.api.electricity.formatting.ChatFormatter;
-import electrodynamics.api.electricity.formatting.DisplayUnit;
-import electrodynamics.client.render.tile.AbstractTileRenderer;
-import electrodynamics.prefab.utilities.RenderingUtils;
-import electrodynamics.prefab.utilities.math.Color;
-import electrodynamics.prefab.utilities.math.MathUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -18,9 +12,15 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import nuclearscience.client.ClientRegister;
+import nuclearscience.client.NuclearScienceClientRegister;
 import nuclearscience.common.tile.reactor.TileControlRod;
 import nuclearscience.common.tile.reactor.logisticsnetwork.TileControlRodModule;
+import voltaic.api.electricity.formatting.ChatFormatter;
+import voltaic.api.electricity.formatting.DisplayUnits;
+import voltaic.client.render.AbstractTileRenderer;
+import voltaic.prefab.utilities.RenderingUtils;
+import voltaic.prefab.utilities.math.Color;
+import voltaic.prefab.utilities.math.MathUtils;
 
 public class RenderControlRodModule extends AbstractTileRenderer<TileControlRodModule> {
 
@@ -46,16 +46,16 @@ public class RenderControlRodModule extends AbstractTileRenderer<TileControlRodM
 
         stack.mulPose(MathUtils.rotQuaternionDeg(0, facing.toYRot() - sign * 90, 0));
 
-        double insertion = tile.insertion.get() / (double) TileControlRod.MAX_EXTENSION;
+        double insertion = tile.insertion.getValue() / (double) TileControlRod.MAX_EXTENSION;
 
         stack.translate(0, 0, -MAX_DELTA * insertion);
 
-        RenderingUtils.renderModel(getModel(ClientRegister.MODEL_CONTROLRODMODULE_ROD), tile, RenderType.solid(), stack, bufferIn, combinedLightIn, combinedOverlayIn);
+        RenderingUtils.renderModel(getModel(NuclearScienceClientRegister.MODEL_CONTROLRODMODULE_ROD), tile, RenderType.solid(), stack, bufferIn, combinedLightIn, combinedOverlayIn);
 
         stack.popPose();
 
 
-        if(!tile.linked.get()) {
+        if(!tile.linked.getValue()) {
             return;
         }
 
@@ -70,7 +70,7 @@ public class RenderControlRodModule extends AbstractTileRenderer<TileControlRodM
 
         stack.translate(0, 0.175, 0.1775);
 
-        Component transfer = ChatFormatter.getChatDisplayShort((double) tile.insertion.get() / (double) TileControlRod.MAX_EXTENSION * 100.0, DisplayUnit.PERCENTAGE);
+        Component transfer = ChatFormatter.getChatDisplayShort((double) tile.insertion.getValue() / (double) TileControlRod.MAX_EXTENSION * 100.0, DisplayUnits.PERCENTAGE);
 
         float scale = 0.0215F / (font.width(transfer) / 16.0F);
 

@@ -1,8 +1,8 @@
 package nuclearscience.common.block;
 
-import electrodynamics.common.block.voxelshapes.VoxelShapeProvider;
-import electrodynamics.prefab.block.GenericMachineBlock;
 import nuclearscience.common.tile.accelerator.TileElectromagneticGateway;
+import voltaic.common.block.voxelshapes.VoxelShapeProvider;
+import voltaic.prefab.block.GenericMachineBlock;
 
 public class BlockElectromagneticGateway extends GenericMachineBlock {
 

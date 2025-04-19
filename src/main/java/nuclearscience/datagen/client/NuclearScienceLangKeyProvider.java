@@ -1,8 +1,7 @@
 package nuclearscience.datagen.client;
 
-import electrodynamics.datagen.client.ElectrodynamicsLangKeyProvider;
 import net.minecraft.data.PackOutput;
-import nuclearscience.References;
+import nuclearscience.NuclearScience;
 import nuclearscience.common.block.subtype.SubtypeElectromagent;
 import nuclearscience.common.block.subtype.SubtypeIrradiatedBlock;
 import nuclearscience.common.block.subtype.SubtypeMoltenSaltPipe;
@@ -20,11 +19,12 @@ import nuclearscience.registers.NuclearScienceFluids;
 import nuclearscience.registers.NuclearScienceGases;
 import nuclearscience.registers.NuclearScienceItems;
 import nuclearscience.registers.NuclearScienceSounds;
+import voltaic.datagen.utils.client.BaseLangKeyProvider;
 
-public class NuclearScienceLangKeyProvider extends ElectrodynamicsLangKeyProvider {
+public class NuclearScienceLangKeyProvider extends BaseLangKeyProvider {
 
 	public NuclearScienceLangKeyProvider(PackOutput output, Locale locale) {
-		super(output, locale, References.ID);
+		super(output, locale, NuclearScience.ID);
 	}
 
 	@Override
@@ -188,10 +188,6 @@ public class NuclearScienceLangKeyProvider extends ElectrodynamicsLangKeyProvide
 			addGuiLabel("saltsupplier.waste", "Waste");
 			addGuiLabel("saltsupplier.wastecont", "Waste: %s");
 
-			addGuiLabel("displayunit.radsymbol", "Rad");
-			addGuiLabel("displayunit.radname", "Rad");
-			addGuiLabel("displayunit.radnameplural", "Rads");
-
 			addGuiLabel("displayunit.speedoflightsymbol", "C");
 			addGuiLabel("displayunit.speedoflightname", "C");
 			addGuiLabel("displayunit.speedoflightnameplural", "C");
@@ -265,8 +261,6 @@ public class NuclearScienceLangKeyProvider extends ElectrodynamicsLangKeyProvide
 			addTooltip("deuteriumlevel", "Deuterium: %s");
 			addTooltip("tritiumlevel", "Tritium: %s");
 			addTooltip("steamfunneluse", "Collects and emits steam");
-			addTooltip("radiationshieldingamount", "Shielding Amount: %s");
-			addTooltip("radiationshieldinglevel", "Shielding Level: %s");
 			addTooltip("fissionreactor.maxtemp", "Maximum: %s");
 			addTooltip("fissionreactor.currtemp", "Current: %s");
 			addTooltip("fissionreactor.warning", "OVERHEATING!");
@@ -310,7 +304,7 @@ public class NuclearScienceLangKeyProvider extends ElectrodynamicsLangKeyProvide
 			addJei("particalacceleratorantimatter", "Particle Collision");
 			addJei("particalacceleratordarkmatter", "Particle Collision");
 
-			addGuidebook(References.ID, "Nuclear Science");
+			addGuidebook(NuclearScience.ID, "Nuclear Science");
 
 			addGuidebook("chapter.radiation", "Radiation");
 			addGuidebook("chapter.radiation.l1.1", "Radiation is one of the key mechanics of Nuclear Science. Radiation is measured in rads and is ray casting-based. Each radiation source will be cast out to entities within a certain radius from the source position. If you are outside the radius, you will not be affected by that particular source. Below, the following" +

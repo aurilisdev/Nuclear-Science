@@ -6,18 +6,18 @@ import org.jetbrains.annotations.NotNull;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import electrodynamics.Electrodynamics;
-import electrodynamics.client.render.tile.AbstractTileRenderer;
-import electrodynamics.prefab.utilities.RenderingUtils;
-import electrodynamics.prefab.utilities.math.MathUtils;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import nuclearscience.client.ClientRegister;
+import nuclearscience.client.NuclearScienceClientRegister;
 import nuclearscience.client.particle.smoke.ParticleOptionSmoke;
 import nuclearscience.common.tile.TileFalloutScrubber;
+import voltaic.Voltaic;
+import voltaic.client.render.AbstractTileRenderer;
+import voltaic.prefab.utilities.RenderingUtils;
+import voltaic.prefab.utilities.math.MathUtils;
 
 public class RenderFalloutScrubber extends AbstractTileRenderer<TileFalloutScrubber> {
     public RenderFalloutScrubber(BlockEntityRendererProvider.Context context) {
@@ -35,7 +35,7 @@ public class RenderFalloutScrubber extends AbstractTileRenderer<TileFalloutScrub
 
         float roat = 0;
 
-        if(tile.active.get()) {
+        if(tile.active.getValue()) {
             roat = (System.currentTimeMillis() % 150) / 150.0F * 90.0F;
         }
 
@@ -52,20 +52,20 @@ public class RenderFalloutScrubber extends AbstractTileRenderer<TileFalloutScrub
         }
 
         BlockPos pos = tile.getBlockPos();
-        Random random = Electrodynamics.RANDOM;
+        Random random = Voltaic.RANDOM;
 
-        RenderingUtils.renderModel(getModel(ClientRegister.MODEL_FALLOUTSCRUBBER_FAN), tile, RenderType.solid(), stack, bufferIn, combinedLightIn, combinedOverlayIn);
+        RenderingUtils.renderModel(getModel(NuclearScienceClientRegister.MODEL_FALLOUTSCRUBBER_FAN), tile, RenderType.solid(), stack, bufferIn, combinedLightIn, combinedOverlayIn);
 
         stack.popPose();
 
-        if(!tile.active.get() || random.nextFloat() > 0.4F) {
+        if(!tile.active.getValue() || random.nextFloat() > 0.4F) {
             return;
         }
 
         double offset = 1 + random.nextDouble(0.5);
 
         double x = pos.getX() + random.nextDouble(0.75) + 0.125;
-        double y = pos.getY() + Electrodynamics.RANDOM.nextDouble(0.75) + 0.12;
+        double y = pos.getY() + Voltaic.RANDOM.nextDouble(0.75) + 0.12;
         double z = pos.getZ() + random.nextDouble(0.75) + 0.12;
 
         int lifetime = (int) (10.0 * offset);

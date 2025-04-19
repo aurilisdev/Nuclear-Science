@@ -7,7 +7,7 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.MenuType.MenuSupplier;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import nuclearscience.References;
+import nuclearscience.NuclearScience;
 import nuclearscience.common.inventory.container.ContainerAtomicAssembler;
 import nuclearscience.common.inventory.container.ContainerChemicalExtractor;
 import nuclearscience.common.inventory.container.ContainerCloudChamber;
@@ -31,7 +31,7 @@ import nuclearscience.common.inventory.container.ContainerTeleporter;
 import nuclearscience.common.inventory.container.ContainerThermometerModule;
 
 public class NuclearScienceMenuTypes {
-	public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(Registries.MENU, References.ID);
+	public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(Registries.MENU, NuclearScience.ID);
 
 	public static final DeferredHolder<MenuType<?>, MenuType<ContainerGasCentrifuge>> CONTAINER_GASCENTRIFUGE = register("gascentrifuge", ContainerGasCentrifuge::new);
 	public static final DeferredHolder<MenuType<?>, MenuType<ContainerNuclearBoiler>> CONTAINER_NUCLEARBOILER = register("nuclearboiler", ContainerNuclearBoiler::new);

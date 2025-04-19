@@ -8,7 +8,6 @@ import org.joml.Matrix4f;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
-import electrodynamics.client.render.event.levelstage.AbstractLevelStageHandler;
 import net.minecraft.client.Camera;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -20,6 +19,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 import nuclearscience.common.tile.TileCloudChamber;
+import voltaic.client.event.AbstractLevelStageHandler;
 
 public class HandlerCloudChamber extends AbstractLevelStageHandler {
 
@@ -45,12 +45,12 @@ public class HandlerCloudChamber extends AbstractLevelStageHandler {
 
             TileCloudChamber chamber = it.next();
 
-            if(chamber == null || chamber.isRemoved() || !chamber.hasLevel() || !chamber.getLevel().isLoaded(chamber.getBlockPos()) || !chamber.active.get()) {
+            if(chamber == null || chamber.isRemoved() || !chamber.hasLevel() || !chamber.getLevel().isLoaded(chamber.getBlockPos()) || !chamber.active.getValue()) {
                 it.remove();
                 continue;
             }
 
-            chamber.sources.get().forEach(source -> {
+            chamber.sources.getValue().forEach(source -> {
                 AABB outline = new AABB(source);
 
                 if(!frustum.isVisible(outline)) {

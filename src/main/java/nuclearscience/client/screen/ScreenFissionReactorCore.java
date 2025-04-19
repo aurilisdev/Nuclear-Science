@@ -3,14 +3,6 @@ package nuclearscience.client.screen;
 import java.util.ArrayList;
 import java.util.List;
 
-import electrodynamics.api.electricity.formatting.ChatFormatter;
-import electrodynamics.api.electricity.formatting.DisplayUnit;
-import electrodynamics.prefab.screen.GenericScreen;
-import electrodynamics.prefab.screen.component.ScreenComponentGeneric;
-import electrodynamics.prefab.screen.component.types.ScreenComponentProgress;
-import electrodynamics.prefab.screen.component.types.guitab.ScreenComponentTemperature;
-import electrodynamics.prefab.screen.component.types.wrapper.WrapperInventoryIO;
-import electrodynamics.prefab.screen.component.utils.AbstractScreenComponentInfo;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -21,6 +13,14 @@ import nuclearscience.NuclearScience;
 import nuclearscience.common.inventory.container.ContainerFissionReactorCore;
 import nuclearscience.common.tile.reactor.fission.TileFissionReactorCore;
 import nuclearscience.prefab.utils.NuclearTextUtils;
+import voltaic.api.electricity.formatting.ChatFormatter;
+import voltaic.api.electricity.formatting.DisplayUnits;
+import voltaic.prefab.screen.GenericScreen;
+import voltaic.prefab.screen.component.ScreenComponentGeneric;
+import voltaic.prefab.screen.component.types.ScreenComponentProgress;
+import voltaic.prefab.screen.component.types.guitab.ScreenComponentTemperature;
+import voltaic.prefab.screen.component.types.wrapper.WrapperInventoryIO;
+import voltaic.prefab.screen.component.utils.AbstractScreenComponentInfo;
 
 public class ScreenFissionReactorCore extends GenericScreen<ContainerFissionReactorCore> {
 	public static final ResourceLocation SCREEN_BACKGROUND = NuclearScience.rl("textures/gui/fissionreactor.png");
@@ -42,20 +42,20 @@ public class ScreenFissionReactorCore extends GenericScreen<ContainerFissionReac
 				return list;
 			}
 
-			list.add(NuclearTextUtils.tooltip("fissionreactor.maxtemp", ChatFormatter.getChatDisplayShort( TileFissionReactorCore.getActualTemp(TileFissionReactorCore.MELTDOWN_TEMPERATURE_ACTUAL), DisplayUnit.TEMPERATURE_CELCIUS).withStyle(ChatFormatting.BOLD, ChatFormatting.YELLOW)).withStyle(ChatFormatting.GRAY).getVisualOrderText());
+			list.add(NuclearTextUtils.tooltip("fissionreactor.maxtemp", ChatFormatter.getChatDisplayShort( TileFissionReactorCore.getActualTemp(TileFissionReactorCore.MELTDOWN_TEMPERATURE_ACTUAL), DisplayUnits.TEMPERATURE_CELCIUS).withStyle(ChatFormatting.BOLD, ChatFormatting.YELLOW)).withStyle(ChatFormatting.GRAY).getVisualOrderText());
 
-			MutableComponent text = ChatFormatter.getChatDisplayShort(TileFissionReactorCore.getActualTemp(core.temperature.get()), DisplayUnit.TEMPERATURE_CELCIUS);
+			MutableComponent text = ChatFormatter.getChatDisplayShort(TileFissionReactorCore.getActualTemp(core.temperature.getValue()), DisplayUnits.TEMPERATURE_CELCIUS);
 
-			if (core.temperature.get() > TileFissionReactorCore.MELTDOWN_TEMPERATURE_ACTUAL) {
+			if (core.temperature.getValue() > TileFissionReactorCore.MELTDOWN_TEMPERATURE_ACTUAL) {
 				text = text.withStyle(ChatFormatting.RED);
-			} else if (core.temperature.get() > TileFissionReactorCore.MELTDOWN_TEMPERATURE_ACTUAL - 100) {
+			} else if (core.temperature.getValue() > TileFissionReactorCore.MELTDOWN_TEMPERATURE_ACTUAL - 100) {
 				text = text.withStyle(ChatFormatting.YELLOW);
 			} else {
 				text = text.withStyle(ChatFormatting.GREEN);
 			}
 
 			list.add(NuclearTextUtils.tooltip("fissionreactor.currtemp", text).withStyle(ChatFormatting.GRAY).getVisualOrderText());
-			if (core.temperature.get() > TileFissionReactorCore.MELTDOWN_TEMPERATURE_ACTUAL && System.currentTimeMillis() % 1000 < 500) {
+			if (core.temperature.getValue() > TileFissionReactorCore.MELTDOWN_TEMPERATURE_ACTUAL && System.currentTimeMillis() % 1000 < 500) {
 				list.add(NuclearTextUtils.tooltip("fissionreactor.warning").withStyle(ChatFormatting.BOLD, ChatFormatting.RED).getVisualOrderText());
 			}
 

@@ -2,14 +2,14 @@ package nuclearscience.client.render.tile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import electrodynamics.client.render.tile.AbstractTileRenderer;
-import electrodynamics.prefab.tile.components.IComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import electrodynamics.prefab.utilities.RenderingUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import nuclearscience.common.tile.TileQuantumTunnel;
+import voltaic.client.render.AbstractTileRenderer;
+import voltaic.prefab.tile.components.IComponentType;
+import voltaic.prefab.tile.components.type.ComponentTickable;
+import voltaic.prefab.utilities.RenderingUtils;
 
 public class RenderQuantumTunnel extends AbstractTileRenderer<TileQuantumTunnel> {
 

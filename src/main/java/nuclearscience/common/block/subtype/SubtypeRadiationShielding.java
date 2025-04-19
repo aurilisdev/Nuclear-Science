@@ -1,9 +1,9 @@
 package nuclearscience.common.block.subtype;
 
-import electrodynamics.api.ISubtype;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import voltaic.api.ISubtype;
 
 public enum SubtypeRadiationShielding implements ISubtype {
     base(Blocks.NETHERITE_BLOCK.properties().strength(5.0f, 3.0f).sound(SoundType.METAL).requiresCorrectToolForDrops()),

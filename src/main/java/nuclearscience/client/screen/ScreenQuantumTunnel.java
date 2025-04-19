@@ -6,14 +6,6 @@ import java.util.List;
 
 import com.mojang.blaze3d.platform.InputConstants;
 
-import electrodynamics.api.electricity.formatting.ChatFormatter;
-import electrodynamics.api.electricity.formatting.DisplayUnit;
-import electrodynamics.api.gas.GasStack;
-import electrodynamics.prefab.screen.GenericScreen;
-import electrodynamics.prefab.screen.component.types.ScreenComponentVerticalSlider;
-import electrodynamics.prefab.screen.component.types.guitab.ScreenComponentGuiTab;
-import electrodynamics.prefab.screen.component.utils.AbstractScreenComponentInfo;
-import electrodynamics.prefab.utilities.object.TransferPack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
@@ -29,6 +21,14 @@ import nuclearscience.prefab.screen.component.quantumtunnel.WrapperIOEditor;
 import nuclearscience.prefab.screen.component.quantumtunnel.WrapperNewFrequency;
 import nuclearscience.prefab.screen.component.quantumtunnel.WrapperQuantumTunnelFrequencies;
 import nuclearscience.prefab.utils.NuclearTextUtils;
+import voltaic.api.electricity.formatting.ChatFormatter;
+import voltaic.api.electricity.formatting.DisplayUnits;
+import voltaic.api.gas.GasStack;
+import voltaic.prefab.screen.GenericScreen;
+import voltaic.prefab.screen.component.types.ScreenComponentVerticalSlider;
+import voltaic.prefab.screen.component.types.guitab.ScreenComponentGuiTab;
+import voltaic.prefab.screen.component.utils.AbstractScreenComponentInfo;
+import voltaic.prefab.utilities.object.TransferPack;
 
 public class ScreenQuantumTunnel extends GenericScreen<ContainerQuantumTunnel> {
 
@@ -83,14 +83,14 @@ public class ScreenQuantumTunnel extends GenericScreen<ContainerQuantumTunnel> {
 
             info.add(gas.getGas().getDescription().getVisualOrderText());
             info.add(Component.literal(" ").append(ChatFormatter.formatFluidMilibuckets(gas.getAmount()).withStyle(ChatFormatting.GRAY)).getVisualOrderText());
-            info.add(Component.literal(" ").append(ChatFormatter.getChatDisplayShort(gas.getTemperature(), DisplayUnit.TEMPERATURE_KELVIN).withStyle(ChatFormatting.GRAY)).getVisualOrderText());
-            info.add(Component.literal(" ").append(ChatFormatter.getChatDisplayShort(gas.getPressure(), DisplayUnit.PRESSURE_ATM).withStyle(ChatFormatting.GRAY)).getVisualOrderText());
+            info.add(Component.literal(" ").append(ChatFormatter.getChatDisplayShort(gas.getTemperature(), DisplayUnits.TEMPERATURE_KELVIN).withStyle(ChatFormatting.GRAY)).getVisualOrderText());
+            info.add(Component.literal(" ").append(ChatFormatter.getChatDisplayShort(gas.getPressure(), DisplayUnits.PRESSURE_ATM).withStyle(ChatFormatting.GRAY)).getVisualOrderText());
 
 
             TransferPack energy = buffer.getBufferedEnergy();
 
-            info.add(ChatFormatter.getChatDisplayShort(energy.getJoules(), DisplayUnit.JOULES).getVisualOrderText());
-            info.add(Component.literal(" ").append(ChatFormatter.getChatDisplayShort(energy.getVoltage(), DisplayUnit.VOLTAGE).withStyle(ChatFormatting.GRAY)).getVisualOrderText());
+            info.add(ChatFormatter.getChatDisplayShort(energy.getJoules(), DisplayUnits.JOULES).getVisualOrderText());
+            info.add(Component.literal(" ").append(ChatFormatter.getChatDisplayShort(energy.getVoltage(), DisplayUnits.VOLTAGE).withStyle(ChatFormatting.GRAY)).getVisualOrderText());
 
             return info;
 

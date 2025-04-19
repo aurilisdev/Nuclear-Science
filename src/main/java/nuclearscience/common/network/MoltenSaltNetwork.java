@@ -6,12 +6,12 @@ import java.util.Set;
 
 import com.google.common.collect.Sets;
 
-import electrodynamics.common.network.NetworkRegistry;
-import electrodynamics.prefab.network.AbstractNetwork;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import nuclearscience.common.block.subtype.SubtypeMoltenSaltPipe;
 import nuclearscience.common.tile.reactor.moltensalt.TileHeatExchanger;
 import nuclearscience.common.tile.reactor.moltensalt.TileMoltenSaltPipe;
+import voltaic.common.network.NetworkRegistry;
+import voltaic.prefab.network.AbstractNetwork;
 
 public class MoltenSaltNetwork extends AbstractNetwork<TileMoltenSaltPipe, SubtypeMoltenSaltPipe, Double, MoltenSaltNetwork> {
 

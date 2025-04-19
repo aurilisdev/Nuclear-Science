@@ -1,13 +1,13 @@
 package nuclearscience.common.tile.reactor.logisticsnetwork.util;
 
-import electrodynamics.prefab.tile.GenericTile;
-import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import electrodynamics.prefab.utilities.object.CachedTileOutput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.api.network.reactorlogistics.ILogisticsMember;
+import voltaic.prefab.tile.GenericTile;
+import voltaic.prefab.tile.components.type.ComponentTickable;
+import voltaic.prefab.utilities.object.CachedTileOutput;
 
 public abstract class GenericTileLogisticsMember extends GenericTile implements ILogisticsMember {
 

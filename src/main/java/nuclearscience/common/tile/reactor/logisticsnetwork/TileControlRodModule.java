@@ -1,13 +1,5 @@
 package nuclearscience.common.tile.reactor.logisticsnetwork;
 
-import electrodynamics.common.block.states.ElectrodynamicsBlockStates;
-import electrodynamics.prefab.properties.Property;
-import electrodynamics.prefab.properties.PropertyTypes;
-import electrodynamics.prefab.tile.components.IComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
-import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import electrodynamics.prefab.utilities.BlockEntityUtils;
-import electrodynamics.registers.ElectrodynamicsItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -27,36 +19,44 @@ import nuclearscience.common.tile.reactor.TileControlRod;
 import nuclearscience.common.tile.reactor.logisticsnetwork.interfaces.GenericTileInterface;
 import nuclearscience.common.tile.reactor.logisticsnetwork.util.GenericTileInterfaceBound;
 import nuclearscience.registers.NuclearScienceTiles;
+import voltaic.common.block.states.VoltaicBlockStates;
+import voltaic.prefab.properties.types.PropertyTypes;
+import voltaic.prefab.properties.variant.SingleProperty;
+import voltaic.prefab.tile.components.IComponentType;
+import voltaic.prefab.tile.components.type.ComponentContainerProvider;
+import voltaic.prefab.tile.components.type.ComponentTickable;
+import voltaic.prefab.utilities.BlockEntityUtils;
+import voltaic.registers.VoltaicItems;
 
 public class TileControlRodModule extends GenericTileInterfaceBound {
 
     private Direction relativeBack;
 
-    public final Property<Integer> insertion = property(new Property<>(PropertyTypes.INTEGER, "insertion", 0));
-    public final Property<Integer> redstoneSignal = property(new Property<>(PropertyTypes.INTEGER, "redstonesignal", 0)).onChange((prop, oldVal) -> {
-        if(level == null || level.isClientSide || prop.get() == oldVal) {
+    public final SingleProperty<Integer> insertion = property(new SingleProperty<>(PropertyTypes.INTEGER, "insertion", 0));
+    public final SingleProperty<Integer> redstoneSignal = property(new SingleProperty<>(PropertyTypes.INTEGER, "redstonesignal", 0)).onChange((prop, oldVal) -> {
+        if(level == null || level.isClientSide || prop.getValue() == oldVal) {
             return;
         }
 
-        double perc = (double) prop.get() / 15.0;
+        double perc = (double) prop.getValue() / 15.0;
 
         double tot = perc * TileControlRod.MAX_EXTENSION;
 
         int mult = (int) (tot / TileControlRod.EXTENSION_PER_CLICK);
 
-        insertion.set(mult * TileControlRod.EXTENSION_PER_CLICK);
+        insertion.setValue(mult * TileControlRod.EXTENSION_PER_CLICK);
     });
 
     public TileControlRodModule(BlockPos worldPos, BlockState blockState) {
         super(NuclearScienceTiles.TILE_CONTROLRODMODULE.get(), worldPos, blockState);
         addComponent(new ComponentTickable(this).tickServer(this::tickServer));
-        addComponent(new ComponentContainerProvider("container.controlrodmodule", this).createMenu((id, player) -> new ContainerControlRodModule(id, player, new SimpleContainer(0), getCoordsArray())));
+        addComponent(new ComponentContainerProvider("controlrodmodule", this).createMenu((id, player) -> new ContainerControlRodModule(id, player, new SimpleContainer(0), getCoordsArray())));
         relativeBack = BlockEntityUtils.getRelativeSide(getFacing(), BlockEntityUtils.MachineDirection.BACK.mappedDir);
     }
 
     @Override
     public boolean checkLinkedPosition(GenericTileInterface inter) {
-        return inter.controlRodLocation.get().equals(getBlockPos());
+        return inter.controlRodLocation.getValue().equals(getBlockPos());
     }
 
     @Override
@@ -67,7 +67,7 @@ public class TileControlRodModule extends GenericTileInterfaceBound {
     @Override
     public void onBlockStateUpdate(BlockState oldState, BlockState newState) {
         super.onBlockStateUpdate(oldState, newState);
-        if (!level.isClientSide() && oldState.hasProperty(ElectrodynamicsBlockStates.FACING) && newState.hasProperty(ElectrodynamicsBlockStates.FACING) && oldState.getValue(ElectrodynamicsBlockStates.FACING) != newState.getValue(ElectrodynamicsBlockStates.FACING)) {
+        if (!level.isClientSide() && oldState.hasProperty(VoltaicBlockStates.FACING) && newState.hasProperty(VoltaicBlockStates.FACING) && oldState.getValue(VoltaicBlockStates.FACING) != newState.getValue(VoltaicBlockStates.FACING)) {
             relativeBack = BlockEntityUtils.getRelativeSide(getFacing(), BlockEntityUtils.MachineDirection.BACK.mappedDir);
         }
     }
@@ -88,7 +88,7 @@ public class TileControlRodModule extends GenericTileInterfaceBound {
     public void onNeightborChanged(BlockPos neighbor, boolean blockStateTrigger) {
         super.onNeightborChanged(neighbor, blockStateTrigger);
         if (!level.isClientSide) {
-            redstoneSignal.set(getLevel().getBestNeighborSignal(getBlockPos()));
+            redstoneSignal.setValue(getLevel().getBestNeighborSignal(getBlockPos()));
         }
     }
 
@@ -109,13 +109,13 @@ public class TileControlRodModule extends GenericTileInterfaceBound {
 
             ReactorLogisticsNetwork network = cable.getNetwork();
 
-            GenericTileInterface inter = network.getInterface(interfaceLocation.get());
+            GenericTileInterface inter = network.getInterface(interfaceLocation.getValue());
 
             if (inter == null) {
                 return;
             }
 
-            inter.controlRodLocation.set(BlockEntityUtils.OUT_OF_REACH);
+            inter.controlRodLocation.setValue(BlockEntityUtils.OUT_OF_REACH);
         }
     }
 
@@ -126,7 +126,7 @@ public class TileControlRodModule extends GenericTileInterfaceBound {
 
     @Override
     public ItemInteractionResult useWithItem(ItemStack used, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (player.getItemInHand(hand).is(ElectrodynamicsItems.ITEM_WRENCH)) {
+        if (player.getItemInHand(hand).is(VoltaicItems.ITEM_WRENCH)) {
             if (this.hasComponent(IComponentType.ContainerProvider)) {
                 if (!this.level.isClientSide) {
                     player.openMenu(this.getComponent(IComponentType.ContainerProvider));
@@ -143,7 +143,7 @@ public class TileControlRodModule extends GenericTileInterfaceBound {
 
     @Override
     public int getComparatorSignal() {
-        return (int) (((double) insertion.get() / (double) TileControlRod.MAX_EXTENSION) * 15);
+        return (int) (((double) insertion.getValue() / (double) TileControlRod.MAX_EXTENSION) * 15);
     }
 
     @Override
@@ -153,14 +153,14 @@ public class TileControlRodModule extends GenericTileInterfaceBound {
         }
 
         if (player.isShiftKeyDown()) {
-            insertion.set(insertion.get() - TileControlRod.TileFissionControlRod.EXTENSION_PER_CLICK);
-            if (insertion.get() < 0) {
-                insertion.set(TileControlRod.TileFissionControlRod.MAX_EXTENSION);
+            insertion.setValue(insertion.getValue() - TileControlRod.TileFissionControlRod.EXTENSION_PER_CLICK);
+            if (insertion.getValue() < 0) {
+                insertion.setValue(TileControlRod.TileFissionControlRod.MAX_EXTENSION);
             }
         } else {
-            insertion.set(insertion.get() + TileControlRod.TileFissionControlRod.EXTENSION_PER_CLICK);
-            if (insertion.get() > TileControlRod.TileFissionControlRod.MAX_EXTENSION) {
-                insertion.set(0);
+            insertion.setValue(insertion.getValue() + TileControlRod.TileFissionControlRod.EXTENSION_PER_CLICK);
+            if (insertion.getValue() > TileControlRod.TileFissionControlRod.MAX_EXTENSION) {
+                insertion.setValue(0);
             }
         }
 
@@ -168,12 +168,12 @@ public class TileControlRodModule extends GenericTileInterfaceBound {
     }
 
     @Override
-    public void onInterfacePropChange(Property<BlockPos> prop, BlockPos old) {
+    public void onInterfacePropChange(SingleProperty<BlockPos> prop, BlockPos old) {
 
         super.onInterfacePropChange(prop, old);
 
         boolean oldInval = old.equals(BlockEntityUtils.OUT_OF_REACH);
-        boolean newInval = prop.get().equals(BlockEntityUtils.OUT_OF_REACH);
+        boolean newInval = prop.getValue().equals(BlockEntityUtils.OUT_OF_REACH);
 
         if(oldInval && newInval) {
             return;
@@ -192,16 +192,16 @@ public class TileControlRodModule extends GenericTileInterfaceBound {
         ReactorLogisticsNetwork network = cable.getNetwork();
 
         if(oldInval && !newInval) {
-            GenericTileInterface inter = network.getInterface(prop.get());
+            GenericTileInterface inter = network.getInterface(prop.getValue());
 
             if(inter != null) {
-                inter.controlRodLocation.set(getBlockPos());
+                inter.controlRodLocation.setValue(getBlockPos());
             }
         } else if (!oldInval && newInval) {
             GenericTileInterface inter = network.getInterface(old);
 
             if(inter != null) {
-                inter.controlRodLocation.set(BlockEntityUtils.OUT_OF_REACH);
+                inter.controlRodLocation.setValue(BlockEntityUtils.OUT_OF_REACH);
             }
         }
 

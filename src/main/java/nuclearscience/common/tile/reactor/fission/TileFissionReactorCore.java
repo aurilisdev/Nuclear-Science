@@ -2,20 +2,6 @@ package nuclearscience.common.tile.reactor.fission;
 
 import java.util.List;
 
-import electrodynamics.common.recipe.ElectrodynamicsRecipe;
-import electrodynamics.common.recipe.categories.item2item.Item2ItemRecipe;
-import electrodynamics.common.recipe.recipeutils.CountableIngredient;
-import electrodynamics.prefab.properties.Property;
-import electrodynamics.prefab.properties.PropertyTypes;
-import electrodynamics.prefab.tile.GenericTile;
-import electrodynamics.prefab.tile.components.IComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
-import electrodynamics.prefab.tile.components.type.ComponentInventory;
-import electrodynamics.prefab.tile.components.type.ComponentInventory.InventoryBuilder;
-import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
-import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import electrodynamics.prefab.utilities.BlockEntityUtils;
-import electrodynamics.prefab.utilities.object.CachedTileOutput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleTypes;
@@ -38,18 +24,31 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import nuclearscience.api.radiation.RadiationSystem;
-import nuclearscience.api.radiation.SimpleRadiationSource;
 import nuclearscience.api.turbine.ISteamReceiver;
 import nuclearscience.common.inventory.container.ContainerFissionReactorCore;
-import nuclearscience.common.recipe.NuclearScienceRecipeInit;
-import nuclearscience.common.settings.Constants;
+import nuclearscience.registers.NuclearScienceRecipies;
+import nuclearscience.common.settings.NuclearConstants;
 import nuclearscience.common.tile.reactor.TileControlRod;
 import nuclearscience.registers.NuclearScienceBlocks;
-import nuclearscience.registers.NuclearScienceDamageTypes;
 import nuclearscience.registers.NuclearScienceItems;
 import nuclearscience.registers.NuclearScienceSounds;
 import nuclearscience.registers.NuclearScienceTiles;
+import voltaic.api.radiation.RadiationSystem;
+import voltaic.api.radiation.SimpleRadiationSource;
+import voltaic.common.recipe.VoltaicRecipe;
+import voltaic.common.recipe.categories.item2item.Item2ItemRecipe;
+import voltaic.common.recipe.recipeutils.CountableIngredient;
+import voltaic.prefab.properties.types.PropertyTypes;
+import voltaic.prefab.properties.variant.SingleProperty;
+import voltaic.prefab.tile.GenericTile;
+import voltaic.prefab.tile.components.IComponentType;
+import voltaic.prefab.tile.components.type.ComponentContainerProvider;
+import voltaic.prefab.tile.components.type.ComponentInventory;
+import voltaic.prefab.tile.components.type.ComponentPacketHandler;
+import voltaic.prefab.tile.components.type.ComponentTickable;
+import voltaic.prefab.utilities.BlockEntityUtils;
+import voltaic.prefab.utilities.object.CachedTileOutput;
+import voltaic.registers.VoltaicDamageTypes;
 
 public class TileFissionReactorCore extends GenericTile {
 
@@ -69,28 +68,28 @@ public class TileFissionReactorCore extends GenericTile {
     public static final int STEAM_GEN_DIAMETER = 5;
     public static final int STEAM_GEN_HEIGHT = 2;
     private ISteamReceiver[][][] cachedReceivers = new ISteamReceiver[STEAM_GEN_DIAMETER][STEAM_GEN_HEIGHT][STEAM_GEN_DIAMETER];
-    public Property<Double> temperature = property(new Property<>(PropertyTypes.DOUBLE, "temperature", AIR_TEMPERATURE));
-    public Property<Integer> fuelCount = property(new Property<>(PropertyTypes.INTEGER, "fuelCount", 0));
-    public Property<Boolean> hasDeuterium = property(new Property<>(PropertyTypes.BOOLEAN, "hasDeuterium", false));
+    public SingleProperty<Double> temperature = property(new SingleProperty<>(PropertyTypes.DOUBLE, "temperature", AIR_TEMPERATURE));
+    public SingleProperty<Integer> fuelCount = property(new SingleProperty<>(PropertyTypes.INTEGER, "fuelCount", 0));
+    public SingleProperty<Boolean> hasDeuterium = property(new SingleProperty<>(PropertyTypes.BOOLEAN, "hasDeuterium", false));
     private CachedTileOutput controlRodCache;
     private int ticksOverheating = 0;
 
-    private List<RecipeHolder<ElectrodynamicsRecipe>> cachedRecipes;
+    private List<RecipeHolder<VoltaicRecipe>> cachedRecipes;
 
     public TileFissionReactorCore(BlockPos pos, BlockState state) {
         super(NuclearScienceTiles.TILE_REACTORCORE.get(), pos, state);
 
         addComponent(new ComponentTickable(this).tickCommon(this::tickCommon).tickServer(this::tickServer));
         addComponent(new ComponentPacketHandler(this));
-        addComponent(new ComponentInventory(this, InventoryBuilder.newInv().inputs(5).outputs(1)).setSlotsByDirection(BlockEntityUtils.MachineDirection.TOP, 0, 1, 2, 3, 4).setSlotsByDirection(BlockEntityUtils.MachineDirection.BOTTOM, 5));
-        addComponent(new ComponentContainerProvider("container.reactorcore", this).createMenu((id, player) -> new ContainerFissionReactorCore(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
+        addComponent(new ComponentInventory(this, ComponentInventory.InventoryBuilder.newInv().inputs(5).outputs(1)).setSlotsByDirection(BlockEntityUtils.MachineDirection.TOP, 0, 1, 2, 3, 4).setSlotsByDirection(BlockEntityUtils.MachineDirection.BOTTOM, 5));
+        addComponent(new ComponentContainerProvider("reactorcore", this).createMenu((id, player) -> new ContainerFissionReactorCore(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
     }
 
     protected void tickServer(ComponentTickable tickable) {
 
-        double decrease = (temperature.get() - AIR_TEMPERATURE) / 3000.0;
+        double decrease = (temperature.getValue() - AIR_TEMPERATURE) / 3000.0;
 
-        if (fuelCount.get() == 0) {
+        if (fuelCount.getValue() == 0) {
 
             decrease *= 25;
 
@@ -100,21 +99,21 @@ public class TileFissionReactorCore extends GenericTile {
 
         if (hasWater) {
 
-            decrease += (temperature.get() - WATER_TEMPERATURE) / 5000.0;
+            decrease += (temperature.getValue() - WATER_TEMPERATURE) / 5000.0;
 
         }
 
         if (decrease != 0) {
 
-            temperature.set(temperature.get() - (decrease < 0.001 && decrease > 0 ? 0.001 : decrease > -0.001 && decrease < 0 ? -0.001 : decrease));
+            temperature.setValue(temperature.getValue() - (decrease < 0.001 && decrease > 0 ? 0.001 : decrease > -0.001 && decrease < 0 ? -0.001 : decrease));
 
         }
 
         ComponentInventory inv = getComponent(IComponentType.Inventory);
 
-        if (fuelCount.get() > 0) {
+        if (fuelCount.getValue() > 0) {
 
-            double totstrength = temperature.get() * 10;
+            double totstrength = temperature.getValue() * 10;
 
             int range = (int) (Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 2);
 
@@ -132,7 +131,7 @@ public class TileFissionReactorCore extends GenericTile {
                 level.playSound(null, getBlockPos(), sound, SoundSource.BLOCKS, 1.0F, 1.0F);
             }
 
-            if (level.getLevelData().getGameTime() % 10 == 0 && temperature.get() > 100) {
+            if (level.getLevelData().getGameTime() % 10 == 0 && temperature.getValue() > 100) {
                 AABB bb = AABB.ofSize(new Vec3(getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ()), 4, 4, 4);
                 List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, bb);
                 for (LivingEntity living : list) {
@@ -169,7 +168,7 @@ public class TileFissionReactorCore extends GenericTile {
 
                     ItemStack fuelRod = inv.getItem(slot);
 
-                    fuelRod.setDamageValue((int) (fuelRod.getDamageValue() + 1 + Math.round(temperature.get()) / MELTDOWN_TEMPERATURE_CALC));
+                    fuelRod.setDamageValue((int) (fuelRod.getDamageValue() + 1 + Math.round(temperature.getValue()) / MELTDOWN_TEMPERATURE_CALC));
 
                     if (!fuelRod.isEmpty() && fuelRod.getDamageValue() >= fuelRod.getMaxDamage()) {
 
@@ -181,9 +180,9 @@ public class TileFissionReactorCore extends GenericTile {
 
             }
 
-            temperature.set(temperature.get() + (MELTDOWN_TEMPERATURE_CALC * insertDecimal * (0.25 * (fuelCount.get() / 2.0) + level.random.nextDouble() / 5.0) - temperature.get()) / (200 + 20 * (hasWater ? 4.0 : 1)));
+            temperature.setValue(temperature.getValue() + (MELTDOWN_TEMPERATURE_CALC * insertDecimal * (0.25 * (fuelCount.getValue() / 2.0) + level.random.nextDouble() / 5.0) - temperature.getValue()) / (200 + 20 * (hasWater ? 4.0 : 1)));
 
-            if (temperature.get() > MELTDOWN_TEMPERATURE_ACTUAL + level.random.nextInt(50) && fuelCount.get() > 0) {
+            if (temperature.getValue() > MELTDOWN_TEMPERATURE_ACTUAL + level.random.nextInt(50) && fuelCount.getValue() > 0) {
 
                 ticksOverheating++;
 
@@ -202,9 +201,9 @@ public class TileFissionReactorCore extends GenericTile {
 
         }
 
-        temperature.set(Math.max(AIR_TEMPERATURE, temperature.get()));
+        temperature.setValue(Math.max(AIR_TEMPERATURE, temperature.getValue()));
 
-        if (hasDeuterium.get() && fuelCount.get() > 0 && level.random.nextFloat() < 1 / (1200.0 * MELTDOWN_TEMPERATURE_CALC / temperature.get())) {
+        if (hasDeuterium.getValue() && fuelCount.getValue() > 0 && level.random.nextFloat() < 1 / (1200.0 * MELTDOWN_TEMPERATURE_CALC / temperature.getValue())) {
 
             processFissReact(inv);
 
@@ -238,9 +237,9 @@ public class TileFissionReactorCore extends GenericTile {
         }
         level.setBlockAndUpdate(worldPosition, Blocks.AIR.defaultBlockState());
 
-        Explosion actual = new Explosion(level, null, level.damageSources().source(NuclearScienceDamageTypes.RADIATION), null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), 20, true, BlockInteraction.KEEP, ParticleTypes.EXPLOSION, ParticleTypes.EXPLOSION_EMITTER, SoundEvents.GENERIC_EXPLODE);
+        Explosion actual = new Explosion(level, null, level.damageSources().source(VoltaicDamageTypes.RADIATION), null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), 20, true, BlockInteraction.KEEP, ParticleTypes.EXPLOSION, ParticleTypes.EXPLOSION_EMITTER, SoundEvents.GENERIC_EXPLODE);
 
-        radius = 3 * fuelCount.get();
+        radius = 3 * fuelCount.getValue();
         for (int i = -radius; i <= radius; i++) {
             for (int j = -radius; j <= radius; j++) {
                 for (int k = -radius; k <= radius; k++) {
@@ -260,7 +259,7 @@ public class TileFissionReactorCore extends GenericTile {
     }
 
     protected void produceSteam() {
-        if (temperature.get() <= 400) {
+        if (temperature.getValue() <= 400) {
             return;
         }
         for (int i = 0; i < STEAM_GEN_DIAMETER; i++) {
@@ -268,7 +267,7 @@ public class TileFissionReactorCore extends GenericTile {
                 for (int k = 0; k < STEAM_GEN_DIAMETER; k++) {
                     boolean isReactor2d = i - STEAM_GEN_DIAMETER / 2 == 0 && k - STEAM_GEN_DIAMETER / 2 == 0;
                     if (isReactor2d && j == 0) {
-                        if (!level.isClientSide && level.random.nextFloat() < temperature.get() / (MELTDOWN_TEMPERATURE_CALC * 20.0 * STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * STEAM_GEN_HEIGHT)) {
+                        if (!level.isClientSide && level.random.nextFloat() < temperature.getValue() / (MELTDOWN_TEMPERATURE_CALC * 20.0 * STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * STEAM_GEN_HEIGHT)) {
                             if (level.getBlockState(worldPosition).hasProperty(BlockStateProperties.WATERLOGGED)) {
                                 level.setBlockAndUpdate(worldPosition, getBlockState().setValue(BlockStateProperties.WATERLOGGED, false));
                             }
@@ -296,10 +295,10 @@ public class TileFissionReactorCore extends GenericTile {
                             if (turbine.isStillValid()) {
                                 cachedReceivers[i][j][k] = null;
                             }
-                            double temp = temperature.get();
-                            turbine.receiveSteam((int) temp, (int) (Constants.FISSIONREACTOR_MAXENERGYTARGET / (STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * 20.0 * (MELTDOWN_TEMPERATURE_ACTUAL / temperature.get()))));
+                            double temp = temperature.getValue();
+                            turbine.receiveSteam((int) temp, (int) (NuclearConstants.FISSIONREACTOR_MAXENERGYTARGET / (STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * 20.0 * (MELTDOWN_TEMPERATURE_ACTUAL / temperature.getValue()))));
                         }
-                        if (level.random.nextFloat() < temperature.get() / (MELTDOWN_TEMPERATURE_CALC * 20.0 * STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * STEAM_GEN_HEIGHT)) {
+                        if (level.random.nextFloat() < temperature.getValue() / (MELTDOWN_TEMPERATURE_CALC * 20.0 * STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * STEAM_GEN_HEIGHT)) {
                             level.setBlockAndUpdate(offpos, Blocks.AIR.defaultBlockState());
                             continue;
                         }
@@ -311,7 +310,7 @@ public class TileFissionReactorCore extends GenericTile {
                                 cachedReceivers[i][j][k] = null;
                             }
                         }
-                    } else if (level.isClientSide && level.random.nextFloat() < temperature.get() / (MELTDOWN_TEMPERATURE_ACTUAL * 3)) {
+                    } else if (level.isClientSide && level.random.nextFloat() < temperature.getValue() / (MELTDOWN_TEMPERATURE_ACTUAL * 3)) {
                         double offsetFX = offsetX + level.random.nextDouble() / 2.0 * (level.random.nextBoolean() ? -1 : 1);
                         double offsetFY = offsetY + level.random.nextDouble() / 2.0 * (level.random.nextBoolean() ? -1 : 1);
                         double offsetFZ = offsetZ + level.random.nextDouble() / 2.0 * (level.random.nextBoolean() ? -1 : 1);
@@ -339,10 +338,10 @@ public class TileFissionReactorCore extends GenericTile {
 
         if (cachedRecipes == null || cachedRecipes.isEmpty()) {
 
-            cachedRecipes = ElectrodynamicsRecipe.findRecipesbyType(NuclearScienceRecipeInit.FISSION_REACTOR_TYPE.get(), level);
+            cachedRecipes = VoltaicRecipe.findRecipesbyType(NuclearScienceRecipies.FISSION_REACTOR_TYPE.get(), level);
         }
 
-        for (RecipeHolder<ElectrodynamicsRecipe> iRecipe : cachedRecipes) {
+        for (RecipeHolder<VoltaicRecipe> iRecipe : cachedRecipes) {
 
             Item2ItemRecipe recipe = (Item2ItemRecipe) iRecipe.value();
 
@@ -380,7 +379,7 @@ public class TileFissionReactorCore extends GenericTile {
 
         if (slot == -1 || slot < FUEL_ROD_COUNT) {
 
-            fuelCount.set(0);
+            fuelCount.setValue(0);
 
             for (int i = 0; i < FUEL_ROD_COUNT; i++) {
 
@@ -402,14 +401,14 @@ public class TileFissionReactorCore extends GenericTile {
 
                 }
 
-                fuelCount.set(fuelCount.get() + fuelValue);
+                fuelCount.setValue(fuelCount.getValue() + fuelValue);
             }
 
         }
 
         if (slot == -1 || slot == DUETERIUM_SLOT) {
 
-            hasDeuterium.set(!inv.getItem(DUETERIUM_SLOT).isEmpty());
+            hasDeuterium.setValue(!inv.getItem(DUETERIUM_SLOT).isEmpty());
 
         }
 

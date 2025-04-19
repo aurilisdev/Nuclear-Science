@@ -2,16 +2,16 @@ package nuclearscience.client.render.tile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import electrodynamics.client.render.tile.AbstractTileRenderer;
-import electrodynamics.prefab.utilities.RenderingUtils;
-import electrodynamics.prefab.utilities.math.MathUtils;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
-import nuclearscience.client.ClientRegister;
+import nuclearscience.client.NuclearScienceClientRegister;
 import nuclearscience.common.tile.reactor.TileControlRod;
 import nuclearscience.common.tile.reactor.logisticsnetwork.interfaces.TileMSInterface;
+import voltaic.client.render.AbstractTileRenderer;
+import voltaic.prefab.utilities.RenderingUtils;
+import voltaic.prefab.utilities.math.MathUtils;
 
 public class RenderMSInterface extends AbstractTileRenderer<TileMSInterface> {
 
@@ -38,11 +38,11 @@ public class RenderMSInterface extends AbstractTileRenderer<TileMSInterface> {
 
         stack.mulPose(MathUtils.rotQuaternionDeg(0, facing.toYRot() + sign * 90, 0));
 
-        double insertion = tile.insertion.get() / (double) TileControlRod.MAX_EXTENSION;
+        double insertion = tile.insertion.getValue() / (double) TileControlRod.MAX_EXTENSION;
 
         stack.translate(MAX_DELTA * insertion, 0, 0);
 
-        RenderingUtils.renderModel(getModel(ClientRegister.MODEL_MSCONTROLROD_ROD), tile, RenderType.solid(), stack, bufferIn, combinedLightIn, combinedOverlayIn);
+        RenderingUtils.renderModel(getModel(NuclearScienceClientRegister.MODEL_MSCONTROLROD_ROD), tile, RenderType.solid(), stack, bufferIn, combinedLightIn, combinedOverlayIn);
 
         stack.popPose();
 

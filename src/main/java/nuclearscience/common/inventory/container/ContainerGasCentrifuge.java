@@ -1,10 +1,6 @@
 package nuclearscience.common.inventory.container;
 
-import electrodynamics.common.item.subtype.SubtypeItemUpgrade;
-import electrodynamics.prefab.inventory.container.slot.item.type.SlotRestricted;
-import electrodynamics.prefab.inventory.container.slot.item.type.SlotUpgrade;
-import electrodynamics.prefab.inventory.container.types.GenericContainerBlockEntity;
-import electrodynamics.prefab.utilities.math.Color;
+import electrodynamics.registers.ElectrodynamicsItems;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -12,6 +8,12 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import nuclearscience.common.tile.TileGasCentrifuge;
 import nuclearscience.registers.NuclearScienceMenuTypes;
+import voltaic.common.item.ItemUpgrade;
+import voltaic.common.item.subtype.SubtypeItemUpgrade;
+import voltaic.prefab.inventory.container.slot.item.type.SlotRestricted;
+import voltaic.prefab.inventory.container.slot.item.type.SlotUpgrade;
+import voltaic.prefab.inventory.container.types.GenericContainerBlockEntity;
+import voltaic.prefab.utilities.math.Color;
 
 public class ContainerGasCentrifuge extends GenericContainerBlockEntity<TileGasCentrifuge> {
 
@@ -30,8 +32,8 @@ public class ContainerGasCentrifuge extends GenericContainerBlockEntity<TileGasC
 		addSlot(new SlotRestricted(inv, nextIndex(), 129, 14).setIOColor(new Color(255, 0, 0, 255)));
 		addSlot(new SlotRestricted(inv, nextIndex(), 129, 34).setIOColor(new Color(255, 0, 0, 255)));
 		addSlot(new SlotRestricted(inv, nextIndex(), 129, 55).setIOColor(new Color(255, 0, 0, 255)));
-		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 14, VALID_UPGRADES));
-		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 34, VALID_UPGRADES));
-		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 55, VALID_UPGRADES));
+		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 14, ElectrodynamicsItems.ITEMS_UPGRADE.getSpecificValuesArray(new ItemUpgrade[0], VALID_UPGRADES)));
+		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 34, ElectrodynamicsItems.ITEMS_UPGRADE.getSpecificValuesArray(new ItemUpgrade[0], VALID_UPGRADES)));
+		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 55, ElectrodynamicsItems.ITEMS_UPGRADE.getSpecificValuesArray(new ItemUpgrade[0], VALID_UPGRADES)));
 	}
 }

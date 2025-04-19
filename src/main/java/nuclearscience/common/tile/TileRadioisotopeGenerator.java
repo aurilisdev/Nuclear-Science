@@ -1,27 +1,22 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.prefab.tile.GenericTile;
-import electrodynamics.prefab.tile.components.IComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
-import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
-import electrodynamics.prefab.tile.components.type.ComponentInventory;
-import electrodynamics.prefab.tile.components.type.ComponentInventory.InventoryBuilder;
-import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
-import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import electrodynamics.prefab.utilities.BlockEntityUtils;
 import electrodynamics.prefab.utilities.ElectricityUtils;
-import electrodynamics.prefab.utilities.object.CachedTileOutput;
-import electrodynamics.prefab.utilities.object.TransferPack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
-import nuclearscience.api.radiation.util.RadioactiveObject;
 import nuclearscience.common.inventory.container.ContainerRadioisotopeGenerator;
-import nuclearscience.common.reloadlistener.RadioactiveItemRegister;
-import nuclearscience.common.settings.Constants;
-import nuclearscience.prefab.utils.RadiationUtils;
+import nuclearscience.common.settings.NuclearConstants;
 import nuclearscience.registers.NuclearScienceTiles;
+import voltaic.api.radiation.util.RadioactiveObject;
+import voltaic.common.reloadlistener.RadioactiveItemRegister;
+import voltaic.prefab.tile.GenericTile;
+import voltaic.prefab.tile.components.IComponentType;
+import voltaic.prefab.tile.components.type.*;
+import voltaic.prefab.utilities.BlockEntityUtils;
+import voltaic.prefab.utilities.RadiationUtils;
+import voltaic.prefab.utilities.object.CachedTileOutput;
+import voltaic.prefab.utilities.object.TransferPack;
 
 public class TileRadioisotopeGenerator extends GenericTile {
 
@@ -33,9 +28,9 @@ public class TileRadioisotopeGenerator extends GenericTile {
 
 		addComponent(new ComponentTickable(this).tickServer(this::tickServer));
 		addComponent(new ComponentPacketHandler(this));
-		addComponent(new ComponentElectrodynamic(this, true, false).voltage(Constants.RADIOISOTOPEGENERATOR_VOLTAGE).extractPower((x, y) -> TransferPack.EMPTY).setOutputDirections(BlockEntityUtils.MachineDirection.BOTTOM, BlockEntityUtils.MachineDirection.TOP));
-		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().inputs(1)).setDirectionsBySlot(0, BlockEntityUtils.MachineDirection.values()).valid((slot, stack, i) -> RadioactiveItemRegister.getValue(stack.getItem()).amount() > 0));
-		addComponent(new ComponentContainerProvider("container.radioisotopegenerator", this).createMenu((id, player) -> new ContainerRadioisotopeGenerator(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
+		addComponent(new ComponentElectrodynamic(this, true, false).voltage(NuclearConstants.RADIOISOTOPEGENERATOR_VOLTAGE).extractPower((x, y) -> TransferPack.EMPTY).setOutputDirections(BlockEntityUtils.MachineDirection.BOTTOM, BlockEntityUtils.MachineDirection.TOP));
+		addComponent(new ComponentInventory(this, ComponentInventory.InventoryBuilder.newInv().inputs(1)).setDirectionsBySlot(0, BlockEntityUtils.MachineDirection.values()).valid((slot, stack, i) -> RadioactiveItemRegister.getValue(stack.getItem()).amount() > 0));
+		addComponent(new ComponentContainerProvider("radioisotopegenerator", this).createMenu((id, player) -> new ContainerRadioisotopeGenerator(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
 	}
 
 	public void tickServer(ComponentTickable tickable) {
@@ -63,12 +58,12 @@ public class TileRadioisotopeGenerator extends GenericTile {
 			return;
 		}
 
-		RadiationUtils.handleRadioactiveItems(this, inv, Constants.RADIO_GENATOR_RADIATION_RADIUS, true, 0, false);
+		RadiationUtils.handleRadioactiveItems(this, inv, NuclearConstants.RADIO_GENATOR_RADIATION_RADIUS, true, 0, false);
 
-		double currentOutput = input.getCount() * Constants.RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER * radiation.amount();
+		double currentOutput = input.getCount() * NuclearConstants.RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER * radiation.amount();
 
 		if (currentOutput > 0) {
-			TransferPack transfer = TransferPack.ampsVoltage(currentOutput / (Constants.RADIOISOTOPEGENERATOR_VOLTAGE * 2.0), Constants.RADIOISOTOPEGENERATOR_VOLTAGE);
+			TransferPack transfer = TransferPack.ampsVoltage(currentOutput / (NuclearConstants.RADIOISOTOPEGENERATOR_VOLTAGE * 2.0), NuclearConstants.RADIOISOTOPEGENERATOR_VOLTAGE);
 			if (output1.valid()) {
 				ElectricityUtils.receivePower(output1.getSafe(), Direction.DOWN, transfer, false);
 			}

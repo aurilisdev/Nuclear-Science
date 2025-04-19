@@ -4,11 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-import electrodynamics.prefab.screen.component.button.ScreenComponentButton;
-import electrodynamics.prefab.screen.component.types.ScreenComponentFillArea;
-import electrodynamics.prefab.screen.component.types.ScreenComponentSimpleLabel;
-import electrodynamics.prefab.screen.component.types.ScreenComponentVerticalSlider;
-import electrodynamics.prefab.utilities.math.Color;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -21,6 +16,11 @@ import nuclearscience.common.packet.type.server.PacketDeleteFrequency;
 import nuclearscience.common.tile.TileQuantumTunnel;
 import nuclearscience.prefab.screen.component.NuclearIconTypes;
 import nuclearscience.prefab.utils.NuclearTextUtils;
+import voltaic.prefab.screen.component.button.ScreenComponentButton;
+import voltaic.prefab.screen.component.types.ScreenComponentFillArea;
+import voltaic.prefab.screen.component.types.ScreenComponentSimpleLabel;
+import voltaic.prefab.screen.component.types.ScreenComponentVerticalSlider;
+import voltaic.prefab.utilities.math.Color;
 
 public class WrapperQuantumTunnelFrequencies {
 
@@ -58,10 +58,10 @@ public class WrapperQuantumTunnelFrequencies {
             Component frequencyName;
             if (selectedFrequency != null) {
                 frequencyName = Component.literal(selectedFrequency.getName());
-            } else if (tile == null || tile.frequency.get().equals(TunnelFrequency.NO_FREQUENCY)) {
+            } else if (tile == null || tile.frequency.getValue().equals(TunnelFrequency.NO_FREQUENCY)) {
                 frequencyName = NuclearTextUtils.gui("quantumtunnel.none");
             } else {
-                frequencyName = Component.literal(tile.frequency.get().getName());
+                frequencyName = Component.literal(tile.frequency.getValue().getName());
             }
 
             return frequencyName;
@@ -70,10 +70,10 @@ public class WrapperQuantumTunnelFrequencies {
 
         enable = (ScreenComponentButton<?>) new ScreenComponentButton<>(x + 127, y + 19,20, 20).setOnPress(but -> {
             TileQuantumTunnel tile = screen.getMenu().getSafeHost();
-            if(tile == null || selectedFrequency == null || tile.frequency.get().equals(selectedFrequency)) {
+            if(tile == null || selectedFrequency == null || tile.frequency.getValue().equals(selectedFrequency)) {
                 return;
             }
-            tile.frequency.set(selectedFrequency);
+            tile.frequency.setValue(selectedFrequency);
 
         }).onTooltip((graphics, button, xAxis, yAxis) -> graphics.renderTooltip(screen.getFontRenderer(), NuclearTextUtils.gui("quantumtunnel.enable"), xAxis, yAxis)).setIcon(NuclearIconTypes.ENABLE);
 
@@ -82,7 +82,7 @@ public class WrapperQuantumTunnelFrequencies {
             if(tile == null) {
                 return;
             }
-            tile.frequency.set(TunnelFrequency.NO_FREQUENCY);
+            tile.frequency.setValue(TunnelFrequency.NO_FREQUENCY);
 
         }).onTooltip((graphics, button, xAxis, yAxis) -> graphics.renderTooltip(screen.getFontRenderer(), NuclearTextUtils.gui("quantumtunnel.disable"), xAxis, yAxis)).setIcon(NuclearIconTypes.DISABLE);
 
@@ -168,8 +168,8 @@ public class WrapperQuantumTunnelFrequencies {
                     selectedFrequency = null;
                 }
 
-                if(tile.frequency.get().equals(frequency)) {
-                    tile.frequency.set(TunnelFrequency.NO_FREQUENCY);
+                if(tile.frequency.getValue().equals(frequency)) {
+                    tile.frequency.setValue(TunnelFrequency.NO_FREQUENCY);
                 }
 
                 PacketDistributor.sendToServer(new PacketDeleteFrequency(player.getUUID(), frequency));

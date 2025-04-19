@@ -1,6 +1,5 @@
 package nuclearscience;
 
-import electrodynamics.prefab.configuration.ConfigurationHandler;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -10,25 +9,25 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import nuclearscience.client.ClientRegister;
+import nuclearscience.client.NuclearScienceClientRegister;
 import nuclearscience.common.block.states.NuclearScienceBlockStates;
 import nuclearscience.common.block.voxelshapes.NuclearScienceVoxelShapes;
 import nuclearscience.common.reloadlistener.AtomicAssemblerBlacklistRegister;
 import nuclearscience.common.reloadlistener.AtomicAssemblerWhitelistRegister;
-import nuclearscience.common.reloadlistener.RadiationShieldingRegister;
-import nuclearscience.common.reloadlistener.RadioactiveFluidRegister;
-import nuclearscience.common.reloadlistener.RadioactiveGasRegister;
-import nuclearscience.common.reloadlistener.RadioactiveItemRegister;
-import nuclearscience.common.settings.Constants;
+import nuclearscience.common.settings.NuclearConstants;
 import nuclearscience.common.tags.NuclearScienceTags;
 import nuclearscience.registers.UnifiedNuclearScienceRegister;
+import voltaic.prefab.configuration.ConfigurationHandler;
 
-@Mod(References.ID)
-@EventBusSubscriber(modid = References.ID, bus = EventBusSubscriber.Bus.MOD)
+@Mod(NuclearScience.ID)
+@EventBusSubscriber(modid = NuclearScience.ID, bus = EventBusSubscriber.Bus.MOD)
 public class NuclearScience {
 
+	public static final String ID = "nuclearscience";
+	public static final String NAME = "Nuclear Science";
+
 	public NuclearScience(IEventBus bus) {
-		ConfigurationHandler.registerConfig(Constants.class);
+		ConfigurationHandler.registerConfig(NuclearConstants.class);
 		NuclearScienceBlockStates.init();
 		NuclearScienceVoxelShapes.init();
 		UnifiedNuclearScienceRegister.register(bus);
@@ -38,24 +37,20 @@ public class NuclearScience {
 	@OnlyIn(Dist.CLIENT)
 	public static void onClientSetup(FMLClientSetupEvent event) {
 		event.enqueueWork(() -> {
-			ClientRegister.setup();
+			NuclearScienceClientRegister.setup();
 		});
 	}
 
 	@SubscribeEvent
 	public static void onCommonSetup(FMLCommonSetupEvent event) {
 		NuclearScienceTags.init();
-		RadioactiveItemRegister.INSTANCE = new RadioactiveItemRegister().subscribeAsSyncable();
-		RadioactiveFluidRegister.INSTANCE = new RadioactiveFluidRegister().subscribeAsSyncable();
-		RadioactiveGasRegister.INSTANCE = new RadioactiveGasRegister().subscribeAsSyncable();
 		AtomicAssemblerBlacklistRegister.INSTANCE = new AtomicAssemblerBlacklistRegister().subscribeAsSyncable();
-		RadiationShieldingRegister.INSTANCE = new RadiationShieldingRegister().subscribeAsSyncable();
 		AtomicAssemblerWhitelistRegister.INSTANCE = new AtomicAssemblerWhitelistRegister().subscribeAsSyncable();
 
 	}
 
 	public static final ResourceLocation rl(String path) {
-		return ResourceLocation.fromNamespaceAndPath(References.ID, path);
+		return ResourceLocation.fromNamespaceAndPath(NuclearScience.ID, path);
 	}
 
 }

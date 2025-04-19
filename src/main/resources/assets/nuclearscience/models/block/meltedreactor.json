@@ -7,7 +7,7 @@
   ],
   "textures": {
     "0": "nuclearscience:block/model/meltedreactor",
-    "particle": "nuclearscience:block/model/meltedreactor"
+    "particle": "voltaic:block/steelcasing"
   },
   "elements": [
     {

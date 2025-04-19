@@ -3,7 +3,7 @@
   "inventory": {
     "parent": "nuclearscience:block/pipe/moltensaltpipevanadiumsteelceramic_side"
   },
-  "loader": "electrodynamics:electrodynamicscableloader",
+  "loader": "voltaic:voltaiccableloader",
   "none": {
     "parent": "nuclearscience:block/pipe/moltensaltpipevanadiumsteelceramic_none"
   },

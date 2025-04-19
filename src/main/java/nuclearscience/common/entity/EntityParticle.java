@@ -2,9 +2,6 @@ package nuclearscience.common.entity;
 
 import java.util.Optional;
 
-import electrodynamics.common.block.states.ElectrodynamicsBlockStates;
-import electrodynamics.prefab.utilities.BlockEntityUtils;
-import electrodynamics.prefab.utilities.object.Location;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -22,17 +19,20 @@ import net.minecraft.world.level.Level.ExplosionInteraction;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import nuclearscience.api.radiation.RadiationSystem;
-import nuclearscience.api.radiation.SimpleRadiationSource;
 import nuclearscience.common.block.states.NuclearScienceBlockStates;
 import nuclearscience.common.block.states.facing.FacingDirection;
-import nuclearscience.common.settings.Constants;
+import nuclearscience.common.settings.NuclearConstants;
 import nuclearscience.common.tags.NuclearScienceTags;
 import nuclearscience.common.tile.accelerator.TileElectromagneticGateway;
 import nuclearscience.common.tile.accelerator.TileParticleInjector;
 import nuclearscience.prefab.sound.SoundBarrierMethods;
 import nuclearscience.registers.NuclearScienceBlocks;
 import nuclearscience.registers.NuclearScienceEntities;
+import voltaic.api.radiation.RadiationSystem;
+import voltaic.api.radiation.SimpleRadiationSource;
+import voltaic.common.block.states.VoltaicBlockStates;
+import voltaic.prefab.utilities.BlockEntityUtils;
+import voltaic.prefab.utilities.object.Location;
 
 public class EntityParticle extends Entity {
 
@@ -143,7 +143,7 @@ public class EntityParticle extends Entity {
             ticksAlive++;
         }
 
-        if (ticksAlive > Constants.PARTICLE_SURVIVAL_TICKS) {
+        if (ticksAlive > NuclearConstants.PARTICLE_SURVIVAL_TICKS) {
             if(isServerside) {
                 removeAfterChangingDimensions();
                 level.explode(this, getX(), getY(), getZ(), speed, ExplosionInteraction.BLOCK);
@@ -202,7 +202,7 @@ public class EntityParticle extends Entity {
 
             if (startOfLoopStateIsBooster) {
 
-                Direction boosterFacing = startOfLoopState.getValue(ElectrodynamicsBlockStates.FACING).getOpposite();
+                Direction boosterFacing = startOfLoopState.getValue(VoltaicBlockStates.FACING).getOpposite();
 
                 FacingDirection boosterOrientation = startOfLoopState.getValue(NuclearScienceBlockStates.FACINGDIRECTION);
 
@@ -493,9 +493,9 @@ public class EntityParticle extends Entity {
 
                 if (checkIsBooster) {
 
-                    Direction oldDir = startOfLoopState.getValue(ElectrodynamicsBlockStates.FACING);
+                    Direction oldDir = startOfLoopState.getValue(VoltaicBlockStates.FACING);
 
-                    Direction nextDir = proposedMoveState.getValue(ElectrodynamicsBlockStates.FACING);
+                    Direction nextDir = proposedMoveState.getValue(VoltaicBlockStates.FACING);
 
                     if (oldDir != nextDir) {
 
@@ -576,7 +576,7 @@ public class EntityParticle extends Entity {
 				BlockState oldState = level().getBlockState(next);
 				boolean isBooster = false;
 				if (oldState.getBlock() == NuclearScienceBlocks.BLOCK_ELECTORMAGNETICBOOSTER.get()) {
-					Direction dir = oldState.getValue(ElectrodynamicsBlockStates.FACING).getOpposite();
+					Direction dir = oldState.getValue(VoltaicBlockStates.FACING).getOpposite();
 					FacingDirection face = oldState.getValue(BlockElectromagneticBooster.FACINGDIRECTION);
 					if (face == FacingDirection.RIGHT) {
 						dir = dir.getClockWise();
@@ -665,8 +665,8 @@ public class EntityParticle extends Entity {
 						boolean checkIsBooster = nextState.getBlock() == NuclearScienceBlocks.BLOCK_ELECTORMAGNETICBOOSTER.get() && oldState.getBlock() == NuclearScienceBlocks.BLOCK_ELECTORMAGNETICBOOSTER.get();
 						boolean explode = false;
 						if (checkIsBooster) {
-							Direction oldDir = oldState.getValue(ElectrodynamicsBlockStates.FACING);
-							Direction nextDir = nextState.getValue(ElectrodynamicsBlockStates.FACING);
+							Direction oldDir = oldState.getValue(VoltaicBlockStates.FACING);
+							Direction nextDir = nextState.getValue(VoltaicBlockStates.FACING);
 							if (oldDir != nextDir) {
 								FacingDirection face = oldState.getValue(BlockElectromagneticBooster.FACINGDIRECTION);
 								if (face == FacingDirection.RIGHT) {
@@ -718,7 +718,7 @@ public class EntityParticle extends Entity {
     }
 
     public boolean canPassThroughDiode(BlockState state, Direction facing) {
-        return isDiode(state) && state.getValue(ElectrodynamicsBlockStates.FACING) == facing;
+        return isDiode(state) && state.getValue(VoltaicBlockStates.FACING) == facing;
     }
 
     @Override

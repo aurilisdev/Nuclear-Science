@@ -1,8 +1,5 @@
 package nuclearscience.common.tags;
 
-import electrodynamics.Electrodynamics;
-import electrodynamics.api.gas.Gas;
-import electrodynamics.registers.ElectrodynamicsGases;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
@@ -11,6 +8,9 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
+import voltaic.Voltaic;
+import voltaic.api.gas.Gas;
+import voltaic.registers.VoltaicGases;
 
 public class NuclearScienceTags {
 
@@ -61,7 +61,7 @@ public class NuclearScienceTags {
 		}
 
 		private static TagKey<Item> forgeTag(String name) {
-			return ItemTags.create(Electrodynamics.commonrl(name));
+			return ItemTags.create(Voltaic.commonrl(name));
 		}
 
 	}
@@ -76,7 +76,7 @@ public class NuclearScienceTags {
 		}
 
 		private static TagKey<Block> forgeTag(String name) {
-			return BlockTags.create(Electrodynamics.commonrl(name));
+			return BlockTags.create(Voltaic.commonrl(name));
 		}
 
 	}
@@ -92,7 +92,7 @@ public class NuclearScienceTags {
 		}
 
 		private static TagKey<Fluid> forgeTag(String name) {
-			return FluidTags.create(Electrodynamics.commonrl(name));
+			return FluidTags.create(Voltaic.commonrl(name));
 		}
 	}
 
@@ -105,11 +105,11 @@ public class NuclearScienceTags {
 		}
 
 		private static TagKey<Gas> forgeTag(String name) {
-			return create(Electrodynamics.commonrl(name));
+			return create(Voltaic.commonrl(name));
 		}
 
 		public static TagKey<Gas> create(ResourceLocation loc) {
-			return TagKey.create(ElectrodynamicsGases.GAS_REGISTRY_KEY, loc);
+			return TagKey.create(VoltaicGases.GAS_REGISTRY_KEY, loc);
 		}
 	}
 

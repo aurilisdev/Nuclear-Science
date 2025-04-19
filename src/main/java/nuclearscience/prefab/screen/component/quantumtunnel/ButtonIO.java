@@ -3,11 +3,7 @@ package nuclearscience.prefab.screen.component.quantumtunnel;
 import java.util.ArrayList;
 import java.util.List;
 
-import electrodynamics.prefab.screen.GenericScreen;
-import electrodynamics.prefab.screen.component.button.ScreenComponentButton;
-import electrodynamics.prefab.screen.component.types.ScreenComponentInventoryIO;
 import electrodynamics.prefab.utilities.ElectroTextUtils;
-import electrodynamics.prefab.utilities.math.Color;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -16,6 +12,10 @@ import net.minecraft.util.FormattedCharSequence;
 import nuclearscience.common.inventory.container.ContainerQuantumTunnel;
 import nuclearscience.common.tile.TileQuantumTunnel;
 import nuclearscience.prefab.utils.NuclearTextUtils;
+import voltaic.prefab.screen.GenericScreen;
+import voltaic.prefab.screen.component.button.ScreenComponentButton;
+import voltaic.prefab.screen.component.types.ScreenComponentInventoryIO;
+import voltaic.prefab.utilities.math.Color;
 
 public class ButtonIO extends ScreenComponentButton<ButtonIO> {
     public static final int DRAWING_AREA_SIZE = 24;

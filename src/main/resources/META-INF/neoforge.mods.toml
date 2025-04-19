@@ -31,6 +31,13 @@ description='''${mod_description}'''
     ordering="NONE"
     side="BOTH"
 
+[[dependencies.nuclearscience]]
+modId="voltaic"
+mandatory=true
+versionRange="[1.0,)"
+ordering="NONE"
+side="BOTH"
+
 [[accessTransformers]]
 
 file="META-INF/accesstransformer.cfg"

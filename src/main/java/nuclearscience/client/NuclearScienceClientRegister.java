@@ -3,9 +3,6 @@ package nuclearscience.client;
 import java.util.HashMap;
 import java.util.List;
 
-import electrodynamics.client.guidebook.ScreenGuidebook;
-import electrodynamics.client.misc.SWBFClientExtensions;
-import electrodynamics.common.fluid.SimpleWaterBasedFluidType;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -20,7 +17,6 @@ import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.client.event.TextureAtlasStitchedEvent;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import nuclearscience.NuclearScience;
-import nuclearscience.References;
 import nuclearscience.client.guidebook.ModuleNuclearScience;
 import nuclearscience.client.particle.smoke.ParticleSmoke;
 import nuclearscience.client.render.entity.RenderParticle;
@@ -71,9 +67,13 @@ import nuclearscience.registers.NuclearScienceFluids;
 import nuclearscience.registers.NuclearScienceMenuTypes;
 import nuclearscience.registers.NuclearScienceParticles;
 import nuclearscience.registers.NuclearScienceTiles;
+import voltaic.client.VoltaicClientRegister;
+import voltaic.client.guidebook.ScreenGuidebook;
+import voltaic.client.misc.SWBFClientExtensions;
+import voltaic.common.fluid.SimpleWaterBasedFluidType;
 
-@EventBusSubscriber(modid = References.ID, bus = EventBusSubscriber.Bus.MOD, value = {Dist.CLIENT})
-public class ClientRegister {
+@EventBusSubscriber(modid = NuclearScience.ID, bus = EventBusSubscriber.Bus.MOD, value = {Dist.CLIENT})
+public class NuclearScienceClientRegister {
 
     public static final ModelResourceLocation MODEL_GASCENTRIFUGECENTER = ModelResourceLocation.standalone(NuclearScience.rl("block/gascentrifugecenter"));
     public static final ModelResourceLocation MODEL_TURBINECASING = ModelResourceLocation.standalone(NuclearScience.rl("block/turbinecasing"));
@@ -90,11 +90,11 @@ public class ClientRegister {
     public static final ResourceLocation TEXTURE_GATEWAYLASER = NuclearScience.rl("block/custom/gatewaylaser");
 
     private static final HashMap<ResourceLocation, TextureAtlasSprite> CACHED_TEXTUREATLASSPRITES = new HashMap<>();
-    private static final List<ResourceLocation> CUSTOM_TEXTURES = List.of(TEXTURE_FUELCELL, TEXTURE_GATEWAYLASER, electrodynamics.client.ClientRegister.TEXTURE_WHITE);
+    private static final List<ResourceLocation> CUSTOM_TEXTURES = List.of(TEXTURE_FUELCELL, TEXTURE_GATEWAYLASER);
 
     public static void setup() {
 
-        ClientEvents.init();
+        NuclearScienceClientEvents.init();
         ScreenGuidebook.addGuidebookModule(new ModuleNuclearScience());
     }
 
@@ -182,13 +182,13 @@ public class ClientRegister {
         if (event.getAtlas().location().equals(TextureAtlas.LOCATION_BLOCKS)) {
             CACHED_TEXTUREATLASSPRITES.clear();
             for (ResourceLocation loc : CUSTOM_TEXTURES) {
-                ClientRegister.CACHED_TEXTUREATLASSPRITES.put(loc, event.getAtlas().getSprite(loc));
+                NuclearScienceClientRegister.CACHED_TEXTUREATLASSPRITES.put(loc, event.getAtlas().getSprite(loc));
             }
         }
     }
 
     public static TextureAtlasSprite getSprite(ResourceLocation sprite) {
-        return CACHED_TEXTUREATLASSPRITES.getOrDefault(sprite, CACHED_TEXTUREATLASSPRITES.get(electrodynamics.client.ClientRegister.TEXTURE_WHITE));
+        return CACHED_TEXTUREATLASSPRITES.getOrDefault(sprite, VoltaicClientRegister.whiteSprite());
     }
 
 }

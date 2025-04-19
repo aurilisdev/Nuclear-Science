@@ -8,8 +8,6 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-import electrodynamics.common.network.NetworkRegistry;
-import electrodynamics.prefab.network.AbstractNetwork;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -21,6 +19,8 @@ import nuclearscience.common.tile.reactor.logisticsnetwork.TileReactorLogisticsC
 import nuclearscience.common.tile.reactor.logisticsnetwork.TileSupplyModule;
 import nuclearscience.common.tile.reactor.logisticsnetwork.TileThermometerModule;
 import nuclearscience.common.tile.reactor.logisticsnetwork.interfaces.GenericTileInterface;
+import voltaic.common.network.NetworkRegistry;
+import voltaic.prefab.network.AbstractNetwork;
 
 public class ReactorLogisticsNetwork extends
 		AbstractNetwork<TileReactorLogisticsCable, SubtypeReactorLogisticsCable, Void, ReactorLogisticsNetwork> {

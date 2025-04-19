@@ -2,7 +2,6 @@ package nuclearscience.common.block;
 
 import com.mojang.serialization.MapCodec;
 
-import electrodynamics.prefab.block.GenericEntityBlockWaterloggable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -21,6 +20,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import nuclearscience.common.tile.TileTurbine;
+import voltaic.prefab.block.GenericEntityBlockWaterloggable;
 
 public class BlockTurbine extends GenericEntityBlockWaterloggable {
 
@@ -62,7 +62,7 @@ public class BlockTurbine extends GenericEntityBlockWaterloggable {
         }
         TileTurbine turbine = (TileTurbine) player.level().getBlockEntity(pos);
         if (turbine != null) {
-            if (turbine.isCore.get()) {
+            if (turbine.isCore.getValue()) {
                 turbine.deconstructStructure();
             } else {
                 turbine.constructStructure();

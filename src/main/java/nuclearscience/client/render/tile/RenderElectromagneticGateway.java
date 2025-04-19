@@ -4,16 +4,16 @@ import org.jetbrains.annotations.NotNull;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import electrodynamics.client.render.tile.AbstractTileRenderer;
-import electrodynamics.prefab.utilities.RenderingUtils;
-import electrodynamics.prefab.utilities.math.Color;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.world.phys.AABB;
-import nuclearscience.client.ClientRegister;
+import nuclearscience.client.NuclearScienceClientRegister;
 import nuclearscience.common.tile.accelerator.TileElectromagneticGateway;
+import voltaic.client.render.AbstractTileRenderer;
+import voltaic.prefab.utilities.RenderingUtils;
+import voltaic.prefab.utilities.math.Color;
 
 public class RenderElectromagneticGateway extends AbstractTileRenderer<TileElectromagneticGateway> {
 
@@ -33,7 +33,7 @@ public class RenderElectromagneticGateway extends AbstractTileRenderer<TileElect
 
         matrix.pushPose();
 
-        TextureAtlasSprite texture = ClientRegister.getSprite(ClientRegister.TEXTURE_GATEWAYLASER);
+        TextureAtlasSprite texture = NuclearScienceClientRegister.getSprite(NuclearScienceClientRegister.TEXTURE_GATEWAYLASER);
 
         RenderingUtils.renderFilledBoxNoOverlay(matrix, bufferIn.getBuffer(RenderType.TRANSLUCENT), BOX1, COLOR.rFloat(), COLOR.gFloat(), COLOR.bFloat(), COLOR.aFloat(), texture.getU0(), texture.getV0(), texture.getU1(), texture.getV1(), combinedLightIn, FACES);
         RenderingUtils.renderFilledBoxNoOverlay(matrix, bufferIn.getBuffer(RenderType.TRANSLUCENT), BOX2, COLOR.rFloat(), COLOR.gFloat(), COLOR.bFloat(), COLOR.aFloat(), texture.getU0(), texture.getV0(), texture.getU1(), texture.getV1(), combinedLightIn, FACES);

@@ -1,9 +1,6 @@
 package nuclearscience.common.tile.reactor.logisticsnetwork;
 
 import electrodynamics.common.block.states.ElectrodynamicsBlockStates;
-import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
-import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import electrodynamics.prefab.utilities.BlockEntityUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -14,6 +11,10 @@ import nuclearscience.common.inventory.container.ContainerMonitorModule;
 import nuclearscience.common.tile.reactor.logisticsnetwork.interfaces.GenericTileInterface;
 import nuclearscience.common.tile.reactor.logisticsnetwork.util.GenericTileInterfaceBound;
 import nuclearscience.registers.NuclearScienceTiles;
+import voltaic.common.block.states.VoltaicBlockStates;
+import voltaic.prefab.tile.components.type.ComponentContainerProvider;
+import voltaic.prefab.tile.components.type.ComponentTickable;
+import voltaic.prefab.utilities.BlockEntityUtils;
 
 public class TileMonitorModule extends GenericTileInterfaceBound {
 
@@ -22,7 +23,7 @@ public class TileMonitorModule extends GenericTileInterfaceBound {
     public TileMonitorModule(BlockPos worldPos, BlockState blockState) {
         super(NuclearScienceTiles.TILE_MONITORMODULE.get(), worldPos, blockState);
         addComponent(new ComponentTickable(this).tickServer(this::tickServer));
-        addComponent(new ComponentContainerProvider("container.monitormodule", this).createMenu((id, player) -> new ContainerMonitorModule(id, player, new SimpleContainer(0), getCoordsArray())));
+        addComponent(new ComponentContainerProvider("monitormodule", this).createMenu((id, player) -> new ContainerMonitorModule(id, player, new SimpleContainer(0), getCoordsArray())));
         relativeBack = BlockEntityUtils.getRelativeSide(getFacing(), BlockEntityUtils.MachineDirection.BACK.mappedDir);
     }
 
@@ -34,7 +35,7 @@ public class TileMonitorModule extends GenericTileInterfaceBound {
     @Override
     public void onBlockStateUpdate(BlockState oldState, BlockState newState) {
         super.onBlockStateUpdate(oldState, newState);
-        if (!level.isClientSide() && oldState.hasProperty(ElectrodynamicsBlockStates.FACING) && newState.hasProperty(ElectrodynamicsBlockStates.FACING) && oldState.getValue(ElectrodynamicsBlockStates.FACING) != newState.getValue(ElectrodynamicsBlockStates.FACING)) {
+        if (!level.isClientSide() && oldState.hasProperty(VoltaicBlockStates.FACING) && newState.hasProperty(VoltaicBlockStates.FACING) && oldState.getValue(VoltaicBlockStates.FACING) != newState.getValue(VoltaicBlockStates.FACING)) {
             relativeBack = BlockEntityUtils.getRelativeSide(getFacing(), BlockEntityUtils.MachineDirection.BACK.mappedDir);
         }
     }

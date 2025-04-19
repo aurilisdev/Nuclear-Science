@@ -1,9 +1,5 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.Electrodynamics;
-import electrodynamics.prefab.tile.GenericTile;
-import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
-import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
@@ -14,8 +10,11 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.world.chunk.RegisterTicketControllersEvent;
 import net.neoforged.neoforge.common.world.chunk.TicketController;
 import nuclearscience.NuclearScience;
-import nuclearscience.References;
 import nuclearscience.registers.NuclearScienceTiles;
+import voltaic.Voltaic;
+import voltaic.prefab.tile.GenericTile;
+import voltaic.prefab.tile.components.type.ComponentPacketHandler;
+import voltaic.prefab.tile.components.type.ComponentTickable;
 
 public class TileChunkloader extends GenericTile {
     public TileChunkloader(BlockPos worldPos, BlockState blockState) {
@@ -51,7 +50,7 @@ public class TileChunkloader extends GenericTile {
             for (int j = 0; j <= delta; j++) {
                 ChunkloaderManager.TICKET_CONTROLLER.forceChunk((ServerLevel) world, ownerPos[i][j], lowerXOffset + i, lowerZOffset + j, load, true);
                 String action = load ? "loading" : "unloading";
-                Electrodynamics.LOGGER.info(action + " chunk at " + lowerXOffset + i + "," + lowerZOffset + j);
+                Voltaic.LOGGER.info(action + " chunk at " + lowerXOffset + i + "," + lowerZOffset + j);
             }
         }
 
@@ -73,7 +72,7 @@ public class TileChunkloader extends GenericTile {
         }
     }
 
-    @EventBusSubscriber(modid = References.ID, bus = EventBusSubscriber.Bus.MOD)
+    @EventBusSubscriber(modid = NuclearScience.ID, bus = EventBusSubscriber.Bus.MOD)
     private static final class ChunkloaderManager {
 
         private static final TicketController TICKET_CONTROLLER = new TicketController(NuclearScience.rl("chunkloadercontroller"));

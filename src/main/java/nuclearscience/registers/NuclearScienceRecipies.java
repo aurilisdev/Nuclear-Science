@@ -1,41 +1,41 @@
-package nuclearscience.common.recipe;
+package nuclearscience.registers;
 
-import electrodynamics.common.recipe.ElectrodynamicsRecipeInit;
-import electrodynamics.common.recipe.categories.fluiditem2gas.FluidItem2GasRecipeSerializer;
-import electrodynamics.common.recipe.categories.fluiditem2item.FluidItem2ItemRecipeSerializer;
-import electrodynamics.common.recipe.categories.item2item.Item2ItemRecipeSerializer;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import nuclearscience.References;
+import nuclearscience.NuclearScience;
 import nuclearscience.common.recipe.categories.fluiditem2gas.NuclearBoilerRecipe;
 import nuclearscience.common.recipe.categories.fluiditem2item.ChemicalExtractorRecipe;
 import nuclearscience.common.recipe.categories.fluiditem2item.MSRFuelPreProcessorRecipe;
 import nuclearscience.common.recipe.categories.fluiditem2item.RadioactiveProcessorRecipe;
 import nuclearscience.common.recipe.categories.item2item.FissionReactorRecipe;
 import nuclearscience.common.recipe.categories.item2item.FuelReprocessorRecipe;
+import voltaic.common.recipe.VoltaicRecipeType;
+import voltaic.common.recipe.categories.fluiditem2gas.FluidItem2GasRecipeSerializer;
+import voltaic.common.recipe.categories.fluiditem2item.FluidItem2ItemRecipeSerializer;
+import voltaic.common.recipe.categories.item2item.Item2ItemRecipeSerializer;
 
-public class NuclearScienceRecipeInit {
+public class NuclearScienceRecipies {
 
 	// Deferred Register
-	public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZER = DeferredRegister.create(Registries.RECIPE_SERIALIZER, References.ID);
-	public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(Registries.RECIPE_TYPE, References.ID);
+	public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZER = DeferredRegister.create(Registries.RECIPE_SERIALIZER, NuclearScience.ID);
+	public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(Registries.RECIPE_TYPE, NuclearScience.ID);
 
 	/* RECIPE TYPES */
 
 	// ITEM2ITEM
-	public static final DeferredHolder<RecipeType<?>, RecipeType<FissionReactorRecipe>> FISSION_REACTOR_TYPE = RECIPE_TYPES.register(FissionReactorRecipe.RECIPE_GROUP, ElectrodynamicsRecipeInit.CustomRecipeType::new);
-	public static final DeferredHolder<RecipeType<?>, RecipeType<FuelReprocessorRecipe>> FUEL_REPROCESSOR_TYPE = RECIPE_TYPES.register(FuelReprocessorRecipe.RECIPE_GROUP, ElectrodynamicsRecipeInit.CustomRecipeType::new);
+	public static final DeferredHolder<RecipeType<?>, RecipeType<FissionReactorRecipe>> FISSION_REACTOR_TYPE = RECIPE_TYPES.register(FissionReactorRecipe.RECIPE_GROUP, VoltaicRecipeType::new);
+	public static final DeferredHolder<RecipeType<?>, RecipeType<FuelReprocessorRecipe>> FUEL_REPROCESSOR_TYPE = RECIPE_TYPES.register(FuelReprocessorRecipe.RECIPE_GROUP, VoltaicRecipeType::new);
 
 	// FLUIDITEM2GAS
-	public static final DeferredHolder<RecipeType<?>, RecipeType<NuclearBoilerRecipe>> NUCLEAR_BOILER_TYPE = RECIPE_TYPES.register(NuclearBoilerRecipe.RECIPE_GROUP, ElectrodynamicsRecipeInit.CustomRecipeType::new);
+	public static final DeferredHolder<RecipeType<?>, RecipeType<NuclearBoilerRecipe>> NUCLEAR_BOILER_TYPE = RECIPE_TYPES.register(NuclearBoilerRecipe.RECIPE_GROUP, VoltaicRecipeType::new);
 
 	// FLUIDITEM2ITEM
-	public static final DeferredHolder<RecipeType<?>, RecipeType<ChemicalExtractorRecipe>> CHEMICAL_EXTRACTOR_TYPE = RECIPE_TYPES.register(ChemicalExtractorRecipe.RECIPE_GROUP, ElectrodynamicsRecipeInit.CustomRecipeType::new);
-	public static final DeferredHolder<RecipeType<?>, RecipeType<RadioactiveProcessorRecipe>> RADIOACTIVE_PROCESSOR_TYPE = RECIPE_TYPES.register(RadioactiveProcessorRecipe.RECIPE_GROUP, ElectrodynamicsRecipeInit.CustomRecipeType::new);
-	public static final DeferredHolder<RecipeType<?>, RecipeType<MSRFuelPreProcessorRecipe>> MSR_FUEL_PREPROCESSOR_TYPE = RECIPE_TYPES.register(MSRFuelPreProcessorRecipe.RECIPE_GROUP, ElectrodynamicsRecipeInit.CustomRecipeType::new);
+	public static final DeferredHolder<RecipeType<?>, RecipeType<ChemicalExtractorRecipe>> CHEMICAL_EXTRACTOR_TYPE = RECIPE_TYPES.register(ChemicalExtractorRecipe.RECIPE_GROUP, VoltaicRecipeType::new);
+	public static final DeferredHolder<RecipeType<?>, RecipeType<RadioactiveProcessorRecipe>> RADIOACTIVE_PROCESSOR_TYPE = RECIPE_TYPES.register(RadioactiveProcessorRecipe.RECIPE_GROUP, VoltaicRecipeType::new);
+	public static final DeferredHolder<RecipeType<?>, RecipeType<MSRFuelPreProcessorRecipe>> MSR_FUEL_PREPROCESSOR_TYPE = RECIPE_TYPES.register(MSRFuelPreProcessorRecipe.RECIPE_GROUP, VoltaicRecipeType::new);
 
 	/* RECIPE SERIALIZERS */
 

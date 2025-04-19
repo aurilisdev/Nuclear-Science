@@ -5,11 +5,10 @@ import net.minecraft.sounds.SoundEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import nuclearscience.NuclearScience;
-import nuclearscience.References;
 
 public class NuclearScienceSounds {
 
-	public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(Registries.SOUND_EVENT, References.ID);
+	public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(Registries.SOUND_EVENT, NuclearScience.ID);
 
 	public static final DeferredHolder<SoundEvent, SoundEvent> SOUND_TURBINE = sound("turbine");
 	public static final DeferredHolder<SoundEvent, SoundEvent> SOUND_NUCLEARBOILER = sound("nuclearboiler");

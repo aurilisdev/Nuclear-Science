@@ -7,7 +7,7 @@
   ],
   "textures": {
     "0": "nuclearscience:block/model/msinterface",
-    "particle": "electrodynamics:block/steelcasing"
+    "particle": "voltaic:block/steelcasing"
   },
   "elements": [
     {

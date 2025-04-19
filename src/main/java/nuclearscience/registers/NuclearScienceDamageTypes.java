@@ -11,7 +11,6 @@ import nuclearscience.NuclearScience;
 public class NuclearScienceDamageTypes {
 
 	public static final ResourceKey<DamageType> PLASMA = create("plasma");
-	public static final ResourceKey<DamageType> RADIATION = create("radiation");
 
 	public static ResourceKey<DamageType> create(String name) {
 		return ResourceKey.create(Registries.DAMAGE_TYPE, NuclearScience.rl(name));
@@ -19,7 +18,6 @@ public class NuclearScienceDamageTypes {
 
 	public static void registerTypes(BootstrapContext<DamageType> context) {
 		context.register(PLASMA, new DamageType("plasma", DamageScaling.NEVER, 0, DamageEffects.BURNING));
-		context.register(RADIATION, new DamageType("radiation", DamageScaling.NEVER, 0.1F, DamageEffects.HURT));
 	}
 
 }

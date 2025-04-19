@@ -1,10 +1,5 @@
 package nuclearscience.common.block.subtype;
 
-import electrodynamics.api.ISubtype;
-import electrodynamics.api.multiblock.subnodebased.parent.IMultiblockParentBlock;
-import electrodynamics.api.tile.IMachine;
-import electrodynamics.api.tile.MachineProperties;
-import electrodynamics.common.block.voxelshapes.VoxelShapeProvider;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -40,6 +35,11 @@ import nuclearscience.common.tile.reactor.moltensalt.TileHeatExchanger;
 import nuclearscience.common.tile.reactor.moltensalt.TileMSRFuelPreProcessor;
 import nuclearscience.common.tile.reactor.moltensalt.TileMSReactorCore;
 import nuclearscience.common.tile.reactor.moltensalt.TileMoltenSaltSupplier;
+import voltaic.api.ISubtype;
+import voltaic.api.multiblock.subnodebased.parent.IMultiblockParentBlock;
+import voltaic.api.tile.IMachine;
+import voltaic.api.tile.MachineProperties;
+import voltaic.common.block.voxelshapes.VoxelShapeProvider;
 
 public enum SubtypeNuclearMachine implements ISubtype, IMachine {
 

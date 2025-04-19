@@ -2,15 +2,15 @@ package nuclearscience.api.quantumtunnel;
 
 import java.util.HashMap;
 
-import electrodynamics.api.gas.GasAction;
-import electrodynamics.api.gas.GasStack;
-import electrodynamics.prefab.utilities.object.TransferPack;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import nuclearscience.registers.NuclearScienceAttachmentTypes;
+import voltaic.api.gas.GasAction;
+import voltaic.api.gas.GasStack;
+import voltaic.prefab.utilities.object.TransferPack;
 
 public class FrequencyConnectionManager {
 

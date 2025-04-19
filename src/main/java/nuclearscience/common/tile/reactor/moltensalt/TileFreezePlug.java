@@ -1,38 +1,33 @@
 package nuclearscience.common.tile.reactor.moltensalt;
 
-import electrodynamics.prefab.properties.Property;
-import electrodynamics.prefab.properties.PropertyTypes;
-import electrodynamics.prefab.tile.GenericTile;
-import electrodynamics.prefab.tile.components.IComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
-import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
-import electrodynamics.prefab.tile.components.type.ComponentInventory;
-import electrodynamics.prefab.tile.components.type.ComponentInventory.InventoryBuilder;
-import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
-import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import electrodynamics.prefab.utilities.BlockEntityUtils;
-import electrodynamics.prefab.utilities.object.TransferPack;
-import electrodynamics.registers.ElectrodynamicsCapabilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.common.inventory.container.ContainerFreezePlug;
-import nuclearscience.common.settings.Constants;
+import nuclearscience.common.settings.NuclearConstants;
 import nuclearscience.registers.NuclearScienceItems;
 import nuclearscience.registers.NuclearScienceTiles;
+import voltaic.prefab.properties.types.PropertyTypes;
+import voltaic.prefab.properties.variant.SingleProperty;
+import voltaic.prefab.tile.GenericTile;
+import voltaic.prefab.tile.components.IComponentType;
+import voltaic.prefab.tile.components.type.*;
+import voltaic.prefab.utilities.BlockEntityUtils;
+import voltaic.prefab.utilities.object.TransferPack;
+import voltaic.registers.VoltaicCapabilities;
 
 public class TileFreezePlug extends GenericTile {
 
-	public final Property<Boolean> isFrozen = property(new Property<>(PropertyTypes.BOOLEAN, "isfrozen", false));
-	public final Property<Double> saltBonus = property(new Property<>(PropertyTypes.DOUBLE, "saltbonus", 1.0));
+	public final SingleProperty<Boolean> isFrozen = property(new SingleProperty<>(PropertyTypes.BOOLEAN, "isfrozen", false));
+	public final SingleProperty<Double> saltBonus = property(new SingleProperty<>(PropertyTypes.DOUBLE, "saltbonus", 1.0));
 
 	public TileFreezePlug(BlockPos pos, BlockState state) {
 		super(NuclearScienceTiles.TILE_FREEZEPLUG.get(), pos, state);
 		addComponent(new ComponentTickable(this).tickServer(this::tickServer));
 		addComponent(new ComponentPacketHandler(this));
-		addComponent(new ComponentElectrodynamic(this, false, true).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE).extractPower((x, y) -> TransferPack.EMPTY).setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM).maxJoules(Constants.FREEZEPLUG_USAGE_PER_TICK * 20));
-		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().inputs(1)).valid((slot, stack, i) -> stack.getItem() == NuclearScienceItems.ITEM_FLINAK.get()));
-		addComponent(new ComponentContainerProvider("container.freezeplug", this).createMenu((id, player) -> new ContainerFreezePlug(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
+		addComponent(new ComponentElectrodynamic(this, false, true).voltage(VoltaicCapabilities.DEFAULT_VOLTAGE).extractPower((x, y) -> TransferPack.EMPTY).setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM).maxJoules(NuclearConstants.FREEZEPLUG_USAGE_PER_TICK * 20));
+		addComponent(new ComponentInventory(this, ComponentInventory.InventoryBuilder.newInv().inputs(1)).valid((slot, stack, i) -> stack.getItem() == NuclearScienceItems.ITEM_FLINAK.get()));
+		addComponent(new ComponentContainerProvider("freezeplug", this).createMenu((id, player) -> new ContainerFreezePlug(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
 	}
 
 	public void tickServer(ComponentTickable tickable) {
@@ -42,33 +37,33 @@ public class TileFreezePlug extends GenericTile {
 		ItemStack stack = inv.getItem(0);
 
 		if (stack.isEmpty()) {
-			isFrozen.set(false);
-			saltBonus.set(0.0);
+			isFrozen.setValue(false);
+			saltBonus.setValue(0.0);
 			return;
 		}
 
-		if (electro.getJoulesStored() < Constants.FREEZEPLUG_USAGE_PER_TICK) {
-			isFrozen.set(false);
-			saltBonus.set(0.0);
+		if (electro.getJoulesStored() < NuclearConstants.FREEZEPLUG_USAGE_PER_TICK) {
+			isFrozen.setValue(false);
+			saltBonus.setValue(0.0);
 			return;
 		}
 
-		electro.joules(electro.getJoulesStored() - Constants.FREEZEPLUG_USAGE_PER_TICK);
+		electro.joules(electro.getJoulesStored() - NuclearConstants.FREEZEPLUG_USAGE_PER_TICK);
 
-		isFrozen.set(true);
+		isFrozen.setValue(true);
 
 		double bonus = 1.0 + ((stack.getCount() - 1) / 63.0);
 
-		saltBonus.set(bonus);
+		saltBonus.setValue(bonus);
 
 	}
 
 	public boolean isFrozen() {
-		return isFrozen.get();
+		return isFrozen.getValue();
 	}
 
 	public double getSaltBonus() {
-		return saltBonus.get();
+		return saltBonus.getValue();
 	}
 
 }

@@ -7,7 +7,7 @@ import java.util.UUID;
 
 import net.minecraft.server.level.ServerLevel;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
-import nuclearscience.common.settings.Constants;
+import nuclearscience.common.settings.NuclearConstants;
 import nuclearscience.registers.NuclearScienceAttachmentTypes;
 
 public class TunnelFrequencyManager {
@@ -47,7 +47,7 @@ public class TunnelFrequencyManager {
         ServerLevel level = getOverworld();
         HashMap<UUID, HashSet<TunnelFrequency>> map = level.getData(NuclearScienceAttachmentTypes.CHANNEL_MAP);
         for(Map.Entry<UUID, HashSet<TunnelFrequency>> entry : map.entrySet()) {
-            if(entry.getValue().size() > Constants.QUANTUM_TUNNEL_FREQUENCY_CAP_PER_PLAYER) {
+            if(entry.getValue().size() > NuclearConstants.QUANTUM_TUNNEL_FREQUENCY_CAP_PER_PLAYER) {
                 return false;
             }
             for(TunnelFrequency id : entry.getValue()) {

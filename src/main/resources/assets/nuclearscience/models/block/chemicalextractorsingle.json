@@ -3,7 +3,7 @@
   "parent": "block/cube_all",
   "textures": {
     "1": "nuclearscience:block/model/chemicalextractor",
-    "particle": "electrodynamics:block/steelcasing"
+    "particle": "voltaic:block/steelcasing"
   },
   "elements": [
     {

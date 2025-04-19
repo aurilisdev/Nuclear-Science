@@ -4,14 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-import electrodynamics.prefab.inventory.container.slot.item.SlotGeneric;
-import electrodynamics.prefab.screen.component.button.ScreenComponentButton;
-import electrodynamics.prefab.screen.component.types.ScreenComponentSimpleLabel;
-import electrodynamics.prefab.screen.component.types.ScreenComponentVerticalSlider;
-import electrodynamics.prefab.screen.component.types.guitab.ScreenComponentGuiTab;
-import electrodynamics.prefab.utilities.BlockEntityUtils;
 import electrodynamics.prefab.utilities.ElectroTextUtils;
-import electrodynamics.prefab.utilities.math.Color;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -23,6 +16,13 @@ import nuclearscience.common.tile.reactor.logisticsnetwork.interfaces.GenericTil
 import nuclearscience.common.tile.reactor.logisticsnetwork.util.GenericTileInterfaceBound;
 import nuclearscience.prefab.screen.component.NuclearIconTypes;
 import nuclearscience.prefab.utils.NuclearTextUtils;
+import voltaic.prefab.inventory.container.slot.item.SlotGeneric;
+import voltaic.prefab.screen.component.button.ScreenComponentButton;
+import voltaic.prefab.screen.component.types.ScreenComponentSimpleLabel;
+import voltaic.prefab.screen.component.types.ScreenComponentVerticalSlider;
+import voltaic.prefab.screen.component.types.guitab.ScreenComponentGuiTab;
+import voltaic.prefab.utilities.BlockEntityUtils;
+import voltaic.prefab.utilities.math.Color;
 
 public class WrapperBindInterface {
 
@@ -105,11 +105,11 @@ public class WrapperBindInterface {
 
         enable = (ScreenComponentButton<?>) new ScreenComponentButton<>(x + 127, y + 19, 20, 20).setOnPress(but -> {
             GenericTileInterfaceBound tile = screen.getMenu().getSafeHost();
-            if (tile == null || boundInterface.getInterface() == null || tile.interfaceLocation.get().equals(boundInterface.getInterface().pos())) {
+            if (tile == null || boundInterface.getInterface() == null || tile.interfaceLocation.getValue().equals(boundInterface.getInterface().pos())) {
                 return;
             }
-            tile.interfaceLocation.set(boundInterface.getInterface().pos());
-            tile.interfaceType.set(boundInterface.getInterface().type().ordinal());
+            tile.interfaceLocation.setValue(boundInterface.getInterface().pos());
+            tile.interfaceType.setValue(boundInterface.getInterface().type().ordinal());
 
         }).onTooltip((graphics, button, xAxis, yAxis) -> graphics.renderTooltip(screen.getFontRenderer(), NuclearTextUtils.gui("quantumtunnel.enable"), xAxis, yAxis)).setIcon(NuclearIconTypes.ENABLE);
 
@@ -118,8 +118,8 @@ public class WrapperBindInterface {
             if (tile == null) {
                 return;
             }
-            tile.interfaceLocation.set(BlockEntityUtils.OUT_OF_REACH);
-            tile.interfaceType.set(GenericTileInterface.InterfaceType.NONE.ordinal());
+            tile.interfaceLocation.setValue(BlockEntityUtils.OUT_OF_REACH);
+            tile.interfaceType.setValue(GenericTileInterface.InterfaceType.NONE.ordinal());
 
         }).onTooltip((graphics, button, xAxis, yAxis) -> graphics.renderTooltip(screen.getFontRenderer(), NuclearTextUtils.gui("quantumtunnel.disable"), xAxis, yAxis)).setIcon(NuclearIconTypes.DISABLE);
 

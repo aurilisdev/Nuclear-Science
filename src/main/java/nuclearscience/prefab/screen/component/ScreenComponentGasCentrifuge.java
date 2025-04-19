@@ -2,11 +2,11 @@ package nuclearscience.prefab.screen.component;
 
 import java.util.function.DoubleSupplier;
 
-import electrodynamics.api.screen.ITexture;
-import electrodynamics.prefab.screen.component.ScreenComponentGeneric;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import nuclearscience.NuclearScience;
+import voltaic.api.screen.ITexture;
+import voltaic.prefab.screen.component.ScreenComponentGeneric;
 
 public class ScreenComponentGasCentrifuge extends ScreenComponentGeneric {
 

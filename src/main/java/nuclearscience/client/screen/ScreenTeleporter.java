@@ -1,16 +1,6 @@
 package nuclearscience.client.screen;
 
-import electrodynamics.prefab.screen.GenericScreen;
-import electrodynamics.prefab.screen.component.button.ScreenComponentButton;
-import electrodynamics.prefab.screen.component.editbox.ScreenComponentEditBox;
-import electrodynamics.prefab.screen.component.types.ScreenComponentSimpleLabel;
-import electrodynamics.prefab.screen.component.types.guitab.ScreenComponentElectricInfo;
-import electrodynamics.prefab.screen.component.utils.AbstractScreenComponentInfo;
-import electrodynamics.prefab.tile.components.IComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentInventory;
 import electrodynamics.prefab.utilities.ElectroTextUtils;
-import electrodynamics.prefab.utilities.math.Color;
-import electrodynamics.registers.ElectrodynamicsDataComponentTypes;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
@@ -21,9 +11,19 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import nuclearscience.common.inventory.container.ContainerTeleporter;
-import nuclearscience.common.settings.Constants;
+import nuclearscience.common.settings.NuclearConstants;
 import nuclearscience.common.tile.TileTeleporter;
 import nuclearscience.prefab.utils.NuclearTextUtils;
+import voltaic.prefab.screen.GenericScreen;
+import voltaic.prefab.screen.component.button.ScreenComponentButton;
+import voltaic.prefab.screen.component.editbox.ScreenComponentEditBox;
+import voltaic.prefab.screen.component.types.ScreenComponentSimpleLabel;
+import voltaic.prefab.screen.component.types.guitab.ScreenComponentElectricInfo;
+import voltaic.prefab.screen.component.utils.AbstractScreenComponentInfo;
+import voltaic.prefab.tile.components.IComponentType;
+import voltaic.prefab.tile.components.type.ComponentInventory;
+import voltaic.prefab.utilities.math.Color;
+import voltaic.registers.VoltaicDataComponentTypes;
 
 public class ScreenTeleporter extends GenericScreen<ContainerTeleporter> {
 
@@ -45,7 +45,7 @@ public class ScreenTeleporter extends GenericScreen<ContainerTeleporter> {
                 return Component.empty();
             }
 
-            ResourceKey<Level> dimension = ResourceKey.create(Registries.DIMENSION, tile.dimension.get());
+            ResourceKey<Level> dimension = ResourceKey.create(Registries.DIMENSION, tile.dimension.getValue());
 
             if(ElectroTextUtils.dimensionExists(dimension)) {
                 return ElectroTextUtils.dimension(dimension);
@@ -70,14 +70,14 @@ public class ScreenTeleporter extends GenericScreen<ContainerTeleporter> {
 
             ItemStack input = tile.<ComponentInventory>getComponent(IComponentType.Inventory).getItem(0);
 
-            if(input.isEmpty() || !input.has(ElectrodynamicsDataComponentTypes.BLOCK_POS)) {
+            if(input.isEmpty() || !input.has(VoltaicDataComponentTypes.BLOCK_POS)) {
                 return;
             }
 
-            tile.destination.set(input.get(ElectrodynamicsDataComponentTypes.BLOCK_POS));
+            tile.destination.setValue(input.get(VoltaicDataComponentTypes.BLOCK_POS));
 
-            if(input.has(ElectrodynamicsDataComponentTypes.RESOURCE_LOCATION)) {
-                tile.dimension.set(input.get(ElectrodynamicsDataComponentTypes.RESOURCE_LOCATION));
+            if(input.has(VoltaicDataComponentTypes.RESOURCE_LOCATION)) {
+                tile.dimension.setValue(input.get(VoltaicDataComponentTypes.RESOURCE_LOCATION));
             }
 
 
@@ -90,17 +90,17 @@ public class ScreenTeleporter extends GenericScreen<ContainerTeleporter> {
                 return;
             }
 
-            tile.destination.set(tile.getBlockPos());
-            tile.dimension.set(ClientLevel.OVERWORLD.location());
+            tile.destination.setValue(tile.getBlockPos());
+            tile.dimension.setValue(getMinecraft().level.OVERWORLD.location());
 
-            xBox.setValue("" + menu.getSafeHost().destination.get().getX());
-            yBox.setValue("" + menu.getSafeHost().destination.get().getY());
-            zBox.setValue("" + menu.getSafeHost().destination.get().getZ());
+            xBox.setValue("" + menu.getSafeHost().destination.getValue().getX());
+            yBox.setValue("" + menu.getSafeHost().destination.getValue().getY());
+            zBox.setValue("" + menu.getSafeHost().destination.getValue().getZ());
 
 
         }).setLabel(NuclearTextUtils.gui("teleporter.reset")));
 
-        addComponent(new ScreenComponentElectricInfo(-AbstractScreenComponentInfo.SIZE + 1, 2).wattage(Constants.TELEPORTER_USAGE_PER_TELEPORT / 20));
+        addComponent(new ScreenComponentElectricInfo(-AbstractScreenComponentInfo.SIZE + 1, 2).wattage(NuclearConstants.TELEPORTER_USAGE_PER_TELEPORT / 20));
 
         xBox.setFocus(false);
         yBox.setFocus(false);
@@ -148,9 +148,9 @@ public class ScreenTeleporter extends GenericScreen<ContainerTeleporter> {
             return;
         }
 
-        BlockPos dest = tile.destination.get();
+        BlockPos dest = tile.destination.getValue();
 
-        tile.destination.set(new BlockPos(x, dest.getY(), dest.getZ()));
+        tile.destination.setValue(new BlockPos(x, dest.getY(), dest.getZ()));
 
     }
 
@@ -173,9 +173,9 @@ public class ScreenTeleporter extends GenericScreen<ContainerTeleporter> {
             return;
         }
 
-        BlockPos dest = tile.destination.get();
+        BlockPos dest = tile.destination.getValue();
 
-        tile.destination.set(new BlockPos(dest.getX(), y, dest.getZ()));
+        tile.destination.setValue(new BlockPos(dest.getX(), y, dest.getZ()));
 
     }
 
@@ -198,9 +198,9 @@ public class ScreenTeleporter extends GenericScreen<ContainerTeleporter> {
             return;
         }
 
-        BlockPos dest = tile.destination.get();
+        BlockPos dest = tile.destination.getValue();
 
-        tile.destination.set(new BlockPos(dest.getX(), dest.getY(), z));
+        tile.destination.setValue(new BlockPos(dest.getX(), dest.getY(), z));
 
     }
 
@@ -210,9 +210,9 @@ public class ScreenTeleporter extends GenericScreen<ContainerTeleporter> {
         super.render(graphics, mouseX, mouseY, partialTicks);
         if (needsUpdate && menu.getSafeHost() != null) {
             needsUpdate = false;
-            xBox.setValue("" + menu.getSafeHost().destination.get().getX());
-            yBox.setValue("" + menu.getSafeHost().destination.get().getY());
-            zBox.setValue("" + menu.getSafeHost().destination.get().getZ());
+            xBox.setValue("" + menu.getSafeHost().destination.getValue().getX());
+            yBox.setValue("" + menu.getSafeHost().destination.getValue().getY());
+            zBox.setValue("" + menu.getSafeHost().destination.getValue().getZ());
         }
     }
 }

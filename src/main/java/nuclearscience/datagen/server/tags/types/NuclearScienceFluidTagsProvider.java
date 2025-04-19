@@ -7,14 +7,14 @@ import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.FluidTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import nuclearscience.References;
+import nuclearscience.NuclearScience;
 import nuclearscience.common.tags.NuclearScienceTags;
 import nuclearscience.registers.NuclearScienceFluids;
 
 public class NuclearScienceFluidTagsProvider extends FluidTagsProvider {
 
     public NuclearScienceFluidTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
-        super(output, lookupProvider, References.ID, existingFileHelper);
+        super(output, lookupProvider, NuclearScience.ID, existingFileHelper);
     }
 
     @Override

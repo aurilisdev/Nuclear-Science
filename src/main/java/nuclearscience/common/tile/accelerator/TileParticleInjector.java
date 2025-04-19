@@ -2,20 +2,6 @@ package nuclearscience.common.tile.accelerator;
 
 import java.util.Random;
 
-import electrodynamics.Electrodynamics;
-import electrodynamics.prefab.properties.Property;
-import electrodynamics.prefab.properties.PropertyTypes;
-import electrodynamics.prefab.tile.GenericTile;
-import electrodynamics.prefab.tile.components.IComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
-import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
-import electrodynamics.prefab.tile.components.type.ComponentInventory;
-import electrodynamics.prefab.tile.components.type.ComponentInventory.InventoryBuilder;
-import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
-import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import electrodynamics.prefab.utilities.BlockEntityUtils;
-import electrodynamics.prefab.utilities.object.Location;
-import electrodynamics.registers.ElectrodynamicsCapabilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -29,10 +15,19 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.common.entity.EntityParticle;
 import nuclearscience.common.inventory.container.ContainerParticleInjector;
-import nuclearscience.common.settings.Constants;
-import nuclearscience.prefab.utils.RadiationUtils;
+import nuclearscience.common.settings.NuclearConstants;
 import nuclearscience.registers.NuclearScienceItems;
 import nuclearscience.registers.NuclearScienceTiles;
+import voltaic.Voltaic;
+import voltaic.prefab.properties.types.PropertyTypes;
+import voltaic.prefab.properties.variant.SingleProperty;
+import voltaic.prefab.tile.GenericTile;
+import voltaic.prefab.tile.components.IComponentType;
+import voltaic.prefab.tile.components.type.*;
+import voltaic.prefab.utilities.BlockEntityUtils;
+import voltaic.prefab.utilities.RadiationUtils;
+import voltaic.prefab.utilities.object.Location;
+import voltaic.registers.VoltaicCapabilities;
 
 public class TileParticleInjector extends GenericTile {
 
@@ -43,19 +38,19 @@ public class TileParticleInjector extends GenericTile {
 	public final EntityParticle[] particles = new EntityParticle[2];
 	public int timeSinceSpawn = 0;
 
-	public final Property<Boolean> usingGateway = property(new Property<>(PropertyTypes.BOOLEAN, "usinggateway", false));
-	public final Property<Boolean> hasRedstoneSignal = property(new Property<>(PropertyTypes.BOOLEAN, "hasredstonesignal", false));
+	public final SingleProperty<Boolean> usingGateway = property(new SingleProperty<>(PropertyTypes.BOOLEAN, "usinggateway", false));
+	public final SingleProperty<Boolean> hasRedstoneSignal = property(new SingleProperty<>(PropertyTypes.BOOLEAN, "hasredstonesignal", false));
 
 
 	public TileParticleInjector(BlockPos pos, BlockState state) {
 		super(NuclearScienceTiles.TILE_PARTICLEINJECTOR.get(), pos, state);
 		addComponent(new ComponentTickable(this).tickServer(this::tickServer).tickCommon(this::tickCommon));
 		addComponent(new ComponentPacketHandler(this));
-		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().inputs(2).outputs(1)).valid((index, stack, i) -> index != 1 || stack.getItem() == NuclearScienceItems.ITEM_CELLELECTROMAGNETIC.get()).setSlotsByDirection(BlockEntityUtils.MachineDirection.TOP, 0, 1)
+		addComponent(new ComponentInventory(this, ComponentInventory.InventoryBuilder.newInv().inputs(2).outputs(1)).valid((index, stack, i) -> index != 1 || stack.getItem() == NuclearScienceItems.ITEM_CELLELECTROMAGNETIC.get()).setSlotsByDirection(BlockEntityUtils.MachineDirection.TOP, 0, 1)
 				//
 				.setSlotsByDirection(BlockEntityUtils.MachineDirection.RIGHT, 0, 1).setDirectionsBySlot(2, BlockEntityUtils.MachineDirection.BOTTOM, BlockEntityUtils.MachineDirection.LEFT));
-		addComponent(new ComponentElectrodynamic(this, false, true).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 8).setInputDirections(BlockEntityUtils.MachineDirection.BACK).maxJoules(Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE));
-		addComponent(new ComponentContainerProvider("container.particleinjector", this).createMenu((id, player) -> new ContainerParticleInjector(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
+		addComponent(new ComponentElectrodynamic(this, false, true).voltage(VoltaicCapabilities.DEFAULT_VOLTAGE * 8).setInputDirections(BlockEntityUtils.MachineDirection.BACK).maxJoules(NuclearConstants.PARTICLEINJECTOR_USAGE_PER_PARTICLE));
+		addComponent(new ComponentContainerProvider("particleinjector", this).createMenu((id, player) -> new ContainerParticleInjector(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
 	}
 
 	private void tickCommon(ComponentTickable tickable) {
@@ -76,18 +71,18 @@ public class TileParticleInjector extends GenericTile {
 
 	private void tickServer(ComponentTickable componentTickable) {
 
-		if(hasRedstoneSignal.get()) {
+		if(hasRedstoneSignal.getValue()) {
 			return;
 		}
 
-		RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory), Constants.PARTICLE_INJECTOR_RADIATION_RADIUS, true, 0, false);
+		RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory), NuclearConstants.PARTICLE_INJECTOR_RADIATION_RADIUS, true, 0, false);
 
 		ComponentElectrodynamic electro = getComponent(IComponentType.Electrodynamic);
 		ComponentInventory inv = getComponent(IComponentType.Inventory);
 
 		ItemStack input = inv.getItem(INPUT_SLOT);
 
-		if(electro.getJoulesStored() < Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE || input.isEmpty()) {
+		if(electro.getJoulesStored() < NuclearConstants.PARTICLEINJECTOR_USAGE_PER_PARTICLE || input.isEmpty()) {
 			return;
 		}
 
@@ -96,7 +91,7 @@ public class TileParticleInjector extends GenericTile {
 			return;
 		}
 
-		if(usingGateway.get() && particles[0] != null && !particles[0].passedThroughGate) {
+		if(usingGateway.getValue() && particles[0] != null && !particles[0].passedThroughGate) {
 			return;
 		}
 
@@ -110,7 +105,7 @@ public class TileParticleInjector extends GenericTile {
 			return;
 		}
 
-		timeSinceSpawn = Constants.DEFAULT_PARTICLE_COOLDOWN_TICKS;
+		timeSinceSpawn = NuclearConstants.DEFAULT_PARTICLE_COOLDOWN_TICKS;
 
 		input.shrink(1);
 
@@ -122,7 +117,7 @@ public class TileParticleInjector extends GenericTile {
 
 		level.addFreshEntity(particle);
 
-		electro.setJoulesStored(electro.getJoulesStored() - Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE);
+		electro.setJoulesStored(electro.getJoulesStored() - NuclearConstants.PARTICLEINJECTOR_USAGE_PER_PARTICLE);
 
 
 	}
@@ -157,7 +152,7 @@ public class TileParticleInjector extends GenericTile {
 			one.remove(RemovalReason.KILLED);
 			two.remove(RemovalReason.KILLED);
 
-			Random random = Electrodynamics.RANDOM;
+			Random random = Voltaic.RANDOM;
 
 			for(int i = 0; i < 50; i++) {
 				double d0 = pos.getX() + random.nextDouble();
@@ -240,7 +235,7 @@ public class TileParticleInjector extends GenericTile {
 	@Override
 	public void onNeightborChanged(BlockPos neighbor, boolean blockStateTrigger) {
 		if(!level.isClientSide()) {
-			hasRedstoneSignal.set(level.hasNeighborSignal(getBlockPos()));
+			hasRedstoneSignal.setValue(level.hasNeighborSignal(getBlockPos()));
 		}
 	}
 }

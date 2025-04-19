@@ -1,9 +1,5 @@
 package nuclearscience.registers;
 
-import electrodynamics.api.registration.BulkDeferredHolder;
-import electrodynamics.common.block.BlockCustomGlass;
-import electrodynamics.common.block.BlockMachine;
-import electrodynamics.prefab.utilities.math.Color;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
@@ -21,7 +17,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import nuclearscience.References;
+import nuclearscience.NuclearScience;
 import nuclearscience.common.block.BlockElectromagneticBooster;
 import nuclearscience.common.block.BlockElectromagneticDiode;
 import nuclearscience.common.block.BlockElectromagneticGateway;
@@ -41,10 +37,14 @@ import nuclearscience.common.block.subtype.SubtypeRadiationShielding;
 import nuclearscience.common.block.subtype.SubtypeReactorLogisticsCable;
 import nuclearscience.common.tile.TileQuantumTunnel;
 import nuclearscience.common.tile.reactor.fission.TileFissionReactorCore;
+import voltaic.api.registration.BulkDeferredHolder;
+import voltaic.common.block.BlockCustomGlass;
+import voltaic.common.block.BlockMachine;
+import voltaic.prefab.utilities.math.Color;
 
 public class NuclearScienceBlocks {
 
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Registries.BLOCK, References.ID);
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Registries.BLOCK, NuclearScience.ID);
 
     public static final BulkDeferredHolder<Block, Block, SubtypeRadiationShielding> BLOCKS_RADIATION_SHIELDING = new BulkDeferredHolder<>(SubtypeRadiationShielding.values(), subtype -> BLOCKS.register(subtype.tag(), () -> {
         if (subtype == SubtypeRadiationShielding.door) {
@@ -74,7 +74,7 @@ public class NuclearScienceBlocks {
                 @Override
                 public int getLightEmission(BlockState state, BlockGetter world, BlockPos pos) {
                     if (world.getBlockEntity(pos) instanceof TileFissionReactorCore core) {
-                        return (int) Math.max(0, Math.min(core.temperature.get() / TileFissionReactorCore.MELTDOWN_TEMPERATURE_ACTUAL * 15, 15));
+                        return (int) Math.max(0, Math.min(core.temperature.getValue() / TileFissionReactorCore.MELTDOWN_TEMPERATURE_ACTUAL * 15, 15));
                     }
                     return super.getLightEmission(state, world, pos);
                 }
@@ -113,7 +113,7 @@ public class NuclearScienceBlocks {
 
 
 
-    @EventBusSubscriber(value = Dist.CLIENT, modid = References.ID, bus = EventBusSubscriber.Bus.MOD)
+    @EventBusSubscriber(value = Dist.CLIENT, modid = NuclearScience.ID, bus = EventBusSubscriber.Bus.MOD)
     private static class ColorHandlerInternal {
 
         private static final Color NONE = new Color(114, 114, 114, 255);

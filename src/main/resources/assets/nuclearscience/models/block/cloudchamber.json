@@ -7,7 +7,7 @@
   ],
   "textures": {
     "0": "nuclearscience:block/model/cloudchamber",
-    "particle": "electrodynamics:block/steelcasing"
+    "particle": "voltaic:block/steelcasing"
   },
   "groups": [
     {
@@ -57,7 +57,7 @@
       "render_type": "minecraft:solid",
       "textures": {
         "0": "nuclearscience:block/model/cloudchamber",
-        "particle": "electrodynamics:block/steelcasing"
+        "particle": "voltaic:block/steelcasing"
       },
       "elements": [
         {
@@ -288,7 +288,7 @@
       "render_type": "minecraft:translucent",
       "textures": {
         "0": "nuclearscience:block/model/cloudchamber",
-        "particle": "electrodynamics:block/steelcasing"
+        "particle": "voltaic:block/steelcasing"
       },
       "elements": [
         {

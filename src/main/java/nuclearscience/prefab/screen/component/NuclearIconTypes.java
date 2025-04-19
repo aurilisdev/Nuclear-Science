@@ -1,8 +1,8 @@
 package nuclearscience.prefab.screen.component;
 
-import electrodynamics.api.screen.ITexture;
 import net.minecraft.resources.ResourceLocation;
 import nuclearscience.NuclearScience;
+import voltaic.api.screen.ITexture;
 
 public enum NuclearIconTypes implements ITexture {
 	PELLET_DARK(0, 0, 14, 14, 14, 14, NuclearScience.rl("textures/screen/component/icon/pelletdark.png")),
