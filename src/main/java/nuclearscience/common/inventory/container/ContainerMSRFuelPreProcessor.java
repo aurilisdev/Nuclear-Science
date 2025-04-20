@@ -1,6 +1,5 @@
 package nuclearscience.common.inventory.container;
 
-import electrodynamics.registers.ElectrodynamicsItems;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -8,7 +7,6 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import nuclearscience.common.tile.reactor.moltensalt.TileMSRFuelPreProcessor;
 import nuclearscience.registers.NuclearScienceMenuTypes;
-import voltaic.common.item.ItemUpgrade;
 import voltaic.common.item.subtype.SubtypeItemUpgrade;
 import voltaic.prefab.inventory.container.slot.item.SlotGeneric;
 import voltaic.prefab.inventory.container.slot.item.type.SlotFluid;
@@ -36,8 +34,8 @@ public class ContainerMSRFuelPreProcessor extends GenericContainerBlockEntity<Ti
 		addSlot(new SlotGeneric(inv, nextIndex(), 74, 60).setIOColor(new Color(144, 0, 255, 255)));
 		addSlot(new SlotRestricted(inv, nextIndex(), 128, 40).setIOColor(new Color(255, 0, 0, 255)));
 		addSlot(new SlotFluid(inv, nextIndex(), 45, 50));
-		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 14, ElectrodynamicsItems.ITEMS_UPGRADE.getSpecificValuesArray(new ItemUpgrade[0], VALID_UPGRADES)));
-		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 34, ElectrodynamicsItems.ITEMS_UPGRADE.getSpecificValuesArray(new ItemUpgrade[0], VALID_UPGRADES)));
-		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 54, ElectrodynamicsItems.ITEMS_UPGRADE.getSpecificValuesArray(new ItemUpgrade[0], VALID_UPGRADES)));
+		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 14, VALID_UPGRADES));
+		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 34, VALID_UPGRADES));
+		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 54, VALID_UPGRADES));
 	}
 }
