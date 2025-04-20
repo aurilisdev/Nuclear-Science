@@ -4,14 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import electrodynamics.client.screen.tile.ScreenO2OProcessor;
-import electrodynamics.compatibility.jei.ElectrodynamicsJEIPlugin;
 import electrodynamics.compatibility.jei.recipecategories.utils.psuedorecipes.types.PsuedoItem2ItemRecipe;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.neoforge.NeoForgeTypes;
-import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.registration.IExtraIngredientRegistration;
 import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
@@ -54,6 +51,7 @@ import nuclearscience.registers.NuclearScienceFluids;
 import nuclearscience.registers.NuclearScienceGases;
 import voltaic.api.gas.Gas;
 import voltaic.api.gas.GasStack;
+import voltaic.client.screen.ScreenO2OProcessor;
 import voltaic.compatibility.jei.utils.ingredients.VoltaicJeiTypes;
 import voltaic.registers.VoltaicGases;
 
@@ -145,7 +143,7 @@ public class NuclearSciencePlugin implements IModPlugin {
 
     @Override
     public void registerGuiHandlers(IGuiHandlerRegistration registry) {
-        registry.addRecipeClickArea(ScreenO2OProcessor.class, 48, 35, 22, 15, ElectrodynamicsJEIPlugin.O2O_CLICK_AREAS.toArray(new RecipeType<?>[ElectrodynamicsJEIPlugin.O2O_CLICK_AREAS.size()]));
+        //registry.addRecipeClickArea(ScreenO2OProcessor.class, 48, 35, 22, 15, ElectrodynamicsJEIPlugin.O2O_CLICK_AREAS.toArray(new RecipeType<?>[ElectrodynamicsJEIPlugin.O2O_CLICK_AREAS.size()]));
         registry.addRecipeClickArea(ScreenNuclearBoiler.class, 97, 31, 22, 15, NuclearBoilerRecipeCategory.RECIPE_TYPE);
         registry.addRecipeClickArea(ScreenRadioactiveProcessor.class, 97, 31, 22, 15, RadioactiveProcessorRecipeCategory.RECIPE_TYPE);
         registry.addRecipeClickArea(ScreenChemicalExtractor.class, 97, 31, 22, 15, ChemicalExtractorRecipeCategory.RECIPE_TYPE);

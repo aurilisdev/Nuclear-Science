@@ -1,6 +1,5 @@
 package nuclearscience.compatibility.jei.recipecategories.item2item;
 
-import electrodynamics.compatibility.jei.ElectrodynamicsJEIPlugin;
 import mezz.jei.api.gui.drawable.IDrawableAnimated.StartDirection;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.RecipeIngredientRole;
@@ -11,6 +10,7 @@ import nuclearscience.common.block.subtype.SubtypeNuclearMachine;
 import nuclearscience.common.recipe.categories.item2item.FuelReprocessorRecipe;
 import nuclearscience.prefab.utils.NuclearTextUtils;
 import nuclearscience.registers.NuclearScienceBlocks;
+import voltaic.compatibility.jei.VoltaicJEIPlugin;
 import voltaic.compatibility.jei.recipecategories.item2item.Item2ItemRecipeCategory;
 import voltaic.compatibility.jei.utils.gui.types.ArrowAnimatedObject;
 import voltaic.compatibility.jei.utils.gui.types.BackgroundObject;
@@ -27,7 +27,7 @@ public class FuelReprocessorRecipeCategory extends Item2ItemRecipeCategory<FuelR
 	public static final BackgroundObject BACK_WRAP = new BackgroundObject(132, 58);
 
 	public static final ItemSlotObject INPUT_SLOT = new ItemSlotObject(ScreenComponentSlot.SlotType.NORMAL, 17, 20, RecipeIngredientRole.INPUT);
-	public static final ItemSlotObject OUTPUT_SLOT = new ItemSlotObject(ScreenComponentSlot.SlotType.NORMAL, 69, 16, RecipeIngredientRole.OUTPUT);
+	public static final ItemSlotObject OUTPUT_SLOT = new ItemSlotObject(ScreenComponentSlot.SlotType.BIG, 69, 16, RecipeIngredientRole.OUTPUT);
 	public static final ItemSlotObject BIPRODUCT_SLOT = new ItemSlotObject(ScreenComponentSlot.SlotType.NORMAL, 100, 20, RecipeIngredientRole.OUTPUT);
 
 	public static final ArrowAnimatedObject ANIM_ARROW = new ArrowAnimatedObject(ScreenComponentProgress.ProgressBars.PROGRESS_ARROW_RIGHT, 41, 23, StartDirection.LEFT);
@@ -44,7 +44,7 @@ public class FuelReprocessorRecipeCategory extends Item2ItemRecipeCategory<FuelR
 
 	public FuelReprocessorRecipeCategory(IGuiHelper guiHelper) {
 		super(guiHelper, NuclearTextUtils.jeiTranslated(FuelReprocessorRecipe.RECIPE_GROUP), INPUT_MACHINE, BACK_WRAP, RECIPE_TYPE, ANIM_TIME);
-		ElectrodynamicsJEIPlugin.addO2OClickArea(RECIPE_TYPE);
+		VoltaicJEIPlugin.addO2OCategory(RECIPE_TYPE);
 		setInputSlots(guiHelper, INPUT_SLOT);
 		setOutputSlots(guiHelper, OUTPUT_SLOT, BIPRODUCT_SLOT);
 		setAnimatedArrows(guiHelper, ANIM_ARROW);

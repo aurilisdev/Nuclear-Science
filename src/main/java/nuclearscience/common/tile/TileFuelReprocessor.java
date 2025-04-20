@@ -1,6 +1,5 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.common.inventory.container.tile.ContainerO2OProcessor;
 import electrodynamics.registers.ElectrodynamicsSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -8,6 +7,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.registers.NuclearScienceRecipies;
 import nuclearscience.common.settings.NuclearConstants;
 import nuclearscience.registers.NuclearScienceTiles;
+import voltaic.common.inventory.container.ContainerO2OProcessor;
 import voltaic.prefab.sound.ITickableSound;
 import voltaic.prefab.sound.SoundBarrierMethods;
 import voltaic.prefab.tile.GenericTile;
