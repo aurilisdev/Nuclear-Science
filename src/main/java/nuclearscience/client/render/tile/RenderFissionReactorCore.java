@@ -4,20 +4,20 @@ import java.util.List;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import electrodynamics.client.render.tile.AbstractTileRenderer;
-import electrodynamics.prefab.tile.components.IComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentInventory;
-import electrodynamics.prefab.utilities.RenderingUtils;
-import electrodynamics.prefab.utilities.math.Color;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
-import nuclearscience.client.ClientRegister;
+import nuclearscience.client.NuclearScienceClientRegister;
 import nuclearscience.common.tags.NuclearScienceTags;
 import nuclearscience.common.tile.reactor.fission.TileFissionReactorCore;
+import voltaic.client.render.AbstractTileRenderer;
+import voltaic.prefab.tile.components.IComponentType;
+import voltaic.prefab.tile.components.type.ComponentInventory;
+import voltaic.prefab.utilities.RenderingUtils;
+import voltaic.prefab.utilities.math.Color;
 
 public class RenderFissionReactorCore extends AbstractTileRenderer<TileFissionReactorCore> {
 
@@ -82,7 +82,7 @@ public class RenderFissionReactorCore extends AbstractTileRenderer<TileFissionRe
 
         matrix.pushPose();
 
-        TextureAtlasSprite texture = ClientRegister.getSprite(ClientRegister.TEXTURE_FUELCELL);
+        TextureAtlasSprite texture = NuclearScienceClientRegister.getSprite(NuclearScienceClientRegister.TEXTURE_FUELCELL);
 
         RenderingUtils.renderFilledBoxNoOverlay(matrix, bufferIn.getBuffer(RenderType.SOLID), TRITIUM_CELL, color.rFloat(), color.gFloat(), color.bFloat(), color.aFloat(), texture.getU0(), texture.getV0(), texture.getU1(), texture.getV1(), combinedLightIn, FACES);
 
@@ -93,7 +93,7 @@ public class RenderFissionReactorCore extends AbstractTileRenderer<TileFissionRe
 
     private void renderFuelCell(int cellSlot, ItemStack stack, PoseStack matrix, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
 
-        TextureAtlasSprite texture = ClientRegister.getSprite(ClientRegister.TEXTURE_FUELCELL);
+        TextureAtlasSprite texture = NuclearScienceClientRegister.getSprite(NuclearScienceClientRegister.TEXTURE_FUELCELL);
 
         matrix.pushPose();
 

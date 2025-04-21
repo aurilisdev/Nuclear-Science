@@ -2,17 +2,17 @@ package nuclearscience.common.recipe.categories.item2item;
 
 import java.util.List;
 
-import electrodynamics.common.recipe.categories.item2item.Item2ItemRecipe;
-import electrodynamics.common.recipe.recipeutils.CountableIngredient;
-import electrodynamics.common.recipe.recipeutils.ProbableFluid;
-import electrodynamics.common.recipe.recipeutils.ProbableGas;
-import electrodynamics.common.recipe.recipeutils.ProbableItem;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import nuclearscience.NuclearScience;
-import nuclearscience.common.recipe.NuclearScienceRecipeInit;
+import nuclearscience.registers.NuclearScienceRecipies;
+import voltaic.common.recipe.categories.item2item.Item2ItemRecipe;
+import voltaic.common.recipe.recipeutils.CountableIngredient;
+import voltaic.common.recipe.recipeutils.ProbableFluid;
+import voltaic.common.recipe.recipeutils.ProbableGas;
+import voltaic.common.recipe.recipeutils.ProbableItem;
 
 public class FissionReactorRecipe extends Item2ItemRecipe {
 
@@ -25,12 +25,12 @@ public class FissionReactorRecipe extends Item2ItemRecipe {
 
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return NuclearScienceRecipeInit.FISSION_REACTOR_SERIALIZER.get();
+		return NuclearScienceRecipies.FISSION_REACTOR_SERIALIZER.get();
 	}
 
 	@Override
 	public RecipeType<?> getType() {
-		return NuclearScienceRecipeInit.FISSION_REACTOR_TYPE.get();
+		return NuclearScienceRecipies.FISSION_REACTOR_TYPE.get();
 	}
 
 }

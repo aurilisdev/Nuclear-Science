@@ -1,21 +1,21 @@
 package nuclearscience.datagen.client;
 
-import electrodynamics.datagen.client.ElectrodynamicsItemModelsProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import nuclearscience.References;
+import nuclearscience.NuclearScience;
 import nuclearscience.common.block.subtype.SubtypeMoltenSaltPipe;
 import nuclearscience.common.block.subtype.SubtypeNuclearMachine;
 import nuclearscience.common.block.subtype.SubtypeRadiationShielding;
 import nuclearscience.common.block.subtype.SubtypeReactorLogisticsCable;
 import nuclearscience.registers.NuclearScienceBlocks;
 import nuclearscience.registers.NuclearScienceItems;
+import voltaic.datagen.utils.client.BaseItemModelsProvider;
 
-public class NuclearScienceItemModelsProvider extends ElectrodynamicsItemModelsProvider {
+public class NuclearScienceItemModelsProvider extends BaseItemModelsProvider {
 
 	public NuclearScienceItemModelsProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
-		super(output, existingFileHelper, References.ID);
+		super(output, existingFileHelper, NuclearScience.ID);
 	}
 
 	@Override

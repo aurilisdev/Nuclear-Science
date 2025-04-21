@@ -1,10 +1,5 @@
 package nuclearscience.common.tile.reactor.logisticsnetwork.interfaces;
 
-import electrodynamics.prefab.properties.Property;
-import electrodynamics.prefab.properties.PropertyTypes;
-import electrodynamics.prefab.tile.components.IComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentInventory;
-import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
@@ -17,10 +12,15 @@ import nuclearscience.common.tile.reactor.logisticsnetwork.TileControlRodModule;
 import nuclearscience.common.tile.reactor.logisticsnetwork.TileReactorLogisticsCable;
 import nuclearscience.common.tile.reactor.logisticsnetwork.TileSupplyModule;
 import nuclearscience.registers.NuclearScienceTiles;
+import voltaic.prefab.properties.types.PropertyTypes;
+import voltaic.prefab.properties.variant.SingleProperty;
+import voltaic.prefab.tile.components.IComponentType;
+import voltaic.prefab.tile.components.type.ComponentInventory;
+import voltaic.prefab.tile.components.type.ComponentTickable;
 
 public class TileFissionInterface extends GenericTileInterface implements IFissionControlRod {
 
-    public final Property<Integer> insertion = property(new Property<>(PropertyTypes.INTEGER, "insertion", 0));
+    public final SingleProperty<Integer> insertion = property(new SingleProperty<>(PropertyTypes.INTEGER, "insertion", 0));
 
     public TileFissionInterface(BlockPos worldPos, BlockState blockState) {
         super(NuclearScienceTiles.TILE_FISSIONINTERFACE.get(), worldPos, blockState);
@@ -31,33 +31,33 @@ public class TileFissionInterface extends GenericTileInterface implements IFissi
         super.tickServer(tickable);
 
         if (!networkCable.valid() || !(networkCable.getSafe() instanceof TileReactorLogisticsCable)) {
-            insertion.set(0);
+            insertion.setValue(0);
             return;
         }
 
         TileReactorLogisticsCable cable = networkCable.getSafe();
 
         if (cable.isRemoved()) {
-            insertion.set(0);
+            insertion.setValue(0);
             return;
         }
 
         ReactorLogisticsNetwork network = cable.getNetwork();
 
         if (!network.isControllerActive()) {
-            insertion.set(0);
+            insertion.setValue(0);
             return;
         }
 
-        TileControlRodModule controlRod = network.getControlRod(controlRodLocation.get());
+        TileControlRodModule controlRod = network.getControlRod(controlRodLocation.getValue());
 
         if (controlRod == null) {
-            insertion.set(0);
+            insertion.setValue(0);
         } else {
-            insertion.set(controlRod.insertion.get());
+            insertion.setValue(controlRod.insertion.getValue());
         }
 
-        TileSupplyModule supplyModule = network.getSupplyModule(supplyModuleLocation.get());
+        TileSupplyModule supplyModule = network.getSupplyModule(supplyModuleLocation.getValue());
 
         if (!reactor.valid() || supplyModule == null || !(reactor.getSafe() instanceof TileFissionReactorCore)) {
             return;
@@ -106,22 +106,21 @@ public class TileFissionInterface extends GenericTileInterface implements IFissi
                     if (inserted) {
                         switch (i) {
                             case 0:
-                                queuedAnimations.get().add(InterfaceAnimation.FISSION_WASTE_1.ordinal());
+                                queuedAnimations.addValue(InterfaceAnimation.FISSION_WASTE_1.ordinal());
                                 break;
                             case 1:
-                                queuedAnimations.get().add(InterfaceAnimation.FISSION_WASTE_2.ordinal());
+                                queuedAnimations.addValue(InterfaceAnimation.FISSION_WASTE_2.ordinal());
                                 break;
                             case 2:
-                                queuedAnimations.get().add(InterfaceAnimation.FISSION_WASTE_3.ordinal());
+                                queuedAnimations.addValue(InterfaceAnimation.FISSION_WASTE_3.ordinal());
                                 break;
                             case 3:
-                                queuedAnimations.get().add(InterfaceAnimation.FISSION_WASTE_4.ordinal());
+                                queuedAnimations.addValue(InterfaceAnimation.FISSION_WASTE_4.ordinal());
                                 break;
                         }
 
                         isExtractingSpentCell = true;
 
-                        queuedAnimations.forceDirty();
                     }
                 }
             }
@@ -162,8 +161,7 @@ public class TileFissionInterface extends GenericTileInterface implements IFissi
             }
             if (extracted) {
 
-                queuedAnimations.get().add(InterfaceAnimation.FISSION_TRITIUM_EXTRACT.ordinal());
-                queuedAnimations.forceDirty();
+                queuedAnimations.addValue(InterfaceAnimation.FISSION_TRITIUM_EXTRACT.ordinal());
 
                 isExtractingTritium = true;
 
@@ -202,20 +200,19 @@ public class TileFissionInterface extends GenericTileInterface implements IFissi
                     if (inserted) {
                         switch (i) {
                             case 0:
-                                queuedAnimations.get().add(InterfaceAnimation.FISSION_FUEL_1.ordinal());
+                                queuedAnimations.addValue(InterfaceAnimation.FISSION_FUEL_1.ordinal());
                                 break;
                             case 1:
-                                queuedAnimations.get().add(InterfaceAnimation.FISSION_FUEL_2.ordinal());
+                                queuedAnimations.addValue(InterfaceAnimation.FISSION_FUEL_2.ordinal());
                                 break;
                             case 2:
-                                queuedAnimations.get().add(InterfaceAnimation.FISSION_FUEL_3.ordinal());
+                                queuedAnimations.addValue(InterfaceAnimation.FISSION_FUEL_3.ordinal());
                                 break;
                             case 3:
-                                queuedAnimations.get().add(InterfaceAnimation.FISSION_FUEL_4.ordinal());
+                                queuedAnimations.addValue(InterfaceAnimation.FISSION_FUEL_4.ordinal());
                                 break;
                         }
 
-                        queuedAnimations.forceDirty();
                     }
 
                 }
@@ -258,8 +255,7 @@ public class TileFissionInterface extends GenericTileInterface implements IFissi
             }
 
             if (taken) {
-                queuedAnimations.get().add(InterfaceAnimation.FISSION_DEUTERIUM_INSERT.ordinal());
-                queuedAnimations.forceDirty();
+                queuedAnimations.addValue(InterfaceAnimation.FISSION_DEUTERIUM_INSERT.ordinal());
             }
 
         }
@@ -270,7 +266,7 @@ public class TileFissionInterface extends GenericTileInterface implements IFissi
 
     @Override
     public int getInsertion() {
-        return insertion.get();
+        return insertion.getValue();
     }
 
     @Override

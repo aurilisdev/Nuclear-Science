@@ -2,11 +2,6 @@ package nuclearscience.common.item;
 
 import java.util.function.Function;
 
-import electrodynamics.api.electricity.formatting.ChatFormatter;
-import electrodynamics.api.item.IItemElectric;
-import electrodynamics.prefab.item.ElectricItemProperties;
-import electrodynamics.prefab.item.ItemElectric;
-import electrodynamics.registers.ElectrodynamicsDataComponentTypes;
 import net.minecraft.core.Holder;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -17,12 +12,17 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import nuclearscience.api.radiation.util.IRadiationRecipient;
-import nuclearscience.api.radiation.util.RadioactiveObject;
-import nuclearscience.prefab.utils.NuclearDisplayUnits;
 import nuclearscience.prefab.utils.NuclearTextUtils;
-import nuclearscience.registers.NuclearScienceCapabilities;
 import nuclearscience.registers.NuclearScienceSounds;
+import voltaic.api.electricity.formatting.ChatFormatter;
+import voltaic.api.electricity.formatting.DisplayUnits;
+import voltaic.api.item.IItemElectric;
+import voltaic.api.radiation.util.IRadiationRecipient;
+import voltaic.api.radiation.util.RadioactiveObject;
+import voltaic.prefab.item.ElectricItemProperties;
+import voltaic.prefab.item.ItemElectric;
+import voltaic.registers.VoltaicCapabilities;
+import voltaic.registers.VoltaicDataComponentTypes;
 
 public class ItemGeigerCounter extends ItemElectric {
 
@@ -43,7 +43,7 @@ public class ItemGeigerCounter extends ItemElectric {
 
             boolean noPower = getJoulesStored(stack) < POWER_USAGE;
 
-            IRadiationRecipient capability = player.getCapability(NuclearScienceCapabilities.CAPABILITY_RADIATIONRECIPIENT);
+            IRadiationRecipient capability = player.getCapability(VoltaicCapabilities.CAPABILITY_RADIATIONRECIPIENT);
             if (capability == null) {
                 return;
             }
@@ -54,7 +54,7 @@ public class ItemGeigerCounter extends ItemElectric {
                 if(noPower) {
                     player.displayClientMessage(NuclearTextUtils.chatMessage("geigercounter.nopower"), true);
                 } else {
-                    player.displayClientMessage(ChatFormatter.getChatDisplay(recievedRads.amount(), NuclearDisplayUnits.RAD, 3, true), true);
+                    player.displayClientMessage(ChatFormatter.getChatDisplay(recievedRads.amount(), DisplayUnits.RAD, 3, true), true);
                 }
 
             }
@@ -71,7 +71,7 @@ public class ItemGeigerCounter extends ItemElectric {
                 };
 
                 worldIn.playSound(null, player.blockPosition(), sound, SoundSource.BLOCKS, 1.0F, 1.0F);
-                IItemElectric.setEnergyStored(stack, this.getJoulesStored(stack) - stack.getOrDefault(ElectrodynamicsDataComponentTypes.POWER_USAGE, POWER_USAGE));
+                IItemElectric.setEnergyStored(stack, this.getJoulesStored(stack) - stack.getOrDefault(VoltaicDataComponentTypes.POWER_USAGE, POWER_USAGE));
                 player.getInventory().setItem(itemSlot, stack);
                 player.getInventory().setChanged();
 

@@ -1,16 +1,16 @@
 package nuclearscience.datagen.server.recipe.custom.fluiditem2item;
 
-import electrodynamics.common.tags.ElectrodynamicsTags;
-import electrodynamics.datagen.utils.recipe.AbstractRecipeGenerator;
-import electrodynamics.datagen.utils.recipe.builders.ElectrodynamicsRecipeBuilder;
-import electrodynamics.datagen.utils.recipe.builders.FluidItem2ItemBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.item.ItemStack;
-import nuclearscience.References;
+import nuclearscience.NuclearScience;
 import nuclearscience.common.recipe.categories.fluiditem2item.ChemicalExtractorRecipe;
 import nuclearscience.common.tags.NuclearScienceTags;
 import nuclearscience.registers.NuclearScienceItems;
+import voltaic.common.tags.VoltaicTags;
+import voltaic.datagen.utils.server.recipe.AbstractRecipeGenerator;
+import voltaic.datagen.utils.server.recipe.builders.BaseRecipeBuilder;
+import voltaic.datagen.utils.server.recipe.builders.FluidItem2ItemBuilder;
 
 public class NuclearScienceChemicalExtractorRecipes extends AbstractRecipeGenerator {
 
@@ -20,7 +20,7 @@ public class NuclearScienceChemicalExtractorRecipes extends AbstractRecipeGenera
 	private final String modID;
 
 	public NuclearScienceChemicalExtractorRecipes() {
-		this(References.ID);
+		this(NuclearScience.ID);
 	}
 
 	public NuclearScienceChemicalExtractorRecipes(String modID) {
@@ -48,7 +48,7 @@ public class NuclearScienceChemicalExtractorRecipes extends AbstractRecipeGenera
 
 		newRecipe(new ItemStack(NuclearScienceItems.ITEM_YELLOWCAKE.get()), 0.0F, CHEMICALEXTRACTOR_REQUIRED_TICKS, CHEMICALEXTRACTOR_USAGE_PER_TICK, "yellowcake_from_rawuranium", this.modID)
 				//
-				.addItemTagInput(ElectrodynamicsTags.Items.RAW_ORE_URANIUM, 1)
+				.addItemTagInput(VoltaicTags.Items.RAW_ORE_URANIUM, 1)
 				//
 				.addFluidTagInput(FluidTags.WATER, 1600)
 				//
@@ -57,7 +57,7 @@ public class NuclearScienceChemicalExtractorRecipes extends AbstractRecipeGenera
 	}
 
 	public FluidItem2ItemBuilder<ChemicalExtractorRecipe> newRecipe(ItemStack stack, float xp, int ticks, double usagePerTick, String name, String group) {
-		return new FluidItem2ItemBuilder<>(ChemicalExtractorRecipe::new, stack, ElectrodynamicsRecipeBuilder.RecipeCategory.FLUID_ITEM_2_ITEM, modID, "chemical_extractor/" + name, group, xp, ticks, usagePerTick);
+		return new FluidItem2ItemBuilder<>(ChemicalExtractorRecipe::new, stack, BaseRecipeBuilder.RecipeCategory.FLUID_ITEM_2_ITEM, modID, "chemical_extractor/" + name, group, xp, ticks, usagePerTick);
 	}
 
 }

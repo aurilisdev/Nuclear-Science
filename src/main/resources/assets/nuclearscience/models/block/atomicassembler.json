@@ -3,7 +3,7 @@
   "parent": "block/cube_all",
   "textures": {
     "0": "nuclearscience:block/model/atomicassembler",
-    "particle": "nuclearscience:block/model/atomicassembler"
+    "particle": "voltaic:block/steelcasing"
   },
   "groups": [
     {
@@ -44,7 +44,7 @@
       "render_type": "minecraft:solid",
       "textures": {
         "0": "nuclearscience:block/model/atomicassembler",
-        "particle": "electrodynamics:block/steelcasing"
+        "particle": "voltaic:block/steelcasing"
       },
       "elements": [
         {
@@ -1575,7 +1575,7 @@
       "render_type": "minecraft:translucent",
       "textures": {
         "0": "nuclearscience:block/model/atomicassembler",
-        "particle": "electrodynamics:block/steelcasing"
+        "particle": "voltaic:block/steelcasing"
       },
       "elements": [
         {

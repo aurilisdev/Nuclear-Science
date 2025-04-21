@@ -7,7 +7,7 @@
   ],
   "textures": {
     "0": "nuclearscience:block/model/nuclearboiler",
-    "particle": "electrodynamics:block/steelcasing"
+    "particle": "voltaic:block/steelcasing"
   },
   "groups": [
     {
@@ -70,7 +70,7 @@
       "parent": "block/cube_all",
       "textures": {
         "0": "nuclearscience:block/model/nuclearboiler",
-        "particle": "electrodynamics:block/steelcasing"
+        "particle": "voltaic:block/steelcasing"
       },
       "elements": [
         {
@@ -2068,7 +2068,7 @@
       "parent": "block/cube_all",
       "textures": {
         "0": "nuclearscience:block/model/nuclearboiler",
-        "particle": "electrodynamics:block/steelcasing"
+        "particle": "voltaic:block/steelcasing"
       },
       "elements": [
         {

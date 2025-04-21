@@ -5,8 +5,6 @@ import org.joml.Quaternionf;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import electrodynamics.client.render.tile.AbstractTileRenderer;
-import electrodynamics.prefab.utilities.math.Color;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -18,6 +16,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.phys.AABB;
 import nuclearscience.common.tile.reactor.fusion.TileFusionReactorCore;
 import nuclearscience.prefab.utils.NuclearTextUtils;
+import voltaic.client.render.AbstractTileRenderer;
+import voltaic.prefab.utilities.math.Color;
 
 public class RenderFusionReactorCore extends AbstractTileRenderer<TileFusionReactorCore> {
 
@@ -30,11 +30,11 @@ public class RenderFusionReactorCore extends AbstractTileRenderer<TileFusionReac
 		BlockPos pos = tileEntityIn.getBlockPos();
 		if (Minecraft.getInstance().player.distanceToSqr(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) <= 32) {
 
-			renderFloatingText(matrixStackIn, bufferIn, NuclearTextUtils.tooltip("deuteriumlevel", tileEntityIn.deuterium.get()), 0.5f, 0.7f + 1, 0.5f, Color.WHITE.color(), combinedLightIn);
-			renderFloatingText(matrixStackIn, bufferIn, NuclearTextUtils.tooltip("tritiumlevel", tileEntityIn.tritium.get()), 0.5f, 0.3f + 1, 0.5f, Color.WHITE.color(), combinedLightIn);
+			renderFloatingText(matrixStackIn, bufferIn, NuclearTextUtils.tooltip("deuteriumlevel", tileEntityIn.deuterium.getValue()), 0.5f, 0.7f + 1, 0.5f, Color.WHITE.color(), combinedLightIn);
+			renderFloatingText(matrixStackIn, bufferIn, NuclearTextUtils.tooltip("tritiumlevel", tileEntityIn.tritium.getValue()), 0.5f, 0.3f + 1, 0.5f, Color.WHITE.color(), combinedLightIn);
 
-			renderFloatingText(matrixStackIn, bufferIn, NuclearTextUtils.tooltip("deuteriumlevel", tileEntityIn.deuterium.get()), 0.5f, 0.7f - 1, 0.5f, Color.WHITE.color(), combinedLightIn);
-			renderFloatingText(matrixStackIn, bufferIn, NuclearTextUtils.tooltip("tritiumlevel", tileEntityIn.tritium.get()), 0.5f, 0.3f - 1, 0.5f, Color.WHITE.color(), combinedLightIn);
+			renderFloatingText(matrixStackIn, bufferIn, NuclearTextUtils.tooltip("deuteriumlevel", tileEntityIn.deuterium.getValue()), 0.5f, 0.7f - 1, 0.5f, Color.WHITE.color(), combinedLightIn);
+			renderFloatingText(matrixStackIn, bufferIn, NuclearTextUtils.tooltip("tritiumlevel", tileEntityIn.tritium.getValue()), 0.5f, 0.3f - 1, 0.5f, Color.WHITE.color(), combinedLightIn);
 		}
 	}
 

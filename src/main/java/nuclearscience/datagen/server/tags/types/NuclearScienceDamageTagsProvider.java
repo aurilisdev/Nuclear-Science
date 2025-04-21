@@ -7,20 +7,20 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.DamageTypeTagsProvider;
 import net.minecraft.tags.DamageTypeTags;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import nuclearscience.References;
+import nuclearscience.NuclearScience;
 import nuclearscience.registers.NuclearScienceDamageTypes;
 
 public class NuclearScienceDamageTagsProvider extends DamageTypeTagsProvider {
 
     public NuclearScienceDamageTagsProvider(PackOutput output, CompletableFuture<Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
-        super(output, lookupProvider, References.ID, existingFileHelper);
+        super(output, lookupProvider, NuclearScience.ID, existingFileHelper);
     }
 
     @Override
     protected void addTags(Provider provider) {
-        tag(DamageTypeTags.BYPASSES_ARMOR).add(NuclearScienceDamageTypes.PLASMA, NuclearScienceDamageTypes.RADIATION);
-        tag(DamageTypeTags.BYPASSES_EFFECTS).add(NuclearScienceDamageTypes.PLASMA, NuclearScienceDamageTypes.RADIATION); // bypasses magic
-        tag(DamageTypeTags.NO_KNOCKBACK).add(NuclearScienceDamageTypes.PLASMA, NuclearScienceDamageTypes.RADIATION);
+        tag(DamageTypeTags.BYPASSES_ARMOR).add(NuclearScienceDamageTypes.PLASMA);
+        tag(DamageTypeTags.BYPASSES_EFFECTS).add(NuclearScienceDamageTypes.PLASMA); // bypasses magic
+        tag(DamageTypeTags.NO_KNOCKBACK).add(NuclearScienceDamageTypes.PLASMA);
     }
 
 }

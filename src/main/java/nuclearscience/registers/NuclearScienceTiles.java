@@ -6,7 +6,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import nuclearscience.References;
+import nuclearscience.NuclearScience;
 import nuclearscience.common.block.connect.BlockMoltenSaltPipe;
 import nuclearscience.common.block.connect.BlockReactorLogisticsCable;
 import nuclearscience.common.block.subtype.SubtypeNuclearMachine;
@@ -49,7 +49,7 @@ import nuclearscience.common.tile.reactor.moltensalt.TileMoltenSaltPipe;
 import nuclearscience.common.tile.reactor.moltensalt.TileMoltenSaltSupplier;
 
 public class NuclearScienceTiles {
-    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, References.ID);
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, NuclearScience.ID);
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TileGasCentrifuge>> TILE_GASCENTRIFUGE = BLOCK_ENTITY_TYPES.register(SubtypeNuclearMachine.gascentrifuge.tag(), () -> new BlockEntityType<>(TileGasCentrifuge::new, Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.gascentrifuge)), null));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TileNuclearBoiler>> TILE_CHEMICALBOILER = BLOCK_ENTITY_TYPES.register(SubtypeNuclearMachine.nuclearboiler.tag(), () -> new BlockEntityType<>(TileNuclearBoiler::new, Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.nuclearboiler)), null));

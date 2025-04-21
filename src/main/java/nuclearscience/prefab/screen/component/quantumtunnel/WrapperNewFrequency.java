@@ -3,12 +3,7 @@ package nuclearscience.prefab.screen.component.quantumtunnel;
 import java.util.ArrayList;
 import java.util.List;
 
-import electrodynamics.prefab.screen.component.button.ScreenComponentButton;
-import electrodynamics.prefab.screen.component.editbox.ScreenComponentEditBox;
-import electrodynamics.prefab.screen.component.types.ScreenComponentSimpleLabel;
-import electrodynamics.prefab.screen.component.types.guitab.ScreenComponentGuiTab;
 import electrodynamics.prefab.utilities.ElectroTextUtils;
-import electrodynamics.prefab.utilities.math.Color;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
@@ -19,6 +14,11 @@ import nuclearscience.client.screen.ScreenQuantumTunnel;
 import nuclearscience.common.packet.type.server.PacketCreateNewFreqeuency;
 import nuclearscience.prefab.screen.component.NuclearIconTypes;
 import nuclearscience.prefab.utils.NuclearTextUtils;
+import voltaic.prefab.screen.component.button.ScreenComponentButton;
+import voltaic.prefab.screen.component.editbox.ScreenComponentEditBox;
+import voltaic.prefab.screen.component.types.ScreenComponentSimpleLabel;
+import voltaic.prefab.screen.component.types.guitab.ScreenComponentGuiTab;
+import voltaic.prefab.utilities.math.Color;
 
 public class WrapperNewFrequency {
 

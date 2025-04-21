@@ -1,6 +1,7 @@
 package nuclearscience.common.block.subtype;
 
-import electrodynamics.api.ISubtype;
+
+import voltaic.api.ISubtype;
 
 public enum SubtypeReactorLogisticsCable implements ISubtype {
     base;

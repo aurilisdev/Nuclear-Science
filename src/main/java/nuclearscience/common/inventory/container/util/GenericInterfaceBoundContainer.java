@@ -1,6 +1,5 @@
 package nuclearscience.common.inventory.container.util;
 
-import electrodynamics.prefab.inventory.container.types.GenericContainerBlockEntity;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
@@ -9,6 +8,7 @@ import net.minecraft.world.inventory.MenuType;
 import net.neoforged.neoforge.network.PacketDistributor;
 import nuclearscience.common.packet.type.client.PacketSetClientInterfaces;
 import nuclearscience.common.tile.reactor.logisticsnetwork.util.GenericTileInterfaceBound;
+import voltaic.prefab.inventory.container.types.GenericContainerBlockEntity;
 
 public abstract class GenericInterfaceBoundContainer<T extends GenericTileInterfaceBound> extends GenericContainerBlockEntity<T> {
 

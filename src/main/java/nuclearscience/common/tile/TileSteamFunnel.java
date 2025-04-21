@@ -1,16 +1,5 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.api.gas.Gas;
-import electrodynamics.api.gas.GasAction;
-import electrodynamics.api.gas.GasStack;
-import electrodynamics.common.network.utils.GasUtilities;
-import electrodynamics.common.tags.ElectrodynamicsTags;
-import electrodynamics.prefab.tile.GenericTile;
-import electrodynamics.prefab.tile.components.IComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentGasHandlerSimple;
-import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
-import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import electrodynamics.prefab.utilities.BlockEntityUtils;
 import electrodynamics.registers.ElectrodynamicsGases;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -24,6 +13,17 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import nuclearscience.api.turbine.ISteamReceiver;
 import nuclearscience.registers.NuclearScienceTiles;
+import voltaic.api.gas.Gas;
+import voltaic.api.gas.GasAction;
+import voltaic.api.gas.GasStack;
+import voltaic.common.network.utils.GasUtilities;
+import voltaic.common.tags.VoltaicTags;
+import voltaic.prefab.tile.GenericTile;
+import voltaic.prefab.tile.components.IComponentType;
+import voltaic.prefab.tile.components.type.ComponentGasHandlerSimple;
+import voltaic.prefab.tile.components.type.ComponentPacketHandler;
+import voltaic.prefab.tile.components.type.ComponentTickable;
+import voltaic.prefab.utilities.BlockEntityUtils;
 
 public class TileSteamFunnel extends GenericTile implements ISteamReceiver {
 
@@ -36,7 +36,7 @@ public class TileSteamFunnel extends GenericTile implements ISteamReceiver {
 
         addComponent(new ComponentTickable(this).tickServer(this::tickServer).tickClient(this::tickClient));
         addComponent(new ComponentPacketHandler(this));
-        addComponent(new ComponentGasHandlerSimple(this, "storedsteam", INTERNAL_CAPACITY, MAX_TEMPERATURE, MAX_PRESSURE).setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM).setOutputDirections(BlockEntityUtils.MachineDirection.TOP).setValidFluidTags(ElectrodynamicsTags.Gases.STEAM));
+        addComponent(new ComponentGasHandlerSimple(this, "storedsteam", INTERNAL_CAPACITY, MAX_TEMPERATURE, MAX_PRESSURE).setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM).setOutputDirections(BlockEntityUtils.MachineDirection.TOP).setValidFluidTags(VoltaicTags.Gases.STEAM));
     }
 
     private void tickServer(ComponentTickable tickable) {

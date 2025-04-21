@@ -4,7 +4,6 @@ import java.util.EnumMap;
 
 import org.jetbrains.annotations.Nullable;
 
-import electrodynamics.common.item.gear.armor.ItemElectrodynamicsArmor;
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
@@ -15,9 +14,10 @@ import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import nuclearscience.NuclearScience;
-import nuclearscience.api.radiation.util.IHazmatSuit;
+import voltaic.api.radiation.util.IHazmatSuit;
+import voltaic.common.item.gear.ItemVoltaicArmor;
 
-public class ItemHazmatArmor extends ItemElectrodynamicsArmor implements IHazmatSuit {
+public class ItemHazmatArmor extends ItemVoltaicArmor implements IHazmatSuit {
 
 	public static final EnumMap<Type, Integer> DEFENSE_MAP_BASE = Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
 		map.put(Type.HELMET, 2);

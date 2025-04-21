@@ -1,39 +1,38 @@
 package nuclearscience.compatibility.jei.recipecategories.fluiditem2gas.specificmachines;
 
-import electrodynamics.compatibility.jei.recipecategories.fluiditem2gas.FluidItem2GasRecipeCategory;
-import electrodynamics.compatibility.jei.utils.gui.types.ArrowAnimatedObject;
-import electrodynamics.compatibility.jei.utils.gui.types.BackgroundObject;
-import electrodynamics.compatibility.jei.utils.gui.types.ItemSlotObject;
-import electrodynamics.compatibility.jei.utils.gui.types.fluidgauge.FluidGaugeObject;
-import electrodynamics.compatibility.jei.utils.gui.types.gasgauge.GasGaugeObject;
-import electrodynamics.compatibility.jei.utils.label.types.PowerLabelWrapperElectroRecipe;
-import electrodynamics.compatibility.jei.utils.label.types.TimeLabelWrapperElectroRecipe;
-import electrodynamics.prefab.screen.component.types.ScreenComponentProgress.ProgressBars;
-import electrodynamics.prefab.screen.component.types.ScreenComponentSlot.IconType;
-import electrodynamics.prefab.screen.component.types.ScreenComponentSlot.SlotType;
 import mezz.jei.api.gui.drawable.IDrawableAnimated.StartDirection;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.world.item.ItemStack;
-import nuclearscience.References;
+import nuclearscience.NuclearScience;
 import nuclearscience.common.block.subtype.SubtypeNuclearMachine;
 import nuclearscience.common.recipe.categories.fluiditem2gas.NuclearBoilerRecipe;
 import nuclearscience.prefab.utils.NuclearTextUtils;
 import nuclearscience.registers.NuclearScienceBlocks;
+import voltaic.compatibility.jei.recipecategories.fluiditem2gas.FluidItem2GasRecipeCategory;
+import voltaic.compatibility.jei.utils.gui.types.ArrowAnimatedObject;
+import voltaic.compatibility.jei.utils.gui.types.BackgroundObject;
+import voltaic.compatibility.jei.utils.gui.types.ItemSlotObject;
+import voltaic.compatibility.jei.utils.gui.types.fluidgauge.FluidGaugeObject;
+import voltaic.compatibility.jei.utils.gui.types.gasgauge.GasGaugeObject;
+import voltaic.compatibility.jei.utils.label.types.PowerLabelWrapperElectroRecipe;
+import voltaic.compatibility.jei.utils.label.types.TimeLabelWrapperElectroRecipe;
+import voltaic.prefab.screen.component.types.ScreenComponentProgress;
+import voltaic.prefab.screen.component.types.ScreenComponentSlot;
 
 public class NuclearBoilerRecipeCategory extends FluidItem2GasRecipeCategory<NuclearBoilerRecipe> {
 
 	// JEI Window Parameters
 	public static final BackgroundObject BACK_WRAP = new BackgroundObject(132, 64);
 
-	public static final ItemSlotObject INPUT_SLOT = new ItemSlotObject(SlotType.NORMAL, 57, 16, RecipeIngredientRole.INPUT);
-	public static final ItemSlotObject INPUT_BUCKET_SLOT = new ItemSlotObject(SlotType.NORMAL, IconType.FLUID_DARK, 57, 36, RecipeIngredientRole.INPUT);
-	public static final ItemSlotObject OUTPUT_BUCKET_SLOT = new ItemSlotObject(SlotType.NORMAL, IconType.FLUID_DARK, 88, 36, RecipeIngredientRole.OUTPUT);
+	public static final ItemSlotObject INPUT_SLOT = new ItemSlotObject(ScreenComponentSlot.SlotType.NORMAL, 57, 16, RecipeIngredientRole.INPUT);
+	public static final ItemSlotObject INPUT_BUCKET_SLOT = new ItemSlotObject(ScreenComponentSlot.SlotType.NORMAL, ScreenComponentSlot.IconType.FLUID_DARK, 57, 36, RecipeIngredientRole.INPUT);
+	public static final ItemSlotObject OUTPUT_BUCKET_SLOT = new ItemSlotObject(ScreenComponentSlot.SlotType.NORMAL, ScreenComponentSlot.IconType.FLUID_DARK, 88, 36, RecipeIngredientRole.OUTPUT);
 
-	public static final ArrowAnimatedObject ANIM_RIGHT_ARROW_1 = new ArrowAnimatedObject(ProgressBars.PROGRESS_ARROW_RIGHT, 30, 17, StartDirection.LEFT);
-	public static final ArrowAnimatedObject ANIM_RIGHT_ARROW_2 = new ArrowAnimatedObject(ProgressBars.PROGRESS_ARROW_RIGHT, 80, 17, StartDirection.LEFT);
-	public static final ArrowAnimatedObject ANIM_LEFT_ARROW = new ArrowAnimatedObject(ProgressBars.PROGRESS_ARROW_LEFT, 30, 37, StartDirection.RIGHT);
+	public static final ArrowAnimatedObject ANIM_RIGHT_ARROW_1 = new ArrowAnimatedObject(ScreenComponentProgress.ProgressBars.PROGRESS_ARROW_RIGHT, 30, 17, StartDirection.LEFT);
+	public static final ArrowAnimatedObject ANIM_RIGHT_ARROW_2 = new ArrowAnimatedObject(ScreenComponentProgress.ProgressBars.PROGRESS_ARROW_RIGHT, 80, 17, StartDirection.LEFT);
+	public static final ArrowAnimatedObject ANIM_LEFT_ARROW = new ArrowAnimatedObject(ScreenComponentProgress.ProgressBars.PROGRESS_ARROW_LEFT, 30, 37, StartDirection.RIGHT);
 
 	public static final FluidGaugeObject IN_GAUGE = new FluidGaugeObject(10, 5);
 	public static final GasGaugeObject OUT_GAUGE = new GasGaugeObject(108, 5);
@@ -45,7 +44,7 @@ public class NuclearBoilerRecipeCategory extends FluidItem2GasRecipeCategory<Nuc
 
 	public static ItemStack INPUT_MACHINE = new ItemStack(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.nuclearboiler));
 
-	public static final RecipeType<NuclearBoilerRecipe> RECIPE_TYPE = RecipeType.create(References.ID, NuclearBoilerRecipe.RECIPE_GROUP, NuclearBoilerRecipe.class);
+	public static final RecipeType<NuclearBoilerRecipe> RECIPE_TYPE = RecipeType.create(NuclearScience.ID, NuclearBoilerRecipe.RECIPE_GROUP, NuclearBoilerRecipe.class);
 
 	public NuclearBoilerRecipeCategory(IGuiHelper guiHelper) {
 		super(guiHelper, NuclearTextUtils.jeiTranslated(NuclearBoilerRecipe.RECIPE_GROUP), INPUT_MACHINE, BACK_WRAP, RECIPE_TYPE, ANIM_TIME);

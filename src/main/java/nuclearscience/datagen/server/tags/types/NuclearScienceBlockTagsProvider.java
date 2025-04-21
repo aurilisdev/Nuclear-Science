@@ -2,7 +2,6 @@ package nuclearscience.datagen.server.tags.types;
 
 import java.util.concurrent.CompletableFuture;
 
-import electrodynamics.common.block.BlockMachine;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
@@ -11,16 +10,17 @@ import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import nuclearscience.References;
+import nuclearscience.NuclearScience;
 import nuclearscience.common.block.subtype.SubtypeIrradiatedBlock;
 import nuclearscience.common.block.subtype.SubtypeNuclearMachine;
 import nuclearscience.common.tags.NuclearScienceTags;
 import nuclearscience.registers.NuclearScienceBlocks;
+import voltaic.common.block.BlockMachine;
 
 public class NuclearScienceBlockTagsProvider extends BlockTagsProvider {
 
     public NuclearScienceBlockTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
-        super(output, lookupProvider, References.ID, existingFileHelper);
+        super(output, lookupProvider, NuclearScience.ID, existingFileHelper);
     }
 
     @Override

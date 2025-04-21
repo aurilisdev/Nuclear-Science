@@ -1,9 +1,5 @@
 package nuclearscience.prefab.screen.component.quantumtunnel;
 
-import electrodynamics.prefab.screen.component.button.ScreenComponentButton;
-import electrodynamics.prefab.screen.component.editbox.ScreenComponentEditBox;
-import electrodynamics.prefab.screen.component.types.ScreenComponentSimpleLabel;
-import electrodynamics.prefab.utilities.math.Color;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -12,6 +8,10 @@ import nuclearscience.client.screen.ScreenQuantumTunnel;
 import nuclearscience.common.packet.type.server.PacketEditFrequency;
 import nuclearscience.common.tile.TileQuantumTunnel;
 import nuclearscience.prefab.utils.NuclearTextUtils;
+import voltaic.prefab.screen.component.button.ScreenComponentButton;
+import voltaic.prefab.screen.component.editbox.ScreenComponentEditBox;
+import voltaic.prefab.screen.component.types.ScreenComponentSimpleLabel;
+import voltaic.prefab.utilities.math.Color;
 
 public class WrapperEditFrequency {
 
@@ -55,9 +55,9 @@ public class WrapperEditFrequency {
 
                 currFrequency.setName(name);
 
-                if(tile.frequency.get().equals(currFrequency)) {
-                    tile.frequency.set(currFrequency);
-                    tile.frequency.forceDirty();
+                if(tile.frequency.getValue().equals(currFrequency)) {
+                    tile.frequency.setValue(currFrequency);
+                    tile.frequency.forceDirtyForManager();
                 }
 
 

@@ -1,15 +1,5 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.prefab.properties.Property;
-import electrodynamics.prefab.properties.PropertyTypes;
-import electrodynamics.prefab.tile.GenericTile;
-import electrodynamics.prefab.tile.components.IComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
-import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
-import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
-import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
-import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import electrodynamics.prefab.utilities.BlockEntityUtils;
 import electrodynamics.registers.ElectrodynamicsCapabilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
@@ -17,12 +7,19 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
-import nuclearscience.api.radiation.RadiationSystem;
-import nuclearscience.api.radiation.util.BlockPosVolume;
 import nuclearscience.common.inventory.container.ContainerFalloutScrubber;
-import nuclearscience.common.settings.Constants;
+import nuclearscience.common.settings.NuclearConstants;
 import nuclearscience.common.tags.NuclearScienceTags;
 import nuclearscience.registers.NuclearScienceTiles;
+import voltaic.api.radiation.RadiationSystem;
+import voltaic.api.radiation.util.BlockPosVolume;
+import voltaic.prefab.properties.types.PropertyTypes;
+import voltaic.prefab.properties.variant.SingleProperty;
+import voltaic.prefab.tile.GenericTile;
+import voltaic.prefab.tile.components.IComponentType;
+import voltaic.prefab.tile.components.type.*;
+import voltaic.prefab.utilities.BlockEntityUtils;
+import voltaic.registers.VoltaicCapabilities;
 
 public class TileFalloutScrubber extends GenericTile {
 
@@ -31,8 +28,8 @@ public class TileFalloutScrubber extends GenericTile {
 
     public static final double DISIPATION = 1.0;
 
-    public final Property<Boolean> active = property(new Property<>(PropertyTypes.BOOLEAN, "active", false));
-    private final Property<Boolean> hasRedstoneSignal = property(new Property(PropertyTypes.BOOLEAN, "redstonesignal", false));
+    public final SingleProperty<Boolean> active = property(new SingleProperty<>(PropertyTypes.BOOLEAN, "active", false));
+    private final SingleProperty<Boolean> hasRedstoneSignal = property(new SingleProperty(PropertyTypes.BOOLEAN, "redstonesignal", false));
 
     private final BlockPosVolume area;
 
@@ -44,23 +41,23 @@ public class TileFalloutScrubber extends GenericTile {
 
         addComponent(new ComponentPacketHandler(this));
         addComponent(new ComponentTickable(this).tickServer(this::tickServer));
-        addComponent(new ComponentElectrodynamic(this, false, true).maxJoules(Constants.FALLOUT_SCRUBBER_USAGE_PER_TICK * 20).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE).setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM));
+        addComponent(new ComponentElectrodynamic(this, false, true).maxJoules(NuclearConstants.FALLOUT_SCRUBBER_USAGE_PER_TICK * 20).voltage(VoltaicCapabilities.DEFAULT_VOLTAGE).setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM));
         addComponent(new ComponentFluidHandlerMulti(this).setInputTanks(2, 100, 100).setInputFluidTags(FluidTags.WATER, NuclearScienceTags.Fluids.DECONTAMINATION_FOAM).setInputDirections(BlockEntityUtils.MachineDirection.LEFT, BlockEntityUtils.MachineDirection.RIGHT));
-        addComponent(new ComponentContainerProvider("container.falloutscrubber", this).createMenu((id, player) -> new ContainerFalloutScrubber(id, player, new SimpleContainer(), getCoordsArray())));
+        addComponent(new ComponentContainerProvider("falloutscrubber", this).createMenu((id, player) -> new ContainerFalloutScrubber(id, player, new SimpleContainer(), getCoordsArray())));
     }
 
     private void tickServer(ComponentTickable tickable) {
 
-        if(hasRedstoneSignal.get()) {
-            active.set(false);
+        if(hasRedstoneSignal.getValue()) {
+            active.setValue(false);
             RadiationSystem.removeDisipation(getLevel(), area);
             return;
         }
 
         ComponentElectrodynamic electro = getComponent(IComponentType.Electrodynamic);
 
-        if(electro.getJoulesStored() < Constants.FALLOUT_SCRUBBER_USAGE_PER_TICK) {
-            active.set(false);
+        if(electro.getJoulesStored() < NuclearConstants.FALLOUT_SCRUBBER_USAGE_PER_TICK) {
+            active.setValue(false);
             RadiationSystem.removeDisipation(getLevel(), area);
             return;
         }
@@ -70,15 +67,15 @@ public class TileFalloutScrubber extends GenericTile {
         FluidTank[] tanks = multi.getInputTanks();
 
         if(tanks[0].isEmpty() || tanks[0].getFluidAmount() < FLUID_USAGE_PER_TICK || tanks[1].isEmpty() || tanks[1].getFluidAmount() < FLUID_USAGE_PER_TICK) {
-            active.set(false);
+            active.setValue(false);
             RadiationSystem.removeDisipation(getLevel(), area);
             return;
         }
 
-        active.set(true);
+        active.setValue(true);
         tanks[0].drain(FLUID_USAGE_PER_TICK, IFluidHandler.FluidAction.EXECUTE);
         tanks[1].drain(FLUID_USAGE_PER_TICK, IFluidHandler.FluidAction.EXECUTE);
-        electro.setJoulesStored(electro.getJoulesStored() - Constants.FALLOUT_SCRUBBER_USAGE_PER_TICK);
+        electro.setJoulesStored(electro.getJoulesStored() - NuclearConstants.FALLOUT_SCRUBBER_USAGE_PER_TICK);
 
         RadiationSystem.addDisipation(getLevel(), DISIPATION, area);
 
@@ -87,7 +84,7 @@ public class TileFalloutScrubber extends GenericTile {
     @Override
     public void onNeightborChanged(BlockPos neighbor, boolean blockStateTrigger) {
         if (!level.isClientSide) {
-            hasRedstoneSignal.set(this.level.hasNeighborSignal(this.getBlockPos()));
+            hasRedstoneSignal.setValue(this.level.hasNeighborSignal(this.getBlockPos()));
         }
     }
 }

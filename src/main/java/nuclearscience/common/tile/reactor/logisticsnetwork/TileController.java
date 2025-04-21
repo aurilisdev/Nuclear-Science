@@ -1,15 +1,5 @@
 package nuclearscience.common.tile.reactor.logisticsnetwork;
 
-import electrodynamics.common.block.states.ElectrodynamicsBlockStates;
-import electrodynamics.prefab.properties.Property;
-import electrodynamics.prefab.properties.PropertyTypes;
-import electrodynamics.prefab.sound.SoundBarrierMethods;
-import electrodynamics.prefab.sound.utils.ITickableSound;
-import electrodynamics.prefab.tile.components.IComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
-import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import electrodynamics.prefab.utilities.BlockEntityUtils;
-import electrodynamics.registers.ElectrodynamicsCapabilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -19,12 +9,22 @@ import nuclearscience.common.network.ReactorLogisticsNetwork;
 import nuclearscience.common.tile.reactor.logisticsnetwork.util.GenericTileLogisticsMember;
 import nuclearscience.registers.NuclearScienceSounds;
 import nuclearscience.registers.NuclearScienceTiles;
+import voltaic.common.block.states.VoltaicBlockStates;
+import voltaic.prefab.properties.types.PropertyTypes;
+import voltaic.prefab.properties.variant.SingleProperty;
+import voltaic.prefab.sound.ITickableSound;
+import voltaic.prefab.sound.SoundBarrierMethods;
+import voltaic.prefab.tile.components.IComponentType;
+import voltaic.prefab.tile.components.type.ComponentElectrodynamic;
+import voltaic.prefab.tile.components.type.ComponentTickable;
+import voltaic.prefab.utilities.BlockEntityUtils;
+import voltaic.registers.VoltaicCapabilities;
 
 public class TileController extends GenericTileLogisticsMember implements ITickableSound {
 
     public static final double USAGE = 100;
 
-    public final Property<Boolean> active = property(new Property<>(PropertyTypes.BOOLEAN, "active", false));
+    public final SingleProperty<Boolean> active = property(new SingleProperty<>(PropertyTypes.BOOLEAN, "active", false));
     private Direction relativeBack;
 
     private boolean isSoundPlaying = false;
@@ -32,7 +32,7 @@ public class TileController extends GenericTileLogisticsMember implements ITicka
     public TileController(BlockPos worldPos, BlockState blockState) {
         super(NuclearScienceTiles.TILE_LOGISTICSCONTROLLER.get(), worldPos, blockState);
         addComponent(new ComponentTickable(this).tickServer(this::tickServer).tickClient(this::tickClient));
-        addComponent(new ComponentElectrodynamic(this, false, true).setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE).maxJoules(USAGE * 20));
+        addComponent(new ComponentElectrodynamic(this, false, true).setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM).voltage(VoltaicCapabilities.DEFAULT_VOLTAGE).maxJoules(USAGE * 20));
         relativeBack = BlockEntityUtils.getRelativeSide(getFacing(), BlockEntityUtils.MachineDirection.BACK.mappedDir);
     }
 
@@ -50,7 +50,7 @@ public class TileController extends GenericTileLogisticsMember implements ITicka
 
         if (canRun) {
             electro.setJoulesStored(electro.getJoulesStored() - USAGE);
-            active.set(canRun);
+            active.setValue(canRun);
         }
 
     }
@@ -75,7 +75,7 @@ public class TileController extends GenericTileLogisticsMember implements ITicka
     @Override
     public void onBlockStateUpdate(BlockState oldState, BlockState newState) {
         super.onBlockStateUpdate(oldState, newState);
-        if (!level.isClientSide() && oldState.hasProperty(ElectrodynamicsBlockStates.FACING) && newState.hasProperty(ElectrodynamicsBlockStates.FACING) && oldState.getValue(ElectrodynamicsBlockStates.FACING) != newState.getValue(ElectrodynamicsBlockStates.FACING)) {
+        if (!level.isClientSide() && oldState.hasProperty(VoltaicBlockStates.FACING) && newState.hasProperty(VoltaicBlockStates.FACING) && oldState.getValue(VoltaicBlockStates.FACING) != newState.getValue(VoltaicBlockStates.FACING)) {
             relativeBack = BlockEntityUtils.getRelativeSide(getFacing(), BlockEntityUtils.MachineDirection.BACK.mappedDir);
         }
     }
@@ -93,7 +93,7 @@ public class TileController extends GenericTileLogisticsMember implements ITicka
     }
 
     public boolean isActive() {
-        return active.get();
+        return active.getValue();
     }
 
     @Override
@@ -103,6 +103,6 @@ public class TileController extends GenericTileLogisticsMember implements ITicka
 
     @Override
     public boolean shouldPlaySound() {
-        return active.get();
+        return active.getValue();
     }
 }

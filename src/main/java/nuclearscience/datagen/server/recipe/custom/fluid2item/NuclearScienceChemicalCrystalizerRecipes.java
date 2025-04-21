@@ -3,14 +3,14 @@ package nuclearscience.datagen.server.recipe.custom.fluid2item;
 import electrodynamics.datagen.server.recipe.types.custom.fluid2item.ElectrodynamicsChemicalCrystallizerRecipes;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.world.item.ItemStack;
-import nuclearscience.References;
+import nuclearscience.NuclearScience;
 import nuclearscience.common.tags.NuclearScienceTags;
 import nuclearscience.registers.NuclearScienceItems;
 
 public class NuclearScienceChemicalCrystalizerRecipes extends ElectrodynamicsChemicalCrystallizerRecipes {
 
     public NuclearScienceChemicalCrystalizerRecipes() {
-        super(References.ID);
+        super(NuclearScience.ID);
     }
 
     @Override

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import electrodynamics.common.item.gear.tools.ItemCanister;
-import electrodynamics.prefab.utilities.ItemUtils;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
@@ -12,11 +11,12 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
-import nuclearscience.api.radiation.RadiationSystem;
-import nuclearscience.api.radiation.SimpleRadiationSource;
-import nuclearscience.api.radiation.util.RadioactiveObject;
-import nuclearscience.common.reloadlistener.RadioactiveFluidRegister;
 import nuclearscience.registers.NuclearScienceItems;
+import voltaic.api.radiation.RadiationSystem;
+import voltaic.api.radiation.SimpleRadiationSource;
+import voltaic.api.radiation.util.RadioactiveObject;
+import voltaic.common.reloadlistener.RadioactiveFluidRegister;
+import voltaic.prefab.utilities.ItemUtils;
 
 public class ItemCanisterLead extends ItemCanister {
 

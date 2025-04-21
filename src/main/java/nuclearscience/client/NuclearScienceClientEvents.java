@@ -3,7 +3,6 @@ package nuclearscience.client;
 import java.util.ArrayList;
 import java.util.List;
 
-import electrodynamics.client.render.event.levelstage.AbstractLevelStageHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.api.distmarker.Dist;
@@ -11,11 +10,12 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
-import nuclearscience.References;
+import nuclearscience.NuclearScience;
 import nuclearscience.client.render.event.levelstage.HandlerCloudChamber;
+import voltaic.client.event.AbstractLevelStageHandler;
 
-@EventBusSubscriber(modid = References.ID, bus = EventBusSubscriber.Bus.GAME, value = { Dist.CLIENT })
-public class ClientEvents {
+@EventBusSubscriber(modid = NuclearScience.ID, bus = EventBusSubscriber.Bus.GAME, value = { Dist.CLIENT })
+public class NuclearScienceClientEvents {
 
     private static final List<AbstractLevelStageHandler> LEVEL_STAGE_RENDER_HANDLERS = new ArrayList<>();
 

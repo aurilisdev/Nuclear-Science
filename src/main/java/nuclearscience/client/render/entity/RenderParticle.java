@@ -2,13 +2,13 @@ package nuclearscience.client.render.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import electrodynamics.prefab.utilities.RenderingUtils;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
 import nuclearscience.common.entity.EntityParticle;
+import voltaic.prefab.utilities.RenderingUtils;
 
 public class RenderParticle extends EntityRenderer<EntityParticle> {
 

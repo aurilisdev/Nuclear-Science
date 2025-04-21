@@ -1,10 +1,5 @@
 package nuclearscience.client.screen;
 
-import electrodynamics.api.electricity.formatting.DisplayUnit;
-import electrodynamics.prefab.screen.GenericScreen;
-import electrodynamics.prefab.screen.component.editbox.ScreenComponentEditBox;
-import electrodynamics.prefab.screen.component.types.ScreenComponentSimpleLabel;
-import electrodynamics.prefab.utilities.math.Color;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -12,6 +7,11 @@ import nuclearscience.common.inventory.container.ContainerElectromagneticGateway
 import nuclearscience.common.tile.accelerator.TileElectromagneticGateway;
 import nuclearscience.prefab.utils.NuclearDisplayUnits;
 import nuclearscience.prefab.utils.NuclearTextUtils;
+import voltaic.api.electricity.formatting.DisplayUnits;
+import voltaic.prefab.screen.GenericScreen;
+import voltaic.prefab.screen.component.editbox.ScreenComponentEditBox;
+import voltaic.prefab.screen.component.types.ScreenComponentSimpleLabel;
+import voltaic.prefab.utilities.math.Color;
 
 public class ScreenElectromagneticGateway extends GenericScreen<ContainerElectromagneticGateway> {
 
@@ -45,11 +45,11 @@ public class ScreenElectromagneticGateway extends GenericScreen<ContainerElectro
                 temp = 100.0F;
             }
 
-            tile.targetSpeed.set(temp);
+            tile.targetSpeed.setValue(temp);
 
         }));
 
-        addComponent(new ScreenComponentSimpleLabel(132, 43, 10, Color.TEXT_GRAY, DisplayUnit.PERCENTAGE.getSymbol().copy().append(NuclearDisplayUnits.SPEEDOFLIGHT.getSymbol())));
+        addComponent(new ScreenComponentSimpleLabel(132, 43, 10, Color.TEXT_GRAY, DisplayUnits.PERCENTAGE.getSymbol().copy().append(NuclearDisplayUnits.SPEEDOFLIGHT.getSymbol())));
 
     }
 
@@ -58,7 +58,7 @@ public class ScreenElectromagneticGateway extends GenericScreen<ContainerElectro
         super.render(graphics, mouseX, mouseY, partialTicks);
 
         if(needsUpdate && getMenu().getSafeHost() instanceof TileElectromagneticGateway gateway) {
-            box.setValue(gateway.targetSpeed.get() + "");
+            box.setValue(gateway.targetSpeed.getValue() + "");
             needsUpdate = false;
         }
     }

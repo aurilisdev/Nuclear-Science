@@ -2,19 +2,20 @@ package nuclearscience.client.render.tile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import electrodynamics.client.render.tile.AbstractTileRenderer;
-import electrodynamics.prefab.tile.components.IComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import electrodynamics.prefab.utilities.RenderingUtils;
-import electrodynamics.prefab.utilities.math.Color;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.world.phys.AABB;
-import nuclearscience.client.ClientRegister;
+import nuclearscience.client.NuclearScienceClientRegister;
 import nuclearscience.common.tile.reactor.fusion.TileFusionReactorCore;
 import nuclearscience.common.tile.reactor.logisticsnetwork.interfaces.TileFusionInterface;
+import voltaic.client.VoltaicClientRegister;
+import voltaic.client.render.AbstractTileRenderer;
+import voltaic.prefab.tile.components.IComponentType;
+import voltaic.prefab.tile.components.type.ComponentTickable;
+import voltaic.prefab.utilities.RenderingUtils;
+import voltaic.prefab.utilities.math.Color;
 
 public class RenderFusionInterface extends AbstractTileRenderer<TileFusionInterface> {
 
@@ -40,8 +41,8 @@ public class RenderFusionInterface extends AbstractTileRenderer<TileFusionInterf
 
         Long currTime = tile.<ComponentTickable>getComponent(IComponentType.Tickable).getTicks();
 
-        TextureAtlasSprite fuelCell = ClientRegister.getSprite(ClientRegister.TEXTURE_FUELCELL);
-        TextureAtlasSprite white = electrodynamics.client.ClientRegister.getSprite(electrodynamics.client.ClientRegister.TEXTURE_WHITE);
+        TextureAtlasSprite fuelCell = NuclearScienceClientRegister.getSprite(NuclearScienceClientRegister.TEXTURE_FUELCELL);
+        TextureAtlasSprite white = VoltaicClientRegister.whiteSprite();
 
         if(tile.clientAnimations.isEmpty()) {
             matrix.pushPose();

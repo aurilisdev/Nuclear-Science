@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import electrodynamics.prefab.properties.Property;
-import electrodynamics.prefab.properties.PropertyTypes;
-import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import electrodynamics.prefab.utilities.BlockEntityUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -15,6 +11,10 @@ import nuclearscience.api.network.reactorlogistics.Interface;
 import nuclearscience.common.network.ReactorLogisticsNetwork;
 import nuclearscience.common.tile.reactor.logisticsnetwork.TileReactorLogisticsCable;
 import nuclearscience.common.tile.reactor.logisticsnetwork.interfaces.GenericTileInterface;
+import voltaic.prefab.properties.types.PropertyTypes;
+import voltaic.prefab.properties.variant.SingleProperty;
+import voltaic.prefab.tile.components.type.ComponentTickable;
+import voltaic.prefab.utilities.BlockEntityUtils;
 
 public abstract class GenericTileInterfaceBound extends GenericTileLogisticsMember {
 
@@ -23,20 +23,20 @@ public abstract class GenericTileInterfaceBound extends GenericTileLogisticsMemb
     public static final GenericTileInterface.InterfaceType[] SUPPLIES = {GenericTileInterface.InterfaceType.FISSION, GenericTileInterface.InterfaceType.FUSION};
     public static final GenericTileInterface.InterfaceType[] ALL = {GenericTileInterface.InterfaceType.FISSION, GenericTileInterface.InterfaceType.MS, GenericTileInterface.InterfaceType.FUSION};
 
-    public final Property<Boolean> linked = property(new Property<>(PropertyTypes.BOOLEAN, "islinked", false)).onChange((prop, old) -> {
+    public final SingleProperty<Boolean> linked = property(new SingleProperty<>(PropertyTypes.BOOLEAN, "islinked", false)).onChange((prop, old) -> {
 
         if (level == null || level.isClientSide) {
             return;
         }
 
-        if (BlockEntityUtils.isLit(this) ^ prop.get()) {
-            BlockEntityUtils.updateLit(this, prop.get());
+        if (BlockEntityUtils.isLit(this) ^ prop.getValue()) {
+            BlockEntityUtils.updateLit(this, prop.getValue());
         }
 
 
     });
 
-    public final Property<BlockPos> interfaceLocation = property(new Property<>(PropertyTypes.BLOCK_POS, "interfacelocation", BlockEntityUtils.OUT_OF_REACH)).onChange((prop, old) -> {
+    public final SingleProperty<BlockPos> interfaceLocation = property(new SingleProperty<>(PropertyTypes.BLOCK_POS, "interfacelocation", BlockEntityUtils.OUT_OF_REACH)).onChange((prop, old) -> {
 
         if (level == null || level.isClientSide) {
             return;
@@ -45,7 +45,7 @@ public abstract class GenericTileInterfaceBound extends GenericTileLogisticsMemb
         onInterfacePropChange(prop, old);
 
     });
-    public final Property<Integer> interfaceType = property(new Property<>(PropertyTypes.INTEGER, "interfacetype", GenericTileInterface.InterfaceType.NONE.ordinal()));
+    public final SingleProperty<Integer> interfaceType = property(new SingleProperty<>(PropertyTypes.INTEGER, "interfacetype", GenericTileInterface.InterfaceType.NONE.ordinal()));
 
     public final List<Interface> clientInterfaces = new ArrayList<>();
 
@@ -58,33 +58,33 @@ public abstract class GenericTileInterfaceBound extends GenericTileLogisticsMemb
         super.tickServer(tickable);
 
         if (!networkCable.valid() || !(networkCable.getSafe() instanceof TileReactorLogisticsCable)) {
-            linked.set(false);
+            linked.setValue(false);
             return;
         }
 
         TileReactorLogisticsCable cable = networkCable.getSafe();
 
         if (cable.isRemoved()) {
-            linked.set(false);
+            linked.setValue(false);
             return;
         }
 
         ReactorLogisticsNetwork network = cable.getNetwork();
 
-        GenericTileInterface inter = network.getInterface(interfaceLocation.get());
+        GenericTileInterface inter = network.getInterface(interfaceLocation.getValue());
 
         if (!network.isControllerActive() || inter == null) {
-            linked.set(false);
+            linked.setValue(false);
             return;
         }
 
-        if (inter.getInterfaceType() != GenericTileInterface.InterfaceType.values()[interfaceType.get()] || !checkLinkedPosition(inter)) {
-            interfaceLocation.set(BlockEntityUtils.OUT_OF_REACH);
-            interfaceType.set(GenericTileInterface.InterfaceType.NONE.ordinal());
-            linked.set(false);
+        if (inter.getInterfaceType() != GenericTileInterface.InterfaceType.values()[interfaceType.getValue()] || !checkLinkedPosition(inter)) {
+            interfaceLocation.setValue(BlockEntityUtils.OUT_OF_REACH);
+            interfaceType.setValue(GenericTileInterface.InterfaceType.NONE.ordinal());
+            linked.setValue(false);
         }
 
-        linked.set(true);
+        linked.setValue(true);
 
     }
 
@@ -116,7 +116,7 @@ public abstract class GenericTileInterfaceBound extends GenericTileLogisticsMemb
         return list;
     }
 
-    public void onInterfacePropChange(Property<BlockPos> prop, BlockPos old) {
+    public void onInterfacePropChange(SingleProperty<BlockPos> prop, BlockPos old) {
 
     }
 

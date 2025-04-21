@@ -1,13 +1,5 @@
 package nuclearscience.client.screen;
 
-import electrodynamics.api.electricity.formatting.ChatFormatter;
-import electrodynamics.api.electricity.formatting.DisplayUnit;
-import electrodynamics.prefab.inventory.container.slot.item.SlotGeneric;
-import electrodynamics.prefab.screen.component.button.ScreenComponentButton;
-import electrodynamics.prefab.screen.component.editbox.ScreenComponentEditBox;
-import electrodynamics.prefab.screen.component.types.ScreenComponentCustomRender;
-import electrodynamics.prefab.utilities.BlockEntityUtils;
-import electrodynamics.prefab.utilities.math.Color;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -24,6 +16,14 @@ import nuclearscience.common.tile.reactor.logisticsnetwork.interfaces.TileFissio
 import nuclearscience.common.tile.reactor.logisticsnetwork.interfaces.TileMSInterface;
 import nuclearscience.common.tile.reactor.moltensalt.TileMSReactorCore;
 import nuclearscience.prefab.utils.NuclearTextUtils;
+import voltaic.api.electricity.formatting.ChatFormatter;
+import voltaic.api.electricity.formatting.DisplayUnits;
+import voltaic.prefab.inventory.container.slot.item.SlotGeneric;
+import voltaic.prefab.screen.component.button.ScreenComponentButton;
+import voltaic.prefab.screen.component.editbox.ScreenComponentEditBox;
+import voltaic.prefab.screen.component.types.ScreenComponentCustomRender;
+import voltaic.prefab.utilities.BlockEntityUtils;
+import voltaic.prefab.utilities.math.Color;
 
 public class ScreenThermometerModule extends GenericInterfaceBoundScreen<ContainerThermometerModule> {
 
@@ -58,7 +58,7 @@ public class ScreenThermometerModule extends GenericInterfaceBoundScreen<Contain
                 return;
             }
 
-            GenericTileInterface.InterfaceType type = GenericTileInterface.InterfaceType.values()[tile.interfaceType.get()];
+            GenericTileInterface.InterfaceType type = GenericTileInterface.InterfaceType.values()[tile.interfaceType.getValue()];
 
             Font font = getFontRenderer();
 
@@ -70,7 +70,7 @@ public class ScreenThermometerModule extends GenericInterfaceBoundScreen<Contain
 
 
 
-            if(!tile.linked.get() || type == GenericTileInterface.InterfaceType.NONE || tile.interfaceLocation.get().equals(BlockEntityUtils.OUT_OF_REACH)) {
+            if(!tile.linked.getValue() || type == GenericTileInterface.InterfaceType.NONE || tile.interfaceLocation.getValue().equals(BlockEntityUtils.OUT_OF_REACH)) {
                 graphics.drawString(font, NuclearTextUtils.gui("logisticsnetwork.unlinked"), guiWidth + 20, guiHeight + 20, Color.TEXT_GRAY.color(), false);
                 modeButton.setVisible(false);
                 invertButton.setVisible(false);
@@ -78,7 +78,7 @@ public class ScreenThermometerModule extends GenericInterfaceBoundScreen<Contain
                 return;
             }
 
-            BlockEntity blockEntity = tile.getLevel().getBlockEntity(tile.interfaceLocation.get());
+            BlockEntity blockEntity = tile.getLevel().getBlockEntity(tile.interfaceLocation.getValue());
 
             double currTemp = 0;
 
@@ -105,7 +105,7 @@ public class ScreenThermometerModule extends GenericInterfaceBoundScreen<Contain
 
                     TileFissionReactorCore fissionCore = fissionInterface.reactor.getSafe();
 
-                    currTemp = TileFissionReactorCore.getActualTemp(fissionCore.temperature.get());
+                    currTemp = TileFissionReactorCore.getActualTemp(fissionCore.temperature.getValue());
 
                     break;
 
@@ -131,7 +131,7 @@ public class ScreenThermometerModule extends GenericInterfaceBoundScreen<Contain
 
                     TileMSReactorCore msCore = msInterface.reactor.getSafe();
 
-                    currTemp = msCore.temperature.get();
+                    currTemp = msCore.temperature.getValue();
 
                     break;
 
@@ -149,7 +149,7 @@ public class ScreenThermometerModule extends GenericInterfaceBoundScreen<Contain
 
             graphics.renderItem(GenericTileInterface.getItemFromType(type), guiWidth + 80, guiHeight + 20);
 
-            graphics.drawString(font, NuclearTextUtils.gui("logisticsnetwork.temperature", ChatFormatter.getChatDisplayShort(currTemp, DisplayUnit.TEMPERATURE_CELCIUS).withStyle(ChatFormatting.GOLD)), guiWidth + 20, guiHeight + 45, Color.TEXT_GRAY.color(), false);
+            graphics.drawString(font, NuclearTextUtils.gui("logisticsnetwork.temperature", ChatFormatter.getChatDisplayShort(currTemp, DisplayUnits.TEMPERATURE_CELCIUS).withStyle(ChatFormatting.GOLD)), guiWidth + 20, guiHeight + 45, Color.TEXT_GRAY.color(), false);
 
             Component text = NuclearTextUtils.gui("logisticsnetwork.outputmode");
 
@@ -170,9 +170,9 @@ public class ScreenThermometerModule extends GenericInterfaceBoundScreen<Contain
 
             graphics.drawString(font, NuclearTextUtils.gui("logisticsnetwork.targettemp"), guiWidth + 20, guiHeight + 100, Color.TEXT_GRAY.color(), false);
 
-            graphics.drawString(font, DisplayUnit.TEMPERATURE_CELCIUS.getSymbol().copy().withStyle(ChatFormatting.WHITE), guiWidth + 20 + 120 + 2, guiHeight + 113, Color.TEXT_GRAY.color(), false);
+            graphics.drawString(font, DisplayUnits.TEMPERATURE_CELCIUS.getSymbol().copy().withStyle(ChatFormatting.WHITE), guiWidth + 20 + 120 + 2, guiHeight + 113, Color.TEXT_GRAY.color(), false);
 
-            graphics.drawString(font, NuclearTextUtils.gui("logisticsnetwork.signalstrength", Component.literal("" + tile.redstoneSignal.get()).withStyle(ChatFormatting.WHITE)), guiWidth + 20, guiHeight + 135, Color.TEXT_GRAY.color(), false);
+            graphics.drawString(font, NuclearTextUtils.gui("logisticsnetwork.signalstrength", Component.literal("" + tile.redstoneSignal.getValue()).withStyle(ChatFormatting.WHITE)), guiWidth + 20, guiHeight + 135, Color.TEXT_GRAY.color(), false);
 
 
 
@@ -185,7 +185,7 @@ public class ScreenThermometerModule extends GenericInterfaceBoundScreen<Contain
                 return Component.empty();
             }
 
-            return switch(TileThermometerModule.Mode.values()[tile.mode.get()]) {
+            return switch(TileThermometerModule.Mode.values()[tile.mode.getValue()]) {
                 case BUILD_UP -> NuclearTextUtils.gui("logisticsnetwork.modebuildup");
                 case CONSTANT -> NuclearTextUtils.gui("logisticsnetwork.modeconstant");
                 default -> Component.empty();
@@ -198,7 +198,7 @@ public class ScreenThermometerModule extends GenericInterfaceBoundScreen<Contain
                 return;
             }
 
-            int currMode = tile.mode.get();
+            int currMode = tile.mode.getValue();
 
             if(currMode >= SimpleBufferBuilder.Mode.values().length - 1) {
                 currMode = 0;
@@ -206,7 +206,7 @@ public class ScreenThermometerModule extends GenericInterfaceBoundScreen<Contain
                 currMode++;
             }
 
-            tile.mode.set(currMode);
+            tile.mode.setValue(currMode);
 
         }));
 
@@ -217,7 +217,7 @@ public class ScreenThermometerModule extends GenericInterfaceBoundScreen<Contain
                 return Component.empty();
             }
 
-            return tile.inverted.get() ? NuclearTextUtils.gui("logisticsnetwork.signalinverted") : NuclearTextUtils.gui("logisticsnetwork.signalnormal");
+            return tile.inverted.getValue() ? NuclearTextUtils.gui("logisticsnetwork.signalinverted") : NuclearTextUtils.gui("logisticsnetwork.signalnormal");
         }).setOnPress(button -> {
 
             TileThermometerModule tile = menu.getSafeHost();
@@ -226,7 +226,7 @@ public class ScreenThermometerModule extends GenericInterfaceBoundScreen<Contain
                 return;
             }
 
-            tile.inverted.set(!tile.inverted.get());
+            tile.inverted.setValue(!tile.inverted.getValue());
 
         }));
 
@@ -250,7 +250,7 @@ public class ScreenThermometerModule extends GenericInterfaceBoundScreen<Contain
                 temp = 0;
             }
 
-            tile.targetTemperature.set(temp);
+            tile.targetTemperature.setValue(temp);
 
 
 
@@ -272,7 +272,7 @@ public class ScreenThermometerModule extends GenericInterfaceBoundScreen<Contain
         super.render(graphics, mouseX, mouseY, partialTicks);
 
         if(needsUpdate && getMenu().getSafeHost() instanceof TileThermometerModule module) {
-            targetTempBox.setValue(module.targetTemperature.get() + "");
+            targetTempBox.setValue(module.targetTemperature.getValue() + "");
             needsUpdate = false;
         }
     }

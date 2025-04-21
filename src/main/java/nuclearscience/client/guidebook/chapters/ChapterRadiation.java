@@ -1,11 +1,5 @@
 package nuclearscience.client.guidebook.chapters;
 
-import electrodynamics.api.electricity.formatting.ChatFormatter;
-import electrodynamics.api.electricity.formatting.DisplayUnit;
-import electrodynamics.client.guidebook.utils.components.Chapter;
-import electrodynamics.client.guidebook.utils.components.Module;
-import electrodynamics.client.guidebook.utils.pagedata.graphics.ImageWrapperObject;
-import electrodynamics.client.guidebook.utils.pagedata.text.TextWrapperObject;
 import electrodynamics.common.item.subtype.SubtypePlate;
 import electrodynamics.registers.ElectrodynamicsItems;
 import net.minecraft.ChatFormatting;
@@ -14,12 +8,18 @@ import net.minecraft.network.chat.MutableComponent;
 import nuclearscience.NuclearScience;
 import nuclearscience.common.block.subtype.SubtypeNuclearMachine;
 import nuclearscience.common.item.ItemGeigerCounter;
-import nuclearscience.common.item.ItemIodineTablet;
-import nuclearscience.common.settings.Constants;
 import nuclearscience.common.tile.TileCloudChamber;
 import nuclearscience.common.tile.TileFalloutScrubber;
 import nuclearscience.prefab.utils.NuclearTextUtils;
 import nuclearscience.registers.NuclearScienceItems;
+import voltaic.api.electricity.formatting.ChatFormatter;
+import voltaic.api.electricity.formatting.DisplayUnits;
+import voltaic.client.guidebook.utils.components.Chapter;
+import voltaic.client.guidebook.utils.components.Module;
+import voltaic.client.guidebook.utils.pagedata.graphics.ImageWrapperObject;
+import voltaic.client.guidebook.utils.pagedata.text.TextWrapperObject;
+import voltaic.common.item.ItemIodineTablet;
+import voltaic.common.settings.VoltaicConstants;
 
 public class ChapterRadiation extends Chapter {
 
@@ -55,11 +55,11 @@ public class ChapterRadiation extends Chapter {
 				//
 				NuclearScienceItems.ITEM_IODINETABLET.get().getDescription().copy().withStyle(ChatFormatting.BOLD),
 				//
-				Component.literal("" + Constants.IODINE_RESISTANCE_THRESHHOLD).withStyle(ChatFormatting.BOLD),
+				Component.literal("" + VoltaicConstants.IODINE_RESISTANCE_THRESHHOLD).withStyle(ChatFormatting.BOLD),
 				//
 				Component.literal("" + ItemIodineTablet.TIME_MINUTES).withStyle(ChatFormatting.BOLD),
 				//
-				ChatFormatter.getChatDisplayShort((1.0 - Constants.IODINE_RAD_REDUCTION) * 100, DisplayUnit.PERCENTAGE).withStyle(ChatFormatting.BOLD))).setIndentions(1).setSeparateStart());
+				ChatFormatter.getChatDisplayShort((1.0 - VoltaicConstants.IODINE_RAD_REDUCTION) * 100, DisplayUnits.PERCENTAGE).withStyle(ChatFormatting.BOLD))).setIndentions(1).setSeparateStart());
 		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.radiation.l5",
 				//
 				NuclearTextUtils.guidebook("chapter.radiation.hazmatsuit").withStyle(ChatFormatting.BOLD),
@@ -74,7 +74,7 @@ public class ChapterRadiation extends Chapter {
 		blankLine();
 		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.radiation.l7", NuclearScienceItems.ITEM_ANTIDOTE.get().getDescription().copy().withStyle(ChatFormatting.BOLD))));
 		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.radiation.l8", NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.cloudchamber).getDescription().copy().withStyle(ChatFormatting.BOLD), TileCloudChamber.HORR_RADIUS)).setSeparateStart().setIndentions(1));
-		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.radiation.l9", NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.falloutscrubber).getDescription().copy().withStyle(ChatFormatting.BOLD), Constants.BACKROUND_RADIATION_DISSIPATION, TileFalloutScrubber.RANGE, TileFalloutScrubber.DISIPATION)).setSeparateStart().setIndentions(1));
+		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.radiation.l9", NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.falloutscrubber).getDescription().copy().withStyle(ChatFormatting.BOLD), VoltaicConstants.BACKROUND_RADIATION_DISSIPATION, TileFalloutScrubber.RANGE, TileFalloutScrubber.DISIPATION)).setSeparateStart().setIndentions(1));
 
 	}
 

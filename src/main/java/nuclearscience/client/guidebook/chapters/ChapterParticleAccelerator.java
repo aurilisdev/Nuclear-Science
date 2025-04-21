@@ -1,22 +1,22 @@
 package nuclearscience.client.guidebook.chapters;
 
-import electrodynamics.api.electricity.formatting.ChatFormatter;
-import electrodynamics.api.electricity.formatting.DisplayUnit;
-import electrodynamics.client.guidebook.utils.components.Chapter;
-import electrodynamics.client.guidebook.utils.components.Module;
-import electrodynamics.client.guidebook.utils.pagedata.graphics.ImageWrapperObject;
-import electrodynamics.client.guidebook.utils.pagedata.graphics.ItemWrapperObject;
-import electrodynamics.client.guidebook.utils.pagedata.text.TextWrapperObject;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import nuclearscience.NuclearScience;
 import nuclearscience.common.block.subtype.SubtypeNuclearMachine;
 import nuclearscience.common.entity.EntityParticle;
-import nuclearscience.common.settings.Constants;
+import nuclearscience.common.settings.NuclearConstants;
 import nuclearscience.common.tile.accelerator.TileElectromagneticGateway;
 import nuclearscience.prefab.utils.NuclearTextUtils;
 import nuclearscience.registers.NuclearScienceItems;
+import voltaic.api.electricity.formatting.ChatFormatter;
+import voltaic.api.electricity.formatting.DisplayUnits;
+import voltaic.client.guidebook.utils.components.Chapter;
+import voltaic.client.guidebook.utils.components.Module;
+import voltaic.client.guidebook.utils.pagedata.graphics.ImageWrapperObject;
+import voltaic.client.guidebook.utils.pagedata.graphics.ItemWrapperObject;
+import voltaic.client.guidebook.utils.pagedata.text.TextWrapperObject;
 
 public class ChapterParticleAccelerator extends Chapter {
 
@@ -47,9 +47,9 @@ public class ChapterParticleAccelerator extends Chapter {
                 //
                 NuclearScienceItems.ITEM_CELLELECTROMAGNETIC.get().getDescription().copy().withStyle(ChatFormatting.BOLD),
                 //
-                ChatFormatter.getChatDisplayShort(Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE, DisplayUnit.JOULES).withStyle(ChatFormatting.BOLD),
+                ChatFormatter.getChatDisplayShort(NuclearConstants.PARTICLEINJECTOR_USAGE_PER_PARTICLE, DisplayUnits.JOULES).withStyle(ChatFormatting.BOLD),
                 //
-                ChatFormatter.getChatDisplayShort(Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE * 2.0, DisplayUnit.JOULES).withStyle(ChatFormatting.BOLD)
+                ChatFormatter.getChatDisplayShort(NuclearConstants.PARTICLEINJECTOR_USAGE_PER_PARTICLE * 2.0, DisplayUnits.JOULES).withStyle(ChatFormatting.BOLD)
                 //
         )).setIndentions(1).setSeparateStart());
         pageData.add(new ImageWrapperObject(0, 0, 0, 0, 150, 75, 150, 75, NuclearScience.rl("textures/screen/guidebook/particleaccelerator1.png")));
@@ -58,14 +58,14 @@ public class ChapterParticleAccelerator extends Chapter {
                 //
                 NuclearScienceItems.ITEM_ELECTROMAGNETICBOOSTER.get().getDescription().copy().withStyle(ChatFormatting.BOLD),
                 //
-                ChatFormatter.getChatDisplayShort(TileElectromagneticGateway.getLightSpeedPerc(EntityParticle.STRAIGHT_SPEED_INCREMENT), DisplayUnit.PERCENTAGE).withStyle(ChatFormatting.BOLD),
+                ChatFormatter.getChatDisplayShort(TileElectromagneticGateway.getLightSpeedPerc(EntityParticle.STRAIGHT_SPEED_INCREMENT), DisplayUnits.PERCENTAGE).withStyle(ChatFormatting.BOLD),
                 //
-                ChatFormatter.getChatDisplayShort(TileElectromagneticGateway.getLightSpeedPerc((1.0F - EntityParticle.TURN_SPEED_PENALTY)), DisplayUnit.PERCENTAGE).withStyle(ChatFormatting.BOLD)
+                ChatFormatter.getChatDisplayShort(TileElectromagneticGateway.getLightSpeedPerc((1.0F - EntityParticle.TURN_SPEED_PENALTY)), DisplayUnits.PERCENTAGE).withStyle(ChatFormatting.BOLD)
                 //
         )).setIndentions(1).setSeparateStart());
         pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.particleaccelerator.l5",
                 //
-                Component.literal(Constants.PARTICLE_SURVIVAL_TICKS + "").withStyle(ChatFormatting.BOLD)
+                Component.literal(NuclearConstants.PARTICLE_SURVIVAL_TICKS + "").withStyle(ChatFormatting.BOLD)
                 //
         )).setIndentions(1).setSeparateStart());
         pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.particleaccelerator.l6")).setIndentions(1).setSeparateStart());

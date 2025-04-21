@@ -2,21 +2,22 @@ package nuclearscience.client.render.tile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import electrodynamics.client.render.tile.AbstractTileRenderer;
-import electrodynamics.prefab.tile.components.IComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentInventory;
-import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import electrodynamics.prefab.utilities.RenderingUtils;
-import electrodynamics.prefab.utilities.math.Color;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.world.phys.AABB;
-import nuclearscience.client.ClientRegister;
+import nuclearscience.client.NuclearScienceClientRegister;
 import nuclearscience.common.tile.reactor.TileControlRod;
 import nuclearscience.common.tile.reactor.fission.TileFissionReactorCore;
 import nuclearscience.common.tile.reactor.logisticsnetwork.interfaces.TileFissionInterface;
+import voltaic.client.VoltaicClientRegister;
+import voltaic.client.render.AbstractTileRenderer;
+import voltaic.prefab.tile.components.IComponentType;
+import voltaic.prefab.tile.components.type.ComponentInventory;
+import voltaic.prefab.tile.components.type.ComponentTickable;
+import voltaic.prefab.utilities.RenderingUtils;
+import voltaic.prefab.utilities.math.Color;
 
 public class RenderFissionInterface extends AbstractTileRenderer<TileFissionInterface> {
 
@@ -49,11 +50,11 @@ public class RenderFissionInterface extends AbstractTileRenderer<TileFissionInte
 
         matrix.translate(0.5, 0.5, 0.5);
 
-        double insertion = tile.insertion.get() / (double) TileControlRod.MAX_EXTENSION;
+        double insertion = tile.insertion.getValue() / (double) TileControlRod.MAX_EXTENSION;
 
         matrix.translate(0, START_Y + MAX_Y * insertion, 0);
 
-        RenderingUtils.renderModel(getModel(ClientRegister.MODEL_FISSIONINTERFACE_ROD), tile, RenderType.solid(), matrix, bufferIn, combinedLightIn, combinedOverlayIn);
+        RenderingUtils.renderModel(getModel(NuclearScienceClientRegister.MODEL_FISSIONINTERFACE_ROD), tile, RenderType.solid(), matrix, bufferIn, combinedLightIn, combinedOverlayIn);
 
         matrix.popPose();
 
@@ -63,7 +64,7 @@ public class RenderFissionInterface extends AbstractTileRenderer<TileFissionInte
 
                 matrix.pushPose();
 
-                TextureAtlasSprite white = electrodynamics.client.ClientRegister.getSprite(electrodynamics.client.ClientRegister.TEXTURE_WHITE);
+                TextureAtlasSprite white = VoltaicClientRegister.whiteSprite();
                 renderBox(matrix, FUEL_ROD_PISTON_1, PISTON_HEAD_GRAY, white, bufferIn, combinedLightIn, RenderingUtils.ALL_FACES);
                 renderBox(matrix, FUEL_ROD_PISTON_2, PISTON_HEAD_GRAY, white, bufferIn, combinedLightIn, RenderingUtils.ALL_FACES);
                 renderBox(matrix, FUEL_ROD_PISTON_3, PISTON_HEAD_GRAY, white, bufferIn, combinedLightIn, RenderingUtils.ALL_FACES);
@@ -83,8 +84,8 @@ public class RenderFissionInterface extends AbstractTileRenderer<TileFissionInte
 
         Long currTime = tile.<ComponentTickable>getComponent(IComponentType.Tickable).getTicks();
 
-        TextureAtlasSprite fuelCell = ClientRegister.getSprite(ClientRegister.TEXTURE_FUELCELL);
-        TextureAtlasSprite white = electrodynamics.client.ClientRegister.getSprite(electrodynamics.client.ClientRegister.TEXTURE_WHITE);
+        TextureAtlasSprite fuelCell = NuclearScienceClientRegister.getSprite(NuclearScienceClientRegister.TEXTURE_FUELCELL);
+        TextureAtlasSprite white = VoltaicClientRegister.whiteSprite();
 
         matrix.pushPose();
 

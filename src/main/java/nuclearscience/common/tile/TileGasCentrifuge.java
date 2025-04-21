@@ -1,35 +1,28 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.api.gas.GasAction;
-import electrodynamics.api.gas.GasTank;
-import electrodynamics.prefab.properties.Property;
-import electrodynamics.prefab.properties.PropertyTypes;
-import electrodynamics.prefab.sound.SoundBarrierMethods;
-import electrodynamics.prefab.sound.utils.ITickableSound;
-import electrodynamics.prefab.tile.GenericTile;
-import electrodynamics.prefab.tile.components.IComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
-import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
-import electrodynamics.prefab.tile.components.type.ComponentGasHandlerMulti;
-import electrodynamics.prefab.tile.components.type.ComponentInventory;
-import electrodynamics.prefab.tile.components.type.ComponentInventory.InventoryBuilder;
-import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
-import electrodynamics.prefab.tile.components.type.ComponentProcessor;
-import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import electrodynamics.prefab.utilities.BlockEntityUtils;
-import electrodynamics.registers.ElectrodynamicsCapabilities;
-import electrodynamics.registers.ElectrodynamicsGases;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.common.inventory.container.ContainerGasCentrifuge;
-import nuclearscience.common.settings.Constants;
+import nuclearscience.common.settings.NuclearConstants;
 import nuclearscience.common.tags.NuclearScienceTags;
-import nuclearscience.prefab.utils.RadiationUtils;
 import nuclearscience.registers.NuclearScienceItems;
 import nuclearscience.registers.NuclearScienceSounds;
 import nuclearscience.registers.NuclearScienceTiles;
+import voltaic.api.gas.GasAction;
+import voltaic.api.gas.GasTank;
+import voltaic.prefab.properties.types.PropertyTypes;
+import voltaic.prefab.properties.variant.SingleProperty;
+import voltaic.prefab.sound.ITickableSound;
+import voltaic.prefab.sound.SoundBarrierMethods;
+import voltaic.prefab.tile.GenericTile;
+import voltaic.prefab.tile.components.IComponentType;
+import voltaic.prefab.tile.components.type.*;
+import voltaic.prefab.utilities.BlockEntityUtils;
+import voltaic.prefab.utilities.RadiationUtils;
+import voltaic.registers.VoltaicCapabilities;
+import voltaic.registers.VoltaicGases;
 
 public class TileGasCentrifuge extends GenericTile implements ITickableSound {
 
@@ -37,11 +30,11 @@ public class TileGasCentrifuge extends GenericTile implements ITickableSound {
 	public static final double REQUIRED = 2500;
 	public static final double PERCENT_U235 = 0.172;
 	public static final double WASTE_MULTIPLIER = 0.1;
-	public Property<Integer> spinSpeed = property(new Property<>(PropertyTypes.INTEGER, "spinSpeed", 0));
-	public Property<Double> stored235 = property(new Property<>(PropertyTypes.DOUBLE, "stored235", 0.0));
-	public Property<Double> stored238 = property(new Property<>(PropertyTypes.DOUBLE, "stored238", 0.0));
-	public Property<Double> storedWaste = property(new Property<>(PropertyTypes.DOUBLE, "storedWaste", 0.0));
-	public Property<Boolean> isRunning = property(new Property<>(PropertyTypes.BOOLEAN, "isRunning", false));
+	public SingleProperty<Integer> spinSpeed = property(new SingleProperty<>(PropertyTypes.INTEGER, "spinSpeed", 0));
+	public SingleProperty<Double> stored235 = property(new SingleProperty<>(PropertyTypes.DOUBLE, "stored235", 0.0));
+	public SingleProperty<Double> stored238 = property(new SingleProperty<>(PropertyTypes.DOUBLE, "stored238", 0.0));
+	public SingleProperty<Double> storedWaste = property(new SingleProperty<>(PropertyTypes.DOUBLE, "storedWaste", 0.0));
+	public SingleProperty<Boolean> isRunning = property(new SingleProperty<>(PropertyTypes.BOOLEAN, "isRunning", false));
 
 	private boolean isSoundPlaying = false;
 
@@ -51,73 +44,73 @@ public class TileGasCentrifuge extends GenericTile implements ITickableSound {
 
 		addComponent(new ComponentPacketHandler(this));
 		addComponent(new ComponentGasHandlerMulti(this).setInputTanks(1, arr(TANKCAPACITY), arr(294), arr(1)).setInputGasTags(NuclearScienceTags.Gases.URANIUM_HEXAFLUORIDE).setInputDirections(BlockEntityUtils.MachineDirection.BACK));
-		addComponent(new ComponentElectrodynamic(this, false, true).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 2).setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM).maxJoules(Constants.GASCENTRIFUGE_USAGE_PER_TICK * 10));
-		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().outputs(3).upgrades(3)).setSlotsByDirection(BlockEntityUtils.MachineDirection.TOP, 0, 1, 2).setSlotsByDirection(BlockEntityUtils.MachineDirection.RIGHT, 0, 1, 2).setSlotsByDirection(BlockEntityUtils.MachineDirection.LEFT, 0, 1, 2)
+		addComponent(new ComponentElectrodynamic(this, false, true).voltage(VoltaicCapabilities.DEFAULT_VOLTAGE * 2).setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM).maxJoules(NuclearConstants.GASCENTRIFUGE_USAGE_PER_TICK * 10));
+		addComponent(new ComponentInventory(this, ComponentInventory.InventoryBuilder.newInv().outputs(3).upgrades(3)).setSlotsByDirection(BlockEntityUtils.MachineDirection.TOP, 0, 1, 2).setSlotsByDirection(BlockEntityUtils.MachineDirection.RIGHT, 0, 1, 2).setSlotsByDirection(BlockEntityUtils.MachineDirection.LEFT, 0, 1, 2)
 				//
 				.setSlotsByDirection(BlockEntityUtils.MachineDirection.BACK, 0, 1, 2).validUpgrades(ContainerGasCentrifuge.VALID_UPGRADES).valid(machineValidator()));
-		addComponent(new ComponentProcessor(this).usage(Constants.GASCENTRIFUGE_USAGE_PER_TICK).requiredTicks(Constants.GASCENTRIFUGE_REQUIRED_TICKS_PER_PROCESSING).canProcess(this::canProcess).process(this::process));
-		addComponent(new ComponentContainerProvider("container.gascentrifuge", this).createMenu((id, player) -> new ContainerGasCentrifuge(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
+		addComponent(new ComponentProcessor(this).usage(NuclearConstants.GASCENTRIFUGE_USAGE_PER_TICK, 0).requiredTicks(NuclearConstants.GASCENTRIFUGE_REQUIRED_TICKS_PER_PROCESSING, 0).canProcess(this::canProcess).process(this::process));
+		addComponent(new ComponentContainerProvider("gascentrifuge", this).createMenu((id, player) -> new ContainerGasCentrifuge(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
 	}
 
-	public boolean canProcess(ComponentProcessor processor) {
+	public boolean canProcess(ComponentProcessor processor, int procNumber) {
 		ComponentElectrodynamic electro = getComponent(IComponentType.Electrodynamic);
 		ComponentInventory inv = getComponent(IComponentType.Inventory);
 		ComponentGasHandlerMulti gasHandler = getComponent(IComponentType.GasHandler);
 
-		RadiationUtils.handleRadioactiveGases(this, gasHandler, Constants.GAS_CENTRIFUGE_RADIATION_RADIUS, true, 0, false);
-		RadiationUtils.handleRadioactiveItems(this, inv, Constants.GAS_CENTRIFUGE_RADIATION_RADIUS, true, 0, false);
+		RadiationUtils.handleRadioactiveGases(this, gasHandler, NuclearConstants.GAS_CENTRIFUGE_RADIATION_RADIUS, true, 0, false);
+		RadiationUtils.handleRadioactiveItems(this, inv, NuclearConstants.GAS_CENTRIFUGE_RADIATION_RADIUS, true, 0, false);
 
 		boolean hasGas = gasHandler.getInputTanks()[0].getGasAmount() >= REQUIRED / 60.0;
-		boolean val = electro.getJoulesStored() >= processor.getUsage() && hasGas && inv.getItem(0).getCount() < inv.getItem(0).getMaxStackSize() && inv.getItem(1).getCount() < inv.getItem(1).getMaxStackSize() && inv.getItem(2).getCount() < inv.getItem(2).getMaxStackSize();
-		if (!val && spinSpeed.get() > 0) {
-			spinSpeed.set(0);
+		boolean val = electro.getJoulesStored() >= processor.getUsage(0) && hasGas && inv.getItem(0).getCount() < inv.getItem(0).getMaxStackSize() && inv.getItem(1).getCount() < inv.getItem(1).getMaxStackSize() && inv.getItem(2).getCount() < inv.getItem(2).getMaxStackSize();
+		if (!val && spinSpeed.getValue() > 0) {
+			spinSpeed.setValue(0);
 		}
 
-		isRunning.set(val);
+		isRunning.setValue(val);
 
 		return val;
 	}
 
-	public void process(ComponentProcessor processor) {
+	public void process(ComponentProcessor processor, int procNumber) {
 		ComponentInventory inv = getComponent(IComponentType.Inventory);
 		ComponentGasHandlerMulti multi = getComponent(IComponentType.GasHandler);
-		spinSpeed.set(processor.operatingSpeed.get().intValue());
+		spinSpeed.setValue(processor.operatingSpeed.getValue().intValue());
 		int processed = (int) (REQUIRED / 60.0);
 		GasTank tank = multi.getInputTanks()[0];
 
-		if (ElectrodynamicsGases.GAS_REGISTRY.getTag(NuclearScienceTags.Gases.URANIUM_HEXAFLUORIDE).get().contains(new Holder.Direct<>(tank.getGas().getGas())) && tank.getGasAmount() >= processed) {
+		if (VoltaicGases.GAS_REGISTRY.getTag(NuclearScienceTags.Gases.URANIUM_HEXAFLUORIDE).get().contains(new Holder.Direct<>(tank.getGas().getGas())) && tank.getGasAmount() >= processed) {
 			tank.drain(processed, GasAction.EXECUTE);
 		}
 
-		stored235.set(stored235.get() + processed * PERCENT_U235);
-		stored238.set(stored238.get() + processed * (1 - PERCENT_U235 - WASTE_MULTIPLIER));
-		storedWaste.set(stored235.get() + processed * WASTE_MULTIPLIER);
-		if (stored235.get() > REQUIRED) {
+		stored235.setValue(stored235.getValue() + processed * PERCENT_U235);
+		stored238.setValue(stored238.getValue() + processed * (1 - PERCENT_U235 - WASTE_MULTIPLIER));
+		storedWaste.setValue(stored235.getValue() + processed * WASTE_MULTIPLIER);
+		if (stored235.getValue() > REQUIRED) {
 			ItemStack stack = inv.getItem(0);
 			if (!stack.isEmpty()) {
 				stack.setCount(stack.getCount() + 1);
 			} else {
 				inv.setItem(0, new ItemStack(NuclearScienceItems.ITEM_URANIUM235.get()));
 			}
-			stored235.set(stored235.get() - REQUIRED);
+			stored235.setValue(stored235.getValue() - REQUIRED);
 		}
-		if (stored238.get() > REQUIRED) {
+		if (stored238.getValue() > REQUIRED) {
 			ItemStack stack = inv.getItem(1);
 			if (!stack.isEmpty()) {
 				stack.setCount(stack.getCount() + 1);
 			} else {
 				inv.setItem(1, new ItemStack(NuclearScienceItems.ITEM_URANIUM238.get()));
 			}
-			stored238.set(stored238.get() - REQUIRED);
+			stored238.setValue(stored238.getValue() - REQUIRED);
 		}
-		if (storedWaste.get() > REQUIRED) {
+		if (storedWaste.getValue() > REQUIRED) {
 			ItemStack stack = inv.getItem(2);
 			if (!stack.isEmpty()) {
 				stack.grow(1);
 			} else {
 				inv.setItem(2, new ItemStack(NuclearScienceItems.ITEM_FISSILEDUST.get(), 1));
 			}
-			storedWaste.set(storedWaste.get() - REQUIRED);
+			storedWaste.setValue(storedWaste.getValue() - REQUIRED);
 		}
 	}
 
@@ -135,11 +128,11 @@ public class TileGasCentrifuge extends GenericTile implements ITickableSound {
 
 	@Override
 	public boolean shouldPlaySound() {
-		return spinSpeed.get() > 0;
+		return spinSpeed.getValue() > 0;
 	}
 
 	@Override
 	public int getComparatorSignal() {
-		return isRunning.get() ? 15 : 0;
+		return isRunning.getValue() ? 15 : 0;
 	}
 }

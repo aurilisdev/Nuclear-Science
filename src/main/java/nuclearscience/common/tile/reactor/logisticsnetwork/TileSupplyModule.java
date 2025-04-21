@@ -1,13 +1,5 @@
 package nuclearscience.common.tile.reactor.logisticsnetwork;
 
-import electrodynamics.common.block.states.ElectrodynamicsBlockStates;
-import electrodynamics.prefab.properties.Property;
-import electrodynamics.prefab.tile.components.IComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
-import electrodynamics.prefab.tile.components.type.ComponentInventory;
-import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
-import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import electrodynamics.prefab.utilities.BlockEntityUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -15,11 +7,19 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.common.inventory.container.ContainerSupplyModule;
 import nuclearscience.common.network.ReactorLogisticsNetwork;
-import nuclearscience.common.settings.Constants;
+import nuclearscience.common.settings.NuclearConstants;
 import nuclearscience.common.tile.reactor.logisticsnetwork.interfaces.GenericTileInterface;
 import nuclearscience.common.tile.reactor.logisticsnetwork.util.GenericTileInterfaceBound;
-import nuclearscience.prefab.utils.RadiationUtils;
 import nuclearscience.registers.NuclearScienceTiles;
+import voltaic.common.block.states.VoltaicBlockStates;
+import voltaic.prefab.properties.variant.SingleProperty;
+import voltaic.prefab.tile.components.IComponentType;
+import voltaic.prefab.tile.components.type.ComponentContainerProvider;
+import voltaic.prefab.tile.components.type.ComponentInventory;
+import voltaic.prefab.tile.components.type.ComponentPacketHandler;
+import voltaic.prefab.tile.components.type.ComponentTickable;
+import voltaic.prefab.utilities.BlockEntityUtils;
+import voltaic.prefab.utilities.RadiationUtils;
 
 public class TileSupplyModule extends GenericTileInterfaceBound {
 
@@ -40,19 +40,19 @@ public class TileSupplyModule extends GenericTileInterfaceBound {
                 .setSlotsByDirection(BlockEntityUtils.MachineDirection.LEFT, 9, 10, 11, 12, 13, 14, 15, 16, 17)
                 //
                 .setSlotsByDirection(BlockEntityUtils.MachineDirection.RIGHT, 9, 10, 11, 12, 13, 14, 15, 16, 17).valid(machineValidator()));
-        addComponent(new ComponentContainerProvider("container.supplymodule", this).createMenu((id, player) -> new ContainerSupplyModule(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
+        addComponent(new ComponentContainerProvider("supplymodule", this).createMenu((id, player) -> new ContainerSupplyModule(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
         relativeBack = BlockEntityUtils.getRelativeSide(getFacing(), BlockEntityUtils.MachineDirection.BACK.mappedDir);
     }
 
     @Override
     public void tickServer(ComponentTickable tickable) {
         super.tickServer(tickable);
-        RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory), Constants.RADIOACTIVE_PROCESSOR_RADIATION_RADIUS, true, 0, false);
+        RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory), NuclearConstants.RADIOACTIVE_PROCESSOR_RADIATION_RADIUS, true, 0, false);
     }
 
     @Override
     public boolean checkLinkedPosition(GenericTileInterface inter) {
-        return inter.supplyModuleLocation.get().equals(getBlockPos());
+        return inter.supplyModuleLocation.getValue().equals(getBlockPos());
     }
 
     @Override
@@ -68,7 +68,7 @@ public class TileSupplyModule extends GenericTileInterfaceBound {
     @Override
     public void onBlockStateUpdate(BlockState oldState, BlockState newState) {
         super.onBlockStateUpdate(oldState, newState);
-        if (!level.isClientSide() && oldState.hasProperty(ElectrodynamicsBlockStates.FACING) && newState.hasProperty(ElectrodynamicsBlockStates.FACING) && oldState.getValue(ElectrodynamicsBlockStates.FACING) != newState.getValue(ElectrodynamicsBlockStates.FACING)) {
+        if (!level.isClientSide() && oldState.hasProperty(VoltaicBlockStates.FACING) && newState.hasProperty(VoltaicBlockStates.FACING) && oldState.getValue(VoltaicBlockStates.FACING) != newState.getValue(VoltaicBlockStates.FACING)) {
             relativeBack = BlockEntityUtils.getRelativeSide(getFacing(), BlockEntityUtils.MachineDirection.BACK.mappedDir);
         }
     }
@@ -86,12 +86,12 @@ public class TileSupplyModule extends GenericTileInterfaceBound {
     }
 
     @Override
-    public void onInterfacePropChange(Property<BlockPos> prop, BlockPos old) {
+    public void onInterfacePropChange(SingleProperty<BlockPos> prop, BlockPos old) {
 
         super.onInterfacePropChange(prop, old);
 
         boolean oldInval = old.equals(BlockEntityUtils.OUT_OF_REACH);
-        boolean newInval = prop.get().equals(BlockEntityUtils.OUT_OF_REACH);
+        boolean newInval = prop.getValue().equals(BlockEntityUtils.OUT_OF_REACH);
 
         if(oldInval && newInval) {
             return;
@@ -110,16 +110,16 @@ public class TileSupplyModule extends GenericTileInterfaceBound {
         ReactorLogisticsNetwork network = cable.getNetwork();
 
         if(oldInval && !newInval) {
-            GenericTileInterface inter = network.getInterface(prop.get());
+            GenericTileInterface inter = network.getInterface(prop.getValue());
 
             if(inter != null) {
-                inter.supplyModuleLocation.set(getBlockPos());
+                inter.supplyModuleLocation.setValue(getBlockPos());
             }
         } else if (!oldInval && newInval) {
             GenericTileInterface inter = network.getInterface(old);
 
             if(inter != null) {
-                inter.supplyModuleLocation.set(BlockEntityUtils.OUT_OF_REACH);
+                inter.supplyModuleLocation.setValue(BlockEntityUtils.OUT_OF_REACH);
             }
         }
 
@@ -142,13 +142,13 @@ public class TileSupplyModule extends GenericTileInterfaceBound {
 
             ReactorLogisticsNetwork network = cable.getNetwork();
 
-            GenericTileInterface inter = network.getInterface(interfaceLocation.get());
+            GenericTileInterface inter = network.getInterface(interfaceLocation.getValue());
 
             if (inter == null) {
                 return;
             }
 
-            inter.supplyModuleLocation.set(BlockEntityUtils.OUT_OF_REACH);
+            inter.supplyModuleLocation.setValue(BlockEntityUtils.OUT_OF_REACH);
         }
     }
 }

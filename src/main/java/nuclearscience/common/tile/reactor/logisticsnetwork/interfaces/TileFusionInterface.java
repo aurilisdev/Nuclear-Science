@@ -1,8 +1,5 @@
 package nuclearscience.common.tile.reactor.logisticsnetwork.interfaces;
 
-import electrodynamics.prefab.tile.components.IComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentInventory;
-import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
@@ -13,6 +10,9 @@ import nuclearscience.common.tile.reactor.fusion.TileFusionReactorCore;
 import nuclearscience.common.tile.reactor.logisticsnetwork.TileReactorLogisticsCable;
 import nuclearscience.common.tile.reactor.logisticsnetwork.TileSupplyModule;
 import nuclearscience.registers.NuclearScienceTiles;
+import voltaic.prefab.tile.components.IComponentType;
+import voltaic.prefab.tile.components.type.ComponentInventory;
+import voltaic.prefab.tile.components.type.ComponentTickable;
 
 public class TileFusionInterface extends GenericTileInterface {
 
@@ -40,7 +40,7 @@ public class TileFusionInterface extends GenericTileInterface {
             return;
         }
 
-        TileSupplyModule supplyModule = network.getSupplyModule(supplyModuleLocation.get());
+        TileSupplyModule supplyModule = network.getSupplyModule(supplyModuleLocation.getValue());
 
         if (!reactor.valid() || supplyModule == null || !(reactor.getSafe() instanceof TileFusionReactorCore)) {
             return;
@@ -88,8 +88,7 @@ public class TileFusionInterface extends GenericTileInterface {
             }
 
             if (inserted) {
-                queuedAnimations.get().add(InterfaceAnimation.FUSION_DEUTERIUM_INSERT.ordinal());
-                queuedAnimations.forceDirty();
+                queuedAnimations.addValue(InterfaceAnimation.FUSION_DEUTERIUM_INSERT.ordinal());
             }
         }
 
@@ -117,8 +116,7 @@ public class TileFusionInterface extends GenericTileInterface {
             }
 
             if (inserted) {
-                queuedAnimations.get().add(InterfaceAnimation.FUSION_TRITIUM_INSERT.ordinal());
-                queuedAnimations.forceDirty();
+                queuedAnimations.addValue(InterfaceAnimation.FUSION_TRITIUM_INSERT.ordinal());
             }
         }
 

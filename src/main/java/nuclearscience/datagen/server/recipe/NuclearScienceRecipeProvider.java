@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-import electrodynamics.datagen.utils.recipe.AbstractRecipeGenerator;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -19,6 +18,7 @@ import nuclearscience.datagen.server.recipe.custom.fluiditem2item.NuclearScience
 import nuclearscience.datagen.server.recipe.custom.item2item.NuclearScienceFissionReactorRecipes;
 import nuclearscience.datagen.server.recipe.custom.item2item.NuclearScienceFuelReprocessorRecipes;
 import nuclearscience.datagen.server.recipe.vanilla.NuclearScienceCraftingTableRecipes;
+import voltaic.datagen.utils.server.recipe.AbstractRecipeGenerator;
 
 public class NuclearScienceRecipeProvider extends RecipeProvider {
 

@@ -5,11 +5,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 
-import electrodynamics.prefab.properties.Property;
-import electrodynamics.prefab.properties.PropertyTypes;
-import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import electrodynamics.prefab.utilities.BlockEntityUtils;
-import electrodynamics.prefab.utilities.object.CachedTileOutput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
@@ -17,17 +12,22 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.common.block.subtype.SubtypeNuclearMachine;
 import nuclearscience.common.tile.reactor.logisticsnetwork.util.GenericTileLogisticsMember;
-import nuclearscience.prefab.NuclearPropertyTypes;
 import nuclearscience.registers.NuclearScienceItems;
+import voltaic.prefab.properties.types.PropertyTypes;
+import voltaic.prefab.properties.variant.SetProperty;
+import voltaic.prefab.properties.variant.SingleProperty;
+import voltaic.prefab.tile.components.type.ComponentTickable;
+import voltaic.prefab.utilities.BlockEntityUtils;
+import voltaic.prefab.utilities.object.CachedTileOutput;
 
 public abstract class GenericTileInterface extends GenericTileLogisticsMember {
 
     public CachedTileOutput reactor;
 
-    public final Property<HashSet<Integer>> queuedAnimations = property(new Property<>(NuclearPropertyTypes.INTEGER_SET, "queuedanimations", new HashSet<>()));
+    public final SetProperty<Integer> queuedAnimations = property(new SetProperty<>(PropertyTypes.INTEGER_SET, "queuedanimations", new HashSet<>()));
 
-    public final Property<BlockPos> controlRodLocation = property(new Property<>(PropertyTypes.BLOCK_POS, "controlrodlocation", BlockEntityUtils.OUT_OF_REACH));
-    public final Property<BlockPos> supplyModuleLocation = property(new Property<>(PropertyTypes.BLOCK_POS, "supplymodulelocation", BlockEntityUtils.OUT_OF_REACH));
+    public final SingleProperty<BlockPos> controlRodLocation = property(new SingleProperty<>(PropertyTypes.BLOCK_POS, "controlrodlocation", BlockEntityUtils.OUT_OF_REACH));
+    public final SingleProperty<BlockPos> supplyModuleLocation = property(new SingleProperty<>(PropertyTypes.BLOCK_POS, "supplymodulelocation", BlockEntityUtils.OUT_OF_REACH));
 
     public final HashMap<InterfaceAnimation, Long> clientAnimations = new HashMap<>();
     //Nothing is rendered with this map; it is used to keep track of what the interface is doing only
@@ -44,8 +44,7 @@ public abstract class GenericTileInterface extends GenericTileLogisticsMember {
 
         super.tickServer(tickable);
 
-        queuedAnimations.set(new HashSet<>());
-        queuedAnimations.forceDirty();
+        queuedAnimations.wipeSet();
 
         if (reactor == null) {
             reactor = new CachedTileOutput(getLevel(), getBlockPos().relative(getReactorDirection()));
@@ -72,7 +71,7 @@ public abstract class GenericTileInterface extends GenericTileLogisticsMember {
 
         long currTime = tickable.getTicks();
 
-        queuedAnimations.get().forEach(val -> {
+        queuedAnimations.getValue().forEach(val -> {
 
             InterfaceAnimation animation = InterfaceAnimation.values()[val];
 
@@ -104,7 +103,7 @@ public abstract class GenericTileInterface extends GenericTileLogisticsMember {
     protected void handleServerAnimations(ComponentTickable tickable) {
         long currTime = tickable.getTicks();
 
-        queuedAnimations.get().forEach(val -> {
+        queuedAnimations.getValue().forEach(val -> {
 
             InterfaceAnimation animation = InterfaceAnimation.values()[val];
 

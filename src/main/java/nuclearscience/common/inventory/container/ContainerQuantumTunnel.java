@@ -1,6 +1,5 @@
 package nuclearscience.common.inventory.container;
 
-import electrodynamics.prefab.inventory.container.types.GenericContainerBlockEntity;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -13,6 +12,7 @@ import nuclearscience.api.quantumtunnel.TunnelFrequencyManager;
 import nuclearscience.common.packet.type.client.PacketSetClientTunnelFrequencies;
 import nuclearscience.common.tile.TileQuantumTunnel;
 import nuclearscience.registers.NuclearScienceMenuTypes;
+import voltaic.prefab.inventory.container.types.GenericContainerBlockEntity;
 
 public class ContainerQuantumTunnel extends GenericContainerBlockEntity<TileQuantumTunnel> {
 
@@ -39,7 +39,7 @@ public class ContainerQuantumTunnel extends GenericContainerBlockEntity<TileQuan
 		super.broadcastChanges();
 
 		if(!getLevel().isClientSide() && getPlayer() != null && getSafeHost() != null) {
-			PacketSetClientTunnelFrequencies packet = new PacketSetClientTunnelFrequencies(TunnelFrequencyManager.getFrequenciesForPlayerClient(getPlayer().getUUID()), FrequencyConnectionManager.getClientBuffer(getSafeHost().frequency.get()), getSafeHost().getBlockPos());
+			PacketSetClientTunnelFrequencies packet = new PacketSetClientTunnelFrequencies(TunnelFrequencyManager.getFrequenciesForPlayerClient(getPlayer().getUUID()), FrequencyConnectionManager.getClientBuffer(getSafeHost().frequency.getValue()), getSafeHost().getBlockPos());
 			PacketDistributor.sendToPlayer((ServerPlayer) getPlayer(), packet);
 		}
 

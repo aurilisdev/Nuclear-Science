@@ -1,26 +1,21 @@
 package nuclearscience.common.tile.reactor.moltensalt;
 
-import electrodynamics.prefab.properties.Property;
-import electrodynamics.prefab.properties.PropertyTypes;
-import electrodynamics.prefab.tile.GenericTile;
-import electrodynamics.prefab.tile.components.IComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
-import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
-import electrodynamics.prefab.tile.components.type.ComponentInventory;
-import electrodynamics.prefab.tile.components.type.ComponentInventory.InventoryBuilder;
-import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
-import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import electrodynamics.prefab.utilities.BlockEntityUtils;
-import electrodynamics.prefab.utilities.object.CachedTileOutput;
-import electrodynamics.prefab.utilities.object.TransferPack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.common.inventory.container.ContainerMoltenSaltSupplier;
-import nuclearscience.common.settings.Constants;
+import nuclearscience.common.settings.NuclearConstants;
 import nuclearscience.registers.NuclearScienceItems;
 import nuclearscience.registers.NuclearScienceTiles;
+import voltaic.prefab.properties.types.PropertyTypes;
+import voltaic.prefab.properties.variant.SingleProperty;
+import voltaic.prefab.tile.GenericTile;
+import voltaic.prefab.tile.components.IComponentType;
+import voltaic.prefab.tile.components.type.*;
+import voltaic.prefab.utilities.BlockEntityUtils;
+import voltaic.prefab.utilities.object.CachedTileOutput;
+import voltaic.prefab.utilities.object.TransferPack;
 
 public class TileMoltenSaltSupplier extends GenericTile {
 
@@ -29,7 +24,7 @@ public class TileMoltenSaltSupplier extends GenericTile {
 
 	protected CachedTileOutput output;
 
-	public final Property<Double> reactorWaste = property(new Property<>(PropertyTypes.DOUBLE, "reactorwaste", 0.0));
+	public final SingleProperty<Double> reactorWaste = property(new SingleProperty<>(PropertyTypes.DOUBLE, "reactorwaste", 0.0).setNoSave());
 
 	public TileMoltenSaltSupplier(BlockPos pos, BlockState state) {
 
@@ -37,11 +32,9 @@ public class TileMoltenSaltSupplier extends GenericTile {
 
 		addComponent(new ComponentTickable(this).tickServer(this::tickServer));
 		addComponent(new ComponentPacketHandler(this));
-		addComponent(new ComponentElectrodynamic(this, false, true).voltage(Constants.MOLTENSALTSUPPLIER_VOLTAGE).extractPower((x, y) -> TransferPack.EMPTY).setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM).maxJoules(Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK * 20));
-		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().inputs(1).outputs(1)).setDirectionsBySlot(0, BlockEntityUtils.MachineDirection.FRONT, BlockEntityUtils.MachineDirection.TOP).setDirectionsBySlot(1, BlockEntityUtils.MachineDirection.LEFT, BlockEntityUtils.MachineDirection.RIGHT).valid((slot, stack, i) -> stack.getItem() == NuclearScienceItems.ITEM_LIFHT4PUF3.get()));
-		addComponent(new ComponentContainerProvider("container.moltensaltsupplier", this).createMenu((id, player) -> new ContainerMoltenSaltSupplier(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
-
-		reactorWaste.setNoSave();
+		addComponent(new ComponentElectrodynamic(this, false, true).voltage(NuclearConstants.MOLTENSALTSUPPLIER_VOLTAGE).extractPower((x, y) -> TransferPack.EMPTY).setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM).maxJoules(NuclearConstants.MOLTENSALTSUPPLIER_USAGE_PER_TICK * 20));
+		addComponent(new ComponentInventory(this, ComponentInventory.InventoryBuilder.newInv().inputs(1).outputs(1)).setDirectionsBySlot(0, BlockEntityUtils.MachineDirection.FRONT, BlockEntityUtils.MachineDirection.TOP).setDirectionsBySlot(1, BlockEntityUtils.MachineDirection.LEFT, BlockEntityUtils.MachineDirection.RIGHT).valid((slot, stack, i) -> stack.getItem() == NuclearScienceItems.ITEM_LIFHT4PUF3.get()));
+		addComponent(new ComponentContainerProvider("moltensaltsupplier", this).createMenu((id, player) -> new ContainerMoltenSaltSupplier(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
 	}
 
 	public void tickServer(ComponentTickable tickable) {
@@ -50,7 +43,7 @@ public class TileMoltenSaltSupplier extends GenericTile {
 			output = new CachedTileOutput(level, worldPosition.relative(dir.getOpposite()));
 		}
 		ComponentElectrodynamic electro = getComponent(IComponentType.Electrodynamic);
-		boolean enoughPower = electro.getJoulesStored() >= Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK;
+		boolean enoughPower = electro.getJoulesStored() >= NuclearConstants.MOLTENSALTSUPPLIER_USAGE_PER_TICK;
 		if (!enoughPower) {
 			return;
 		}
@@ -59,7 +52,7 @@ public class TileMoltenSaltSupplier extends GenericTile {
 			BlockEntityUtils.updateLit(this, enoughPower);
 		}
 
-		electro.joules(electro.getJoulesStored() - Constants.MOLTENSALTSUPPLIER_USAGE_PER_TICK);
+		electro.joules(electro.getJoulesStored() - NuclearConstants.MOLTENSALTSUPPLIER_USAGE_PER_TICK);
 
 		if (tickable.getTicks() % 40 == 0) {
 			output.update(worldPosition.relative(dir.getOpposite()));
@@ -70,12 +63,12 @@ public class TileMoltenSaltSupplier extends GenericTile {
 		ItemStack fuel = inv.getItem(0);
 
 		if (!output.valid() || !(output.getSafe() instanceof TileMSReactorCore)) {
-			reactorWaste.set(0.0);
+			reactorWaste.setValue(0.0);
 			return;
 		}
 
 		TileMSReactorCore core = output.getSafe();
-		reactorWaste.set(core.currentWaste.get());
+		reactorWaste.setValue(core.currentWaste.getValue());
 
 		if (fuel.isEmpty()) {
 			return;
@@ -85,12 +78,12 @@ public class TileMoltenSaltSupplier extends GenericTile {
 			return;
 		}
 
-		if (TileMSReactorCore.FUEL_CAPACITY - core.currentFuel.get() >= AMT_PER_SALT) {
+		if (TileMSReactorCore.FUEL_CAPACITY - core.currentFuel.getValue() >= AMT_PER_SALT) {
 			fuel.shrink(1);
-			core.currentFuel.set(core.currentFuel.get() + AMT_PER_SALT);
+			core.currentFuel.setValue(core.currentFuel.getValue() + AMT_PER_SALT);
 		}
 
-		if (core.currentWaste.get() < AMT_PER_WASTE) {
+		if (core.currentWaste.getValue() < AMT_PER_WASTE) {
 			return;
 		}
 
@@ -107,7 +100,7 @@ public class TileMoltenSaltSupplier extends GenericTile {
 			inv.setItem(1, waste);
 		}
 
-		core.currentWaste.set(core.currentWaste.get() - AMT_PER_WASTE);
+		core.currentWaste.setValue(core.currentWaste.getValue() - AMT_PER_WASTE);
 
 	}
 

@@ -3,27 +3,14 @@ package nuclearscience.client.screen;
 import java.util.ArrayList;
 import java.util.List;
 
-import electrodynamics.api.electricity.formatting.ChatFormatter;
-import electrodynamics.api.electricity.formatting.DisplayUnit;
-import electrodynamics.prefab.screen.GenericScreen;
-import electrodynamics.prefab.screen.component.ScreenComponentGeneric;
-import electrodynamics.prefab.screen.component.button.ScreenComponentButton;
-import electrodynamics.prefab.screen.component.types.ScreenComponentSimpleLabel;
-import electrodynamics.prefab.screen.component.types.guitab.ScreenComponentElectricInfo;
-import electrodynamics.prefab.screen.component.types.guitab.ScreenComponentGuiTab;
-import electrodynamics.prefab.screen.component.types.wrapper.WrapperInventoryIO;
-import electrodynamics.prefab.screen.component.utils.AbstractScreenComponentInfo;
-import electrodynamics.prefab.tile.components.IComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import electrodynamics.prefab.utilities.ElectroTextUtils;
-import electrodynamics.prefab.utilities.math.Color;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.player.Inventory;
 import nuclearscience.common.entity.EntityParticle;
 import nuclearscience.common.inventory.container.ContainerParticleInjector;
-import nuclearscience.common.settings.Constants;
+import nuclearscience.common.settings.NuclearConstants;
 import nuclearscience.common.tile.accelerator.TileElectromagneticGateway;
 import nuclearscience.common.tile.accelerator.TileParticleInjector;
 import nuclearscience.compatibility.jei.utils.NuclearJeiTextures;
@@ -31,6 +18,19 @@ import nuclearscience.prefab.screen.component.NuclearArrows;
 import nuclearscience.prefab.screen.component.NuclearIconTypes;
 import nuclearscience.prefab.utils.NuclearDisplayUnits;
 import nuclearscience.prefab.utils.NuclearTextUtils;
+import voltaic.api.electricity.formatting.ChatFormatter;
+import voltaic.api.electricity.formatting.DisplayUnits;
+import voltaic.prefab.screen.GenericScreen;
+import voltaic.prefab.screen.component.ScreenComponentGeneric;
+import voltaic.prefab.screen.component.button.ScreenComponentButton;
+import voltaic.prefab.screen.component.types.ScreenComponentSimpleLabel;
+import voltaic.prefab.screen.component.types.guitab.ScreenComponentElectricInfo;
+import voltaic.prefab.screen.component.types.guitab.ScreenComponentGuiTab;
+import voltaic.prefab.screen.component.types.wrapper.WrapperInventoryIO;
+import voltaic.prefab.screen.component.utils.AbstractScreenComponentInfo;
+import voltaic.prefab.tile.components.IComponentType;
+import voltaic.prefab.tile.components.type.ComponentElectrodynamic;
+import voltaic.prefab.utilities.math.Color;
 
 public class ScreenParticleInjector extends GenericScreen<ContainerParticleInjector> {
 
@@ -43,14 +43,14 @@ public class ScreenParticleInjector extends GenericScreen<ContainerParticleInjec
         addComponent(new ScreenComponentGeneric(NuclearArrows.PARTICLE_INJECTOR_ARROWS, 44, 24));
         addComponent(new ScreenComponentSimpleLabel(titleLabelX, titleLabelY + 20, 10, Color.TEXT_GRAY, NuclearTextUtils.gui("particleinjector.matter")));
         addComponent(new ScreenComponentSimpleLabel(titleLabelX, titleLabelY + 56, 10, Color.TEXT_GRAY, NuclearTextUtils.gui("particleinjector.cells")));
-        addComponent(new ScreenComponentElectricInfo(this::getElectricInformation, -AbstractScreenComponentInfo.SIZE + 1, 2).wattage(Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE));
+        addComponent(new ScreenComponentElectricInfo(this::getElectricInformation, -AbstractScreenComponentInfo.SIZE + 1, 2).wattage(NuclearConstants.PARTICLEINJECTOR_USAGE_PER_PARTICLE));
         addComponent(new ScreenComponentButton<>(ScreenComponentGuiTab.GuiInfoTabTextures.REGULAR, -AbstractScreenComponentInfo.SIZE + 1, 2 * AbstractScreenComponentInfo.SIZE + 2)
                 .setOnPress(button -> {
                     TileParticleInjector injector = menu.getSafeHost();
                     if (injector == null) {
                         return;
                     }
-                    injector.usingGateway.set(!injector.usingGateway.get());
+                    injector.usingGateway.setValue(!injector.usingGateway.getValue());
                 })
                 .setIcon(NuclearIconTypes.GATEWAY)
                 .onTooltip((graphics, button, x, y) -> {
@@ -63,7 +63,7 @@ public class ScreenParticleInjector extends GenericScreen<ContainerParticleInjec
 					}
 
 					list.add(NuclearTextUtils.tooltip("particleinjector.gatewaymode").withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
-					if(injector.usingGateway.get()) {
+					if(injector.usingGateway.getValue()) {
 						list.add(NuclearTextUtils.tooltip("particleinjector.gatewayenabled").withStyle(ChatFormatting.GREEN).getVisualOrderText());
 					} else {
 						list.add(NuclearTextUtils.tooltip("particleinjector.gatewaydisabled").withStyle(ChatFormatting.RED).getVisualOrderText());
@@ -92,7 +92,7 @@ public class ScreenParticleInjector extends GenericScreen<ContainerParticleInjec
                 oneSpeed = one.speed;
             }
 
-            list.add(NuclearTextUtils.tooltip("particleinjector.particle1speed", ChatFormatter.getChatDisplayShort(TileElectromagneticGateway.getLightSpeedPerc(oneSpeed), DisplayUnit.PERCENTAGE).append(" ").append(NuclearDisplayUnits.SPEEDOFLIGHT.getSymbol()).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
+            list.add(NuclearTextUtils.tooltip("particleinjector.particle1speed", ChatFormatter.getChatDisplayShort(TileElectromagneticGateway.getLightSpeedPerc(oneSpeed), DisplayUnits.PERCENTAGE).append(" ").append(NuclearDisplayUnits.SPEEDOFLIGHT.getSymbol()).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
 
             EntityParticle two = injector.particles[1];
 
@@ -102,7 +102,7 @@ public class ScreenParticleInjector extends GenericScreen<ContainerParticleInjec
                 twoSpeed = two.speed;
             }
 
-            list.add(NuclearTextUtils.tooltip("particleinjector.particle2speed", ChatFormatter.getChatDisplayShort(TileElectromagneticGateway.getLightSpeedPerc(twoSpeed), DisplayUnit.PERCENTAGE).append(" ").append(NuclearDisplayUnits.SPEEDOFLIGHT.getSymbol()).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
+            list.add(NuclearTextUtils.tooltip("particleinjector.particle2speed", ChatFormatter.getChatDisplayShort(TileElectromagneticGateway.getLightSpeedPerc(twoSpeed), DisplayUnits.PERCENTAGE).append(" ").append(NuclearDisplayUnits.SPEEDOFLIGHT.getSymbol()).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
 
             graphics.renderTooltip(getFontRenderer(), list, x, y);
 
@@ -118,8 +118,8 @@ public class ScreenParticleInjector extends GenericScreen<ContainerParticleInjec
         }
 
         ComponentElectrodynamic el = injector.getComponent(IComponentType.Electrodynamic);
-        list.add(NuclearTextUtils.tooltip("particleinjector.charge", ChatFormatter.getChatDisplayShort(el.getJoulesStored(), DisplayUnit.JOULES).withStyle(ChatFormatting.GRAY), ChatFormatter.getChatDisplayShort(Constants.PARTICLEINJECTOR_USAGE_PER_PARTICLE, DisplayUnit.JOULES).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
-        list.add(ElectroTextUtils.gui("machine.voltage", ChatFormatter.getChatDisplayShort(el.getVoltage(), DisplayUnit.VOLTAGE).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
+        list.add(NuclearTextUtils.tooltip("particleinjector.charge", ChatFormatter.getChatDisplayShort(el.getJoulesStored(), DisplayUnits.JOULES).withStyle(ChatFormatting.GRAY), ChatFormatter.getChatDisplayShort(NuclearConstants.PARTICLEINJECTOR_USAGE_PER_PARTICLE, DisplayUnits.JOULES).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
+        list.add(ElectroTextUtils.gui("machine.voltage", ChatFormatter.getChatDisplayShort(el.getVoltage(), DisplayUnits.VOLTAGE).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
 
         return list;
     }

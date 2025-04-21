@@ -1,7 +1,5 @@
 package nuclearscience.common.tile.reactor.fission;
 
-import electrodynamics.prefab.tile.GenericTile;
-import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -18,10 +16,12 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.common.Tags;
-import nuclearscience.api.radiation.RadiationSystem;
-import nuclearscience.api.radiation.SimpleRadiationSource;
 import nuclearscience.common.block.BlockIrradiated;
 import nuclearscience.registers.NuclearScienceTiles;
+import voltaic.api.radiation.RadiationSystem;
+import voltaic.api.radiation.SimpleRadiationSource;
+import voltaic.prefab.tile.GenericTile;
+import voltaic.prefab.tile.components.type.ComponentTickable;
 
 public class TileMeltedReactor extends GenericTile {
 	public static final float RADIATION_RADIUS = 30;

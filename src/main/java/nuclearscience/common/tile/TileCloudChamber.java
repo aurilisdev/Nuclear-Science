@@ -3,70 +3,73 @@ package nuclearscience.common.tile;
 import java.util.ArrayList;
 import java.util.List;
 
-import electrodynamics.prefab.properties.Property;
-import electrodynamics.prefab.properties.PropertyTypes;
-import electrodynamics.prefab.tile.GenericTile;
-import electrodynamics.prefab.tile.components.IComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
-import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
-import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerSimple;
-import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import electrodynamics.prefab.utilities.BlockEntityUtils;
-import electrodynamics.registers.ElectrodynamicsCapabilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import nuclearscience.api.radiation.RadiationSystem;
 import nuclearscience.client.render.event.levelstage.HandlerCloudChamber;
 import nuclearscience.common.inventory.container.ContainerCloudChamber;
-import nuclearscience.common.settings.Constants;
+import nuclearscience.common.settings.NuclearConstants;
 import nuclearscience.common.tags.NuclearScienceTags;
 import nuclearscience.registers.NuclearScienceTiles;
+import voltaic.api.radiation.RadiationSystem;
+import voltaic.prefab.properties.types.PropertyTypes;
+import voltaic.prefab.properties.variant.ListProperty;
+import voltaic.prefab.properties.variant.SingleProperty;
+import voltaic.prefab.tile.GenericTile;
+import voltaic.prefab.tile.components.IComponentType;
+import voltaic.prefab.tile.components.type.ComponentContainerProvider;
+import voltaic.prefab.tile.components.type.ComponentElectrodynamic;
+import voltaic.prefab.tile.components.type.ComponentFluidHandlerSimple;
+import voltaic.prefab.tile.components.type.ComponentTickable;
+import voltaic.prefab.utilities.BlockEntityUtils;
+import voltaic.registers.VoltaicCapabilities;
 
 public class TileCloudChamber extends GenericTile {
 
     public static final int HORR_RADIUS = 30;
     private static final int VERT_RADIUS = 30;
 
-    public final Property<ArrayList<BlockPos>> sources = property(new Property<>(PropertyTypes.BLOCK_POS_LIST, "sources", new ArrayList<BlockPos>()));
-    public final Property<Boolean> active = property(new Property<>(PropertyTypes.BOOLEAN, "active", false));
-    private final Property<Boolean> hasRedstoneSignal = property(new Property(PropertyTypes.BOOLEAN, "redstonesignal", false));
+    public final ListProperty<BlockPos> sources = property(new ListProperty<>(PropertyTypes.BLOCK_POS_LIST, "sources", new ArrayList<BlockPos>()));
+    public final SingleProperty<Boolean> active = property(new SingleProperty<>(PropertyTypes.BOOLEAN, "active", false));
+    private final SingleProperty<Boolean> hasRedstoneSignal = property(new SingleProperty(PropertyTypes.BOOLEAN, "redstonesignal", false));
 
     public TileCloudChamber(BlockPos worldPos, BlockState blockState) {
         super(NuclearScienceTiles.TILE_CLOUDCHAMBER.get(), worldPos, blockState);
 
         addComponent(new ComponentTickable(this).tickServer(this::tickServer).tickClient(this::tickClient));
-        addComponent(new ComponentElectrodynamic(this, false, true).setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE).maxJoules(Constants.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK * 20));
+        addComponent(new ComponentElectrodynamic(this, false, true).setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM).voltage(VoltaicCapabilities.DEFAULT_VOLTAGE).maxJoules(NuclearConstants.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK * 20));
         addComponent(new ComponentFluidHandlerSimple(100, fluidStack -> fluidStack.getFluid().is(NuclearScienceTags.Fluids.METHANOL), this, "methanolstorage").setInputDirections(BlockEntityUtils.MachineDirection.BACK));
-        addComponent(new ComponentContainerProvider("container.cloudchamber", this).createMenu((id, player) -> new ContainerCloudChamber(id, player, new SimpleContainer(), getCoordsArray())));
+        addComponent(new ComponentContainerProvider("cloudchamber", this).createMenu((id, player) -> new ContainerCloudChamber(id, player, new SimpleContainer(), getCoordsArray())));
 
     }
 
     private void tickClient(ComponentTickable tickable) {
-        if(active.get()) {
+        if(active.getValue()) {
             HandlerCloudChamber.addSources(this);
         }
     }
 
     private void tickServer(ComponentTickable tickable) {
 
-        if(hasRedstoneSignal.get()) {
-            active.set(false);
+        this.sources.wipeList();
+
+        if(hasRedstoneSignal.getValue()) {
+            active.setValue(false);
             return;
         }
 
         ComponentElectrodynamic electro = getComponent(IComponentType.Electrodynamic);
 
-        if(electro.getJoulesStored() < Constants.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK) {
-            active.set(false);
+        if(electro.getJoulesStored() < NuclearConstants.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK) {
+            active.setValue(false);
             return;
         }
 
         ComponentFluidHandlerSimple fluid = getComponent(IComponentType.FluidHandler);
 
-        if(fluid.isEmpty() || fluid.getFluidAmount() < Constants.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK) {
-            active.set(false);
+        if(fluid.isEmpty() || fluid.getFluidAmount() < NuclearConstants.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK) {
+            active.setValue(false);
             return;
         }
 
@@ -91,23 +94,22 @@ public class TileCloudChamber extends GenericTile {
         });
 
         if(accepted.isEmpty()) {
-            active.set(false);
+            active.setValue(false);
             return;
         }
 
-        active.set(true);
+        active.setValue(true);
 
-        this.sources.set(accepted);
-        this.sources.forceDirty();
+        this.sources.addValues(accepted);
 
-        electro.setJoulesStored(electro.getJoulesStored() - Constants.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK);
-        fluid.drain(Constants.CLOUD_CHAMBER_FLUID_USAGE_PER_TICK, IFluidHandler.FluidAction.EXECUTE);
+        electro.setJoulesStored(electro.getJoulesStored() - NuclearConstants.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK);
+        fluid.drain(NuclearConstants.CLOUD_CHAMBER_FLUID_USAGE_PER_TICK, IFluidHandler.FluidAction.EXECUTE);
     }
 
     @Override
     public void onNeightborChanged(BlockPos neighbor, boolean blockStateTrigger) {
         if (!level.isClientSide) {
-            hasRedstoneSignal.set(this.level.hasNeighborSignal(this.getBlockPos()));
+            hasRedstoneSignal.setValue(this.level.hasNeighborSignal(this.getBlockPos()));
         }
     }
 

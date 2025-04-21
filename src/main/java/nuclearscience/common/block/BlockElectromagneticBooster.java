@@ -1,7 +1,5 @@
 package nuclearscience.common.block;
 
-import electrodynamics.common.block.states.ElectrodynamicsBlockStates;
-import electrodynamics.prefab.tile.IWrenchable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Player;
@@ -20,36 +18,38 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import nuclearscience.common.block.states.NuclearScienceBlockStates;
 import nuclearscience.common.block.states.facing.FacingDirection;
+import voltaic.common.block.states.VoltaicBlockStates;
+import voltaic.prefab.tile.IWrenchable;
 
 public class BlockElectromagneticBooster extends Block implements IWrenchable {
 
 
 	public BlockElectromagneticBooster() {
 		super(Blocks.GLASS.properties().strength(3.5f, 20).requiresCorrectToolForDrops().noOcclusion().isRedstoneConductor((x, y, z) -> false));
-		registerDefaultState(stateDefinition.any().setValue(ElectrodynamicsBlockStates.FACING, Direction.NORTH).setValue(NuclearScienceBlockStates.FACINGDIRECTION, FacingDirection.NONE));
+		registerDefaultState(stateDefinition.any().setValue(VoltaicBlockStates.FACING, Direction.NORTH).setValue(NuclearScienceBlockStates.FACINGDIRECTION, FacingDirection.NONE));
 	}
 
 	@Override
 	public BlockState rotate(BlockState state, Rotation rot) {
-		return state.setValue(ElectrodynamicsBlockStates.FACING, rot.rotate(state.getValue(ElectrodynamicsBlockStates.FACING)));
+		return state.setValue(VoltaicBlockStates.FACING, rot.rotate(state.getValue(VoltaicBlockStates.FACING)));
 	}
 
 	@Override
 	public BlockState mirror(BlockState state, Mirror mirrorIn) {
-		return state.rotate(mirrorIn.getRotation(state.getValue(ElectrodynamicsBlockStates.FACING)));
+		return state.rotate(mirrorIn.getRotation(state.getValue(VoltaicBlockStates.FACING)));
 	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
 		Direction movingdirection = context.getHorizontalDirection();
-		BlockState state = super.getStateForPlacement(context).setValue(ElectrodynamicsBlockStates.FACING, context.getHorizontalDirection().getOpposite());
+		BlockState state = super.getStateForPlacement(context).setValue(VoltaicBlockStates.FACING, context.getHorizontalDirection().getOpposite());
 		// left check first in front
 		BlockState check = context.getLevel().getBlockState(context.getClickedPos().relative(movingdirection.getClockWise().getOpposite()));
-		if (check.getBlock() == this && check.getValue(ElectrodynamicsBlockStates.FACING).getOpposite() == movingdirection.getClockWise().getOpposite()) {
+		if (check.getBlock() == this && check.getValue(VoltaicBlockStates.FACING).getOpposite() == movingdirection.getClockWise().getOpposite()) {
 			state = state.setValue(NuclearScienceBlockStates.FACINGDIRECTION, FacingDirection.LEFT);
 		} else {
 			check = context.getLevel().getBlockState(context.getClickedPos().relative(movingdirection.getClockWise()));
-			if (check.getBlock() == this && check.getValue(ElectrodynamicsBlockStates.FACING).getOpposite() == movingdirection.getClockWise()) {
+			if (check.getBlock() == this && check.getValue(VoltaicBlockStates.FACING).getOpposite() == movingdirection.getClockWise()) {
 				state = state.setValue(NuclearScienceBlockStates.FACINGDIRECTION, FacingDirection.RIGHT);
 			}
 		}
@@ -58,7 +58,7 @@ public class BlockElectromagneticBooster extends Block implements IWrenchable {
 
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-		builder.add(ElectrodynamicsBlockStates.FACING);
+		builder.add(VoltaicBlockStates.FACING);
 		builder.add(NuclearScienceBlockStates.FACINGDIRECTION);
 	}
 

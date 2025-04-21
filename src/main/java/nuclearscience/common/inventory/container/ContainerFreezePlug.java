@@ -1,8 +1,5 @@
 package nuclearscience.common.inventory.container;
 
-import electrodynamics.prefab.inventory.container.slot.item.type.SlotRestricted;
-import electrodynamics.prefab.inventory.container.types.GenericContainerBlockEntity;
-import electrodynamics.prefab.screen.component.types.ScreenComponentSlot.SlotType;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -12,6 +9,9 @@ import nuclearscience.common.tile.reactor.moltensalt.TileFreezePlug;
 import nuclearscience.prefab.screen.component.NuclearIconTypes;
 import nuclearscience.registers.NuclearScienceItems;
 import nuclearscience.registers.NuclearScienceMenuTypes;
+import voltaic.prefab.inventory.container.slot.item.type.SlotRestricted;
+import voltaic.prefab.inventory.container.types.GenericContainerBlockEntity;
+import voltaic.prefab.screen.component.types.ScreenComponentSlot;
 
 public class ContainerFreezePlug extends GenericContainerBlockEntity<TileFreezePlug> {
 
@@ -25,6 +25,6 @@ public class ContainerFreezePlug extends GenericContainerBlockEntity<TileFreezeP
 
 	@Override
 	public void addInventorySlots(Container inv, Inventory playerinv) {
-		addSlot(new SlotRestricted(SlotType.NORMAL, NuclearIconTypes.PELLET_DARK, inv, nextIndex(), 15, 35).setRestriction(NuclearScienceItems.ITEM_FLINAK.get()));
+		addSlot(new SlotRestricted(ScreenComponentSlot.SlotType.NORMAL, NuclearIconTypes.PELLET_DARK, inv, nextIndex(), 15, 35).setRestriction(NuclearScienceItems.ITEM_FLINAK.get()));
 	}
 }

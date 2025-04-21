@@ -2,7 +2,7 @@
   "parent": "nuclearscience:parent/logisticscable_side",
   "render_type": "minecraft:cutout",
   "textures": {
-    "particle": "electrodynamics:block/steelcasing",
+    "particle": "voltaic:block/steelcasing",
     "texture": "nuclearscience:block/pipe/logisticscablebase_side"
   }
 }

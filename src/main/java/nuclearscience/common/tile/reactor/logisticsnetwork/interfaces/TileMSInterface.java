@@ -1,8 +1,5 @@
 package nuclearscience.common.tile.reactor.logisticsnetwork.interfaces;
 
-import electrodynamics.prefab.properties.Property;
-import electrodynamics.prefab.properties.PropertyTypes;
-import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
@@ -11,10 +8,13 @@ import nuclearscience.common.tile.reactor.logisticsnetwork.TileControlRodModule;
 import nuclearscience.common.tile.reactor.logisticsnetwork.TileReactorLogisticsCable;
 import nuclearscience.common.tile.reactor.moltensalt.IMSControlRod;
 import nuclearscience.registers.NuclearScienceTiles;
+import voltaic.prefab.properties.types.PropertyTypes;
+import voltaic.prefab.properties.variant.SingleProperty;
+import voltaic.prefab.tile.components.type.ComponentTickable;
 
 public class TileMSInterface extends GenericTileInterface implements IMSControlRod {
 
-    public final Property<Integer> insertion = property(new Property<>(PropertyTypes.INTEGER, "insertion", 0));
+    public final SingleProperty<Integer> insertion = property(new SingleProperty<>(PropertyTypes.INTEGER, "insertion", 0));
 
     public TileMSInterface(BlockPos worldPos, BlockState blockState) {
         super(NuclearScienceTiles.TILE_MSINTERFACE.get(), worldPos, blockState);
@@ -25,37 +25,37 @@ public class TileMSInterface extends GenericTileInterface implements IMSControlR
         super.tickServer(tickable);
 
         if (!networkCable.valid() || !(networkCable.getSafe() instanceof TileReactorLogisticsCable)) {
-            insertion.set(0);
+            insertion.setValue(0);
             return;
         }
 
         TileReactorLogisticsCable cable = networkCable.getSafe();
 
         if (cable.isRemoved()) {
-            insertion.set(0);
+            insertion.setValue(0);
             return;
         }
 
         ReactorLogisticsNetwork network = cable.getNetwork();
 
         if (!network.isControllerActive()) {
-            insertion.set(0);
+            insertion.setValue(0);
             return;
         }
 
-        TileControlRodModule controlRod = network.getControlRod(controlRodLocation.get());
+        TileControlRodModule controlRod = network.getControlRod(controlRodLocation.getValue());
 
         if (controlRod == null) {
-            insertion.set(0);
+            insertion.setValue(0);
         } else {
-            insertion.set(controlRod.insertion.get());
+            insertion.setValue(controlRod.insertion.getValue());
         }
 
     }
 
     @Override
     public int getInsertion() {
-        return insertion.get();
+        return insertion.getValue();
     }
 
     @Override

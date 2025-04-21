@@ -85,9 +85,6 @@
   "gui.nuclearscience.cloudchamber.detected": "Detected: %s",
   "gui.nuclearscience.cloudchamber.offline": "Offline",
   "gui.nuclearscience.cloudchamber.status": "Status: %s",
-  "gui.nuclearscience.displayunit.radname": "Rad",
-  "gui.nuclearscience.displayunit.radnameplural": "Rads",
-  "gui.nuclearscience.displayunit.radsymbol": "Rad",
   "gui.nuclearscience.displayunit.speedoflightname": "C",
   "gui.nuclearscience.displayunit.speedoflightnameplural": "C",
   "gui.nuclearscience.displayunit.speedoflightsymbol": "C",
@@ -370,8 +367,6 @@
   "tooltip.nuclearscience.quantumtunnel.ioconfig": "I/O Config",
   "tooltip.nuclearscience.quantumtunnel.none": "None",
   "tooltip.nuclearscience.quantumtunnel.output": "Output",
-  "tooltip.nuclearscience.radiationshieldingamount": "Shielding Amount: %s",
-  "tooltip.nuclearscience.radiationshieldinglevel": "Shielding Level: %s",
   "tooltip.nuclearscience.steamfunneluse": "Collects and emits steam",
   "tooltip.nuclearscience.tritiumlevel": "Tritium: %s"
 }

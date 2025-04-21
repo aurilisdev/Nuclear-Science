@@ -2,7 +2,6 @@ package nuclearscience.common.block;
 
 import com.mojang.serialization.MapCodec;
 
-import electrodynamics.prefab.block.GenericEntityBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
@@ -18,6 +17,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import nuclearscience.common.tile.reactor.fusion.TilePlasma;
 import nuclearscience.registers.NuclearScienceDamageTypes;
+import voltaic.prefab.block.GenericEntityBlock;
 
 public class BlockPlasma extends GenericEntityBlock {
 

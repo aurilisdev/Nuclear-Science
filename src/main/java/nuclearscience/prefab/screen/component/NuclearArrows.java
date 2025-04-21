@@ -1,8 +1,8 @@
 package nuclearscience.prefab.screen.component;
 
-import electrodynamics.api.screen.ITexture;
 import net.minecraft.resources.ResourceLocation;
 import nuclearscience.NuclearScience;
+import voltaic.api.screen.ITexture;
 
 public enum NuclearArrows implements ITexture {
 	FISSION_REACTOR_ARROW_LR(0, 0, 54, 19, 54, 19, NuclearScience.rl("textures/screen/component/fissionreactorarrow_lr.png")),

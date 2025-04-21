@@ -1,13 +1,13 @@
 package nuclearscience.common.tile.reactor.logisticsnetwork;
 
-import electrodynamics.prefab.tile.GenericTile;
-import electrodynamics.prefab.utilities.object.CachedTileOutput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.api.network.reactorlogistics.ILogisticsMember;
 import nuclearscience.common.network.ReactorLogisticsNetwork;
+import voltaic.prefab.tile.GenericTile;
+import voltaic.prefab.utilities.object.CachedTileOutput;
 
 public abstract class TileAlarmModule extends GenericTile implements ILogisticsMember {
 

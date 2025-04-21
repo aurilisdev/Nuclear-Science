@@ -2,7 +2,6 @@ package nuclearscience.common.tile.reactor.logisticsnetwork;
 
 import java.util.Set;
 
-import electrodynamics.prefab.tile.types.GenericRefreshingConnectTile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -11,6 +10,7 @@ import nuclearscience.common.block.connect.BlockReactorLogisticsCable;
 import nuclearscience.common.block.subtype.SubtypeReactorLogisticsCable;
 import nuclearscience.common.network.ReactorLogisticsNetwork;
 import nuclearscience.registers.NuclearScienceTiles;
+import voltaic.prefab.tile.types.GenericRefreshingConnectTile;
 
 public class TileReactorLogisticsCable extends GenericRefreshingConnectTile<SubtypeReactorLogisticsCable, TileReactorLogisticsCable, ReactorLogisticsNetwork> {
 

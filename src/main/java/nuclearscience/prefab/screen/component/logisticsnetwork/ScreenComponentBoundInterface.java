@@ -1,10 +1,5 @@
 package nuclearscience.prefab.screen.component.logisticsnetwork;
 
-import electrodynamics.api.screen.ITexture;
-import electrodynamics.prefab.screen.component.ScreenComponentGeneric;
-import electrodynamics.prefab.screen.component.editbox.ScreenComponentEditBox;
-import electrodynamics.prefab.utilities.BlockEntityUtils;
-import electrodynamics.prefab.utilities.math.Color;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
@@ -13,6 +8,11 @@ import nuclearscience.client.screen.util.GenericInterfaceBoundScreen;
 import nuclearscience.common.tile.reactor.logisticsnetwork.interfaces.GenericTileInterface;
 import nuclearscience.common.tile.reactor.logisticsnetwork.util.GenericTileInterfaceBound;
 import nuclearscience.prefab.screen.component.quantumtunnel.QuantumTunnelTextures;
+import voltaic.api.screen.ITexture;
+import voltaic.prefab.screen.component.ScreenComponentGeneric;
+import voltaic.prefab.screen.component.editbox.ScreenComponentEditBox;
+import voltaic.prefab.utilities.BlockEntityUtils;
+import voltaic.prefab.utilities.math.Color;
 
 public class ScreenComponentBoundInterface extends ScreenComponentGeneric {
 
@@ -44,10 +44,10 @@ public class ScreenComponentBoundInterface extends ScreenComponentGeneric {
         ScreenComponentEditBox.drawExpandedBox(graphics, texture.getLocation(), xLocation + guiWidth, yLocation + guiHeight, width, height);
 
         if (inter == null) {
-            if(tile.interfaceLocation.get().equals(BlockEntityUtils.OUT_OF_REACH)) {
+            if(tile.interfaceLocation.getValue().equals(BlockEntityUtils.OUT_OF_REACH)) {
                 return;
             }
-            inter = new Interface(tile.interfaceLocation.get(), GenericTileInterface.InterfaceType.values()[tile.interfaceType.get()]);
+            inter = new Interface(tile.interfaceLocation.getValue(), GenericTileInterface.InterfaceType.values()[tile.interfaceType.getValue()]);
         }
 
         graphics.renderItem(GenericTileInterface.getItemFromType(inter.type()), guiWidth + xLocation + 2, guiHeight + yLocation + 2);

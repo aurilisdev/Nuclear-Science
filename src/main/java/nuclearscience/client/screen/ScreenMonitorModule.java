@@ -1,18 +1,6 @@
 package nuclearscience.client.screen;
 
 import java.util.List;
-
-import electrodynamics.api.electricity.formatting.ChatFormatter;
-import electrodynamics.api.electricity.formatting.DisplayUnit;
-import electrodynamics.api.screen.ITexture;
-import electrodynamics.prefab.inventory.container.slot.item.SlotGeneric;
-import electrodynamics.prefab.screen.component.types.ScreenComponentCustomRender;
-import electrodynamics.prefab.tile.components.IComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
-import electrodynamics.prefab.tile.components.type.ComponentInventory;
-import electrodynamics.prefab.utilities.BlockEntityUtils;
-import electrodynamics.prefab.utilities.ElectroTextUtils;
-import electrodynamics.prefab.utilities.math.Color;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
@@ -21,7 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import nuclearscience.client.screen.util.GenericInterfaceBoundScreen;
 import nuclearscience.common.inventory.container.ContainerMonitorModule;
-import nuclearscience.common.settings.Constants;
+import nuclearscience.common.settings.NuclearConstants;
 import nuclearscience.common.tile.reactor.fission.TileFissionReactorCore;
 import nuclearscience.common.tile.reactor.fusion.TileFusionReactorCore;
 import nuclearscience.common.tile.reactor.logisticsnetwork.TileMonitorModule;
@@ -33,6 +21,17 @@ import nuclearscience.common.tile.reactor.moltensalt.TileFreezePlug;
 import nuclearscience.common.tile.reactor.moltensalt.TileMSReactorCore;
 import nuclearscience.prefab.screen.component.NuclearIconTypes;
 import nuclearscience.prefab.utils.NuclearTextUtils;
+import voltaic.api.electricity.formatting.ChatFormatter;
+import voltaic.api.electricity.formatting.DisplayUnits;
+import voltaic.api.screen.ITexture;
+import voltaic.prefab.inventory.container.slot.item.SlotGeneric;
+import voltaic.prefab.screen.component.types.ScreenComponentCustomRender;
+import voltaic.prefab.tile.components.IComponentType;
+import voltaic.prefab.tile.components.type.ComponentElectrodynamic;
+import voltaic.prefab.tile.components.type.ComponentInventory;
+import voltaic.prefab.utilities.BlockEntityUtils;
+import voltaic.prefab.utilities.VoltaicTextUtils;
+import voltaic.prefab.utilities.math.Color;
 
 public class ScreenMonitorModule extends GenericInterfaceBoundScreen<ContainerMonitorModule> {
 
@@ -60,7 +59,7 @@ public class ScreenMonitorModule extends GenericInterfaceBoundScreen<ContainerMo
                 return;
             }
 
-            GenericTileInterface.InterfaceType type = GenericTileInterface.InterfaceType.values()[tile.interfaceType.get()];
+            GenericTileInterface.InterfaceType type = GenericTileInterface.InterfaceType.values()[tile.interfaceType.getValue()];
 
             Font font = getFontRenderer();
 
@@ -69,12 +68,12 @@ public class ScreenMonitorModule extends GenericInterfaceBoundScreen<ContainerMo
 
             graphics.fill(guiWidth + 17, guiHeight + 17, guiWidth + 159, guiHeight + 149, new Color(112, 112, 112, 255).color());
 
-            if(!tile.linked.get() || type == GenericTileInterface.InterfaceType.NONE || tile.interfaceLocation.get().equals(BlockEntityUtils.OUT_OF_REACH)) {
+            if(!tile.linked.getValue() || type == GenericTileInterface.InterfaceType.NONE || tile.interfaceLocation.getValue().equals(BlockEntityUtils.OUT_OF_REACH)) {
                 graphics.drawString(font, NuclearTextUtils.gui("logisticsnetwork.unlinked"), guiWidth + 20, guiHeight + 20, Color.TEXT_GRAY.color(), false);
                 return;
             }
 
-            BlockEntity blockEntity = tile.getLevel().getBlockEntity(tile.interfaceLocation.get());
+            BlockEntity blockEntity = tile.getLevel().getBlockEntity(tile.interfaceLocation.getValue());
 
             switch (type) {
                 case FISSION :
@@ -95,7 +94,7 @@ public class ScreenMonitorModule extends GenericInterfaceBoundScreen<ContainerMo
 
                     graphics.renderItem(GenericTileInterface.getItemFromType(type), guiWidth + 80, guiHeight + 20);
 
-                    graphics.drawString(font, NuclearTextUtils.gui("logisticsnetwork.temperature", ChatFormatter.getChatDisplayShort(TileFissionReactorCore.getActualTemp(fissionCore.temperature.get()), DisplayUnit.TEMPERATURE_CELCIUS).withStyle(ChatFormatting.GOLD)), guiWidth + 20, guiHeight + 45, Color.TEXT_GRAY.color(), false);
+                    graphics.drawString(font, NuclearTextUtils.gui("logisticsnetwork.temperature", ChatFormatter.getChatDisplayShort(TileFissionReactorCore.getActualTemp(fissionCore.temperature.getValue()), DisplayUnits.TEMPERATURE_CELCIUS).withStyle(ChatFormatting.GOLD)), guiWidth + 20, guiHeight + 45, Color.TEXT_GRAY.color(), false);
 
                     graphics.drawString(font, NuclearTextUtils.gui("logisticsnetwork.fuel"), guiWidth + 20, guiHeight + 65, Color.TEXT_GRAY.color(), false);
 
@@ -142,7 +141,7 @@ public class ScreenMonitorModule extends GenericInterfaceBoundScreen<ContainerMo
 
                     if(empty == 4) {
                         status = NuclearTextUtils.gui("logisticsnetwork.statusnofuel").withStyle(ChatFormatting.YELLOW);
-                    } else if (fissionCore.temperature.get() > TileFissionReactorCore.MELTDOWN_TEMPERATURE_ACTUAL) {
+                    } else if (fissionCore.temperature.getValue() > TileFissionReactorCore.MELTDOWN_TEMPERATURE_ACTUAL) {
                         status = NuclearTextUtils.gui("logisticsnetwork.statusoverheat").withStyle(ChatFormatting.RED, ChatFormatting.BOLD);
                     }
 
@@ -167,15 +166,15 @@ public class ScreenMonitorModule extends GenericInterfaceBoundScreen<ContainerMo
 
                     graphics.renderItem(GenericTileInterface.getItemFromType(type), guiWidth + 80, guiHeight + 20);
 
-                    graphics.drawString(font, NuclearTextUtils.gui("logisticsnetwork.temperature", ChatFormatter.getChatDisplayShort(msCore.temperature.get(), DisplayUnit.TEMPERATURE_CELCIUS).withStyle(ChatFormatting.GOLD)), guiWidth + 20, guiHeight + 45, Color.TEXT_GRAY.color(), false);
+                    graphics.drawString(font, NuclearTextUtils.gui("logisticsnetwork.temperature", ChatFormatter.getChatDisplayShort(msCore.temperature.getValue(), DisplayUnits.TEMPERATURE_CELCIUS).withStyle(ChatFormatting.GOLD)), guiWidth + 20, guiHeight + 45, Color.TEXT_GRAY.color(), false);
 
                     graphics.drawString(font, NuclearTextUtils.gui("logisticsnetwork.fuel"), guiWidth + 20, guiHeight + 65, Color.TEXT_GRAY.color(), false);
 
-                    graphics.drawString(font, ElectroTextUtils.ratio(ChatFormatter.getChatDisplayShort(msCore.currentFuel.get() / 1000.0, DisplayUnit.BUCKETS), ChatFormatter.getChatDisplayShort(TileMSReactorCore.FUEL_CAPACITY / 1000.0, DisplayUnit.BUCKETS)), guiWidth + 30, guiHeight + 75, Color.WHITE.color(), false);
+                    graphics.drawString(font, VoltaicTextUtils.ratio(ChatFormatter.getChatDisplayShort(msCore.currentFuel.getValue() / 1000.0, DisplayUnits.BUCKETS), ChatFormatter.getChatDisplayShort(TileMSReactorCore.FUEL_CAPACITY / 1000.0, DisplayUnits.BUCKETS)), guiWidth + 30, guiHeight + 75, Color.WHITE.color(), false);
 
                     graphics.drawString(font, NuclearTextUtils.gui("logisticsnetwork.waste"), guiWidth + 20, guiHeight + 90, Color.TEXT_GRAY.color(), false);
 
-                    graphics.drawString(font, ElectroTextUtils.ratio(ChatFormatter.getChatDisplayShort(msCore.currentWaste.get() / 1000.0, DisplayUnit.BUCKETS), ChatFormatter.getChatDisplayShort(TileMSReactorCore.WASTE_CAP / 1000.0, DisplayUnit.BUCKETS)), guiWidth + 30, guiHeight + 100, Color.WHITE.color(), false);
+                    graphics.drawString(font, VoltaicTextUtils.ratio(ChatFormatter.getChatDisplayShort(msCore.currentWaste.getValue() / 1000.0, DisplayUnits.BUCKETS), ChatFormatter.getChatDisplayShort(TileMSReactorCore.WASTE_CAP / 1000.0, DisplayUnits.BUCKETS)), guiWidth + 30, guiHeight + 100, Color.WHITE.color(), false);
 
                     status = NuclearTextUtils.gui("logisticsnetwork.statusgood").withStyle(ChatFormatting.GREEN);
 
@@ -183,9 +182,9 @@ public class ScreenMonitorModule extends GenericInterfaceBoundScreen<ContainerMo
                         status = NuclearTextUtils.gui("msreactor.status.nofreezeplug").withStyle(ChatFormatting.RED);
                     } else if (msCore.clientPlugCache.getSafe() instanceof TileFreezePlug plug && !plug.isFrozen()) {
                         status = NuclearTextUtils.gui("msreactor.warning.freezeoff").withStyle(ChatFormatting.YELLOW);
-                    } else if (msCore.wasteIsFull.get()) {
+                    } else if (msCore.wasteIsFull.getValue()) {
                         status = NuclearTextUtils.gui("msreactor.status.wastefull").withStyle(ChatFormatting.YELLOW);
-                    } else if (msCore.temperature.get() > TileMSReactorCore.MELTDOWN_TEMPERATURE) {
+                    } else if (msCore.temperature.getValue() > TileMSReactorCore.MELTDOWN_TEMPERATURE) {
                         status = NuclearTextUtils.gui("logisticsnetwork.statusoverheat").withStyle(ChatFormatting.RED, ChatFormatting.BOLD);
                     }
 
@@ -214,21 +213,21 @@ public class ScreenMonitorModule extends GenericInterfaceBoundScreen<ContainerMo
 
                     graphics.drawString(font, NuclearTextUtils.gui("logisticsnetwork.deuterium"), guiWidth + 20, guiHeight + 45, Color.TEXT_GRAY.color(), false);
 
-                    graphics.drawString(font, ElectroTextUtils.ratio(Component.literal(fusionCore.deuterium.get() + ""), Component.literal(Constants.FUSIONREACTOR_MAXSTORAGE + "")), guiWidth + 30, guiHeight + 55, Color.WHITE.color(), false);
+                    graphics.drawString(font, VoltaicTextUtils.ratio(Component.literal(fusionCore.deuterium.getName() + ""), Component.literal(NuclearConstants.FUSIONREACTOR_MAXSTORAGE + "")), guiWidth + 30, guiHeight + 55, Color.WHITE.color(), false);
 
                     graphics.drawString(font, NuclearTextUtils.gui("logisticsnetwork.tritium"), guiWidth + 20, guiHeight + 70, Color.TEXT_GRAY.color(), false);
 
-                    graphics.drawString(font, ElectroTextUtils.ratio(Component.literal(fusionCore.tritium.get() + ""), Component.literal(Constants.FUSIONREACTOR_MAXSTORAGE + "")), guiWidth + 30, guiHeight + 80, Color.WHITE.color(), false);
+                    graphics.drawString(font, VoltaicTextUtils.ratio(Component.literal(fusionCore.tritium.getName() + ""), Component.literal(NuclearConstants.FUSIONREACTOR_MAXSTORAGE + "")), guiWidth + 30, guiHeight + 80, Color.WHITE.color(), false);
 
                     graphics.drawString(font, NuclearTextUtils.gui("logisticsnetwork.power"), guiWidth + 20, guiHeight + 95, Color.TEXT_GRAY.color(), false);
 
-                    graphics.drawString(font, ChatFormatter.getChatDisplayShort(Math.min(1.0, electro.getJoulesStored() / Constants.FUSIONREACTOR_USAGE_PER_TICK) * 100.0, DisplayUnit.PERCENTAGE), guiWidth + 30, guiHeight + 105, Color.WHITE.color(), false);
+                    graphics.drawString(font, ChatFormatter.getChatDisplayShort(Math.min(1.0, electro.getJoulesStored() / NuclearConstants.FUSIONREACTOR_USAGE_PER_TICK) * 100.0, DisplayUnits.PERCENTAGE), guiWidth + 30, guiHeight + 105, Color.WHITE.color(), false);
 
                     status = NuclearTextUtils.gui("logisticsnetwork.statusgood").withStyle(ChatFormatting.GREEN);
 
-                    if (fusionCore.tritium.get() < 1 || fusionCore.deuterium.get() < 1) {
+                    if (fusionCore.tritium.getValue() < 1 || fusionCore.deuterium.getValue() < 1) {
                         status = NuclearTextUtils.gui("logisticsnetwork.statusnofuel").withStyle(ChatFormatting.RED);
-                    } else if (electro.getJoulesStored() < Constants.FUSIONREACTOR_USAGE_PER_TICK) {
+                    } else if (electro.getJoulesStored() < NuclearConstants.FUSIONREACTOR_USAGE_PER_TICK) {
                         status = NuclearTextUtils.gui("logisticsnetwork.statusnopower").withStyle(ChatFormatting.YELLOW);
                     }
 

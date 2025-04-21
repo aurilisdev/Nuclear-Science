@@ -1,6 +1,5 @@
 package nuclearscience.prefab.sound;
 
-import electrodynamics.prefab.utilities.WorldUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
@@ -9,6 +8,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import nuclearscience.common.entity.EntityParticle;
+import voltaic.prefab.utilities.WorldUtils;
 
 public class TickableSoundParticle extends AbstractTickableSoundInstance {
 

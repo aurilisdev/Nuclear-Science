@@ -1,10 +1,7 @@
 package nuclearscience.client.guidebook;
 
-import electrodynamics.client.guidebook.utils.components.Module;
-import electrodynamics.client.guidebook.utils.pagedata.graphics.ImageWrapperObject;
 import net.minecraft.network.chat.MutableComponent;
 import nuclearscience.NuclearScience;
-import nuclearscience.References;
 import nuclearscience.client.guidebook.chapters.ChapterFissionReactor;
 import nuclearscience.client.guidebook.chapters.ChapterFusionReactor;
 import nuclearscience.client.guidebook.chapters.ChapterGasCentrifuge;
@@ -19,6 +16,8 @@ import nuclearscience.client.guidebook.chapters.ChapterRadioGenerator;
 import nuclearscience.client.guidebook.chapters.ChapterSteamFunnel;
 import nuclearscience.client.guidebook.chapters.ChapterTurbines;
 import nuclearscience.prefab.utils.NuclearTextUtils;
+import voltaic.client.guidebook.utils.components.Module;
+import voltaic.client.guidebook.utils.pagedata.graphics.ImageWrapperObject;
 
 public class ModuleNuclearScience extends Module {
 
@@ -31,7 +30,7 @@ public class ModuleNuclearScience extends Module {
 
 	@Override
 	public MutableComponent getTitle() {
-		return NuclearTextUtils.guidebook(References.ID);
+		return NuclearTextUtils.guidebook(NuclearScience.ID);
 	}
 
 	@Override

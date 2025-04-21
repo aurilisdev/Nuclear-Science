@@ -8,14 +8,14 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import nuclearscience.References;
+import nuclearscience.NuclearScience;
 import nuclearscience.common.tags.NuclearScienceTags;
 import nuclearscience.registers.NuclearScienceItems;
 
 public class NuclearScienceItemTagsProvider extends ItemTagsProvider {
 
     public NuclearScienceItemTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, BlockTagsProvider provider, ExistingFileHelper existingFileHelper) {
-        super(output, lookupProvider, provider.contentsGetter(), References.ID, existingFileHelper);
+        super(output, lookupProvider, provider.contentsGetter(), NuclearScience.ID, existingFileHelper);
     }
 
     @Override

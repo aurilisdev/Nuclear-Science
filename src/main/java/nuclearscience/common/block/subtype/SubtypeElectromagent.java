@@ -1,6 +1,6 @@
 package nuclearscience.common.block.subtype;
 
-import electrodynamics.api.ISubtype;
+import voltaic.api.ISubtype;
 
 public enum SubtypeElectromagent implements ISubtype {
     electromagnet(1.0), electromagneticglass(1.0);

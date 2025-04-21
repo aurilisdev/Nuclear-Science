@@ -1,16 +1,16 @@
 package nuclearscience.client.screen;
 
-import electrodynamics.prefab.screen.GenericScreen;
-import electrodynamics.prefab.screen.component.types.ScreenComponentProgress;
-import electrodynamics.prefab.screen.component.types.gauges.ScreenComponentFluidGauge;
-import electrodynamics.prefab.screen.component.types.guitab.ScreenComponentElectricInfo;
-import electrodynamics.prefab.screen.component.utils.AbstractScreenComponentInfo;
-import electrodynamics.prefab.tile.components.IComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import nuclearscience.common.inventory.container.ContainerFalloutScrubber;
 import nuclearscience.common.tile.TileFalloutScrubber;
+import voltaic.prefab.screen.GenericScreen;
+import voltaic.prefab.screen.component.types.ScreenComponentProgress;
+import voltaic.prefab.screen.component.types.gauges.ScreenComponentFluidGauge;
+import voltaic.prefab.screen.component.types.guitab.ScreenComponentElectricInfo;
+import voltaic.prefab.screen.component.utils.AbstractScreenComponentInfo;
+import voltaic.prefab.tile.components.IComponentType;
+import voltaic.prefab.tile.components.type.ComponentFluidHandlerMulti;
 
 public class ScreenFalloutScrubber extends GenericScreen<ContainerFalloutScrubber> {
     public ScreenFalloutScrubber(ContainerFalloutScrubber container, Inventory inv, Component title) {
@@ -33,7 +33,7 @@ public class ScreenFalloutScrubber extends GenericScreen<ContainerFalloutScrubbe
 
         addComponent(new ScreenComponentProgress(ScreenComponentProgress.ProgressBars.FAN, () -> {
             TileFalloutScrubber scrubber = container.getSafeHost();
-            if (scrubber != null && scrubber.active.get()) {
+            if (scrubber != null && scrubber.active.getValue()) {
                 return 1.0;
             }
             return 0;

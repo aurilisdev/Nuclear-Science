@@ -1,11 +1,5 @@
 package nuclearscience.common.tile.reactor.logisticsnetwork;
 
-import electrodynamics.common.block.states.ElectrodynamicsBlockStates;
-import electrodynamics.prefab.properties.Property;
-import electrodynamics.prefab.properties.PropertyTypes;
-import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
-import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import electrodynamics.prefab.utilities.BlockEntityUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -19,23 +13,29 @@ import nuclearscience.common.tile.reactor.logisticsnetwork.interfaces.GenericTil
 import nuclearscience.common.tile.reactor.logisticsnetwork.util.GenericTileInterfaceBound;
 import nuclearscience.common.tile.reactor.moltensalt.TileMSReactorCore;
 import nuclearscience.registers.NuclearScienceTiles;
+import voltaic.common.block.states.VoltaicBlockStates;
+import voltaic.prefab.properties.types.PropertyTypes;
+import voltaic.prefab.properties.variant.SingleProperty;
+import voltaic.prefab.tile.components.type.ComponentContainerProvider;
+import voltaic.prefab.tile.components.type.ComponentTickable;
+import voltaic.prefab.utilities.BlockEntityUtils;
 
 public class TileThermometerModule extends GenericTileInterfaceBound {
 
     private Direction relativeBack;
 
-    public final Property<Integer> mode = property(new Property<>(PropertyTypes.INTEGER, "comparitormode", Mode.CONSTANT.ordinal()));
-    public final Property<Boolean> inverted = property(new Property<>(PropertyTypes.BOOLEAN, "inverted", false));
-    public final Property<Double> targetTemperature = property(new Property<>(PropertyTypes.DOUBLE, "targettemperature", 0.0));
-    public final Property<Double> trackedTemperature = property(new Property<>(PropertyTypes.DOUBLE, "trackedtemperature", 0.0));
-    public final Property<Integer> redstoneSignal = property(new Property<>(PropertyTypes.INTEGER, "redstonesignal", 0));
+    public final SingleProperty<Integer> mode = property(new SingleProperty<>(PropertyTypes.INTEGER, "comparitormode", Mode.CONSTANT.ordinal()));
+    public final SingleProperty<Boolean> inverted = property(new SingleProperty<>(PropertyTypes.BOOLEAN, "inverted", false));
+    public final SingleProperty<Double> targetTemperature = property(new SingleProperty<>(PropertyTypes.DOUBLE, "targettemperature", 0.0));
+    public final SingleProperty<Double> trackedTemperature = property(new SingleProperty<>(PropertyTypes.DOUBLE, "trackedtemperature", 0.0));
+    public final SingleProperty<Integer> redstoneSignal = property(new SingleProperty<>(PropertyTypes.INTEGER, "redstonesignal", 0));
 
     public static final int MAX_REDSTONE = 15;
 
     public TileThermometerModule(BlockPos worldPos, BlockState blockState) {
         super(NuclearScienceTiles.TILE_THERMOMETERMODULE.get(), worldPos, blockState);
         addComponent(new ComponentTickable(this).tickServer(this::tickServer));
-        addComponent(new ComponentContainerProvider("container.thermometermodule", this).createMenu((id, player) -> new ContainerThermometerModule(id, player, new SimpleContainer(0), getCoordsArray())));
+        addComponent(new ComponentContainerProvider("thermometermodule", this).createMenu((id, player) -> new ContainerThermometerModule(id, player, new SimpleContainer(0), getCoordsArray())));
         relativeBack = BlockEntityUtils.getRelativeSide(getFacing(), BlockEntityUtils.MachineDirection.BACK.mappedDir);
     }
 
@@ -43,47 +43,47 @@ public class TileThermometerModule extends GenericTileInterfaceBound {
     public void tickServer(ComponentTickable tickable) {
         super.tickServer(tickable);
 
-        GenericTileInterface.InterfaceType type = GenericTileInterface.InterfaceType.values()[interfaceType.get()];
+        GenericTileInterface.InterfaceType type = GenericTileInterface.InterfaceType.values()[interfaceType.getValue()];
 
-        if (type == GenericTileInterface.InterfaceType.NONE || interfaceLocation.get().equals(BlockEntityUtils.OUT_OF_REACH)) {
-            redstoneSignal.set(0);
-            trackedTemperature.set(0.0);
+        if (type == GenericTileInterface.InterfaceType.NONE || interfaceLocation.getValue().equals(BlockEntityUtils.OUT_OF_REACH)) {
+            redstoneSignal.setValue(0);
+            trackedTemperature.setValue(0.0);
             return;
         }
 
         if (!networkCable.valid() || !(networkCable.getSafe() instanceof TileReactorLogisticsCable)) {
-            redstoneSignal.set(0);
-            trackedTemperature.set(0.0);
+            redstoneSignal.setValue(0);
+            trackedTemperature.setValue(0.0);
             return;
         }
 
         TileReactorLogisticsCable cable = networkCable.getSafe();
 
         if (cable.isRemoved()) {
-            redstoneSignal.set(0);
-            trackedTemperature.set(0.0);
+            redstoneSignal.setValue(0);
+            trackedTemperature.setValue(0.0);
             return;
         }
 
         ReactorLogisticsNetwork network = cable.getNetwork();
 
         if (!network.isControllerActive()) {
-            redstoneSignal.set(0);
-            trackedTemperature.set(0.0);
+            redstoneSignal.setValue(0);
+            trackedTemperature.setValue(0.0);
             return;
         }
 
-        GenericTileInterface genericInterface = network.getInterface(interfaceLocation.get());
+        GenericTileInterface genericInterface = network.getInterface(interfaceLocation.getValue());
 
         if (genericInterface == null || genericInterface.getInterfaceType() != type) {
-            redstoneSignal.set(0);
-            trackedTemperature.set(0.0);
+            redstoneSignal.setValue(0);
+            trackedTemperature.setValue(0.0);
             return;
         }
 
         if (genericInterface.reactor == null || !genericInterface.reactor.valid()) {
-            redstoneSignal.set(0);
-            trackedTemperature.set(0.0);
+            redstoneSignal.setValue(0);
+            trackedTemperature.setValue(0.0);
             return;
         }
 
@@ -91,34 +91,34 @@ public class TileThermometerModule extends GenericTileInterfaceBound {
 
         if (genericInterface.reactor.getSafe() instanceof TileFissionReactorCore core) {
 
-            temp = TileFissionReactorCore.getActualTemp(core.temperature.get());
+            temp = TileFissionReactorCore.getActualTemp(core.temperature.getValue());
 
         } else if (genericInterface.reactor.getSafe() instanceof TileMSReactorCore core) {
 
-            temp = core.temperature.get();
+            temp = core.temperature.getValue();
 
         }
 
         if (temp < 0) {
-            redstoneSignal.set(0);
-            trackedTemperature.set(0.0);
+            redstoneSignal.setValue(0);
+            trackedTemperature.setValue(0.0);
             return;
         }
 
         double perc = 0;
 
-        trackedTemperature.set(temp);
+        trackedTemperature.setValue(temp);
 
-        switch (Mode.values()[mode.get()]) {
+        switch (Mode.values()[mode.getValue()]) {
             case CONSTANT:
-                if (inverted.get()) {
-                    if (temp <= targetTemperature.get()) {
+                if (inverted.getValue()) {
+                    if (temp <= targetTemperature.getValue()) {
                         perc = 1;
                     } else {
                         perc = 0;
                     }
                 } else {
-                    if (temp >= targetTemperature.get()) {
+                    if (temp >= targetTemperature.getValue()) {
                         perc = 1;
                     } else {
                         perc = 0;
@@ -128,20 +128,20 @@ public class TileThermometerModule extends GenericTileInterfaceBound {
                 break;
             case BUILD_UP:
 
-                if (inverted.get()) {
-                    if (temp == 0 || targetTemperature.get() == 0) {
+                if (inverted.getValue()) {
+                    if (temp == 0 || targetTemperature.getValue() == 0) {
                         perc = 1;
                     } else {
 
-                        perc = 1.0 - Math.min(1, (temp / targetTemperature.get()));
+                        perc = 1.0 - Math.min(1, (temp / targetTemperature.getValue()));
 
                     }
                 } else {
-                    if (temp == 0 || targetTemperature.get() == 0) {
+                    if (temp == 0 || targetTemperature.getValue() == 0) {
                         perc = 0;
                     } else {
 
-                        perc = Math.min(1, temp / targetTemperature.get());
+                        perc = Math.min(1, temp / targetTemperature.getValue());
 
                     }
 
@@ -150,7 +150,7 @@ public class TileThermometerModule extends GenericTileInterfaceBound {
                 break;
         }
 
-        redstoneSignal.set((int) (MAX_REDSTONE * perc));
+        redstoneSignal.setValue((int) (MAX_REDSTONE * perc));
 
 
     }
@@ -168,7 +168,7 @@ public class TileThermometerModule extends GenericTileInterfaceBound {
     @Override
     public void onBlockStateUpdate(BlockState oldState, BlockState newState) {
         super.onBlockStateUpdate(oldState, newState);
-        if (!level.isClientSide() && oldState.hasProperty(ElectrodynamicsBlockStates.FACING) && newState.hasProperty(ElectrodynamicsBlockStates.FACING) && oldState.getValue(ElectrodynamicsBlockStates.FACING) != newState.getValue(ElectrodynamicsBlockStates.FACING)) {
+        if (!level.isClientSide() && oldState.hasProperty(VoltaicBlockStates.FACING) && newState.hasProperty(VoltaicBlockStates.FACING) && oldState.getValue(VoltaicBlockStates.FACING) != newState.getValue(VoltaicBlockStates.FACING)) {
             relativeBack = BlockEntityUtils.getRelativeSide(getFacing(), BlockEntityUtils.MachineDirection.BACK.mappedDir);
         }
     }
@@ -192,7 +192,7 @@ public class TileThermometerModule extends GenericTileInterfaceBound {
 
     @Override
     public int getComparatorSignal() {
-        return redstoneSignal.get();
+        return redstoneSignal.getValue();
     }
 
     public static enum Mode {

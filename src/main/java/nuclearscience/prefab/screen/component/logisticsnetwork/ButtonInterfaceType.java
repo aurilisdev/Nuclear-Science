@@ -1,9 +1,5 @@
 package nuclearscience.prefab.screen.component.logisticsnetwork;
 
-import electrodynamics.api.screen.ITexture;
-import electrodynamics.prefab.screen.component.button.ScreenComponentButton;
-import electrodynamics.prefab.screen.component.editbox.ScreenComponentEditBox;
-import electrodynamics.prefab.utilities.math.Color;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
@@ -12,6 +8,10 @@ import nuclearscience.client.screen.util.GenericInterfaceBoundScreen;
 import nuclearscience.common.tile.reactor.logisticsnetwork.interfaces.GenericTileInterface;
 import nuclearscience.common.tile.reactor.logisticsnetwork.util.GenericTileInterfaceBound;
 import nuclearscience.prefab.screen.component.quantumtunnel.QuantumTunnelTextures;
+import voltaic.api.screen.ITexture;
+import voltaic.prefab.screen.component.button.ScreenComponentButton;
+import voltaic.prefab.screen.component.editbox.ScreenComponentEditBox;
+import voltaic.prefab.utilities.math.Color;
 
 public class ButtonInterfaceType extends ScreenComponentButton<ButtonInterfaceType> {
 
@@ -39,7 +39,7 @@ public class ButtonInterfaceType extends ScreenComponentButton<ButtonInterfaceTy
 
         ITexture texture;
 
-        if (bound != null && (tile.interfaceLocation.get().equals(bound.pos()) || isSelected || isHovered())) {
+        if (bound != null && (tile.interfaceLocation.getValue().equals(bound.pos()) || isSelected || isHovered())) {
 
             texture = QuantumTunnelTextures.FREQUENCY_SELECTED;
 

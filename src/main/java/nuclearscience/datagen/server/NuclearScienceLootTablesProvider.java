@@ -2,10 +2,9 @@ package nuclearscience.datagen.server;
 
 import java.util.List;
 
-import electrodynamics.datagen.server.ElectrodynamicsLootTablesProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.level.block.Block;
-import nuclearscience.References;
+import nuclearscience.NuclearScience;
 import nuclearscience.common.block.subtype.SubtypeElectromagent;
 import nuclearscience.common.block.subtype.SubtypeIrradiatedBlock;
 import nuclearscience.common.block.subtype.SubtypeMoltenSaltPipe;
@@ -14,11 +13,12 @@ import nuclearscience.common.block.subtype.SubtypeRadiationShielding;
 import nuclearscience.common.block.subtype.SubtypeReactorLogisticsCable;
 import nuclearscience.registers.NuclearScienceBlocks;
 import nuclearscience.registers.NuclearScienceTiles;
+import voltaic.datagen.utils.server.loottable.BaseLootTablesProvider;
 
-public class NuclearScienceLootTablesProvider extends ElectrodynamicsLootTablesProvider {
+public class NuclearScienceLootTablesProvider extends BaseLootTablesProvider {
 
 	public NuclearScienceLootTablesProvider(HolderLookup.Provider provider) {
-		super(References.ID, provider);
+		super(NuclearScience.ID, provider);
 	}
 
 	@Override

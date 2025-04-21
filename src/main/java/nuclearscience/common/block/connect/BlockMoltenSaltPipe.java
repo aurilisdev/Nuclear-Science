@@ -4,8 +4,6 @@ import java.util.HashSet;
 
 import com.mojang.serialization.MapCodec;
 
-import electrodynamics.common.block.connect.util.AbstractRefreshingConnectBlock;
-import electrodynamics.common.block.connect.util.EnumConnectType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -18,6 +16,8 @@ import nuclearscience.common.block.subtype.SubtypeMoltenSaltPipe;
 import nuclearscience.common.tile.reactor.moltensalt.TileHeatExchanger;
 import nuclearscience.common.tile.reactor.moltensalt.TileMSReactorCore;
 import nuclearscience.common.tile.reactor.moltensalt.TileMoltenSaltPipe;
+import voltaic.common.block.connect.AbstractRefreshingConnectBlock;
+import voltaic.common.block.connect.EnumConnectType;
 
 public class BlockMoltenSaltPipe extends AbstractRefreshingConnectBlock<TileMoltenSaltPipe> {
 

@@ -5,11 +5,6 @@ import org.joml.Matrix4f;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import electrodynamics.api.electricity.formatting.ChatFormatter;
-import electrodynamics.api.electricity.formatting.DisplayUnit;
-import electrodynamics.client.render.tile.AbstractTileRenderer;
-import electrodynamics.prefab.utilities.math.Color;
-import electrodynamics.prefab.utilities.math.MathUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -17,6 +12,11 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import nuclearscience.common.tile.reactor.logisticsnetwork.TileThermometerModule;
+import voltaic.api.electricity.formatting.ChatFormatter;
+import voltaic.api.electricity.formatting.DisplayUnits;
+import voltaic.client.render.AbstractTileRenderer;
+import voltaic.prefab.utilities.math.Color;
+import voltaic.prefab.utilities.math.MathUtils;
 
 public class RenderThermometerModule extends AbstractTileRenderer<TileThermometerModule> {
 
@@ -27,7 +27,7 @@ public class RenderThermometerModule extends AbstractTileRenderer<TileThermomete
     @Override
     public void render(@NotNull TileThermometerModule tile, float partialTicks, PoseStack stack, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
 
-        if(!tile.linked.get()) {
+        if(!tile.linked.getValue()) {
             return;
         }
 
@@ -49,7 +49,7 @@ public class RenderThermometerModule extends AbstractTileRenderer<TileThermomete
 
         stack.translate(0, 0.175, -0.46875);
 
-        Component transfer = ChatFormatter.getChatDisplayShort(tile.trackedTemperature.get(), DisplayUnit.TEMPERATURE_CELCIUS);
+        Component transfer = ChatFormatter.getChatDisplayShort(tile.trackedTemperature.getValue(), DisplayUnits.TEMPERATURE_CELCIUS);
 
         int width = font.width(transfer);
 
@@ -71,7 +71,7 @@ public class RenderThermometerModule extends AbstractTileRenderer<TileThermomete
 
         stack.translate(0, -0.0625, -0.46875);
 
-        transfer = ChatFormatter.getChatDisplayShort(tile.targetTemperature.get(), DisplayUnit.TEMPERATURE_CELCIUS);
+        transfer = ChatFormatter.getChatDisplayShort(tile.targetTemperature.getValue(), DisplayUnits.TEMPERATURE_CELCIUS);
 
         width = font.width(transfer);
 

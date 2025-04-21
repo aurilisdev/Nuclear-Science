@@ -1,8 +1,8 @@
 package nuclearscience.prefab.screen.component.quantumtunnel;
 
-import electrodynamics.api.screen.ITexture;
 import net.minecraft.resources.ResourceLocation;
 import nuclearscience.NuclearScience;
+import voltaic.api.screen.ITexture;
 
 public enum QuantumTunnelTextures implements ITexture {
     FREQUENCY(18, 18, 0, 0, 18, 18, NuclearScience.rl("textures/screen/component/quantumtunnel/frequency.png")),

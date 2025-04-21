@@ -3,20 +3,7 @@ package nuclearscience.client.guidebook.chapters;
 import java.util.ArrayList;
 import java.util.List;
 
-import electrodynamics.api.electricity.formatting.ChatFormatter;
-import electrodynamics.api.electricity.formatting.DisplayUnit;
-import electrodynamics.client.guidebook.ScreenGuidebook;
-import electrodynamics.client.guidebook.utils.components.Chapter;
-import electrodynamics.client.guidebook.utils.components.Module;
-import electrodynamics.client.guidebook.utils.pagedata.OnKeyPress;
-import electrodynamics.client.guidebook.utils.pagedata.OnTooltip;
-import electrodynamics.client.guidebook.utils.pagedata.graphics.AbstractGraphicWrapper;
-import electrodynamics.client.guidebook.utils.pagedata.graphics.ImageWrapperObject;
-import electrodynamics.client.guidebook.utils.pagedata.graphics.ItemWrapperObject;
-import electrodynamics.client.guidebook.utils.pagedata.text.TextWrapperObject;
-import electrodynamics.compatibility.jei.JeiBuffer;
 import electrodynamics.prefab.utilities.ElectroTextUtils;
-import electrodynamics.registers.ElectrodynamicsCapabilities;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.MutableComponent;
@@ -28,6 +15,19 @@ import nuclearscience.common.block.subtype.SubtypeReactorLogisticsCable;
 import nuclearscience.common.tile.reactor.logisticsnetwork.TileController;
 import nuclearscience.prefab.utils.NuclearTextUtils;
 import nuclearscience.registers.NuclearScienceItems;
+import voltaic.api.electricity.formatting.ChatFormatter;
+import voltaic.api.electricity.formatting.DisplayUnits;
+import voltaic.client.guidebook.ScreenGuidebook;
+import voltaic.client.guidebook.utils.components.Chapter;
+import voltaic.client.guidebook.utils.components.Module;
+import voltaic.client.guidebook.utils.pagedata.OnKeyPress;
+import voltaic.client.guidebook.utils.pagedata.OnTooltip;
+import voltaic.client.guidebook.utils.pagedata.graphics.AbstractGraphicWrapper;
+import voltaic.client.guidebook.utils.pagedata.graphics.ImageWrapperObject;
+import voltaic.client.guidebook.utils.pagedata.graphics.ItemWrapperObject;
+import voltaic.client.guidebook.utils.pagedata.text.TextWrapperObject;
+import voltaic.compatibility.jei.JeiBuffer;
+import voltaic.registers.VoltaicCapabilities;
 
 public class ChapterLogisticsNetwork extends Chapter {
 
@@ -107,7 +107,7 @@ public class ChapterLogisticsNetwork extends Chapter {
             }
 
         }));
-        pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.reactorlogistics.logisticscontroller", ChatFormatter.getChatDisplayShort(TileController.USAGE * 20, DisplayUnit.WATT), ChatFormatter.getChatDisplayShort(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE, DisplayUnit.VOLTAGE))).setSeparateStart());
+        pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.reactorlogistics.logisticscontroller", ChatFormatter.getChatDisplayShort(TileController.USAGE * 20, DisplayUnits.WATT), ChatFormatter.getChatDisplayShort(VoltaicCapabilities.DEFAULT_VOLTAGE, DisplayUnits.VOLTAGE))).setSeparateStart());
 
         // Fission Interface
 
