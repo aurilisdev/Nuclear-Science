@@ -2,15 +2,15 @@ package nuclearscience.prefab.screen.component;
 
 import java.util.function.DoubleSupplier;
 
-import electrodynamics.api.screen.ITexture;
-import electrodynamics.prefab.screen.component.types.ScreenComponentGeneric;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
-import nuclearscience.References;
+import nuclearscience.NuclearScience;
+import voltaic.api.screen.ITexture;
+import voltaic.prefab.screen.component.ScreenComponentGeneric;
 
 public class ScreenComponentGasCentrifuge extends ScreenComponentGeneric {
 
-	private static final ResourceLocation TEXTURE = new ResourceLocation(References.ID + ":textures/screen/component/nsprocessingarrows.png");
+	private static final ResourceLocation TEXTURE = NuclearScience.rl("textures/screen/component/nsprocessingarrows.png");
 
 	private final DoubleSupplier progressInfoHandlerBulbs;
 	private final DoubleSupplier progressInfoHandlerProgressTop;

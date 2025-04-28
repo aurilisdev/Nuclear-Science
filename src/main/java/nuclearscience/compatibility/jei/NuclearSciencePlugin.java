@@ -4,13 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import electrodynamics.client.screen.tile.ScreenO2OProcessor;
-import electrodynamics.compatibility.jei.ElectrodynamicsJEIPlugin;
 import electrodynamics.compatibility.jei.recipecategories.utils.psuedorecipes.types.PsuedoItem2ItemRecipe;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
@@ -19,6 +17,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.registries.RegistryObject;
+import nuclearscience.NuclearScience;
 import nuclearscience.client.screen.ScreenChemicalExtractor;
 import nuclearscience.client.screen.ScreenFissionReactorCore;
 import nuclearscience.client.screen.ScreenGasCentrifuge;
@@ -26,13 +28,13 @@ import nuclearscience.client.screen.ScreenMSRFuelPreProcessor;
 import nuclearscience.client.screen.ScreenNuclearBoiler;
 import nuclearscience.client.screen.ScreenParticleInjector;
 import nuclearscience.client.screen.ScreenRadioactiveProcessor;
-import nuclearscience.common.recipe.NuclearScienceRecipeInit;
-import nuclearscience.common.recipe.categories.fluiditem2gas.specificmachines.NuclearBoilerRecipe;
-import nuclearscience.common.recipe.categories.fluiditem2item.specificmachines.ChemicalExtractorRecipe;
-import nuclearscience.common.recipe.categories.fluiditem2item.specificmachines.MSRFuelPreProcessorRecipe;
-import nuclearscience.common.recipe.categories.fluiditem2item.specificmachines.RadioactiveProcessorRecipe;
-import nuclearscience.common.recipe.categories.item2item.specificmachines.FissionReactorRecipe;
-import nuclearscience.common.recipe.categories.item2item.specificmachines.FuelReprocessorRecipe;
+import nuclearscience.registers.NuclearScienceRecipies;
+import nuclearscience.common.recipe.categories.fluiditem2gas.NuclearBoilerRecipe;
+import nuclearscience.common.recipe.categories.fluiditem2item.ChemicalExtractorRecipe;
+import nuclearscience.common.recipe.categories.fluiditem2item.MSRFuelPreProcessorRecipe;
+import nuclearscience.common.recipe.categories.fluiditem2item.RadioactiveProcessorRecipe;
+import nuclearscience.common.recipe.categories.item2item.FissionReactorRecipe;
+import nuclearscience.common.recipe.categories.item2item.FuelReprocessorRecipe;
 import nuclearscience.compatibility.jei.recipecategories.fluiditem2gas.specificmachines.NuclearBoilerRecipeCategory;
 import nuclearscience.compatibility.jei.recipecategories.fluiditem2item.specificmachines.ChemicalExtractorRecipeCategory;
 import nuclearscience.compatibility.jei.recipecategories.fluiditem2item.specificmachines.MSRProcessorRecipeCategory;
@@ -44,13 +46,22 @@ import nuclearscience.compatibility.jei.recipecategories.psuedo.specificmachines
 import nuclearscience.compatibility.jei.recipecategories.psuedo.specificmachines.ParticleAcceleratorDarkMatterRecipeCategory;
 import nuclearscience.compatibility.jei.utils.psuedorecipes.NuclearSciencePsuedoRecipes;
 import nuclearscience.compatibility.jei.utils.psuedorecipes.PsuedoGasCentrifugeRecipe;
+import nuclearscience.registers.NuclearScienceFluids;
+import nuclearscience.registers.NuclearScienceGases;
+import voltaic.api.gas.Gas;
+import voltaic.api.gas.GasStack;
+import voltaic.compatibility.jei.utils.ingredients.VoltaicJeiTypes;
+import voltaic.registers.VoltaicGases;
+import mezz.jei.api.registration.IExtraIngredientRegistration;
 
 @JeiPlugin
 public class NuclearSciencePlugin implements IModPlugin {
 
+	public static final ResourceLocation ID = NuclearScience.rl("jei");
+
 	@Override
 	public ResourceLocation getPluginUid() {
-		return new ResourceLocation(nuclearscience.References.ID, "jei");
+		return ID;
 	}
 
 	@Override
@@ -78,15 +89,15 @@ public class NuclearSciencePlugin implements IModPlugin {
 		registration.addRecipes(GasCentrifugeRecipeCategory.RECIPE_TYPE, gasCentrifugeRecipes);
 
 		// Nuclear Boiler
-		List<NuclearBoilerRecipe> nuclearBoilerRecipes = recipeManager.getAllRecipesFor(NuclearScienceRecipeInit.NUCLEAR_BOILER_TYPE.get());
+		List<NuclearBoilerRecipe> nuclearBoilerRecipes = recipeManager.getAllRecipesFor(NuclearScienceRecipies.NUCLEAR_BOILER_TYPE.get());
 		registration.addRecipes(NuclearBoilerRecipeCategory.RECIPE_TYPE, nuclearBoilerRecipes);
 
 		// Chemical Extractor
-		List<ChemicalExtractorRecipe> chemicalExtractorRecipes = recipeManager.getAllRecipesFor(NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_TYPE.get());
+		List<ChemicalExtractorRecipe> chemicalExtractorRecipes = recipeManager.getAllRecipesFor(NuclearScienceRecipies.CHEMICAL_EXTRACTOR_TYPE.get());
 		registration.addRecipes(ChemicalExtractorRecipeCategory.RECIPE_TYPE, chemicalExtractorRecipes);
 
 		// Fission Reactor
-		List<FissionReactorRecipe> fissionReactorRecipes = recipeManager.getAllRecipesFor(NuclearScienceRecipeInit.FISSION_REACTOR_TYPE.get());
+		List<FissionReactorRecipe> fissionReactorRecipes = recipeManager.getAllRecipesFor(NuclearScienceRecipies.FISSION_REACTOR_TYPE.get());
 		registration.addRecipes(FissionReactorRecipeCategory.RECIPE_TYPE, fissionReactorRecipes);
 
 		// Anti-Matter
@@ -98,15 +109,15 @@ public class NuclearSciencePlugin implements IModPlugin {
 		registration.addRecipes(ParticleAcceleratorDarkMatterRecipeCategory.RECIPE_TYPE, darkMatterRecipes);
 
 		// Fuel Reprocessor
-		List<FuelReprocessorRecipe> fuelReprocessorRecipes = recipeManager.getAllRecipesFor(NuclearScienceRecipeInit.FUEL_REPROCESSOR_TYPE.get());
+		List<FuelReprocessorRecipe> fuelReprocessorRecipes = recipeManager.getAllRecipesFor(NuclearScienceRecipies.FUEL_REPROCESSOR_TYPE.get());
 		registration.addRecipes(FuelReprocessorRecipeCategory.RECIPE_TYPE, fuelReprocessorRecipes);
 
 		// Radioactive Processor
-		List<RadioactiveProcessorRecipe> radioactiveProcessorRecipes = recipeManager.getAllRecipesFor(NuclearScienceRecipeInit.RADIOACTIVE_PROCESSOR_TYPE.get());
+		List<RadioactiveProcessorRecipe> radioactiveProcessorRecipes = recipeManager.getAllRecipesFor(NuclearScienceRecipies.RADIOACTIVE_PROCESSOR_TYPE.get());
 		registration.addRecipes(RadioactiveProcessorRecipeCategory.RECIPE_TYPE, radioactiveProcessorRecipes);
 
 		// MSR Processor
-		List<MSRFuelPreProcessorRecipe> msrProcessorRecipes = recipeManager.getAllRecipesFor(NuclearScienceRecipeInit.MSR_FUEL_PREPROCESSOR_TYPE.get());
+		List<MSRFuelPreProcessorRecipe> msrProcessorRecipes = recipeManager.getAllRecipesFor(NuclearScienceRecipies.MSR_FUEL_PREPROCESSOR_TYPE.get());
 		registration.addRecipes(MSRProcessorRecipeCategory.RECIPE_TYPE, msrProcessorRecipes);
 
 		nuclearScienceInfoTabs(registration);
@@ -131,18 +142,38 @@ public class NuclearSciencePlugin implements IModPlugin {
 
 	@Override
 	public void registerGuiHandlers(IGuiHandlerRegistration registry) {
-		registry.addRecipeClickArea(ScreenO2OProcessor.class, 48, 35, 22, 15, ElectrodynamicsJEIPlugin.O2O_CLICK_AREAS.toArray(new RecipeType<?>[ElectrodynamicsJEIPlugin.O2O_CLICK_AREAS.size()]));
+		// registry.addRecipeClickArea(ScreenO2OProcessor.class, 48, 35, 22, 15, ElectrodynamicsJEIPlugin.O2O_CLICK_AREAS.toArray(new
+		// RecipeType<?>[ElectrodynamicsJEIPlugin.O2O_CLICK_AREAS.size()]));
 		registry.addRecipeClickArea(ScreenNuclearBoiler.class, 97, 31, 22, 15, NuclearBoilerRecipeCategory.RECIPE_TYPE);
 		registry.addRecipeClickArea(ScreenRadioactiveProcessor.class, 97, 31, 22, 15, RadioactiveProcessorRecipeCategory.RECIPE_TYPE);
 		registry.addRecipeClickArea(ScreenChemicalExtractor.class, 97, 31, 22, 15, ChemicalExtractorRecipeCategory.RECIPE_TYPE);
 		registry.addRecipeClickArea(ScreenGasCentrifuge.class, 105, 13, 20, 54, GasCentrifugeRecipeCategory.RECIPE_TYPE);
-		registry.addRecipeClickArea(ScreenFissionReactorCore.class, 117, 53, 14, 13, FissionReactorRecipeCategory.RECIPE_TYPE);
+		registry.addRecipeClickArea(ScreenFissionReactorCore.class, 77, 38, 22, 15, FissionReactorRecipeCategory.RECIPE_TYPE);
 		registry.addRecipeClickArea(ScreenParticleInjector.class, 102, 43, 28, 14, ParticleAcceleratorAntiMatterRecipeCategory.RECIPE_TYPE, ParticleAcceleratorDarkMatterRecipeCategory.RECIPE_TYPE);
 		registry.addRecipeClickArea(ScreenMSRFuelPreProcessor.class, 98, 40, 16, 16, MSRProcessorRecipeCategory.RECIPE_TYPE);
 	}
 
 	private static void nuclearScienceInfoTabs(IRecipeRegistration registration) {
 
+	}
+
+	@Override
+	public void registerExtraIngredients(IExtraIngredientRegistration registration) {
+		List<FluidStack> fluids = new ArrayList<>();
+		for (RegistryObject<? extends Fluid> fluid : NuclearScienceFluids.FLUIDS.getEntries()) {
+			fluids.add(new FluidStack(fluid.get(), 1000));
+		}
+		registration.addExtraIngredients(ForgeTypes.FLUID_STACK, fluids);
+
+		List<GasStack> gases = new ArrayList<>();
+		for (RegistryObject<? extends Gas> gas : NuclearScienceGases.GASES.getEntries()) {
+			if (gas.get() == VoltaicGases.EMPTY.get()) {
+				continue;
+			}
+
+			gases.add(new GasStack(gas.get(), 1000, Gas.ROOM_TEMPERATURE, Gas.PRESSURE_AT_SEA_LEVEL));
+		}
+		registration.addExtraIngredients(VoltaicJeiTypes.GAS_STACK, gases);
 	}
 
 }

@@ -16,10 +16,10 @@
     "count": 1
   },
   "output": {
-    "amount": 2000.0,
+    "amount": 2000,
     "gas": "nuclearscience:uraniumhexafluoride",
     "pressure": 1,
-    "temp": 293.0
+    "temp": 293
   },
   "ticks": 800,
   "usagepertick": 750.0

@@ -7,20 +7,22 @@ import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.FluidTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import nuclearscience.References;
+import nuclearscience.NuclearScience;
 import nuclearscience.common.tags.NuclearScienceTags;
 import nuclearscience.registers.NuclearScienceFluids;
 
 public class NuclearScienceFluidTagsProvider extends FluidTagsProvider {
 
 	public NuclearScienceFluidTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
-		super(output, lookupProvider, References.ID, existingFileHelper);
+		super(output, lookupProvider, NuclearScience.ID, existingFileHelper);
 	}
 
 	@Override
 	protected void addTags(Provider provider) {
 
-		tag(NuclearScienceTags.Fluids.AMMONIA).add(NuclearScienceFluids.fluidAmmonia);
+		tag(NuclearScienceTags.Fluids.IODINE_SOLUTION).add(NuclearScienceFluids.FLUID_IODINESOLUTION.get());
+        tag(NuclearScienceTags.Fluids.METHANOL).add(NuclearScienceFluids.FLUID_METHANOL.get());
+        tag(NuclearScienceTags.Fluids.DECONTAMINATION_FOAM).add(NuclearScienceFluids.FLUID_DECONTAMINATIONFOAM.get());
 
 	}
 

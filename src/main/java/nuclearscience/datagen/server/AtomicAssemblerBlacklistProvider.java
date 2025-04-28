@@ -15,12 +15,12 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.registries.ForgeRegistries;
-import nuclearscience.References;
+import nuclearscience.NuclearScience;
 import nuclearscience.common.reloadlistener.AtomicAssemblerBlacklistRegister;
 
 public class AtomicAssemblerBlacklistProvider implements DataProvider {
 
-	public static final String LOC = "data/" + References.ID + "/" + AtomicAssemblerBlacklistRegister.FOLDER + "/" + AtomicAssemblerBlacklistRegister.FILE_NAME;
+	public static final String LOC = "data/" + NuclearScience.ID + "/" + AtomicAssemblerBlacklistRegister.FOLDER + "/" + AtomicAssemblerBlacklistRegister.FILE_NAME;
 
 	private final PackOutput output;
 

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "nuclearscience:electromagneticswitch"
+    },
+    {
+      "item": "electrodynamics:motor"
+    },
+    {
+      "tag": "forge:circuits/ultimate"
+    }
+  ],
+  "result": {
+    "item": "nuclearscience:electromagneticgateway"
+  }
+}

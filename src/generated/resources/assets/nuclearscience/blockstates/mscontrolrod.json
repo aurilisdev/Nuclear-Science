@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "nuclearscience:block/mscontrolrod",
+      "y": 180
+    },
+    "facing=north": {
+      "model": "nuclearscience:block/mscontrolrod",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "nuclearscience:block/mscontrolrod",
+      "y": 270
+    },
+    "facing=west": {
+      "model": "nuclearscience:block/mscontrolrod"
+    }
+  }
+}

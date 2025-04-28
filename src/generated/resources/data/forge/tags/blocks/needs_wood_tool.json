@@ -1,5 +1,7 @@
 {
   "values": [
-    "nuclearscience:radioactivesoil"
+    "nuclearscience:irradiatedblocksoil",
+    "nuclearscience:irradiatedblockgrass",
+    "nuclearscience:irradiatedblockpetrifiedwood"
   ]
 }

@@ -1,0 +1,22 @@
+{
+  "minecraft:water": {
+    "amount": 5000.0,
+    "level": 1.0
+  },
+  "nuclearscience:radiationshieldingbase": {
+    "amount": 20000.0,
+    "level": 1.0
+  },
+  "nuclearscience:radiationshieldingdoor": {
+    "amount": 20000.0,
+    "level": 1.0
+  },
+  "nuclearscience:radiationshieldingglass": {
+    "amount": 5000.0,
+    "level": 1.0
+  },
+  "nuclearscience:radiationshieldingtrapdoor": {
+    "amount": 20000.0,
+    "level": 1.0
+  }
+}

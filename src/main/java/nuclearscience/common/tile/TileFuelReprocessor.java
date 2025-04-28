@@ -1,53 +1,57 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.api.capability.ElectrodynamicsCapabilities;
-import electrodynamics.common.inventory.container.tile.ContainerO2OProcessor;
-import electrodynamics.prefab.sound.SoundBarrierMethods;
-import electrodynamics.prefab.sound.utils.ITickableSound;
-import electrodynamics.prefab.tile.GenericTile;
-import electrodynamics.prefab.tile.components.IComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
-import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
-import electrodynamics.prefab.tile.components.type.ComponentInventory;
-import electrodynamics.prefab.tile.components.type.ComponentInventory.InventoryBuilder;
-import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
-import electrodynamics.prefab.tile.components.type.ComponentProcessor;
-import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import electrodynamics.prefab.utilities.BlockEntityUtils;
 import electrodynamics.registers.ElectrodynamicsSounds;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.block.state.BlockState;
-import nuclearscience.common.recipe.NuclearScienceRecipeInit;
-import nuclearscience.registers.NuclearScienceBlockTypes;
+import nuclearscience.registers.NuclearScienceRecipies;
+import nuclearscience.common.settings.NuclearConstants;
+import nuclearscience.registers.NuclearScienceTiles;
+import voltaic.common.inventory.container.ContainerO2OProcessor;
+import voltaic.prefab.sound.ITickableSound;
+import voltaic.prefab.sound.SoundBarrierMethods;
+import voltaic.prefab.tile.GenericTile;
+import voltaic.prefab.tile.components.IComponentType;
+import voltaic.prefab.tile.components.type.*;
+import voltaic.prefab.utilities.BlockEntityUtils;
+import voltaic.prefab.utilities.RadiationUtils;
+import voltaic.registers.VoltaicCapabilities;
 
 public class TileFuelReprocessor extends GenericTile implements ITickableSound {
 
 	private boolean isSoundPlaying = false;
 
 	public TileFuelReprocessor(BlockPos pos, BlockState state) {
-		super(NuclearScienceBlockTypes.TILE_FUELREPROCESSOR.get(), pos, state);
+		super(NuclearScienceTiles.TILE_FUELREPROCESSOR.get(), pos, state);
 
 		addComponent(new ComponentPacketHandler(this));
 		addComponent(new ComponentTickable(this).tickClient(this::tickClient));
-		addComponent(new ComponentElectrodynamic(this, false, true).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 4).setInputDirections(Direction.NORTH));
-		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().processors(1, 1, 1, 1).upgrades(3)).setSlotsByDirection(Direction.UP, 0).setDirectionsBySlot(1, Direction.DOWN, Direction.EAST).setSlotsByDirection(Direction.WEST, 2).validUpgrades(ContainerO2OProcessor.VALID_UPGRADES).valid(machineValidator()));
-		addProcessor(new ComponentProcessor(this).canProcess(this::shouldProcessRecipe).process(component -> component.processItem2ItemRecipe(component)));
-		addComponent(new ComponentContainerProvider("container.fuelreprocessor", this).createMenu((id, player) -> new ContainerO2OProcessor(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
+		addComponent(new ComponentElectrodynamic(this, false, true).voltage(VoltaicCapabilities.DEFAULT_VOLTAGE * 4).setInputDirections(BlockEntityUtils.MachineDirection.BACK));
+		addComponent(new ComponentInventory(this, ComponentInventory.InventoryBuilder.newInv().processors(1, 1, 1, 1).upgrades(3)).setSlotsByDirection(BlockEntityUtils.MachineDirection.TOP, 0).setDirectionsBySlot(1, BlockEntityUtils.MachineDirection.BOTTOM)
+				//
+				.setSlotsByDirection(BlockEntityUtils.MachineDirection.BOTTOM, 2).validUpgrades(ContainerO2OProcessor.VALID_UPGRADES).valid(machineValidator()));
+		addComponent(new ComponentProcessor(this).canProcess(this::shouldProcessRecipe).process(ComponentProcessor::processItem2ItemRecipe));
+		addComponent(new ComponentContainerProvider("fuelreprocessor", this).createMenu((id, player) -> new ContainerO2OProcessor(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
 	}
 
-	private boolean shouldProcessRecipe(ComponentProcessor component) {
-		boolean canProcess = component.canProcessItem2ItemRecipe(component, NuclearScienceRecipeInit.FUEL_REPROCESSOR_TYPE.get());
+	private boolean shouldProcessRecipe(ComponentProcessor component, int procNumber) {
+		boolean canProcess = component.canProcessItem2ItemRecipe(procNumber, NuclearScienceRecipies.FUEL_REPROCESSOR_TYPE.get());
 		if (BlockEntityUtils.isLit(this) ^ canProcess) {
 			BlockEntityUtils.updateLit(this, canProcess);
 		}
+
+		RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory), NuclearConstants.FUEL_REPROCESSOR_RADIATION_RADIUS, true, 0, false);
+
 		return canProcess;
 	}
 
 	public void tickClient(ComponentTickable tickable) {
 		if (!isSoundPlaying && shouldPlaySound()) {
 			isSoundPlaying = true;
-			SoundBarrierMethods.playTileSound(ElectrodynamicsSounds.SOUND_MINERALCRUSHER.get(), this, true);
+			SoundBarrierMethods.playTileSound(ElectrodynamicsSounds.SOUND_HUM.get(), this, true);
+		}
+		if(this.<ComponentProcessor>getComponent(IComponentType.Processor).isActive(0) && getLevel().getRandom().nextFloat() < 0.3) {
+			this.level.addParticle(ParticleTypes.SMOKE, this.worldPosition.getX() + level.random.nextFloat(), this.worldPosition.getY() + level.random.nextFloat(), this.worldPosition.getZ() + level.random.nextFloat(), 0.0, 0.0, 0.0);
 		}
 	}
 
@@ -58,11 +62,11 @@ public class TileFuelReprocessor extends GenericTile implements ITickableSound {
 
 	@Override
 	public boolean shouldPlaySound() {
-		return isProcessorActive();
+		return this.<ComponentProcessor>getComponent(IComponentType.Processor).isActive(0);
 	}
 
 	@Override
 	public int getComparatorSignal() {
-		return isProcessorActive() ? 15 : 0;
+		return this.<ComponentProcessor>getComponent(IComponentType.Processor).isActive(0) ? 15 : 0;
 	}
 }

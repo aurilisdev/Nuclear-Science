@@ -1,0 +1,24 @@
+{
+  "type": "electrodynamics:chemical_mixer_recipe",
+  "experience": 0.0,
+  "fluidinputs": {
+    "0": {
+      "amount": 200,
+      "tag": "forge:hydrogen"
+    },
+    "count": 1
+  },
+  "iteminputs": {
+    "0": {
+      "count": 2,
+      "tag": "minecraft:coals"
+    },
+    "count": 1
+  },
+  "output": {
+    "amount": 100,
+    "fluid": "nuclearscience:methanol"
+  },
+  "ticks": 200,
+  "usagepertick": 1000.0
+}

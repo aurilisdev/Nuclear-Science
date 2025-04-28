@@ -2,7 +2,6 @@ package nuclearscience.common.item;
 
 import java.util.function.Supplier;
 
-import electrodynamics.common.item.gear.armor.ItemElectrodynamicsArmor;
 import electrodynamics.common.item.subtype.SubtypePlate;
 import electrodynamics.registers.ElectrodynamicsItems;
 import net.minecraft.sounds.SoundEvent;
@@ -14,9 +13,10 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import nuclearscience.References;
+import nuclearscience.NuclearScience;
+import voltaic.common.item.gear.ItemVoltaicArmor;
 
-public class ItemHazmatArmor extends ItemElectrodynamicsArmor {
+public class ItemHazmatArmor extends ItemVoltaicArmor {
 
 	public ItemHazmatArmor(ArmorMaterial materialIn, Type slot, Properties properties, Supplier<CreativeModeTab> creativeTab) {
 		super(materialIn, slot, properties, creativeTab);
@@ -28,7 +28,7 @@ public class ItemHazmatArmor extends ItemElectrodynamicsArmor {
 
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-		return References.ID + ":textures/block/model/" + (material == ArmorMaterialHazmat.hazmat ? "" : "reinforced") + "hazmatarmor.png";
+		return NuclearScience.ID + ":textures/block/model/" + (material == ArmorMaterialHazmat.hazmat ? "" : "reinforced") + "hazmatarmor.png";
 	}
 
 	public enum ArmorMaterialHazmat implements ArmorMaterial {
@@ -57,7 +57,7 @@ public class ItemHazmatArmor extends ItemElectrodynamicsArmor {
 
 		@Override
 		public Ingredient getRepairIngredient() {
-			return Ingredient.of(this == hazmat ? Items.LEATHER : ElectrodynamicsItems.SUBTYPEITEMREGISTER_MAPPINGS.get(SubtypePlate.lead).get());
+			return Ingredient.of(this == hazmat ? Items.LEATHER : ElectrodynamicsItems.ITEMS_PLATE.getValue(SubtypePlate.lead));
 		}
 
 		@Override

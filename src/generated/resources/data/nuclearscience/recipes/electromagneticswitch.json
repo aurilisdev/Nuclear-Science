@@ -7,6 +7,9 @@
     },
     {
       "item": "electrodynamics:motor"
+    },
+    {
+      "tag": "forge:plates/steel"
     }
   ],
   "result": {

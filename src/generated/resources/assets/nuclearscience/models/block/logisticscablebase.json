@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:block/cube",
+  "inventory": {
+    "parent": "nuclearscience:block/pipe/logisticscablebase_side"
+  },
+  "loader": "voltaic:voltaiccableloader",
+  "none": {
+    "parent": "nuclearscience:block/pipe/logisticscablebase_none"
+  },
+  "render_type": "minecraft:cutout",
+  "wire": {
+    "parent": "nuclearscience:block/pipe/logisticscablebase_side"
+  }
+}

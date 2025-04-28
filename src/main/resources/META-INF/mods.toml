@@ -8,7 +8,7 @@ version="${file.jarVersion}" #mandatory
 displayName="Nuclear Science" #mandatory
 displayURL="https://github.com/aurilisdev/Nuclear-Science" #optional
 logoFile="nuclearscience.png" #optional
-credits="Thanks to all contributors" #optional
+credits="Thanks to all contributors. Brazil lang key by FITFC. Russian lang key by Quarkrus" #optional
 authors="aurilisdev" #optional
 description='''
 '''
@@ -16,5 +16,12 @@ description='''
     modId="electrodynamics"
     mandatory=true
     versionRange="[1.20.1-0.9,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.nuclearscience]]
+    modId="voltaic"
+    mandatory=true
+    versionRange="[1.0,)"
     ordering="NONE"
     side="BOTH"

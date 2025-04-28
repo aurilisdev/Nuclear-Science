@@ -4,15 +4,15 @@ import java.util.List;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import electrodynamics.client.render.tile.AbstractTileRenderer;
-import electrodynamics.prefab.tile.components.IComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import nuclearscience.common.tile.TileTeleporter;
+import voltaic.client.render.AbstractTileRenderer;
+import voltaic.prefab.tile.components.IComponentType;
+import voltaic.prefab.tile.components.type.ComponentElectrodynamic;
 
 public class RenderTeleporter extends AbstractTileRenderer<TileTeleporter> {
 
@@ -39,4 +39,5 @@ public class RenderTeleporter extends AbstractTileRenderer<TileTeleporter> {
 		}
 		stack.popPose();
 	}
+	
 }

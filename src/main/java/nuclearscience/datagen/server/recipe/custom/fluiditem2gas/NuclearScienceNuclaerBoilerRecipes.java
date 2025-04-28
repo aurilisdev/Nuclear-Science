@@ -2,16 +2,16 @@ package nuclearscience.datagen.server.recipe.custom.fluiditem2gas;
 
 import java.util.function.Consumer;
 
-import electrodynamics.api.gas.GasStack;
-import electrodynamics.common.tags.ElectrodynamicsTags;
-import electrodynamics.datagen.utils.recipe.AbstractElectrodynamicsFinishedRecipe.RecipeCategory;
-import electrodynamics.datagen.utils.recipe.AbstractRecipeGenerator;
-import electrodynamics.datagen.utils.recipe.FinishedRecipeGasOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
-import nuclearscience.References;
-import nuclearscience.common.recipe.NuclearScienceRecipeInit;
+import nuclearscience.NuclearScience;
 import nuclearscience.common.tags.NuclearScienceTags;
 import nuclearscience.registers.NuclearScienceGases;
+import nuclearscience.registers.NuclearScienceRecipies;
+import voltaic.api.gas.GasStack;
+import voltaic.common.tags.VoltaicTags;
+import voltaic.datagen.utils.server.recipe.AbstractRecipeGenerator;
+import voltaic.datagen.utils.server.recipe.FinishedRecipeBase.RecipeCategory;
+import voltaic.datagen.utils.server.recipe.FinishedRecipeGasOutput;
 
 public class NuclearScienceNuclaerBoilerRecipes extends AbstractRecipeGenerator {
 
@@ -21,7 +21,7 @@ public class NuclearScienceNuclaerBoilerRecipes extends AbstractRecipeGenerator 
 	private final String modID;
 
 	public NuclearScienceNuclaerBoilerRecipes() {
-		this(References.ID);
+		this(NuclearScience.ID);
 	}
 
 	public NuclearScienceNuclaerBoilerRecipes(String modID) {
@@ -33,7 +33,7 @@ public class NuclearScienceNuclaerBoilerRecipes extends AbstractRecipeGenerator 
 
 		newRecipe(new GasStack(NuclearScienceGases.URANIUM_HEXAFLUORIDE.get(), 2000, 293, 1), 0, CHEMICALBOILER_REQUIRED_TICKS, CHEMICALBOILER_USAGE_PER_TICK, "uraniumhexafluoride_from_uraniumpellets")
 				//
-				.addFluidTagInput(ElectrodynamicsTags.Fluids.HYDROGEN_FLUORIDE, 1600)
+				.addFluidTagInput(VoltaicTags.Fluids.HYDROFLUORIC_ACID, 1600)
 				//
 				.addItemTagInput(NuclearScienceTags.Items.PELLET_URANIUM238, 1)
 				//
@@ -41,7 +41,7 @@ public class NuclearScienceNuclaerBoilerRecipes extends AbstractRecipeGenerator 
 
 		newRecipe(new GasStack(NuclearScienceGases.URANIUM_HEXAFLUORIDE.get(), 2500, 293, 1), 0.25F, CHEMICALBOILER_REQUIRED_TICKS, CHEMICALBOILER_USAGE_PER_TICK, "uraniumhexafluoride_from_yellowcake")
 				//
-				.addFluidTagInput(ElectrodynamicsTags.Fluids.HYDROGEN_FLUORIDE, 800)
+				.addFluidTagInput(VoltaicTags.Fluids.HYDROFLUORIC_ACID, 800)
 				//
 				.addItemTagInput(NuclearScienceTags.Items.YELLOW_CAKE, 1)
 				//
@@ -50,7 +50,7 @@ public class NuclearScienceNuclaerBoilerRecipes extends AbstractRecipeGenerator 
 	}
 
 	public FinishedRecipeGasOutput newRecipe(GasStack stack, float xp, int ticks, double usagePerTick, String name) {
-		return FinishedRecipeGasOutput.of(NuclearScienceRecipeInit.NUCLEAR_BOILER_SERIALIZER.get(), stack, xp, ticks, usagePerTick).name(RecipeCategory.FLUID_ITEM_2_GAS, modID, "nuclear_boiler/" + name);
+		return FinishedRecipeGasOutput.of(NuclearScienceRecipies.NUCLEAR_BOILER_SERIALIZER.get(), stack, xp, ticks, usagePerTick).name(RecipeCategory.FLUID_ITEM_2_GAS, modID, "nuclear_boiler/" + name);
 	}
 
 }
