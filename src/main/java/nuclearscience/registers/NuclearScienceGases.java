@@ -1,17 +1,17 @@
 package nuclearscience.registers;
 
-import electrodynamics.api.gas.Gas;
-import electrodynamics.registers.ElectrodynamicsRegistries;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
-import nuclearscience.References;
+import nuclearscience.NuclearScience;
 import nuclearscience.prefab.utils.NuclearTextUtils;
+import voltaic.api.gas.Gas;
+import voltaic.registers.VoltaicRegistries;
 
 public class NuclearScienceGases {
 
-	public static final DeferredRegister<Gas> GASES = DeferredRegister.create(ElectrodynamicsRegistries.GAS_REGISTRY_KEY, References.ID);
+	public static final DeferredRegister<Gas> GASES = DeferredRegister.create(VoltaicRegistries.GAS_REGISTRY_KEY, NuclearScience.ID);
 
-	public static final RegistryObject<Gas> URANIUM_HEXAFLUORIDE = GASES.register("uraniumhexafluoride", () -> new Gas(() -> Items.AIR, null, NuclearTextUtils.gas("uraniumhexafluoride")));
+	public static final RegistryObject<Gas> URANIUM_HEXAFLUORIDE = GASES.register("uraniumhexafluoride", () -> new Gas(() -> Items.AIR, NuclearTextUtils.gas("uraniumhexafluoride")));
 
 }

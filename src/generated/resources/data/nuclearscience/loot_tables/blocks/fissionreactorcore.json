@@ -28,7 +28,7 @@
               "source": "block_entity"
             },
             {
-              "type": "nuclearscience:reactorcore",
+              "type": "nuclearscience:fissionreactorcore",
               "entries": [
                 {
                   "type": "minecraft:dynamic",

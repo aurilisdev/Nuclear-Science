@@ -1,0 +1,46 @@
+package nuclearscience.common.item;
+
+import java.util.function.Supplier;
+
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import nuclearscience.api.capability.ICapabilityAntimatterItem;
+import nuclearscience.common.settings.NuclearConstants;
+import nuclearscience.prefab.utils.NuclearCapabilityUtils;
+import nuclearscience.registers.NuclearScienceCapabilities;
+import voltaic.common.item.ItemVoltaic;
+
+public class ItemAntimatter extends ItemVoltaic {
+    public ItemAntimatter(Properties properties, Supplier<CreativeModeTab> creativeTab) {
+        super(properties, creativeTab);
+    }
+
+    @Override
+    public boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity) {
+
+    	ICapabilityAntimatterItem cap = entity.getCapability(NuclearScienceCapabilities.CAPABILITY_ANTIMATTERITEM).orElse(NuclearCapabilityUtils.EMPTY_ANTIMATTERITEM);
+    	
+    	if(cap == NuclearCapabilityUtils.EMPTY_ANTIMATTERITEM) {
+    		return super.onEntityItemUpdate(stack, entity);
+    	}
+    	
+        int time = cap.getTime();
+
+        if(time >= NuclearConstants.ANTIMATTER_TICKS_ON_GROUND) {
+
+            if(!entity.level().isClientSide()) {
+                entity.level().explode(entity, entity.getX(), entity.getY(), entity.getZ(), 2F, Level.ExplosionInteraction.BLOCK);
+                entity.remove(Entity.RemovalReason.DISCARDED);
+            }
+
+            return true;
+        }
+
+        cap.incrementTime();
+
+        return super.onEntityItemUpdate(stack, entity);
+    }
+}

@@ -1,7 +1,7 @@
 package nuclearscience.compatibility.jei.utils.psuedorecipes;
 
-import electrodynamics.common.recipe.recipeutils.GasIngredient;
 import net.minecraft.world.item.ItemStack;
+import voltaic.common.recipe.recipeutils.GasIngredient;
 
 public class PsuedoGasCentrifugeRecipe {
 

@@ -1,6 +1,5 @@
 package nuclearscience.common.block;
 
-import electrodynamics.prefab.block.GenericEntityBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
@@ -13,10 +12,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import nuclearscience.common.tile.fusionreactor.TilePlasma;
+import nuclearscience.common.tile.reactor.fusion.TilePlasma;
 import nuclearscience.registers.NuclearScienceDamageTypes;
+import voltaic.prefab.block.GenericEntityBlock;
 
 public class BlockPlasma extends GenericEntityBlock {
 
@@ -44,8 +42,8 @@ public class BlockPlasma extends GenericEntityBlock {
 		return Shapes.empty();
 	}
 
+
 	@Override
-	@OnlyIn(Dist.CLIENT)
 	public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
 		return adjacentBlockState.is(this) || super.skipRendering(state, adjacentBlockState, side);
 	}
@@ -56,4 +54,5 @@ public class BlockPlasma extends GenericEntityBlock {
 			super.onRemove(state, worldIn, pos, newState, isMoving);
 		}
 	}
+
 }

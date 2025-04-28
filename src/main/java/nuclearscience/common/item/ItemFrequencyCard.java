@@ -3,9 +3,7 @@ package nuclearscience.common.item;
 import java.util.List;
 import java.util.function.Supplier;
 
-import electrodynamics.common.item.ItemElectrodynamics;
 import electrodynamics.prefab.utilities.ElectroTextUtils;
-import electrodynamics.prefab.utilities.NBTUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
@@ -20,8 +18,10 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import nuclearscience.common.tile.TileTeleporter;
 import nuclearscience.prefab.utils.NuclearTextUtils;
+import voltaic.common.item.ItemVoltaic;
+import voltaic.prefab.utilities.NBTUtils;
 
-public class ItemFrequencyCard extends ItemElectrodynamics {
+public class ItemFrequencyCard extends ItemVoltaic {
 
 	public ItemFrequencyCard(Properties properties, Supplier<CreativeModeTab> creativeTab) {
 		super(properties.stacksTo(1), creativeTab);
@@ -44,8 +44,8 @@ public class ItemFrequencyCard extends ItemElectrodynamics {
 				BlockPos pos = readBlockPos(stack);
 				ResourceKey<Level> world = readDimension(stack);
 
-				teleporter.destination.set(pos);
-				teleporter.dimension = world;
+				teleporter.destination.setValue(pos);
+				teleporter.dimension.setValue(world);
 
 				MutableComponent worldKey = ElectroTextUtils.dimensionExists(world) ? ElectroTextUtils.dimension(world) : Component.literal(world.location().getPath());
 

@@ -1,0 +1,11 @@
+{
+  "values": [
+    "nuclearscience:electromagneticglass",
+    "nuclearscience:electromagnet",
+    "nuclearscience:particleinjector",
+    "nuclearscience:electromagneticbooster",
+    "nuclearscience:electromagneticgateway",
+    "nuclearscience:electromagneticdiode",
+    "nuclearscience:electromagneticswitch"
+  ]
+}

@@ -3,22 +3,27 @@ package nuclearscience.compatibility.jei.utils.psuedorecipes;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import electrodynamics.common.recipe.recipeutils.GasIngredient;
 import electrodynamics.compatibility.jei.recipecategories.utils.psuedorecipes.types.PsuedoItem2ItemRecipe;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import nuclearscience.common.tags.NuclearScienceTags;
 import nuclearscience.registers.NuclearScienceItems;
+import voltaic.common.recipe.recipeutils.GasIngredient;
 
 public class NuclearSciencePsuedoRecipes {
 
-	private static ArrayList<ArrayList<ItemStack>> NUCLEAR_SCIENCE_ITEMS = new ArrayList<>();
+	private static final ArrayList<ArrayList<ItemStack>> NUCLEAR_SCIENCE_ITEMS = new ArrayList<>();
 
-	public static ArrayList<PsuedoGasCentrifugeRecipe> GAS_CENTRIFUGE_RECIPES = new ArrayList<>();
-	public static ArrayList<PsuedoItem2ItemRecipe> ANTI_MATTER_RECIPES = new ArrayList<>();
-	public static ArrayList<PsuedoItem2ItemRecipe> DARK_MATTER_RECIPES = new ArrayList<>();
+	public static final ArrayList<PsuedoGasCentrifugeRecipe> GAS_CENTRIFUGE_RECIPES = new ArrayList<>();
+	public static final ArrayList<PsuedoItem2ItemRecipe> ANTI_MATTER_RECIPES = new ArrayList<>();
+	public static final ArrayList<PsuedoItem2ItemRecipe> DARK_MATTER_RECIPES = new ArrayList<>();
 
 	public static void addNuclearScienceRecipes() {
+
+		NUCLEAR_SCIENCE_ITEMS.clear();
+		GAS_CENTRIFUGE_RECIPES.clear();
+		ANTI_MATTER_RECIPES.clear();
+		DARK_MATTER_RECIPES.clear();
 
 		addNuclearScienceItems();
 

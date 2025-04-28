@@ -1,57 +1,249 @@
 {
-	"credit": "aurilisdev",
-	"parent": "block/cube_all",
-	"render_type": "minecraft:translucent",
-	"textures": {
-		"particle": "nuclearscience:block/electromagneticbooster",
-		"east": "nuclearscience:block/electromagneticbooster",
-		"west": "nuclearscience:block/electromagneticboosterreversed",
-		"up": "nuclearscience:block/electromagnettop"
-	},
-	"elements": [
-		{
-			"from": [15, 1, 0],
-			"to": [16, 15, 16],
-			"faces": {
-				"north": {"uv": [0, 0, 1, 14], "texture": "#west"},
-				"east": {"uv": [0, 0, 16, 14], "texture": "#east"},
-				"south": {"uv": [0, 0, 1, 14], "texture": "#west"},
-				"west": {"uv": [0, 0, 16, 14], "texture": "#west"}
-			}
-		},
-		{
-			"from": [0, 1, 15],
-			"to": [15, 15, 16],
-			"faces": {
-				"north": {"uv": [0, 0, 15, 14], "texture": "#west"},
-				"south": {"uv": [0, 0, 15, 14], "texture": "#east"},
-				"west": {"uv": [0, 0, 1, 14], "texture": "#west"}
-			}
-		},
-		{
-			"from": [0, 0, 0],
-			"to": [16, 1, 16],
-			"faces": {
-				"north": {"uv": [0, 0, 16, 1], "texture": "#up"},
-				"east": {"uv": [0, 0, 16, 1], "texture": "#up"},
-				"south": {"uv": [0, 0, 16, 1], "texture": "#up"},
-				"west": {"uv": [0, 0, 16, 1], "texture": "#up"},
-				"up": {"uv": [0, 0, 16, 16], "texture": "#up"},
-				"down": {"uv": [0, 0, 16, 16], "texture": "#up"}
-			}
-		},
-		{
-			"from": [0, 15, 0],
-			"to": [16, 16, 16],
-			"rotation": {"angle": 0, "axis": "y", "origin": [8, 24, 8]},
-			"faces": {
-				"north": {"uv": [0, 0, 16, 1], "texture": "#up"},
-				"east": {"uv": [0, 0, 16, 1], "texture": "#up"},
-				"south": {"uv": [0, 0, 16, 1], "texture": "#up"},
-				"west": {"uv": [0, 0, 16, 1], "texture": "#up"},
-				"up": {"uv": [0, 0, 16, 16], "texture": "#up"},
-				"down": {"uv": [0, 0, 16, 16], "texture": "#up"}
-			}
-		}
-	]
+  "credit": "aurilisdev",
+  "parent": "block/cube_all",
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "particle": "nuclearscience:block/electromagneticbooster",
+    "east": "nuclearscience:block/electromagneticbooster",
+    "west": "nuclearscience:block/electromagneticboosterreversed",
+    "up": "nuclearscience:block/electromagnettop"
+  },
+  "elements": [
+    {
+      "from": [
+        15,
+        1,
+        0
+      ],
+      "to": [
+        16,
+        15,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            1,
+            14
+          ],
+          "texture": "#west"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            14
+          ],
+          "texture": "#east"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1,
+            14
+          ],
+          "texture": "#west"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            14
+          ],
+          "texture": "#west"
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        1,
+        15
+      ],
+      "to": [
+        15,
+        15,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            15,
+            14
+          ],
+          "texture": "#west"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            15,
+            14
+          ],
+          "texture": "#east"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            1,
+            14
+          ],
+          "texture": "#west"
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        1,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            1
+          ],
+          "texture": "#up"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            1
+          ],
+          "texture": "#up"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            1
+          ],
+          "texture": "#up"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            1
+          ],
+          "texture": "#up"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#up"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#up"
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        15,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          8,
+          24,
+          8
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            1
+          ],
+          "texture": "#up"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            1
+          ],
+          "texture": "#up"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            1
+          ],
+          "texture": "#up"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            1
+          ],
+          "texture": "#up"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#up"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#up"
+        }
+      }
+    }
+  ]
 }

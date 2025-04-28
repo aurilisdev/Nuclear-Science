@@ -1,18 +1,21 @@
 package nuclearscience.datagen.client;
 
-import electrodynamics.datagen.client.ElectrodynamicsItemModelsProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import nuclearscience.References;
+import nuclearscience.NuclearScience;
 import nuclearscience.common.block.subtype.SubtypeMoltenSaltPipe;
+import nuclearscience.common.block.subtype.SubtypeNuclearMachine;
+import nuclearscience.common.block.subtype.SubtypeRadiationShielding;
+import nuclearscience.common.block.subtype.SubtypeReactorLogisticsCable;
 import nuclearscience.registers.NuclearScienceBlocks;
 import nuclearscience.registers.NuclearScienceItems;
+import voltaic.datagen.utils.client.BaseItemModelsProvider;
 
-public class NuclearScienceItemModelsProvider extends ElectrodynamicsItemModelsProvider {
+public class NuclearScienceItemModelsProvider extends BaseItemModelsProvider {
 
 	public NuclearScienceItemModelsProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
-		super(output, existingFileHelper, References.ID);
+		super(output, existingFileHelper, NuclearScience.ID);
 	}
 
 	@Override
@@ -49,6 +52,7 @@ public class NuclearScienceItemModelsProvider extends ElectrodynamicsItemModelsP
 
 		layeredItem(NuclearScienceItems.ITEM_GEIGERCOUNTER, Parent.GENERATED, itemLoc("geigercounter"));
 		layeredItem(NuclearScienceItems.ITEM_ANTIDOTE, Parent.GENERATED, itemLoc("antidote"));
+		layeredItem(NuclearScienceItems.ITEM_IODINETABLET, Parent.GENERATED, itemLoc("iodinetablet"));
 		layeredItem(NuclearScienceItems.ITEM_CANISTERLEAD, Parent.GENERATED, itemLoc("canisterlead"));
 		layeredBuilder(name(NuclearScienceItems.ITEM_FREQUENCYCARD), Parent.GENERATED, itemLoc("frequencycard")).transforms().transform(ItemDisplayContext.GUI).scale(0.75F).end();
 
@@ -62,12 +66,22 @@ public class NuclearScienceItemModelsProvider extends ElectrodynamicsItemModelsP
 		layeredItem(NuclearScienceItems.ITEM_REINFORCEDHAZMATLEGS, Parent.GENERATED, itemLoc("reinforcedhazmatlegs"));
 		layeredItem(NuclearScienceItems.ITEM_REINFORCEDHAZMATBOOTS, Parent.GENERATED, itemLoc("reinforcedhazmatboots"));
 
-		simpleBlockItem(NuclearScienceBlocks.blockAtomicAssembler, existingBlock(blockLoc("atomicassemblersingle")));
-		simpleBlockItem(NuclearScienceBlocks.blockControlRodAssembly, existingBlock(blockLoc("controlrodassembly"))).transforms().transform(ItemDisplayContext.GUI).rotation(30.0F, 225.0F, 0.0F).translation(0.0F, -0.9F, 0.0F).scale(0.5F).end();
-		simpleBlockItem(NuclearScienceBlocks.blockGasCentrifuge, existingBlock(blockLoc("gascentrifuge")));
-		layeredItem(NuclearScienceItems.getItem(SubtypeMoltenSaltPipe.vanadiumsteelceramic), Parent.GENERATED, itemLoc("pipe/" + SubtypeMoltenSaltPipe.vanadiumsteelceramic.tag()));
-		simpleBlockItem(NuclearScienceBlocks.blockParticleInjector, existingBlock(blockLoc("particleinjector"))).transforms().transform(ItemDisplayContext.GUI).rotation(45.0F, 45.0F, 0).scale(0.5F).translation(0.0F, -1.0F, 0.0F);
-		simpleBlockItem(NuclearScienceBlocks.blockTurbine, existingBlock(blockLoc("turbine")));
+		simpleBlockItem(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.atomicassembler), existingBlock(blockLoc("atomicassemblersingle")));
+		simpleBlockItem(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.fissioncontrolrod), existingBlock(blockLoc("fissioncontrolroditem")));
+		simpleBlockItem(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.mscontrolrod), existingBlock(blockLoc("mscontrolroditem")));
+		simpleBlockItem(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.gascentrifuge), existingBlock(blockLoc("gascentrifuge")));
+		layeredItem(NuclearScienceItems.ITEMS_MOLTENSALTPIPTE.getValue(SubtypeMoltenSaltPipe.vanadiumsteelceramic), Parent.GENERATED, itemLoc("pipe/" + SubtypeMoltenSaltPipe.vanadiumsteelceramic.tag()));
+		simpleBlockItem(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.particleinjector), existingBlock(blockLoc("particleinjector"))).transforms().transform(ItemDisplayContext.GUI).rotation(45.0F, 45.0F, 0).scale(0.5F).translation(0.0F, -1.0F, 0.0F);
+		simpleBlockItem(NuclearScienceBlocks.BLOCK_TURBINE.get(), existingBlock(blockLoc("turbine")));
+		simpleBlockItem(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.falloutscrubber), existingBlock(blockLoc("falloutscrubber")));
+
+		layeredItem(NuclearScienceItems.ITEMS_RADIATION_SHIELDING.getValue(SubtypeRadiationShielding.door), Parent.GENERATED, itemLoc("leadlineddoor"));
+
+		simpleBlockItem(NuclearScienceBlocks.BLOCKS_RADIATION_SHIELDING.getValue(SubtypeRadiationShielding.trapdoor), existingBlock(blockLoc("radiationshieldingtrapdoor_bottom")));
+		layeredItem(NuclearScienceItems.ITEMS_REACTORLOGISTICSCABLE.getValue(SubtypeReactorLogisticsCable.base), Parent.GENERATED, itemLoc("pipe/" + SubtypeReactorLogisticsCable.base.tag()));
+		simpleBlockItem(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.controlrodmodule), existingBlock(blockLoc("controlrodmoduleitem")));
+		simpleBlockItem(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.fissioninterface), existingBlock(blockLoc("fissioninterfaceitem")));
+		simpleBlockItem(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.msinterface), existingBlock(blockLoc("msinterfaceitem")));
 
 	}
 

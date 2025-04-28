@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "tag": "forge:circuits/ultimate"
+    },
+    "D": {
+      "tag": "forge:cells/dark_matter"
+    },
+    "P": {
+      "tag": "forge:plates/hslasteel"
+    }
+  },
+  "pattern": [
+    "PCP",
+    "CDC",
+    "PCP"
+  ],
+  "result": {
+    "item": "nuclearscience:chunkloader"
+  },
+  "show_notification": false
+}

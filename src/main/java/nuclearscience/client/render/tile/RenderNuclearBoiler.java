@@ -3,15 +3,6 @@ package nuclearscience.client.render.tile;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
-import electrodynamics.api.gas.GasStack;
-import electrodynamics.api.gas.GasTank;
-import electrodynamics.client.ClientRegister;
-import electrodynamics.client.render.tile.AbstractTileRenderer;
-import electrodynamics.prefab.tile.components.IComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
-import electrodynamics.prefab.tile.components.type.ComponentGasHandlerMulti;
-import electrodynamics.prefab.utilities.RenderingUtils;
-import electrodynamics.prefab.utilities.math.Color;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -21,6 +12,15 @@ import net.minecraft.world.phys.AABB;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import nuclearscience.common.tile.TileNuclearBoiler;
+import voltaic.api.gas.GasStack;
+import voltaic.api.gas.GasTank;
+import voltaic.client.VoltaicClientRegister;
+import voltaic.client.render.AbstractTileRenderer;
+import voltaic.prefab.tile.components.IComponentType;
+import voltaic.prefab.tile.components.type.ComponentFluidHandlerMulti;
+import voltaic.prefab.tile.components.type.ComponentGasHandlerMulti;
+import voltaic.prefab.utilities.RenderingUtils;
+import voltaic.prefab.utilities.math.Color;
 
 public class RenderNuclearBoiler extends AbstractTileRenderer<TileNuclearBoiler> {
 
@@ -86,7 +86,7 @@ public class RenderNuclearBoiler extends AbstractTileRenderer<TileNuclearBoiler>
 
 		}
 
-		RenderingUtils.renderFluidBox(stack, minecraft(), builder, box, fluid, light, overlay);
+		RenderingUtils.renderFluidBox(stack, minecraft(), builder, box, fluid, light, overlay, RenderingUtils.ALL_FACES);
 	}
 
 	private void drawGasOutput(PoseStack stack, VertexConsumer builder, GasStack fluid, Direction facing, float height, int light, int overlay) {
@@ -112,11 +112,11 @@ public class RenderNuclearBoiler extends AbstractTileRenderer<TileNuclearBoiler>
 
 		}
 
-		TextureAtlasSprite sprite = ClientRegister.CACHED_TEXTUREATLASSPRITES.get(ClientRegister.TEXTURE_GAS);
+		TextureAtlasSprite sprite = VoltaicClientRegister.getSprite(VoltaicClientRegister.TEXTURE_GAS);
 
 		float[] colors = new Color(sprite.getPixelRGBA(0, 10, 10)).colorFloatArr();
 
-		RenderingUtils.renderFilledBox(stack, builder, box, colors[0], colors[1], colors[2], colors[3], sprite.getU0(), sprite.getV0(), sprite.getU1(), sprite.getV1(), light, overlay);
+		RenderingUtils.renderFilledBox(stack, builder, box, colors[0], colors[1], colors[2], colors[3], sprite.getU0(), sprite.getV0(), sprite.getU1(), sprite.getV1(), light, overlay, RenderingUtils.ALL_FACES);
 	}
 
 }

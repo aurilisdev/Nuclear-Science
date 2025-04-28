@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "tag": "forge:circuits/ultimate"
+    },
+    "S": {
+      "item": "nuclearscience:electromagneticswitch"
+    }
+  },
+  "pattern": [
+    "C",
+    "S",
+    "C"
+  ],
+  "result": {
+    "item": "nuclearscience:electromagneticdiode"
+  },
+  "show_notification": false
+}
