@@ -6,7 +6,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.fml.earlydisplay.SimpleBufferBuilder;
 import nuclearscience.client.screen.util.GenericInterfaceBoundScreen;
 import nuclearscience.common.inventory.container.ContainerThermometerModule;
 import nuclearscience.common.tile.reactor.fission.TileFissionReactorCore;
@@ -200,7 +199,7 @@ public class ScreenThermometerModule extends GenericInterfaceBoundScreen<Contain
 
             int currMode = tile.mode.getValue();
 
-            if(currMode >= SimpleBufferBuilder.Mode.values().length - 1) {
+            if(currMode >= TileThermometerModule.Mode.values().length - 1) {
                 currMode = 0;
             } else {
                 currMode++;
