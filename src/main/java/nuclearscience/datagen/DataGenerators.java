@@ -1,11 +1,10 @@
 package nuclearscience.datagen;
 
-import electrodynamics.datagen.client.ElectrodynamicsLangKeyProvider.Locale;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import nuclearscience.References;
+import nuclearscience.NuclearScience;
 import nuclearscience.datagen.client.NuclearScienceBlockStateProvider;
 import nuclearscience.datagen.client.NuclearScienceItemModelsProvider;
 import nuclearscience.datagen.client.NuclearScienceLangKeyProvider;
@@ -16,8 +15,9 @@ import nuclearscience.datagen.server.NuclearScienceItemTagsProvider;
 import nuclearscience.datagen.server.NuclearScienceLootTablesProvider;
 import nuclearscience.datagen.server.radiation.RadioactiveItemsProvider;
 import nuclearscience.datagen.server.recipe.NuclearScienceRecipeProvider;
+import voltaic.datagen.utils.client.BaseLangKeyProvider.Locale;
 
-@Mod.EventBusSubscriber(modid = References.ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = NuclearScience.ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class DataGenerators {
 
 	@SubscribeEvent

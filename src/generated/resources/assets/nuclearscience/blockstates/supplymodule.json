@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "nuclearscience:block/supplymodule"
+    },
+    "facing=north": {
+      "model": "nuclearscience:block/supplymodule",
+      "y": 270
+    },
+    "facing=south": {
+      "model": "nuclearscience:block/supplymodule",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "nuclearscience:block/supplymodule",
+      "y": 180
+    }
+  }
+}

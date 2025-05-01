@@ -15,7 +15,7 @@ public interface ISteamReceiver {
 	 * @param amount:      The amount of steam
 	 * @return How much steam was accepted
 	 */
-	public double receiveSteam(double temperature, double amount);
+	public int receiveSteam(int temperature, int amount);
 
 	public boolean isStillValid();
 

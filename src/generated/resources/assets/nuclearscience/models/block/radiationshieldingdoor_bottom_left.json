@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_bottom_left",
+  "textures": {
+    "bottom": "nuclearscience:block/leadlineddoor_bottom",
+    "top": "nuclearscience:block/leadlineddoor_top"
+  }
+}

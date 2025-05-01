@@ -1,0 +1,252 @@
+{
+  "credit": "skip999",
+  "parent": "block/cube_all",
+  "texture_size": [
+    64,
+    64
+  ],
+  "textures": {
+    "0": "nuclearscience:block/model/monitormoduleon",
+    "particle": "voltaic:block/steelcasing"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        5,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            9.25,
+            4,
+            10.5
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            0,
+            8,
+            4,
+            9.25
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            0,
+            9.25,
+            4,
+            10.5
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            0,
+            9.25,
+            4,
+            10.5
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            8,
+            4,
+            4,
+            0
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            4,
+            0,
+            0,
+            4
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        5,
+        2
+      ],
+      "to": [
+        12,
+        7,
+        14
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          0,
+          5,
+          2
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            1.25,
+            14.25,
+            4.25,
+            14.75
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            8,
+            0,
+            11,
+            0.5
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            1.25,
+            14,
+            4.25,
+            14.5
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            4.5,
+            7.5,
+            7.5,
+            8
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            4.25,
+            15.75,
+            1.25,
+            12.75
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            9,
+            0,
+            6,
+            3
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        7,
+        3
+      ],
+      "to": [
+        11,
+        16,
+        13
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          0,
+          7,
+          3
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            0.5,
+            4.75,
+            3.25,
+            7
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            1.25,
+            10.5,
+            3.75,
+            12.75
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            0.5,
+            4.75,
+            3.25,
+            7
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            4.75,
+            5.25,
+            7.25,
+            7.5
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            3.25,
+            7.25,
+            0.5,
+            4.75
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            8,
+            3.5,
+            5.25,
+            6
+          ],
+          "texture": "#0"
+        }
+      }
+    }
+  ],
+  "groups": [
+    {
+      "name": "thermometermodule",
+      "origin": [
+        8,
+        8,
+        8
+      ],
+      "color": 0,
+      "children": [
+        0,
+        1,
+        2
+      ]
+    }
+  ]
+}

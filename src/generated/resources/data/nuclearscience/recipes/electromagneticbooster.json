@@ -1,6 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
   "key": {
+    "C": {
+      "item": "electrodynamics:coil"
+    },
     "E": {
       "item": "nuclearscience:electromagnet"
     },
@@ -9,7 +12,9 @@
     }
   },
   "pattern": [
-    "EGE"
+    " C ",
+    "EGE",
+    " C "
   ],
   "result": {
     "item": "nuclearscience:electromagneticbooster"

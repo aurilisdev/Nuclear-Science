@@ -1,8 +1,5 @@
 package nuclearscience.common.tile;
 
-import electrodynamics.api.sound.SoundAPI;
-import electrodynamics.prefab.tile.GenericTile;
-import electrodynamics.prefab.tile.components.type.ComponentTickable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
@@ -11,13 +8,16 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import nuclearscience.registers.NuclearScienceBlockTypes;
 import nuclearscience.registers.NuclearScienceSounds;
+import nuclearscience.registers.NuclearScienceTiles;
+import voltaic.api.sound.SoundAPI;
+import voltaic.prefab.tile.GenericTile;
+import voltaic.prefab.tile.components.type.ComponentTickable;
 
 public class TileSiren extends GenericTile {
 
 	public TileSiren(BlockPos worldPos, BlockState blockState) {
-		super(NuclearScienceBlockTypes.TILE_SIREN.get(), worldPos, blockState);
+		super(NuclearScienceTiles.TILE_SIREN.get(), worldPos, blockState);
 		addComponent(new ComponentTickable(this).tickClient(this::tickClient));
 	}
 
@@ -34,10 +34,11 @@ public class TileSiren extends GenericTile {
 			}
 		}
 	}
-
+	
 	@Override
-	public InteractionResult use(Player arg0, InteractionHand arg1, BlockHitResult arg2) {
+	public InteractionResult use(Player player, InteractionHand hand, BlockHitResult hit) {
 		return InteractionResult.PASS;
 	}
+
 
 }

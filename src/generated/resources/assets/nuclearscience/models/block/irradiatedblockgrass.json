@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "nuclearscience:block/irradiatedblocksoil",
+    "east": "nuclearscience:block/irradiatedblockgrassside",
+    "north": "nuclearscience:block/irradiatedblockgrassside",
+    "particle": "nuclearscience:block/irradiatedblocksoil",
+    "south": "nuclearscience:block/irradiatedblockgrassside",
+    "up": "nuclearscience:block/irradiatedblockgrass",
+    "west": "nuclearscience:block/irradiatedblockgrassside"
+  }
+}

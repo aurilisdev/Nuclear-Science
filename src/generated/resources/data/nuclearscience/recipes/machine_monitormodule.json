@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "tag": "forge:plates/stainlesssteel"
+    },
+    "C": {
+      "tag": "forge:circuits/advanced"
+    },
+    "G": {
+      "item": "electrodynamics:glassclear"
+    },
+    "L": {
+      "item": "nuclearscience:logisticscablebase"
+    }
+  },
+  "pattern": [
+    "#G#",
+    "#C#",
+    "#L#"
+  ],
+  "result": {
+    "item": "nuclearscience:monitormodule"
+  }
+}

@@ -3,44 +3,44 @@ package nuclearscience.client.screen;
 import java.util.ArrayList;
 import java.util.List;
 
-import electrodynamics.api.electricity.formatting.ChatFormatter;
-import electrodynamics.api.electricity.formatting.DisplayUnit;
-import electrodynamics.prefab.screen.GenericScreen;
-import electrodynamics.prefab.screen.component.types.ScreenComponentMultiLabel;
-import electrodynamics.prefab.screen.component.types.guitab.ScreenComponentTemperature;
-import electrodynamics.prefab.screen.component.utils.AbstractScreenComponentInfo;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import nuclearscience.common.inventory.container.ContainerMSRReactorCore;
-import nuclearscience.common.tile.msreactor.TileFreezePlug;
-import nuclearscience.common.tile.msreactor.TileMSReactorCore;
+import nuclearscience.common.inventory.container.ContainerMSReactorCore;
+import nuclearscience.common.tile.reactor.moltensalt.TileFreezePlug;
+import nuclearscience.common.tile.reactor.moltensalt.TileMSReactorCore;
 import nuclearscience.prefab.screen.component.ScreenComponentReactorFuel;
 import nuclearscience.prefab.utils.NuclearTextUtils;
+import voltaic.api.electricity.formatting.ChatFormatter;
+import voltaic.api.electricity.formatting.DisplayUnits;
+import voltaic.prefab.screen.GenericScreen;
+import voltaic.prefab.screen.component.types.ScreenComponentMultiLabel;
+import voltaic.prefab.screen.component.types.guitab.ScreenComponentTemperature;
+import voltaic.prefab.screen.component.utils.AbstractScreenComponentInfo;
+import voltaic.prefab.utilities.math.Color;
 
-@OnlyIn(Dist.CLIENT)
-public class ScreenMSReactorCore extends GenericScreen<ContainerMSRReactorCore> {
+public class ScreenMSReactorCore extends GenericScreen<ContainerMSReactorCore> {
 
-	public ScreenMSReactorCore(ContainerMSRReactorCore container, Inventory playerInventory, Component title) {
+	public static final Color WARNING_COLOR = new Color(255, 0, 0, 255);
+
+	public ScreenMSReactorCore(ContainerMSReactorCore container, Inventory playerInventory, Component title) {
 		super(container, playerInventory, title);
 		addComponent(new ScreenComponentTemperature(() -> {
 
 			List<FormattedCharSequence> list = new ArrayList<>();
 
-			TileMSReactorCore core = menu.getHostFromIntArray();
+			TileMSReactorCore core = menu.getSafeHost();
 			if (core == null) {
 				return list;
 			}
 
-			MutableComponent text = ChatFormatter.getChatDisplayShort(core.temperature.get(), DisplayUnit.TEMPERATURE_CELCIUS);
+			MutableComponent text = ChatFormatter.getChatDisplayShort(core.temperature.getValue(), DisplayUnits.TEMPERATURE_CELCIUS);
 
-			if (core.temperature.get() > TileMSReactorCore.MELTDOWN_TEMPERATURE) {
+			if (core.temperature.getValue() > TileMSReactorCore.MELTDOWN_TEMPERATURE) {
 				text = text.withStyle(ChatFormatting.RED);
-			} else if (core.temperature.get() > TileMSReactorCore.MELTDOWN_TEMPERATURE - 100) {
+			} else if (core.temperature.getValue() > TileMSReactorCore.MELTDOWN_TEMPERATURE - 100) {
 				text = text.withStyle(ChatFormatting.YELLOW);
 			} else {
 				text = text.withStyle(ChatFormatting.GREEN);
@@ -50,36 +50,36 @@ public class ScreenMSReactorCore extends GenericScreen<ContainerMSRReactorCore> 
 
 			return list;
 		}, -AbstractScreenComponentInfo.SIZE + 1, 2));
-		addComponent(new ScreenComponentMultiLabel(0, 0, stack -> {
-			TileMSReactorCore core = menu.getHostFromIntArray();
+		addComponent(new ScreenComponentMultiLabel(0, 0, poseStack -> {
+			TileMSReactorCore core = menu.getSafeHost();
 			if (core == null) {
 				return;
 			}
 
-			font.draw(stack, NuclearTextUtils.gui("msreactor.status"), titleLabelX, titleLabelY + 14, 0);
+			font.draw(poseStack, NuclearTextUtils.gui("msreactor.status"), titleLabelX, titleLabelY + 14, Color.BLACK.color());
 
-			if (!(core.plugCache.getSafe() instanceof TileFreezePlug)) {
-				font.draw(stack, NuclearTextUtils.gui("msreactor.status.nofreezeplug"), titleLabelX + 5, titleLabelY + 24, 4210752);
-			} else if (core.wasteIsFull.get()) {
-				font.draw(stack, NuclearTextUtils.gui("msreactor.status.wastefull"), titleLabelX + 5, titleLabelY + 24, 4210752);
+			if (!(core.clientPlugCache.getSafe() instanceof TileFreezePlug)) {
+				font.draw(poseStack, NuclearTextUtils.gui("msreactor.status.nofreezeplug"), titleLabelX + 5, titleLabelY + 24, Color.TEXT_GRAY.color());
+			} else if (core.wasteIsFull.getValue()) {
+				font.draw(poseStack, NuclearTextUtils.gui("msreactor.status.wastefull"), titleLabelX + 5, titleLabelY + 24, Color.TEXT_GRAY.color());
 			} else {
-				font.draw(stack, NuclearTextUtils.gui("msreactor.status.good").withStyle(ChatFormatting.GREEN), titleLabelX + 5, titleLabelY + 24, -1);
+				font.draw(poseStack, NuclearTextUtils.gui("msreactor.status.good").withStyle(ChatFormatting.GREEN), titleLabelX + 5, titleLabelY + 24, Color.WHITE.color());
 
 			}
-			font.draw(stack, NuclearTextUtils.gui("msreactor.warning"), titleLabelX, titleLabelY + 38, 0);
+			font.draw(poseStack, NuclearTextUtils.gui("msreactor.warning"), titleLabelX, titleLabelY + 38, 0);
 
-			if (core.temperature.get() > TileMSReactorCore.MELTDOWN_TEMPERATURE) {
+			if (core.temperature.getValue() > TileMSReactorCore.MELTDOWN_TEMPERATURE) {
 
 				if (System.currentTimeMillis() % 1000 < 500) {
-					font.draw(stack, NuclearTextUtils.gui("msreactor.warning.overheat"), titleLabelX + 5, titleLabelY + 48, 16711680);
+					font.draw(poseStack, NuclearTextUtils.gui("msreactor.warning.overheat"), titleLabelX + 5, titleLabelY + 48,WARNING_COLOR.color());
 				} else {
-					font.draw(stack, NuclearTextUtils.gui("msreactor.warning.overheat"), titleLabelX + 5, titleLabelY + 48, 4210752);
+					font.draw(poseStack, NuclearTextUtils.gui("msreactor.warning.overheat"), titleLabelX + 5, titleLabelY + 48, Color.TEXT_GRAY.color());
 				}
 
-			} else if (core.plugCache.getSafe() instanceof TileFreezePlug plug && !plug.isFrozen()) {
-				font.draw(stack, NuclearTextUtils.gui("msreactor.warning.freezeoff").withStyle(ChatFormatting.YELLOW), titleLabelX + 5, titleLabelY + 48, -1);
+			} else if (core.clientPlugCache.getSafe() instanceof TileFreezePlug plug && !plug.isFrozen()) {
+				font.draw(poseStack, NuclearTextUtils.gui("msreactor.warning.freezeoff").withStyle(ChatFormatting.YELLOW), titleLabelX + 5, titleLabelY + 48, Color.WHITE.color());
 			} else {
-				font.draw(stack, NuclearTextUtils.gui("msreactor.warning.none").withStyle(ChatFormatting.GREEN), titleLabelX + 5, titleLabelY + 48, -1);
+				font.draw(poseStack, NuclearTextUtils.gui("msreactor.warning.none").withStyle(ChatFormatting.GREEN), titleLabelX + 5, titleLabelY + 48, Color.WHITE.color());
 			}
 
 		}));

@@ -1,0 +1,8 @@
+{
+  "parent": "nuclearscience:parent/logisticscable_none",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "particle": "voltaic:block/steelcasing",
+    "texture": "nuclearscience:block/pipe/logisticscablebase_none"
+  }
+}

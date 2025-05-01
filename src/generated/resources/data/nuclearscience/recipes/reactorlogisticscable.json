@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "G": {
+      "item": "electrodynamics:glassclear"
+    },
+    "V": {
+      "tag": "forge:plates/vanadiumsteel"
+    }
+  },
+  "pattern": [
+    "VVV",
+    "GGG",
+    "VVV"
+  ],
+  "result": {
+    "count": 6,
+    "item": "nuclearscience:logisticscablebase"
+  }
+}

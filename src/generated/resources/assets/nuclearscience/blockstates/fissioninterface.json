@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "nuclearscience:block/fissioninterface"
+    },
+    "facing=north": {
+      "model": "nuclearscience:block/fissioninterface",
+      "y": 270
+    },
+    "facing=south": {
+      "model": "nuclearscience:block/fissioninterface",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "nuclearscience:block/fissioninterface",
+      "y": 180
+    }
+  }
+}

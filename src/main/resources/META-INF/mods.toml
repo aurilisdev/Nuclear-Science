@@ -18,3 +18,9 @@ description='''
     versionRange="[1.19.2-0.7,)"
     ordering="NONE"
     side="BOTH"
+[[dependencies.nuclearscience]]
+    modId="voltaic"
+    mandatory=true
+    versionRange="[1.0,)"
+    ordering="NONE"
+    side="BOTH"

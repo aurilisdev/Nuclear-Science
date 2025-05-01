@@ -1,6 +1,6 @@
 package nuclearscience.common.block.subtype;
 
-import electrodynamics.api.ISubtype;
+import voltaic.api.ISubtype;
 
 public enum SubtypeMoltenSaltPipe implements ISubtype {
 	vanadiumsteelceramic(10000);

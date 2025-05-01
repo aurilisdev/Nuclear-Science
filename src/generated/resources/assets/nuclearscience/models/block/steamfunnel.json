@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "nuclearscience:block/steamfunneltop",
+    "side": "nuclearscience:block/steamfunnelside"
+  }
+}
