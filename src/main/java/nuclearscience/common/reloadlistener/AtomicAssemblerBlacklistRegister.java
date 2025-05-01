@@ -20,7 +20,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import electrodynamics.Electrodynamics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.resources.Resource;
@@ -40,6 +39,7 @@ import net.minecraftforge.network.PacketDistributor.PacketTarget;
 import net.minecraftforge.network.simple.SimpleChannel;
 import net.minecraftforge.registries.ForgeRegistries;
 import nuclearscience.common.packet.type.client.PacketSetClientAtomicAssemblerBlacklistVals;
+import voltaic.Voltaic;
 
 public class AtomicAssemblerBlacklistRegister extends SimplePreparableReloadListener<JsonObject> {
 
@@ -58,7 +58,7 @@ public class AtomicAssemblerBlacklistRegister extends SimplePreparableReloadList
 
 	private final HashSet<TagKey<Item>> tags = new HashSet<>();
 
-	private final Logger logger = Electrodynamics.LOGGER;
+	private final Logger logger = Voltaic.LOGGER;
 
 	@Override
 	protected JsonObject prepare(ResourceManager manager, ProfilerFiller profiler) {

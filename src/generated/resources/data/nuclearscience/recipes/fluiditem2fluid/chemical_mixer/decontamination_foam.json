@@ -1,0 +1,24 @@
+{
+  "type": "electrodynamics:chemical_mixer_recipe",
+  "experience": 0.0,
+  "fluidinputs": {
+    "0": {
+      "amount": 1000,
+      "tag": "forge:ammonia"
+    },
+    "count": 1
+  },
+  "iteminputs": {
+    "0": {
+      "count": 2,
+      "item": "electrodynamics:crystalpotassiumchloride"
+    },
+    "count": 1
+  },
+  "output": {
+    "amount": 1000,
+    "fluid": "nuclearscience:decontaminationfoam"
+  },
+  "ticks": 100,
+  "usagepertick": 1000.0
+}

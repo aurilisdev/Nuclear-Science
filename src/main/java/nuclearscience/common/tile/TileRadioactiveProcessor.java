@@ -1,52 +1,52 @@
 package nuclearscience.common.tile;
 
-
-import electrodynamics.api.capability.ElectrodynamicsCapabilities;
-import electrodynamics.prefab.tile.GenericTile;
-import electrodynamics.prefab.tile.components.IComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentContainerProvider;
-import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
-import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
-import electrodynamics.prefab.tile.components.type.ComponentInventory;
-import electrodynamics.prefab.tile.components.type.ComponentInventory.InventoryBuilder;
-import electrodynamics.prefab.tile.components.type.ComponentPacketHandler;
-import electrodynamics.prefab.tile.components.type.ComponentProcessor;
-import electrodynamics.prefab.tile.components.type.ComponentTickable;
-import electrodynamics.prefab.utilities.BlockEntityUtils;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.common.inventory.container.ContainerRadioactiveProcessor;
-import nuclearscience.common.recipe.NuclearScienceRecipeInit;
-import nuclearscience.registers.NuclearScienceBlockTypes;
+import nuclearscience.common.settings.NuclearConstants;
+import nuclearscience.registers.NuclearScienceRecipies;
+import nuclearscience.registers.NuclearScienceTiles;
+import voltaic.prefab.tile.GenericTile;
+import voltaic.prefab.tile.components.IComponentType;
+import voltaic.prefab.tile.components.type.*;
+import voltaic.prefab.utilities.BlockEntityUtils;
+import voltaic.prefab.utilities.RadiationUtils;
+import voltaic.registers.VoltaicCapabilities;
 
 public class TileRadioactiveProcessor extends GenericTile {
 
-	public static final int MAX_TANK_CAPACITY = 5000;
+    public static final int MAX_TANK_CAPACITY = 5000;
 
-	public TileRadioactiveProcessor(BlockPos pos, BlockState state) {
-		super(NuclearScienceBlockTypes.TILE_RADIOACTIVEPROCESSOR.get(), pos, state);
-		addComponent(new ComponentTickable(this));
-		addComponent(new ComponentPacketHandler(this));
-		addComponent(new ComponentElectrodynamic(this, false, true).voltage(ElectrodynamicsCapabilities.DEFAULT_VOLTAGE * 4).setInputDirections(Direction.NORTH));
-		addComponent(new ComponentFluidHandlerMulti(this).setInputTanks(1, MAX_TANK_CAPACITY).setInputDirections(Direction.UP).setRecipeType(NuclearScienceRecipeInit.RADIOACTIVE_PROCESSOR_TYPE.get()));
-		addComponent(new ComponentInventory(this, InventoryBuilder.newInv().processors(1, 1, 1, 0).bucketInputs(1).upgrades(3)).validUpgrades(ContainerRadioactiveProcessor.VALID_UPGRADES).valid(machineValidator()).setDirectionsBySlot(0, Direction.EAST).setDirectionsBySlot(1, Direction.WEST, Direction.DOWN));
-		addComponent(new ComponentProcessor(this).canProcess(this::shouldProcessRecipe).process(component -> component.processFluidItem2ItemRecipe(component)));
-		addComponent(new ComponentContainerProvider("container.radioactiveprocessor", this).createMenu((id, player) -> new ContainerRadioactiveProcessor(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
-	}
+    public TileRadioactiveProcessor(BlockPos pos, BlockState state) {
+        super(NuclearScienceTiles.TILE_RADIOACTIVEPROCESSOR.get(), pos, state);
+        addComponent(new ComponentTickable(this));
+        addComponent(new ComponentPacketHandler(this));
+        addComponent(new ComponentElectrodynamic(this, false, true).voltage(VoltaicCapabilities.DEFAULT_VOLTAGE * 4).setInputDirections(BlockEntityUtils.MachineDirection.BACK));
+        addComponent(new ComponentFluidHandlerMulti(this).setInputTanks(1, MAX_TANK_CAPACITY).setInputDirections(BlockEntityUtils.MachineDirection.TOP).setRecipeType(NuclearScienceRecipies.RADIOACTIVE_PROCESSOR_TYPE.get()));
+        addComponent(new ComponentInventory(this, ComponentInventory.InventoryBuilder.newInv().processors(1, 1, 1, 0).bucketInputs(1).upgrades(3)).validUpgrades(ContainerRadioactiveProcessor.VALID_UPGRADES).valid(machineValidator())
+                //
+                .setDirectionsBySlot(0, BlockEntityUtils.MachineDirection.LEFT).setDirectionsBySlot(1, BlockEntityUtils.MachineDirection.RIGHT, BlockEntityUtils.MachineDirection.BOTTOM));
+        addComponent(new ComponentProcessor(this).canProcess(this::shouldProcessRecipe).process(ComponentProcessor::processFluidItem2ItemRecipe));
+        addComponent(new ComponentContainerProvider("radioactiveprocessor", this).createMenu((id, player) -> new ContainerRadioactiveProcessor(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
+    }
 
-	private boolean shouldProcessRecipe(ComponentProcessor component) {
-		component.consumeBucket();
-		boolean canProcess = component.canProcessFluidItem2ItemRecipe(component, NuclearScienceRecipeInit.RADIOACTIVE_PROCESSOR_TYPE.get());
-		if (BlockEntityUtils.isLit(this) ^ canProcess) {
-			BlockEntityUtils.updateLit(this, canProcess);
-		}
-		return canProcess;
-	}
+    private boolean shouldProcessRecipe(ComponentProcessor component, int procNumber) {
+        component.consumeBucket();
 
-	@Override
-	public int getComparatorSignal() {
-		return this.<ComponentProcessor>getComponent(IComponentType.Processor).isActive() ? 15 : 0;
-	}
+        boolean canProcess = component.canProcessFluidItem2ItemRecipe(procNumber, NuclearScienceRecipies.RADIOACTIVE_PROCESSOR_TYPE.get());
+        if (BlockEntityUtils.isLit(this) ^ canProcess) {
+            BlockEntityUtils.updateLit(this, canProcess);
+        }
+
+        RadiationUtils.handleRadioactiveFluids(this, (ComponentFluidHandlerMulti) getComponent(IComponentType.FluidHandler), NuclearConstants.RADIOACTIVE_PROCESSOR_RADIATION_RADIUS, true, 0, false);
+        RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory), NuclearConstants.RADIOACTIVE_PROCESSOR_RADIATION_RADIUS, true, 0, false);
+
+        return canProcess;
+    }
+
+    @Override
+    public int getComparatorSignal() {
+        return this.<ComponentProcessor>getComponent(IComponentType.Processor).isActive(0) ? 15 : 0;
+    }
 
 }

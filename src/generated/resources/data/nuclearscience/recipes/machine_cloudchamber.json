@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "tag": "forge:circuits/basic"
+    },
+    "G": {
+      "item": "electrodynamics:glassclear"
+    },
+    "O": {
+      "item": "electrodynamics:coil"
+    },
+    "P": {
+      "tag": "forge:plates/vanadiumsteel"
+    },
+    "T": {
+      "item": "electrodynamics:tanksteel"
+    }
+  },
+  "pattern": [
+    "PGP",
+    "GCG",
+    "OTO"
+  ],
+  "result": {
+    "item": "nuclearscience:cloudchamber"
+  }
+}

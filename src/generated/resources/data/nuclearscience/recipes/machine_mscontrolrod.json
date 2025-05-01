@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "tag": "minecraft:coals"
+    },
+    "R": {
+      "item": "nuclearscience:fissioncontrolrod"
+    }
+  },
+  "pattern": [
+    " C ",
+    "CRC",
+    " C "
+  ],
+  "result": {
+    "item": "nuclearscience:mscontrolrod"
+  }
+}

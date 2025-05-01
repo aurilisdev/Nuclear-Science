@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "nuclearscience:block/falloutscrubberframe"
+    },
+    "facing=north": {
+      "model": "nuclearscience:block/falloutscrubberframe",
+      "y": 270
+    },
+    "facing=south": {
+      "model": "nuclearscience:block/falloutscrubberframe",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "nuclearscience:block/falloutscrubberframe",
+      "y": 180
+    }
+  }
+}

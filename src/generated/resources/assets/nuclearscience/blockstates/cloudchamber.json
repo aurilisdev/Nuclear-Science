@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "nuclearscience:block/cloudchamber"
+    },
+    "facing=north": {
+      "model": "nuclearscience:block/cloudchamber",
+      "y": 270
+    },
+    "facing=south": {
+      "model": "nuclearscience:block/cloudchamber",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "nuclearscience:block/cloudchamber",
+      "y": 180
+    }
+  }
+}

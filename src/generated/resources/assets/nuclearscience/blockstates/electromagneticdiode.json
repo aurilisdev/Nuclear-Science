@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "nuclearscience:block/electromagneticdiode"
+    },
+    "facing=north": {
+      "model": "nuclearscience:block/electromagneticdiode",
+      "y": 270
+    },
+    "facing=south": {
+      "model": "nuclearscience:block/electromagneticdiode",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "nuclearscience:block/electromagneticdiode",
+      "y": 180
+    }
+  }
+}

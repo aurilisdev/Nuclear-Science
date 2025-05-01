@@ -1,19 +1,20 @@
 package nuclearscience.common.tags;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
-import nuclearscience.common.fluid.types.FluidAmmonia;
-import nuclearscience.common.fluid.types.FluidUraniumHexafluoride;
+import voltaic.Voltaic;
 
 public class NuclearScienceTags {
 
 	public static void init() {
 		Fluids.init();
 		Items.init();
+		Blocks.init();
 	}
 
 	public static class Items {
@@ -34,7 +35,7 @@ public class NuclearScienceTags {
 
 		public static final TagKey<Item> DUST_THORIUM = forgeTag("dusts/thorium");
 		public static final TagKey<Item> DUST_FISSILE = forgeTag("dusts/fissile");
-		
+
 		public static final TagKey<Item> SALT_FISSILE = forgeTag("salts/fissile");
 
 		public static final TagKey<Item> OXIDE_PLUTONIUM = forgeTag("oxide/plutonium");
@@ -56,22 +57,40 @@ public class NuclearScienceTags {
 		}
 
 		private static TagKey<Item> forgeTag(String name) {
-			return ItemTags.create(new ResourceLocation("forge", name));
+			return ItemTags.create(Voltaic.forgerl(name));
+		}
+
+	}
+
+	public static class Blocks {
+
+		public static final TagKey<Block> PARTICLE_CONTAINMENT = forgeTag("particle_containment");
+		public static final TagKey<Block> FUSION_CONTAINMENT = forgeTag("fusion_containment");
+
+
+		private static void init() {
+		}
+
+		private static TagKey<Block> forgeTag(String name) {
+			return BlockTags.create(Voltaic.forgerl(name));
 		}
 
 	}
 
 	public static class Fluids {
 
-		public static final TagKey<Fluid> URANIUM_HEXAFLUORIDE = forgeTag(FluidUraniumHexafluoride.FORGE_TAG);
-		public static final TagKey<Fluid> AMMONIA = forgeTag(FluidAmmonia.FORGE_TAG);
+		public static final TagKey<Fluid> DECONTAMINATION_FOAM = forgeTag("decontamination_foam");
+		public static final TagKey<Fluid> IODINE_SOLUTION = forgeTag("iodine_solution");
+		public static final TagKey<Fluid> METHANOL = forgeTag("methanol");
+		public static final TagKey<Fluid> STEAM = forgeTag("steam");
+		public static final TagKey<Fluid> URANIUM_HEXAFLUORIDE = forgeTag("uraniumhexafluoride");
 
 		private static void init() {
-			
+
 		}
 
 		private static TagKey<Fluid> forgeTag(String name) {
-			return FluidTags.create(new ResourceLocation("forge", name));
+			return FluidTags.create(Voltaic.forgerl(name));
 		}
 	}
 

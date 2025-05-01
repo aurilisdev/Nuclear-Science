@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "tag": "forge:plates/stainlesssteel"
+    },
+    "C": {
+      "tag": "forge:circuits/ultimate"
+    },
+    "P": {
+      "tag": "forge:pellets/plutonium"
+    }
+  },
+  "pattern": [
+    "#C#",
+    "CPC",
+    "#C#"
+  ],
+  "result": {
+    "item": "nuclearscience:logisticscontroller"
+  }
+}

@@ -17,7 +17,7 @@
   },
   "output": {
     "amount": 2500,
-    "fluid": "nuclearscience:fluiduraniumhexafluoride"
+    "fluid": "nuclearscience:uraniumhexafluoride"
   },
   "ticks": 800,
   "usagepertick": 750.0
