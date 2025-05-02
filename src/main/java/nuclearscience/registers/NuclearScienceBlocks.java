@@ -91,9 +91,8 @@ public class NuclearScienceBlocks {
 
         if(subtype == SubtypeElectromagent.electromagneticglass) {
             return new BlockCustomGlass(3.5F, 20);
-        } else {
-            return new Block(Blocks.IRON_BLOCK.properties().strength(3.5F, 20).requiresCorrectToolForDrops());
         }
+	return new Block(Blocks.IRON_BLOCK.properties().strength(3.5F, 20).requiresCorrectToolForDrops());
 
     }));
 
@@ -141,9 +140,8 @@ public class NuclearScienceBlocks {
                             return NONE.color();
                         }
 
-                    } else {
-                        return NONE.color();
                     }
+		    return NONE.color();
                 }
                 return Color.WHITE.color();
             }, block);

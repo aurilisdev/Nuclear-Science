@@ -48,9 +48,8 @@ public class ScreenTeleporter extends GenericScreen<ContainerTeleporter> {
 
             if(ElectroTextUtils.dimensionExists(dimension)) {
                 return ElectroTextUtils.dimension(dimension);
-            } else {
-                return Component.literal(dimension.location().getPath());
             }
+	    return Component.literal(dimension.location().getPath());
         }));
 
         addComponent(new ScreenComponentSimpleLabel(30, 33, 10, Color.TEXT_GRAY, NuclearTextUtils.gui("teleporter.x")));
@@ -90,7 +89,7 @@ public class ScreenTeleporter extends GenericScreen<ContainerTeleporter> {
             }
 
             tile.destination.setValue(tile.getBlockPos());
-            tile.dimension.setValue(getMinecraft().level.OVERWORLD.location());
+            tile.dimension.setValue(Level.OVERWORLD.location());
 
             xBox.setValue("" + menu.getSafeHost().destination.getValue().getX());
             yBox.setValue("" + menu.getSafeHost().destination.getValue().getY());

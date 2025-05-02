@@ -134,9 +134,8 @@ public class TileControlRodModule extends GenericTileInterfaceBound {
                 }
 
                 return ItemInteractionResult.CONSUME;
-            } else {
-                return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
             }
+	    return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
         return super.useWithItem(used, player, hand, hit);
     }

@@ -30,9 +30,8 @@ public class ServerBarrierMethods {
             if(TunnelFrequencyManager.isValidTunnelID(frequencyID)) {
                 valid = true;
                 break;
-            } else {
-                frequencyID = UUID.randomUUID();
             }
+	    frequencyID = UUID.randomUUID();
             tries++;
         }
 
