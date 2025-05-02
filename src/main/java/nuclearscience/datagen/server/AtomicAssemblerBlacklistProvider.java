@@ -40,7 +40,7 @@ public class AtomicAssemblerBlacklistProvider implements DataProvider {
 		return CompletableFuture.allOf(DataProvider.saveStable(cache, json, parent));
 	}
 
-	private void getFuels(JsonObject object) {
+	private static void getFuels(JsonObject object) {
 		JsonArray json = new JsonArray();
 
 		addItem(Items.AIR, json);
