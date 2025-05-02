@@ -29,7 +29,6 @@ import nuclearscience.client.screen.ScreenMSRFuelPreProcessor;
 import nuclearscience.client.screen.ScreenNuclearBoiler;
 import nuclearscience.client.screen.ScreenParticleInjector;
 import nuclearscience.client.screen.ScreenRadioactiveProcessor;
-import nuclearscience.registers.NuclearScienceRecipies;
 import nuclearscience.common.recipe.categories.fluiditem2gas.NuclearBoilerRecipe;
 import nuclearscience.common.recipe.categories.fluiditem2item.ChemicalExtractorRecipe;
 import nuclearscience.common.recipe.categories.fluiditem2item.MSRFuelPreProcessorRecipe;
@@ -49,9 +48,9 @@ import nuclearscience.compatibility.jei.utils.psuedorecipes.NuclearSciencePsuedo
 import nuclearscience.compatibility.jei.utils.psuedorecipes.PsuedoGasCentrifugeRecipe;
 import nuclearscience.registers.NuclearScienceFluids;
 import nuclearscience.registers.NuclearScienceGases;
+import nuclearscience.registers.NuclearScienceRecipies;
 import voltaic.api.gas.Gas;
 import voltaic.api.gas.GasStack;
-import voltaic.client.screen.ScreenO2OProcessor;
 import voltaic.compatibility.jei.utils.ingredients.VoltaicJeiTypes;
 import voltaic.registers.VoltaicGases;
 

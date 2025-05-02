@@ -2,7 +2,6 @@ package nuclearscience.client.screen;
 
 import electrodynamics.prefab.utilities.ElectroTextUtils;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;

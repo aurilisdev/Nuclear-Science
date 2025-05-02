@@ -1,6 +1,7 @@
 package nuclearscience.client.screen;
 
 import java.util.List;
+
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;

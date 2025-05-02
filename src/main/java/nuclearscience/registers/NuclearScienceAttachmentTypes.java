@@ -1,7 +1,15 @@
 package nuclearscience.registers;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.annotation.Nullable;
+
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.Dynamic;
+
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.nbt.CompoundTag;
@@ -16,12 +24,6 @@ import nuclearscience.NuclearScience;
 import nuclearscience.api.quantumtunnel.TunnelFrequency;
 import nuclearscience.api.quantumtunnel.TunnelFrequencyBuffer;
 import nuclearscience.common.settings.NuclearConstants;
-
-import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.UUID;
 
 public class NuclearScienceAttachmentTypes {
 

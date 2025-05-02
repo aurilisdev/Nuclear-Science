@@ -9,7 +9,11 @@ import nuclearscience.NuclearScience;
 import nuclearscience.registers.NuclearScienceRecipies;
 import voltaic.api.gas.GasStack;
 import voltaic.common.recipe.categories.fluiditem2gas.FluidItem2GasRecipe;
-import voltaic.common.recipe.recipeutils.*;
+import voltaic.common.recipe.recipeutils.CountableIngredient;
+import voltaic.common.recipe.recipeutils.FluidIngredient;
+import voltaic.common.recipe.recipeutils.ProbableFluid;
+import voltaic.common.recipe.recipeutils.ProbableGas;
+import voltaic.common.recipe.recipeutils.ProbableItem;
 
 public class NuclearBoilerRecipe extends FluidItem2GasRecipe {
 

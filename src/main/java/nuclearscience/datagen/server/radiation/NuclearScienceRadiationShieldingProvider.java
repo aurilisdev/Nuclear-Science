@@ -1,6 +1,7 @@
 package nuclearscience.datagen.server.radiation;
 
 import com.google.gson.JsonObject;
+
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Blocks;
 import nuclearscience.NuclearScience;

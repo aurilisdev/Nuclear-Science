@@ -3,7 +3,6 @@ package nuclearscience.prefab.screen.component;
 import java.util.ArrayList;
 import java.util.List;
 
-import electrodynamics.prefab.utilities.ElectroTextUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;

@@ -9,7 +9,11 @@ import net.minecraft.world.item.crafting.RecipeType;
 import nuclearscience.NuclearScience;
 import nuclearscience.registers.NuclearScienceRecipies;
 import voltaic.common.recipe.categories.fluiditem2item.FluidItem2ItemRecipe;
-import voltaic.common.recipe.recipeutils.*;
+import voltaic.common.recipe.recipeutils.CountableIngredient;
+import voltaic.common.recipe.recipeutils.FluidIngredient;
+import voltaic.common.recipe.recipeutils.ProbableFluid;
+import voltaic.common.recipe.recipeutils.ProbableGas;
+import voltaic.common.recipe.recipeutils.ProbableItem;
 
 public class RadioactiveProcessorRecipe extends FluidItem2ItemRecipe {
 
