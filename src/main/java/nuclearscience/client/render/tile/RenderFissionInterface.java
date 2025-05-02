@@ -319,7 +319,8 @@ public class RenderFissionInterface extends AbstractTileRenderer<TileFissionInte
                     }
 
 
-                case FISSION_TRITIUM_EXTRACT:
+                    break;
+	    case FISSION_TRITIUM_EXTRACT:
 
                     if (perc > 0.5) {
 
@@ -383,7 +384,7 @@ public class RenderFissionInterface extends AbstractTileRenderer<TileFissionInte
         matrix.popPose();
     }
 
-    private void renderBox(PoseStack matrix, AABB box, Color color, TextureAtlasSprite texture, MultiBufferSource bufferIn, int combinedLightIn, boolean[] faces) {
+    private static void renderBox(PoseStack matrix, AABB box, Color color, TextureAtlasSprite texture, MultiBufferSource bufferIn, int combinedLightIn, boolean[] faces) {
         RenderingUtils.renderFilledBoxNoOverlay(matrix, bufferIn.getBuffer(RenderType.SOLID), box, color.rFloat(), color.gFloat(), color.bFloat(), color.aFloat(), texture.getU0(), texture.getV0(), texture.getU1(), texture.getV1(), combinedLightIn, faces);
     }
 
