@@ -89,7 +89,7 @@ public class RenderNuclearBoiler extends AbstractTileRenderer<TileNuclearBoiler>
 		RenderingUtils.renderFluidBox(stack, minecraft(), builder, box, fluid, light, overlay, RenderingUtils.ALL_FACES);
 	}
 
-	private void drawGasOutput(PoseStack stack, VertexConsumer builder, GasStack fluid, Direction facing, float height, int light, int overlay) {
+	private static void drawGasOutput(PoseStack stack, VertexConsumer builder, GasStack fluid, Direction facing, float height, int light, int overlay) {
 
 		AABB box = null;
 

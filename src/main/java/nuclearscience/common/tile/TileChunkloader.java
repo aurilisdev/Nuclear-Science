@@ -27,7 +27,7 @@ public class TileChunkloader extends GenericTile {
         //TODO if we want to make it use power or something
     }
 
-    private void updateChunks(boolean load, Level world, BlockPos pos) {
+    private static void updateChunks(boolean load, Level world, BlockPos pos) {
 
         int offset = 1;
         ChunkPos currChunkPos = world.getChunk(pos).getPos();

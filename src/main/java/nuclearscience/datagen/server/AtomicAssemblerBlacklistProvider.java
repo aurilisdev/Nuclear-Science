@@ -53,11 +53,11 @@ public class AtomicAssemblerBlacklistProvider implements DataProvider {
 		object.add(AtomicAssemblerBlacklistRegister.KEY, json);
 	}
 
-	private void addTag(TagKey<Item> item, JsonArray json) {
+	private static void addTag(TagKey<Item> item, JsonArray json) {
 		json.add("#" + item.location().toString());
 	}
 
-	private void addItem(Item item, JsonArray json) {
+	private static void addItem(Item item, JsonArray json) {
 		json.add(BuiltInRegistries.ITEM.getKey(item).toString());
 	}
 

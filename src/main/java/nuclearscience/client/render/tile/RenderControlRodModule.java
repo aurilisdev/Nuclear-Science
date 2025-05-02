@@ -85,7 +85,7 @@ public class RenderControlRodModule extends AbstractTileRenderer<TileControlRodM
         stack.popPose();
     }
 
-    private void rotateMatrix(PoseStack stack, Direction dir) {
+    private static void rotateMatrix(PoseStack stack, Direction dir) {
         switch (dir) {
             case EAST -> stack.mulPose(MathUtils.rotQuaternionDeg(0, -90, 0));// stack.mulPose(new Quaternion(0, -90, 0, true));
             case SOUTH -> stack.mulPose(MathUtils.rotQuaternionDeg(0, 180, 0));// stack.mulPose(new Quaternion(0, 180, 0, true));
