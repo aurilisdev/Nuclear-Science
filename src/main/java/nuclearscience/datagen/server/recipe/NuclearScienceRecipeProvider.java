@@ -1,13 +1,7 @@
 package nuclearscience.datagen.server.recipe;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Consumer;
-
-import electrodynamics.datagen.utils.recipe.AbstractRecipeGenerator;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.data.recipes.RecipeProvider;
+import nuclearscience.datagen.server.recipe.custom.fluid2item.NuclearScienceChemicalCrystalizerRecipes;
 import nuclearscience.datagen.server.recipe.custom.fluiditem2fluid.NuclearScienceChemicalMixerRecipes;
 import nuclearscience.datagen.server.recipe.custom.fluiditem2fluid.NuclearScienceNuclaerBoilerRecipes;
 import nuclearscience.datagen.server.recipe.custom.fluiditem2item.NuclearScienceChemicalExtractorRecipes;
@@ -16,32 +10,24 @@ import nuclearscience.datagen.server.recipe.custom.fluiditem2item.NuclearScience
 import nuclearscience.datagen.server.recipe.custom.item2item.NuclearScienceFissionReactorRecipes;
 import nuclearscience.datagen.server.recipe.custom.item2item.NuclearScienceFuelReprocessorRecipes;
 import nuclearscience.datagen.server.recipe.vanilla.NuclearScienceCraftingTableRecipes;
+import voltaic.datagen.utils.server.recipe.BaseRecipeProvider;
 
-public class NuclearScienceRecipeProvider extends RecipeProvider {
-
-	public final List<AbstractRecipeGenerator> GENERATORS = new ArrayList<>();
+public class NuclearScienceRecipeProvider extends BaseRecipeProvider {
 
 	public NuclearScienceRecipeProvider(DataGenerator gen) {
 		super(gen);
-		addRecipes();
 	}
 
 	public void addRecipes() {
-		GENERATORS.add(new NuclearScienceCraftingTableRecipes());
-		GENERATORS.add(new NuclearScienceChemicalMixerRecipes());
-		GENERATORS.add(new NuclearScienceNuclaerBoilerRecipes());
-		GENERATORS.add(new NuclearScienceChemicalExtractorRecipes());
-		GENERATORS.add(new NuclearScienceMSRFuelPreprocessorRecipes());
-		GENERATORS.add(new NuclearScienceRadioactiveProcessorRecipes());
-		GENERATORS.add(new NuclearScienceFissionReactorRecipes());
-		GENERATORS.add(new NuclearScienceFuelReprocessorRecipes());
-	}
-
-	@Override
-	protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
-		for (AbstractRecipeGenerator generator : GENERATORS) {
-			generator.addRecipes(consumer);
-		}
+		generators.add(new NuclearScienceCraftingTableRecipes());
+		generators.add(new NuclearScienceChemicalMixerRecipes());
+		generators.add(new NuclearScienceChemicalCrystalizerRecipes());
+		generators.add(new NuclearScienceNuclaerBoilerRecipes());
+		generators.add(new NuclearScienceChemicalExtractorRecipes());
+		generators.add(new NuclearScienceMSRFuelPreprocessorRecipes());
+		generators.add(new NuclearScienceRadioactiveProcessorRecipes());
+		generators.add(new NuclearScienceFissionReactorRecipes());
+		generators.add(new NuclearScienceFuelReprocessorRecipes());
 	}
 
 }

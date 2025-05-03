@@ -1,31 +1,33 @@
 package nuclearscience.common.item;
 
-import electrodynamics.common.item.subtype.SubtypePlate;
-import electrodynamics.registers.ElectrodynamicsItems;
+import java.util.function.Supplier;
+
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import nuclearscience.References;
+import net.minecraftforge.common.Tags;
+import nuclearscience.NuclearScience;
+import voltaic.common.item.gear.ItemVoltaicArmor;
+import voltaic.common.tags.VoltaicTags;
 
-public class ItemHazmatArmor extends ArmorItem {
+public class ItemHazmatArmor extends ItemVoltaicArmor {
 
-	public ItemHazmatArmor(ArmorMaterial materialIn, EquipmentSlot slot, Properties builderIn) {
-		super(materialIn, slot, builderIn);
+	public ItemHazmatArmor(ArmorMaterial materialIn, EquipmentSlot slot, Properties properties, Supplier<CreativeModeTab> creativeTab) {
+		super(materialIn, slot, properties, creativeTab);
 	}
 
-	public ItemHazmatArmor(EquipmentSlot slot, Properties builderIn) {
-		this(ArmorMaterialHazmat.hazmat, slot, builderIn);
+	public ItemHazmatArmor(EquipmentSlot slot, Properties properties, Supplier<CreativeModeTab> creativeTab) {
+		this(ArmorMaterialHazmat.hazmat, slot, properties, creativeTab);
 	}
 
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-		return References.ID + ":textures/model/" + (material == ArmorMaterialHazmat.hazmat ? "" : "reinforced") + "hazmatarmor.png";
+		return NuclearScience.ID + ":textures/block/model/" + (material == ArmorMaterialHazmat.hazmat ? "" : "reinforced") + "hazmatarmor.png";
 	}
 
 	public enum ArmorMaterialHazmat implements ArmorMaterial {
@@ -33,12 +35,12 @@ public class ItemHazmatArmor extends ArmorItem {
 		reinforcedhazmat;
 
 		@Override
-		public int getDurabilityForSlot(EquipmentSlot slotIn) {
+		public int getDurabilityForSlot(EquipmentSlot type) {
 			return this == hazmat ? 37500 : 37500 * 5;
 		}
 
 		@Override
-		public int getDefenseForSlot(EquipmentSlot slotIn) {
+		public int getDefenseForSlot(EquipmentSlot type) {
 			return this == hazmat ? 2 : 4;
 		}
 
@@ -54,7 +56,7 @@ public class ItemHazmatArmor extends ArmorItem {
 
 		@Override
 		public Ingredient getRepairIngredient() {
-			return Ingredient.of(this == hazmat ? Items.LEATHER : ElectrodynamicsItems.SUBTYPEITEMREGISTER_MAPPINGS.get(SubtypePlate.lead).get());
+			return Ingredient.of(this == hazmat ? Tags.Items.LEATHER : VoltaicTags.Items.PLATE_LEAD);
 		}
 
 		@Override

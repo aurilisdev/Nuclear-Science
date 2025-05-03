@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#R#",
+    "#C#",
+    "#M#"
+  ],
+  "key": {
+    "R": {
+      "item": "minecraft:comparator"
+    },
+    "#": {
+      "tag": "forge:plates/stainlesssteel"
+    },
+    "C": {
+      "tag": "forge:circuits/ultimate"
+    },
+    "M": {
+      "item": "nuclearscience:monitormodule"
+    }
+  },
+  "result": {
+    "item": "nuclearscience:thermometermodule"
+  }
+}

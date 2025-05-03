@@ -1,11 +1,10 @@
 package nuclearscience.datagen;
 
-import electrodynamics.datagen.client.ElectrodynamicsLangKeyProvider.Locale;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
-import nuclearscience.References;
+import nuclearscience.NuclearScience;
 import nuclearscience.datagen.client.NuclearScienceBlockStateProvider;
 import nuclearscience.datagen.client.NuclearScienceItemModelsProvider;
 import nuclearscience.datagen.client.NuclearScienceLangKeyProvider;
@@ -14,10 +13,13 @@ import nuclearscience.datagen.server.NuclearScienceBlockTagsProvider;
 import nuclearscience.datagen.server.NuclearScienceFluidTagsProvider;
 import nuclearscience.datagen.server.NuclearScienceItemTagsProvider;
 import nuclearscience.datagen.server.NuclearScienceLootTablesProvider;
+import nuclearscience.datagen.server.radiation.NuclearScienceRadiationShieldingProvider;
+import nuclearscience.datagen.server.radiation.NuclearScienceRadioactiveFluidsProvider;
 import nuclearscience.datagen.server.radiation.RadioactiveItemsProvider;
 import nuclearscience.datagen.server.recipe.NuclearScienceRecipeProvider;
+import voltaic.datagen.utils.client.BaseLangKeyProvider.Locale;
 
-@Mod.EventBusSubscriber(modid = References.ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = NuclearScience.ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class DataGenerators {
 
 	@SubscribeEvent
@@ -33,7 +35,8 @@ public class DataGenerators {
 			generator.addProvider(new NuclearScienceLootTablesProvider(generator));
 			generator.addProvider(new NuclearScienceRecipeProvider(generator));
 			generator.addProvider(new RadioactiveItemsProvider(generator));
-
+			generator.addProvider(new NuclearScienceRadioactiveFluidsProvider(generator));
+			generator.addProvider(new NuclearScienceRadiationShieldingProvider(generator));
 		}
 		if (event.includeClient()) {
 			generator.addProvider(new NuclearScienceBlockStateProvider(generator, event.getExistingFileHelper()));

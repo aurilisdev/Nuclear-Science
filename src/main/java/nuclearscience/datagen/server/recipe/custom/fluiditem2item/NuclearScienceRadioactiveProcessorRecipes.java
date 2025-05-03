@@ -2,19 +2,20 @@ package nuclearscience.datagen.server.recipe.custom.fluiditem2item;
 
 import java.util.function.Consumer;
 
-import electrodynamics.common.tags.ElectrodynamicsTags;
-import electrodynamics.datagen.utils.recipe.AbstractElectrodynamicsFinishedRecipe.RecipeCategory;
-import electrodynamics.datagen.utils.recipe.AbstractRecipeGenerator;
-import electrodynamics.datagen.utils.recipe.FinishedRecipeItemOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import nuclearscience.References;
-import nuclearscience.common.recipe.NuclearScienceRecipeInit;
+import nuclearscience.NuclearScience;
+import nuclearscience.common.block.subtype.SubtypeIrradiatedBlock;
 import nuclearscience.common.tags.NuclearScienceTags;
 import nuclearscience.registers.NuclearScienceBlocks;
 import nuclearscience.registers.NuclearScienceItems;
+import nuclearscience.registers.NuclearScienceRecipies;
+import voltaic.common.tags.VoltaicTags;
+import voltaic.datagen.utils.server.recipe.AbstractRecipeGenerator;
+import voltaic.datagen.utils.server.recipe.FinishedRecipeBase.RecipeCategory;
+import voltaic.datagen.utils.server.recipe.FinishedRecipeItemOutput;
 
 public class NuclearScienceRadioactiveProcessorRecipes extends AbstractRecipeGenerator {
 
@@ -24,7 +25,7 @@ public class NuclearScienceRadioactiveProcessorRecipes extends AbstractRecipeGen
 	private final String modID;
 
 	public NuclearScienceRadioactiveProcessorRecipes() {
-		this(References.ID);
+		this(NuclearScience.ID);
 	}
 
 	public NuclearScienceRadioactiveProcessorRecipes(String modID) {
@@ -38,21 +39,29 @@ public class NuclearScienceRadioactiveProcessorRecipes extends AbstractRecipeGen
 				//
 				.addItemTagInput(NuclearScienceTags.Items.DUST_FISSILE, 2)
 				//
-				.addFluidTagInput(ElectrodynamicsTags.Fluids.IRON_SULF, 3000)
+				.addFluidTagInput(VoltaicTags.Fluids.IRON_SULFATE, 3000)
 				//
 				.complete(consumer);
 
 		newRecipe(new ItemStack(NuclearScienceItems.ITEM_THORIANITEDUST.get()), 0.0F, RADIOACTIVEPROCESSOR_REQUIRED_TICKS, RADIOACTIVEPROCESSOR_USAGE_PER_TICK, "thorianite_dust")
 				//
-				.addItemTagInput(ElectrodynamicsTags.Items.RAW_ORE_THORIUM, 1)
+				.addItemTagInput(VoltaicTags.Items.RAW_ORE_THORIUM, 1)
 				//
-				.addFluidTagInput(ElectrodynamicsTags.Fluids.SULFURIC_ACID, 1000)
+				.addFluidTagInput(VoltaicTags.Fluids.SULFURIC_ACID, 1000)
 				//
 				.complete(consumer);
 
-		newRecipe(new ItemStack(Items.DIRT), 0.0F, RADIOACTIVEPROCESSOR_REQUIRED_TICKS, RADIOACTIVEPROCESSOR_USAGE_PER_TICK, "dirt_from_radioactivesoil")
+		newRecipe(new ItemStack(Items.DIRT), 0.0F, RADIOACTIVEPROCESSOR_REQUIRED_TICKS, RADIOACTIVEPROCESSOR_USAGE_PER_TICK, "dirt_from_irradiated_soil")
 				//
-				.addItemStackInput(new ItemStack(NuclearScienceBlocks.blockRadioactiveSoil))
+				.addItemStackInput(new ItemStack(NuclearScienceBlocks.BLOCKS_IRRADIATED.getValue(SubtypeIrradiatedBlock.soil)))
+				//
+				.addFluidTagInput(FluidTags.WATER, 100)
+				//
+				.complete(consumer);
+
+		newRecipe(new ItemStack(Items.COAL), 0.0F, RADIOACTIVEPROCESSOR_REQUIRED_TICKS, RADIOACTIVEPROCESSOR_USAGE_PER_TICK, "coal_from_petrified_wood")
+				//
+				.addItemStackInput(new ItemStack(NuclearScienceBlocks.BLOCKS_IRRADIATED.getValue(SubtypeIrradiatedBlock.petrifiedwood)))
 				//
 				.addFluidTagInput(FluidTags.WATER, 100)
 				//
@@ -62,14 +71,14 @@ public class NuclearScienceRadioactiveProcessorRecipes extends AbstractRecipeGen
 				//
 				.addItemTagInput(NuclearScienceTags.Items.OXIDE_ACTINIUM, 1)
 				//
-				.addFluidTagInput(ElectrodynamicsTags.Fluids.HYDROGEN_FLUORIDE, 100)
+				.addFluidTagInput(VoltaicTags.Fluids.HYDROFLUORIC_ACID, 100)
 				//
 				.complete(consumer);
 
 	}
 
 	public FinishedRecipeItemOutput newRecipe(ItemStack stack, float xp, int ticks, double usagePerTick, String name) {
-		return FinishedRecipeItemOutput.of(NuclearScienceRecipeInit.RADIOACTIVE_PROCESSOR_SERIALIZER.get(), stack, xp, ticks, usagePerTick).name(RecipeCategory.FLUID_ITEM_2_ITEM, modID, "radioactive_processor/" + name);
+		return FinishedRecipeItemOutput.of(NuclearScienceRecipies.RADIOACTIVE_PROCESSOR_SERIALIZER.get(), stack, xp, ticks, usagePerTick).name(RecipeCategory.FLUID_ITEM_2_ITEM, modID, "radioactive_processor/" + name);
 	}
 
 }

@@ -1,12 +1,12 @@
 package nuclearscience.common.block;
 
-import electrodynamics.prefab.block.GenericEntityBlockWaterloggable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import nuclearscience.common.tile.fissionreactor.TileMeltedReactor;
+import nuclearscience.common.tile.reactor.fission.TileMeltedReactor;
+import voltaic.prefab.block.GenericEntityBlockWaterloggable;
 
 public class BlockMeltedReactor extends GenericEntityBlockWaterloggable {
 
@@ -18,4 +18,5 @@ public class BlockMeltedReactor extends GenericEntityBlockWaterloggable {
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
 		return new TileMeltedReactor(pos, state);
 	}
+
 }
