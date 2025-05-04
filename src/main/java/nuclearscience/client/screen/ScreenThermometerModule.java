@@ -269,8 +269,8 @@ public class ScreenThermometerModule extends GenericInterfaceBoundScreen<Contain
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         super.render(graphics, mouseX, mouseY, partialTicks);
-
-        if(needsUpdate && getMenu().getSafeHost() instanceof TileThermometerModule module) {
+        TileThermometerModule module =  getMenu().getSafeHost();
+        if(needsUpdate && module != null) {
             targetTempBox.setValue(module.targetTemperature.getValue() + "");
             needsUpdate = false;
         }

@@ -56,8 +56,8 @@ public class ScreenElectromagneticGateway extends GenericScreen<ContainerElectro
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         super.render(graphics, mouseX, mouseY, partialTicks);
-
-        if(needsUpdate && getMenu().getSafeHost() instanceof TileElectromagneticGateway gateway) {
+        TileElectromagneticGateway gateway =  getMenu().getSafeHost();
+        if(needsUpdate && gateway != null) {
             box.setValue(gateway.targetSpeed.getValue() + "");
             needsUpdate = false;
         }
