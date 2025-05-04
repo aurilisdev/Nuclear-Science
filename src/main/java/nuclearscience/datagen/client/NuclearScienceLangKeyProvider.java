@@ -33,7 +33,7 @@ public class NuclearScienceLangKeyProvider extends BaseLangKeyProvider {
 		case EN_US:
 		default:
 
-			add("itemGroup.itemgroup" + NuclearScience.ID + "main", "Electrodynamics");
+			add("itemGroup.itemgroup" + NuclearScience.ID + "main", "Nuclear Science");
 
 			addItem(NuclearScienceItems.ITEM_URANIUM235, "Uranium-235");
 			addItem(NuclearScienceItems.ITEM_URANIUM238, "Uranium-238");

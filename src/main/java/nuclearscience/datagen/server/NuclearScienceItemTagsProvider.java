@@ -7,6 +7,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import nuclearscience.NuclearScience;
 import nuclearscience.common.tags.NuclearScienceTags;
 import nuclearscience.registers.NuclearScienceItems;
+import voltaic.common.tags.VoltaicTags;
 
 public class NuclearScienceItemTagsProvider extends ItemTagsProvider {
 
@@ -50,6 +51,8 @@ public class NuclearScienceItemTagsProvider extends ItemTagsProvider {
 		tag(NuclearScienceTags.Items.PELLET_ACTINIUM225).add(NuclearScienceItems.ITEM_ACTINIUM225.get());
 
 		tag(NuclearScienceTags.Items.YELLOW_CAKE).add(NuclearScienceItems.ITEM_YELLOWCAKE.get());
+		
+		tag(VoltaicTags.Items.CURES_RADIATION).add(NuclearScienceItems.ITEM_ANTIDOTE.get());
 
 	}
 
