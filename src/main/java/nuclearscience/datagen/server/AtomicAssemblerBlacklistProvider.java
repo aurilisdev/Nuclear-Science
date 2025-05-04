@@ -38,7 +38,7 @@ public class AtomicAssemblerBlacklistProvider implements DataProvider {
 		return CompletableFuture.allOf(DataProvider.saveStable(cache, json, parent));
 	}
 
-	private void getFuels(JsonObject object) {
+	private static void getFuels(JsonObject object) {
 		JsonArray json = new JsonArray();
 
 		addItem(Items.AIR, json);
@@ -47,11 +47,11 @@ public class AtomicAssemblerBlacklistProvider implements DataProvider {
 		object.add(AtomicAssemblerBlacklistRegister.KEY, json);
 	}
 
-	private void addTag(TagKey<Item> item, JsonArray json) {
+	private static void addTag(TagKey<Item> item, JsonArray json) {
 		json.add("#" + item.location().toString());
 	}
 
-	private void addItem(Item item, JsonArray json) {
+	private static void addItem(Item item, JsonArray json) {
 		json.add(ForgeRegistries.ITEMS.getKey(item).toString());
 	}
 

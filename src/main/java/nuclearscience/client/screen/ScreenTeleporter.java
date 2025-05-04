@@ -49,9 +49,8 @@ public class ScreenTeleporter extends GenericScreen<ContainerTeleporter> {
 
             if(ElectroTextUtils.dimensionExists(dimension)) {
                 return ElectroTextUtils.dimension(dimension);
-            } else {
-                return Component.literal(dimension.location().getPath());
             }
+	    return Component.literal(dimension.location().getPath());
         }));
 
         addComponent(new ScreenComponentSimpleLabel(30, 33, 10, Color.TEXT_GRAY, NuclearTextUtils.gui("teleporter.x")));

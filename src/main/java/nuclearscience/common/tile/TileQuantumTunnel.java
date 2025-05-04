@@ -235,11 +235,11 @@ public class TileQuantumTunnel extends GenericTile {
     		return handler == null ? LazyOptional.empty() : LazyOptional.of(() -> handler).cast();
     	}
     	if(cap == ForgeCapabilities.FLUID_HANDLER) {
-    		IFluidHandler handler = fluidHandlers[side.ordinal()];;
+    		IFluidHandler handler = fluidHandlers[side.ordinal()];
     		return handler == null ? LazyOptional.empty() : LazyOptional.of(() -> handler).cast();
     	}
     	if(cap == VoltaicCapabilities.CAPABILITY_ELECTRODYNAMIC_BLOCK) {
-    		ICapabilityElectrodynamic electro = electrodynamicHandlers[side.ordinal()];;
+    		ICapabilityElectrodynamic electro = electrodynamicHandlers[side.ordinal()];
     		return electro == null ? LazyOptional.empty() : LazyOptional.of(() -> electro).cast();
     	}
     	if(cap == VoltaicCapabilities.CAPABILITY_GASHANDLER_BLOCK) {
@@ -306,7 +306,7 @@ public class TileQuantumTunnel extends GenericTile {
         outputDirections.setValue(removeDirection(outputDirections.getValue(), dir));
     }
 
-    private List<Direction> readDirections(int directions, int checkValue) {
+    private static List<Direction> readDirections(int directions, int checkValue) {
         List<Direction> values = new ArrayList<>();
         if ((directions & DOWN_MASK) >> Direction.DOWN.ordinal() * 4 == checkValue) {
             values.add(Direction.DOWN);
@@ -329,7 +329,7 @@ public class TileQuantumTunnel extends GenericTile {
         return values;
     }
 
-    private int writeDirection(int directions, Direction dir, int value) {
+    private static int writeDirection(int directions, Direction dir, int value) {
 
         int masked;
 
@@ -361,7 +361,7 @@ public class TileQuantumTunnel extends GenericTile {
 
     }
 
-    private int removeDirection(int directions, Direction dir) {
+    private static int removeDirection(int directions, Direction dir) {
         return switch (dir) {
             case DOWN -> directions & ~DOWN_MASK;
             case UP -> directions & ~UP_MASK;

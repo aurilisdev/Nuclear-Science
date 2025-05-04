@@ -32,7 +32,7 @@ public class ItemCanisterLead extends ItemCanister {
 				return;
 			}
 
-			IFluidHandlerItem cap = (IFluidHandlerItem) stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).orElse(CapabilityUtils.EMPTY_FLUID_ITEM);
+			IFluidHandlerItem cap = stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).orElse(CapabilityUtils.EMPTY_FLUID_ITEM);
 
 			if (cap == CapabilityUtils.EMPTY_FLUID_ITEM) {
 				return;

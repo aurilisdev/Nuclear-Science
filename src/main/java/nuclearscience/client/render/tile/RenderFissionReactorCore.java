@@ -78,7 +78,7 @@ public class RenderFissionReactorCore extends AbstractTileRenderer<TileFissionRe
         matrix.popPose();
     }
 
-    private void renderDeuteriumCell(Color color, PoseStack matrix, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
+    private static void renderDeuteriumCell(Color color, PoseStack matrix, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
 
         matrix.pushPose();
 
@@ -91,7 +91,7 @@ public class RenderFissionReactorCore extends AbstractTileRenderer<TileFissionRe
 
     }
 
-    private void renderFuelCell(int cellSlot, ItemStack stack, PoseStack matrix, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
+    private static void renderFuelCell(int cellSlot, ItemStack stack, PoseStack matrix, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
 
         TextureAtlasSprite texture = NuclearScienceClientRegister.getSprite(NuclearScienceClientRegister.TEXTURE_FUELCELL);
 

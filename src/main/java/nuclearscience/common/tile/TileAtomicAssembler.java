@@ -114,7 +114,7 @@ public class TileAtomicAssembler extends GenericTile {
 		}
 	}
 
-	private boolean validateDupeItem(ItemStack stack) {
+	private static boolean validateDupeItem(ItemStack stack) {
 
 		if(AtomicAssemblerWhitelistRegister.INSTANCE.isWhitelisted(stack.getItem())) {
 			return true;
