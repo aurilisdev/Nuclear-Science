@@ -165,7 +165,7 @@ public class WrapperQuantumTunnelFrequencies {
 
                 TunnelFrequency frequency = tunnel.getFrequency();
 
-                if(selectedFrequency != null && selectedFrequency.equals(frequency) && selectedFrequency.getCreatorId().equals(player)) {
+                if(selectedFrequency != null && selectedFrequency.equals(frequency) && selectedFrequency.getCreatorId().equals(player.getUUID())) {
                     selectedFrequency = null;
                 }
 
