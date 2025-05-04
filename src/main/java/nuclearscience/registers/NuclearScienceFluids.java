@@ -1,22 +1,21 @@
 package nuclearscience.registers;
 
-import static electrodynamics.registers.UnifiedElectrodynamicsRegister.supplier;
-
+import electrodynamics.registers.ElectrodynamicsItems;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import nuclearscience.References;
-import nuclearscience.common.fluid.types.FluidAmmonia;
-import nuclearscience.common.fluid.types.FluidUraniumHexafluoride;
+import net.minecraftforge.registries.RegistryObject;
+import nuclearscience.NuclearScience;
+import voltaic.common.fluid.FluidNonPlaceable;
+import voltaic.prefab.utilities.math.Color;
 
 public class NuclearScienceFluids {
-	public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, References.ID);
+	public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, NuclearScience.ID);
 
-	public static FluidUraniumHexafluoride fluidUraniumHexafluoride;
-	public static FluidAmmonia fluidAmmonia;
+	public static final RegistryObject<FluidNonPlaceable> FLUID_IODINESOLUTION = FLUIDS.register("iodinesolution", () -> new FluidNonPlaceable(() -> ElectrodynamicsItems.ITEM_CANISTERREINFORCED.get(), NuclearScience.ID, "iodinesolution", "iodinesolution", new Color(255, 251, 245, 255)));
+	public static final RegistryObject<FluidNonPlaceable> FLUID_METHANOL = FLUIDS.register("methanol", () -> new FluidNonPlaceable(() -> ElectrodynamicsItems.ITEM_CANISTERREINFORCED.get(), NuclearScience.ID, "methanol", "methanol", new Color(245, 220, 255, 255)));
+	public static final RegistryObject<FluidNonPlaceable> FLUID_DECONTAMINATIONFOAM = FLUIDS.register("decontaminationfoam", () -> new FluidNonPlaceable(() -> ElectrodynamicsItems.ITEM_CANISTERREINFORCED.get(), NuclearScience.ID, "decontaminationfoam","decontaminationfoam", Color.WHITE));
+	public static final RegistryObject<FluidNonPlaceable> FLUID_STEAM = FLUIDS.register("steam", () -> new FluidNonPlaceable(() -> ElectrodynamicsItems.ITEM_CANISTERREINFORCED.get(), NuclearScience.ID, "steam","steam", Color.WHITE));
+	public static final RegistryObject<FluidNonPlaceable> FLUID_URANIUMHEXAFLUORIDE = FLUIDS.register("uraniumhexafluoride", () -> new FluidNonPlaceable(() -> NuclearScienceItems.ITEM_CANISTERLEAD.get(), NuclearScience.ID, "uraniumhexafluoride","uraniumhexafluoride", Color.WHITE));
 
-	static {
-		FLUIDS.register("fluiduraniumhexafluoride", supplier(() -> fluidUraniumHexafluoride = new FluidUraniumHexafluoride()));
-		FLUIDS.register("fluidammonia", supplier(() -> fluidAmmonia = new FluidAmmonia()));
-	}
 }

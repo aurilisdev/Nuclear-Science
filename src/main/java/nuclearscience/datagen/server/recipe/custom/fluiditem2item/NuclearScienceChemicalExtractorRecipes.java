@@ -2,17 +2,17 @@ package nuclearscience.datagen.server.recipe.custom.fluiditem2item;
 
 import java.util.function.Consumer;
 
-import electrodynamics.common.tags.ElectrodynamicsTags;
-import electrodynamics.datagen.utils.recipe.AbstractElectrodynamicsFinishedRecipe.RecipeCategory;
-import electrodynamics.datagen.utils.recipe.AbstractRecipeGenerator;
-import electrodynamics.datagen.utils.recipe.FinishedRecipeItemOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.item.ItemStack;
-import nuclearscience.References;
-import nuclearscience.common.recipe.NuclearScienceRecipeInit;
+import nuclearscience.NuclearScience;
 import nuclearscience.common.tags.NuclearScienceTags;
 import nuclearscience.registers.NuclearScienceItems;
+import nuclearscience.registers.NuclearScienceRecipies;
+import voltaic.common.tags.VoltaicTags;
+import voltaic.datagen.utils.server.recipe.AbstractRecipeGenerator;
+import voltaic.datagen.utils.server.recipe.FinishedRecipeBase.RecipeCategory;
+import voltaic.datagen.utils.server.recipe.FinishedRecipeItemOutput;
 
 public class NuclearScienceChemicalExtractorRecipes extends AbstractRecipeGenerator {
 
@@ -22,7 +22,7 @@ public class NuclearScienceChemicalExtractorRecipes extends AbstractRecipeGenera
 	private final String modID;
 
 	public NuclearScienceChemicalExtractorRecipes() {
-		this(References.ID);
+		this(NuclearScience.ID);
 	}
 
 	public NuclearScienceChemicalExtractorRecipes(String modID) {
@@ -50,7 +50,7 @@ public class NuclearScienceChemicalExtractorRecipes extends AbstractRecipeGenera
 
 		newRecipe(new ItemStack(NuclearScienceItems.ITEM_YELLOWCAKE.get()), 0.0F, CHEMICALEXTRACTOR_REQUIRED_TICKS, CHEMICALEXTRACTOR_USAGE_PER_TICK, "yellowcake_from_rawuranium")
 				//
-				.addItemTagInput(ElectrodynamicsTags.Items.RAW_ORE_URANIUM, 1)
+				.addItemTagInput(VoltaicTags.Items.RAW_ORE_URANIUM, 1)
 				//
 				.addFluidTagInput(FluidTags.WATER, 1600)
 				//
@@ -59,7 +59,7 @@ public class NuclearScienceChemicalExtractorRecipes extends AbstractRecipeGenera
 	}
 
 	public FinishedRecipeItemOutput newRecipe(ItemStack stack, float xp, int ticks, double usagePerTick, String name) {
-		return FinishedRecipeItemOutput.of(NuclearScienceRecipeInit.CHEMICAL_EXTRACTOR_SERIALIZER.get(), stack, xp, ticks, usagePerTick).name(RecipeCategory.FLUID_ITEM_2_ITEM, modID, "chemical_extractor/" + name);
+		return FinishedRecipeItemOutput.of(NuclearScienceRecipies.CHEMICAL_EXTRACTOR_SERIALIZER.get(), stack, xp, ticks, usagePerTick).name(RecipeCategory.FLUID_ITEM_2_ITEM, modID, "chemical_extractor/" + name);
 	}
 
 }

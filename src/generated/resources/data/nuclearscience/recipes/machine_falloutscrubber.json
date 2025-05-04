@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP",
+    "BMB",
+    "TCT"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:plates/vanadiumsteel"
+    },
+    "B": {
+      "item": "minecraft:iron_bars"
+    },
+    "C": {
+      "tag": "forge:circuits/advanced"
+    },
+    "T": {
+      "item": "electrodynamics:tanksteel"
+    },
+    "M": {
+      "item": "electrodynamics:motor"
+    }
+  },
+  "result": {
+    "item": "nuclearscience:falloutscrubber"
+  }
+}

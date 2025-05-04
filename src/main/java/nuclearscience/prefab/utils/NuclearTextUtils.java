@@ -15,7 +15,7 @@ import static electrodynamics.prefab.utilities.ElectroTextUtils.TOOLTIP_BASE;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TranslatableComponent;
-import nuclearscience.References;
+import nuclearscience.NuclearScience;
 
 /**
  * I will see about condensing this into a single class later, for now this works
@@ -70,7 +70,7 @@ public class NuclearTextUtils {
 	}
 
 	public static MutableComponent translated(String base, String key, Object... additional) {
-		return new TranslatableComponent(base + "." + References.ID + "." + key, additional);
+		return new TranslatableComponent(base + "." + NuclearScience.ID + "." + key, additional);
 	}
 
 	public static boolean guiExists(String key) {
@@ -82,7 +82,7 @@ public class NuclearTextUtils {
 	}
 
 	public static boolean translationExists(String base, String key) {
-		return I18n.exists(base + "." + References.ID + "." + key);
+		return I18n.exists(base + "." + NuclearScience.ID + "." + key);
 	}
 
 }

@@ -4,16 +4,15 @@ import java.util.function.DoubleSupplier;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import electrodynamics.api.screen.ITexture;
-import electrodynamics.prefab.screen.component.types.ScreenComponentGeneric;
-import electrodynamics.prefab.utilities.RenderingUtils;
 import net.minecraft.resources.ResourceLocation;
-import nuclearscience.References;
-
+import nuclearscience.NuclearScience;
+import voltaic.api.screen.ITexture;
+import voltaic.prefab.screen.component.ScreenComponentGeneric;
+import voltaic.prefab.utilities.RenderingUtils;
 
 public class ScreenComponentGasCentrifuge extends ScreenComponentGeneric {
 
-	private static final ResourceLocation TEXTURE = new ResourceLocation(References.ID + ":textures/screen/component/nsprocessingarrows.png");
+	private static final ResourceLocation TEXTURE = NuclearScience.rl("textures/screen/component/nsprocessingarrows.png");
 
 	private final DoubleSupplier progressInfoHandlerBulbs;
 	private final DoubleSupplier progressInfoHandlerProgressTop;
@@ -29,26 +28,23 @@ public class ScreenComponentGasCentrifuge extends ScreenComponentGeneric {
 	}
 
 	@Override
-	public void renderBackground(PoseStack stack, final int xAxis, final int yAxis, final int guiWidth, final int guiHeight) {
-		super.renderBackground(stack, xAxis, yAxis, guiWidth, guiHeight);
+	public void renderBackground(PoseStack poseStack, final int xAxis, final int yAxis, final int guiWidth, final int guiHeight) {
+		super.renderBackground(poseStack, xAxis, yAxis, guiWidth, guiHeight);
 
 		ITexture texture = GasCentrifugeTextures.BULB;
-		
-		RenderingUtils.bindTexture(TEXTURE);
-		
 		int progressBulbs = (int) (progressInfoHandlerBulbs.getAsDouble() * texture.textureWidth());
-		blit(stack, guiWidth + xLocation, guiHeight + yLocation + 3, texture.textureU(), texture.textureV(), progressBulbs, texture.textureHeight(), texture.imageWidth(), texture.imageHeight());
+		RenderingUtils.bindTexture(texture.getLocation());
+		blit(poseStack, guiWidth + xLocation, guiHeight + yLocation + 3, texture.textureU(), texture.textureV(), progressBulbs, texture.textureHeight(), texture.imageWidth(), texture.imageHeight());
 
 		texture = GasCentrifugeTextures.ARROW;
 		int topProgress = (int) (progressInfoHandlerProgressTop.getAsDouble() * texture.textureWidth());
 		int middleProgress = (int) (progressInfoHandlerProgressMiddle.getAsDouble() * texture.textureWidth());
 		int bottomProgress = (int) (progressInfoHandlerProgressBottom.getAsDouble() * texture.textureWidth());
 
-		blit(stack, guiWidth + xLocation + 72, guiHeight + yLocation, texture.textureU(), texture.textureV(), topProgress, texture.textureHeight(), texture.imageWidth(), texture.imageHeight());
-		blit(stack, guiWidth + xLocation + 72, guiHeight + yLocation + 20, texture.textureU(), texture.textureV(), middleProgress, texture.textureHeight(), texture.imageWidth(), texture.imageHeight());
-		blit(stack, guiWidth + xLocation + 72, guiHeight + yLocation + 41, texture.textureU(), texture.textureV(), bottomProgress, texture.textureHeight(), texture.imageWidth(), texture.imageHeight());
-		
-		RenderingUtils.resetShaderColor();
+		RenderingUtils.bindTexture(texture.getLocation());
+		blit(poseStack, guiWidth + xLocation + 72, guiHeight + yLocation, texture.textureU(), texture.textureV(), topProgress, texture.textureHeight(), texture.imageWidth(), texture.imageHeight());
+		blit(poseStack, guiWidth + xLocation + 72, guiHeight + yLocation + 20, texture.textureU(), texture.textureV(), middleProgress, texture.textureHeight(), texture.imageWidth(), texture.imageHeight());
+		blit(poseStack, guiWidth + xLocation + 72, guiHeight + yLocation + 41, texture.textureU(), texture.textureV(), bottomProgress, texture.textureHeight(), texture.imageWidth(), texture.imageHeight());
 
 	}
 
