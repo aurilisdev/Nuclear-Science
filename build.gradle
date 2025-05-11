@@ -22,17 +22,12 @@ apply plugin: 'maven-publish'
 libsDirName = "../output"
 distsDirName = "../output"
 
-def version_minor='4'
-def version_revision='1'
-def minecraft_version='1.16.5'
-def version_build='0'
-def version_major='0'
+group = nuclearscience_group
+version = "${minecraft_version}-" + nuclearscience_version
+archivesBaseName = nuclearscience_name
 
-version = minecraft_version+'-'+version_major+'.'+version_minor+'.'+version_revision+'-'+version_build
-group = 'nuclearscience' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'Nuclear Science'
+java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(8) // Need this here so eclipse task generates correctly.
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
@@ -92,15 +87,20 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
-	minecraft 'net.minecraftforge:forge:1.16.5-36.2.39'
-	
-  	def Folder2 = new File("libs")
+    def Folder = new File("C:/AmpzLibz")
+    if(Folder.exists()) {
+        implementation fileTree(Folder)
+    }
+    def Folder2 = new File("libs")
     if(Folder2.exists()) {
         implementation fileTree(Folder2)
     }
-	
-    compileOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.1.153:api")
-  	runtimeOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.1.153")
+
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}:api")
+    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
+    
+    //implementation fg.deobf("curse.maven:packet-fixer-689467:6386831")
 
 }
 
@@ -162,6 +162,12 @@ repositories{
     	name = "ModMaven"
     	url = "https://modmaven.dev"
   	}
+  	maven {
+        url "https://cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
 }
 
 tasks.curseforge.dependsOn jar

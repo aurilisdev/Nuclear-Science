@@ -1,0 +1,7 @@
+{
+  "parent": "nuclearscience:parent/logisticscable_none",
+  "textures": {
+    "texture": "nuclearscience:block/pipe/logisticscablebase_none",
+    "particle": "voltaic:block/steelcasing"
+  }
+}

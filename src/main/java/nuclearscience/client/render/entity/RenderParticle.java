@@ -22,8 +22,12 @@ import nuclearscience.common.entity.EntityParticle;
 
 public class RenderParticle extends EntityRenderer<EntityParticle> {
 
-	public RenderParticle(EntityRendererManager renderManager) {
-		super(renderManager);
+	private static final float MAX_SCALE = 0.02F;
+	private static final float MIN_SCALE = 0.01F;
+	private static final float DELTA_SCALE = MAX_SCALE - MIN_SCALE;
+
+	public RenderParticle(EntityRendererManager context) {
+		super(context);
 	}
 
 	@Override
@@ -88,7 +92,7 @@ public class RenderParticle extends EntityRenderer<EntityParticle> {
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(EntityParticle p_110775_1_) {
+	public ResourceLocation getTextureLocation(EntityParticle entity) {
 		return AtlasTexture.LOCATION_BLOCKS;
 	}
 

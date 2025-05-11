@@ -1,40 +1,91 @@
 package nuclearscience.common.item;
 
-import electrodynamics.api.electricity.formatting.ChatFormatter;
-import electrodynamics.api.sound.SoundAPI;
+import java.util.function.Supplier;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import nuclearscience.api.radiation.RadiationSystem;
 import nuclearscience.prefab.utils.NuclearTextUtils;
 import nuclearscience.registers.NuclearScienceSounds;
+import voltaic.api.electricity.formatting.ChatFormatter;
+import voltaic.api.electricity.formatting.DisplayUnits;
+import voltaic.api.item.IItemElectric;
+import voltaic.api.radiation.util.IRadiationRecipient;
+import voltaic.api.radiation.util.RadioactiveObject;
+import voltaic.prefab.item.ElectricItemProperties;
+import voltaic.prefab.item.ItemElectric;
+import voltaic.prefab.utilities.CapabilityUtils;
+import voltaic.registers.VoltaicCapabilities;
 
-public class ItemGeigerCounter extends Item {
+public class ItemGeigerCounter extends ItemElectric {
 
-	public ItemGeigerCounter(Properties properties) {
-		super(properties);
+	public static final double POWER_USAGE = 1666666.66667 / (120.0 * 20.0);
+
+	public ItemGeigerCounter(ElectricItemProperties properties, Supplier<ItemGroup> creativeTab) {
+		super(properties, creativeTab);
 	}
 
 	@Override
 	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		super.inventoryTick(stack, worldIn, entityIn, itemSlot, isSelected);
 		if (entityIn instanceof PlayerEntity) {
+
 			PlayerEntity player = (PlayerEntity) entityIn;
-			if (!worldIn.isClientSide) {
-				if ((isSelected || player.getItemBySlot(EquipmentSlotType.OFFHAND).getItem() instanceof ItemGeigerCounter) && RadiationSystem.radiationMap.get().containsKey(entityIn)) {
-					player.displayClientMessage(NuclearTextUtils.chatMessage("geigercounter.text", ChatFormatter.formatDecimals(RadiationSystem.radiationMap.get().get(entityIn), 3)), true);
-				}
+
+			boolean noPower = getJoulesStored(stack) < POWER_USAGE;
+
+			IRadiationRecipient capability = player.getCapability(VoltaicCapabilities.CAPABILITY_RADIATIONRECIPIENT).orElse(CapabilityUtils.EMPTY_RADIATION_REPIPIENT);
+			if (capability == CapabilityUtils.EMPTY_RADIATION_REPIPIENT) {
+				return;
 			}
-			if (worldIn.isClientSide && RadiationSystem.radiationMap.get().containsKey(entityIn) && (isSelected || player.getItemBySlot(EquipmentSlotType.OFFHAND).getItem() instanceof ItemGeigerCounter)) {
-				double amount = RadiationSystem.radiationMap.get().get(entityIn);
-				if (worldIn.random.nextFloat() * 50 * 60.995 / 3 < amount) {
-					SoundAPI.playSound(NuclearScienceSounds.SOUND_GEIGER.get(), SoundCategory.BLOCKS, 1, 1, player.blockPosition());
+
+			RadioactiveObject recievedRads = capability.getRecievedRadiation(player);
+
+			if (isSelected || player.getItemBySlot(EquipmentSlotType.OFFHAND).getItem() instanceof ItemGeigerCounter) {
+				if (noPower) {
+					player.displayClientMessage(NuclearTextUtils.chatMessage("geigercounter.nopower"), true);
+				} else {
+					player.displayClientMessage(ChatFormatter.getChatDisplay(recievedRads.amount(), DisplayUnits.RAD, 3, true), true);
 				}
+
 			}
+
+			if (!noPower && recievedRads.amount() > 0 && worldIn.random.nextFloat() * 50 * 60.995 / 3 < recievedRads.amount()) {
+
+				SoundEvent sound;
+				switch (worldIn.random.nextInt(6)) {
+				case 1:
+					sound = NuclearScienceSounds.SOUND_GEIGERCOUNTER_2.get();
+					break;
+				case 2:
+					sound = NuclearScienceSounds.SOUND_GEIGERCOUNTER_3.get();
+					break;
+				case 3:
+					sound = NuclearScienceSounds.SOUND_GEIGERCOUNTER_4.get();
+					break;
+				case 4:
+					sound = NuclearScienceSounds.SOUND_GEIGERCOUNTER_5.get();
+					break;
+				case 5:
+					sound = NuclearScienceSounds.SOUND_GEIGERCOUNTER_6.get();
+					break;
+				default:
+					sound = NuclearScienceSounds.SOUND_GEIGERCOUNTER_1.get();
+					break;
+				}
+
+				worldIn.playSound(null, player.blockPosition(), sound, SoundCategory.BLOCKS, 1.0F, 1.0F);
+				IItemElectric.setEnergyStored(stack, this.getJoulesStored(stack) - POWER_USAGE);
+				player.inventory.setItem(itemSlot, stack);
+				player.inventory.setChanged();
+
+			}
+
 		}
 	}
 }

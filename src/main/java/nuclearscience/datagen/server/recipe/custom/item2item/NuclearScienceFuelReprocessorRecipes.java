@@ -3,18 +3,18 @@ package nuclearscience.datagen.server.recipe.custom.item2item;
 import java.util.function.Consumer;
 
 import electrodynamics.common.item.subtype.SubtypeIngot;
-import electrodynamics.common.recipe.recipeutils.ProbableItem;
-import electrodynamics.datagen.utils.recipe.AbstractElectrodynamicsFinishedRecipe.RecipeCategory;
-import electrodynamics.datagen.utils.recipe.AbstractRecipeGenerator;
-import electrodynamics.datagen.utils.recipe.FinishedRecipeItemOutput;
 import electrodynamics.registers.ElectrodynamicsItems;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.item.ItemStack;
-import nuclearscience.References;
-import nuclearscience.common.recipe.NuclearScienceRecipeInit;
+import nuclearscience.NuclearScience;
 import nuclearscience.common.tags.NuclearScienceTags;
 import nuclearscience.registers.NuclearScienceBlocks;
 import nuclearscience.registers.NuclearScienceItems;
+import nuclearscience.registers.NuclearScienceRecipies;
+import voltaic.common.recipe.recipeutils.ProbableItem;
+import voltaic.datagen.utils.server.recipe.AbstractRecipeGenerator;
+import voltaic.datagen.utils.server.recipe.FinishedRecipeBase.RecipeCategory;
+import voltaic.datagen.utils.server.recipe.FinishedRecipeItemOutput;
 
 public class NuclearScienceFuelReprocessorRecipes extends AbstractRecipeGenerator {
 
@@ -24,7 +24,7 @@ public class NuclearScienceFuelReprocessorRecipes extends AbstractRecipeGenerato
 	private final String modID;
 
 	public NuclearScienceFuelReprocessorRecipes() {
-		this(References.ID);
+		this(NuclearScience.ID);
 	}
 
 	public NuclearScienceFuelReprocessorRecipes(String modID) {
@@ -50,9 +50,9 @@ public class NuclearScienceFuelReprocessorRecipes extends AbstractRecipeGenerato
 				//
 				.complete(consumer);
 
-		newRecipe(new ItemStack(ElectrodynamicsItems.getItem(SubtypeIngot.steel), 2), 0.0F, FUELREPROCESSOR_REQUIRED_TICKS, FUELREPROCESSOR_USAGE_PER_TICK, "reactor_salvage")
+		newRecipe(new ItemStack(ElectrodynamicsItems.ITEMS_INGOT.getValue(SubtypeIngot.steel), 2), 0.0F, FUELREPROCESSOR_REQUIRED_TICKS, FUELREPROCESSOR_USAGE_PER_TICK, "reactor_salvage")
 				//
-				.addItemStackInput(new ItemStack(NuclearScienceBlocks.blockMeltedReactor))
+				.addItemStackInput(new ItemStack(NuclearScienceBlocks.BLOCK_MELTEDREACTOR.get()))
 				//
 				.addItemBiproduct(new ProbableItem(new ItemStack(NuclearScienceItems.ITEM_PLUTONIUM239.get()), 1.0D))
 				//
@@ -69,7 +69,7 @@ public class NuclearScienceFuelReprocessorRecipes extends AbstractRecipeGenerato
 	}
 
 	public FinishedRecipeItemOutput newRecipe(ItemStack stack, float xp, int ticks, double usagePerTick, String name) {
-		return FinishedRecipeItemOutput.of(NuclearScienceRecipeInit.FUEL_REPROCESSOR_SERIALIZER.get(), stack, xp, ticks, usagePerTick).name(RecipeCategory.ITEM_2_ITEM, modID, "fuel_reprocessor/" + name);
+		return FinishedRecipeItemOutput.of(NuclearScienceRecipies.FUEL_REPROCESSOR_SERIALIZER.get(), stack, xp, ticks, usagePerTick).name(RecipeCategory.ITEM_2_ITEM, modID, "fuel_reprocessor/" + name);
 	}
 
 }

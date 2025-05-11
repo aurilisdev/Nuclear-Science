@@ -17,8 +17,10 @@
   "itembi": {
     "count": 1,
     "0": {
-      "item": "nuclearscience:polonium210chunk",
-      "count": 3,
+      "item": {
+        "id": "nuclearscience:polonium210chunk",
+        "Count": 3
+      },
       "chance": 1.0
     }
   }

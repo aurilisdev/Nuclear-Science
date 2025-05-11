@@ -2,7 +2,8 @@ package nuclearscience.common.tab;
 
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import nuclearscience.registers.NuclearScienceBlocks;
+import nuclearscience.common.block.subtype.SubtypeNuclearMachine;
+import nuclearscience.registers.NuclearScienceItems;
 
 public class ItemGroupNuclearScience extends ItemGroup {
 
@@ -12,6 +13,6 @@ public class ItemGroupNuclearScience extends ItemGroup {
 
 	@Override
 	public ItemStack makeIcon() {
-		return new ItemStack(NuclearScienceBlocks.blockGasCentrifuge);
+		return new ItemStack(NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.gascentrifuge));
 	}
 }

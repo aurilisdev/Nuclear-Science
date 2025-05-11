@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GMG",
+    "CRL",
+    "GMG"
+  ],
+  "key": {
+    "R": {
+      "item": "nuclearscience:mscontrolrod"
+    },
+    "C": {
+      "tag": "forge:circuits/ultimate"
+    },
+    "G": {
+      "item": "electrodynamics:glassaluminum"
+    },
+    "L": {
+      "item": "nuclearscience:logisticscablebase"
+    },
+    "M": {
+      "item": "electrodynamics:motor"
+    }
+  },
+  "result": {
+    "item": "nuclearscience:msinterface"
+  }
+}

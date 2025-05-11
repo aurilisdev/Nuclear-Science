@@ -17,7 +17,7 @@
     }
   },
   "output": {
-    "fluid": "nuclearscience:fluiduraniumhexafluoride",
+    "fluid": "nuclearscience:uraniumhexafluoride",
     "amount": 2500
   },
   "experience": 0.25

@@ -9,9 +9,6 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import electrodynamics.client.render.tile.AbstractTileRenderer;
-import electrodynamics.prefab.tile.components.IComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentElectrodynamic;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -23,15 +20,17 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.vector.Vector3f;
 import nuclearscience.common.tile.TileTeleporter;
+import voltaic.client.render.AbstractTileRenderer;
+import voltaic.prefab.tile.components.IComponentType;
+import voltaic.prefab.tile.components.type.ComponentElectrodynamic;
 
 public class RenderTeleporter extends AbstractTileRenderer<TileTeleporter> {
 
-	public RenderTeleporter(TileEntityRendererDispatcher rendererDispatcherIn) {
-		super(rendererDispatcherIn);
+	public RenderTeleporter(TileEntityRendererDispatcher context) {
+		super(context);
 	}
 
 	@Override
-	@Deprecated
 	public void render(TileTeleporter tileEntityIn, float partialTicks, MatrixStack stack, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
 		stack.pushPose();
 		ComponentElectrodynamic electro = tileEntityIn.getComponent(IComponentType.Electrodynamic);
@@ -124,4 +123,5 @@ public class RenderTeleporter extends AbstractTileRenderer<TileTeleporter> {
 
 		stack.popPose();
 	}
+	
 }

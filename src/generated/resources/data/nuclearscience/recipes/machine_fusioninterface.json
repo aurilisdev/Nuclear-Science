@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GEG",
+    "CMC",
+    "GRG"
+  ],
+  "key": {
+    "R": {
+      "item": "nuclearscience:fissioncontrolrod"
+    },
+    "C": {
+      "tag": "forge:circuits/ultimate"
+    },
+    "E": {
+      "item": "nuclearscience:electromagnet"
+    },
+    "G": {
+      "item": "nuclearscience:electromagneticglass"
+    },
+    "M": {
+      "item": "electrodynamics:motor"
+    }
+  },
+  "result": {
+    "item": "nuclearscience:fusioninterface"
+  }
+}

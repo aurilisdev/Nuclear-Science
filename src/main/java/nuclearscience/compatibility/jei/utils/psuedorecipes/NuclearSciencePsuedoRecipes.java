@@ -3,12 +3,12 @@ package nuclearscience.compatibility.jei.utils.psuedorecipes;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import electrodynamics.common.recipe.recipeutils.FluidIngredient;
 import electrodynamics.compatibility.jei.recipecategories.utils.psuedorecipes.types.PsuedoItem2ItemRecipe;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import nuclearscience.common.tags.NuclearScienceTags;
 import nuclearscience.registers.NuclearScienceItems;
+import voltaic.common.recipe.recipeutils.FluidIngredient;
 
 public class NuclearSciencePsuedoRecipes {
 

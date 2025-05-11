@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BB",
+    "BB",
+    "BB"
+  ],
+  "key": {
+    "B": {
+      "item": "nuclearscience:radiationshieldingbase"
+    }
+  },
+  "result": {
+    "item": "nuclearscience:radiationshieldingdoor"
+  }
+}

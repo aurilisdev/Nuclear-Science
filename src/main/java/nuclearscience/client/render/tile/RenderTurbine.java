@@ -2,17 +2,17 @@ package nuclearscience.client.render.tile;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
-import electrodynamics.client.render.tile.AbstractTileRenderer;
-import electrodynamics.prefab.utilities.RenderingUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.util.math.vector.Quaternion;
-import nuclearscience.client.ClientRegister;
+import nuclearscience.client.NuclearScienceClientRegister;
 import nuclearscience.common.block.BlockTurbine;
 import nuclearscience.common.tile.TileTurbine;
+import voltaic.client.render.AbstractTileRenderer;
+import voltaic.prefab.utilities.RenderingUtils;
 
 public class RenderTurbine extends AbstractTileRenderer<TileTurbine> {
 
@@ -22,9 +22,9 @@ public class RenderTurbine extends AbstractTileRenderer<TileTurbine> {
 
 	@Override
 	public void render(TileTurbine tileEntityIn, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
-		boolean isCore = tileEntityIn.isCore.get();
-		IBakedModel ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_TURBINEROTORLAYER);
-		double daytime = System.currentTimeMillis() / 5.0 * (tileEntityIn.spinSpeed.get() / 20.0);
+		boolean isCore = tileEntityIn.isCore.getValue();
+		IBakedModel ibakedmodel = Minecraft.getInstance().getModelManager().getModel(NuclearScienceClientRegister.MODEL_TURBINEROTORLAYER);
+		double daytime = System.currentTimeMillis() / 5.0 * (tileEntityIn.spinSpeed.getValue() / 20.0);
 		if (!isCore && tileEntityIn.getBlockState().getValue(BlockTurbine.RENDER)) {
 			matrixStackIn.pushPose();
 			matrixStackIn.translate(8 / 16.0, 4.75 / 16.0, 8 / 16.0);
@@ -64,7 +64,7 @@ public class RenderTurbine extends AbstractTileRenderer<TileTurbine> {
 			matrixStackIn.pushPose();
 			matrixStackIn.translate(0.5, 0.5, 0.5);
 			matrixStackIn.scale(size, 1, size);
-			ibakedmodel = Minecraft.getInstance().getModelManager().getModel(ClientRegister.MODEL_TURBINECASING);
+			ibakedmodel = Minecraft.getInstance().getModelManager().getModel(NuclearScienceClientRegister.MODEL_TURBINECASING);
 			RenderingUtils.renderModel(ibakedmodel, tileEntityIn, RenderType.solid(), matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
 			matrixStackIn.popPose();
 		}
