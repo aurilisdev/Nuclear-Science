@@ -1,42 +1,47 @@
 package nuclearscience.common.item;
 
+import java.util.function.Supplier;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
 import net.minecraft.item.IArmorMaterial;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
-import nuclearscience.References;
+import net.minecraftforge.common.Tags;
+import nuclearscience.NuclearScience;
+import voltaic.common.item.gear.ItemVoltaicArmor;
+import voltaic.common.tags.VoltaicTags;
 
-public class ItemHazmatArmor extends ArmorItem {
+public class ItemHazmatArmor extends ItemVoltaicArmor {
 
-	public ItemHazmatArmor(IArmorMaterial materialIn, EquipmentSlotType slot, Properties builderIn) {
-		super(materialIn, slot, builderIn);
+	public ItemHazmatArmor(IArmorMaterial materialIn, EquipmentSlotType slot, Properties properties, Supplier<ItemGroup> creativeTab) {
+		super(materialIn, slot, properties, creativeTab);
 	}
 
-	public ItemHazmatArmor(EquipmentSlotType slot, Properties builderIn) {
-		this(ArmorMaterialHazmat.hazmat, slot, builderIn);
+	public ItemHazmatArmor(EquipmentSlotType slot, Properties properties, Supplier<ItemGroup> creativeTab) {
+		this(ArmorMaterialHazmat.hazmat, slot, properties, creativeTab);
 	}
 
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-		return References.ID + ":textures/model/hazmatarmor.png";
+		return NuclearScience.ID + ":textures/block/model/" + (material == ArmorMaterialHazmat.hazmat ? "" : "reinforced") + "hazmatarmor.png";
 	}
 
 	public enum ArmorMaterialHazmat implements IArmorMaterial {
-		hazmat;
+		hazmat,
+		reinforcedhazmat;
 
 		@Override
-		public int getDurabilityForSlot(EquipmentSlotType slotIn) {
-			return 37500;
+		public int getDurabilityForSlot(EquipmentSlotType type) {
+			return this == hazmat ? 37500 : 37500 * 5;
 		}
 
 		@Override
-		public int getDefenseForSlot(EquipmentSlotType slotIn) {
-			return 2;
+		public int getDefenseForSlot(EquipmentSlotType type) {
+			return this == hazmat ? 2 : 4;
 		}
 
 		@Override
@@ -51,7 +56,7 @@ public class ItemHazmatArmor extends ArmorItem {
 
 		@Override
 		public Ingredient getRepairIngredient() {
-			return Ingredient.of(Items.LEATHER);
+			return Ingredient.of(this == hazmat ? Tags.Items.LEATHER : VoltaicTags.Items.PLATE_LEAD);
 		}
 
 		@Override

@@ -1,6 +1,5 @@
 package nuclearscience.common.block;
 
-import electrodynamics.prefab.block.GenericEntityBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;
@@ -13,10 +12,9 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import nuclearscience.api.plasma.DamageSourcePlasma;
-import nuclearscience.common.tile.fusionreactor.TilePlasma;
+import nuclearscience.common.tile.reactor.fusion.TilePlasma;
+import nuclearscience.registers.NuclearScienceDamageTypes;
+import voltaic.prefab.block.GenericEntityBlock;
 
 public class BlockPlasma extends GenericEntityBlock {
 
@@ -25,7 +23,7 @@ public class BlockPlasma extends GenericEntityBlock {
 	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState arg0, IBlockReader arg1) {
+	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
 		return new TilePlasma();
 	}
 
@@ -36,7 +34,7 @@ public class BlockPlasma extends GenericEntityBlock {
 
 	@Override
 	public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
-		entityIn.hurt(DamageSourcePlasma.INSTANCE, 99999);
+		entityIn.hurt(NuclearScienceDamageTypes.PLASMA, 99999);
 	}
 
 	@Override
@@ -44,8 +42,8 @@ public class BlockPlasma extends GenericEntityBlock {
 		return VoxelShapes.empty();
 	}
 
+
 	@Override
-	@OnlyIn(Dist.CLIENT)
 	public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
 		return adjacentBlockState.is(this) || super.skipRendering(state, adjacentBlockState, side);
 	}
@@ -56,4 +54,5 @@ public class BlockPlasma extends GenericEntityBlock {
 			super.onRemove(state, worldIn, pos, newState, isMoving);
 		}
 	}
+
 }

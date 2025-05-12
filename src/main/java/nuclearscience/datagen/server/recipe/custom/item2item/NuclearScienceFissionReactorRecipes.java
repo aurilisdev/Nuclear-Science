@@ -2,22 +2,22 @@ package nuclearscience.datagen.server.recipe.custom.item2item;
 
 import java.util.function.Consumer;
 
-import electrodynamics.datagen.utils.recipe.AbstractElectrodynamicsFinishedRecipe.RecipeCategory;
-import electrodynamics.datagen.utils.recipe.AbstractRecipeGenerator;
-import electrodynamics.datagen.utils.recipe.FinishedRecipeItemOutput;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.item.ItemStack;
-import nuclearscience.References;
-import nuclearscience.common.recipe.NuclearScienceRecipeInit;
+import nuclearscience.NuclearScience;
 import nuclearscience.common.tags.NuclearScienceTags;
 import nuclearscience.registers.NuclearScienceItems;
+import nuclearscience.registers.NuclearScienceRecipies;
+import voltaic.datagen.utils.server.recipe.AbstractRecipeGenerator;
+import voltaic.datagen.utils.server.recipe.FinishedRecipeBase.RecipeCategory;
+import voltaic.datagen.utils.server.recipe.FinishedRecipeItemOutput;
 
 public class NuclearScienceFissionReactorRecipes extends AbstractRecipeGenerator {
 
 	private final String modID;
 
 	public NuclearScienceFissionReactorRecipes() {
-		this(References.ID);
+		this(NuclearScience.ID);
 	}
 
 	public NuclearScienceFissionReactorRecipes(String modID) {
@@ -36,7 +36,7 @@ public class NuclearScienceFissionReactorRecipes extends AbstractRecipeGenerator
 	}
 
 	public FinishedRecipeItemOutput newRecipe(ItemStack stack, float xp, int ticks, double usagePerTick, String name) {
-		return FinishedRecipeItemOutput.of(NuclearScienceRecipeInit.FISSION_REACTOR_SERIALIZER.get(), stack, xp, ticks, usagePerTick).name(RecipeCategory.ITEM_2_ITEM, modID, "fission_reactor/" + name);
+		return FinishedRecipeItemOutput.of(NuclearScienceRecipies.FISSION_REACTOR_SERIALIZER.get(), stack, xp, ticks, usagePerTick).name(RecipeCategory.ITEM_2_ITEM, modID, "fission_reactor/" + name);
 	}
 
 }

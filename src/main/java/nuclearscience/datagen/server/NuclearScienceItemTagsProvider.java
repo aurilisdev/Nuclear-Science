@@ -4,14 +4,15 @@ import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.ItemTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import nuclearscience.References;
+import nuclearscience.NuclearScience;
 import nuclearscience.common.tags.NuclearScienceTags;
 import nuclearscience.registers.NuclearScienceItems;
+import voltaic.common.tags.VoltaicTags;
 
 public class NuclearScienceItemTagsProvider extends ItemTagsProvider {
 
 	public NuclearScienceItemTagsProvider(DataGenerator generator, BlockTagsProvider provider, ExistingFileHelper existingFileHelper) {
-		super(generator, provider, References.ID, existingFileHelper);
+		super(generator, provider, NuclearScience.ID, existingFileHelper);
 	}
 
 	@Override
@@ -26,7 +27,7 @@ public class NuclearScienceItemTagsProvider extends ItemTagsProvider {
 		tag(NuclearScienceTags.Items.CELL_ANTIMATTER_VERY_LARGE).add(NuclearScienceItems.ITEM_CELLANTIMATTERVERYLARGE.get());
 		tag(NuclearScienceTags.Items.CELL_DARK_MATTER).add(NuclearScienceItems.ITEM_CELLDARKMATTER.get());
 
-		tag(NuclearScienceTags.Items.FUELROD_URANIUM_LOW_EN).add(NuclearScienceItems.ITEM_FUELLEUO2.get());
+		tag(NuclearScienceTags.Items.FUELROD_URANIUM_LOW_EN).add(NuclearScienceItems.ITEM_FUELHEUO2.get());
 		tag(NuclearScienceTags.Items.FUELROD_URANIUM_HIGH_EN).add(NuclearScienceItems.ITEM_FUELLEUO2.get());
 		tag(NuclearScienceTags.Items.FUELROD_PLUTONIUM).add(NuclearScienceItems.ITEM_FUELPLUTONIUM.get());
 		tag(NuclearScienceTags.Items.FUELROD_SPENT).add(NuclearScienceItems.ITEM_FUELSPENT.get());
@@ -50,6 +51,8 @@ public class NuclearScienceItemTagsProvider extends ItemTagsProvider {
 		tag(NuclearScienceTags.Items.PELLET_ACTINIUM225).add(NuclearScienceItems.ITEM_ACTINIUM225.get());
 
 		tag(NuclearScienceTags.Items.YELLOW_CAKE).add(NuclearScienceItems.ITEM_YELLOWCAKE.get());
+		
+		tag(VoltaicTags.Items.CURES_RADIATION).add(NuclearScienceItems.ITEM_ANTIDOTE.get());
 
 	}
 

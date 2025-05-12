@@ -1,14 +1,13 @@
 package nuclearscience.prefab.screen.component;
 
-import electrodynamics.api.screen.ITexture;
 import net.minecraft.util.ResourceLocation;
-import nuclearscience.References;
+import nuclearscience.NuclearScience;
+import voltaic.api.screen.ITexture;
 
 public enum NuclearArrows implements ITexture {
-	
-	FISSION_REACTOR_ARROW_LR(0, 0, 54, 19, 54, 19, new ResourceLocation(References.ID, "textures/screen/component/fissionreactorarrow_lr.png")),
-	FISSION_REACTOR_ARROW_DOWN(0, 0, 14, 13, 14, 13, new ResourceLocation(References.ID, "textures/screen/component/fissionreactorarrow_down.png")),
-	PARTICLE_INJECTOR_ARROWS(0, 0, 86, 48, 86, 48, new ResourceLocation(References.ID, "textures/screen/component/particleinjectorarrows.png"));
+	FISSION_REACTOR_ARROW_LR(0, 0, 54, 19, 54, 19, NuclearScience.rl("textures/screen/component/fissionreactorarrow_lr.png")),
+	FISSION_REACTOR_ARROW_DOWN(0, 0, 14, 13, 14, 13, NuclearScience.rl("textures/screen/component/fissionreactorarrow_down.png")),
+	PARTICLE_INJECTOR_ARROWS(0, 0, 86, 48, 86, 48, NuclearScience.rl("textures/screen/component/particleinjectorarrows.png"));
 
 	private final int textU;
 	private final int textV;

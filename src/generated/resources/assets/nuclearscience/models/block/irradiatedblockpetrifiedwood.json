@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "side": "nuclearscience:block/irradiatedblockpetrifiedwood",
+    "end": "nuclearscience:block/irradiatedblockpetrifiedwoodtop"
+  }
+}

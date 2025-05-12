@@ -3,10 +3,6 @@ package nuclearscience.client.render.tile;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
-import electrodynamics.client.render.tile.AbstractTileRenderer;
-import electrodynamics.prefab.tile.components.IComponentType;
-import electrodynamics.prefab.tile.components.type.ComponentFluidHandlerMulti;
-import electrodynamics.prefab.utilities.RenderingUtils;
 import net.minecraft.client.renderer.Atlases;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
@@ -15,6 +11,10 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import nuclearscience.common.tile.TileNuclearBoiler;
+import voltaic.client.render.AbstractTileRenderer;
+import voltaic.prefab.tile.components.IComponentType;
+import voltaic.prefab.tile.components.type.ComponentFluidHandlerMulti;
+import voltaic.prefab.utilities.RenderingUtils;
 
 public class RenderNuclearBoiler extends AbstractTileRenderer<TileNuclearBoiler> {
 
@@ -30,10 +30,9 @@ public class RenderNuclearBoiler extends AbstractTileRenderer<TileNuclearBoiler>
 		matrix.pushPose();
 
 		Direction facing = tile.getFacing();
-		ComponentFluidHandlerMulti multi = tile.getComponent(IComponentType.FluidHandler);
 		IVertexBuilder builder = buffer.getBuffer(Atlases.translucentCullBlockSheet());
 
-		FluidTank input = multi.getInputTanks()[0];
+		FluidTank input = tile.<ComponentFluidHandlerMulti>getComponent(IComponentType.FluidHandler).getInputTanks()[0];
 
 		if (!input.isEmpty()) {
 
@@ -45,11 +44,11 @@ public class RenderNuclearBoiler extends AbstractTileRenderer<TileNuclearBoiler>
 
 		matrix.pushPose();
 
-		FluidTank output = multi.getOutputTanks()[0];
+		FluidTank output = tile.<ComponentFluidHandlerMulti>getComponent(IComponentType.FluidHandler).getOutputTanks()[0];
 
 		if (!output.isEmpty()) {
 
-			drawFluidOutput(matrix, builder, output.getFluid(), facing, (float) output.getFluidAmount() / (float) TileNuclearBoiler.MAX_FLUID_TANK_CAPACITY, light, overlay);
+			drawFluidOutput(matrix, builder, output.getFluid(), facing, (float) output.getFluidAmount() / (float) TileNuclearBoiler.MAX_GAS_TANK_CAPACITY, light, overlay);
 
 		}
 
@@ -81,7 +80,7 @@ public class RenderNuclearBoiler extends AbstractTileRenderer<TileNuclearBoiler>
 
 		}
 
-		RenderingUtils.renderFluidBox(stack, minecraft(), builder, box, fluid, light, overlay);
+		RenderingUtils.renderFluidBox(stack, minecraft(), builder, box, fluid, light, overlay, RenderingUtils.ALL_FACES);
 	}
 
 	private void drawFluidOutput(MatrixStack stack, IVertexBuilder builder, FluidStack fluid, Direction facing, float height, int light, int overlay) {
@@ -107,7 +106,7 @@ public class RenderNuclearBoiler extends AbstractTileRenderer<TileNuclearBoiler>
 
 		}
 
-		RenderingUtils.renderFluidBox(stack, minecraft(), builder, box, fluid, light, overlay);
+		RenderingUtils.renderFluidBox(stack, minecraft(), builder, box, fluid, light, overlay, RenderingUtils.ALL_FACES);
 	}
 
 }

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "name": "fissioncontrolrod",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "nuclearscience:fissioncontrolrod"
+        }
+      ]
+    }
+  ]
+}

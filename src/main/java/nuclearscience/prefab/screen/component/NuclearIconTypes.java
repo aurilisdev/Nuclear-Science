@@ -1,13 +1,23 @@
 package nuclearscience.prefab.screen.component;
 
-import electrodynamics.api.screen.ITexture;
 import net.minecraft.util.ResourceLocation;
-import nuclearscience.References;
+import nuclearscience.NuclearScience;
+import voltaic.api.screen.ITexture;
 
 public enum NuclearIconTypes implements ITexture {
-	
-	PELLET_DARK(0, 0, 14, 14, 14, 14, new ResourceLocation(References.ID, "textures/screen/component/icon/pelletdark.png")),
-	FUEL_CELL_DARK(0, 0, 12, 12, 12, 12, new ResourceLocation(References.ID, "textures/screen/component/icon/fuelcelldark.png"));
+	PELLET_DARK(0, 0, 14, 14, 14, 14, NuclearScience.rl("textures/screen/component/icon/pelletdark.png")),
+	FUEL_CELL_DARK(0, 0, 12, 12, 12, 12, NuclearScience.rl("textures/screen/component/icon/fuelcelldark.png")),
+	PENCIL(0, 0, 10, 10, 10, 10, NuclearScience.rl("textures/screen/component/icon/pencil.png")),
+	ERASER(0, 0, 14, 14, 14, 14, NuclearScience.rl("textures/screen/component/icon/eraser.png")),
+	ENABLE(0, 0, 14, 11, 14, 11, NuclearScience.rl("textures/screen/component/icon/enable.png")),
+	DISABLE(0, 0, 10, 10, 10, 10, NuclearScience.rl("textures/screen/component/icon/disable.png")),
+	DELETE(0, 0, 8, 8, 8, 8, NuclearScience.rl("textures/screen/component/icon/delete.png")),
+	IOCONFIG(0, 0, 13, 13, 13, 13, NuclearScience.rl("textures/screen/component/icon/ioconfig.png")),
+	CREATENEW(0, 0, 16, 16, 16, 16, NuclearScience.rl("textures/screen/component/icon/createnew.png")),
+	BUFFER(0, 0, 10, 11, 10, 11, NuclearScience.rl("textures/screen/component/icon/buffer.png")),
+	LINK(0, 0, 17, 15, 17, 15, NuclearScience.rl("textures/screen/component/icon/link.png")),
+	GATEWAY(0, 0, 16, 16, 16, 16, NuclearScience.rl("textures/screen/component/icon/gateway.png")),
+	PARTICLEACCELERATOR_DMATOM(16, 16, 0, 0, 16, 16, NuclearScience.rl("textures/screen/jei/particleaccelerator_dmatom.png"));
 
 	private final int textU;
 	private final int textV;

@@ -5,7 +5,10 @@
   "iteminputs": {
     "count": 3,
     "0": {
-      "item": "electrodynamics:crystalpotassiumchloride",
+      "item": {
+        "id": "electrodynamics:crystalpotassiumchloride",
+        "Count": 1
+      },
       "count": 1
     },
     "1": {

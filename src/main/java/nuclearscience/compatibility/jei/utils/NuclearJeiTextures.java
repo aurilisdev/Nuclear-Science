@@ -1,24 +1,25 @@
 package nuclearscience.compatibility.jei.utils;
 
-import electrodynamics.api.screen.ITexture;
 import net.minecraft.util.ResourceLocation;
-import nuclearscience.References;
+import nuclearscience.NuclearScience;
+import nuclearscience.client.NuclearScienceClientRegister;
+import voltaic.api.screen.ITexture;
 
 public enum NuclearJeiTextures implements ITexture {
 
-	GASCENTRIFUGE_ARROW_OFF(47, 54, 0, 0, 47, 54, new ResourceLocation(References.ID + ":textures/screen/jei/gascentrifugearrowoff.png")),
-	GASCENTRIFUGE_ARROW_ON(47, 54, 0, 0, 47, 54, new ResourceLocation(References.ID + ":textures/screen/jei/gascentrifugearrowon.png")),
-	GASCENTRIFUGE_ARROW_STATIC(43, 53, 0, 0, 43, 53, new ResourceLocation(References.ID + ":textures/screen/jei/gascentrifugearrowstatic.png")),
+	GASCENTRIFUGE_ARROW_OFF(47, 54, 0, 0, 47, 54, NuclearScience.rl("textures/screen/jei/gascentrifugearrowoff.png")),
+	GASCENTRIFUGE_ARROW_ON(47, 54, 0, 0, 47, 54, NuclearScience.rl("textures/screen/jei/gascentrifugearrowon.png")),
+	GASCENTRIFUGE_ARROW_STATIC(43, 53, 0, 0, 43, 53, NuclearScience.rl("textures/screen/jei/gascentrifugearrowstatic.png")),
 
-	PARTICLEACCELERATOR_AMARROW_OFF(82, 47, 0, 0, 82, 47, new ResourceLocation(References.ID + ":textures/screen/jei/particleaccelerator_amarrowoff.png")),
-	PARTICLEACCELERATOR_AMARROW_ON(82, 47, 0, 0, 82, 47, new ResourceLocation(References.ID + ":textures/screen/jei/particleaccelerator_amarrowon.png")),
+	PARTICLEACCELERATOR_AMARROW_OFF(82, 47, 0, 0, 82, 47, NuclearScience.rl("textures/screen/jei/particleaccelerator_amarrowoff.png")),
+	PARTICLEACCELERATOR_AMARROW_ON(82, 47, 0, 0, 82, 47, NuclearScience.rl("textures/screen/jei/particleaccelerator_amarrowon.png")),
 
-	PARTICLEACCELERATOR_DMARROWOFF_LEFT(34, 72, 0, 0, 34, 72, new ResourceLocation(References.ID + ":textures/screen/jei/particleaccelerator_dmarrowoff_left.png")),
-	PARTICLEACCELERATOR_DMARROWOFF_RIGHT(34, 72, 0, 0, 34, 72, new ResourceLocation(References.ID + ":textures/screen/jei/particleaccelerator_dmarrowoff_right.png")),
-	PARTICLEACCELERATOR_DMARROWON_LEFT(34, 72, 0, 0, 34, 72, new ResourceLocation(References.ID + ":textures/screen/jei/particleaccelerator_dmarrowon_left.png")),
-	PARTICLEACCELERATOR_DMARROWON_RIGHT(34, 72, 0, 0, 34, 72, new ResourceLocation(References.ID + ":textures/screen/jei/particleaccelerator_dmarrowon_right.png")),
-	PARTICLEACCELERATOR_DMATOM(16, 16, 0, 0, 16, 16, new ResourceLocation(References.ID + ":textures/screen/jei/particleaccelerator_dmatom.png")),
-	PARTICLEACCELERATOR_DMBLACKHOLE(77, 76, 0, 0, 77, 76, new ResourceLocation(References.ID + ":textures/custom/particleaccelerator_dmblackhole.png"));
+	PARTICLEACCELERATOR_DMARROWOFF_LEFT(34, 72, 0, 0, 34, 72, NuclearScience.rl("textures/screen/jei/particleaccelerator_dmarrowoff_left.png")),
+	PARTICLEACCELERATOR_DMARROWOFF_RIGHT(34, 72, 0, 0, 34, 72, NuclearScience.rl("textures/screen/jei/particleaccelerator_dmarrowoff_right.png")),
+	PARTICLEACCELERATOR_DMARROWON_LEFT(34, 72, 0, 0, 34, 72, NuclearScience.rl("textures/screen/jei/particleaccelerator_dmarrowon_left.png")),
+	PARTICLEACCELERATOR_DMARROWON_RIGHT(34, 72, 0, 0, 34, 72, NuclearScience.rl("textures/screen/jei/particleaccelerator_dmarrowon_right.png")),
+	PARTICLEACCELERATOR_DMATOM(16, 16, 0, 0, 16, 16, NuclearScience.rl("textures/screen/jei/particleaccelerator_dmatom.png")),
+	PARTICLEACCELERATOR_DMBLACKHOLE(77, 76, 0, 0, 77, 76, NuclearScienceClientRegister.TEXTURE_JEIBLACKHOLE);
 
 	private final int textureWidth;
 	private final int textureHeight;

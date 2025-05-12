@@ -1,9 +1,14 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "EGE"
+    " C ",
+    "EGE",
+    " C "
   ],
   "key": {
+    "C": {
+      "item": "electrodynamics:coil"
+    },
     "E": {
       "item": "nuclearscience:electromagnet"
     },

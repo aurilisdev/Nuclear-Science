@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "DCD",
+    "EDE",
+    "DCD"
+  ],
+  "key": {
+    "C": {
+      "tag": "forge:circuits/ultimate"
+    },
+    "D": {
+      "tag": "forge:cells/dark_matter"
+    },
+    "E": {
+      "tag": "forge:ender_pearls"
+    }
+  },
+  "result": {
+    "item": "nuclearscience:quantumcapacitor"
+  }
+}

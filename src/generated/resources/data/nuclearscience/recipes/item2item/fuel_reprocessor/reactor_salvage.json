@@ -5,7 +5,10 @@
   "iteminputs": {
     "count": 1,
     "0": {
-      "item": "nuclearscience:meltedreactor",
+      "item": {
+        "id": "nuclearscience:meltedreactor",
+        "Count": 1
+      },
       "count": 1
     }
   },
@@ -17,8 +20,10 @@
   "itembi": {
     "count": 1,
     "0": {
-      "item": "nuclearscience:plutonium239",
-      "count": 1,
+      "item": {
+        "id": "nuclearscience:plutonium239",
+        "Count": 1
+      },
       "chance": 1.0
     }
   }

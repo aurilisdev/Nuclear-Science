@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WWW",
+    "LcL",
+    "WLW"
+  ],
+  "key": {
+    "c": {
+      "item": "nuclearscience:hazmatplate"
+    },
+    "W": {
+      "tag": "minecraft:wool"
+    },
+    "L": {
+      "tag": "forge:plates/lead"
+    }
+  },
+  "result": {
+    "item": "nuclearscience:reinforcedhazmatplate"
+  }
+}

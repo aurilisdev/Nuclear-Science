@@ -1,33 +1,31 @@
 package nuclearscience.datagen.client;
 
 import net.minecraft.data.DataGenerator;
-import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.common.data.SoundDefinition;
-import net.minecraftforge.common.data.SoundDefinition.Sound;
-import net.minecraftforge.common.data.SoundDefinition.SoundType;
-import net.minecraftforge.common.data.SoundDefinitionsProvider;
-import net.minecraftforge.fml.RegistryObject;
-import nuclearscience.References;
+import nuclearscience.NuclearScience;
 import nuclearscience.registers.NuclearScienceSounds;
+import voltaic.datagen.utils.client.BaseSoundProvider;
 
-public class NuclearScienceSoundProvider extends SoundDefinitionsProvider {
+public class NuclearScienceSoundProvider extends BaseSoundProvider {
 
-	public NuclearScienceSoundProvider(DataGenerator generator, ExistingFileHelper helper) {
-		super(generator, References.ID, helper);
+	public NuclearScienceSoundProvider(DataGenerator gen, ExistingFileHelper helper) {
+		super(gen, helper, NuclearScience.ID);
 	}
 
 	@Override
 	public void registerSounds() {
 		add(NuclearScienceSounds.SOUND_GASCENTRIFUGE);
-		add(NuclearScienceSounds.SOUND_GEIGER);
+		add(NuclearScienceSounds.SOUND_GEIGERCOUNTER_1);
+		add(NuclearScienceSounds.SOUND_GEIGERCOUNTER_2);
+		add(NuclearScienceSounds.SOUND_GEIGERCOUNTER_3);
+		add(NuclearScienceSounds.SOUND_GEIGERCOUNTER_4);
+		add(NuclearScienceSounds.SOUND_GEIGERCOUNTER_5);
+		add(NuclearScienceSounds.SOUND_GEIGERCOUNTER_6);
 		add(NuclearScienceSounds.SOUND_NUCLEARBOILER);
 		add(NuclearScienceSounds.SOUND_SIREN);
 		add(NuclearScienceSounds.SOUND_TURBINE);
-	}
-
-	private void add(RegistryObject<SoundEvent> sound) {
-		add(sound.get(), SoundDefinition.definition().subtitle("subtitles." + References.ID + "." + sound.getId().getPath()).with(Sound.sound(sound.getId(), SoundType.SOUND)));
+		add(NuclearScienceSounds.SOUND_LOGISTICSCONTROLLER);
+		add(NuclearScienceSounds.SOUND_PARTICLE);
 	}
 
 }
