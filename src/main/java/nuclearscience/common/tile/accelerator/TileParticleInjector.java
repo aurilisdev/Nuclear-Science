@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.common.entity.EntityParticle;
 import nuclearscience.common.inventory.container.ContainerParticleInjector;
 import nuclearscience.common.settings.NuclearConstants;
+import nuclearscience.registers.NuclearScienceBlocks;
 import nuclearscience.registers.NuclearScienceItems;
 import nuclearscience.registers.NuclearScienceTiles;
 import voltaic.Voltaic;
@@ -96,6 +97,8 @@ public class TileParticleInjector extends GenericTile {
 		}
 
 		if(usingGateway.getValue() && particles[0] != null && !particles[0].passedThroughGate) {
+			return;
+		} else if (!usingGateway.getValue() && !level.getBlockState(worldPosition.relative(getFacing())).is(NuclearScienceBlocks.BLOCK_ELECTORMAGNETICBOOSTER.get())) {
 			return;
 		}
 
