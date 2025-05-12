@@ -1,0 +1,90 @@
+{
+  "#forge:pellets/uranium235": {
+    "strength": 1.0,
+    "amount": 1000.0
+  },
+  "#forge:pellets/uranium238": {
+    "strength": 1.0,
+    "amount": 500.0
+  },
+  "#forge:pellets/plutonium": {
+    "strength": 1.0,
+    "amount": 4500.0
+  },
+  "#forge:pellets/polonium": {
+    "strength": 1.0,
+    "amount": 2500.0
+  },
+  "#forge:pellets/actinium225": {
+    "strength": 1.0,
+    "amount": 5000.0
+  },
+  "#forge:nuggets/polonium": {
+    "strength": 1.0,
+    "amount": 625.0
+  },
+  "#forge:fuel_rods/heuo2": {
+    "strength": 1.0,
+    "amount": 3000.0
+  },
+  "#forge:fuel_rods/leuo2": {
+    "strength": 1.0,
+    "amount": 2000.0
+  },
+  "#forge:fuel_rods/spent": {
+    "strength": 1.0,
+    "amount": 3500.0
+  },
+  "#forge:fuel_rods/plutonium": {
+    "strength": 1.0,
+    "amount": 2500.0
+  },
+  "#forge:yellow_cake_uranium": {
+    "strength": 1.0,
+    "amount": 300.0
+  },
+  "#forge:dusts/fissile": {
+    "strength": 1.0,
+    "amount": 2000.0
+  },
+  "#forge:salts/fissile": {
+    "strength": 1.0,
+    "amount": 200.0
+  },
+  "#forge:oxide/plutonium": {
+    "strength": 1.0,
+    "amount": 4000.0
+  },
+  "#forge:dusts/thorium": {
+    "strength": 1.0,
+    "amount": 2000.0
+  },
+  "#forge:oxide/actinium": {
+    "strength": 1.0,
+    "amount": 400.0
+  },
+  "#forge:ores/thorium": {
+    "strength": 1.0,
+    "amount": 500.0
+  },
+  "#forge:ores/uranium": {
+    "strength": 1.0,
+    "amount": 100.0
+  },
+  "#forge:raw_materials/thorium": {
+    "strength": 1.0,
+    "amount": 150.0
+  },
+  "#forge:raw_materials/uranium": {
+    "strength": 1.0,
+    "amount": 50.0
+  },
+  "#forge:storage_blocks/rawthorium": {
+    "strength": 1.0,
+    "amount": 500.0
+  },
+  "#forge:storage_blocks/rawuranium": {
+    "strength": 1.0,
+    "amount": 450.0
+  }
+}
