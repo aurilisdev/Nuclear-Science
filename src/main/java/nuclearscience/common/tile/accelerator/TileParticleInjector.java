@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.common.entity.EntityParticle;
 import nuclearscience.common.inventory.container.ContainerParticleInjector;
 import nuclearscience.common.settings.NuclearConstants;
+import nuclearscience.registers.NuclearScienceBlocks;
 import nuclearscience.registers.NuclearScienceItems;
 import nuclearscience.registers.NuclearScienceTiles;
 import voltaic.Voltaic;
@@ -40,7 +41,6 @@ public class TileParticleInjector extends GenericTile {
 	public final SingleProperty<Boolean> usingGateway = property(new SingleProperty<>(PropertyTypes.BOOLEAN, "usinggateway", false));
 	public final SingleProperty<Boolean> hasRedstoneSignal = property(new SingleProperty<>(PropertyTypes.BOOLEAN, "hasredstonesignal", false));
 
-
 	public TileParticleInjector(BlockPos pos, BlockState state) {
 		super(NuclearScienceTiles.TILE_PARTICLEINJECTOR.get(), pos, state);
 		addComponent(new ComponentTickable(this).tickServer(this::tickServer).tickCommon(this::tickCommon));
@@ -61,7 +61,7 @@ public class TileParticleInjector extends GenericTile {
 			particles[1] = null;
 		}
 
-		if(particles[0] == null && particles[1] != null) {
+		if (particles[0] == null && particles[1] != null) {
 			particles[0] = particles[1];
 			particles[1] = null;
 		}
@@ -70,7 +70,7 @@ public class TileParticleInjector extends GenericTile {
 
 	private void tickServer(ComponentTickable componentTickable) {
 
-		if(hasRedstoneSignal.getValue()) {
+		if (hasRedstoneSignal.getValue()) {
 			return;
 		}
 
@@ -81,26 +81,28 @@ public class TileParticleInjector extends GenericTile {
 
 		ItemStack input = inv.getItem(INPUT_SLOT);
 
-		if(electro.getJoulesStored() < NuclearConstants.PARTICLEINJECTOR_USAGE_PER_PARTICLE || input.isEmpty()) {
+		if (electro.getJoulesStored() < NuclearConstants.PARTICLEINJECTOR_USAGE_PER_PARTICLE || input.isEmpty()) {
 			return;
 		}
 
-		if(timeSinceSpawn > 0) {
+		if (timeSinceSpawn > 0) {
 			timeSinceSpawn--;
 			return;
 		}
 
-		if(usingGateway.getValue() && particles[0] != null && !particles[0].passedThroughGate) {
+		if (usingGateway.getValue() && particles[0] != null && !particles[0].passedThroughGate) {
+			return;
+		} else if (!usingGateway.getValue() && !level.getBlockState(worldPosition.relative(getFacing())).is(NuclearScienceBlocks.BLOCK_ELECTORMAGNETICBOOSTER.get())) {
 			return;
 		}
 
-		if(particles[0] != null && particles[1] != null) {
+		if (particles[0] != null && particles[1] != null) {
 			return;
 		}
 
 		ItemStack resultStack = inv.getItem(OUTPUT_SLOT);
 
-		if(resultStack.getCount() >= resultStack.getMaxStackSize()) {
+		if (resultStack.getCount() >= resultStack.getMaxStackSize()) {
 			return;
 		}
 
@@ -118,7 +120,6 @@ public class TileParticleInjector extends GenericTile {
 
 		electro.setJoulesStored(electro.getJoulesStored() - NuclearConstants.PARTICLEINJECTOR_USAGE_PER_PARTICLE);
 
-
 	}
 
 	// returns if collision was successful or not
@@ -131,20 +132,20 @@ public class TileParticleInjector extends GenericTile {
 		ItemStack resultStack = inv.getItem(OUTPUT_SLOT);
 		ItemStack cellStack = inv.getItem(ELECTRO_CELL_SLOT);
 
-		if(particles[0] == null || particles[1] == null) {
+		if (particles[0] == null || particles[1] == null) {
 			return false;
 		}
 
 		EntityParticle one = particles[0];
 		EntityParticle two = particles[1];
 
-		if(one.distanceTo(two) >= 1) {
+		if (one.distanceTo(two) >= 1) {
 			return false;
 		}
 
 		BlockPos pos = one.blockPosition();
 
-		if(!level.isClientSide()) {
+		if (!level.isClientSide()) {
 
 			level.playSound(null, pos, SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS, 1, 1);
 
@@ -153,7 +154,7 @@ public class TileParticleInjector extends GenericTile {
 
 			Random random = Voltaic.RANDOM;
 
-			for(int i = 0; i < 50; i++) {
+			for (int i = 0; i < 50; i++) {
 				double d0 = pos.getX() + random.nextDouble();
 				double d1 = pos.getY() + random.nextDouble();
 				double d2 = pos.getZ() + random.nextDouble();
@@ -162,11 +163,11 @@ public class TileParticleInjector extends GenericTile {
 				((ServerLevel) level).sendParticles(ParticleTypes.PORTAL, d0, d1, d2, 1, 0, 0, 0, d3);
 			}
 
-			if(!cellStack.isEmpty() && resultStack.getCount() < resultStack.getMaxStackSize() && one.speed >= EntityParticle.MIN_COLLISION_SPEED && two.speed >= EntityParticle.MIN_COLLISION_SPEED) {
+			if (!cellStack.isEmpty() && resultStack.getCount() < resultStack.getMaxStackSize() && one.speed >= EntityParticle.MIN_COLLISION_SPEED && two.speed >= EntityParticle.MIN_COLLISION_SPEED) {
 
 				double speedOfMax = Math.pow((one.speed + two.speed) / 4.0, 2);
 
-				if (speedOfMax > 0.999) { //Speed needs to be 1.999
+				if (speedOfMax > 0.999) { // Speed needs to be 1.999
 					if (resultStack.getItem() == NuclearScienceItems.ITEM_CELLDARKMATTER.get()) {
 						resultStack.setCount(resultStack.getCount() + 1);
 						cellStack.shrink(1);
@@ -194,25 +195,24 @@ public class TileParticleInjector extends GenericTile {
 
 	}
 
-
 	public void addParticle(EntityParticle particle) {
 
-		if(particles[0] == null && particles[1] == null) {
+		if (particles[0] == null && particles[1] == null) {
 			particles[0] = particle;
 		}
 
-		if(particles[0] != null) {
-			if(particles[0].getUUID().equals(particle.getUUID())) {
+		if (particles[0] != null) {
+			if (particles[0].getUUID().equals(particle.getUUID())) {
 				return;
 			} else if (particles[1] == null) {
 				particles[1] = particle;
 			}
 		}
 
-		if(particles[1] != null) {
-			if(particles[1].getUUID().equals(particle.getUUID())) {
+		if (particles[1] != null) {
+			if (particles[1].getUUID().equals(particle.getUUID())) {
 				return;
-			} else if(particles[0] == null) {
+			} else if (particles[0] == null) {
 				particles[0] = particle;
 			}
 		}
@@ -233,7 +233,7 @@ public class TileParticleInjector extends GenericTile {
 
 	@Override
 	public void onNeightborChanged(BlockPos neighbor, boolean blockStateTrigger) {
-		if(!level.isClientSide()) {
+		if (!level.isClientSide()) {
 			hasRedstoneSignal.setValue(level.hasNeighborSignal(getBlockPos()));
 		}
 	}
