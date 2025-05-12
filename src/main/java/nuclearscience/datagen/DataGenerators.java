@@ -13,6 +13,8 @@ import nuclearscience.datagen.server.NuclearScienceBlockTagsProvider;
 import nuclearscience.datagen.server.NuclearScienceFluidTagsProvider;
 import nuclearscience.datagen.server.NuclearScienceItemTagsProvider;
 import nuclearscience.datagen.server.NuclearScienceLootTablesProvider;
+import nuclearscience.datagen.server.radiation.NuclearScienceRadiationShieldingProvider;
+import nuclearscience.datagen.server.radiation.NuclearScienceRadioactiveFluidsProvider;
 import nuclearscience.datagen.server.radiation.RadioactiveItemsProvider;
 import nuclearscience.datagen.server.recipe.NuclearScienceRecipeProvider;
 import voltaic.datagen.utils.client.BaseLangKeyProvider.Locale;
@@ -33,7 +35,8 @@ public class DataGenerators {
 			generator.addProvider(new NuclearScienceLootTablesProvider(generator));
 			generator.addProvider(new NuclearScienceRecipeProvider(generator));
 			generator.addProvider(new RadioactiveItemsProvider(generator));
-
+			generator.addProvider(new NuclearScienceRadioactiveFluidsProvider(generator));
+			generator.addProvider(new NuclearScienceRadiationShieldingProvider(generator));
 		}
 		if (event.includeClient()) {
 			generator.addProvider(new NuclearScienceBlockStateProvider(generator, event.getExistingFileHelper()));
