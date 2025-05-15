@@ -58,8 +58,8 @@ public class ScreenElectromagneticGateway extends GenericScreen<ContainerElectro
     public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
         super.render(poseStack, mouseX, mouseY, partialTicks);
 
-        if(needsUpdate && getMenu().getSafeHost() instanceof TileElectromagneticGateway gateway) {
-            box.setValue(gateway.targetSpeed.getValue() + "");
+        if(needsUpdate && getMenu().getSafeHost() != null) {
+            box.setValue(getMenu().getSafeHost().targetSpeed.getValue() + "");
             needsUpdate = false;
         }
     }
