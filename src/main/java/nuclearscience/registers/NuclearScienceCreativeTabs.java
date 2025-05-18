@@ -5,6 +5,6 @@ import nuclearscience.common.tab.ItemGroupNuclearScience;
 
 public class NuclearScienceCreativeTabs {
 
-	public static final CreativeModeTab MAIN = new ItemGroupNuclearScience("itemgroupnuclearscience");
+	public static final CreativeModeTab MAIN = new ItemGroupNuclearScience("itemgroupnuclearsciencemain");
 	
 }
