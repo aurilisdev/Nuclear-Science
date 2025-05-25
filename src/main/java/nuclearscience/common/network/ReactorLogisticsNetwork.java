@@ -70,6 +70,16 @@ public class ReactorLogisticsNetwork extends
 	}
 
 	@Override
+	public void tick() {
+		for(BlockEntity tile : acceptorSet) {
+			if(tile == null || tile.isRemoved()) {
+				acceptorSet.remove(tile);
+				acceptorInputMap.remove(tile);
+			}
+		}
+	}
+
+	@Override
 	public void updateRecieverStatistics(BlockEntity reciever, Direction dir) {
 		if (reciever instanceof TileController controller) {
 			this.controller = controller;
