@@ -45,6 +45,13 @@ public class MoltenSaltNetwork extends AbstractNetwork<TileMoltenSaltPipe, Subty
 
 		double perReceiver = transfer / availableAcceptors.size();
 		for (TileEntity receiver : availableAcceptors) {
+			
+			if(receiver == null || receiver.isRemoved()) {
+				acceptorInputMap.remove(receiver);
+				acceptorSet.remove(receiver);
+				continue;
+			}
+			
 			if (acceptorInputMap.containsKey(receiver) && receiver instanceof TileHeatExchanger) {
 				Double rec = ((TileHeatExchanger) receiver).receiveHeat(perReceiver - getSize() * 5);
 				heat += rec;
