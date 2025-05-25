@@ -219,11 +219,11 @@ public class ScreenMonitorModule extends GenericInterfaceBoundScreen<ContainerMo
 
                     font.draw(poseStack, NuclearTextUtils.gui("logisticsnetwork.deuterium"), guiWidth + 20, guiHeight + 45, Color.TEXT_GRAY.color());
 
-                    font.draw(poseStack, VoltaicTextUtils.ratio(new StringTextComponent(fusionCore.deuterium.getName() + ""), new StringTextComponent(NuclearConstants.FUSIONREACTOR_MAXSTORAGE + "")), guiWidth + 30, guiHeight + 55, Color.WHITE.color());
+                    font.draw(poseStack, VoltaicTextUtils.ratio(new StringTextComponent(fusionCore.deuterium.getValue() + ""), new StringTextComponent(NuclearConstants.FUSIONREACTOR_MAXSTORAGE + "")), guiWidth + 30, guiHeight + 55, Color.WHITE.color());
 
                     font.draw(poseStack, NuclearTextUtils.gui("logisticsnetwork.tritium"), guiWidth + 20, guiHeight + 70, Color.TEXT_GRAY.color());
 
-                    font.draw(poseStack, VoltaicTextUtils.ratio(new StringTextComponent(fusionCore.tritium.getName() + ""), new StringTextComponent(NuclearConstants.FUSIONREACTOR_MAXSTORAGE + "")), guiWidth + 30, guiHeight + 80, Color.WHITE.color());
+                    font.draw(poseStack, VoltaicTextUtils.ratio(new StringTextComponent(fusionCore.tritium.getValue() + ""), new StringTextComponent(NuclearConstants.FUSIONREACTOR_MAXSTORAGE + "")), guiWidth + 30, guiHeight + 80, Color.WHITE.color());
 
                     font.draw(poseStack, NuclearTextUtils.gui("logisticsnetwork.power"), guiWidth + 20, guiHeight + 95, Color.TEXT_GRAY.color());
 

@@ -6,6 +6,7 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.IntArray;
 import nuclearscience.common.tile.TileTeleporter;
+import nuclearscience.registers.NuclearScienceItems;
 import nuclearscience.registers.NuclearScienceMenuTypes;
 import voltaic.prefab.inventory.container.slot.item.type.SlotRestricted;
 import voltaic.prefab.inventory.container.types.GenericContainerBlockEntity;
@@ -23,6 +24,6 @@ public class ContainerTeleporter extends GenericContainerBlockEntity<TileTelepor
     @Override
     public void addInventorySlots(IInventory container, PlayerInventory inventory) {
         setPlayerInvOffset(50);
-        addSlot(new SlotRestricted(container, nextIndex(), 31, 80));
+        addSlot(new SlotRestricted(container, nextIndex(), 31, 80).setRestriction(NuclearScienceItems.ITEM_FREQUENCYCARD.get()));
     }
 }
