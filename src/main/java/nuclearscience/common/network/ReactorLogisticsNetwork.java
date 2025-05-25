@@ -85,6 +85,16 @@ public class ReactorLogisticsNetwork extends
 			thermometers.put(thermometer.getBlockPos(), thermometer);
 		}
 	}
+	
+	@Override
+	public void tick() {
+		for(BlockEntity tile : acceptorSet) {
+			if(tile == null || tile.isRemoved()) {
+				acceptorSet.remove(tile);
+				acceptorInputMap.remove(tile);
+			}
+		}
+	}
 
 	@Override
 	public Void emit(Void transfer, ArrayList<BlockEntity> ignored, boolean debug) {
