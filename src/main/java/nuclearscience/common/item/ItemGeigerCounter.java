@@ -33,7 +33,7 @@ public class ItemGeigerCounter extends ItemElectric {
 	@Override
 	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		super.inventoryTick(stack, worldIn, entityIn, itemSlot, isSelected);
-		if (entityIn instanceof PlayerEntity) {
+		if (entityIn instanceof PlayerEntity && !worldIn.isClientSide) {
 
 			PlayerEntity player = (PlayerEntity) entityIn;
 

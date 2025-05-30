@@ -2,7 +2,6 @@ package nuclearscience.compatibility.jei.utils;
 
 import net.minecraft.util.ResourceLocation;
 import nuclearscience.NuclearScience;
-import nuclearscience.client.NuclearScienceClientRegister;
 import voltaic.api.screen.ITexture;
 
 public enum NuclearJeiTextures implements ITexture {
@@ -19,7 +18,7 @@ public enum NuclearJeiTextures implements ITexture {
 	PARTICLEACCELERATOR_DMARROWON_LEFT(34, 72, 0, 0, 34, 72, NuclearScience.rl("textures/screen/jei/particleaccelerator_dmarrowon_left.png")),
 	PARTICLEACCELERATOR_DMARROWON_RIGHT(34, 72, 0, 0, 34, 72, NuclearScience.rl("textures/screen/jei/particleaccelerator_dmarrowon_right.png")),
 	PARTICLEACCELERATOR_DMATOM(16, 16, 0, 0, 16, 16, NuclearScience.rl("textures/screen/jei/particleaccelerator_dmatom.png")),
-	PARTICLEACCELERATOR_DMBLACKHOLE(77, 76, 0, 0, 77, 76, NuclearScienceClientRegister.TEXTURE_JEIBLACKHOLE);
+	PARTICLEACCELERATOR_DMBLACKHOLE(77, 76, 0, 0, 77, 76, NuclearScience.rl("textures/block/custom/particleaccelerator_dmblackhole.png"));
 
 	private final int textureWidth;
 	private final int textureHeight;
