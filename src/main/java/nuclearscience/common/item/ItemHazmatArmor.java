@@ -12,17 +12,23 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.Tags;
 import nuclearscience.NuclearScience;
+import voltaic.api.radiation.util.IHazmatSuit;
 import voltaic.common.item.gear.ItemVoltaicArmor;
 import voltaic.common.tags.VoltaicTags;
 
-public class ItemHazmatArmor extends ItemVoltaicArmor {
+public class ItemHazmatArmor extends ItemVoltaicArmor implements IHazmatSuit {
+	
+	private final double radiationProtection;
+	private final double radiationStrengthProtection;
 
-	public ItemHazmatArmor(ArmorMaterial materialIn, EquipmentSlot slot, Properties properties, Supplier<CreativeModeTab> creativeTab) {
+	public ItemHazmatArmor(ArmorMaterial materialIn, EquipmentSlot slot, Properties properties, double radiationProtection, double radiationStrengthRating, Supplier<CreativeModeTab> creativeTab) {
 		super(materialIn, slot, properties, creativeTab);
+		this.radiationProtection = radiationProtection;
+		this.radiationStrengthProtection = radiationStrengthRating;
 	}
-
-	public ItemHazmatArmor(EquipmentSlot slot, Properties properties, Supplier<CreativeModeTab> creativeTab) {
-		this(ArmorMaterialHazmat.hazmat, slot, properties, creativeTab);
+	
+	public ItemHazmatArmor(EquipmentSlot slot, Properties properties, double radiationProtection, double radiationStrengthRating, Supplier<CreativeModeTab> creativeTab) {
+		this(ArmorMaterialHazmat.hazmat, slot, properties, radiationProtection, radiationStrengthRating, creativeTab);
 	}
 
 	@Override
@@ -74,5 +80,15 @@ public class ItemHazmatArmor extends ItemVoltaicArmor {
 			return 0;
 		}
 
+	}
+
+	@Override
+	public double getRadResistance() {
+		return radiationProtection;
+	}
+
+	@Override
+	public double getRadStrengthProtection() {
+		return radiationStrengthProtection;
 	}
 }

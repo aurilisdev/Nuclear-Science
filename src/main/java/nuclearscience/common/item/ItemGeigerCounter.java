@@ -35,7 +35,7 @@ public class ItemGeigerCounter extends ItemElectric {
 	@Override
 	public void inventoryTick(ItemStack stack, Level worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		super.inventoryTick(stack, worldIn, entityIn, itemSlot, isSelected);
-		if (entityIn instanceof Player player) {
+		if (entityIn instanceof Player player && !worldIn.isClientSide) {
 
             boolean noPower = getJoulesStored(stack) < POWER_USAGE;
 
