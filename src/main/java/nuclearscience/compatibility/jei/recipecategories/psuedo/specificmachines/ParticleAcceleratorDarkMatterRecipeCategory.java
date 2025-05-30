@@ -3,9 +3,6 @@ package nuclearscience.compatibility.jei.recipecategories.psuedo.specificmachine
 import java.util.Arrays;
 import java.util.List;
 
-import com.mojang.blaze3d.platform.GlStateManager.DestFactor;
-import com.mojang.blaze3d.platform.GlStateManager.SourceFactor;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import electrodynamics.compatibility.jei.recipecategories.utils.psuedorecipes.types.PsuedoItem2ItemRecipe;
@@ -15,13 +12,9 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.world.item.ItemStack;
 import nuclearscience.NuclearScience;
-import nuclearscience.client.NuclearScienceClientRegister;
 import nuclearscience.common.block.subtype.SubtypeNuclearMachine;
 import nuclearscience.common.settings.NuclearConstants;
 import nuclearscience.compatibility.jei.utils.NuclearJeiTextures;
