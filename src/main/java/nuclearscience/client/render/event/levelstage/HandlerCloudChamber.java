@@ -79,4 +79,8 @@ public class HandlerCloudChamber extends AbstractLevelStageHandler {
     public static void addSources(TileCloudChamber chamber) {
         INSTANCE.locations.add(chamber);
     }
+
+    public static void removeSources(TileCloudChamber chamber) {
+        INSTANCE.locations.remove(chamber);
+    }
 }
