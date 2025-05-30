@@ -31,7 +31,8 @@ public class TileCloudChamber extends GenericTile {
 
     public final ListProperty<BlockPos> sources = property(new ListProperty<>(PropertyTypes.BLOCK_POS_LIST, "sources", new ArrayList<BlockPos>()));
     public final SingleProperty<Boolean> active = property(new SingleProperty<>(PropertyTypes.BOOLEAN, "active", false));
-    private final SingleProperty<Boolean> hasRedstoneSignal = property(new SingleProperty(PropertyTypes.BOOLEAN, "redstonesignal", false));
+    public final SingleProperty<Boolean> sourcesDetected = property(new SingleProperty<>(PropertyTypes.BOOLEAN, "detectedsources", false));
+    private final SingleProperty<Boolean> hasRedstoneSignal = property(new SingleProperty<>(PropertyTypes.BOOLEAN, "redstonesignal", false));
 
     public TileCloudChamber() {
         super(NuclearScienceTiles.TILE_CLOUDCHAMBER.get());
@@ -44,8 +45,10 @@ public class TileCloudChamber extends GenericTile {
     }
 
     private void tickClient(ComponentTickable tickable) {
-        if(active.getValue()) {
+    	if(sourcesDetected.getValue()) {
             HandlerCloudChamber.addSources(this);
+        } else {
+            HandlerCloudChamber.removeSources(this);
         }
     }
 
@@ -55,6 +58,7 @@ public class TileCloudChamber extends GenericTile {
 
         if(hasRedstoneSignal.getValue()) {
             active.setValue(false);
+            sourcesDetected.setValue(false);
             return;
         }
 
@@ -62,6 +66,7 @@ public class TileCloudChamber extends GenericTile {
 
         if(electro.getJoulesStored() < NuclearConstants.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK) {
             active.setValue(false);
+            sourcesDetected.setValue(false);
             return;
         }
 
@@ -69,8 +74,14 @@ public class TileCloudChamber extends GenericTile {
 
         if(fluid.isEmpty() || fluid.getFluidAmount() < NuclearConstants.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK) {
             active.setValue(false);
+            sourcesDetected.setValue(false);
             return;
         }
+        
+        active.setValue(true);
+
+        electro.setJoulesStored(electro.getJoulesStored() - NuclearConstants.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK);
+        fluid.drain(NuclearConstants.CLOUD_CHAMBER_FLUID_USAGE_PER_TICK, FluidAction.EXECUTE);
 
         List<BlockPos> sources = RadiationSystem.getRadiationSources(getLevel());
 
@@ -91,18 +102,18 @@ public class TileCloudChamber extends GenericTile {
             accepted.add(source);
 
         });
+        
+        sourcesDetected.setValue(!accepted.isEmpty());
 
         if(accepted.isEmpty()) {
-            active.setValue(false);
+            //active.setValue(false);
             return;
         }
 
-        active.setValue(true);
+        //active.setValue(true);
 
         this.sources.addValues(accepted);
 
-        electro.setJoulesStored(electro.getJoulesStored() - NuclearConstants.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK);
-        fluid.drain(NuclearConstants.CLOUD_CHAMBER_FLUID_USAGE_PER_TICK, FluidAction.EXECUTE);
     }
 
     @Override
