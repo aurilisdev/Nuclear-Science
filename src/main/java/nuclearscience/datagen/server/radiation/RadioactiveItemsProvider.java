@@ -22,6 +22,7 @@ public class RadioactiveItemsProvider extends BaseRadioactiveItemsProvider {
 		addTag(NuclearScienceTags.Items.PELLET_PLUTONIUM, 4500, 1, json);
 		addTag(NuclearScienceTags.Items.PELLET_POLONIUM, 2500, 1, json);
 		addTag(NuclearScienceTags.Items.PELLET_ACTINIUM225, 5000, 1, json);
+		addTag(NuclearScienceTags.Items.PELLET_LIFHT4PUF3, 300, 1, json);
 
 		addTag(NuclearScienceTags.Items.NUGGET_POLONIUM, 625, 1, json);
 

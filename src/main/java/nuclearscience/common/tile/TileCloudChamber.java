@@ -114,6 +114,8 @@ public class TileCloudChamber extends GenericTile {
         //active.setValue(true);
 
         this.sources.addValues(accepted);
+
+        //this.sources.forceDirtyForManager();
     }
 
     @Override
