@@ -36,8 +36,10 @@ public class TileChemicalExtractor extends GenericTile {
 	private boolean canProcess(ComponentProcessor processor, int procNumber) {
 		processor.consumeBucket();
 
-		RadiationUtils.handleRadioactiveFluids(this, (ComponentFluidHandlerMulti) getComponent(IComponentType.FluidHandler), NuclearConstants.CHEMICAL_EXTRACTOR_RADIATION_RADIUS, true, 0, false);
-		RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory), NuclearConstants.CHEMICAL_EXTRACTOR_RADIATION_RADIUS, true, 0, false);
+		if(this.<ComponentTickable>getComponent(IComponentType.Tickable).getTicks() % 2 == 0) {
+			RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory), NuclearConstants.CHEMICAL_EXTRACTOR_RADIATION_RADIUS, true, 1, false);
+			RadiationUtils.handleRadioactiveFluids(this, (ComponentFluidHandlerMulti) getComponent(IComponentType.FluidHandler), NuclearConstants.CHEMICAL_EXTRACTOR_RADIATION_RADIUS, true, 0, false);
+		}
 
 		return processor.canProcessFluidItem2ItemRecipe(procNumber, NuclearScienceRecipies.CHEMICAL_EXTRACTOR_TYPE);
 	}
