@@ -26,7 +26,7 @@ import voltaic.registers.VoltaicCapabilities;
 
 public class ItemGeigerCounter extends ItemElectric {
 	
-	public static final double POWER_USAGE = 1666666.66667 / (120.0 * 20.0);
+	public static final double POWER_USAGE = 20;
 
 	public ItemGeigerCounter(ElectricItemProperties properties, Supplier<CreativeModeTab> creativeTab, Function<Item, Item> getBatteryItem) {
 		super(properties, creativeTab, getBatteryItem);
@@ -76,4 +76,10 @@ public class ItemGeigerCounter extends ItemElectric {
 
         }
 	}
+	
+	@Override
+	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+		return !oldStack.is(newStack.getItem());
+	}
+	
 }

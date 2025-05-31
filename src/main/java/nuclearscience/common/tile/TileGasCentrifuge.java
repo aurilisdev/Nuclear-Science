@@ -56,8 +56,10 @@ public class TileGasCentrifuge extends GenericTile implements ITickableSound {
 		ComponentInventory inv = getComponent(IComponentType.Inventory);
 		ComponentFluidHandlerMulti fluidHandler = getComponent(IComponentType.FluidHandler);
 
-		RadiationUtils.handleRadioactiveFluids(this, fluidHandler, NuclearConstants.GAS_CENTRIFUGE_RADIATION_RADIUS, true, 0, false);
-		RadiationUtils.handleRadioactiveItems(this, inv, NuclearConstants.GAS_CENTRIFUGE_RADIATION_RADIUS, true, 0, false);
+		if(this.<ComponentTickable>getComponent(IComponentType.Tickable).getTicks() % 2 == 0) {
+			RadiationUtils.handleRadioactiveFluids(this, fluidHandler, NuclearConstants.GAS_CENTRIFUGE_RADIATION_RADIUS, true, 0, false);
+			RadiationUtils.handleRadioactiveItems(this, inv, NuclearConstants.GAS_CENTRIFUGE_RADIATION_RADIUS, true, 1, false);
+		}
 
 		boolean hasGas = fluidHandler.getInputTanks()[0].getFluidAmount() >= REQUIRED / 60.0;
 		boolean val = electro.getJoulesStored() >= processor.getUsage(0) && hasGas && inv.getItem(0).getCount() < inv.getItem(0).getMaxStackSize() && inv.getItem(1).getCount() < inv.getItem(1).getMaxStackSize() && inv.getItem(2).getCount() < inv.getItem(2).getMaxStackSize();
