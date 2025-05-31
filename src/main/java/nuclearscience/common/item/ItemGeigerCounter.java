@@ -26,7 +26,7 @@ import voltaic.registers.VoltaicDataComponentTypes;
 
 public class ItemGeigerCounter extends ItemElectric {
 
-    public static final double POWER_USAGE = 1666666.66667 / (120.0 * 20.0);
+    public static final double POWER_USAGE = 20;
 
     public ItemGeigerCounter(ElectricItemProperties properties, Holder<CreativeModeTab> creativeTab, Function<Item, Item> getBatteryItem) {
         super(properties, creativeTab, getBatteryItem);
@@ -35,7 +35,8 @@ public class ItemGeigerCounter extends ItemElectric {
     @Override
     public void inventoryTick(ItemStack stack, Level worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
         super.inventoryTick(stack, worldIn, entityIn, itemSlot, isSelected);
-        if (worldIn.isClientSide()) {
+
+        if(worldIn.isClientSide) {
             return;
         }
 
@@ -83,6 +84,8 @@ public class ItemGeigerCounter extends ItemElectric {
 
     @Override
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
-        return slotChanged;
+        return !oldStack.is(newStack.getItem());
     }
+
+
 }

@@ -80,7 +80,9 @@ public class TileParticleInjector extends GenericTile {
 			return;
 		}
 
-		RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory), NuclearConstants.PARTICLE_INJECTOR_RADIATION_RADIUS, true, 0, false);
+		if(this.<ComponentTickable>getComponent(IComponentType.Tickable).getTicks() % 2 == 0) {
+			RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory), NuclearConstants.PARTICLE_INJECTOR_RADIATION_RADIUS, true, 1, false);
+		}
 
 		ComponentElectrodynamic electro = getComponent(IComponentType.Electrodynamic);
 		ComponentInventory inv = getComponent(IComponentType.Inventory);
