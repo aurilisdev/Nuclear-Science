@@ -3,8 +3,6 @@ package nuclearscience.common.tile.reactor.logisticsnetwork;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import nuclearscience.common.network.ReactorLogisticsNetwork;
 import nuclearscience.common.tile.reactor.logisticsnetwork.util.GenericTileLogisticsMember;
 import nuclearscience.registers.NuclearScienceSounds;
@@ -34,15 +32,12 @@ public class TileController extends GenericTileLogisticsMember implements ITicka
         addComponent(new ComponentTickable(this).tickServer(this::tickServer).tickClient(this::tickClient));
         addComponent(new ComponentElectrodynamic(this, false, true).setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM).voltage(VoltaicCapabilities.DEFAULT_VOLTAGE).maxJoules(USAGE * 20));
     }
-    
-    @Override
-    public void setLevelAndPosition(World world, BlockPos pos) {
-    	super.setLevelAndPosition(world, pos);
-    	relativeBack = BlockEntityUtils.getRelativeSide(getFacing(), BlockEntityUtils.MachineDirection.BACK.mappedDir);
-    }
 
     @Override
     public void tickServer(ComponentTickable tickable) {
+    	if(relativeBack == null) {
+        	relativeBack = BlockEntityUtils.getRelativeSide(getFacing(), BlockEntityUtils.MachineDirection.BACK.mappedDir);
+        }
         super.tickServer(tickable);
 
         ComponentElectrodynamic electro = getComponent(IComponentType.Electrodynamic);
@@ -61,6 +56,9 @@ public class TileController extends GenericTileLogisticsMember implements ITicka
     }
 
     public void tickClient(ComponentTickable tickable) {
+    	if(relativeBack == null) {
+        	relativeBack = BlockEntityUtils.getRelativeSide(getFacing(), BlockEntityUtils.MachineDirection.BACK.mappedDir);
+        }
         if (!isSoundPlaying && shouldPlaySound()) {
             isSoundPlaying = true;
             SoundBarrierMethods.playTileSound(NuclearScienceSounds.SOUND_LOGISTICSCONTROLLER.get(), this, true);
