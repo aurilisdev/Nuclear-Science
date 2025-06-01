@@ -19,7 +19,7 @@ public abstract class TileControlRod extends GenericTile {
     public static final int MAX_EXTENSION = 100;
     public static final int EXTENSION_PER_CLICK = 10;
 
-    public final SingleProperty<Integer> insertion = property(new SingleProperty<>(PropertyTypes.INTEGER, "insertion", 0));
+    public final SingleProperty<Integer> insertion = property(new SingleProperty<>(PropertyTypes.INTEGER, "insertion", 0)).setShouldUpdateOnChange();
 
     public TileControlRod(TileEntityType<?> type) {
         super(type);
