@@ -4,7 +4,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import nuclearscience.common.inventory.container.ContainerSupplyModule;
 import nuclearscience.common.network.ReactorLogisticsNetwork;
 import nuclearscience.common.settings.NuclearConstants;
@@ -28,7 +27,7 @@ public class TileSupplyModule extends GenericTileInterfaceBound {
     public TileSupplyModule() {
         super(NuclearScienceTiles.TILE_SUPPLYMODULE.get());
         addComponent(new ComponentPacketHandler(this));
-        addComponent(new ComponentTickable(this).tickServer(this::tickServer));
+        addComponent(new ComponentTickable(this).tickServer(this::tickServer).tickClient(this::tickClient));
         addComponent(new ComponentInventory(this, ComponentInventory.InventoryBuilder.newInv().inputs(9).outputs(9))
                 //
                 .setSlotsByDirection(BlockEntityUtils.MachineDirection.TOP, 0, 1, 2, 3, 4, 5, 6, 7, 8)
@@ -42,18 +41,21 @@ public class TileSupplyModule extends GenericTileInterfaceBound {
                 .setSlotsByDirection(BlockEntityUtils.MachineDirection.RIGHT, 9, 10, 11, 12, 13, 14, 15, 16, 17).valid(machineValidator()));
         addComponent(new ComponentContainerProvider("supplymodule", this).createMenu((id, player) -> new ContainerSupplyModule(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
     }
-    
-    @Override
-    public void setLevelAndPosition(World world, BlockPos pos) {
-    	super.setLevelAndPosition(world, pos);
-    	relativeBack = BlockEntityUtils.getRelativeSide(getFacing(), BlockEntityUtils.MachineDirection.BACK.mappedDir);
-    }
 
     @Override
     public void tickServer(ComponentTickable tickable) {
+    	if(relativeBack == null) {
+        	relativeBack = BlockEntityUtils.getRelativeSide(getFacing(), BlockEntityUtils.MachineDirection.BACK.mappedDir);
+        }
         super.tickServer(tickable);
         if(this.<ComponentTickable>getComponent(IComponentType.Tickable).getTicks() % 2 == 0) {
             RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory), NuclearConstants.RADIOACTIVE_PROCESSOR_RADIATION_RADIUS, true, 1, false);
+        }
+    }
+    
+    public void tickClient(ComponentTickable tickable) {
+    	if(relativeBack == null) {
+        	relativeBack = BlockEntityUtils.getRelativeSide(getFacing(), BlockEntityUtils.MachineDirection.BACK.mappedDir);
         }
     }
 

@@ -4,8 +4,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import nuclearscience.common.inventory.container.ContainerMonitorModule;
 import nuclearscience.common.tile.reactor.logisticsnetwork.interfaces.GenericTileInterface;
 import nuclearscience.common.tile.reactor.logisticsnetwork.util.GenericTileInterfaceBound;
@@ -21,14 +19,22 @@ public class TileMonitorModule extends GenericTileInterfaceBound {
 
     public TileMonitorModule() {
         super(NuclearScienceTiles.TILE_MONITORMODULE.get());
-        addComponent(new ComponentTickable(this).tickServer(this::tickServer));
+        addComponent(new ComponentTickable(this).tickServer(this::tickServer).tickClient(this::tickClient));
         addComponent(new ComponentContainerProvider("monitormodule", this).createMenu((id, player) -> new ContainerMonitorModule(id, player, new Inventory(0), getCoordsArray())));
     }
     
     @Override
-    public void setLevelAndPosition(World world, BlockPos pos) {
-    	super.setLevelAndPosition(world, pos);
-    	relativeBack = BlockEntityUtils.getRelativeSide(getFacing(), BlockEntityUtils.MachineDirection.BACK.mappedDir);
+    public void tickServer(ComponentTickable tickable) {
+    	if(relativeBack == null) {
+    		relativeBack = BlockEntityUtils.getRelativeSide(getFacing(), BlockEntityUtils.MachineDirection.BACK.mappedDir);
+    	}
+    	super.tickServer(tickable);
+    }
+    
+    public void tickClient(ComponentTickable tickable) {
+    	if(relativeBack == null) {
+    		relativeBack = BlockEntityUtils.getRelativeSide(getFacing(), BlockEntityUtils.MachineDirection.BACK.mappedDir);
+    	}
     }
 
     @Override

@@ -5,8 +5,6 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import nuclearscience.common.inventory.container.ContainerThermometerModule;
 import nuclearscience.common.network.ReactorLogisticsNetwork;
 import nuclearscience.common.tile.reactor.fission.TileFissionReactorCore;
@@ -35,18 +33,21 @@ public class TileThermometerModule extends GenericTileInterfaceBound {
 
     public TileThermometerModule() {
         super(NuclearScienceTiles.TILE_THERMOMETERMODULE.get());
-        addComponent(new ComponentTickable(this).tickServer(this::tickServer));
+        addComponent(new ComponentTickable(this).tickServer(this::tickServer).tickClient(this::tickClient));
         addComponent(new ComponentContainerProvider("thermometermodule", this).createMenu((id, player) -> new ContainerThermometerModule(id, player, new Inventory(0), getCoordsArray())));
     }
     
-    @Override
-    public void setLevelAndPosition(World world, BlockPos pos) {
-    	super.setLevelAndPosition(world, pos);
-    	relativeBack = BlockEntityUtils.getRelativeSide(getFacing(), BlockEntityUtils.MachineDirection.BACK.mappedDir);
+    public void tickClient(ComponentTickable tickable) {
+    	if(relativeBack == null) {
+    		relativeBack = BlockEntityUtils.getRelativeSide(getFacing(), BlockEntityUtils.MachineDirection.BACK.mappedDir);
+    	}
     }
 
     @Override
     public void tickServer(ComponentTickable tickable) {
+    	if(relativeBack == null) {
+    		relativeBack = BlockEntityUtils.getRelativeSide(getFacing(), BlockEntityUtils.MachineDirection.BACK.mappedDir);
+    	}
         super.tickServer(tickable);
 
         GenericTileInterface.InterfaceType type = GenericTileInterface.InterfaceType.values()[interfaceType.getValue()];

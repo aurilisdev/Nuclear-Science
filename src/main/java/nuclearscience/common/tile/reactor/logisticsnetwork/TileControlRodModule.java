@@ -10,7 +10,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.World;
 import nuclearscience.common.inventory.container.ContainerControlRodModule;
 import nuclearscience.common.network.ReactorLogisticsNetwork;
 import nuclearscience.common.tile.reactor.TileControlRod;
@@ -47,14 +46,22 @@ public class TileControlRodModule extends GenericTileInterfaceBound {
 
     public TileControlRodModule() {
         super(NuclearScienceTiles.TILE_CONTROLRODMODULE.get());
-        addComponent(new ComponentTickable(this).tickServer(this::tickServer));
+        addComponent(new ComponentTickable(this).tickServer(this::tickServer).tickClient(this::tickClient));
         addComponent(new ComponentContainerProvider("controlrodmodule", this).createMenu((id, player) -> new ContainerControlRodModule(id, player, new Inventory(0), getCoordsArray())));
     }
     
     @Override
-    public void setLevelAndPosition(World world, BlockPos pos) {
-    	super.setLevelAndPosition(world, pos);
-    	relativeBack = BlockEntityUtils.getRelativeSide(getFacing(), BlockEntityUtils.MachineDirection.BACK.mappedDir);
+    public void tickServer(ComponentTickable tickable) {
+    	if(relativeBack == null) {
+    		relativeBack = BlockEntityUtils.getRelativeSide(getFacing(), BlockEntityUtils.MachineDirection.BACK.mappedDir);
+    	}
+    	super.tickServer(tickable);
+    }
+    
+    public void tickClient(ComponentTickable tickable) {
+    	if(relativeBack == null) {
+    		relativeBack = BlockEntityUtils.getRelativeSide(getFacing(), BlockEntityUtils.MachineDirection.BACK.mappedDir);
+    	}
     }
 
     @Override
