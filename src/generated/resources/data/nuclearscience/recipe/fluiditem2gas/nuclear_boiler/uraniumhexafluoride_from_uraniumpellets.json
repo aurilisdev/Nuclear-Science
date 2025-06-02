@@ -3,7 +3,7 @@
   "fluidinputs": [
     {
       "amount": 1600,
-      "tag": "c:hydrochloric_acid"
+      "tag": "c:hydrofluoric_acid"
     }
   ],
   "group": "nuclearscience",
