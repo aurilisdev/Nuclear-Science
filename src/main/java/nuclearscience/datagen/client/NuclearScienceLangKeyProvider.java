@@ -139,7 +139,7 @@ public class NuclearScienceLangKeyProvider extends BaseLangKeyProvider {
 			addFluid(NuclearScienceFluids.FLUID_IODINESOLUTION, "Iodine Solution");
 			addFluid(NuclearScienceFluids.FLUID_METHANOL, "Methanol");
 			addFluid(NuclearScienceFluids.FLUID_DECONTAMINATIONFOAM, "Decontamination Foam");
-			addFluid(NuclearScienceFluids.FLUID_URANIUMHEXAFLUORIDE, "Fluid Uranium Hexafluoride");
+			addFluid(NuclearScienceFluids.FLUID_URANIUMHEXAFLUORIDE, "Liquid Uranium Hexafluoride");
 
 			addGas(NuclearScienceGases.URANIUM_HEXAFLUORIDE, "Uranium Hexafluoride");
 
