@@ -80,6 +80,7 @@
   "fluid.nuclearscience.decontaminationfoam": "Decontamination Foam",
   "fluid.nuclearscience.iodinesolution": "Iodine Solution",
   "fluid.nuclearscience.methanol": "Methanol",
+  "fluid.nuclearscience.uraniumhexafluoride": "Fluid Uranium Hexafluoride",
   "gas.nuclearscience.uraniumhexafluoride": "Uranium Hexafluoride",
   "gui.nuclearscience.cloudchamber.active": "Active",
   "gui.nuclearscience.cloudchamber.detected": "Detected: %s",
