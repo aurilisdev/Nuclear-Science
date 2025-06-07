@@ -23,6 +23,7 @@ public class NuclearScienceFluidTagsProvider extends FluidTagsProvider {
         tag(NuclearScienceTags.Fluids.IODINE_SOLUTION).add(NuclearScienceFluids.FLUID_IODINESOLUTION.get());
         tag(NuclearScienceTags.Fluids.METHANOL).add(NuclearScienceFluids.FLUID_METHANOL.get());
         tag(NuclearScienceTags.Fluids.DECONTAMINATION_FOAM).add(NuclearScienceFluids.FLUID_DECONTAMINATIONFOAM.get());
+        tag(NuclearScienceTags.Fluids.URANIUM_HEXAFLUORIDE).add(NuclearScienceFluids.FLUID_URANIUMHEXAFLUORIDE.get());
 
     }
 
