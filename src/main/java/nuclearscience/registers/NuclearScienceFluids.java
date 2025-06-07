@@ -17,5 +17,6 @@ public class NuclearScienceFluids {
 	public static final DeferredHolder<Fluid, FluidNonPlaceable> FLUID_METHANOL = FLUIDS.register("methanol", () -> new FluidNonPlaceable(ElectrodynamicsItems.ITEM_CANISTERREINFORCED, new SimpleWaterBasedFluidType(NuclearScience.ID, "methanol", "methanol", new Color(245, 220, 255, 255))));
 	public static final DeferredHolder<Fluid, FluidNonPlaceable> FLUID_DECONTAMINATIONFOAM = FLUIDS.register("decontaminationfoam", () -> new FluidNonPlaceable(ElectrodynamicsItems.ITEM_CANISTERREINFORCED, new SimpleWaterBasedFluidType(NuclearScience.ID, "decontaminationfoam","decontaminationfoam", Color.WHITE)));
 
-
+	// For now I'm leaving the texture as Methanol, I am no artis. Should be changed with a custom texture
+	public static final DeferredHolder<Fluid, FluidNonPlaceable> FLUID_URANIUMHEXAFLUORIDE = FLUIDS.register("uraniumhexafluoride", () -> new FluidNonPlaceable(ElectrodynamicsItems.ITEM_CANISTERREINFORCED, new SimpleWaterBasedFluidType(NuclearScience.ID, "uraniumhexafluoride","methanol", Color.WHITE)));
 }

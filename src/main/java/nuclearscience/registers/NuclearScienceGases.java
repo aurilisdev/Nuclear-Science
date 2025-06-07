@@ -14,6 +14,5 @@ public class NuclearScienceGases {
 
 	public static final DeferredRegister<Gas> GASES = DeferredRegister.create(VoltaicGases.GAS_REGISTRY_KEY, NuclearScience.ID);
 
-	public static final DeferredHolder<Gas, Gas> URANIUM_HEXAFLUORIDE = GASES.register("uraniumhexafluoride", () -> new Gas(Holder.direct(Items.AIR), NuclearTextUtils.gas("uraniumhexafluoride"), Color.WHITE));
-
+	public static final DeferredHolder<Gas, Gas> URANIUM_HEXAFLUORIDE = GASES.register("uraniumhexafluoride", () -> new Gas(Holder.direct(Items.AIR), NuclearTextUtils.gas("uraniumhexafluoride"), 330, Color.WHITE, NuclearScienceFluids.FLUID_URANIUMHEXAFLUORIDE));
 }

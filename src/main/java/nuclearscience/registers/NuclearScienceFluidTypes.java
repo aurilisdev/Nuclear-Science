@@ -13,4 +13,5 @@ public class NuclearScienceFluidTypes {
 	public static final DeferredHolder<FluidType, FluidType> FLUID_TYPE_METHANOL = FLUID_TYPES.register("methanol", () -> NuclearScienceFluids.FLUID_METHANOL.get().getFluidType());
 	public static final DeferredHolder<FluidType, FluidType> FLUID_TYPE_DECONTAMINATIONFOAM = FLUID_TYPES.register("decontaminationfoam", () -> NuclearScienceFluids.FLUID_DECONTAMINATIONFOAM.get().getFluidType());
 
+	public static final DeferredHolder<FluidType, FluidType> FLUID_TYPE_URANIUMHEXAFLUORIDE = FLUID_TYPES.register("uraniumhexafluoride", () -> NuclearScienceFluids.FLUID_URANIUMHEXAFLUORIDE.get().getFluidType());
 }

@@ -35,6 +35,7 @@ public class TileGasCentrifuge extends GenericTile implements ITickableSound {
 	public static final int TANKCAPACITY = 5000;
 	public static final double REQUIRED = 2500;
 	public static final double PERCENT_U235 = 0.172;
+	public static final int MAX_TEMPERATURE = 350;
 	public static final double WASTE_MULTIPLIER = 0.1;
 	public SingleProperty<Integer> spinSpeed = property(new SingleProperty<>(PropertyTypes.INTEGER, "spinSpeed", 0));
 	public SingleProperty<Double> stored235 = property(new SingleProperty<>(PropertyTypes.DOUBLE, "stored235", 0.0));
@@ -49,7 +50,7 @@ public class TileGasCentrifuge extends GenericTile implements ITickableSound {
 		addComponent(new ComponentTickable(this).tickClient(this::tickClient));
 
 		addComponent(new ComponentPacketHandler(this));
-		addComponent(new ComponentGasHandlerMulti(this).setInputTanks(1, arr(TANKCAPACITY), arr(294), arr(1)).setInputGasTags(NuclearScienceTags.Gases.URANIUM_HEXAFLUORIDE).setInputDirections(BlockEntityUtils.MachineDirection.BACK));
+		addComponent(new ComponentGasHandlerMulti(this).setInputTanks(1, arr(TANKCAPACITY), arr(MAX_TEMPERATURE), arr(1)).setInputGasTags(NuclearScienceTags.Gases.URANIUM_HEXAFLUORIDE).setInputDirections(BlockEntityUtils.MachineDirection.BACK));
 		addComponent(new ComponentElectrodynamic(this, false, true).voltage(VoltaicCapabilities.DEFAULT_VOLTAGE * 2).setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM).maxJoules(NuclearConstants.GASCENTRIFUGE_USAGE_PER_TICK * 10));
 		addComponent(new ComponentInventory(this, ComponentInventory.InventoryBuilder.newInv().outputs(3).upgrades(3)).setSlotsByDirection(BlockEntityUtils.MachineDirection.TOP, 0, 1, 2).setSlotsByDirection(BlockEntityUtils.MachineDirection.RIGHT, 0, 1, 2).setSlotsByDirection(BlockEntityUtils.MachineDirection.LEFT, 0, 1, 2)
 				//
