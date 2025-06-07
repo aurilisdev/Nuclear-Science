@@ -1,6 +1,8 @@
 package nuclearscience.registers;
 
+import electrodynamics.registers.ElectrodynamicsFluids;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import nuclearscience.NuclearScience;
@@ -13,6 +15,5 @@ public class NuclearScienceGases {
 
 	public static final DeferredRegister<Gas> GASES = DeferredRegister.create(VoltaicRegistries.GAS_REGISTRY_KEY, NuclearScience.ID);
 
-	public static final RegistryObject<Gas> URANIUM_HEXAFLUORIDE = GASES.register("uraniumhexafluoride", () -> new Gas(() -> Items.AIR, NuclearTextUtils.gas("uraniumhexafluoride"), Color.WHITE));
-
+	public static final RegistryObject<Gas> URANIUM_HEXAFLUORIDE = GASES.register("uraniumhexafluoride", () -> new Gas(() -> Items.AIR, NuclearTextUtils.gas("uraniumhexafluoride"), 330, Color.WHITE, () -> (Fluid) NuclearScienceFluids.FLUID_URANIUMHEXAFLUORIDE.get()));
 }
