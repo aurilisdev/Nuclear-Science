@@ -1,6 +1,5 @@
 package nuclearscience.registers;
 
-import electrodynamics.registers.ElectrodynamicsFluids;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.registries.DeferredRegister;
