@@ -86,6 +86,7 @@ public class NuclearScienceTags {
 		public static final TagKey<Fluid> DECONTAMINATION_FOAM = forgeTag("decontamination_foam");
 		public static final TagKey<Fluid> IODINE_SOLUTION = forgeTag("iodine_solution");
 		public static final TagKey<Fluid> METHANOL = forgeTag("methanol");
+		public static final TagKey<Fluid> URANIUM_HEXAFLUORIDE = forgeTag("uranium_hexafluoride");
 
 		private static void init() {
 
