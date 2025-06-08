@@ -27,7 +27,7 @@ public class NuclearSciencePsuedoRecipes {
 
 		addNuclearScienceItems();
 
-		GAS_CENTRIFUGE_RECIPES.add(new PsuedoGasCentrifugeRecipe(new GasIngredient(NuclearScienceTags.Gases.URANIUM_HEXAFLUORIDE, 5000, 273, 1), NUCLEAR_SCIENCE_ITEMS.get(0).get(2), NUCLEAR_SCIENCE_ITEMS.get(0).get(1), new ItemStack(NuclearScienceItems.ITEM_FISSILEDUST.get())));
+		GAS_CENTRIFUGE_RECIPES.add(new PsuedoGasCentrifugeRecipe(new GasIngredient(NuclearScienceTags.Gases.URANIUM_HEXAFLUORIDE, 5000, 350, 1), NUCLEAR_SCIENCE_ITEMS.get(0).get(2), NUCLEAR_SCIENCE_ITEMS.get(0).get(1), new ItemStack(NuclearScienceItems.ITEM_FISSILEDUST.get())));
 
 		ANTI_MATTER_RECIPES.add(new PsuedoItem2ItemRecipe(Arrays.asList(NUCLEAR_SCIENCE_ITEMS.get(1).get(4)), NUCLEAR_SCIENCE_ITEMS.get(1).get(5)));
 
