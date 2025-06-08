@@ -17,4 +17,5 @@ public class NuclearScienceFluids {
 	public static final RegistryObject<FluidNonPlaceable> FLUID_METHANOL = FLUIDS.register("methanol", () -> new FluidNonPlaceable(() -> ElectrodynamicsItems.ITEM_CANISTERREINFORCED.get(), new SimpleWaterBasedFluidType(NuclearScience.ID, "methanol", "methanol", new Color(245, 220, 255, 255))));
 	public static final RegistryObject<FluidNonPlaceable> FLUID_DECONTAMINATIONFOAM = FLUIDS.register("decontaminationfoam", () -> new FluidNonPlaceable(() -> ElectrodynamicsItems.ITEM_CANISTERREINFORCED.get(), new SimpleWaterBasedFluidType(NuclearScience.ID, "decontaminationfoam","decontaminationfoam", Color.WHITE)));
 
+	public static final RegistryObject<FluidNonPlaceable> FLUID_URANIUMHEXAFLUORIDE = FLUIDS.register("uraniumhexafluoride", () -> new FluidNonPlaceable(() -> ElectrodynamicsItems.ITEM_CANISTERREINFORCED.get(), new SimpleWaterBasedFluidType(NuclearScience.ID, "uraniumhexafluoride","uraniumhexafluoride", Color.WHITE)));
 }
