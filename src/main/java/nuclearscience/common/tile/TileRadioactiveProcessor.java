@@ -38,10 +38,8 @@ public class TileRadioactiveProcessor extends GenericTile {
             BlockEntityUtils.updateLit(this, canProcess);
         }
 
-        if(this.<ComponentTickable>getComponent(IComponentType.Tickable).getTicks() % 2 == 0) {
-            RadiationUtils.handleRadioactiveFluids(this, (ComponentFluidHandlerMulti) getComponent(IComponentType.FluidHandler), NuclearConstants.RADIOACTIVE_PROCESSOR_RADIATION_RADIUS, true, 1, false);
-            RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory), NuclearConstants.RADIOACTIVE_PROCESSOR_RADIATION_RADIUS, true, 1, false);
-        }
+        RadiationUtils.handleRadioactiveFluids(this, (ComponentFluidHandlerMulti) getComponent(IComponentType.FluidHandler), NuclearConstants.RADIOACTIVE_PROCESSOR_RADIATION_RADIUS, true, 1, true, false);
+        RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory), NuclearConstants.RADIOACTIVE_PROCESSOR_RADIATION_RADIUS, true, 1, true, false);
 
         return canProcess;
     }

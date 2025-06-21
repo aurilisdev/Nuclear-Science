@@ -122,7 +122,7 @@ public class TileMSReactorCore extends GenericTile {
 
 		double totstrength = temperature.getValue() * Math.pow(3, Math.pow(temperature.getValue() / MELTDOWN_TEMPERATURE, 9));
 		int range = (int) (Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 2);
-		RadiationSystem.addRadiationSource(getLevel(), new SimpleRadiationSource(totstrength, 1, range, true, 0, getBlockPos(), false));
+		RadiationSystem.addRadiationSource(getLevel(), new SimpleRadiationSource(totstrength, 1, range, true, 1, getBlockPos(), true, false));
 
 	}
 
