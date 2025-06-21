@@ -85,7 +85,7 @@ public class TileGasCentrifuge extends GenericTile implements ITickableSound {
 		int processed = (int) (REQUIRED / 60.0);
 		GasTank tank = multi.getInputTanks()[0];
 
-		if (VoltaicGases.GAS_REGISTRY.getTag(NuclearScienceTags.Gases.URANIUM_HEXAFLUORIDE).get().contains(new Holder.Direct<>(tank.getGas().getGas())) && tank.getGasAmount() >= processed) {
+		if (VoltaicGases.GAS_REGISTRY.getTag(NuclearScienceTags.Gases.URANIUM_HEXAFLUORIDE).get().contains(tank.getGas().getGasHolder()) && tank.getGasAmount() >= processed) {
 			tank.drain(processed, GasAction.EXECUTE);
 		}
 
