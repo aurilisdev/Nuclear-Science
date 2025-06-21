@@ -26,7 +26,7 @@ public class BlockRadioactiveAir extends AirBlock {
     @Override
     public void entityInside(BlockState state, Level lvl, BlockPos pos, Entity entityIn) {
         if (lvl.getLevelData().getGameTime() % 10 == 0) {
-            RadiationSystem.addRadiationSource(lvl, new SimpleRadiationSource(20, 1, 3, true, 100, pos, true));
+            RadiationSystem.addRadiationSource(lvl, new SimpleRadiationSource(20, 1, 3, true, 100, pos, true, false));
         }
     }
 

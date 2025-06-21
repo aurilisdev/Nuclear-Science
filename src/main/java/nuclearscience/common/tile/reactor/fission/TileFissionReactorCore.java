@@ -114,7 +114,7 @@ public class TileFissionReactorCore extends GenericTile {
 
             int range = (int) (Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 2);
 
-            RadiationSystem.addRadiationSource(getLevel(), new SimpleRadiationSource(totstrength, 1, range, true, 0, getBlockPos(), false));
+            RadiationSystem.addRadiationSource(getLevel(), new SimpleRadiationSource(totstrength, 1, range, true, 1, getBlockPos(), true, false));
 
             if(level.getRandom().nextFloat() < 0.01F) {
                 SoundEvent sound = switch (level.random.nextIntBetweenInclusive(1, 6)) {
