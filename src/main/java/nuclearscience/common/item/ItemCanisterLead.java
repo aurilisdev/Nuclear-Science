@@ -52,7 +52,7 @@ public class ItemCanisterLead extends ItemCanister {
 
             double radiationMultiplier = (double) fluidStack.getAmount() / (double) cap.getTankCapacity(0);
 
-            RadiationSystem.addRadiationSource(world, new SimpleRadiationSource(radiation.amount() * radiationMultiplier, radiation.strength(), RAD_RANGE, true, 0, entity.blockPosition(), false));
+            RadiationSystem.addRadiationSource(world, new SimpleRadiationSource(radiation.amount() * radiationMultiplier, radiation.strength(), RAD_RANGE, true, 0, entity.blockPosition(), false, false));
 
 		});
 	}
