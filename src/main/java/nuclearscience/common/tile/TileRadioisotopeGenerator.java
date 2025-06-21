@@ -62,7 +62,7 @@ public class TileRadioisotopeGenerator extends GenericTile {
 			return;
 		}
 
-		RadiationUtils.handleRadioactiveItems(this, inv, NuclearConstants.RADIO_GENATOR_RADIATION_RADIUS, true, 0, false);
+		RadiationUtils.handleRadioactiveItems(this, inv, NuclearConstants.RADIO_GENATOR_RADIATION_RADIUS, true, 1, true, false);
 
 		double currentOutput = input.getCount() * NuclearConstants.RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER * radiation.amount();
 

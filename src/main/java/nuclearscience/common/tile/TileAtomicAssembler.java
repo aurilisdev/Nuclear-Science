@@ -52,9 +52,7 @@ public class TileAtomicAssembler extends GenericTile {
 			return;
 		}
 
-		if(tickable.getTicks() % 2 == 0) {
-			RadiationUtils.handleRadioactiveItems(this, inv, NuclearConstants.ATOMIC_ASSEMBLER_RADIATION_RADIUS, true, 0, false);
-		}
+		RadiationUtils.handleRadioactiveItems(this, inv, NuclearConstants.ATOMIC_ASSEMBLER_RADIATION_RADIUS, true, 1, true, false);
 
 		ItemStack output = inv.getItem(7);
 
