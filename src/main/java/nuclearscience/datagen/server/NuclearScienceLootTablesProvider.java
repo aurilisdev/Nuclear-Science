@@ -1,6 +1,7 @@
 package nuclearscience.datagen.server;
 
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.loot.BlockLoot;
 import nuclearscience.NuclearScience;
 import nuclearscience.common.block.subtype.SubtypeElectromagent;
 import nuclearscience.common.block.subtype.SubtypeIrradiatedBlock;
@@ -34,7 +35,7 @@ public class NuclearScienceLootTablesProvider extends BaseLootTablesProvider {
 		addMachineTable(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.gascentrifuge), NuclearScienceTiles.TILE_GASCENTRIFUGE, true, true, false, true, false);
 		addSimpleBlock(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.heatexchanger));
 		addSimpleBlock(NuclearScienceBlocks.BLOCKS_RADIATION_SHIELDING.getValue(SubtypeRadiationShielding.base));
-		addSimpleBlock(NuclearScienceBlocks.BLOCKS_RADIATION_SHIELDING.getValue(SubtypeRadiationShielding.door));
+		lootTables.put(NuclearScienceBlocks.BLOCKS_RADIATION_SHIELDING.getValue(SubtypeRadiationShielding.door), BlockLoot.createDoorTable(NuclearScienceBlocks.BLOCKS_RADIATION_SHIELDING.getValue(SubtypeRadiationShielding.door)));
 		addSimpleBlock(NuclearScienceBlocks.BLOCKS_RADIATION_SHIELDING.getValue(SubtypeRadiationShielding.trapdoor));
 		addSimpleBlock(NuclearScienceBlocks.BLOCKS_RADIATION_SHIELDING.getValue(SubtypeRadiationShielding.glass));
 		addSimpleBlock(NuclearScienceBlocks.BLOCK_MELTEDREACTOR.get());
