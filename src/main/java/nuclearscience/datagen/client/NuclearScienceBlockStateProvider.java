@@ -37,9 +37,9 @@ public class NuclearScienceBlockStateProvider extends BaseBlockstateProvider {
 	protected void registerStatesAndModels() {
 
 		simpleBlock(NuclearScienceBlocks.BLOCKS_RADIATION_SHIELDING.getValue(SubtypeRadiationShielding.base), blockLoc("leadlinedblock"), true);
-        doorBlock((DoorBlock) NuclearScienceBlocks.BLOCKS_RADIATION_SHIELDING.getValue(SubtypeRadiationShielding.door), blockLoc("leadlineddoor_bottom"), blockLoc("leadlineddoor_top"));
+        doorBlockWithRenderType((DoorBlock) NuclearScienceBlocks.BLOCKS_RADIATION_SHIELDING.getValue(SubtypeRadiationShielding.door), blockLoc("leadlineddoor_bottom"), blockLoc("leadlineddoor_top"), Voltaic.vanillarl("cutout"));
         glassBlock(NuclearScienceBlocks.BLOCKS_RADIATION_SHIELDING.getValue(SubtypeRadiationShielding.glass), blockLoc("leadlinedglass"), true);
-        trapdoorBlock((TrapDoorBlock) NuclearScienceBlocks.BLOCKS_RADIATION_SHIELDING.getValue(SubtypeRadiationShielding.trapdoor), blockLoc("leadlinedtrapdoor"), true);
+        trapdoorBlockWithRenderType((TrapDoorBlock) NuclearScienceBlocks.BLOCKS_RADIATION_SHIELDING.getValue(SubtypeRadiationShielding.trapdoor), blockLoc("leadlinedtrapdoor"), true, Voltaic.vanillarl("cutout"));
 
         simpleColumnBlock(NuclearScienceBlocks.BLOCKS_ELECTROMAGENT.getValue(SubtypeElectromagent.electromagnet), blockLoc("electromagnet"), blockLoc("electromagnettop"), true);
         glassBlock(NuclearScienceBlocks.BLOCKS_ELECTROMAGENT.getValue(SubtypeElectromagent.electromagneticglass), blockLoc("electromagneticglass"), true);
