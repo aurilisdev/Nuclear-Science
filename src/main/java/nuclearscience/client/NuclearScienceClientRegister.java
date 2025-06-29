@@ -141,6 +141,8 @@ public class NuclearScienceClientRegister {
 		ItemBlockRenderTypes.setRenderLayer(NuclearScienceBlocks.BLOCKS_ELECTROMAGENT.getValue(SubtypeElectromagent.electromagneticglass), RenderType.translucent());
 		ItemBlockRenderTypes.setRenderLayer(NuclearScienceBlocks.BLOCK_PLASMA.get(), RenderType.translucent());
 		ItemBlockRenderTypes.setRenderLayer(NuclearScienceBlocks.BLOCKS_RADIATION_SHIELDING.getValue(SubtypeRadiationShielding.glass), RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(NuclearScienceBlocks.BLOCKS_RADIATION_SHIELDING.getValue(SubtypeRadiationShielding.door), RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(NuclearScienceBlocks.BLOCKS_RADIATION_SHIELDING.getValue(SubtypeRadiationShielding.trapdoor), RenderType.cutout());
 		
 	}
 
