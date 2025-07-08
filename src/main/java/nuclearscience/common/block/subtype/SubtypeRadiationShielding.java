@@ -9,7 +9,7 @@ import voltaic.api.ISubtype;
 public enum SubtypeRadiationShielding implements ISubtype {
     base(Properties.copy(Blocks.NETHERITE_BLOCK).strength(5.0f, 3.0f).sound(SoundType.METAL).requiresCorrectToolForDrops()),
     glass(Properties.copy(Blocks.GLASS).strength(5.0f, 3.0f).requiresCorrectToolForDrops()),
-    door(Properties.copy(Blocks.NETHERITE_BLOCK).strength(5.0f, 3.0f).sound(SoundType.METAL).requiresCorrectToolForDrops()),
+    door(Properties.copy(Blocks.NETHERITE_BLOCK).strength(5.0f, 3.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion()),
     trapdoor(Properties.copy(Blocks.NETHERITE_BLOCK).strength(5.0f, 3.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion());
 
     public final BlockBehaviour.Properties properties;
