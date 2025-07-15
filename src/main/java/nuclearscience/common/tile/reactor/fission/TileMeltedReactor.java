@@ -93,7 +93,7 @@ public class TileMeltedReactor extends GenericTile {
 		}
 		double totstrength = 120000 * (radiation / START_RADIATION);
 		int range = (int) (Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 2);
-		RadiationSystem.addRadiationSource(getLevel(), new SimpleRadiationSource(totstrength, 1, range, true, 1, getBlockPos(), true, false));
+		RadiationSystem.addRadiationSource(getLevel(), new SimpleRadiationSource(totstrength, 1, range, true, 30, getBlockPos(), true, false));
 	}
 	
 	@Override

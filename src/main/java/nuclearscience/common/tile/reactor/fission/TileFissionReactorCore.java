@@ -83,6 +83,14 @@ public class TileFissionReactorCore extends GenericTile {
     }
 
     protected void tickServer(ComponentTickable tickable) {
+    	
+    	double totstrength = temperature.getValue() * 10;
+
+        int range = (int) (Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 2);
+        
+        if(range > 0 && totstrength > 0 && temperature.getValue() > AIR_TEMPERATURE) {
+        	RadiationSystem.addRadiationSource(getLevel(), new SimpleRadiationSource(totstrength, 1, range, true, 1, getBlockPos(), true, false));
+        }
 
         double decrease = (temperature.getValue() - AIR_TEMPERATURE) / 3000.0;
 
@@ -109,12 +117,6 @@ public class TileFissionReactorCore extends GenericTile {
         ComponentInventory inv = getComponent(IComponentType.Inventory);
 
         if (fuelCount.getValue() > 0) {
-
-            double totstrength = temperature.getValue() * 10;
-
-            int range = (int) (Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 2);
-
-            RadiationSystem.addRadiationSource(getLevel(), new SimpleRadiationSource(totstrength, 1, range, true, 1, getBlockPos(), true, false));
 
             if(level.getRandom().nextFloat() < 0.01F) {
                 SoundEvent sound = switch (level.random.nextIntBetweenInclusive(1, 6)) {
