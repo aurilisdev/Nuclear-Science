@@ -47,7 +47,7 @@ public class TileSupplyModule extends GenericTileInterfaceBound {
     @Override
     public void tickServer(ComponentTickable tickable) {
         super.tickServer(tickable);
-        RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory), NuclearConstants.RADIOACTIVE_PROCESSOR_RADIATION_RADIUS, true, 1, true, false);
+        RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory), NuclearConstants.RADIOACTIVE_PROCESSOR_RADIATION_RADIUS, true, 30, true, false);
     }
 
     @Override

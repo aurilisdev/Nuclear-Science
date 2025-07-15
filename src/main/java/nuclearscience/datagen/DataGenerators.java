@@ -27,7 +27,7 @@ import nuclearscience.datagen.server.NuclearScienceLootTablesProvider;
 import nuclearscience.datagen.server.radiation.NuclearScienceRadiationShieldingProvider;
 import nuclearscience.datagen.server.radiation.NuclearScienceRadioactiveFluidsProvider;
 import nuclearscience.datagen.server.radiation.NuclearScienceRadioactiveGasesProvider;
-import nuclearscience.datagen.server.radiation.RadioactiveItemsProvider;
+import nuclearscience.datagen.server.radiation.NuclearScienceRadioactiveItemsProvider;
 import nuclearscience.datagen.server.recipe.NuclearScienceRecipeProvider;
 import nuclearscience.datagen.server.tags.NuclearScienceTagsProvider;
 import nuclearscience.registers.NuclearScienceDamageTypes;
@@ -51,7 +51,7 @@ public class DataGenerators {
 
 			generator.addProvider(true, new LootTableProvider(output, Collections.emptySet(), List.of(new LootTableProvider.SubProviderEntry(NuclearScienceLootTablesProvider::new, LootContextParamSets.BLOCK)), lookupProvider));
 			generator.addProvider(true, new NuclearScienceRecipeProvider(output, lookupProvider));
-			generator.addProvider(true, new RadioactiveItemsProvider(output));
+			generator.addProvider(true, new NuclearScienceRadioactiveItemsProvider(output));
 			generator.addProvider(true, new NuclearScienceRadioactiveGasesProvider(output));
 			generator.addProvider(true, new NuclearScienceRadioactiveFluidsProvider(output));
 			generator.addProvider(true, new NuclearScienceRadiationShieldingProvider(output));

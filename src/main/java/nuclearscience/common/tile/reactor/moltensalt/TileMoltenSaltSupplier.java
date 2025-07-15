@@ -18,6 +18,7 @@ import voltaic.prefab.tile.components.type.ComponentInventory;
 import voltaic.prefab.tile.components.type.ComponentPacketHandler;
 import voltaic.prefab.tile.components.type.ComponentTickable;
 import voltaic.prefab.utilities.BlockEntityUtils;
+import voltaic.prefab.utilities.RadiationUtils;
 import voltaic.prefab.utilities.object.CachedTileOutput;
 import voltaic.prefab.utilities.object.TransferPack;
 
@@ -46,6 +47,11 @@ public class TileMoltenSaltSupplier extends GenericTile {
 		if (output == null) {
 			output = new CachedTileOutput(level, worldPosition.relative(dir.getOpposite()));
 		}
+
+		ComponentInventory inv = getComponent(IComponentType.Inventory);
+
+		RadiationUtils.handleRadioactiveItems(this, inv, NuclearConstants.MOLTEN_SAL_SUPPLIER_RADIATION_RADIUS, true, 30, true, false);
+
 		ComponentElectrodynamic electro = getComponent(IComponentType.Electrodynamic);
 		boolean enoughPower = electro.getJoulesStored() >= NuclearConstants.MOLTENSALTSUPPLIER_USAGE_PER_TICK;
 		if (!enoughPower) {
@@ -61,8 +67,6 @@ public class TileMoltenSaltSupplier extends GenericTile {
 		if (tickable.getTicks() % 40 == 0) {
 			output.update(worldPosition.relative(dir.getOpposite()));
 		}
-
-		ComponentInventory inv = getComponent(IComponentType.Inventory);
 
 		ItemStack fuel = inv.getItem(0);
 

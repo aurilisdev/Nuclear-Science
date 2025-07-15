@@ -51,6 +51,13 @@ public class TileMSReactorCore extends GenericTile {
 
 	public void tickServer(ComponentTickable tick) {
 
+		double totstrength = temperature.getValue() * Math.pow(3, Math.pow(temperature.getValue() / MELTDOWN_TEMPERATURE, 9));
+		int range = (int) (Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 2);
+
+		if(range > 0 && totstrength > 0 && temperature.getValue() > TileFissionReactorCore.AIR_TEMPERATURE) {
+			RadiationSystem.addRadiationSource(getLevel(), new SimpleRadiationSource(totstrength, 1, range, true, 30, getBlockPos(), true, false));
+		}
+
 		double change = (temperature.getValue() - TileFissionReactorCore.AIR_TEMPERATURE) / 3000.0 + (temperature.getValue() - TileFissionReactorCore.AIR_TEMPERATURE) / 5000.0;
 		if (change != 0) {
 			temperature.setValue(temperature.getValue() - (change < 0.001 && change > 0 ? 0.001 : change > -0.001 && change < 0 ? -0.001 : change));
@@ -119,10 +126,6 @@ public class TileMSReactorCore extends GenericTile {
 			MoltenSaltNetwork net = pipe.getNetwork();
 			net.emit(temperature.getValue() * ((TileFreezePlug) plugCache.getSafe()).getSaltBonus(), new ArrayList<>(), false);
 		}
-
-		double totstrength = temperature.getValue() * Math.pow(3, Math.pow(temperature.getValue() / MELTDOWN_TEMPERATURE, 9));
-		int range = (int) (Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 2);
-		RadiationSystem.addRadiationSource(getLevel(), new SimpleRadiationSource(totstrength, 1, range, true, 1, getBlockPos(), true, false));
 
 	}
 

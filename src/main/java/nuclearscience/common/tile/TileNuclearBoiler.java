@@ -55,9 +55,9 @@ public class TileNuclearBoiler extends GenericTile implements ITickableSound {
 	protected void tickServer(ComponentTickable tickable) {
 		Level world = getLevel();
 
-		RadiationUtils.handleRadioactiveGases(this, (ComponentGasHandlerMulti) getComponent(IComponentType.GasHandler), NuclearConstants.NUCLEAR_BOILER_RADIATION_RADIUS, true, 1, true, false);
-		RadiationUtils.handleRadioactiveFluids(this, (ComponentFluidHandlerMulti) getComponent(IComponentType.FluidHandler), NuclearConstants.NUCLEAR_BOILER_RADIATION_RADIUS, true, 1, true, false);
-		RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory), NuclearConstants.NUCLEAR_BOILER_RADIATION_RADIUS, true, 1, true, false);
+		RadiationUtils.handleRadioactiveGases(this, (ComponentGasHandlerMulti) getComponent(IComponentType.GasHandler), NuclearConstants.NUCLEAR_BOILER_RADIATION_RADIUS, true, 30, true, false);
+		RadiationUtils.handleRadioactiveFluids(this, (ComponentFluidHandlerMulti) getComponent(IComponentType.FluidHandler), NuclearConstants.NUCLEAR_BOILER_RADIATION_RADIUS, true, 30, true, false);
+		RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory), NuclearConstants.NUCLEAR_BOILER_RADIATION_RADIUS, true, 30, true, false);
 
 		Direction centrifugeDir = getFacing().getCounterClockWise();
 		BlockEntity tile = world.getBlockEntity(getBlockPos().relative(centrifugeDir));
