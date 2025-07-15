@@ -67,6 +67,8 @@ public class NuclearConstants {
 	public static int RADIOACTIVE_PROCESSOR_RADIATION_RADIUS = 5;
 	@IntValue(def = 10)
 	public static int RADIO_GENATOR_RADIATION_RADIUS = 10;
+	@IntValue(def = 5)
+	public static int MOLTEN_SAL_SUPPLIER_RADIATION_RADIUS = 5;
 	@IntValue(def = 50)
 	public static int DEFAULT_PARTICLE_COOLDOWN_TICKS = 50;
 	@IntValue(def = 800)

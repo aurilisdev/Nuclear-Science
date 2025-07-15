@@ -42,13 +42,13 @@ public class TileAtomicAssembler extends GenericTile {
 		ComponentInventory inv = getComponent(IComponentType.Inventory);
 
 		ItemStack input = inv.getItem(6);
+		
+		RadiationUtils.handleRadioactiveItems(this, inv, NuclearConstants.ATOMIC_ASSEMBLER_RADIATION_RADIUS, true, 30, true, false);
 
 		if (input.isEmpty()) {
 			progress.setValue(0);
 			return;
 		}
-
-		RadiationUtils.handleRadioactiveItems(this, inv, NuclearConstants.ATOMIC_ASSEMBLER_RADIATION_RADIUS, true, 1, true, false);
 
 		ItemStack output = inv.getItem(7);
 
