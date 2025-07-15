@@ -48,7 +48,7 @@ public class TileSupplyModule extends GenericTileInterfaceBound {
         	relativeBack = BlockEntityUtils.getRelativeSide(getFacing(), BlockEntityUtils.MachineDirection.BACK.mappedDir);
         }
         super.tickServer(tickable);
-        RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory), NuclearConstants.RADIOACTIVE_PROCESSOR_RADIATION_RADIUS, true, 1, true, false);
+        RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory), NuclearConstants.RADIOACTIVE_PROCESSOR_RADIATION_RADIUS, true, 30, true, false);
     }
     
     public void tickClient(ComponentTickable tickable) {

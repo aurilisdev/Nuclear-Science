@@ -14,7 +14,7 @@ public class NuclearScienceRadioactiveFluidsProvider extends BaseRadioactiveFlui
     }
 
     @Override
-    public void getRadioactiveItems(JsonObject json) {
+    public void getRadioactiveFluids(JsonObject json) {
 
         addTag(NuclearScienceTags.Fluids.URANIUM_HEXAFLUORIDE, 1, 1, json);
 

@@ -5,12 +5,11 @@ import com.google.gson.JsonObject;
 import net.minecraft.data.DataGenerator;
 import nuclearscience.NuclearScience;
 import nuclearscience.common.tags.NuclearScienceTags;
-import voltaic.common.tags.VoltaicTags;
 import voltaic.datagen.utils.server.radiation.BaseRadioactiveItemsProvider;
 
-public class RadioactiveItemsProvider extends BaseRadioactiveItemsProvider {
+public class NuclearScienceRadioactiveItemsProvider extends BaseRadioactiveItemsProvider {
 
-	public RadioactiveItemsProvider(DataGenerator gen) {
+	public NuclearScienceRadioactiveItemsProvider(DataGenerator gen) {
 		super(gen, NuclearScience.ID);
 	}
 
@@ -36,15 +35,6 @@ public class RadioactiveItemsProvider extends BaseRadioactiveItemsProvider {
 		addTag(NuclearScienceTags.Items.OXIDE_PLUTONIUM, 4000, 1, json);
 		addTag(NuclearScienceTags.Items.DUST_THORIUM, 2000, 1, json);
 		addTag(NuclearScienceTags.Items.OXIDE_ACTINIUM, 400, 1, json);
-
-		addTag(VoltaicTags.Items.ORE_THORIUM, 500, 1, json);
-		addTag(VoltaicTags.Items.ORE_URANIUM, 100, 1, json);
-
-		addTag(VoltaicTags.Items.RAW_ORE_THORIUM, 150, 1, json);
-		addTag(VoltaicTags.Items.RAW_ORE_URANIUM, 50, 1, json);
-
-		addTag(VoltaicTags.Items.BLOCK_RAW_ORE_THORIUM, 500, 1, json);
-		addTag(VoltaicTags.Items.BLOCK_RAW_ORE_URANIUM, 450, 1, json);
 
 	}
 

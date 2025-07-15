@@ -45,7 +45,7 @@ public class NuclearScienceRadioactiveProcessorRecipes extends AbstractRecipeGen
 
 		newRecipe(new ItemStack(NuclearScienceItems.ITEM_THORIANITEDUST.get()), 0.0F, RADIOACTIVEPROCESSOR_REQUIRED_TICKS, RADIOACTIVEPROCESSOR_USAGE_PER_TICK, "thorianite_dust")
 				//
-				.addItemTagInput(VoltaicTags.Items.RAW_ORE_THORIUM, 1)
+				.addItemTagInput(VoltaicTags.Items.ORE_THORIUM, 1)
 				//
 				.addFluidTagInput(VoltaicTags.Fluids.SULFURIC_ACID, 1000)
 				//
