@@ -68,7 +68,6 @@ public class ItemGeigerCounter extends ItemElectric {
 
                 worldIn.playSound(null, player.blockPosition(), sound, SoundSource.BLOCKS, 1.0F, 1.0F);
                 IItemElectric.setEnergyStored(stack, this.getJoulesStored(stack) - POWER_USAGE);
-                player.getInventory().setItem(itemSlot, stack);
                 player.getInventory().setChanged();
 
             }

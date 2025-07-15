@@ -40,6 +40,8 @@ public class TileAtomicAssembler extends GenericTile {
 	private void tickServer(ComponentTickable tickable) {
 
 		ComponentInventory inv = getComponent(IComponentType.Inventory);
+		
+		RadiationUtils.handleRadioactiveItems(this, inv, NuclearConstants.ATOMIC_ASSEMBLER_RADIATION_RADIUS, true, 30, true, false);
 
 		ItemStack input = inv.getItem(6);
 
@@ -47,8 +49,6 @@ public class TileAtomicAssembler extends GenericTile {
 			progress.setValue(0);
 			return;
 		}
-
-		RadiationUtils.handleRadioactiveItems(this, inv, NuclearConstants.ATOMIC_ASSEMBLER_RADIATION_RADIUS, true, 1, true, false);
 
 		ItemStack output = inv.getItem(7);
 
