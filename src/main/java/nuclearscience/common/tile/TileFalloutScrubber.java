@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import nuclearscience.common.inventory.container.ContainerFalloutScrubber;
@@ -11,7 +12,6 @@ import nuclearscience.common.settings.NuclearConstants;
 import nuclearscience.common.tags.NuclearScienceTags;
 import nuclearscience.registers.NuclearScienceTiles;
 import voltaic.api.radiation.RadiationSystem;
-import voltaic.api.radiation.util.BlockPosVolume;
 import voltaic.prefab.properties.types.PropertyTypes;
 import voltaic.prefab.properties.variant.SingleProperty;
 import voltaic.prefab.tile.GenericTile;
@@ -34,13 +34,13 @@ public class TileFalloutScrubber extends GenericTile {
     public final SingleProperty<Boolean> active = property(new SingleProperty<>(PropertyTypes.BOOLEAN, "active", false));
     private final SingleProperty<Boolean> hasRedstoneSignal = property(new SingleProperty(PropertyTypes.BOOLEAN, "redstonesignal", false));
 
-    private final BlockPosVolume area;
+    private final AABB area;
 
 
     public TileFalloutScrubber(BlockPos worldPos, BlockState blockState) {
         super(NuclearScienceTiles.TILE_FALLOUTSCRUBBER.get(), worldPos, blockState);
 
-        area = new BlockPosVolume(worldPos.offset(-RANGE, -RANGE, -RANGE), worldPos.offset(RANGE, RANGE, RANGE));
+        area = AABB.encapsulatingFullBlocks(worldPos.offset(-RANGE, -RANGE, -RANGE), worldPos.offset(RANGE, RANGE, RANGE));
 
         addComponent(new ComponentPacketHandler(this));
         addComponent(new ComponentTickable(this).tickServer(this::tickServer));
