@@ -12,7 +12,7 @@ import nuclearscience.registers.NuclearScienceMenuTypes;
 public class ContainerMonitorModule extends GenericInterfaceBoundContainer<TileMonitorModule> {
 
     public ContainerMonitorModule(int id, Inventory playerinv) {
-        this(id, playerinv, new SimpleContainer(0), new SimpleContainerData(3));
+        this(id, playerinv, new SimpleContainer(0), new SimpleContainerData(5));
     }
 
     public ContainerMonitorModule(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
