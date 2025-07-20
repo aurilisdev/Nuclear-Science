@@ -18,7 +18,7 @@ import voltaic.prefab.utilities.math.Color;
 public class ContainerAtomicAssembler extends GenericContainerBlockEntity<TileAtomicAssembler> {
 
 	public ContainerAtomicAssembler(int id, Inventory playerinv) {
-		this(id, playerinv, new SimpleContainer(8), new SimpleContainerData(3));
+		this(id, playerinv, new SimpleContainer(8), new SimpleContainerData(5));
 	}
 
 	public ContainerAtomicAssembler(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {

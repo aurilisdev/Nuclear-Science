@@ -12,7 +12,7 @@ import nuclearscience.registers.NuclearScienceMenuTypes;
 public class ContainerControlRodModule extends GenericInterfaceBoundContainer<TileControlRodModule> {
 
     public ContainerControlRodModule(int id, Inventory playerinv) {
-        this(id, playerinv, new SimpleContainer(0), new SimpleContainerData(3));
+        this(id, playerinv, new SimpleContainer(0), new SimpleContainerData(5));
     }
     public ContainerControlRodModule(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
         super(NuclearScienceMenuTypes.CONTAINER_CONTROLRODMODULE.get(), id, playerinv, inventory, inventorydata);
