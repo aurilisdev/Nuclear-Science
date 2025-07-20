@@ -20,7 +20,7 @@ public class ContainerRadioactiveProcessor extends GenericContainerBlockEntity<T
 	public static final SubtypeItemUpgrade[] VALID_UPGRADES = new SubtypeItemUpgrade[] { SubtypeItemUpgrade.basicspeed, SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.iteminput, SubtypeItemUpgrade.itemoutput, SubtypeItemUpgrade.experience };
 
 	public ContainerRadioactiveProcessor(int id, PlayerInventory playerinv) {
-		this(id, playerinv, new Inventory(6), new IntArray(3));
+		this(id, playerinv, new Inventory(6), new IntArray(5));
 	}
 
 	public ContainerRadioactiveProcessor(int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {

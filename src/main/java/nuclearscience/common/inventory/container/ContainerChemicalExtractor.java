@@ -20,7 +20,7 @@ public class ContainerChemicalExtractor extends GenericContainerBlockEntity<Tile
 	public static final SubtypeItemUpgrade[] VALID_UPGRADES = new SubtypeItemUpgrade[] { SubtypeItemUpgrade.basicspeed, SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.iteminput, SubtypeItemUpgrade.itemoutput, SubtypeItemUpgrade.experience };
 
 	public ContainerChemicalExtractor(int id, PlayerInventory playerinv) {
-		this(id, playerinv, new Inventory(6), new IntArray(3));
+		this(id, playerinv, new Inventory(6), new IntArray(5));
 	}
 
 	public ContainerChemicalExtractor(int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {

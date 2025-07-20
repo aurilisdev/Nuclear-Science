@@ -16,7 +16,7 @@ import voltaic.prefab.utilities.math.Color;
 public class ContainerRadioisotopeGenerator extends GenericContainerBlockEntity<TileRadioisotopeGenerator> {
 
 	public ContainerRadioisotopeGenerator(int id, PlayerInventory playerinv) {
-		this(id, playerinv, new Inventory(1), new IntArray(3));
+		this(id, playerinv, new Inventory(1), new IntArray(5));
 	}
 
 	public ContainerRadioisotopeGenerator(int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {

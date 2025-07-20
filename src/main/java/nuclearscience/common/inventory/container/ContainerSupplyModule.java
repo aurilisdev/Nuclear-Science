@@ -14,7 +14,7 @@ import voltaic.prefab.utilities.math.Color;
 public class ContainerSupplyModule extends GenericInterfaceBoundContainer<TileSupplyModule> {
 
     public ContainerSupplyModule(int id, PlayerInventory playerinv) {
-        this(id, playerinv, new Inventory(18), new IntArray(3));
+        this(id, playerinv, new Inventory(18), new IntArray(5));
     }
 
     public ContainerSupplyModule(int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {

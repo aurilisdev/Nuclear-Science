@@ -12,7 +12,7 @@ import voltaic.prefab.inventory.container.types.GenericContainerBlockEntity;
 public class ContainerElectromagneticGateway extends GenericContainerBlockEntity<TileElectromagneticGateway> {
 
     public ContainerElectromagneticGateway(int id, PlayerInventory playerinv) {
-        this(id, playerinv, new Inventory(0), new IntArray(3));
+        this(id, playerinv, new Inventory(0), new IntArray(5));
     }
 
     public ContainerElectromagneticGateway(int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {

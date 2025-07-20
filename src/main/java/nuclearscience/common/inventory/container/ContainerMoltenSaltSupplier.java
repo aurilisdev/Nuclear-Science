@@ -17,7 +17,7 @@ import voltaic.prefab.utilities.math.Color;
 public class ContainerMoltenSaltSupplier extends GenericContainerBlockEntity<TileMoltenSaltSupplier> {
 
 	public ContainerMoltenSaltSupplier(int id, PlayerInventory playerinv) {
-		this(id, playerinv, new Inventory(2), new IntArray(3));
+		this(id, playerinv, new Inventory(2), new IntArray(5));
 	}
 
 	public ContainerMoltenSaltSupplier(int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {

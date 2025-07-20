@@ -17,7 +17,7 @@ import voltaic.prefab.utilities.math.Color;
 public class ContainerFissionReactorCore extends GenericContainerBlockEntity<TileFissionReactorCore> {
 
 	public ContainerFissionReactorCore(int id, PlayerInventory playerinv) {
-		this(id, playerinv, new Inventory(6), new IntArray(3));
+		this(id, playerinv, new Inventory(6), new IntArray(5));
 	}
 
 	public ContainerFissionReactorCore(int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {
