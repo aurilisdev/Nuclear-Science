@@ -27,14 +27,6 @@
     "amount": 625.0,
     "strength": 1.0
   },
-  "#c:ores/thorium": {
-    "amount": 500.0,
-    "strength": 1.0
-  },
-  "#c:ores/uranium": {
-    "amount": 100.0,
-    "strength": 1.0
-  },
   "#c:oxide/actinium": {
     "amount": 400.0,
     "strength": 1.0
@@ -67,24 +59,8 @@
     "amount": 500.0,
     "strength": 1.0
   },
-  "#c:raw_materials/thorium": {
-    "amount": 150.0,
-    "strength": 1.0
-  },
-  "#c:raw_materials/uranium": {
-    "amount": 50.0,
-    "strength": 1.0
-  },
   "#c:salts/fissile": {
     "amount": 200.0,
-    "strength": 1.0
-  },
-  "#c:storage_blocks/rawthorium": {
-    "amount": 500.0,
-    "strength": 1.0
-  },
-  "#c:storage_blocks/rawuranium": {
-    "amount": 450.0,
     "strength": 1.0
   },
   "#c:yellow_cake_uranium": {

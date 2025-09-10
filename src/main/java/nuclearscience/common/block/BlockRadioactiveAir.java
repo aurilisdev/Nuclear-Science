@@ -4,12 +4,14 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AirBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import voltaic.api.radiation.RadiationSystem;
-import voltaic.api.radiation.SimpleRadiationSource;
+import voltaic.api.radiation.util.IRadiationRecipient;
+import voltaic.registers.VoltaicCapabilities;
 
 public class BlockRadioactiveAir extends AirBlock {
 
@@ -24,9 +26,14 @@ public class BlockRadioactiveAir extends AirBlock {
     }
 
     @Override
-    public void entityInside(BlockState state, Level lvl, BlockPos pos, Entity entityIn) {
-        if (lvl.getLevelData().getGameTime() % 10 == 0) {
-            RadiationSystem.addRadiationSource(lvl, new SimpleRadiationSource(20, 1, 3, true, 100, pos, true));
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+        if (level.getLevelData().getGameTime() % 10 == 0 && !level.isClientSide && entity instanceof LivingEntity living) {
+            IRadiationRecipient cap = living.getCapability(VoltaicCapabilities.CAPABILITY_RADIATIONRECIPIENT);
+            if (cap == null) {
+                return;
+            }
+
+            cap.recieveRadiation(living, 20, 1);
         }
     }
 

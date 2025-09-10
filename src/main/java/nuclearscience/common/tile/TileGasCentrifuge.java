@@ -64,10 +64,8 @@ public class TileGasCentrifuge extends GenericTile implements ITickableSound {
 		ComponentInventory inv = getComponent(IComponentType.Inventory);
 		ComponentGasHandlerMulti gasHandler = getComponent(IComponentType.GasHandler);
 
-		if(this.<ComponentTickable>getComponent(IComponentType.Tickable).getTicks() % 2 == 0) {
-			RadiationUtils.handleRadioactiveGases(this, gasHandler, NuclearConstants.GAS_CENTRIFUGE_RADIATION_RADIUS, true, 1, false);
-			RadiationUtils.handleRadioactiveItems(this, inv, NuclearConstants.GAS_CENTRIFUGE_RADIATION_RADIUS, true, 1, false);
-		}
+		RadiationUtils.handleRadioactiveGases(this, gasHandler, NuclearConstants.GAS_CENTRIFUGE_RADIATION_RADIUS, true, 30, true, false);
+		RadiationUtils.handleRadioactiveItems(this, inv, NuclearConstants.GAS_CENTRIFUGE_RADIATION_RADIUS, true, 30, true, false);
 
 		boolean hasGas = gasHandler.getInputTanks()[0].getGasAmount() >= REQUIRED / 60.0;
 		boolean val = electro.getJoulesStored() >= processor.getUsage(0) && hasGas && inv.getItem(0).getCount() < inv.getItem(0).getMaxStackSize() && inv.getItem(1).getCount() < inv.getItem(1).getMaxStackSize() && inv.getItem(2).getCount() < inv.getItem(2).getMaxStackSize();
@@ -87,7 +85,7 @@ public class TileGasCentrifuge extends GenericTile implements ITickableSound {
 		int processed = (int) (REQUIRED / 60.0);
 		GasTank tank = multi.getInputTanks()[0];
 
-		if (VoltaicGases.GAS_REGISTRY.getTag(NuclearScienceTags.Gases.URANIUM_HEXAFLUORIDE).get().contains(new Holder.Direct<>(tank.getGas().getGas())) && tank.getGasAmount() >= processed) {
+		if (VoltaicGases.GAS_REGISTRY.getTag(NuclearScienceTags.Gases.URANIUM_HEXAFLUORIDE).get().contains(tank.getGas().getGasHolder()) && tank.getGasAmount() >= processed) {
 			tank.drain(processed, GasAction.EXECUTE);
 		}
 

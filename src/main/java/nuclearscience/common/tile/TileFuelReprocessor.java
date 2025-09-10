@@ -45,9 +45,7 @@ public class TileFuelReprocessor extends GenericTile implements ITickableSound {
 			BlockEntityUtils.updateLit(this, canProcess);
 		}
 
-		if(this.<ComponentTickable>getComponent(IComponentType.Tickable).getTicks() % 2 == 0) {
-			RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory), NuclearConstants.FUEL_REPROCESSOR_RADIATION_RADIUS, true, 1, false);
-		}
+		RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory), NuclearConstants.FUEL_REPROCESSOR_RADIATION_RADIUS, true, 30, true, false);
 
 		return canProcess;
 	}
