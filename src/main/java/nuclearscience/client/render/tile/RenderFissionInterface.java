@@ -58,7 +58,7 @@ public class RenderFissionInterface extends AbstractTileRenderer<TileFissionInte
 
         matrix.popPose();
 
-        if (tile.clientAnimations.isEmpty() || !tile.reactor.valid() || !(tile.reactor.getSafe() instanceof TileFissionReactorCore)) {
+        if (tile.clientAnimations.isEmpty() || tile.reactor == null || !tile.reactor.valid() || !(tile.reactor.getSafe() instanceof TileFissionReactorCore)) {
 
             if (insertion > 0) {
 

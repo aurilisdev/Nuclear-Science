@@ -33,7 +33,7 @@ public class RenderFusionInterface extends AbstractTileRenderer<TileFusionInterf
     @Override
     public void render(TileFusionInterface tile, float partialTicks, MatrixStack matrix, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
 
-        if(!tile.reactor.valid() || !(tile.reactor.getSafe() instanceof TileFusionReactorCore)) {
+        if(tile.reactor == null || !tile.reactor.valid() || !(tile.reactor.getSafe() instanceof TileFusionReactorCore)) {
             return;
         }
 
