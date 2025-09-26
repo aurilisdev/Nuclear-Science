@@ -12,7 +12,7 @@ import nuclearscience.registers.NuclearScienceMenuTypes;
 public class ContainerThermometerModule extends GenericInterfaceBoundContainer<TileThermometerModule> {
 
     public ContainerThermometerModule(int id, PlayerInventory playerinv) {
-        this(id, playerinv, new Inventory(0), new IntArray(3));
+        this(id, playerinv, new Inventory(0), new IntArray(5));
     }
 
     public ContainerThermometerModule(int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {

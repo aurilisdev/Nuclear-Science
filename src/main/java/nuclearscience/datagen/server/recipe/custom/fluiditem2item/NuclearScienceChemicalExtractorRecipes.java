@@ -50,7 +50,7 @@ public class NuclearScienceChemicalExtractorRecipes extends AbstractRecipeGenera
 
 		newRecipe(new ItemStack(NuclearScienceItems.ITEM_YELLOWCAKE.get()), 0.0F, CHEMICALEXTRACTOR_REQUIRED_TICKS, CHEMICALEXTRACTOR_USAGE_PER_TICK, "yellowcake_from_rawuranium")
 				//
-				.addItemTagInput(VoltaicTags.Items.RAW_ORE_URANIUM, 1)
+				.addItemTagInput(VoltaicTags.Items.ORE_URANIUM, 1)
 				//
 				.addFluidTagInput(FluidTags.WATER, 1600)
 				//

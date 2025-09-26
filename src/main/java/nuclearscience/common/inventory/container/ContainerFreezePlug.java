@@ -16,7 +16,7 @@ import voltaic.prefab.screen.component.types.ScreenComponentSlot;
 public class ContainerFreezePlug extends GenericContainerBlockEntity<TileFreezePlug> {
 
 	public ContainerFreezePlug(int id, PlayerInventory playerinv) {
-		this(id, playerinv, new Inventory(1), new IntArray(3));
+		this(id, playerinv, new Inventory(1), new IntArray(5));
 	}
 
 	public ContainerFreezePlug(int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {

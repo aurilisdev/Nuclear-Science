@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "nuclearscience:electromagneticglass",
-    "nuclearscience:electromagnet"
+    "nuclearscience:electromagnet",
+    "nuclearscience:electromagneticglass"
   ]
 }

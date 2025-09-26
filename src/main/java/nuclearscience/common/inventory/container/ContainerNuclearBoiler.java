@@ -19,7 +19,7 @@ public class ContainerNuclearBoiler extends GenericContainerBlockEntity<TileNucl
 	public static final SubtypeItemUpgrade[] VALID_UPGRADES = new SubtypeItemUpgrade[] { SubtypeItemUpgrade.basicspeed, SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.iteminput, SubtypeItemUpgrade.experience };
 
 	public ContainerNuclearBoiler(int id, PlayerInventory playerinv) {
-		this(id, playerinv, new Inventory(6), new IntArray(3));
+		this(id, playerinv, new Inventory(6), new IntArray(5));
 	}
 
 	public ContainerNuclearBoiler(int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {

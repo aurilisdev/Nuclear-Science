@@ -18,7 +18,7 @@ public class ContainerGasCentrifuge extends GenericContainerBlockEntity<TileGasC
 	public static final SubtypeItemUpgrade[] VALID_UPGRADES = new SubtypeItemUpgrade[] { SubtypeItemUpgrade.basicspeed, SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.itemoutput, SubtypeItemUpgrade.experience };
 
 	public ContainerGasCentrifuge(int id, PlayerInventory playerinv) {
-		this(id, playerinv, new Inventory(6), new IntArray(3));
+		this(id, playerinv, new Inventory(6), new IntArray(5));
 	}
 
 	public ContainerGasCentrifuge(int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {

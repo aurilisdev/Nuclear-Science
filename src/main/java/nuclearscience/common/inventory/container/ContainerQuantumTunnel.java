@@ -18,7 +18,7 @@ import voltaic.prefab.inventory.container.types.GenericContainerBlockEntity;
 public class ContainerQuantumTunnel extends GenericContainerBlockEntity<TileQuantumTunnel> {
 
 	public ContainerQuantumTunnel(int id, PlayerInventory playerinv) {
-		this(id, playerinv, new Inventory(0), new IntArray(3));
+		this(id, playerinv, new Inventory(0), new IntArray(5));
 	}
 
 	public ContainerQuantumTunnel(int id, PlayerInventory playerinv, IInventory inventory, IIntArray inventorydata) {

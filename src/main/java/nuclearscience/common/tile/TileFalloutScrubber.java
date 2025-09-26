@@ -2,6 +2,7 @@ package nuclearscience.common.tile;
 
 import net.minecraft.inventory.Inventory;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
@@ -11,7 +12,6 @@ import nuclearscience.common.settings.NuclearConstants;
 import nuclearscience.common.tags.NuclearScienceTags;
 import nuclearscience.registers.NuclearScienceTiles;
 import voltaic.api.radiation.RadiationSystem;
-import voltaic.api.radiation.util.BlockPosVolume;
 import voltaic.prefab.properties.types.PropertyTypes;
 import voltaic.prefab.properties.variant.SingleProperty;
 import voltaic.prefab.tile.GenericTile;
@@ -30,7 +30,7 @@ public class TileFalloutScrubber extends GenericTile {
     public final SingleProperty<Boolean> active = property(new SingleProperty<>(PropertyTypes.BOOLEAN, "active", false));
     private final SingleProperty<Boolean> hasRedstoneSignal = property(new SingleProperty(PropertyTypes.BOOLEAN, "redstonesignal", false));
 
-    private BlockPosVolume area;
+    private AxisAlignedBB area;
 
 
     public TileFalloutScrubber() {
@@ -47,7 +47,7 @@ public class TileFalloutScrubber extends GenericTile {
     public void setLevelAndPosition(World world, BlockPos pos) {
     	super.setLevelAndPosition(world, pos);
     	
-    	area = new BlockPosVolume(pos.offset(-RANGE, -RANGE, -RANGE), pos.offset(RANGE, RANGE, RANGE));
+    	area = new AxisAlignedBB(pos.offset(-RANGE, -RANGE, -RANGE), pos.offset(RANGE, RANGE, RANGE));
     }
 
     private void tickServer(ComponentTickable tickable) {
