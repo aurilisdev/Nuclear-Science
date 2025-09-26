@@ -18,7 +18,7 @@ import voltaic.prefab.utilities.math.Color;
 public class ContainerParticleInjector extends GenericContainerBlockEntity<TileParticleInjector> {
 
 	public ContainerParticleInjector(int id, Inventory playerinv) {
-		this(id, playerinv, new SimpleContainer(3), new SimpleContainerData(3));
+		this(id, playerinv, new SimpleContainer(3), new SimpleContainerData(5));
 	}
 
 	public ContainerParticleInjector(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
