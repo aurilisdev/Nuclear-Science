@@ -124,7 +124,7 @@ public class EntityParticle extends Entity {
             entityData.set(PASSED_THROUGH_SWITCH, passedThroughSwitch);
             entityData.set(SWITCH_DIRECTION, switchDirection);
 
-            RadiationSystem.addRadiationSource(level, new SimpleRadiationSource(1000, 1, 2, true, 0, blockPosition(), false));
+            RadiationSystem.addRadiationSource(level, new SimpleRadiationSource(1000, 1, 2, true, 0, blockPosition(), false, false));
 
         } else {
 

@@ -3,6 +3,8 @@ package nuclearscience.datagen.server;
 import java.util.List;
 
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DoorBlock;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import nuclearscience.NuclearScience;
 import nuclearscience.common.block.subtype.SubtypeElectromagent;
 import nuclearscience.common.block.subtype.SubtypeIrradiatedBlock;
@@ -36,7 +38,7 @@ public class NuclearScienceLootTablesProvider extends BaseLootTablesProvider {
 		addMachineTable(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.gascentrifuge), NuclearScienceTiles.TILE_GASCENTRIFUGE, true, true, false, true, false);
 		addSimpleBlock(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.heatexchanger));
 		addSimpleBlock(NuclearScienceBlocks.BLOCKS_RADIATION_SHIELDING.getValue(SubtypeRadiationShielding.base));
-		addSimpleBlock(NuclearScienceBlocks.BLOCKS_RADIATION_SHIELDING.getValue(SubtypeRadiationShielding.door));
+		add(NuclearScienceBlocks.BLOCKS_RADIATION_SHIELDING.getValue(SubtypeRadiationShielding.door), createSinglePropConditionTable(NuclearScienceBlocks.BLOCKS_RADIATION_SHIELDING.getValue(SubtypeRadiationShielding.door), DoorBlock.HALF, DoubleBlockHalf.LOWER));
 		addSimpleBlock(NuclearScienceBlocks.BLOCKS_RADIATION_SHIELDING.getValue(SubtypeRadiationShielding.trapdoor));
 		addSimpleBlock(NuclearScienceBlocks.BLOCKS_RADIATION_SHIELDING.getValue(SubtypeRadiationShielding.glass));
 		addSimpleBlock(NuclearScienceBlocks.BLOCK_MELTEDREACTOR.get());

@@ -14,8 +14,6 @@ import voltaic.api.gas.GasStack;
 import voltaic.prefab.utilities.object.TransferPack;
 
 public class FrequencyConnectionManager {
-	
-	private static final HashMap<TunnelFrequency, TunnelFrequencyBuffer> CLIENT_BUFFER = new HashMap<>();
 
     public static TransferPack getBufferedEnergy(TunnelFrequency frequency) {
         ServerLevel level = getOverworld();
@@ -161,14 +159,13 @@ public class FrequencyConnectionManager {
     }
 
     public static TunnelFrequencyBuffer getClientBuffer(TunnelFrequency frequency) {
-        return CLIENT_BUFFER.getOrDefault(frequency, TunnelFrequencyBuffer.EMPTY);
+    	ServerLevel level = getOverworld();
+        ICapabilityTunnelMap cap = level.getCapability(NuclearScienceCapabilities.CAPABILITY_TUNNELMAP).orElse(NuclearCapabilityUtils.EMPTY_TUNNELMAP);
+        if(cap == NuclearCapabilityUtils.EMPTY_TUNNELMAP) {
+        	return TunnelFrequencyBuffer.EMPTY;
+        }
+        return cap.getMap().getOrDefault(frequency, TunnelFrequencyBuffer.EMPTY);
     }
-    
-    public static void setClientBuffer(HashMap<TunnelFrequency, TunnelFrequencyBuffer> map) {
-    	CLIENT_BUFFER.clear();
-    	CLIENT_BUFFER.putAll(map);
-    }
-
 
     private static ServerLevel getOverworld() {
         return ServerLifecycleHooks.getCurrentServer().overworld();

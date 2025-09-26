@@ -14,7 +14,7 @@ import voltaic.prefab.inventory.container.types.GenericContainerBlockEntity;
 public class ContainerTeleporter extends GenericContainerBlockEntity<TileTeleporter> {
 
     public ContainerTeleporter(int id, Inventory playerinv) {
-        this(id, playerinv, new SimpleContainer(1), new SimpleContainerData(3));
+        this(id, playerinv, new SimpleContainer(1), new SimpleContainerData(5));
     }
 
     public ContainerTeleporter(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
