@@ -12,7 +12,7 @@ import voltaic.prefab.inventory.container.types.GenericContainerBlockEntity;
 public class ContainerMSReactorCore extends GenericContainerBlockEntity<TileMSReactorCore> {
 
 	public ContainerMSReactorCore(int id, Inventory playerinv) {
-		this(id, playerinv, new SimpleContainer(0), new SimpleContainerData(3));
+		this(id, playerinv, new SimpleContainer(0), new SimpleContainerData(5));
 	}
 
 	public ContainerMSReactorCore(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {

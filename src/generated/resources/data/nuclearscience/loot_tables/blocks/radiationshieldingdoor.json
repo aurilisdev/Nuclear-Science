@@ -3,13 +3,26 @@
   "pools": [
     {
       "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
       "entries": [
         {
           "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "nuclearscience:radiationshieldingdoor",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "half": "lower"
+              }
+            }
+          ],
           "name": "nuclearscience:radiationshieldingdoor"
         }
       ],
-      "name": "radiationshieldingdoor",
       "rolls": 1.0
     }
   ]

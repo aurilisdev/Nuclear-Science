@@ -20,7 +20,7 @@ public class ContainerMSRFuelPreProcessor extends GenericContainerBlockEntity<Ti
 	public static final SubtypeItemUpgrade[] VALID_UPGRADES = new SubtypeItemUpgrade[] { SubtypeItemUpgrade.basicspeed, SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.iteminput, SubtypeItemUpgrade.itemoutput, SubtypeItemUpgrade.experience };
 
 	public ContainerMSRFuelPreProcessor(int id, Inventory playerinv) {
-		this(id, playerinv, new SimpleContainer(8), new SimpleContainerData(3));
+		this(id, playerinv, new SimpleContainer(8), new SimpleContainerData(5));
 	}
 
 	public ContainerMSRFuelPreProcessor(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {

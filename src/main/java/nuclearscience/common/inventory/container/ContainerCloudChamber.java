@@ -12,7 +12,7 @@ import voltaic.prefab.inventory.container.types.GenericContainerBlockEntity;
 public class ContainerCloudChamber extends GenericContainerBlockEntity<TileCloudChamber> {
 
     public ContainerCloudChamber(int id, Inventory playerinv) {
-        this(id, playerinv, new SimpleContainer(), new SimpleContainerData(3));
+        this(id, playerinv, new SimpleContainer(), new SimpleContainerData(5));
     }
 
     public ContainerCloudChamber(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {

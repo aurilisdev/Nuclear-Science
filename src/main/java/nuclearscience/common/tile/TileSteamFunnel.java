@@ -3,7 +3,6 @@ package nuclearscience.common.tile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -43,7 +42,7 @@ public class TileSteamFunnel extends GenericTile implements ISteamReceiver {
             return;
         }
         if (level.getBlockEntity(getBlockPos().above()) instanceof ISteamReceiver receiver) {
-            handler.drain(receiver.receiveSteam(handler.getFluid().getTag().getInt("temperature"), handler.getFluidAmount()), FluidAction.EXECUTE);
+            handler.drain(receiver.receiveSteam(4200, handler.getFluidAmount()), FluidAction.EXECUTE);
         }
         FluidUtilities.outputToPipe(this, handler.asArray(), Direction.UP);
     }
@@ -65,9 +64,7 @@ public class TileSteamFunnel extends GenericTile implements ISteamReceiver {
         if (level.isClientSide()) {
             return 0;
         }
-        CompoundTag tag = new CompoundTag();
-        tag.putInt("temperature", temperature);
-        return ((ComponentFluidHandlerSimple) getComponent(IComponentType.FluidHandler)).fill(new FluidStack(NuclearScienceFluids.FLUID_STEAM.get(), amount, tag), FluidAction.EXECUTE);
+        return ((ComponentFluidHandlerSimple) getComponent(IComponentType.FluidHandler)).fill(new FluidStack(NuclearScienceFluids.FLUID_STEAM.get(), amount), FluidAction.EXECUTE);
     }
 
     @Override
