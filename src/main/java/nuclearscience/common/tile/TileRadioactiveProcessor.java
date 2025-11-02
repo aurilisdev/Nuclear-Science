@@ -3,7 +3,7 @@ package nuclearscience.common.tile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.common.inventory.container.ContainerRadioactiveProcessor;
-import nuclearscience.common.settings.NuclearConstants;
+import nuclearscience.common.settings.NuclearConfig;
 import nuclearscience.registers.NuclearScienceRecipies;
 import nuclearscience.registers.NuclearScienceTiles;
 import voltaic.prefab.tile.GenericTile;
@@ -44,8 +44,8 @@ public class TileRadioactiveProcessor extends GenericTile {
             BlockEntityUtils.updateLit(this, canProcess);
         }
 
-        RadiationUtils.handleRadioactiveFluids(this, (ComponentFluidHandlerMulti) getComponent(IComponentType.FluidHandler), NuclearConstants.RADIOACTIVE_PROCESSOR_RADIATION_RADIUS, true, 30, true, false);
-        RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory), NuclearConstants.RADIOACTIVE_PROCESSOR_RADIATION_RADIUS, true, 30, true, false);
+        RadiationUtils.handleRadioactiveFluids(this, (ComponentFluidHandlerMulti) getComponent(IComponentType.FluidHandler), NuclearConfig.INSTANCE.RADIOACTIVE_PROCESSOR_RADIATION_RADIUS.get(), true, 30, true, false);
+        RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory), NuclearConfig.INSTANCE.RADIOACTIVE_PROCESSOR_RADIATION_RADIUS.get(), true, 30, true, false);
 
         return canProcess;
     }

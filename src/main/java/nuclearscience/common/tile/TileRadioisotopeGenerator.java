@@ -6,7 +6,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.common.inventory.container.ContainerRadioisotopeGenerator;
-import nuclearscience.common.settings.NuclearConstants;
+import nuclearscience.common.settings.NuclearConfig;
 import nuclearscience.registers.NuclearScienceTiles;
 import voltaic.api.radiation.util.RadioactiveObject;
 import voltaic.common.reloadlistener.RadioactiveItemRegister;
@@ -32,7 +32,7 @@ public class TileRadioisotopeGenerator extends GenericTile {
 
 		addComponent(new ComponentTickable(this).tickServer(this::tickServer));
 		addComponent(new ComponentPacketHandler(this));
-		addComponent(new ComponentElectrodynamic(this, true, false).voltage(NuclearConstants.RADIOISOTOPEGENERATOR_VOLTAGE).extractPower((x, y) -> TransferPack.EMPTY).setOutputDirections(BlockEntityUtils.MachineDirection.BOTTOM, BlockEntityUtils.MachineDirection.TOP));
+		addComponent(new ComponentElectrodynamic(this, true, false).voltage(NuclearConfig.INSTANCE.RADIOISOTOPEGENERATOR_VOLTAGE.get()).extractPower((x, y) -> TransferPack.EMPTY).setOutputDirections(BlockEntityUtils.MachineDirection.BOTTOM, BlockEntityUtils.MachineDirection.TOP));
 		addComponent(new ComponentInventory(this, ComponentInventory.InventoryBuilder.newInv().inputs(1)).setDirectionsBySlot(0, BlockEntityUtils.MachineDirection.values()).valid((slot, stack, i) -> RadioactiveItemRegister.getValue(stack.getItem()).amount() > 0));
 		addComponent(new ComponentContainerProvider("radioisotopegenerator", this).createMenu((id, player) -> new ContainerRadioisotopeGenerator(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
 	}
@@ -62,12 +62,12 @@ public class TileRadioisotopeGenerator extends GenericTile {
 			return;
 		}
 
-		RadiationUtils.handleRadioactiveItems(this, inv, NuclearConstants.RADIO_GENATOR_RADIATION_RADIUS, true, 30, true, false);
+		RadiationUtils.handleRadioactiveItems(this, inv, NuclearConfig.INSTANCE.RADIO_GENATOR_RADIATION_RADIUS.get(), true, 30, true, false);
 
-		double currentOutput = input.getCount() * NuclearConstants.RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER * radiation.amount();
+		double currentOutput = input.getCount() * NuclearConfig.INSTANCE.RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER.get() * radiation.amount();
 
 		if (currentOutput > 0) {
-			TransferPack transfer = TransferPack.ampsVoltage(currentOutput / (NuclearConstants.RADIOISOTOPEGENERATOR_VOLTAGE * 2.0), NuclearConstants.RADIOISOTOPEGENERATOR_VOLTAGE);
+			TransferPack transfer = TransferPack.ampsVoltage(currentOutput / (NuclearConfig.INSTANCE.RADIOISOTOPEGENERATOR_VOLTAGE.get() * 2.0), NuclearConfig.INSTANCE.RADIOISOTOPEGENERATOR_VOLTAGE.get());
 			if (output1.valid()) {
 				ElectricityUtils.receivePower(output1.getSafe(), Direction.DOWN, transfer, false);
 			}

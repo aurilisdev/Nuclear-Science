@@ -19,7 +19,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import nuclearscience.api.turbine.ISteamReceiver;
-import nuclearscience.common.settings.NuclearConstants;
+import nuclearscience.common.settings.NuclearConfig;
 import nuclearscience.common.tile.reactor.fission.TileFissionReactorCore;
 import nuclearscience.registers.NuclearScienceTiles;
 import voltaic.prefab.properties.types.PropertyTypes;
@@ -104,7 +104,7 @@ public class TileHeatExchanger extends GenericTile {
 							if (turbine.isStillValid()) {
 								cachedReceivers[i][j][k] = null;
 							}
-							turbine.receiveSteam((int) (NuclearConstants.MSRREACTOR_MAXENERGYTARGET / (STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * 20.0 * (TileMSReactorCore.MELTDOWN_TEMPERATURE / temperature.getValue()))), temperature.getValue().intValue());
+							turbine.receiveSteam((int) (NuclearConfig.INSTANCE.MSRREACTOR_MAXENERGYTARGET.get() / (STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * 20.0 * (TileMSReactorCore.MELTDOWN_TEMPERATURE / temperature.getValue()))), temperature.getValue().intValue());
 						}
 						if (level.random.nextFloat() < temperature.getValue() / (TileMSReactorCore.MELTDOWN_TEMPERATURE * 20.0 * STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * STEAM_GEN_HEIGHT)) {
 							level.setBlockAndUpdate(offpos, Blocks.AIR.defaultBlockState());

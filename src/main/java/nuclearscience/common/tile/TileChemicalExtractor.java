@@ -4,11 +4,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.common.inventory.container.ContainerChemicalExtractor;
-import nuclearscience.common.settings.NuclearConstants;
+import nuclearscience.common.settings.NuclearConfig;
 import nuclearscience.registers.NuclearScienceRecipies;
 import nuclearscience.registers.NuclearScienceTiles;
 import voltaic.prefab.tile.GenericTile;
-import voltaic.prefab.tile.components.IComponent;
 import voltaic.prefab.tile.components.IComponentType;
 import voltaic.prefab.tile.components.type.ComponentContainerProvider;
 import voltaic.prefab.tile.components.type.ComponentElectrodynamic;
@@ -45,8 +44,8 @@ public class TileChemicalExtractor extends GenericTile {
 	private boolean canProcess(ComponentProcessor processor, int procNumber) {
 		processor.consumeBucket();
 
-		RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory), NuclearConstants.CHEMICAL_EXTRACTOR_RADIATION_RADIUS, true, 30, true, false);
-		RadiationUtils.handleRadioactiveFluids(this, (ComponentFluidHandlerMulti) getComponent(IComponentType.FluidHandler), NuclearConstants.CHEMICAL_EXTRACTOR_RADIATION_RADIUS, true, 30, true, false);
+		RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory), NuclearConfig.INSTANCE.CHEMICAL_EXTRACTOR_RADIATION_RADIUS.get(), true, 30, true, false);
+		RadiationUtils.handleRadioactiveFluids(this, (ComponentFluidHandlerMulti) getComponent(IComponentType.FluidHandler), NuclearConfig.INSTANCE.CHEMICAL_EXTRACTOR_RADIATION_RADIUS.get(), true, 30, true, false);
 
 
 		return processor.canProcessFluidItem2ItemRecipe(procNumber, NuclearScienceRecipies.CHEMICAL_EXTRACTOR_TYPE.get());

@@ -1,11 +1,10 @@
 package nuclearscience.common.tile;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.common.inventory.container.ContainerGasCentrifuge;
-import nuclearscience.common.settings.NuclearConstants;
+import nuclearscience.common.settings.NuclearConfig;
 import nuclearscience.common.tags.NuclearScienceTags;
 import nuclearscience.registers.NuclearScienceItems;
 import nuclearscience.registers.NuclearScienceSounds;
@@ -51,11 +50,11 @@ public class TileGasCentrifuge extends GenericTile implements ITickableSound {
 
 		addComponent(new ComponentPacketHandler(this));
 		addComponent(new ComponentGasHandlerMulti(this).setInputTanks(1, arr(TANKCAPACITY), arr(MAX_TEMPERATURE), arr(1)).setInputGasTags(NuclearScienceTags.Gases.URANIUM_HEXAFLUORIDE).setInputDirections(BlockEntityUtils.MachineDirection.BACK));
-		addComponent(new ComponentElectrodynamic(this, false, true).voltage(VoltaicCapabilities.DEFAULT_VOLTAGE * 2).setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM).maxJoules(NuclearConstants.GASCENTRIFUGE_USAGE_PER_TICK * 10));
+		addComponent(new ComponentElectrodynamic(this, false, true).voltage(VoltaicCapabilities.DEFAULT_VOLTAGE * 2).setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM).maxJoules(NuclearConfig.INSTANCE.GASCENTRIFUGE_USAGE_PER_TICK.get() * 10));
 		addComponent(new ComponentInventory(this, ComponentInventory.InventoryBuilder.newInv().outputs(3).upgrades(3)).setSlotsByDirection(BlockEntityUtils.MachineDirection.TOP, 0, 1, 2).setSlotsByDirection(BlockEntityUtils.MachineDirection.RIGHT, 0, 1, 2).setSlotsByDirection(BlockEntityUtils.MachineDirection.LEFT, 0, 1, 2)
 				//
 				.setSlotsByDirection(BlockEntityUtils.MachineDirection.BACK, 0, 1, 2).validUpgrades(ContainerGasCentrifuge.VALID_UPGRADES).valid(machineValidator()));
-		addComponent(new ComponentProcessor(this).usage(NuclearConstants.GASCENTRIFUGE_USAGE_PER_TICK, 0).requiredTicks(NuclearConstants.GASCENTRIFUGE_REQUIRED_TICKS_PER_PROCESSING, 0).canProcess(this::canProcess).process(this::process));
+		addComponent(new ComponentProcessor(this).usage(NuclearConfig.INSTANCE.GASCENTRIFUGE_USAGE_PER_TICK.get(), 0).requiredTicks(NuclearConfig.INSTANCE.GASCENTRIFUGE_REQUIRED_TICKS_PER_PROCESSING.get(), 0).canProcess(this::canProcess).process(this::process));
 		addComponent(new ComponentContainerProvider("gascentrifuge", this).createMenu((id, player) -> new ContainerGasCentrifuge(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
 	}
 
@@ -64,8 +63,8 @@ public class TileGasCentrifuge extends GenericTile implements ITickableSound {
 		ComponentInventory inv = getComponent(IComponentType.Inventory);
 		ComponentGasHandlerMulti gasHandler = getComponent(IComponentType.GasHandler);
 
-		RadiationUtils.handleRadioactiveGases(this, gasHandler, NuclearConstants.GAS_CENTRIFUGE_RADIATION_RADIUS, true, 30, true, false);
-		RadiationUtils.handleRadioactiveItems(this, inv, NuclearConstants.GAS_CENTRIFUGE_RADIATION_RADIUS, true, 30, true, false);
+		RadiationUtils.handleRadioactiveGases(this, gasHandler, NuclearConfig.INSTANCE.GAS_CENTRIFUGE_RADIATION_RADIUS.get(), true, 30, true, false);
+		RadiationUtils.handleRadioactiveItems(this, inv, NuclearConfig.INSTANCE.GAS_CENTRIFUGE_RADIATION_RADIUS.get(), true, 30, true, false);
 
 		boolean hasGas = gasHandler.getInputTanks()[0].getGasAmount() >= REQUIRED / 60.0;
 		boolean val = electro.getJoulesStored() >= processor.getUsage(0) && hasGas && inv.getItem(0).getCount() < inv.getItem(0).getMaxStackSize() && inv.getItem(1).getCount() < inv.getItem(1).getMaxStackSize() && inv.getItem(2).getCount() < inv.getItem(2).getMaxStackSize();

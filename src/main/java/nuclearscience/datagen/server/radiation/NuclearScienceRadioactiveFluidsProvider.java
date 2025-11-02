@@ -1,6 +1,7 @@
 package nuclearscience.datagen.server.radiation;
 
 import com.google.gson.JsonObject;
+
 import net.minecraft.data.PackOutput;
 import nuclearscience.NuclearScience;
 import nuclearscience.common.tags.NuclearScienceTags;
@@ -12,6 +13,7 @@ public class NuclearScienceRadioactiveFluidsProvider extends BaseRadioactiveFlui
         super(output, NuclearScience.ID);
     }
 
+    @Override
     public void getRadioactiveFluids(JsonObject json) {
         addTag(NuclearScienceTags.Fluids.URANIUM_HEXAFLUORIDE, 1, 1, json);
     }

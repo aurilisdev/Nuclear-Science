@@ -4,7 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.common.inventory.container.ContainerFreezePlug;
-import nuclearscience.common.settings.NuclearConstants;
+import nuclearscience.common.settings.NuclearConfig;
 import nuclearscience.registers.NuclearScienceItems;
 import nuclearscience.registers.NuclearScienceTiles;
 import voltaic.prefab.properties.types.PropertyTypes;
@@ -29,7 +29,7 @@ public class TileFreezePlug extends GenericTile {
 		super(NuclearScienceTiles.TILE_FREEZEPLUG.get(), pos, state);
 		addComponent(new ComponentTickable(this).tickServer(this::tickServer));
 		addComponent(new ComponentPacketHandler(this));
-		addComponent(new ComponentElectrodynamic(this, false, true).voltage(VoltaicCapabilities.DEFAULT_VOLTAGE).extractPower((x, y) -> TransferPack.EMPTY).setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM).maxJoules(NuclearConstants.FREEZEPLUG_USAGE_PER_TICK * 20));
+		addComponent(new ComponentElectrodynamic(this, false, true).voltage(VoltaicCapabilities.DEFAULT_VOLTAGE).extractPower((x, y) -> TransferPack.EMPTY).setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM).maxJoules(NuclearConfig.INSTANCE.FREEZEPLUG_USAGE_PER_TICK.get() * 20));
 		addComponent(new ComponentInventory(this, ComponentInventory.InventoryBuilder.newInv().inputs(1)).valid((slot, stack, i) -> stack.getItem() == NuclearScienceItems.ITEM_FLINAK.get()));
 		addComponent(new ComponentContainerProvider("freezeplug", this).createMenu((id, player) -> new ContainerFreezePlug(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
 	}
@@ -46,13 +46,13 @@ public class TileFreezePlug extends GenericTile {
 			return;
 		}
 
-		if (electro.getJoulesStored() < NuclearConstants.FREEZEPLUG_USAGE_PER_TICK) {
+		if (electro.getJoulesStored() < NuclearConfig.INSTANCE.FREEZEPLUG_USAGE_PER_TICK.get()) {
 			isFrozen.setValue(false);
 			saltBonus.setValue(0.0);
 			return;
 		}
 
-		electro.joules(electro.getJoulesStored() - NuclearConstants.FREEZEPLUG_USAGE_PER_TICK);
+		electro.joules(electro.getJoulesStored() - NuclearConfig.INSTANCE.FREEZEPLUG_USAGE_PER_TICK.get());
 
 		isFrozen.setValue(true);
 

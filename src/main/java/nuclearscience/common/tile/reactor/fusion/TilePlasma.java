@@ -8,7 +8,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.api.turbine.ISteamReceiver;
 import nuclearscience.common.block.subtype.SubtypeNuclearMachine;
-import nuclearscience.common.settings.NuclearConstants;
+import nuclearscience.common.settings.NuclearConfig;
 import nuclearscience.common.tags.NuclearScienceTags;
 import nuclearscience.registers.NuclearScienceBlocks;
 import nuclearscience.registers.NuclearScienceTiles;
@@ -66,7 +66,7 @@ public class TilePlasma extends GenericTile {
 				output = new CachedTileOutput(level, getBlockPos().relative(Direction.UP, 3));
 			} else if (output.getSafe() instanceof ISteamReceiver) {
 				ISteamReceiver turbine = output.getSafe();
-				turbine.receiveSteam(Integer.MAX_VALUE, (int) (NuclearConstants.FUSIONREACTOR_MAXENERGYTARGET / (113.0 * 20.0)));
+				turbine.receiveSteam(Integer.MAX_VALUE, (int) (NuclearConfig.INSTANCE.FUSIONREACTOR_MAXENERGYTARGET.get() / (113.0 * 20.0)));
 			}
 		}
 	}

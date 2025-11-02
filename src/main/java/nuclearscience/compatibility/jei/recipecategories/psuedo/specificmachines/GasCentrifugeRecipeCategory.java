@@ -10,7 +10,7 @@ import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.world.item.ItemStack;
 import nuclearscience.NuclearScience;
 import nuclearscience.common.block.subtype.SubtypeNuclearMachine;
-import nuclearscience.common.settings.NuclearConstants;
+import nuclearscience.common.settings.NuclearConfig;
 import nuclearscience.common.tile.TileGasCentrifuge;
 import nuclearscience.compatibility.jei.utils.NuclearJeiTextures;
 import nuclearscience.compatibility.jei.utils.psuedorecipes.PsuedoGasCentrifugeRecipe;
@@ -49,7 +49,7 @@ public class GasCentrifugeRecipeCategory extends AbstractRecipeCategory<PsuedoGa
 	public static final LabelWrapperGeneric U238 = new LabelWrapperGeneric(LABEL_COLOR, 28, 36, false, ChatFormatter.getChatDisplayShort((1 - TileGasCentrifuge.PERCENT_U235) * 100, DisplayUnits.PERCENTAGE));
 	public static final LabelWrapperGeneric BIPROD = new LabelWrapperGeneric(LABEL_COLOR, 49, 36, false, ChatFormatter.getChatDisplayShort(TileGasCentrifuge.WASTE_MULTIPLIER * 100, DisplayUnits.PERCENTAGE));
 
-	public static final LabelWrapperGeneric POWER_LABEL = new LabelWrapperGeneric(LABEL_COLOR, 58, 2, false, ChatFormatter.getChatDisplayShort(960, DisplayUnits.VOLTAGE).append(" ").append(ChatFormatter.getChatDisplayShort(NuclearConstants.PARTICLEINJECTOR_USAGE_PER_PARTICLE, DisplayUnits.JOULES)));
+	public static final LabelWrapperGeneric POWER_LABEL = new LabelWrapperGeneric(LABEL_COLOR, 58, 2, false, ChatFormatter.getChatDisplayShort(960, DisplayUnits.VOLTAGE).append(" ").append(ChatFormatter.getChatDisplayShort(NuclearConfig.INSTANCE.PARTICLEINJECTOR_USAGE_PER_PARTICLE.get(), DisplayUnits.JOULES)));
 
 	public static final int ANIM_TIME = 100;
 

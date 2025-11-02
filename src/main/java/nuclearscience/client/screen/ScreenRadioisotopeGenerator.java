@@ -9,7 +9,7 @@ import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import nuclearscience.common.inventory.container.ContainerRadioisotopeGenerator;
-import nuclearscience.common.settings.NuclearConstants;
+import nuclearscience.common.settings.NuclearConfig;
 import nuclearscience.prefab.utils.NuclearTextUtils;
 import voltaic.api.electricity.formatting.ChatFormatter;
 import voltaic.api.electricity.formatting.DisplayUnits;
@@ -26,42 +26,71 @@ import voltaic.prefab.utilities.object.TransferPack;
 
 public class ScreenRadioisotopeGenerator extends GenericScreen<ContainerRadioisotopeGenerator> {
 
-	public ScreenRadioisotopeGenerator(ContainerRadioisotopeGenerator container, Inventory playerInventory, Component title) {
-		super(container, playerInventory, title);
-		addComponent(new ScreenComponentProgress(ScreenComponentProgress.ProgressBars.COUNTDOWN_FLAME, () -> {
-			ItemStack in = container.getSlot(0).getItem();
-			RadioactiveObject rad = RadioactiveItemRegister.getValue(in.getItem());
-			double currentOutput = in.getCount() * NuclearConstants.RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER * rad.amount();
-			if (currentOutput > 0) {
-				return 1;
-			}
-			return 0;
-		}, 25, 24));
-		addComponent(new ScreenComponentElectricInfo(this::getEnergyInformation, -AbstractScreenComponentInfo.SIZE + 1, 2));
+    public ScreenRadioisotopeGenerator(ContainerRadioisotopeGenerator container, Inventory playerInventory,
+	    Component title) {
+	super(container, playerInventory, title);
+	addComponent(new ScreenComponentProgress(ScreenComponentProgress.ProgressBars.COUNTDOWN_FLAME, () -> {
+	    ItemStack in = container.getSlot(0).getItem();
+	    RadioactiveObject rad = RadioactiveItemRegister.getValue(in.getItem());
+	    double currentOutput = in.getCount() * NuclearConfig.INSTANCE.RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER.get()
+		    * rad.amount();
+	    if (currentOutput > 0) {
+		return 1;
+	    }
+	    return 0;
+	}, 25, 24));
+	addComponent(
+		new ScreenComponentElectricInfo(this::getEnergyInformation, -AbstractScreenComponentInfo.SIZE + 1, 2));
 
-		addComponent(new ScreenComponentMultiLabel(0, 0, graphics -> {
-			ItemStack in = menu.getSlot(0).getItem();
-			RadioactiveObject rad = RadioactiveItemRegister.getValue(in.getItem());
-			double currentOutput = in.getCount() * NuclearConstants.RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER * rad.amount();
-			TransferPack transfer = TransferPack.ampsVoltage(currentOutput / NuclearConstants.RADIOISOTOPEGENERATOR_VOLTAGE, NuclearConstants.RADIOISOTOPEGENERATOR_VOLTAGE);
-			graphics.drawString(font, NuclearTextUtils.gui("machine.current", ChatFormatter.getChatDisplayShort(transfer.getAmps(), DisplayUnits.AMPERE)), inventoryLabelX + 60, inventoryLabelY - 48, Color.TEXT_GRAY.color(), false);
-			graphics.drawString(font, NuclearTextUtils.gui("machine.output", ChatFormatter.getChatDisplayShort(transfer.getWatts(), DisplayUnits.WATT)), inventoryLabelX + 60, inventoryLabelY - 35, Color.TEXT_GRAY.color(), false);
-			graphics.drawString(font, NuclearTextUtils.gui("machine.voltage", ChatFormatter.getChatDisplayShort(transfer.getVoltage(), DisplayUnits.VOLTAGE)), inventoryLabelX + 60, inventoryLabelY - 22, Color.TEXT_GRAY.color(), false);
-		}));
+	addComponent(new ScreenComponentMultiLabel(0, 0, graphics -> {
+	    ItemStack in = menu.getSlot(0).getItem();
+	    RadioactiveObject rad = RadioactiveItemRegister.getValue(in.getItem());
+	    double currentOutput = in.getCount() * NuclearConfig.INSTANCE.RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER.get()
+		    * rad.amount();
+	    TransferPack transfer = TransferPack.ampsVoltage(
+		    currentOutput / NuclearConfig.INSTANCE.RADIOISOTOPEGENERATOR_VOLTAGE.get(),
+		    NuclearConfig.INSTANCE.RADIOISOTOPEGENERATOR_VOLTAGE.get());
+	    graphics.drawString(font,
+		    NuclearTextUtils.gui("machine.current",
+			    ChatFormatter.getChatDisplayShort(transfer.getAmps(), DisplayUnits.AMPERE)),
+		    inventoryLabelX + 60, inventoryLabelY - 48, Color.TEXT_GRAY.color(), false);
+	    graphics.drawString(font,
+		    NuclearTextUtils.gui("machine.output",
+			    ChatFormatter.getChatDisplayShort(transfer.getWatts(), DisplayUnits.WATT)),
+		    inventoryLabelX + 60, inventoryLabelY - 35, Color.TEXT_GRAY.color(), false);
+	    graphics.drawString(font,
+		    NuclearTextUtils.gui("machine.voltage",
+			    ChatFormatter.getChatDisplayShort(transfer.getVoltage(), DisplayUnits.VOLTAGE)),
+		    inventoryLabelX + 60, inventoryLabelY - 22, Color.TEXT_GRAY.color(), false);
+	}));
 
-		new WrapperInventoryIO(this, -AbstractScreenComponentInfo.SIZE + 1, AbstractScreenComponentInfo.SIZE + 2, 75, 82, 8, 72);
-	}
+	new WrapperInventoryIO(this, -AbstractScreenComponentInfo.SIZE + 1, AbstractScreenComponentInfo.SIZE + 2, 75,
+		82, 8, 72);
+    }
 
-	private List<? extends FormattedCharSequence> getEnergyInformation() {
-		ArrayList<FormattedCharSequence> list = new ArrayList<>();
-		ItemStack in = menu.getSlot(0).getItem();
-		RadioactiveObject rad = RadioactiveItemRegister.getValue(in.getItem());
-		double currentOutput = in.getCount() * NuclearConstants.RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER * rad.amount();
-		TransferPack transfer = TransferPack.ampsVoltage(currentOutput / NuclearConstants.RADIOISOTOPEGENERATOR_VOLTAGE, NuclearConstants.RADIOISOTOPEGENERATOR_VOLTAGE);
-		list.add(NuclearTextUtils.gui("machine.current", ChatFormatter.getChatDisplayShort(transfer.getAmps(), DisplayUnits.AMPERE)).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
-		list.add(NuclearTextUtils.gui("machine.output", ChatFormatter.getChatDisplayShort(transfer.getWatts(), DisplayUnits.WATT).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
-		list.add(NuclearTextUtils.gui("machine.voltage", ChatFormatter.getChatDisplayShort(transfer.getVoltage(), DisplayUnits.VOLTAGE).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
-		return list;
-	}
+    private List<? extends FormattedCharSequence> getEnergyInformation() {
+	ArrayList<FormattedCharSequence> list = new ArrayList<>();
+	ItemStack in = menu.getSlot(0).getItem();
+	RadioactiveObject rad = RadioactiveItemRegister.getValue(in.getItem());
+	double currentOutput = in.getCount() * NuclearConfig.INSTANCE.RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER.get()
+		* rad.amount();
+	TransferPack transfer = TransferPack.ampsVoltage(
+		currentOutput / NuclearConfig.INSTANCE.RADIOISOTOPEGENERATOR_VOLTAGE.get(),
+		NuclearConfig.INSTANCE.RADIOISOTOPEGENERATOR_VOLTAGE.get());
+	list.add(NuclearTextUtils
+		.gui("machine.current", ChatFormatter.getChatDisplayShort(transfer.getAmps(), DisplayUnits.AMPERE))
+		.withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
+	list.add(NuclearTextUtils
+		.gui("machine.output",
+			ChatFormatter.getChatDisplayShort(transfer.getWatts(), DisplayUnits.WATT)
+				.withStyle(ChatFormatting.GRAY))
+		.withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
+	list.add(NuclearTextUtils
+		.gui("machine.voltage",
+			ChatFormatter.getChatDisplayShort(transfer.getVoltage(), DisplayUnits.VOLTAGE)
+				.withStyle(ChatFormatting.GRAY))
+		.withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
+	return list;
+    }
 
 }

@@ -22,7 +22,7 @@ import net.minecraft.world.item.ItemStack;
 import nuclearscience.NuclearScience;
 import nuclearscience.client.NuclearScienceClientRegister;
 import nuclearscience.common.block.subtype.SubtypeNuclearMachine;
-import nuclearscience.common.settings.NuclearConstants;
+import nuclearscience.common.settings.NuclearConfig;
 import nuclearscience.compatibility.jei.utils.NuclearJeiTextures;
 import nuclearscience.prefab.utils.NuclearTextUtils;
 import nuclearscience.registers.NuclearScienceBlocks;
@@ -49,7 +49,7 @@ public class ParticleAcceleratorDarkMatterRecipeCategory extends AbstractRecipeC
 	public static final ArrowAnimatedObject ANIM_RIGHT_LEFT = new ArrowAnimatedObject(NuclearJeiTextures.PARTICLEACCELERATOR_DMARROWOFF_LEFT, NuclearJeiTextures.PARTICLEACCELERATOR_DMARROWON_LEFT, 25, 22, StartDirection.TOP);
 	public static final ArrowAnimatedObject ANIM_RIGHT_RIGHT = new ArrowAnimatedObject(NuclearJeiTextures.PARTICLEACCELERATOR_DMARROWOFF_RIGHT, NuclearJeiTextures.PARTICLEACCELERATOR_DMARROWON_RIGHT, 72, 39, StartDirection.BOTTOM);
 
-	public static final LabelWrapperGeneric POWER_LABEL = new LabelWrapperGeneric(Color.JEI_TEXT_GRAY, 124, 2, false, ChatFormatter.getChatDisplayShort(960, DisplayUnits.VOLTAGE).append(" ").append(ChatFormatter.getChatDisplayShort(NuclearConstants.PARTICLEINJECTOR_USAGE_PER_PARTICLE, DisplayUnits.JOULES)));
+	public static final LabelWrapperGeneric POWER_LABEL = new LabelWrapperGeneric(Color.JEI_TEXT_GRAY, 124, 2, false, ChatFormatter.getChatDisplayShort(960, DisplayUnits.VOLTAGE).append(" ").append(ChatFormatter.getChatDisplayShort(NuclearConfig.INSTANCE.PARTICLEINJECTOR_USAGE_PER_PARTICLE.get(), DisplayUnits.JOULES)));
 
 	public static final int ANIM_TIME = 50;
 

@@ -7,7 +7,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.common.inventory.container.ContainerSupplyModule;
 import nuclearscience.common.network.ReactorLogisticsNetwork;
-import nuclearscience.common.settings.NuclearConstants;
+import nuclearscience.common.settings.NuclearConfig;
 import nuclearscience.common.tile.reactor.logisticsnetwork.interfaces.GenericTileInterface;
 import nuclearscience.common.tile.reactor.logisticsnetwork.util.GenericTileInterfaceBound;
 import nuclearscience.registers.NuclearScienceTiles;
@@ -47,7 +47,7 @@ public class TileSupplyModule extends GenericTileInterfaceBound {
     @Override
     public void tickServer(ComponentTickable tickable) {
         super.tickServer(tickable);
-        RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory), NuclearConstants.RADIOACTIVE_PROCESSOR_RADIATION_RADIUS, true, 30, true, false);
+        RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory), NuclearConfig.INSTANCE.RADIOACTIVE_PROCESSOR_RADIATION_RADIUS.get(), true, 30, true, false);
     }
 
     @Override

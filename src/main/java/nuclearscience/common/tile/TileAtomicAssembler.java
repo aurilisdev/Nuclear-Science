@@ -8,7 +8,7 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import nuclearscience.common.inventory.container.ContainerAtomicAssembler;
 import nuclearscience.common.reloadlistener.AtomicAssemblerBlacklistRegister;
 import nuclearscience.common.reloadlistener.AtomicAssemblerWhitelistRegister;
-import nuclearscience.common.settings.NuclearConstants;
+import nuclearscience.common.settings.NuclearConfig;
 import nuclearscience.registers.NuclearScienceItems;
 import nuclearscience.registers.NuclearScienceTiles;
 import voltaic.prefab.properties.types.PropertyTypes;
@@ -33,7 +33,7 @@ public class TileAtomicAssembler extends GenericTile {
 
 		addComponent(new ComponentTickable(this).tickCommon(this::tickServer));
 		addComponent(new ComponentPacketHandler(this));
-		addComponent(new ComponentElectrodynamic(this, false, true).maxJoules(NuclearConstants.ATOMICASSEMBLER_USAGE_PER_TICK * 20).voltage(NuclearConstants.ATOMICASSEMBLER_VOLTAGE).setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM));
+		addComponent(new ComponentElectrodynamic(this, false, true).maxJoules(NuclearConfig.INSTANCE.ATOMICASSEMBLER_USAGE_PER_TICK.get() * 20).voltage(NuclearConfig.INSTANCE.ATOMICASSEMBLER_VOLTAGE.get()).setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM));
 		// The slot == 6 has to be there to allow items into the input slot.
 		addComponent(new ComponentInventory(this, ComponentInventory.InventoryBuilder.newInv().inputs(7).outputs(1)).setSlotsByDirection(BlockEntityUtils.MachineDirection.TOP, 0, 1, 2, 3, 4, 5).setDirectionsBySlot(6, BlockEntityUtils.MachineDirection.RIGHT, BlockEntityUtils.MachineDirection.BACK)
 				//
@@ -45,7 +45,7 @@ public class TileAtomicAssembler extends GenericTile {
 
 		ComponentInventory inv = getComponent(IComponentType.Inventory);
 
-		RadiationUtils.handleRadioactiveItems(this, inv, NuclearConstants.ATOMIC_ASSEMBLER_RADIATION_RADIUS, true, 30, true, false);
+		RadiationUtils.handleRadioactiveItems(this, inv, NuclearConfig.INSTANCE.ATOMIC_ASSEMBLER_RADIATION_RADIUS.get(), true, 30, true, false);
 
 		ItemStack input = inv.getItem(6);
 
@@ -82,15 +82,15 @@ public class TileAtomicAssembler extends GenericTile {
 
 		ComponentElectrodynamic electro = getComponent(IComponentType.Electrodynamic);
 
-		if (electro.getJoulesStored() < NuclearConstants.ATOMICASSEMBLER_USAGE_PER_TICK) {
+		if (electro.getJoulesStored() < NuclearConfig.INSTANCE.ATOMICASSEMBLER_USAGE_PER_TICK.get()) {
 			return;
 		}
 
 		progress.setValue(progress.getValue() + 1);
 
-		electro.joules(electro.getJoulesStored() - NuclearConstants.ATOMICASSEMBLER_USAGE_PER_TICK);
+		electro.joules(electro.getJoulesStored() - NuclearConfig.INSTANCE.ATOMICASSEMBLER_USAGE_PER_TICK.get());
 
-		if (progress.getValue() < NuclearConstants.ATOMICASSEMBLER_REQUIRED_TICKS) {
+		if (progress.getValue() < NuclearConfig.INSTANCE.ATOMICASSEMBLER_REQUIRED_TICKS.get()) {
 			return;
 		}
 

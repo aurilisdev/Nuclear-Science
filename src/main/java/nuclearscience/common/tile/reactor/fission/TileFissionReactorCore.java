@@ -26,7 +26,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import nuclearscience.api.turbine.ISteamReceiver;
 import nuclearscience.common.inventory.container.ContainerFissionReactorCore;
-import nuclearscience.common.settings.NuclearConstants;
+import nuclearscience.common.settings.NuclearConfig;
 import nuclearscience.common.tile.reactor.TileControlRod;
 import nuclearscience.registers.NuclearScienceBlocks;
 import nuclearscience.registers.NuclearScienceItems;
@@ -298,7 +298,7 @@ public class TileFissionReactorCore extends GenericTile {
                                 cachedReceivers[i][j][k] = null;
                             }
                             double temp = temperature.getValue();
-                            turbine.receiveSteam((int) temp, (int) (NuclearConstants.FISSIONREACTOR_MAXENERGYTARGET / (STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * 20.0 * (MELTDOWN_TEMPERATURE_ACTUAL / temperature.getValue()))));
+                            turbine.receiveSteam((int) temp, (int) (NuclearConfig.INSTANCE.FISSIONREACTOR_MAXENERGYTARGET.get() / (STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * 20.0 * (MELTDOWN_TEMPERATURE_ACTUAL / temperature.getValue()))));
                         }
                         if (level.random.nextFloat() < temperature.getValue() / (MELTDOWN_TEMPERATURE_CALC * 20.0 * STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * STEAM_GEN_HEIGHT)) {
                             level.setBlockAndUpdate(offpos, Blocks.AIR.defaultBlockState());

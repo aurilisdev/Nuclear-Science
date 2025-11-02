@@ -23,7 +23,7 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import nuclearscience.NuclearScience;
 import nuclearscience.api.quantumtunnel.TunnelFrequency;
 import nuclearscience.api.quantumtunnel.TunnelFrequencyBuffer;
-import nuclearscience.common.settings.NuclearConstants;
+import nuclearscience.common.settings.NuclearConfig;
 
 public class NuclearScienceAttachmentTypes {
 
@@ -110,7 +110,7 @@ public class NuclearScienceAttachmentTypes {
         }
     }).build());
 
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> ANTIMATTER_TIMEONGROUND = ATTACHMENT_TYPES.register("timeonground", () -> AttachmentType.builder(() -> NuclearConstants.ANTIMATTER_TICKS_ON_GROUND).serialize(Codec.INT).build());
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> ANTIMATTER_TIMEONGROUND = ATTACHMENT_TYPES.register("timeonground", () -> AttachmentType.builder(() -> NuclearConfig.INSTANCE.ANTIMATTER_TICKS_ON_GROUND.get()).serialize(Codec.INT).build());
 
 
 }

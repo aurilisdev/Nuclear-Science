@@ -23,11 +23,11 @@ import voltaic.datagen.utils.client.BaseLangKeyProvider;
 
 public class NuclearScienceLangKeyProvider extends BaseLangKeyProvider {
 
-	public NuclearScienceLangKeyProvider(PackOutput output, Locale locale) {
-		super(output, locale, NuclearScience.ID);
-	}
+    public NuclearScienceLangKeyProvider(PackOutput output, Locale locale) {
+	super(output, locale, NuclearScience.ID);
+    }
 
-	@Override
+    @Override
 	protected void addTranslations() {
 
 		switch (locale) {
@@ -522,7 +522,40 @@ public class NuclearScienceLangKeyProvider extends BaseLangKeyProvider {
 			addJei("gascentrifuge.info.power_usage", "240V 30kW");
 			addJei("particalaccelerator.antimatter.collision", "Charge:100% Speed<100%");
 			addJei("particalaccelerator.darkmatter.collision", "Charge:100% Speed:100%");
-
+			addConfiguration("common", "Common");
+    			addConfiguration("teleporter_usage", "Teleporter Usage");
+    			addConfiguration("radioisotopegenerator_voltage", "Radioisotope Generator Voltage");
+    			addConfiguration("radioisotopegenerator_output_multiplier", "Radioisotope Generator Output Multiplier");
+    			addConfiguration("fissionreactor_max_energy_target", "Fission Reactor Max Energy Target");
+    			addConfiguration("msrreactor_max_energy_target", "MSR Reactor Max Energy Target");
+    			addConfiguration("fusionreactor_max_energy_target", "Fusion Reactor Max Energy Target");
+    			addConfiguration("fusionreactor_usage_per_tick", "Fusion Reactor Usage Per Tick");
+    			addConfiguration("fusionreactor_max_storage", "Fusion Reactor Max Storage");
+    			addConfiguration("particle_injector_usage_per_particle", "Particle Injector Usage Per Particle");
+    			addConfiguration("gascentrifuge_usage_per_tick", "Gas Centrifuge Usage Per Tick");
+    			addConfiguration("gascentrifuge_required_ticks", "Gas Centrifuge Required ticks");
+    			addConfiguration("freezeplug_usage_per_tick", "Freezeplug Usage Per Tick");
+    			addConfiguration("moltensaltsupplier_voltage", "Molten Salt Supplier voltage");
+    			addConfiguration("moltensaltsupplier_usage_per_tick", "Molten Salt Supplier Usage Per Tick");
+    			addConfiguration("atomicassembler_usage_per_tick", "Atomic Assembler Usage Per Tick");
+    			addConfiguration("atomicassembler_voltage", "Atomic Assembler Voltage");
+    			addConfiguration("atomicassembler_required_ticks", "Atomic Assembler Required Ticks");
+    			addConfiguration("quantum_tunnel_frequency_cap_per_player", "QUantum Tunnel Frequency Cap Per Player");
+    			addConfiguration("antimatter_ticks_on_ground", "Antimatter Ticks On Ground");
+    			addConfiguration("cloud_chamber_energy_usage_per_tick", "Cloud Chamber Energy Usage Per Tick");
+    			addConfiguration("cloud_chamber_fluid_usage_per_tick", "Cloud Chamber Fluid USage Per Tick");
+    			addConfiguration("fallout_scrubber_usage_per_tick", "Fallout Scrubber Usage Per Tick");
+    			addConfiguration("atomic_assembler_radiation_radius", "Atomic Assembler Radiation Radius");
+    			addConfiguration("chemical_extractor_radiation_radius", "Chemical Extractor Radiation Radius");
+    			addConfiguration("fuel_reprocessor_radiation_radius", "Fuel Reprocessor Radiation Radius");
+    			addConfiguration("gas_centrifuge_radiation_radius", "Gas Centrifuge Radiation Radius");
+    			addConfiguration("nuclear_boiler_radiation_radius", "Nuclear boiler Radiation Radius");
+    			addConfiguration("particle_injector_radiation_radius", "Particle Injector Radiation Radius");
+    			addConfiguration("radioactive_processor_radiation_radius", "Radioactive Processor Radiation Radius");
+    			addConfiguration("radioisotopegenerator_radiation_radius", "Radioisotope Generator Radiation Radius");
+    			addConfiguration("molten_salt_supplier_radiation_radius", "Molten Salt Supplier Radiation Radius");
+			addConfiguration("particle_cooldown_tick", "Particle Cooldown Tick");
+			addConfiguration("particle_survival_ticks", "Particle Survival Ticks");
 		}
 
 	}

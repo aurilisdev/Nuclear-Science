@@ -5,7 +5,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Inventory;
 import nuclearscience.common.inventory.container.ContainerCloudChamber;
-import nuclearscience.common.settings.NuclearConstants;
+import nuclearscience.common.settings.NuclearConfig;
 import nuclearscience.common.tile.TileCloudChamber;
 import nuclearscience.prefab.utils.NuclearTextUtils;
 import voltaic.prefab.screen.GenericScreen;
@@ -47,7 +47,7 @@ public class ScreenCloudChamber extends GenericScreen<ContainerCloudChamber> {
             return NuclearTextUtils.gui("cloudchamber.detected", Component.literal("" + count).withStyle(ChatFormatting.BOLD, ChatFormatting.DARK_GRAY));
         }));
 
-        addComponent(new ScreenComponentElectricInfo(-AbstractScreenComponentInfo.SIZE + 1, 2).wattage(NuclearConstants.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK * 20));
+        addComponent(new ScreenComponentElectricInfo(-AbstractScreenComponentInfo.SIZE + 1, 2).wattage(NuclearConfig.INSTANCE.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK.get() * 20));
 
     }
 }

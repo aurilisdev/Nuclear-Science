@@ -4,7 +4,7 @@ import electrodynamics.registers.ElectrodynamicsSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.block.state.BlockState;
-import nuclearscience.common.settings.NuclearConstants;
+import nuclearscience.common.settings.NuclearConfig;
 import nuclearscience.registers.NuclearScienceRecipies;
 import nuclearscience.registers.NuclearScienceTiles;
 import voltaic.common.inventory.container.ContainerO2OProcessor;
@@ -45,7 +45,7 @@ public class TileFuelReprocessor extends GenericTile implements ITickableSound {
 			BlockEntityUtils.updateLit(this, canProcess);
 		}
 
-		RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory), NuclearConstants.FUEL_REPROCESSOR_RADIATION_RADIUS, true, 30, true, false);
+		RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory), NuclearConfig.INSTANCE.FUEL_REPROCESSOR_RADIATION_RADIUS.get(), true, 30, true, false);
 
 		return canProcess;
 	}

@@ -8,7 +8,7 @@ import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import nuclearscience.common.inventory.container.ContainerFalloutScrubber;
-import nuclearscience.common.settings.NuclearConstants;
+import nuclearscience.common.settings.NuclearConfig;
 import nuclearscience.common.tags.NuclearScienceTags;
 import nuclearscience.registers.NuclearScienceTiles;
 import voltaic.api.radiation.RadiationSystem;
@@ -44,7 +44,7 @@ public class TileFalloutScrubber extends GenericTile {
 
         addComponent(new ComponentPacketHandler(this));
         addComponent(new ComponentTickable(this).tickServer(this::tickServer));
-        addComponent(new ComponentElectrodynamic(this, false, true).maxJoules(NuclearConstants.FALLOUT_SCRUBBER_USAGE_PER_TICK * 20).voltage(VoltaicCapabilities.DEFAULT_VOLTAGE).setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM));
+        addComponent(new ComponentElectrodynamic(this, false, true).maxJoules(NuclearConfig.INSTANCE.FALLOUT_SCRUBBER_USAGE_PER_TICK.get() * 20).voltage(VoltaicCapabilities.DEFAULT_VOLTAGE).setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM));
         addComponent(new ComponentFluidHandlerMulti(this).setInputTanks(2, 100, 100).setInputFluidTags(FluidTags.WATER, NuclearScienceTags.Fluids.DECONTAMINATION_FOAM).setInputDirections(BlockEntityUtils.MachineDirection.LEFT, BlockEntityUtils.MachineDirection.RIGHT));
         addComponent(new ComponentContainerProvider("falloutscrubber", this).createMenu((id, player) -> new ContainerFalloutScrubber(id, player, new SimpleContainer(), getCoordsArray())));
     }
@@ -59,7 +59,7 @@ public class TileFalloutScrubber extends GenericTile {
 
         ComponentElectrodynamic electro = getComponent(IComponentType.Electrodynamic);
 
-        if(electro.getJoulesStored() < NuclearConstants.FALLOUT_SCRUBBER_USAGE_PER_TICK) {
+        if(electro.getJoulesStored() < NuclearConfig.INSTANCE.FALLOUT_SCRUBBER_USAGE_PER_TICK.get()) {
             active.setValue(false);
             RadiationSystem.removeDisipation(getLevel(), area);
             return;
@@ -78,7 +78,7 @@ public class TileFalloutScrubber extends GenericTile {
         active.setValue(true);
         tanks[0].drain(FLUID_USAGE_PER_TICK, IFluidHandler.FluidAction.EXECUTE);
         tanks[1].drain(FLUID_USAGE_PER_TICK, IFluidHandler.FluidAction.EXECUTE);
-        electro.setJoulesStored(electro.getJoulesStored() - NuclearConstants.FALLOUT_SCRUBBER_USAGE_PER_TICK);
+        electro.setJoulesStored(electro.getJoulesStored() - NuclearConfig.INSTANCE.FALLOUT_SCRUBBER_USAGE_PER_TICK.get());
 
         RadiationSystem.addDisipation(getLevel(), DISIPATION, area);
 

@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import nuclearscience.client.render.event.levelstage.HandlerCloudChamber;
 import nuclearscience.common.inventory.container.ContainerCloudChamber;
-import nuclearscience.common.settings.NuclearConstants;
+import nuclearscience.common.settings.NuclearConfig;
 import nuclearscience.common.tags.NuclearScienceTags;
 import nuclearscience.registers.NuclearScienceTiles;
 import voltaic.api.radiation.RadiationSystem;
@@ -39,7 +39,7 @@ public class TileCloudChamber extends GenericTile {
         super(NuclearScienceTiles.TILE_CLOUDCHAMBER.get(), worldPos, blockState);
 
         addComponent(new ComponentTickable(this).tickServer(this::tickServer).tickClient(this::tickClient));
-        addComponent(new ComponentElectrodynamic(this, false, true).setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM).voltage(VoltaicCapabilities.DEFAULT_VOLTAGE).maxJoules(NuclearConstants.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK * 20));
+        addComponent(new ComponentElectrodynamic(this, false, true).setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM).voltage(VoltaicCapabilities.DEFAULT_VOLTAGE).maxJoules(NuclearConfig.INSTANCE.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK.get() * 20));
         addComponent(new ComponentFluidHandlerSimple(100, fluidStack -> fluidStack.getFluid().is(NuclearScienceTags.Fluids.METHANOL), this, "methanolstorage").setInputDirections(BlockEntityUtils.MachineDirection.BACK));
         addComponent(new ComponentContainerProvider("cloudchamber", this).createMenu((id, player) -> new ContainerCloudChamber(id, player, new SimpleContainer(), getCoordsArray())));
 
@@ -65,7 +65,7 @@ public class TileCloudChamber extends GenericTile {
 
         ComponentElectrodynamic electro = getComponent(IComponentType.Electrodynamic);
 
-        if(electro.getJoulesStored() < NuclearConstants.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK) {
+        if(electro.getJoulesStored() < NuclearConfig.INSTANCE.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK.get()) {
             active.setValue(false);
             sourcesDetected.setValue(false);
             return;
@@ -73,7 +73,7 @@ public class TileCloudChamber extends GenericTile {
 
         ComponentFluidHandlerSimple fluid = getComponent(IComponentType.FluidHandler);
 
-        if(fluid.isEmpty() || fluid.getFluidAmount() < NuclearConstants.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK) {
+        if(fluid.isEmpty() || fluid.getFluidAmount() < NuclearConfig.INSTANCE.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK.get()) {
             active.setValue(false);
             sourcesDetected.setValue(false);
             return;
@@ -81,8 +81,8 @@ public class TileCloudChamber extends GenericTile {
 
         active.setValue(true);
 
-        electro.setJoulesStored(electro.getJoulesStored() - NuclearConstants.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK);
-        fluid.drain(NuclearConstants.CLOUD_CHAMBER_FLUID_USAGE_PER_TICK, IFluidHandler.FluidAction.EXECUTE);
+        electro.setJoulesStored(electro.getJoulesStored() - NuclearConfig.INSTANCE.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK.get());
+        fluid.drain(NuclearConfig.INSTANCE.CLOUD_CHAMBER_FLUID_USAGE_PER_TICK.get(), IFluidHandler.FluidAction.EXECUTE);
 
         List<BlockPos> sources = RadiationSystem.getRadiationSources(getLevel());
 

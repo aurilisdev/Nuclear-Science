@@ -15,7 +15,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import nuclearscience.NuclearScience;
 import nuclearscience.common.block.subtype.SubtypeNuclearMachine;
-import nuclearscience.common.settings.NuclearConstants;
+import nuclearscience.common.settings.NuclearConfig;
 import nuclearscience.compatibility.jei.utils.NuclearJeiTextures;
 import nuclearscience.prefab.utils.NuclearTextUtils;
 import nuclearscience.registers.NuclearScienceBlocks;
@@ -39,7 +39,7 @@ public class ParticleAcceleratorAntiMatterRecipeCategory extends AbstractRecipeC
 
     public static final ArrowAnimatedObject ANIM_RIGHT_ARROW = new ArrowAnimatedObject(NuclearJeiTextures.PARTICLEACCELERATOR_AMARROW_OFF, NuclearJeiTextures.PARTICLEACCELERATOR_AMARROW_ON, 17, 6, StartDirection.LEFT);
 
-    public static final LabelWrapperGeneric POWER_LABEL = new LabelWrapperGeneric(Color.JEI_TEXT_GRAY, 58, 2, false, ChatFormatter.getChatDisplayShort(960, DisplayUnits.VOLTAGE).append(" ").append(ChatFormatter.getChatDisplayShort(NuclearConstants.PARTICLEINJECTOR_USAGE_PER_PARTICLE, DisplayUnits.JOULES)));
+    public static final LabelWrapperGeneric POWER_LABEL = new LabelWrapperGeneric(Color.JEI_TEXT_GRAY, 58, 2, false, ChatFormatter.getChatDisplayShort(960, DisplayUnits.VOLTAGE).append(" ").append(ChatFormatter.getChatDisplayShort(NuclearConfig.INSTANCE.PARTICLEINJECTOR_USAGE_PER_PARTICLE.get(), DisplayUnits.JOULES)));
     // public static final LabelWrapperGeneric COLLISION_LABEL = new LabelWrapperGeneric(0xFF808080, 58, 132, true, NuclearTextUtils.jeiTranslated("particalaccelerator.antimatter.collision"));
 
     public static final int ANIM_TIME = 50;

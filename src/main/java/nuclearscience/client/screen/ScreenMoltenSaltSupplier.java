@@ -5,7 +5,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import nuclearscience.common.inventory.container.ContainerMoltenSaltSupplier;
-import nuclearscience.common.settings.NuclearConstants;
+import nuclearscience.common.settings.NuclearConfig;
 import nuclearscience.common.tile.reactor.moltensalt.TileMoltenSaltSupplier;
 import nuclearscience.prefab.utils.NuclearTextUtils;
 import voltaic.api.electricity.formatting.ChatFormatter;
@@ -20,7 +20,7 @@ public class ScreenMoltenSaltSupplier extends GenericScreen<ContainerMoltenSaltS
 
 	public ScreenMoltenSaltSupplier(ContainerMoltenSaltSupplier container, Inventory playerInventory, Component title) {
 		super(container, playerInventory, title);
-		addComponent(new ScreenComponentElectricInfo(-AbstractScreenComponentInfo.SIZE + 1, 2).wattage(NuclearConstants.MOLTENSALTSUPPLIER_USAGE_PER_TICK * 20));
+		addComponent(new ScreenComponentElectricInfo(-AbstractScreenComponentInfo.SIZE + 1, 2).wattage(NuclearConfig.INSTANCE.MOLTENSALTSUPPLIER_USAGE_PER_TICK.get() * 20));
 		addComponent(new ScreenComponentProgress(ScreenComponentProgress.ProgressBars.PROGRESS_ARROW_RIGHT, () -> {
 			TileMoltenSaltSupplier supplier = menu.getSafeHost();
 			if (supplier == null) {

@@ -10,7 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import nuclearscience.client.screen.util.GenericInterfaceBoundScreen;
 import nuclearscience.common.inventory.container.ContainerMonitorModule;
-import nuclearscience.common.settings.NuclearConstants;
+import nuclearscience.common.settings.NuclearConfig;
 import nuclearscience.common.tile.reactor.fission.TileFissionReactorCore;
 import nuclearscience.common.tile.reactor.fusion.TileFusionReactorCore;
 import nuclearscience.common.tile.reactor.logisticsnetwork.TileMonitorModule;
@@ -214,21 +214,21 @@ public class ScreenMonitorModule extends GenericInterfaceBoundScreen<ContainerMo
 
                     graphics.drawString(font, NuclearTextUtils.gui("logisticsnetwork.deuterium"), guiWidth + 20, guiHeight + 45, Color.TEXT_GRAY.color(), false);
 
-                    graphics.drawString(font, VoltaicTextUtils.ratio(Component.literal(fusionCore.deuterium.getValue() + ""), Component.literal(NuclearConstants.FUSIONREACTOR_MAXSTORAGE + "")), guiWidth + 30, guiHeight + 55, Color.WHITE.color(), false);
+                    graphics.drawString(font, VoltaicTextUtils.ratio(Component.literal(fusionCore.deuterium.getValue() + ""), Component.literal(NuclearConfig.INSTANCE.FUSIONREACTOR_MAXSTORAGE.get() + "")), guiWidth + 30, guiHeight + 55, Color.WHITE.color(), false);
 
                     graphics.drawString(font, NuclearTextUtils.gui("logisticsnetwork.tritium"), guiWidth + 20, guiHeight + 70, Color.TEXT_GRAY.color(), false);
 
-                    graphics.drawString(font, VoltaicTextUtils.ratio(Component.literal(fusionCore.tritium.getValue() + ""), Component.literal(NuclearConstants.FUSIONREACTOR_MAXSTORAGE + "")), guiWidth + 30, guiHeight + 80, Color.WHITE.color(), false);
+                    graphics.drawString(font, VoltaicTextUtils.ratio(Component.literal(fusionCore.tritium.getValue() + ""), Component.literal(NuclearConfig.INSTANCE.FUSIONREACTOR_MAXSTORAGE.get() + "")), guiWidth + 30, guiHeight + 80, Color.WHITE.color(), false);
 
                     graphics.drawString(font, NuclearTextUtils.gui("logisticsnetwork.power"), guiWidth + 20, guiHeight + 95, Color.TEXT_GRAY.color(), false);
 
-                    graphics.drawString(font, ChatFormatter.getChatDisplayShort(Math.min(1.0, electro.getJoulesStored() / NuclearConstants.FUSIONREACTOR_USAGE_PER_TICK) * 100.0, DisplayUnits.PERCENTAGE), guiWidth + 30, guiHeight + 105, Color.WHITE.color(), false);
+                    graphics.drawString(font, ChatFormatter.getChatDisplayShort(Math.min(1.0, electro.getJoulesStored() / NuclearConfig.INSTANCE.FUSIONREACTOR_USAGE_PER_TICK.get()) * 100.0, DisplayUnits.PERCENTAGE), guiWidth + 30, guiHeight + 105, Color.WHITE.color(), false);
 
                     status = NuclearTextUtils.gui("logisticsnetwork.statusgood").withStyle(ChatFormatting.GREEN);
 
                     if (fusionCore.tritium.getValue() < 1 || fusionCore.deuterium.getValue() < 1) {
                         status = NuclearTextUtils.gui("logisticsnetwork.statusnofuel").withStyle(ChatFormatting.RED);
-                    } else if (electro.getJoulesStored() < NuclearConstants.FUSIONREACTOR_USAGE_PER_TICK) {
+                    } else if (electro.getJoulesStored() < NuclearConfig.INSTANCE.FUSIONREACTOR_USAGE_PER_TICK.get()) {
                         status = NuclearTextUtils.gui("logisticsnetwork.statusnopower").withStyle(ChatFormatting.YELLOW);
                     }
 

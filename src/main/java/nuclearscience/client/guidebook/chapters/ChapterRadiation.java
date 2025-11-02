@@ -19,7 +19,7 @@ import voltaic.client.guidebook.utils.components.Module;
 import voltaic.client.guidebook.utils.pagedata.graphics.ImageWrapperObject;
 import voltaic.client.guidebook.utils.pagedata.text.TextWrapperObject;
 import voltaic.common.item.ItemIodineTablet;
-import voltaic.common.settings.VoltaicConstants;
+import voltaic.common.settings.VoltaicConfig;
 
 public class ChapterRadiation extends Chapter {
 
@@ -55,11 +55,11 @@ public class ChapterRadiation extends Chapter {
 				//
 				NuclearScienceItems.ITEM_IODINETABLET.get().getDescription().copy().withStyle(ChatFormatting.BOLD),
 				//
-				Component.literal("" + VoltaicConstants.IODINE_RESISTANCE_THRESHHOLD).withStyle(ChatFormatting.BOLD),
+				Component.literal("" + VoltaicConfig.INSTANCE.IODINE_RESISTANCE_THRESHOLD.get()).withStyle(ChatFormatting.BOLD),
 				//
 				Component.literal("" + ItemIodineTablet.TIME_MINUTES).withStyle(ChatFormatting.BOLD),
 				//
-				ChatFormatter.getChatDisplayShort((1.0 - VoltaicConstants.IODINE_RAD_REDUCTION) * 100, DisplayUnits.PERCENTAGE).withStyle(ChatFormatting.BOLD))).setIndentions(1).setSeparateStart());
+				ChatFormatter.getChatDisplayShort((1.0 - VoltaicConfig.INSTANCE.IODINE_RAD_REDUCTION.get()) * 100, DisplayUnits.PERCENTAGE).withStyle(ChatFormatting.BOLD))).setIndentions(1).setSeparateStart());
 		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.radiation.l5",
 				//
 				NuclearTextUtils.guidebook("chapter.radiation.hazmatsuit").withStyle(ChatFormatting.BOLD),
@@ -74,7 +74,7 @@ public class ChapterRadiation extends Chapter {
 		blankLine();
 		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.radiation.l7", NuclearScienceItems.ITEM_ANTIDOTE.get().getDescription().copy().withStyle(ChatFormatting.BOLD))));
 		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.radiation.l8", NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.cloudchamber).getDescription().copy().withStyle(ChatFormatting.BOLD), TileCloudChamber.HORR_RADIUS)).setSeparateStart().setIndentions(1));
-		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.radiation.l9", NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.falloutscrubber).getDescription().copy().withStyle(ChatFormatting.BOLD), VoltaicConstants.BACKROUND_RADIATION_DISSIPATION, TileFalloutScrubber.RANGE, TileFalloutScrubber.DISIPATION)).setSeparateStart().setIndentions(1));
+		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.radiation.l9", NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.falloutscrubber).getDescription().copy().withStyle(ChatFormatting.BOLD), VoltaicConfig.INSTANCE.BACKGROUND_RADIATION_DISSIPATION.get(), TileFalloutScrubber.RANGE, TileFalloutScrubber.DISIPATION)).setSeparateStart().setIndentions(1));
 
 	}
 

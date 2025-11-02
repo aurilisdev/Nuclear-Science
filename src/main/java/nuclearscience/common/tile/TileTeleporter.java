@@ -16,7 +16,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import nuclearscience.common.inventory.container.ContainerTeleporter;
-import nuclearscience.common.settings.NuclearConstants;
+import nuclearscience.common.settings.NuclearConfig;
 import nuclearscience.registers.NuclearScienceTiles;
 import voltaic.prefab.properties.types.PropertyTypes;
 import voltaic.prefab.properties.variant.SingleProperty;
@@ -41,7 +41,7 @@ public class TileTeleporter extends GenericTile {
 
 		addComponent(new ComponentTickable(this).tickServer(this::tickServer));
 		addComponent(new ComponentPacketHandler(this));
-		addComponent(new ComponentElectrodynamic(this, false, true).maxJoules(NuclearConstants.TELEPORTER_USAGE_PER_TELEPORT * 20).voltage(VoltaicCapabilities.DEFAULT_VOLTAGE * 4).setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM));
+		addComponent(new ComponentElectrodynamic(this, false, true).maxJoules(NuclearConfig.INSTANCE.TELEPORTER_USAGE_PER_TELEPORT.get() * 20).voltage(VoltaicCapabilities.DEFAULT_VOLTAGE * 4).setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM));
 		addComponent(new ComponentInventory(this, ComponentInventory.InventoryBuilder.newInv().inputs(1)));
 		addComponent(new ComponentContainerProvider("teleporter", this).createMenu((id, player) -> new ContainerTeleporter(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
 
@@ -51,7 +51,7 @@ public class TileTeleporter extends GenericTile {
 
 		ComponentElectrodynamic electro = getComponent(IComponentType.Electrodynamic);
 
-		boolean powered = electro.getJoulesStored() > NuclearConstants.TELEPORTER_USAGE_PER_TELEPORT;
+		boolean powered = electro.getJoulesStored() > NuclearConfig.INSTANCE.TELEPORTER_USAGE_PER_TELEPORT.get();
 
 		if (BlockEntityUtils.isLit(this) ^ powered) {
 			BlockEntityUtils.updateLit(this, powered);
@@ -85,7 +85,7 @@ public class TileTeleporter extends GenericTile {
 
 		cooldown.setValue(80);
 
-		electro.joules(electro.getJoulesStored() - NuclearConstants.TELEPORTER_USAGE_PER_TELEPORT);
+		electro.joules(electro.getJoulesStored() - NuclearConfig.INSTANCE.TELEPORTER_USAGE_PER_TELEPORT.get());
 
 	}
 
