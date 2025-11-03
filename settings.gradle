@@ -21,13 +21,13 @@ pluginManagement {
     maven {
         url "https://cursemaven.com"
     }
-    }
-
+}
 }
 
 plugins {
     id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0'
 }
+
 
 dependencyResolutionManagement {
     versionCatalogs {
