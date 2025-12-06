@@ -11,6 +11,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import nuclearscience.client.NuclearScienceClientRegister;
@@ -32,7 +33,9 @@ public final class NuclearScience {
     public NuclearScience(IEventBus bus, ModContainer container) {
 	NuclearConfig.INSTANCE = new NuclearConfig();
 	container.registerConfig(ModConfig.Type.COMMON, NuclearConfig.INSTANCE.SPEC);
-	container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
+	if (FMLEnvironment.dist == Dist.CLIENT) {
+	    container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
+	}
 	NuclearScienceBlockStates.init();
 	NuclearScienceVoxelShapes.init();
 	UnifiedNuclearScienceRegister.register(bus);
