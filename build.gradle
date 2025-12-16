@@ -1,22 +1,21 @@
 plugins {
 	id 'eclipse'
+    id 'idea'
+	id 'java-library'
 	id 'maven-publish'
 	id 'net.minecraftforge.gradle' version "${forge_gradle_version}"
 	id 'org.parchmentmc.librarian.forgegradle' version "${parchent_librarian_version}.+"
-    id 'com.matthewprenger.cursegradle' version "${cursegradle_version}"
 }
-//apply plugin: 'net.minecraftforge.gradle'
-//apply plugin: 'org.parchmentmc.librarian.forgegradle'
-// Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
-//apply plugin: 'eclipse'
-//apply plugin: 'maven-publish'
-//apply from: 'https://raw.githubusercontent.com/SizableShrimp/Forge-Class-Remapper/main/classremapper.gradle'
 
 libsDirName = "../output"
 distsDirName = "../output"
 
 group = nuclearscience_group
 version = "${minecraft_version}-" + nuclearscience_version
+
+repositories {
+    mavenLocal()
+}
 
 base {
 
@@ -84,35 +83,21 @@ minecraft {
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
+configurations {
+    runtimeClasspath.extendsFrom localRuntime
+}
+
 dependencies {
-    def Folder = new File("C:/AmpzLibz/1.20")
-    if(Folder.exists()) {
-        compileOnly fileTree(Folder)
-    }
-    def Folder2 = new File("libs")
-    if(Folder2.exists()) {
-        compileOnly fileTree(Folder2)
-    }
 	minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+	
+    implementation "voltaic:Voltaic:1.20.1-1.0.1-0:deobf"
+    implementation "electrodynamics:Electrodynamics:1.20.1-1.0.0-0:deobf"
+    
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
     runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
 }
 
-repositories {
-	mavenCentral()
-	maven {
-	    // location of the maven that hosts JEI files since January 2023
-	    name = "Jared's maven"
-	    url = "https://maven.blamejared.com/"
-	}
-	maven {
-   		// location of a maven mirror for JEI files, as a fallback
-    	name = "ModMaven"
-    	url = "https://modmaven.dev"
-  	}
-
-}
 
 // Example for how to get properties into the manifest for reading by the runtime..
 tasks.named('jar', Jar).configure {
@@ -154,8 +139,9 @@ artifacts {
 
 publishing {
     publications {
-        mavenJava(MavenPublication) {
-            artifact jar
+        register('mavenJava', MavenPublication) {
+            from components.java
+            artifact(tasks.named('deobfJar')) // publishes :deobf
         }
     }
     repositories {
@@ -165,21 +151,33 @@ publishing {
     }
 }
 
-tasks.curseforge.dependsOn jar
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+}
 
-curseforge {
-  apiKey = System.getenv("CURSEFORGE_KEY")
-  project {
-    id = '318646'
-    changelog = 'You can find changelog at: https://aurilis.dev/'
-    releaseType = 'release'
-    addGameVersion minecraft_version
-    
-    mainArtifact(jar) {
-      relations {
-        requiredDependency 'electrodynamics'
-      }
-      displayName=project.name+' ' + project.version
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
     }
-  }
+}
+java {
+  withSourcesJar()   // <- generates sources JAR
+}
+
+repositories {
+	maven {
+	    // location of the maven that hosts JEI files since January 2023
+	    name = "Jared's maven"
+	    url = "https://maven.blamejared.com/"
+	}
+	maven {
+   		// location of a maven mirror for JEI files, as a fallback
+    	name = "ModMaven"
+    	url = "https://modmaven.dev"
+  	}
+    maven {
+        url = "https://api.modrinth.com/maven"
+    }
+
 }
