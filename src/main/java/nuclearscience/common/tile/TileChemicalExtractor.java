@@ -34,9 +34,9 @@ public class TileChemicalExtractor extends GenericTile {
 				.setInputDirections(BlockEntityUtils.MachineDirection.TOP, BlockEntityUtils.MachineDirection.FRONT, BlockEntityUtils.MachineDirection.RIGHT, BlockEntityUtils.MachineDirection.BACK, BlockEntityUtils.MachineDirection.LEFT).setRecipeType(NuclearScienceRecipies.CHEMICAL_EXTRACTOR_TYPE.get()));
 		addComponent(new ComponentInventory(this, ComponentInventory.InventoryBuilder.newInv().processors(1, 1, 1, 0).bucketInputs(1).upgrades(3))
 				//
-				.setDirectionsBySlot(0, BlockEntityUtils.MachineDirection.TOP, BlockEntityUtils.MachineDirection.LEFT, BlockEntityUtils.MachineDirection.RIGHT, BlockEntityUtils.MachineDirection.FRONT, BlockEntityUtils.MachineDirection.BACK)
+				.setDirectionsBySlot(0, BlockEntityUtils.MachineDirection.TOP)
 				//
-				.setDirectionsBySlot(1, BlockEntityUtils.MachineDirection.TOP, BlockEntityUtils.MachineDirection.LEFT, BlockEntityUtils.MachineDirection.RIGHT, BlockEntityUtils.MachineDirection.FRONT, BlockEntityUtils.MachineDirection.BACK).validUpgrades(ContainerChemicalExtractor.VALID_UPGRADES).valid(machineValidator()));
+				.setDirectionsBySlot(1, BlockEntityUtils.MachineDirection.LEFT, BlockEntityUtils.MachineDirection.RIGHT).validUpgrades(ContainerChemicalExtractor.VALID_UPGRADES).valid(machineValidator()));
 		addComponent(new ComponentProcessor(this).canProcess(this::canProcess).process(ComponentProcessor::processFluidItem2ItemRecipe));
 		addComponent(new ComponentContainerProvider("chemicalextractor", this).createMenu((id, player) -> new ContainerChemicalExtractor(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
 	}
