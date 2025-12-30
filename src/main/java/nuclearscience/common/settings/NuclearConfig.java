@@ -62,7 +62,7 @@ public class NuclearConfig {
 	MOLTENSALTSUPPLIER_USAGE_PER_TICK = builder.defineInRange("moltensaltsupplier_usage_per_tick", 200.0, 0, Double.MAX_VALUE);
 	ATOMICASSEMBLER_USAGE_PER_TICK = builder.defineInRange("atomicassembler_usage_per_tick", 6000.0, 0, Double.MAX_VALUE);
 	ATOMICASSEMBLER_VOLTAGE = builder.defineInRange("atomicassembler_voltage", 480.0, 0, Double.MAX_VALUE);
-	ATOMICASSEMBLER_REQUIRED_TICKS = builder.defineInRange("atomicassembler_required_ticks", 12000, 0, Integer.MAX_VALUE);
+	ATOMICASSEMBLER_REQUIRED_TICKS = builder.defineInRange("atomicassembler_required_ticks", 6000, 0, Integer.MAX_VALUE);
 	QUANTUM_TUNNEL_FREQUENCY_CAP_PER_PLAYER = builder.defineInRange("quantum_tunnel_frequency_cap_per_player", 40, 0, Integer.MAX_VALUE);
 	ANTIMATTER_TICKS_ON_GROUND = builder.defineInRange("antimatter_ticks_on_ground", 40, 0, Integer.MAX_VALUE);
 	CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK = builder.defineInRange("cloud_chamber_energy_usage_per_tick", 100, 0, Double.MAX_VALUE);
