@@ -39,8 +39,8 @@ public class NuclearConstants {
 	public static double ATOMICASSEMBLER_USAGE_PER_TICK = 6000.0;
 	@DoubleValue(def = 480.0)
 	public static double ATOMICASSEMBLER_VOLTAGE = 480.0;
-	@IntValue(def = 1200)
-	public static int ATOMICASSEMBLER_REQUIRED_TICKS = 12000;
+	@IntValue(def = 6000)
+	public static int ATOMICASSEMBLER_REQUIRED_TICKS = 6000;
 	@IntValue(def = 40)
 	public static int QUANTUM_TUNNEL_FREQUENCY_CAP_PER_PLAYER = 40;
 	@IntValue(def = 40)
