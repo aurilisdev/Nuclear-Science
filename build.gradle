@@ -88,7 +88,7 @@ configurations {
 }
 
 dependencies {
-    implementation "voltaic:Voltaic:1.21.1-1.0.2-0"
+    implementation "voltaic:Voltaic:1.21.1-1.0.2"
     implementation "electrodynamics:Electrodynamics:1.21.1-1.0.2"
 
     implementation libs.neo.neoforge
