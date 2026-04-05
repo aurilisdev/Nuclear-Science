@@ -9,7 +9,6 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -20,6 +19,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import nuclearscience.common.tile.TileTurbine;
+import voltaic.common.block.states.VoltaicMaterials;
 import voltaic.prefab.block.GenericEntityBlockWaterloggable;
 
 public class BlockTurbine extends GenericEntityBlockWaterloggable {
@@ -45,7 +45,7 @@ public class BlockTurbine extends GenericEntityBlockWaterloggable {
     public static final BooleanProperty RENDER = BooleanProperty.create("render");
 
     public BlockTurbine() {
-        super(Blocks.IRON_BLOCK.properties().strength(3.5F).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion());
+        super(VoltaicMaterials.metal().strength(3.5F).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion());
         registerDefaultState(stateDefinition.any().setValue(RENDER, true));
     }
 

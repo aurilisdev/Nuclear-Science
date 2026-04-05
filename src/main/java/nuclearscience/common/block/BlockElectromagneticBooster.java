@@ -8,7 +8,6 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
@@ -19,13 +18,14 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import nuclearscience.common.block.states.NuclearScienceBlockStates;
 import nuclearscience.common.block.states.facing.FacingDirection;
 import voltaic.common.block.states.VoltaicBlockStates;
+import voltaic.common.block.states.VoltaicMaterials;
 import voltaic.prefab.tile.IWrenchable;
 
 public class BlockElectromagneticBooster extends Block implements IWrenchable {
 
 
 	public BlockElectromagneticBooster() {
-		super(Blocks.GLASS.properties().strength(3.5f, 20).requiresCorrectToolForDrops().noOcclusion().isRedstoneConductor((x, y, z) -> false));
+		super(VoltaicMaterials.glass().strength(3.5f, 20).requiresCorrectToolForDrops().noOcclusion().isRedstoneConductor((x, y, z) -> false));
 		registerDefaultState(stateDefinition.any().setValue(VoltaicBlockStates.FACING, Direction.NORTH).setValue(NuclearScienceBlockStates.FACINGDIRECTION, FacingDirection.NONE));
 	}
 

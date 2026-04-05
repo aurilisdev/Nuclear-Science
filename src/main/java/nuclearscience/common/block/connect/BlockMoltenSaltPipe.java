@@ -8,7 +8,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -18,6 +17,7 @@ import nuclearscience.common.tile.reactor.moltensalt.TileMSReactorCore;
 import nuclearscience.common.tile.reactor.moltensalt.TileMoltenSaltPipe;
 import voltaic.common.block.connect.AbstractRefreshingConnectBlock;
 import voltaic.common.block.connect.EnumConnectType;
+import voltaic.common.block.states.VoltaicMaterials;
 
 public class BlockMoltenSaltPipe extends AbstractRefreshingConnectBlock<TileMoltenSaltPipe> {
 
@@ -26,7 +26,7 @@ public class BlockMoltenSaltPipe extends AbstractRefreshingConnectBlock<TileMolt
     public final SubtypeMoltenSaltPipe pipe;
 
     public BlockMoltenSaltPipe(SubtypeMoltenSaltPipe pipe) {
-        super(Blocks.IRON_BLOCK.properties().sound(SoundType.METAL).strength(0.15f).dynamicShape(), 3);
+        super(VoltaicMaterials.metal().sound(SoundType.METAL).strength(0.15f).dynamicShape(), 3);
         this.pipe = pipe;
         PIPESET.add(this);
     }

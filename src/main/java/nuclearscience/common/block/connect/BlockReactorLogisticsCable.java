@@ -10,7 +10,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -19,6 +18,7 @@ import nuclearscience.common.block.subtype.SubtypeReactorLogisticsCable;
 import nuclearscience.common.tile.reactor.logisticsnetwork.TileReactorLogisticsCable;
 import voltaic.common.block.connect.AbstractRefreshingConnectBlock;
 import voltaic.common.block.connect.EnumConnectType;
+import voltaic.common.block.states.VoltaicMaterials;
 
 public class BlockReactorLogisticsCable extends AbstractRefreshingConnectBlock<TileReactorLogisticsCable> {
 
@@ -27,7 +27,7 @@ public class BlockReactorLogisticsCable extends AbstractRefreshingConnectBlock<T
     public final SubtypeReactorLogisticsCable cable;
 
     public BlockReactorLogisticsCable(SubtypeReactorLogisticsCable cable) {
-        super(Blocks.IRON_BLOCK.properties().sound(SoundType.METAL).strength(0.15f).dynamicShape(), 5);
+        super(VoltaicMaterials.metal().sound(SoundType.METAL).strength(0.15f).dynamicShape(), 5);
         this.cable = cable;
         PIPESET.add(this);
     }

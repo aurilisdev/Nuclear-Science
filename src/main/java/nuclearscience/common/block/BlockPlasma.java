@@ -8,7 +8,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -17,12 +16,13 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import nuclearscience.common.tile.reactor.fusion.TilePlasma;
 import nuclearscience.registers.NuclearScienceDamageTypes;
+import voltaic.common.block.states.VoltaicMaterials;
 import voltaic.prefab.block.GenericEntityBlock;
 
 public class BlockPlasma extends GenericEntityBlock {
 
     public BlockPlasma() {
-	super(Blocks.NETHER_PORTAL.properties().noCollission().randomTicks().strength(-1.0F).sound(SoundType.GLASS));
+	super(VoltaicMaterials.portal().noCollission().randomTicks().strength(-1.0F).sound(SoundType.GLASS));
     }
 
     @Override

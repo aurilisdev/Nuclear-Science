@@ -11,12 +11,13 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import voltaic.api.radiation.RadiationSystem;
 import voltaic.api.radiation.util.IRadiationRecipient;
+import voltaic.common.block.states.VoltaicMaterials;
 import voltaic.registers.VoltaicCapabilities;
 
 public class BlockRadioactiveAir extends AirBlock {
 
     public BlockRadioactiveAir() {
-        super(Blocks.AIR.properties().noCollission().air().randomTicks());
+        super(VoltaicMaterials.air().noCollission().air().randomTicks());
     }
 
     @Override
