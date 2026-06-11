@@ -15,34 +15,35 @@ import voltaic.registers.VoltaicCapabilities;
 
 public class BlockRadioactiveAir extends AirBlock {
 
-    public BlockRadioactiveAir() {
-        super(Blocks.AIR.properties().noCollission().air().randomTicks());
-    }
+	public BlockRadioactiveAir() {
+		super(Properties.ofFullCopy(Blocks.AIR).noCollission().air().randomTicks());
+	}
 
-    @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        super.onRemove(state, level, pos, newState, movedByPiston);
-        RadiationSystem.removeRadiationSource(level, pos, true);
-    }
+	@Override
+	protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+		super.onRemove(state, level, pos, newState, movedByPiston);
+		RadiationSystem.removeRadiationSource(level, pos, true);
+	}
 
-    @Override
-    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-        if (level.getLevelData().getGameTime() % 10 == 0 && !level.isClientSide && entity instanceof LivingEntity living) {
-            IRadiationRecipient cap = living.getCapability(VoltaicCapabilities.CAPABILITY_RADIATIONRECIPIENT);
-            if (cap == null) {
-                return;
-            }
+	@Override
+	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+		if (level.getLevelData().getGameTime() % 10 == 0 && !level.isClientSide
+				&& entity instanceof LivingEntity living) {
+			IRadiationRecipient cap = living.getCapability(VoltaicCapabilities.CAPABILITY_RADIATIONRECIPIENT);
+			if (cap == null) {
+				return;
+			}
 
-            cap.recieveRadiation(living, 20, 1);
-        }
-    }
+			cap.recieveRadiation(living, 20, 1);
+		}
+	}
 
-    @Override
-    public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        super.randomTick(state, level, pos, random);
-        if (random.nextFloat() < 0.01F) {
-            level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-        }
-    }
+	@Override
+	public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+		super.randomTick(state, level, pos, random);
+		if (random.nextFloat() < 0.01F) {
+			level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+		}
+	}
 
 }

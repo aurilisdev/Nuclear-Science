@@ -2,12 +2,13 @@ package nuclearscience.common.block.subtype;
 
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import voltaic.api.ISubtype;
 
 public enum SubtypeIrradiatedBlock implements ISubtype {
-    soil(Blocks.DIRT.properties().randomTicks()),
-    grass(Blocks.GRASS_BLOCK.properties().randomTicks()),
-    petrifiedwood(Blocks.OAK_WOOD.properties().randomTicks().ignitedByLava(), true);
+    soil(Properties.ofFullCopy(Blocks.DIRT).randomTicks()),
+    grass(Properties.ofFullCopy(Blocks.GRASS_BLOCK).randomTicks()),
+    petrifiedwood(Properties.ofFullCopy(Blocks.OAK_WOOD).randomTicks().ignitedByLava(), true);
 
     public final BlockBehaviour.Properties properties;
     private boolean burnable = false;

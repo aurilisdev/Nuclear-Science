@@ -3,13 +3,14 @@ package nuclearscience.common.block.subtype;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import voltaic.api.ISubtype;
 
 public enum SubtypeRadiationShielding implements ISubtype {
-    base(Blocks.NETHERITE_BLOCK.properties().strength(5.0f, 3.0f).sound(SoundType.METAL).requiresCorrectToolForDrops()),
-    glass(Blocks.GRASS_BLOCK.properties().strength(5.0f, 3.0f).requiresCorrectToolForDrops()),
-    door(Blocks.NETHERITE_BLOCK.properties().strength(5.0f, 3.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion()),
-    trapdoor(Blocks.NETHERITE_BLOCK.properties().strength(5.0f, 3.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion());
+    base(Properties.ofFullCopy(Blocks.NETHERITE_BLOCK).strength(5.0f, 3.0f).sound(SoundType.METAL).requiresCorrectToolForDrops()),
+    glass(Properties.ofFullCopy(Blocks.GRASS_BLOCK).strength(5.0f, 3.0f).requiresCorrectToolForDrops()),
+    door(Properties.ofFullCopy(Blocks.NETHERITE_BLOCK).strength(5.0f, 3.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion()),
+    trapdoor(Properties.ofFullCopy(Blocks.NETHERITE_BLOCK).strength(5.0f, 3.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion());
 
     public final BlockBehaviour.Properties properties;
 

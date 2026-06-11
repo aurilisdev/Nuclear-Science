@@ -21,7 +21,7 @@ public class BlockElectromagneticSwitch extends Block {
 	}
 
 	public BlockElectromagneticSwitch() {
-		super(Blocks.IRON_BLOCK.properties().strength(3.5f, 20).requiresCorrectToolForDrops().noOcclusion().isRedstoneConductor((p1, p2, p3) -> false));
+		super(Properties.ofFullCopy(Blocks.IRON_BLOCK).strength(3.5f, 20).requiresCorrectToolForDrops().noOcclusion().isRedstoneConductor((p1, p2, p3) -> false));
 	}
 
 	@Override

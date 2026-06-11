@@ -14,7 +14,8 @@ import voltaic.prefab.block.GenericEntityBlockWaterloggable;
 public class BlockMeltedReactor extends GenericEntityBlockWaterloggable {
 
 	public BlockMeltedReactor() {
-		super(Blocks.IRON_BLOCK.properties().strength(250.0f, 999.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion());
+		super(Properties.ofFullCopy(Blocks.IRON_BLOCK).strength(250.0f, 999.0f).sound(SoundType.METAL)
+				.requiresCorrectToolForDrops().noOcclusion());
 	}
 
 	@Override

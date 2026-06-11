@@ -23,47 +23,49 @@ import voltaic.prefab.tile.IWrenchable;
 
 public class BlockElectromagneticDiode extends Block implements IWrenchable {
 
-    private static final VoxelShape SHAPE = Shapes.box(0, 0, 0, 1.0, 2.0 / 16.0, 1.0);
+	private static final VoxelShape SHAPE = Shapes.box(0, 0, 0, 1.0, 2.0 / 16.0, 1.0);
 
-    public BlockElectromagneticDiode() {
-        super(Blocks.IRON_BLOCK.properties().strength(3.5f, 20).requiresCorrectToolForDrops().noOcclusion().isRedstoneConductor((p1, p2, p3) -> false));
-        registerDefaultState(stateDefinition.any().setValue(VoltaicBlockStates.FACING, Direction.NORTH));
-    }
+	public BlockElectromagneticDiode() {
+		super(Properties.ofFullCopy(Blocks.IRON_BLOCK).strength(3.5f, 20).requiresCorrectToolForDrops().noOcclusion()
+				.isRedstoneConductor((p1, p2, p3) -> false));
+		registerDefaultState(stateDefinition.any().setValue(VoltaicBlockStates.FACING, Direction.NORTH));
+	}
 
-    @Override
-    public BlockState rotate(BlockState state, Rotation rot) {
-        return state.setValue(VoltaicBlockStates.FACING, rot.rotate(state.getValue(VoltaicBlockStates.FACING)));
-    }
+	@Override
+	public BlockState rotate(BlockState state, Rotation rot) {
+		return state.setValue(VoltaicBlockStates.FACING, rot.rotate(state.getValue(VoltaicBlockStates.FACING)));
+	}
 
-    @Override
-    public BlockState mirror(BlockState state, Mirror mirrorIn) {
-        return state.rotate(mirrorIn.getRotation(state.getValue(VoltaicBlockStates.FACING)));
-    }
+	@Override
+	public BlockState mirror(BlockState state, Mirror mirrorIn) {
+		return state.rotate(mirrorIn.getRotation(state.getValue(VoltaicBlockStates.FACING)));
+	}
 
-    @Nullable
-    @Override
-    public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return super.getStateForPlacement(context).setValue(VoltaicBlockStates.FACING, context.getHorizontalDirection().getOpposite());
-    }
+	@Nullable
+	@Override
+	public BlockState getStateForPlacement(BlockPlaceContext context) {
+		return super.getStateForPlacement(context).setValue(VoltaicBlockStates.FACING,
+				context.getHorizontalDirection().getOpposite());
+	}
 
-    @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(VoltaicBlockStates.FACING);
-    }
+	@Override
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+		builder.add(VoltaicBlockStates.FACING);
+	}
 
-    @Override
-    public void onRotate(ItemStack stack, BlockPos pos, Player player) {
-        player.level().setBlockAndUpdate(pos, rotate(player.level().getBlockState(pos), Rotation.CLOCKWISE_90));
-    }
+	@Override
+	public void onRotate(ItemStack stack, BlockPos pos, Player player) {
+		player.level().setBlockAndUpdate(pos, rotate(player.level().getBlockState(pos), Rotation.CLOCKWISE_90));
+	}
 
-    @Override
-    public void onPickup(ItemStack stack, BlockPos pos, Player player) {
-        Level world = player.level();
-        world.destroyBlock(pos, true, player);
-    }
+	@Override
+	public void onPickup(ItemStack stack, BlockPos pos, Player player) {
+		Level world = player.level();
+		world.destroyBlock(pos, true, player);
+	}
 
-    @Override
-    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return SHAPE;
-    }
+	@Override
+	protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+		return SHAPE;
+	}
 }

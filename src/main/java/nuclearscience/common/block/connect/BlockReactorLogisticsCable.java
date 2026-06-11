@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import nuclearscience.api.network.reactorlogistics.ILogisticsMember;
 import nuclearscience.common.block.subtype.SubtypeReactorLogisticsCable;
 import nuclearscience.common.tile.reactor.logisticsnetwork.TileReactorLogisticsCable;
@@ -27,7 +28,7 @@ public class BlockReactorLogisticsCable extends AbstractRefreshingConnectBlock<T
     public final SubtypeReactorLogisticsCable cable;
 
     public BlockReactorLogisticsCable(SubtypeReactorLogisticsCable cable) {
-        super(Blocks.IRON_BLOCK.properties().sound(SoundType.METAL).strength(0.15f).dynamicShape(), 5);
+        super(Properties.ofFullCopy(Blocks.IRON_BLOCK).sound(SoundType.METAL).strength(0.15f).dynamicShape(), 5);
         this.cable = cable;
         PIPESET.add(this);
     }

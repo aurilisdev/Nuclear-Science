@@ -26,7 +26,7 @@ public class BlockMoltenSaltPipe extends AbstractRefreshingConnectBlock<TileMolt
     public final SubtypeMoltenSaltPipe pipe;
 
     public BlockMoltenSaltPipe(SubtypeMoltenSaltPipe pipe) {
-        super(Blocks.IRON_BLOCK.properties().sound(SoundType.METAL).strength(0.15f).dynamicShape(), 3);
+        super(Properties.ofFullCopy(Blocks.IRON_BLOCK).sound(SoundType.METAL).strength(0.15f).dynamicShape(), 3);
         this.pipe = pipe;
         PIPESET.add(this);
     }
