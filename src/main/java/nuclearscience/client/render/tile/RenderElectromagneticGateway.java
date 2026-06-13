@@ -19,11 +19,10 @@ public class RenderElectromagneticGateway extends AbstractTileRenderer<TileElect
 
     public static final boolean[] FACES = {false, false, true, true, true, true};
     public static final Color COLOR = new Color(255, 0, 0, 255);
-    private static final AABB BOX1 = new AABB(0.0 / 16.0, 1.0 / 16.0, 1.0 / 16.0, 1.0 / 16.0, 15.0 / 16.0, 15.0 / 16.0);
-    private static final AABB BOX2 = new AABB(15.0 / 16.0, 1.0 / 16.0, 1.0 / 16.0, 16.0 / 16.0, 15.0 / 16.0, 15.0 / 16.0);
-    private static final AABB BOX3 = new AABB(1.0 / 16.0, 0.0 / 16.0, 0.0 / 16.0, 15.0 / 16.0, 15.0 / 16.0, 1.0 / 16.0);
-    private static final AABB BOX4 = new AABB(1.0 / 16.0, 15.0 / 16.0, 1.0 / 16.0, 15.0 / 16.0, 15.0 / 16.0, 16.0 / 16.0);
-
+	private static final AABB BOX1 = new AABB(0.0 / 16.0, 1.0 / 16.0, 1.0 / 16.0, 1.0 / 16.0, 15.0 / 16.0, 15.0 / 16.0);
+	private static final AABB BOX2 = new AABB(15.0 / 16.0, 1.0 / 16.0, 1.0 / 16.0, 16.0 / 16.0, 15.0 / 16.0,15.0 / 16.0);
+	private static final AABB BOX3 = new AABB(1.0 / 16.0, 0.0 / 16.0, 0.0 / 16.0, 15.0 / 16.0, 15.0 / 16.0, 1.0 / 16.0);
+	private static final AABB BOX4 = new AABB(1.0 / 16.0, 1.0 / 16.0, 15.0 / 16.0, 15.0 / 16.0, 15.0 / 16.0,16.0 / 16.0);
     public RenderElectromagneticGateway(BlockEntityRendererProvider.Context context) {
         super(context);
     }
