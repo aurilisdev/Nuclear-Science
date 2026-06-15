@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.neoforged.api.distmarker.Dist;
@@ -92,7 +93,7 @@ public class NuclearScienceBlocks {
         if(subtype == SubtypeElectromagent.electromagneticglass) {
             return new BlockCustomGlass(3.5F, 20);
         }
-	return new Block(Blocks.IRON_BLOCK.properties().strength(3.5F, 20).requiresCorrectToolForDrops());
+	return new Block(Properties.ofFullCopy(Blocks.IRON_BLOCK).strength(3.5F, 20).requiresCorrectToolForDrops());
 
     }));
 
