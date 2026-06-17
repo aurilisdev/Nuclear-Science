@@ -13,18 +13,19 @@ import nuclearscience.registers.NuclearScienceFluids;
 
 public class NuclearScienceFluidTagsProvider extends FluidTagsProvider {
 
-	public NuclearScienceFluidTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
-		super(output, lookupProvider, NuclearScience.ID, existingFileHelper);
-	}
+    public NuclearScienceFluidTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider,
+	    ExistingFileHelper existingFileHelper) {
+	super(output, lookupProvider, NuclearScience.ID, existingFileHelper);
+    }
 
-	@Override
-	protected void addTags(Provider provider) {
+    @Override
+    protected void addTags(Provider provider) {
 
-		tag(NuclearScienceTags.Fluids.IODINE_SOLUTION).add(NuclearScienceFluids.FLUID_IODINESOLUTION.get());
-        tag(NuclearScienceTags.Fluids.METHANOL).add(NuclearScienceFluids.FLUID_METHANOL.get());
-        tag(NuclearScienceTags.Fluids.DECONTAMINATION_FOAM).add(NuclearScienceFluids.FLUID_DECONTAMINATIONFOAM.get());
-        tag(NuclearScienceTags.Fluids.URANIUM_HEXAFLUORIDE).add(NuclearScienceFluids.FLUID_URANIUMHEXAFLUORIDE.get());
+	tag(NuclearScienceTags.Fluids.IODINE_SOLUTION).add(NuclearScienceFluids.FLUID_IODINESOLUTION.get());
+	tag(NuclearScienceTags.Fluids.METHANOL).add(NuclearScienceFluids.FLUID_METHANOL.get());
+	tag(NuclearScienceTags.Fluids.DECONTAMINATION_FOAM).add(NuclearScienceFluids.FLUID_DECONTAMINATIONFOAM.get());
+	tag(NuclearScienceTags.Fluids.URANIUM_HEXAFLUORIDE).add(NuclearScienceFluids.FLUID_URANIUMHEXAFLUORIDE.get());
 
-	}
+    }
 
 }

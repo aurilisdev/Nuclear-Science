@@ -36,43 +36,47 @@ import voltaic.datagen.utils.client.BaseLangKeyProvider.Locale;
 @Mod.EventBusSubscriber(modid = NuclearScience.ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class DataGenerators {
 
-	@SubscribeEvent
-	public static void gatherData(GatherDataEvent event) {
+    @SubscribeEvent
+    public static void gatherData(GatherDataEvent event) {
 
-		DataGenerator generator = event.getGenerator();
+	DataGenerator generator = event.getGenerator();
 
-		PackOutput output = generator.getPackOutput();
+	PackOutput output = generator.getPackOutput();
 
-		ExistingFileHelper helper = event.getExistingFileHelper();
+	ExistingFileHelper helper = event.getExistingFileHelper();
 
-		CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
+	CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
-		if (event.includeServer()) {
+	if (event.includeServer()) {
 
-			generator.addProvider(true, new LootTableProvider(output, Collections.emptySet(), List.of(new LootTableProvider.SubProviderEntry(NuclearScienceLootTablesProvider::new, LootContextParamSets.BLOCK))));
-			generator.addProvider(true, new NuclearScienceRecipeProvider(output));
-			generator.addProvider(true, new NuclearScienceRadioactiveItemsProvider(output));
-			generator.addProvider(true, new NuclearScienceRadioactiveGasesProvider(output));
-			generator.addProvider(true, new NuclearScienceRadiationShieldingProvider(output));
-			generator.addProvider(true, new NuclearScienceRadioactiveFluidsProvider(output));
-			generator.addProvider(true, new AtomicAssemblerBlacklistProvider(output));
+	    generator.addProvider(true,
+		    new LootTableProvider(output, Collections.emptySet(),
+			    List.of(new LootTableProvider.SubProviderEntry(NuclearScienceLootTablesProvider::new,
+				    LootContextParamSets.BLOCK))));
+	    generator.addProvider(true, new NuclearScienceRecipeProvider(output));
+	    generator.addProvider(true, new NuclearScienceRadioactiveItemsProvider(output));
+	    generator.addProvider(true, new NuclearScienceRadioactiveGasesProvider(output));
+	    generator.addProvider(true, new NuclearScienceRadiationShieldingProvider(output));
+	    generator.addProvider(true, new NuclearScienceRadioactiveFluidsProvider(output));
+	    generator.addProvider(true, new AtomicAssemblerBlacklistProvider(output));
 
-			DatapackBuiltinEntriesProvider datapacks = new DatapackBuiltinEntriesProvider(output, lookupProvider, new RegistrySetBuilder()
-					//
-					.add(Registries.DAMAGE_TYPE, NuclearScienceDamageTypes::registerTypes),
-					//
-					Set.of(NuclearScience.ID));
+	    DatapackBuiltinEntriesProvider datapacks = new DatapackBuiltinEntriesProvider(output, lookupProvider,
+		    new RegistrySetBuilder()
+			    //
+			    .add(Registries.DAMAGE_TYPE, NuclearScienceDamageTypes::registerTypes),
+		    //
+		    Set.of(NuclearScience.ID));
 
-			generator.addProvider(true, datapacks);
-			NuclearScienceTagsProvider.addTagProviders(generator, output, datapacks.getRegistryProvider(), helper);
+	    generator.addProvider(true, datapacks);
+	    NuclearScienceTagsProvider.addTagProviders(generator, output, datapacks.getRegistryProvider(), helper);
 
-		}
-		if (event.includeClient()) {
-			generator.addProvider(true, new NuclearScienceBlockStateProvider(output, helper));
-			generator.addProvider(true, new NuclearScienceItemModelsProvider(output, helper));
-			generator.addProvider(true, new NuclearScienceLangKeyProvider(output, Locale.EN_US));
-			generator.addProvider(true, new NuclearScienceSoundProvider(output, helper));
-		}
 	}
+	if (event.includeClient()) {
+	    generator.addProvider(true, new NuclearScienceBlockStateProvider(output, helper));
+	    generator.addProvider(true, new NuclearScienceItemModelsProvider(output, helper));
+	    generator.addProvider(true, new NuclearScienceLangKeyProvider(output, Locale.EN_US));
+	    generator.addProvider(true, new NuclearScienceSoundProvider(output, helper));
+	}
+    }
 
 }

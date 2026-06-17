@@ -23,33 +23,35 @@ public class BlockMoltenSaltPipe extends AbstractRefreshingConnectBlock<TileMolt
     public final SubtypeMoltenSaltPipe pipe;
 
     public BlockMoltenSaltPipe(SubtypeMoltenSaltPipe pipe) {
-        super(Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.METAL).strength(0.15f).dynamicShape(), 3);
-        this.pipe = pipe;
-        PIPESET.add(this);
+	super(Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.METAL).strength(0.15f).dynamicShape(), 3);
+	this.pipe = pipe;
+	PIPESET.add(this);
     }
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new TileMoltenSaltPipe(pos, state);
+	return new TileMoltenSaltPipe(pos, state);
     }
 
     @Override
     public TileMoltenSaltPipe getCableIfValid(BlockEntity tile) {
-        if (tile instanceof TileMoltenSaltPipe pipe) {
-            return pipe;
-        }
-        return null;
+	if (tile instanceof TileMoltenSaltPipe pipe) {
+	    return pipe;
+	}
+	return null;
     }
 
     @Override
-    public EnumConnectType getConnection(BlockState otherState, BlockEntity otherTile, TileMoltenSaltPipe thisCable, Direction dir) {
-        EnumConnectType connection = EnumConnectType.NONE;
-        if (otherTile instanceof TileMoltenSaltPipe) {
-            connection = EnumConnectType.WIRE;
-        } else if ((otherTile instanceof TileMSReactorCore && dir.getOpposite() == Direction.UP) || (otherTile instanceof TileHeatExchanger && dir.getOpposite() == Direction.DOWN)) {
-            connection = EnumConnectType.INVENTORY;
-        }
-        return connection;
+    public EnumConnectType getConnection(BlockState otherState, BlockEntity otherTile, TileMoltenSaltPipe thisCable,
+	    Direction dir) {
+	EnumConnectType connection = EnumConnectType.NONE;
+	if (otherTile instanceof TileMoltenSaltPipe) {
+	    connection = EnumConnectType.WIRE;
+	} else if (otherTile instanceof TileMSReactorCore && dir.getOpposite() == Direction.UP
+		|| otherTile instanceof TileHeatExchanger && dir.getOpposite() == Direction.DOWN) {
+	    connection = EnumConnectType.INVENTORY;
+	}
+	return connection;
     }
 
 }

@@ -24,34 +24,36 @@ import voltaic.prefab.configuration.ConfigurationHandler;
 @EventBusSubscriber(modid = NuclearScience.ID, bus = EventBusSubscriber.Bus.MOD)
 public class NuclearScience {
 
-	public static final String ID = "nuclearscience";
-	public static final String NAME = "Nuclear Science";
+    public static final String ID = "nuclearscience";
+    public static final String NAME = "Nuclear Science";
 
-	public NuclearScience() {
-		ConfigurationHandler.registerConfig(NuclearConstants.class);
-		NuclearScienceVoxelShapes.init();
-		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-		UnifiedNuclearScienceRegister.register(bus);
-	}
+    public NuclearScience() {
+	ConfigurationHandler.registerConfig(NuclearConstants.class);
+	NuclearScienceVoxelShapes.init();
+	IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+	UnifiedNuclearScienceRegister.register(bus);
+    }
 
-	@SubscribeEvent
-	@OnlyIn(Dist.CLIENT)
-	public static void onClientSetup(FMLClientSetupEvent event) {
-		event.enqueueWork(() -> {
-			NuclearScienceClientRegister.setup();
-		});
-	}
+    @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
+    public static void onClientSetup(FMLClientSetupEvent event) {
+	event.enqueueWork(() -> {
+	    NuclearScienceClientRegister.setup();
+	});
+    }
 
-	@SubscribeEvent
-	public static void onCommonSetup(FMLCommonSetupEvent event) {
-		NetworkHandler.init();
-		NuclearScienceTags.init();
-		AtomicAssemblerBlacklistRegister.INSTANCE = new AtomicAssemblerBlacklistRegister().subscribeAsSyncable(NetworkHandler.CHANNEL);
-		AtomicAssemblerWhitelistRegister.INSTANCE = new AtomicAssemblerWhitelistRegister().subscribeAsSyncable(NetworkHandler.CHANNEL);
-	}
-	
-	public static final ResourceLocation rl(String path) {
-		return new ResourceLocation(NuclearScience.ID, path);
-	}
+    @SubscribeEvent
+    public static void onCommonSetup(FMLCommonSetupEvent event) {
+	NetworkHandler.init();
+	NuclearScienceTags.init();
+	AtomicAssemblerBlacklistRegister.INSTANCE = new AtomicAssemblerBlacklistRegister()
+		.subscribeAsSyncable(NetworkHandler.CHANNEL);
+	AtomicAssemblerWhitelistRegister.INSTANCE = new AtomicAssemblerWhitelistRegister()
+		.subscribeAsSyncable(NetworkHandler.CHANNEL);
+    }
+
+    public static final ResourceLocation rl(String path) {
+	return new ResourceLocation(NuclearScience.ID, path);
+    }
 
 }

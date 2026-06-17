@@ -21,26 +21,27 @@ public class NuclearScienceClientEvents {
 
     public static void init() {
 
-        LEVEL_STAGE_RENDER_HANDLERS.add(HandlerCloudChamber.INSTANCE);
+	LEVEL_STAGE_RENDER_HANDLERS.add(HandlerCloudChamber.INSTANCE);
 
     }
 
     @SubscribeEvent
     public static void handleRenderEvents(RenderLevelStageEvent event) {
-        LEVEL_STAGE_RENDER_HANDLERS.forEach(handler -> {
-            if (handler.shouldRender(event.getStage())) {
-                handler.render(event.getCamera(), event.getFrustum(), event.getLevelRenderer(), event.getPoseStack(), event.getProjectionMatrix(), Minecraft.getInstance(), event.getRenderTick(), event.getPartialTick());
-            }
-        });
+	LEVEL_STAGE_RENDER_HANDLERS.forEach(handler -> {
+	    if (handler.shouldRender(event.getStage())) {
+		handler.render(event.getCamera(), event.getFrustum(), event.getLevelRenderer(), event.getPoseStack(),
+			event.getProjectionMatrix(), Minecraft.getInstance(), event.getRenderTick(),
+			event.getPartialTick());
+	    }
+	});
     }
 
     @SubscribeEvent
     public static void wipeRenderHashes(ClientPlayerNetworkEvent.LoggingOut event) {
-        Player player = event.getPlayer();
-        if (player != null) {
-            LEVEL_STAGE_RENDER_HANDLERS.forEach(AbstractLevelStageHandler::clear);
-        }
+	Player player = event.getPlayer();
+	if (player != null) {
+	    LEVEL_STAGE_RENDER_HANDLERS.forEach(AbstractLevelStageHandler::clear);
+	}
     }
-
 
 }

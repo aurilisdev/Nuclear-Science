@@ -3,6 +3,7 @@ package nuclearscience.common.item;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
+
 import electrodynamics.common.item.gear.tools.ItemCanister;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
@@ -19,42 +20,45 @@ import voltaic.prefab.utilities.ItemUtils;
 
 public class ItemCanisterLead extends ItemCanister {
 
-	public static final int RAD_RANGE = 10;
+    public static final int RAD_RANGE = 10;
 
-	public static List<ResourceLocation> TAG_NAMES = new ArrayList<>();
+    public static List<ResourceLocation> TAG_NAMES = new ArrayList<>();
 
-	public ItemCanisterLead(Properties oroperties, Supplier<CreativeModeTab> creativeTab) {
-		super(oroperties, creativeTab);
-		// The regular canister now emits radiation if it has radioactive fluids in it
-		INVENTORY_TICK_CONSUMERS.add((stack, world, entity, slot, isSelected) -> {
+    public ItemCanisterLead(Properties oroperties, Supplier<CreativeModeTab> creativeTab) {
+	super(oroperties, creativeTab);
+	// The regular canister now emits radiation if it has radioactive fluids in it
+	INVENTORY_TICK_CONSUMERS.add((stack, world, entity, slot, isSelected) -> {
 
-			if (ItemUtils.testItems(stack.getItem(), NuclearScienceItems.ITEM_CANISTERLEAD.get())) {
-				return;
-			}
+	    if (ItemUtils.testItems(stack.getItem(), NuclearScienceItems.ITEM_CANISTERLEAD.get())) {
+		return;
+	    }
 
-			IFluidHandlerItem cap = stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).orElse(CapabilityUtils.EMPTY_FLUID_ITEM);
+	    IFluidHandlerItem cap = stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM)
+		    .orElse(CapabilityUtils.EMPTY_FLUID_ITEM);
 
-			if (cap == CapabilityUtils.EMPTY_FLUID_ITEM) {
-				return;
-			}
+	    if (cap == CapabilityUtils.EMPTY_FLUID_ITEM) {
+		return;
+	    }
 
-			FluidStack fluidStack = cap.getFluidInTank(0);
+	    FluidStack fluidStack = cap.getFluidInTank(0);
 
-            if (fluidStack.isEmpty()) {
-                return;
-            }
+	    if (fluidStack.isEmpty()) {
+		return;
+	    }
 
-            RadioactiveObject radiation = RadioactiveFluidRegister.getValue(fluidStack.getFluid());
+	    RadioactiveObject radiation = RadioactiveFluidRegister.getValue(fluidStack.getFluid());
 
-            if (radiation.amount() <= 0) {
-                return;
-            }
+	    if (radiation.amount() <= 0) {
+		return;
+	    }
 
-            double radiationMultiplier = (double) fluidStack.getAmount() / (double) cap.getTankCapacity(0);
+	    double radiationMultiplier = (double) fluidStack.getAmount() / (double) cap.getTankCapacity(0);
 
-            RadiationSystem.addRadiationSource(world, new SimpleRadiationSource(radiation.amount() * radiationMultiplier, radiation.strength(), RAD_RANGE, true, 0, entity.getOnPos(), false, false));
+	    RadiationSystem.addRadiationSource(world,
+		    new SimpleRadiationSource(radiation.amount() * radiationMultiplier, radiation.strength(), RAD_RANGE,
+			    true, 0, entity.getOnPos(), false, false));
 
-		});
-	}
+	});
+    }
 
 }

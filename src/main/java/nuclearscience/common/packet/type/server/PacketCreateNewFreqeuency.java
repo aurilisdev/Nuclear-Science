@@ -11,21 +11,22 @@ import voltaic.api.codec.StreamCodec;
 
 public class PacketCreateNewFreqeuency {
 
-    public static final StreamCodec<ByteBuf, PacketCreateNewFreqeuency> CODEC = new StreamCodec<ByteBuf, PacketCreateNewFreqeuency>() {
-        @Override
-        public PacketCreateNewFreqeuency decode(ByteBuf buf) {
+    public static final StreamCodec<ByteBuf, PacketCreateNewFreqeuency> CODEC = new StreamCodec<>() {
+	@Override
+	public PacketCreateNewFreqeuency decode(ByteBuf buf) {
 
-            return new PacketCreateNewFreqeuency(StreamCodec.UUID.decode(buf), StreamCodec.STRING.decode(buf), FrequencyType.values()[StreamCodec.INT.decode(buf)]);
-        }
+	    return new PacketCreateNewFreqeuency(StreamCodec.UUID.decode(buf), StreamCodec.STRING.decode(buf),
+		    FrequencyType.values()[StreamCodec.INT.decode(buf)]);
+	}
 
-        @Override
-        public void encode(ByteBuf buf, PacketCreateNewFreqeuency packet) {
+	@Override
+	public void encode(ByteBuf buf, PacketCreateNewFreqeuency packet) {
 
-        	StreamCodec.UUID.encode(buf, packet.creator);
-            StreamCodec.STRING.encode(buf, packet.name);
-            StreamCodec.INT.encode(buf, packet.type.ordinal());
+	    StreamCodec.UUID.encode(buf, packet.creator);
+	    StreamCodec.STRING.encode(buf, packet.name);
+	    StreamCodec.INT.encode(buf, packet.type.ordinal());
 
-        }
+	}
 
     };
 
@@ -34,26 +35,26 @@ public class PacketCreateNewFreqeuency {
     private final String name;
 
     public PacketCreateNewFreqeuency(UUID creator, String name, FrequencyType type) {
-        this.creator = creator;
-        this.type = type;
-        this.name = name;
+	this.creator = creator;
+	this.type = type;
+	this.name = name;
     }
 
     public static void handle(PacketCreateNewFreqeuency message, Supplier<Context> context) {
-    	Context ctx = context.get();
-		ctx.enqueueWork(() -> {
+	Context ctx = context.get();
+	ctx.enqueueWork(() -> {
 
-			ServerBarrierMethods.createNewPacket(message.creator, message.type, message.name);
+	    ServerBarrierMethods.createNewPacket(message.creator, message.type, message.name);
 
-		});
-		ctx.setPacketHandled(true);
+	});
+	ctx.setPacketHandled(true);
     }
 
     public static void encode(PacketCreateNewFreqeuency pkt, FriendlyByteBuf buf) {
-		CODEC.encode(buf, pkt);
-	}
+	CODEC.encode(buf, pkt);
+    }
 
-	public static PacketCreateNewFreqeuency decode(FriendlyByteBuf buf) {
-		return CODEC.decode(buf);
-	}
+    public static PacketCreateNewFreqeuency decode(FriendlyByteBuf buf) {
+	return CODEC.decode(buf);
+    }
 }

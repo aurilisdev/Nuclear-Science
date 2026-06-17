@@ -17,25 +17,37 @@ import voltaic.prefab.utilities.math.Color;
 
 public class ContainerAtomicAssembler extends GenericContainerBlockEntity<TileAtomicAssembler> {
 
-	public ContainerAtomicAssembler(int id, Inventory playerinv) {
-		this(id, playerinv, new SimpleContainer(8), new SimpleContainerData(5));
-	}
+    public ContainerAtomicAssembler(int id, Inventory playerinv) {
+	this(id, playerinv, new SimpleContainer(8), new SimpleContainerData(5));
+    }
 
-	public ContainerAtomicAssembler(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
-		super(NuclearScienceMenuTypes.CONTAINER_ATOMICASSEMBLER.get(), id, playerinv, inventory, inventorydata);
-	}
+    public ContainerAtomicAssembler(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
+	super(NuclearScienceMenuTypes.CONTAINER_ATOMICASSEMBLER.get(), id, playerinv, inventory, inventorydata);
+    }
 
-	@Override
-	public void addInventorySlots(Container inv, Inventory playerinv) {
-		setPlayerInvOffset(64);
-		addSlot(new SlotRestricted(ScreenComponentSlot.SlotType.NORMAL, NuclearIconTypes.FUEL_CELL_DARK, inv, nextIndex(), 60 + 18 * 3 / 2, 40).setRestriction(NuclearScienceItems.ITEM_CELLDARKMATTER.get()).setIOColor(new Color(0, 255, 30, 255)));
-		addSlot(new SlotRestricted(ScreenComponentSlot.SlotType.NORMAL, NuclearIconTypes.FUEL_CELL_DARK, inv, nextIndex(), 33, 56).setRestriction(NuclearScienceItems.ITEM_CELLDARKMATTER.get()).setIOColor(new Color(0, 255, 30, 255)));
-		addSlot(new SlotRestricted(ScreenComponentSlot.SlotType.NORMAL, NuclearIconTypes.FUEL_CELL_DARK, inv, nextIndex(), 114 + 27, 56).setRestriction(NuclearScienceItems.ITEM_CELLDARKMATTER.get()).setIOColor(new Color(0, 255, 30, 255)));
-		addSlot(new SlotRestricted(ScreenComponentSlot.SlotType.NORMAL, NuclearIconTypes.FUEL_CELL_DARK, inv, nextIndex(), 33, 88).setRestriction(NuclearScienceItems.ITEM_CELLDARKMATTER.get()).setIOColor(new Color(0, 255, 30, 255)));
-		addSlot(new SlotRestricted(ScreenComponentSlot.SlotType.NORMAL, NuclearIconTypes.FUEL_CELL_DARK, inv, nextIndex(), 114 + 27, 88).setRestriction(NuclearScienceItems.ITEM_CELLDARKMATTER.get()).setIOColor(new Color(0, 255, 30, 255)));
-		addSlot(new SlotRestricted(ScreenComponentSlot.SlotType.NORMAL, NuclearIconTypes.FUEL_CELL_DARK, inv, nextIndex(), 60 + 18 * 3 / 2, 103).setRestriction(NuclearScienceItems.ITEM_CELLDARKMATTER.get()).setIOColor(new Color(0, 255, 30, 255)));
+    @Override
+    public void addInventorySlots(Container inv, Inventory playerinv) {
+	setPlayerInvOffset(64);
+	addSlot(new SlotRestricted(ScreenComponentSlot.SlotType.NORMAL, NuclearIconTypes.FUEL_CELL_DARK, inv,
+		nextIndex(), 60 + 18 * 3 / 2, 40).setRestriction(NuclearScienceItems.ITEM_CELLDARKMATTER.get())
+		.setIOColor(new Color(0, 255, 30, 255)));
+	addSlot(new SlotRestricted(ScreenComponentSlot.SlotType.NORMAL, NuclearIconTypes.FUEL_CELL_DARK, inv,
+		nextIndex(), 33, 56).setRestriction(NuclearScienceItems.ITEM_CELLDARKMATTER.get())
+		.setIOColor(new Color(0, 255, 30, 255)));
+	addSlot(new SlotRestricted(ScreenComponentSlot.SlotType.NORMAL, NuclearIconTypes.FUEL_CELL_DARK, inv,
+		nextIndex(), 114 + 27, 56).setRestriction(NuclearScienceItems.ITEM_CELLDARKMATTER.get())
+		.setIOColor(new Color(0, 255, 30, 255)));
+	addSlot(new SlotRestricted(ScreenComponentSlot.SlotType.NORMAL, NuclearIconTypes.FUEL_CELL_DARK, inv,
+		nextIndex(), 33, 88).setRestriction(NuclearScienceItems.ITEM_CELLDARKMATTER.get())
+		.setIOColor(new Color(0, 255, 30, 255)));
+	addSlot(new SlotRestricted(ScreenComponentSlot.SlotType.NORMAL, NuclearIconTypes.FUEL_CELL_DARK, inv,
+		nextIndex(), 114 + 27, 88).setRestriction(NuclearScienceItems.ITEM_CELLDARKMATTER.get())
+		.setIOColor(new Color(0, 255, 30, 255)));
+	addSlot(new SlotRestricted(ScreenComponentSlot.SlotType.NORMAL, NuclearIconTypes.FUEL_CELL_DARK, inv,
+		nextIndex(), 60 + 18 * 3 / 2, 103).setRestriction(NuclearScienceItems.ITEM_CELLDARKMATTER.get())
+		.setIOColor(new Color(0, 255, 30, 255)));
 
-		addSlot(new SlotGeneric(inv, nextIndex(), 60, 72).setIOColor(new Color(0, 240, 255, 255)));
-		addSlot(new SlotRestricted(inv, nextIndex(), 114, 72).setIOColor(new Color(255, 0, 0, 255)));
-	}
+	addSlot(new SlotGeneric(inv, nextIndex(), 60, 72).setIOColor(new Color(0, 240, 255, 255)));
+	addSlot(new SlotRestricted(inv, nextIndex(), 114, 72).setIOColor(new Color(255, 0, 0, 255)));
+    }
 }

@@ -1,10 +1,16 @@
 package nuclearscience.registers;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DoorBlock;
+import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -31,138 +37,149 @@ import nuclearscience.common.block.subtype.SubtypeNuclearMachine;
 import nuclearscience.common.block.subtype.SubtypeRadiationShielding;
 import nuclearscience.common.block.subtype.SubtypeReactorLogisticsCable;
 import nuclearscience.common.tile.TileQuantumTunnel;
+import nuclearscience.common.tile.reactor.fission.TileFissionReactorCore;
 import voltaic.api.registration.BulkRegistryObject;
+import voltaic.common.block.BlockCustomGlass;
 import voltaic.common.block.BlockMachine;
 import voltaic.prefab.utilities.math.Color;
-import net.minecraft.world.level.block.DoorBlock;
-import net.minecraft.world.level.block.state.properties.BlockSetType;
-import net.minecraft.world.level.block.TrapDoorBlock;
-import voltaic.common.block.BlockCustomGlass;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.core.BlockPos;
-import nuclearscience.common.tile.reactor.fission.TileFissionReactorCore;
 
 public class NuclearScienceBlocks {
 
-	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, NuclearScience.ID);
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS,
+	    NuclearScience.ID);
 
-	public static final BulkRegistryObject<Block, SubtypeRadiationShielding> BLOCKS_RADIATION_SHIELDING = new BulkRegistryObject<>(SubtypeRadiationShielding.values(), subtype -> BLOCKS.register(subtype.tag(), () -> {
+    public static final BulkRegistryObject<Block, SubtypeRadiationShielding> BLOCKS_RADIATION_SHIELDING = new BulkRegistryObject<>(
+	    SubtypeRadiationShielding.values(), subtype -> BLOCKS.register(subtype.tag(), () -> {
 		if (subtype == SubtypeRadiationShielding.door) {
-			return new DoorBlock(subtype.properties, BlockSetType.IRON);
+		    return new DoorBlock(subtype.properties, BlockSetType.IRON);
 		} else if (subtype == SubtypeRadiationShielding.trapdoor) {
-			return new TrapDoorBlock(subtype.properties, BlockSetType.IRON);
+		    return new TrapDoorBlock(subtype.properties, BlockSetType.IRON);
 		} else if (subtype == SubtypeRadiationShielding.glass) {
-			return new BlockCustomGlass(5.0f, 3.0f);
+		    return new BlockCustomGlass(5.0f, 3.0f);
 		} else {
-			return new Block(subtype.properties);
+		    return new Block(subtype.properties);
 		}
-	}));
+	    }));
 
-	public static final RegistryObject<BlockTurbine> BLOCK_TURBINE = BLOCKS.register("turbine", BlockTurbine::new);
+    public static final RegistryObject<BlockTurbine> BLOCK_TURBINE = BLOCKS.register("turbine", BlockTurbine::new);
 
-	public static final BulkRegistryObject<BlockMachine, SubtypeNuclearMachine> BLOCKS_NUCLEARMACHINE = new BulkRegistryObject<>(SubtypeNuclearMachine.values(), subtype -> BLOCKS.register(subtype.tag(), () -> {
+    public static final BulkRegistryObject<BlockMachine, SubtypeNuclearMachine> BLOCKS_NUCLEARMACHINE = new BulkRegistryObject<>(
+	    SubtypeNuclearMachine.values(), subtype -> BLOCKS.register(subtype.tag(), () -> {
 
 		if (subtype == SubtypeNuclearMachine.chunkloader) {
-			return new BlockMachine(subtype) {
-				@Override
-				public int getLightEmission(BlockState state, BlockGetter world, BlockPos pos) {
-					return 15;
-				}
-			};
+		    return new BlockMachine(subtype) {
+			@Override
+			public int getLightEmission(BlockState state, BlockGetter world, BlockPos pos) {
+			    return 15;
+			}
+		    };
 		} else if (subtype == SubtypeNuclearMachine.fissionreactorcore) {
-			return new BlockMachine(subtype) {
-				@Override
-				public int getLightEmission(BlockState state, BlockGetter world, BlockPos pos) {
-					if (world.getBlockEntity(pos) instanceof TileFissionReactorCore core) {
-						return (int) Math.max(0, Math.min(core.temperature.getValue() / TileFissionReactorCore.MELTDOWN_TEMPERATURE_ACTUAL * 15, 15));
-					}
-					return super.getLightEmission(state, world, pos);
-				}
-			};
+		    return new BlockMachine(subtype) {
+			@Override
+			public int getLightEmission(BlockState state, BlockGetter world, BlockPos pos) {
+			    if (world.getBlockEntity(pos) instanceof TileFissionReactorCore core) {
+				return (int) Math.max(0, Math.min(core.temperature.getValue()
+					/ TileFissionReactorCore.MELTDOWN_TEMPERATURE_ACTUAL * 15, 15));
+			    }
+			    return super.getLightEmission(state, world, pos);
+			}
+		    };
 		} else {
-			return new BlockMachine(subtype);
+		    return new BlockMachine(subtype);
 		}
 
-	})
+	    })
 
-	);
+    );
 
-	public static final BulkRegistryObject<Block, SubtypeElectromagent> BLOCKS_ELECTROMAGENT = new BulkRegistryObject<>(SubtypeElectromagent.values(), subtype -> BLOCKS.register(subtype.tag(), () -> {
+    public static final BulkRegistryObject<Block, SubtypeElectromagent> BLOCKS_ELECTROMAGENT = new BulkRegistryObject<>(
+	    SubtypeElectromagent.values(), subtype -> BLOCKS.register(subtype.tag(), () -> {
 
 		if (subtype == SubtypeElectromagent.electromagneticglass) {
-			return new BlockCustomGlass(3.5F, 20);
+		    return new BlockCustomGlass(3.5F, 20);
 		}
 		return new Block(Properties.copy(Blocks.IRON_BLOCK).strength(3.5F, 20).requiresCorrectToolForDrops());
 
-	}));
+	    }));
 
-	// public static final RegistryObject<BlockElectromagnet> BLOCK_ELECTROMAGNET = BLOCKS.register("electromagnet", () -> new
-	// BlockElectromagnet(Blocks.IRON_BLOCK.properties(), false));
-	// public static final RegistryObject<BlockElectromagnet> BLOCK_ELECTROMAGNETICGLASS = BLOCKS.register("electromagneticglass", ()
-	// -> new BlockElectromagnet(Blocks.GLASS.properties(), true));
-	public static final RegistryObject<BlockElectromagneticBooster> BLOCK_ELECTORMAGNETICBOOSTER = BLOCKS.register("electromagneticbooster", BlockElectromagneticBooster::new);
-	public static final RegistryObject<BlockElectromagneticSwitch> BLOCK_ELECTROMAGNETICSWITCH = BLOCKS.register("electromagneticswitch", BlockElectromagneticSwitch::new);
-	public static final RegistryObject<BlockElectromagneticGateway> BLOCK_ELECTROMAGNETICGATEWAY = BLOCKS.register("electromagneticgateway", BlockElectromagneticGateway::new);
-	public static final RegistryObject<BlockElectromagneticDiode> BLOCK_ELECTROMAGNETICDIODE = BLOCKS.register("electromagneticdiode", BlockElectromagneticDiode::new);
-	public static final RegistryObject<BlockPlasma> BLOCK_PLASMA = BLOCKS.register("plasma", BlockPlasma::new);
-	public static final BulkRegistryObject<BlockMoltenSaltPipe, SubtypeMoltenSaltPipe> BLOCKS_MOLTENSALTPIPE = new BulkRegistryObject<>(SubtypeMoltenSaltPipe.values(), subtype -> BLOCKS.register(subtype.tag(), () -> new BlockMoltenSaltPipe(subtype)));
-	public static final BulkRegistryObject<BlockReactorLogisticsCable, SubtypeReactorLogisticsCable> BLOCKS_REACTORLOGISTICSCABLE = new BulkRegistryObject<>(SubtypeReactorLogisticsCable.values(), subtype -> BLOCKS.register(subtype.tag(), () -> new BlockReactorLogisticsCable(subtype)));
-	public static final RegistryObject<BlockMeltedReactor> BLOCK_MELTEDREACTOR = BLOCKS.register("meltedreactor", BlockMeltedReactor::new);
-	public static final RegistryObject<BlockRadioactiveAir> BLOCK_RADIOACTIVEAIR = BLOCKS.register("radioactiveair", BlockRadioactiveAir::new);
-	public static final BulkRegistryObject<BlockIrradiated, SubtypeIrradiatedBlock> BLOCKS_IRRADIATED = new BulkRegistryObject<>(SubtypeIrradiatedBlock.values(), subtype -> BLOCKS.register(subtype.tag(), () -> new BlockIrradiated(subtype)));
+    // public static final RegistryObject<BlockElectromagnet> BLOCK_ELECTROMAGNET =
+    // BLOCKS.register("electromagnet", () -> new
+    // BlockElectromagnet(Blocks.IRON_BLOCK.properties(), false));
+    // public static final RegistryObject<BlockElectromagnet>
+    // BLOCK_ELECTROMAGNETICGLASS = BLOCKS.register("electromagneticglass", ()
+    // -> new BlockElectromagnet(Blocks.GLASS.properties(), true));
+    public static final RegistryObject<BlockElectromagneticBooster> BLOCK_ELECTORMAGNETICBOOSTER = BLOCKS
+	    .register("electromagneticbooster", BlockElectromagneticBooster::new);
+    public static final RegistryObject<BlockElectromagneticSwitch> BLOCK_ELECTROMAGNETICSWITCH = BLOCKS
+	    .register("electromagneticswitch", BlockElectromagneticSwitch::new);
+    public static final RegistryObject<BlockElectromagneticGateway> BLOCK_ELECTROMAGNETICGATEWAY = BLOCKS
+	    .register("electromagneticgateway", BlockElectromagneticGateway::new);
+    public static final RegistryObject<BlockElectromagneticDiode> BLOCK_ELECTROMAGNETICDIODE = BLOCKS
+	    .register("electromagneticdiode", BlockElectromagneticDiode::new);
+    public static final RegistryObject<BlockPlasma> BLOCK_PLASMA = BLOCKS.register("plasma", BlockPlasma::new);
+    public static final BulkRegistryObject<BlockMoltenSaltPipe, SubtypeMoltenSaltPipe> BLOCKS_MOLTENSALTPIPE = new BulkRegistryObject<>(
+	    SubtypeMoltenSaltPipe.values(),
+	    subtype -> BLOCKS.register(subtype.tag(), () -> new BlockMoltenSaltPipe(subtype)));
+    public static final BulkRegistryObject<BlockReactorLogisticsCable, SubtypeReactorLogisticsCable> BLOCKS_REACTORLOGISTICSCABLE = new BulkRegistryObject<>(
+	    SubtypeReactorLogisticsCable.values(),
+	    subtype -> BLOCKS.register(subtype.tag(), () -> new BlockReactorLogisticsCable(subtype)));
+    public static final RegistryObject<BlockMeltedReactor> BLOCK_MELTEDREACTOR = BLOCKS.register("meltedreactor",
+	    BlockMeltedReactor::new);
+    public static final RegistryObject<BlockRadioactiveAir> BLOCK_RADIOACTIVEAIR = BLOCKS.register("radioactiveair",
+	    BlockRadioactiveAir::new);
+    public static final BulkRegistryObject<BlockIrradiated, SubtypeIrradiatedBlock> BLOCKS_IRRADIATED = new BulkRegistryObject<>(
+	    SubtypeIrradiatedBlock.values(),
+	    subtype -> BLOCKS.register(subtype.tag(), () -> new BlockIrradiated(subtype)));
 
-	@EventBusSubscriber(value = Dist.CLIENT, modid = NuclearScience.ID, bus = EventBusSubscriber.Bus.MOD)
-	private static class ColorHandlerInternal {
+    @EventBusSubscriber(value = Dist.CLIENT, modid = NuclearScience.ID, bus = EventBusSubscriber.Bus.MOD)
+    private static class ColorHandlerInternal {
 
-		private static final Color NONE = new Color(114, 114, 114, 255);
-		private static final Color INPUT = new Color(167, 223, 248, 255);
-		private static final Color OUTPUT = new Color(255, 120, 46, 255);
+	private static final Color NONE = new Color(114, 114, 114, 255);
+	private static final Color INPUT = new Color(167, 223, 248, 255);
+	private static final Color OUTPUT = new Color(255, 120, 46, 255);
 
-		@SubscribeEvent
-		public static void registerColoredBlocks(RegisterColorHandlersEvent.Block event) {
-			Block block = BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.quantumcapacitor);
+	@SubscribeEvent
+	public static void registerColoredBlocks(RegisterColorHandlersEvent.Block event) {
+	    Block block = BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.quantumcapacitor);
 
-			event.register((state, level, pos, tintIndex) -> {
-				if (tintIndex >= 1) {
+	    event.register((state, level, pos, tintIndex) -> {
+		if (tintIndex >= 1) {
 
-					BlockEntity tile = level.getBlockEntity(pos);
+		    BlockEntity tile = level.getBlockEntity(pos);
 
-					if (tile instanceof TileQuantumTunnel tunnel) {
+		    if (tile instanceof TileQuantumTunnel tunnel) {
 
-						Direction dir = getDirFromIndex(tintIndex);
+			Direction dir = getDirFromIndex(tintIndex);
 
-						if (tunnel.readInputDirections().contains(dir)) {
-							return INPUT.color();
-						} else if (tunnel.readOutputDirections().contains(dir)) {
-							return OUTPUT.color();
-						} else {
-							return NONE.color();
-						}
+			if (tunnel.readInputDirections().contains(dir)) {
+			    return INPUT.color();
+			} else if (tunnel.readOutputDirections().contains(dir)) {
+			    return OUTPUT.color();
+			} else {
+			}
 
-					}
-					return NONE.color();
-				}
-				return Color.WHITE.color();
-			}, block);
+		    }
+		    return NONE.color();
 		}
+		return Color.WHITE.color();
+	    }, block);
 	}
+    }
 
-	private static Direction getDirFromIndex(int index) {
-		if (index == 1) {
-			return Direction.SOUTH.getCounterClockWise();
-		} else if (index == 2) {
-			return Direction.NORTH.getCounterClockWise();
-		} else if (index == 3) {
-			return Direction.EAST.getCounterClockWise();
-		} else if (index == 4) {
-			return Direction.WEST.getCounterClockWise();
-		} else if (index == 5) {
-			return Direction.UP;
-		} else if (index == 6) {
-			return Direction.DOWN;
-		}
-		return Direction.UP;
+    private static Direction getDirFromIndex(int index) {
+	if (index == 1) {
+	    return Direction.SOUTH.getCounterClockWise();
+	} else if (index == 2) {
+	    return Direction.NORTH.getCounterClockWise();
+	} else if (index == 3) {
+	    return Direction.EAST.getCounterClockWise();
+	} else if (index == 4) {
+	    return Direction.WEST.getCounterClockWise();
+	} else if (index == 5) {
+	} else if (index == 6) {
+	    return Direction.DOWN;
 	}
+	return Direction.UP;
+    }
 
 }

@@ -19,59 +19,64 @@ import voltaic.prefab.utilities.math.MathUtils;
 public class RenderMonitorModule extends AbstractTileRenderer<TileMonitorModule> {
 
     public RenderMonitorModule(BlockEntityRendererProvider.Context context) {
-        super(context);
+	super(context);
     }
 
     @Override
-    public void render(@NotNull TileMonitorModule tile, float partialTicks, PoseStack stack, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
+    public void render(@NotNull TileMonitorModule tile, float partialTicks, PoseStack stack, MultiBufferSource bufferIn,
+	    int combinedLightIn, int combinedOverlayIn) {
 
-        if(!tile.linked.getValue()) {
-            return;
-        }
+	if (!tile.linked.getValue()) {
+	    return;
+	}
 
-        long time = System.currentTimeMillis() % 1500 - 750;
+	long time = System.currentTimeMillis() % 1500 - 750;
 
-        if(time < 0) {
-            return;
-        }
+	if (time < 0) {
+	    return;
+	}
 
-        Font font = Minecraft.getInstance().font;
+	Font font = Minecraft.getInstance().font;
 
-        Direction facing = tile.getFacing();
+	Direction facing = tile.getFacing();
 
-        stack.pushPose();
+	stack.pushPose();
 
-        stack.translate(0.5, 0.5, 0.5);
+	stack.translate(0.5, 0.5, 0.5);
 
-        rotateMatrix(stack, facing);
+	rotateMatrix(stack, facing);
 
-        stack.translate(0.1, 0.3, -0.188125);
+	stack.translate(0.1, 0.3, -0.188125);
 
-        Component transfer = Component.literal("_");
+	Component transfer = Component.literal("_");
 
-        int width = font.width(transfer);
+	int width = font.width(transfer);
 
-        float scale = 0.0215F / (width / 8.0F);
+	float scale = 0.0215F / (width / 8.0F);
 
-        stack.scale(-scale, -scale, -scale);
+	stack.scale(-scale, -scale, -scale);
 
-        Matrix4f matrix4f = stack.last().pose();
+	Matrix4f matrix4f = stack.last().pose();
 
-        float textX = -width / 2.0f;
+	float textX = -width / 2.0f;
 
-        font.drawInBatch(transfer, textX, 0, Color.WHITE.color(), false, matrix4f, bufferIn, Font.DisplayMode.NORMAL, 0, combinedLightIn);
+	font.drawInBatch(transfer, textX, 0, Color.WHITE.color(), false, matrix4f, bufferIn, Font.DisplayMode.NORMAL, 0,
+		combinedLightIn);
 
-        stack.popPose();
+	stack.popPose();
 
     }
 
     private static void rotateMatrix(PoseStack stack, Direction dir) {
-        switch (dir) {
-            case EAST -> stack.mulPose(MathUtils.rotQuaternionDeg(0, -90, 0));// stack.mulPose(new Quaternion(0, -90, 0, true));
-            case SOUTH -> stack.mulPose(MathUtils.rotQuaternionDeg(0, 180, 0));// stack.mulPose(new Quaternion(0, 180, 0, true));
-            case WEST -> stack.mulPose(MathUtils.rotQuaternionDeg(0, 90, 0));// stack.mulPose(new Quaternion(0, 90, 0, true));
-            default -> {
-            }
-        }
+	switch (dir) {
+	case EAST -> stack.mulPose(MathUtils.rotQuaternionDeg(0, -90, 0));// stack.mulPose(new Quaternion(0, -90, 0,
+									  // true));
+	case SOUTH -> stack.mulPose(MathUtils.rotQuaternionDeg(0, 180, 0));// stack.mulPose(new Quaternion(0, 180, 0,
+									   // true));
+	case WEST -> stack.mulPose(MathUtils.rotQuaternionDeg(0, 90, 0));// stack.mulPose(new Quaternion(0, 90, 0,
+									 // true));
+	default -> {
+	}
+	}
     }
 }

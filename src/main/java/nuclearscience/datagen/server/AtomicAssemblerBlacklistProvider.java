@@ -20,44 +20,45 @@ import nuclearscience.common.reloadlistener.AtomicAssemblerBlacklistRegister;
 
 public class AtomicAssemblerBlacklistProvider implements DataProvider {
 
-	public static final String LOC = "data/" + NuclearScience.ID + "/" + AtomicAssemblerBlacklistRegister.FOLDER + "/" + AtomicAssemblerBlacklistRegister.FILE_NAME;
+    public static final String LOC = "data/" + NuclearScience.ID + "/" + AtomicAssemblerBlacklistRegister.FOLDER + "/"
+	    + AtomicAssemblerBlacklistRegister.FILE_NAME;
 
-	private final PackOutput output;
+    private final PackOutput output;
 
-	public AtomicAssemblerBlacklistProvider(PackOutput output) {
-		this.output = output;
-	}
+    public AtomicAssemblerBlacklistProvider(PackOutput output) {
+	this.output = output;
+    }
 
-	@Override
-	public CompletableFuture<?> run(CachedOutput cache) {
-		JsonObject json = new JsonObject();
-		getFuels(json);
+    @Override
+    public CompletableFuture<?> run(CachedOutput cache) {
+	JsonObject json = new JsonObject();
+	getFuels(json);
 
-		Path parent = output.getOutputFolder().resolve(LOC + ".json");
+	Path parent = output.getOutputFolder().resolve(LOC + ".json");
 
-		return CompletableFuture.allOf(DataProvider.saveStable(cache, json, parent));
-	}
+	return CompletableFuture.allOf(DataProvider.saveStable(cache, json, parent));
+    }
 
-	private static void getFuels(JsonObject object) {
-		JsonArray json = new JsonArray();
+    private static void getFuels(JsonObject object) {
+	JsonArray json = new JsonArray();
 
-		addItem(Items.AIR, json);
-		addTag(ItemTags.create(new ResourceLocation("forge", "air")), json); // dummy tag for demonstration purposes
+	addItem(Items.AIR, json);
+	addTag(ItemTags.create(new ResourceLocation("forge", "air")), json); // dummy tag for demonstration purposes
 
-		object.add(AtomicAssemblerBlacklistRegister.KEY, json);
-	}
+	object.add(AtomicAssemblerBlacklistRegister.KEY, json);
+    }
 
-	private static void addTag(TagKey<Item> item, JsonArray json) {
-		json.add("#" + item.location().toString());
-	}
+    private static void addTag(TagKey<Item> item, JsonArray json) {
+	json.add("#" + item.location().toString());
+    }
 
-	private static void addItem(Item item, JsonArray json) {
-		json.add(ForgeRegistries.ITEMS.getKey(item).toString());
-	}
+    private static void addItem(Item item, JsonArray json) {
+	json.add(ForgeRegistries.ITEMS.getKey(item).toString());
+    }
 
-	@Override
-	public String getName() {
-		return "Nuclear Science Atomic Assembler Blacklist Provider";
-	}
+    @Override
+    public String getName() {
+	return "Nuclear Science Atomic Assembler Blacklist Provider";
+    }
 
 }

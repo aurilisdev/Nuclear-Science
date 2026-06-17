@@ -9,8 +9,10 @@ import nuclearscience.client.particle.smoke.ParticleOptionSmoke;
 
 public class NuclearScienceParticles {
 
-    public static final DeferredRegister<ParticleType<?>> PARTICLES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, NuclearScience.ID);
+    public static final DeferredRegister<ParticleType<?>> PARTICLES = DeferredRegister
+	    .create(ForgeRegistries.PARTICLE_TYPES, NuclearScience.ID);
 
-    public static final RegistryObject<ParticleOptionSmoke> PARTICLE_SMOKE = PARTICLES.register("smoke", ParticleOptionSmoke::new);
+    public static final RegistryObject<ParticleOptionSmoke> PARTICLE_SMOKE = PARTICLES.register("smoke",
+	    ParticleOptionSmoke::new);
 
 }

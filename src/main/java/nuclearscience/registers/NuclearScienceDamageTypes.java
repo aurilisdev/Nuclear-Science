@@ -11,14 +11,14 @@ import nuclearscience.NuclearScience;
 
 public class NuclearScienceDamageTypes {
 
-	public static final ResourceKey<DamageType> PLASMA = create("plasma");
+    public static final ResourceKey<DamageType> PLASMA = create("plasma");
 
-	public static ResourceKey<DamageType> create(String name) {
-		return ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(NuclearScience.ID, name));
-	}
+    public static ResourceKey<DamageType> create(String name) {
+	return ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(NuclearScience.ID, name));
+    }
 
-	public static void registerTypes(BootstapContext<DamageType> context) {
-		context.register(PLASMA, new DamageType("plasma", DamageScaling.NEVER, 0, DamageEffects.BURNING));
-	}
+    public static void registerTypes(BootstapContext<DamageType> context) {
+	context.register(PLASMA, new DamageType("plasma", DamageScaling.NEVER, 0, DamageEffects.BURNING));
+    }
 
 }

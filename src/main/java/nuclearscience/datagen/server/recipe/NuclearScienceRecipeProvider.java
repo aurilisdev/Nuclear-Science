@@ -20,30 +20,30 @@ import voltaic.datagen.utils.server.recipe.AbstractRecipeGenerator;
 
 public class NuclearScienceRecipeProvider extends RecipeProvider {
 
-	public final List<AbstractRecipeGenerator> GENERATORS = new ArrayList<>();
+    public final List<AbstractRecipeGenerator> GENERATORS = new ArrayList<>();
 
-	public NuclearScienceRecipeProvider(PackOutput output) {
-		super(output);
-		addRecipes();
-	}
+    public NuclearScienceRecipeProvider(PackOutput output) {
+	super(output);
+	addRecipes();
+    }
 
-	public void addRecipes() {
-		GENERATORS.add(new NuclearScienceCraftingTableRecipes());
-		GENERATORS.add(new NuclearScienceChemicalMixerRecipes());
-		GENERATORS.add(new NuclearScienceChemicalCrystalizerRecipes());
-		GENERATORS.add(new NuclearScienceNuclaerBoilerRecipes());
-		GENERATORS.add(new NuclearScienceChemicalExtractorRecipes());
-		GENERATORS.add(new NuclearScienceMSRFuelPreprocessorRecipes());
-		GENERATORS.add(new NuclearScienceRadioactiveProcessorRecipes());
-		GENERATORS.add(new NuclearScienceFissionReactorRecipes());
-		GENERATORS.add(new NuclearScienceFuelReprocessorRecipes());
-	}
+    public void addRecipes() {
+	GENERATORS.add(new NuclearScienceCraftingTableRecipes());
+	GENERATORS.add(new NuclearScienceChemicalMixerRecipes());
+	GENERATORS.add(new NuclearScienceChemicalCrystalizerRecipes());
+	GENERATORS.add(new NuclearScienceNuclaerBoilerRecipes());
+	GENERATORS.add(new NuclearScienceChemicalExtractorRecipes());
+	GENERATORS.add(new NuclearScienceMSRFuelPreprocessorRecipes());
+	GENERATORS.add(new NuclearScienceRadioactiveProcessorRecipes());
+	GENERATORS.add(new NuclearScienceFissionReactorRecipes());
+	GENERATORS.add(new NuclearScienceFuelReprocessorRecipes());
+    }
 
-	@Override
-	protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
-		for (AbstractRecipeGenerator generator : GENERATORS) {
-			generator.addRecipes(consumer);
-		}
+    @Override
+    protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
+	for (AbstractRecipeGenerator generator : GENERATORS) {
+	    generator.addRecipes(consumer);
 	}
+    }
 
 }

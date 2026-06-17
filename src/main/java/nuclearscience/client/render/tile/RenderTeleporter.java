@@ -16,28 +16,29 @@ import voltaic.prefab.tile.components.type.ComponentElectrodynamic;
 
 public class RenderTeleporter extends AbstractTileRenderer<TileTeleporter> {
 
-	public RenderTeleporter(BlockEntityRendererProvider.Context context) {
-		super(context);
-	}
+    public RenderTeleporter(BlockEntityRendererProvider.Context context) {
+	super(context);
+    }
 
-	@Override
-	public void render(TileTeleporter tileEntityIn, float partialTicks, PoseStack stack, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
+    @Override
+    public void render(TileTeleporter tileEntityIn, float partialTicks, PoseStack stack, MultiBufferSource bufferIn,
+	    int combinedLightIn, int combinedOverlayIn) {
+	stack.pushPose();
+
+	stack.translate(0.5, 0.5, 0.5);
+	ComponentElectrodynamic electro = tileEntityIn.getComponent(IComponentType.Electrodynamic);
+
+	if (electro.getJoulesStored() > 0) {
+	    AABB bb = new AABB(tileEntityIn.getBlockPos(), tileEntityIn.getBlockPos().offset(1, 2, 1));
+	    List<Player> player = tileEntityIn.getLevel().getEntities(EntityType.PLAYER, bb, en -> true);
+	    if (!player.isEmpty()) {
+
 		stack.pushPose();
-
-		stack.translate(0.5, 0.5, 0.5);
-		ComponentElectrodynamic electro = tileEntityIn.getComponent(IComponentType.Electrodynamic);
-
-		if (electro.getJoulesStored() > 0) {
-			AABB bb = new AABB(tileEntityIn.getBlockPos(), tileEntityIn.getBlockPos().offset(1, 2, 1));
-			List<Player> player = tileEntityIn.getLevel().getEntities(EntityType.PLAYER, bb, en -> true);
-			if (!player.isEmpty()) {
-
-				stack.pushPose();
-				// TODO: Actually render something??
-				stack.popPose();
-			}
-		}
+		// TODO: Actually render something??
 		stack.popPose();
+	    }
 	}
-	
+	stack.popPose();
+    }
+
 }

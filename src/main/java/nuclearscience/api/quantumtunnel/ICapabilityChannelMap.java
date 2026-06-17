@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.UUID;
 
 public interface ICapabilityChannelMap {
-	
-	HashMap<UUID, HashSet<TunnelFrequency>> getMap();
+
+    HashMap<UUID, HashSet<TunnelFrequency>> getMap();
 
 }

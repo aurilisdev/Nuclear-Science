@@ -19,39 +19,45 @@ import voltaic.prefab.utilities.math.Color;
 
 public class ScreenComponentReactorFuel extends AbstractScreenComponentGauge {
 
-	public ScreenComponentReactorFuel(int x, int y) {
-		super(x, y);
+    public ScreenComponentReactorFuel(int x, int y) {
+	super(x, y);
+    }
+
+    @Override
+    protected void applyColor() {
+	RenderingUtils.setShaderColor(new Color(IClientFluidTypeExtensions.of(Fluids.LAVA).getTintColor()));
+    }
+
+    @Override
+    protected int getScaledLevel() {
+	TileMSReactorCore core = ((GenericContainerBlockEntity<TileMSReactorCore>) ((GenericScreen<?>) gui).getMenu())
+		.getSafeHost();
+	if (core == null) {
+	    return 0;
 	}
 
-	@Override
-	protected void applyColor() {
-		RenderingUtils.setShaderColor(new Color(IClientFluidTypeExtensions.of(Fluids.LAVA).getTintColor()));
-	}
+	return (int) ((GaugeTextures.BACKGROUND_DEFAULT.textureHeight() - 2) * core.currentFuel.getValue()
+		/ TileMSReactorCore.FUEL_CAPACITY);
+    }
 
-	@Override
-	protected int getScaledLevel() {
-		TileMSReactorCore core = ((GenericContainerBlockEntity<TileMSReactorCore>) ((GenericScreen<?>) gui).getMenu()).getSafeHost();
-		if (core == null) {
-			return 0;
-		}
+    @Override
+    protected ResourceLocation getTexture() {
+	return IClientFluidTypeExtensions.of(Fluids.LAVA).getStillTexture();
+    }
 
-		return (int) ((GaugeTextures.BACKGROUND_DEFAULT.textureHeight() - 2) * (core.currentFuel.getValue()) / TileMSReactorCore.FUEL_CAPACITY);
+    @Override
+    protected List<? extends FormattedCharSequence> getTooltips() {
+	List<FormattedCharSequence> list = new ArrayList<>();
+	TileMSReactorCore core = ((GenericContainerBlockEntity<TileMSReactorCore>) ((GenericScreen<?>) gui).getMenu())
+		.getSafeHost();
+	if (core == null) {
+	    return list;
 	}
-
-	@Override
-	protected ResourceLocation getTexture() {
-		return IClientFluidTypeExtensions.of(Fluids.LAVA).getStillTexture();
-	}
-
-	@Override
-	protected List<? extends FormattedCharSequence> getTooltips() {
-		List<FormattedCharSequence> list = new ArrayList<>();
-		TileMSReactorCore core = ((GenericContainerBlockEntity<TileMSReactorCore>) ((GenericScreen<?>) gui).getMenu()).getSafeHost();
-		if (core == null) {
-			return list;
-		}
-		list.add(VoltaicTextUtils.ratio(ChatFormatter.formatFluidMilibuckets(core.currentFuel.getValue()), ChatFormatter.formatFluidMilibuckets(TileMSReactorCore.FUEL_CAPACITY)).withStyle(ChatFormatting.GRAY).getVisualOrderText());
-		return list;
-	}
+	list.add(VoltaicTextUtils
+		.ratio(ChatFormatter.formatFluidMilibuckets(core.currentFuel.getValue()),
+			ChatFormatter.formatFluidMilibuckets(TileMSReactorCore.FUEL_CAPACITY))
+		.withStyle(ChatFormatting.GRAY).getVisualOrderText());
+	return list;
+    }
 
 }

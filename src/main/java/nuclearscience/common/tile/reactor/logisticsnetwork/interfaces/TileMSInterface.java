@@ -14,67 +14,68 @@ import voltaic.prefab.tile.components.type.ComponentTickable;
 
 public class TileMSInterface extends GenericTileInterface implements IMSControlRod {
 
-    public final SingleProperty<Integer> insertion = property(new SingleProperty<>(PropertyTypes.INTEGER, "insertion", 0));
+    public final SingleProperty<Integer> insertion = property(
+	    new SingleProperty<>(PropertyTypes.INTEGER, "insertion", 0));
 
     public TileMSInterface(BlockPos worldPos, BlockState blockState) {
-        super(NuclearScienceTiles.TILE_MSINTERFACE.get(), worldPos, blockState);
+	super(NuclearScienceTiles.TILE_MSINTERFACE.get(), worldPos, blockState);
     }
 
     @Override
     public void tickServer(ComponentTickable tickable) {
-        super.tickServer(tickable);
+	super.tickServer(tickable);
 
-        if (!networkCable.valid() || !(networkCable.getSafe() instanceof TileReactorLogisticsCable)) {
-            insertion.setValue(0);
-            return;
-        }
+	if (!networkCable.valid() || !(networkCable.getSafe() instanceof TileReactorLogisticsCable)) {
+	    insertion.setValue(0);
+	    return;
+	}
 
-        TileReactorLogisticsCable cable = networkCable.getSafe();
+	TileReactorLogisticsCable cable = networkCable.getSafe();
 
-        if (cable.isRemoved()) {
-            insertion.setValue(0);
-            return;
-        }
+	if (cable.isRemoved()) {
+	    insertion.setValue(0);
+	    return;
+	}
 
-        ReactorLogisticsNetwork network = cable.getNetwork();
+	ReactorLogisticsNetwork network = cable.getNetwork();
 
-        if (!network.isControllerActive()) {
-            insertion.setValue(0);
-            return;
-        }
+	if (!network.isControllerActive()) {
+	    insertion.setValue(0);
+	    return;
+	}
 
-        TileControlRodModule controlRod = network.getControlRod(controlRodLocation.getValue());
+	TileControlRodModule controlRod = network.getControlRod(controlRodLocation.getValue());
 
-        if (controlRod == null) {
-            insertion.setValue(0);
-        } else {
-            insertion.setValue(controlRod.insertion.getValue());
-        }
+	if (controlRod == null) {
+	    insertion.setValue(0);
+	} else {
+	    insertion.setValue(controlRod.insertion.getValue());
+	}
 
     }
 
     @Override
     public int getInsertion() {
-        return insertion.getValue();
+	return insertion.getValue();
     }
 
     @Override
     public Direction facingDir() {
-        return getReactorDirection();
+	return getReactorDirection();
     }
 
     @Override
     public Direction getReactorDirection() {
-        return getFacing().getOpposite();
+	return getFacing().getOpposite();
     }
 
     @Override
     public Direction getCableLocation() {
-        return Direction.DOWN;
+	return Direction.DOWN;
     }
 
     @Override
     public InterfaceType getInterfaceType() {
-        return InterfaceType.MS;
+	return InterfaceType.MS;
     }
 }

@@ -30,99 +30,108 @@ public class TileCloudChamber extends GenericTile {
     public static final int HORR_RADIUS = 30;
     private static final int VERT_RADIUS = 30;
 
-    public final ListProperty<BlockPos> sources = property(new ListProperty<>(PropertyTypes.BLOCK_POS_LIST, "sources", new ArrayList<BlockPos>()));
-    public final SingleProperty<Boolean> active = property(new SingleProperty<>(PropertyTypes.BOOLEAN, "active", false));
-    public final SingleProperty<Boolean> sourcesDetected = property(new SingleProperty<>(PropertyTypes.BOOLEAN, "detectedsources", false));
-    private final SingleProperty<Boolean> hasRedstoneSignal = property(new SingleProperty<>(PropertyTypes.BOOLEAN, "redstonesignal", false));
+    public final ListProperty<BlockPos> sources = property(
+	    new ListProperty<>(PropertyTypes.BLOCK_POS_LIST, "sources", new ArrayList<BlockPos>()));
+    public final SingleProperty<Boolean> active = property(
+	    new SingleProperty<>(PropertyTypes.BOOLEAN, "active", false));
+    public final SingleProperty<Boolean> sourcesDetected = property(
+	    new SingleProperty<>(PropertyTypes.BOOLEAN, "detectedsources", false));
+    private final SingleProperty<Boolean> hasRedstoneSignal = property(
+	    new SingleProperty<>(PropertyTypes.BOOLEAN, "redstonesignal", false));
 
     public TileCloudChamber(BlockPos worldPos, BlockState blockState) {
-        super(NuclearScienceTiles.TILE_CLOUDCHAMBER.get(), worldPos, blockState);
+	super(NuclearScienceTiles.TILE_CLOUDCHAMBER.get(), worldPos, blockState);
 
-        addComponent(new ComponentTickable(this).tickServer(this::tickServer).tickClient(this::tickClient));
-        addComponent(new ComponentElectrodynamic(this, false, true).setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM).voltage(VoltaicCapabilities.DEFAULT_VOLTAGE).maxJoules(NuclearConstants.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK * 20));
-        addComponent(new ComponentFluidHandlerSimple(100, fluidStack -> fluidStack.getFluid().is(NuclearScienceTags.Fluids.METHANOL), this, "methanolstorage").setInputDirections(BlockEntityUtils.MachineDirection.BACK));
-        addComponent(new ComponentContainerProvider("cloudchamber", this).createMenu((id, player) -> new ContainerCloudChamber(id, player, new SimpleContainer(), getCoordsArray())));
+	addComponent(new ComponentTickable(this).tickServer(this::tickServer).tickClient(this::tickClient));
+	addComponent(new ComponentElectrodynamic(this, false, true)
+		.setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM)
+		.voltage(VoltaicCapabilities.DEFAULT_VOLTAGE)
+		.maxJoules(NuclearConstants.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK * 20));
+	addComponent(new ComponentFluidHandlerSimple(100,
+		fluidStack -> fluidStack.getFluid().is(NuclearScienceTags.Fluids.METHANOL), this, "methanolstorage")
+		.setInputDirections(BlockEntityUtils.MachineDirection.BACK));
+	addComponent(new ComponentContainerProvider("cloudchamber", this).createMenu(
+		(id, player) -> new ContainerCloudChamber(id, player, new SimpleContainer(), getCoordsArray())));
 
     }
 
     private void tickClient(ComponentTickable tickable) {
-    	if(sourcesDetected.getValue()) {
-            HandlerCloudChamber.addSources(this);
-        } else {
-            HandlerCloudChamber.removeSources(this);
-        }
+	if (sourcesDetected.getValue()) {
+	    HandlerCloudChamber.addSources(this);
+	} else {
+	    HandlerCloudChamber.removeSources(this);
+	}
     }
 
     private void tickServer(ComponentTickable tickable) {
 
-        this.sources.wipeList();
+	this.sources.wipeList();
 
-        if(hasRedstoneSignal.getValue()) {
-            active.setValue(false);
-            sourcesDetected.setValue(false);
-            return;
-        }
+	if (hasRedstoneSignal.getValue()) {
+	    active.setValue(false);
+	    sourcesDetected.setValue(false);
+	    return;
+	}
 
-        ComponentElectrodynamic electro = getComponent(IComponentType.Electrodynamic);
+	ComponentElectrodynamic electro = getComponent(IComponentType.Electrodynamic);
 
-        if(electro.getJoulesStored() < NuclearConstants.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK) {
-            active.setValue(false);
-            sourcesDetected.setValue(false);
-            return;
-        }
+	if (electro.getJoulesStored() < NuclearConstants.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK) {
+	    active.setValue(false);
+	    sourcesDetected.setValue(false);
+	    return;
+	}
 
-        ComponentFluidHandlerSimple fluid = getComponent(IComponentType.FluidHandler);
+	ComponentFluidHandlerSimple fluid = getComponent(IComponentType.FluidHandler);
 
-        if(fluid.isEmpty() || fluid.getFluidAmount() < NuclearConstants.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK) {
-            active.setValue(false);
-            sourcesDetected.setValue(false);
-            return;
-        }
-        
-        active.setValue(true);
+	if (fluid.isEmpty() || fluid.getFluidAmount() < NuclearConstants.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK) {
+	    active.setValue(false);
+	    sourcesDetected.setValue(false);
+	    return;
+	}
 
-        electro.setJoulesStored(electro.getJoulesStored() - NuclearConstants.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK);
-        fluid.drain(NuclearConstants.CLOUD_CHAMBER_FLUID_USAGE_PER_TICK, FluidAction.EXECUTE);
+	active.setValue(true);
 
-        List<BlockPos> sources = RadiationSystem.getRadiationSources(getLevel());
+	electro.setJoulesStored(electro.getJoulesStored() - NuclearConstants.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK);
+	fluid.drain(NuclearConstants.CLOUD_CHAMBER_FLUID_USAGE_PER_TICK, FluidAction.EXECUTE);
 
-        List<BlockPos> accepted = new ArrayList<>();
+	List<BlockPos> sources = RadiationSystem.getRadiationSources(getLevel());
 
-        BlockPos pos = getBlockPos();
+	List<BlockPos> accepted = new ArrayList<>();
 
-        sources.forEach(source -> {
+	BlockPos pos = getBlockPos();
 
-            int deltaX = source.getX() - pos.getX();
-            int deltaY = source.getY() - pos.getY();
-            int deltaZ = source.getZ() - pos.getZ();
+	sources.forEach(source -> {
 
-            if(Math.abs(deltaY) > VERT_RADIUS || Math.abs(deltaX) > HORR_RADIUS || Math.abs(deltaZ) > HORR_RADIUS) {
-                return;
-            }
+	    int deltaX = source.getX() - pos.getX();
+	    int deltaY = source.getY() - pos.getY();
+	    int deltaZ = source.getZ() - pos.getZ();
 
-            accepted.add(source);
+	    if (Math.abs(deltaY) > VERT_RADIUS || Math.abs(deltaX) > HORR_RADIUS || Math.abs(deltaZ) > HORR_RADIUS) {
+		return;
+	    }
 
-        });
-        
-        sourcesDetected.setValue(!accepted.isEmpty());
+	    accepted.add(source);
 
-        if(accepted.isEmpty()) {
-            //active.setValue(false);
-            return;
-        }
+	});
 
-        //active.setValue(true);
+	sourcesDetected.setValue(!accepted.isEmpty());
 
-        this.sources.addValues(accepted);
+	if (accepted.isEmpty()) {
+	    // active.setValue(false);
+	    return;
+	}
+
+	// active.setValue(true);
+
+	this.sources.addValues(accepted);
 
     }
 
     @Override
     public void onNeightborChanged(BlockPos neighbor, boolean blockStateTrigger) {
-        if (!level.isClientSide) {
-            hasRedstoneSignal.setValue(this.level.hasNeighborSignal(this.getBlockPos()));
-        }
+	if (!level.isClientSide) {
+	    hasRedstoneSignal.setValue(this.level.hasNeighborSignal(this.getBlockPos()));
+	}
     }
-
 
 }

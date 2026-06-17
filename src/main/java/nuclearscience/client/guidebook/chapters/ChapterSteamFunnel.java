@@ -10,24 +10,25 @@ import voltaic.client.guidebook.utils.pagedata.graphics.ItemWrapperObject;
 import voltaic.client.guidebook.utils.pagedata.text.TextWrapperObject;
 
 public class ChapterSteamFunnel extends Chapter {
-    private static final ItemWrapperObject LOGO = new ItemWrapperObject(7, 10, 32, 32, 32, 2.0F, NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.steamfunnel));
+    private static final ItemWrapperObject LOGO = new ItemWrapperObject(7, 10, 32, 32, 32, 2.0F,
+	    NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.steamfunnel));
 
     public ChapterSteamFunnel(Module module) {
-        super(module);
+	super(module);
     }
 
     @Override
     public ItemWrapperObject getLogo() {
-        return LOGO;
+	return LOGO;
     }
 
     @Override
     public MutableComponent getTitle() {
-        return NuclearTextUtils.guidebook("chapter.steamfunnel");
+	return NuclearTextUtils.guidebook("chapter.steamfunnel");
     }
 
     @Override
     public void addData() {
-        pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.steamfunnel.l1")).setIndentions(1));
+	pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.steamfunnel.l1")).setIndentions(1));
     }
 }

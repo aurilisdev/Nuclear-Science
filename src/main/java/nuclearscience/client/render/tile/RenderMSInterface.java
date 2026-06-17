@@ -18,33 +18,35 @@ public class RenderMSInterface extends AbstractTileRenderer<TileMSInterface> {
     private static final double MAX_DELTA = 10.0 / 16.0;
 
     public RenderMSInterface(BlockEntityRendererProvider.Context context) {
-        super(context);
+	super(context);
     }
 
     @Override
-    public void render(TileMSInterface tile, float partialTicks, PoseStack stack, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
+    public void render(TileMSInterface tile, float partialTicks, PoseStack stack, MultiBufferSource bufferIn,
+	    int combinedLightIn, int combinedOverlayIn) {
 
-        stack.pushPose();
+	stack.pushPose();
 
-        stack.translate(0.5, 0.5, 0.5);
+	stack.translate(0.5, 0.5, 0.5);
 
-        Direction facing = tile.getFacing();
+	Direction facing = tile.getFacing();
 
-        int sign = 1;
+	int sign = 1;
 
-        if (facing == Direction.WEST || facing == Direction.EAST) {
-            sign = -1;
-        }
+	if (facing == Direction.WEST || facing == Direction.EAST) {
+	    sign = -1;
+	}
 
-        stack.mulPose(MathUtils.rotQuaternionDeg(0, facing.toYRot() + sign * 90, 0));
+	stack.mulPose(MathUtils.rotQuaternionDeg(0, facing.toYRot() + sign * 90, 0));
 
-        double insertion = tile.insertion.getValue() / (double) TileControlRod.MAX_EXTENSION;
+	double insertion = tile.insertion.getValue() / (double) TileControlRod.MAX_EXTENSION;
 
-        stack.translate(MAX_DELTA * insertion, 0, 0);
+	stack.translate(MAX_DELTA * insertion, 0, 0);
 
-        RenderingUtils.renderModel(getModel(NuclearScienceClientRegister.MODEL_MSCONTROLROD_ROD), tile, RenderType.solid(), stack, bufferIn, combinedLightIn, combinedOverlayIn);
+	RenderingUtils.renderModel(getModel(NuclearScienceClientRegister.MODEL_MSCONTROLROD_ROD), tile,
+		RenderType.solid(), stack, bufferIn, combinedLightIn, combinedOverlayIn);
 
-        stack.popPose();
+	stack.popPose();
 
     }
 

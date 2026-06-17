@@ -11,20 +11,20 @@ import voltaic.api.codec.StreamCodec;
 
 public class PacketEditFrequency {
 
-    public static final StreamCodec<ByteBuf, PacketEditFrequency> CODEC = new StreamCodec<ByteBuf, PacketEditFrequency>() {
-        @Override
-        public PacketEditFrequency decode(ByteBuf buf) {
+    public static final StreamCodec<ByteBuf, PacketEditFrequency> CODEC = new StreamCodec<>() {
+	@Override
+	public PacketEditFrequency decode(ByteBuf buf) {
 
-            return new PacketEditFrequency(StreamCodec.UUID.decode(buf), TunnelFrequency.STREAM_CODEC.decode(buf));
-        }
+	    return new PacketEditFrequency(StreamCodec.UUID.decode(buf), TunnelFrequency.STREAM_CODEC.decode(buf));
+	}
 
-        @Override
-        public void encode(ByteBuf buf, PacketEditFrequency packet) {
+	@Override
+	public void encode(ByteBuf buf, PacketEditFrequency packet) {
 
-            StreamCodec.UUID.encode(buf, packet.requester);
-            TunnelFrequency.STREAM_CODEC.encode(buf, packet.frequency);
+	    StreamCodec.UUID.encode(buf, packet.requester);
+	    TunnelFrequency.STREAM_CODEC.encode(buf, packet.frequency);
 
-        }
+	}
 
     };
 
@@ -32,25 +32,25 @@ public class PacketEditFrequency {
     private final TunnelFrequency frequency;
 
     public PacketEditFrequency(UUID requester, TunnelFrequency frequency) {
-        this.requester = requester;
-        this.frequency = frequency;
+	this.requester = requester;
+	this.frequency = frequency;
     }
 
     public static void handle(PacketEditFrequency message, Supplier<Context> context) {
-    	Context ctx = context.get();
-		ctx.enqueueWork(() -> {
+	Context ctx = context.get();
+	ctx.enqueueWork(() -> {
 
-			ServerBarrierMethods.editFrequency(message.requester, message.frequency);
+	    ServerBarrierMethods.editFrequency(message.requester, message.frequency);
 
-		});
-		ctx.setPacketHandled(true);
+	});
+	ctx.setPacketHandled(true);
     }
 
     public static void encode(PacketEditFrequency pkt, FriendlyByteBuf buf) {
-		CODEC.encode(buf, pkt);
-	}
+	CODEC.encode(buf, pkt);
+    }
 
-	public static PacketEditFrequency decode(FriendlyByteBuf buf) {
-		return CODEC.decode(buf);
-	}
+    public static PacketEditFrequency decode(FriendlyByteBuf buf) {
+	return CODEC.decode(buf);
+    }
 }

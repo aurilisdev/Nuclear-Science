@@ -25,59 +25,62 @@ import voltaic.prefab.utilities.CapabilityUtils;
 import voltaic.registers.VoltaicCapabilities;
 
 public class ItemGeigerCounter extends ItemElectric {
-	
-	public static final double POWER_USAGE = 20;
 
-	public ItemGeigerCounter(ElectricItemProperties properties, Supplier<CreativeModeTab> creativeTab, Function<Item, Item> getBatteryItem) {
-		super(properties, creativeTab, getBatteryItem);
+    public static final double POWER_USAGE = 20;
+
+    public ItemGeigerCounter(ElectricItemProperties properties, Supplier<CreativeModeTab> creativeTab,
+	    Function<Item, Item> getBatteryItem) {
+	super(properties, creativeTab, getBatteryItem);
+    }
+
+    @Override
+    public void inventoryTick(ItemStack stack, Level worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+	super.inventoryTick(stack, worldIn, entityIn, itemSlot, isSelected);
+	if (entityIn instanceof Player player && !worldIn.isClientSide) {
+
+	    boolean noPower = getJoulesStored(stack) < POWER_USAGE;
+
+	    IRadiationRecipient capability = player.getCapability(VoltaicCapabilities.CAPABILITY_RADIATIONRECIPIENT)
+		    .orElse(CapabilityUtils.EMPTY_RADIATION_REPIPIENT);
+	    if (capability == CapabilityUtils.EMPTY_RADIATION_REPIPIENT) {
+		return;
+	    }
+
+	    RadioactiveObject recievedRads = capability.getRecievedRadiation(player);
+
+	    if (isSelected || player.getItemBySlot(EquipmentSlot.OFFHAND).getItem() instanceof ItemGeigerCounter) {
+		if (noPower) {
+		    player.displayClientMessage(NuclearTextUtils.chatMessage("geigercounter.nopower"), true);
+		} else {
+		    player.displayClientMessage(
+			    ChatFormatter.getChatDisplay(recievedRads.amount(), DisplayUnits.RAD, 3, true), true);
+		}
+
+	    }
+
+	    if (!noPower && recievedRads.amount() > 0
+		    && worldIn.random.nextFloat() * 50 * 60.995 / 3 < recievedRads.amount()) {
+
+		SoundEvent sound = switch (worldIn.random.nextIntBetweenInclusive(1, 6)) {
+		case 2 -> NuclearScienceSounds.SOUND_GEIGERCOUNTER_2.get();
+		case 3 -> NuclearScienceSounds.SOUND_GEIGERCOUNTER_3.get();
+		case 4 -> NuclearScienceSounds.SOUND_GEIGERCOUNTER_4.get();
+		case 5 -> NuclearScienceSounds.SOUND_GEIGERCOUNTER_5.get();
+		case 6 -> NuclearScienceSounds.SOUND_GEIGERCOUNTER_6.get();
+		default -> NuclearScienceSounds.SOUND_GEIGERCOUNTER_1.get();
+		};
+
+		worldIn.playSound(null, player.blockPosition(), sound, SoundSource.BLOCKS, 1.0F, 1.0F);
+		IItemElectric.setEnergyStored(stack, this.getJoulesStored(stack) - POWER_USAGE);
+		player.getInventory().setChanged();
+
+	    }
+
 	}
+    }
 
-	@Override
-	public void inventoryTick(ItemStack stack, Level worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-		super.inventoryTick(stack, worldIn, entityIn, itemSlot, isSelected);
-		if (entityIn instanceof Player player && !worldIn.isClientSide) {
-
-            boolean noPower = getJoulesStored(stack) < POWER_USAGE;
-
-            IRadiationRecipient capability = player.getCapability(VoltaicCapabilities.CAPABILITY_RADIATIONRECIPIENT).orElse(CapabilityUtils.EMPTY_RADIATION_REPIPIENT);
-            if (capability == CapabilityUtils.EMPTY_RADIATION_REPIPIENT) {
-                return;
-            }
-
-            RadioactiveObject recievedRads = capability.getRecievedRadiation(player);
-
-            if (isSelected || player.getItemBySlot(EquipmentSlot.OFFHAND).getItem() instanceof ItemGeigerCounter) {
-                if(noPower) {
-                    player.displayClientMessage(NuclearTextUtils.chatMessage("geigercounter.nopower"), true);
-                } else {
-                    player.displayClientMessage(ChatFormatter.getChatDisplay(recievedRads.amount(), DisplayUnits.RAD, 3, true), true);
-                }
-
-            }
-
-            if (!noPower && recievedRads.amount() > 0 && worldIn.random.nextFloat() * 50 * 60.995 / 3 < recievedRads.amount()) {
-
-                SoundEvent sound = switch(worldIn.random.nextIntBetweenInclusive(1, 6)) {
-                    case 2 -> NuclearScienceSounds.SOUND_GEIGERCOUNTER_2.get();
-                    case 3 -> NuclearScienceSounds.SOUND_GEIGERCOUNTER_3.get();
-                    case 4 -> NuclearScienceSounds.SOUND_GEIGERCOUNTER_4.get();
-                    case 5 -> NuclearScienceSounds.SOUND_GEIGERCOUNTER_5.get();
-                    case 6 -> NuclearScienceSounds.SOUND_GEIGERCOUNTER_6.get();
-                    default -> NuclearScienceSounds.SOUND_GEIGERCOUNTER_1.get();
-                };
-
-                worldIn.playSound(null, player.blockPosition(), sound, SoundSource.BLOCKS, 1.0F, 1.0F);
-                IItemElectric.setEnergyStored(stack, this.getJoulesStored(stack) - POWER_USAGE);
-                player.getInventory().setChanged();
-
-            }
-
-
-        }
-	}
-	
-	@Override
-	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
-		return !oldStack.is(newStack.getItem());
-	}
+    @Override
+    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+	return !oldStack.is(newStack.getItem());
+    }
 }

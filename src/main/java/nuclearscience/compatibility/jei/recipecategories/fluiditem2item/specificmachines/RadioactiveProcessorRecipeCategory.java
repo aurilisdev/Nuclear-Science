@@ -22,35 +22,44 @@ import voltaic.prefab.screen.component.types.ScreenComponentSlot;
 
 public class RadioactiveProcessorRecipeCategory extends FluidItem2ItemRecipeCategory<RadioactiveProcessorRecipe> {
 
-	// JEI Window Parameters
-	public static final BackgroundObject BACK_WRAP = new BackgroundObject(132, 64);
+    // JEI Window Parameters
+    public static final BackgroundObject BACK_WRAP = new BackgroundObject(132, 64);
 
-	public static final ItemSlotObject INPUT_SLOT = new ItemSlotObject(ScreenComponentSlot.SlotType.NORMAL, 57, 16, RecipeIngredientRole.INPUT);
-	public static final ItemSlotObject INPUT_BUCKET_SLOT = new ItemSlotObject(ScreenComponentSlot.SlotType.NORMAL, ScreenComponentSlot.IconType.FLUID_DARK, 57, 36, RecipeIngredientRole.INPUT);
-	public static final ItemSlotObject OUTPUT_SLOT = new ItemSlotObject(ScreenComponentSlot.SlotType.NORMAL, 107, 16, RecipeIngredientRole.OUTPUT);
+    public static final ItemSlotObject INPUT_SLOT = new ItemSlotObject(ScreenComponentSlot.SlotType.NORMAL, 57, 16,
+	    RecipeIngredientRole.INPUT);
+    public static final ItemSlotObject INPUT_BUCKET_SLOT = new ItemSlotObject(ScreenComponentSlot.SlotType.NORMAL,
+	    ScreenComponentSlot.IconType.FLUID_DARK, 57, 36, RecipeIngredientRole.INPUT);
+    public static final ItemSlotObject OUTPUT_SLOT = new ItemSlotObject(ScreenComponentSlot.SlotType.NORMAL, 107, 16,
+	    RecipeIngredientRole.OUTPUT);
 
-	public static final ArrowAnimatedObject ANIM_RIGHT_ARROW_1 = new ArrowAnimatedObject(ScreenComponentProgress.ProgressBars.PROGRESS_ARROW_RIGHT, 30, 17, StartDirection.LEFT);
-	public static final ArrowAnimatedObject ANIM_RIGHT_ARROW_2 = new ArrowAnimatedObject(ScreenComponentProgress.ProgressBars.PROGRESS_ARROW_RIGHT, 80, 17, StartDirection.LEFT);
-	public static final ArrowAnimatedObject ANIM_LEFT_ARROW = new ArrowAnimatedObject(ScreenComponentProgress.ProgressBars.PROGRESS_ARROW_LEFT, 30, 37, StartDirection.RIGHT);
+    public static final ArrowAnimatedObject ANIM_RIGHT_ARROW_1 = new ArrowAnimatedObject(
+	    ScreenComponentProgress.ProgressBars.PROGRESS_ARROW_RIGHT, 30, 17, StartDirection.LEFT);
+    public static final ArrowAnimatedObject ANIM_RIGHT_ARROW_2 = new ArrowAnimatedObject(
+	    ScreenComponentProgress.ProgressBars.PROGRESS_ARROW_RIGHT, 80, 17, StartDirection.LEFT);
+    public static final ArrowAnimatedObject ANIM_LEFT_ARROW = new ArrowAnimatedObject(
+	    ScreenComponentProgress.ProgressBars.PROGRESS_ARROW_LEFT, 30, 37, StartDirection.RIGHT);
 
-	public static final FluidGaugeObject IN_GAUGE = new FluidGaugeObject(10, 5);
+    public static final FluidGaugeObject IN_GAUGE = new FluidGaugeObject(10, 5);
 
-	public static final PowerLabelWrapperElectroRecipe POWER_LABEL = new PowerLabelWrapperElectroRecipe(2, 55, 480);
-	public static final TimeLabelWrapperElectroRecipe TIME_LABEL = new TimeLabelWrapperElectroRecipe(130, 55);
+    public static final PowerLabelWrapperElectroRecipe POWER_LABEL = new PowerLabelWrapperElectroRecipe(2, 55, 480);
+    public static final TimeLabelWrapperElectroRecipe TIME_LABEL = new TimeLabelWrapperElectroRecipe(130, 55);
 
-	public static final int ANIM_TIME = 50;
+    public static final int ANIM_TIME = 50;
 
-	public static ItemStack INPUT_MACHINE = new ItemStack(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.radioactiveprocessor));
+    public static ItemStack INPUT_MACHINE = new ItemStack(
+	    NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.radioactiveprocessor));
 
-	public static final RecipeType<RadioactiveProcessorRecipe> RECIPE_TYPE = RecipeType.create(NuclearScience.ID, RadioactiveProcessorRecipe.RECIPE_GROUP, RadioactiveProcessorRecipe.class);
+    public static final RecipeType<RadioactiveProcessorRecipe> RECIPE_TYPE = RecipeType.create(NuclearScience.ID,
+	    RadioactiveProcessorRecipe.RECIPE_GROUP, RadioactiveProcessorRecipe.class);
 
-	public RadioactiveProcessorRecipeCategory(IGuiHelper guiHelper) {
-		super(guiHelper, NuclearTextUtils.jeiTranslated(RadioactiveProcessorRecipe.RECIPE_GROUP), INPUT_MACHINE, BACK_WRAP, RECIPE_TYPE, ANIM_TIME);
-		setInputSlots(guiHelper, INPUT_SLOT, INPUT_BUCKET_SLOT);
-		setOutputSlots(guiHelper, OUTPUT_SLOT);
-		setFluidInputs(guiHelper, IN_GAUGE);
-		setAnimatedArrows(guiHelper, ANIM_LEFT_ARROW, ANIM_RIGHT_ARROW_1, ANIM_RIGHT_ARROW_2);
-		setLabels(POWER_LABEL, TIME_LABEL);
-	}
+    public RadioactiveProcessorRecipeCategory(IGuiHelper guiHelper) {
+	super(guiHelper, NuclearTextUtils.jeiTranslated(RadioactiveProcessorRecipe.RECIPE_GROUP), INPUT_MACHINE,
+		BACK_WRAP, RECIPE_TYPE, ANIM_TIME);
+	setInputSlots(guiHelper, INPUT_SLOT, INPUT_BUCKET_SLOT);
+	setOutputSlots(guiHelper, OUTPUT_SLOT);
+	setFluidInputs(guiHelper, IN_GAUGE);
+	setAnimatedArrows(guiHelper, ANIM_LEFT_ARROW, ANIM_RIGHT_ARROW_1, ANIM_RIGHT_ARROW_2);
+	setLabels(POWER_LABEL, TIME_LABEL);
+    }
 
 }

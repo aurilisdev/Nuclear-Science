@@ -15,18 +15,21 @@ import voltaic.prefab.utilities.math.MathUtils;
 
 public class RenderGasCentrifuge extends AbstractTileRenderer<TileGasCentrifuge> {
 
-	public RenderGasCentrifuge(BlockEntityRendererProvider.Context context) {
-		super(context);
-	}
+    public RenderGasCentrifuge(BlockEntityRendererProvider.Context context) {
+	super(context);
+    }
 
-	@Override
-	public void render(TileGasCentrifuge tile, float partialTicks, PoseStack poseStack, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
-		BakedModel ibakedmodel = Minecraft.getInstance().getModelManager().getModel(NuclearScienceClientRegister.MODEL_GASCENTRIFUGECENTER);
-		poseStack.translate(0.5, 0.5, 0.5);
-		double daytime = System.currentTimeMillis() / 5.0 * (tile.spinSpeed.getValue() / 20.0);
-		poseStack.mulPose(MathUtils.rotQuaternionDeg(0, (float) (daytime * 20 % 360), 0));
-		// poseStack.mulPose(new Quaternion(0, (float) (daytime * 20 % 360), 0, true));
-		RenderingUtils.renderModel(ibakedmodel, tile, RenderType.solid(), poseStack, bufferIn, combinedLightIn, combinedOverlayIn);
-	}
+    @Override
+    public void render(TileGasCentrifuge tile, float partialTicks, PoseStack poseStack, MultiBufferSource bufferIn,
+	    int combinedLightIn, int combinedOverlayIn) {
+	BakedModel ibakedmodel = Minecraft.getInstance().getModelManager()
+		.getModel(NuclearScienceClientRegister.MODEL_GASCENTRIFUGECENTER);
+	poseStack.translate(0.5, 0.5, 0.5);
+	double daytime = System.currentTimeMillis() / 5.0 * (tile.spinSpeed.getValue() / 20.0);
+	poseStack.mulPose(MathUtils.rotQuaternionDeg(0, (float) (daytime * 20 % 360), 0));
+	// poseStack.mulPose(new Quaternion(0, (float) (daytime * 20 % 360), 0, true));
+	RenderingUtils.renderModel(ibakedmodel, tile, RenderType.solid(), poseStack, bufferIn, combinedLightIn,
+		combinedOverlayIn);
+    }
 
 }

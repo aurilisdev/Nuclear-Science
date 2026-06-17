@@ -11,7 +11,10 @@ import voltaic.registers.VoltaicRegistries;
 
 public class NuclearScienceGases {
 
-	public static final DeferredRegister<Gas> GASES = DeferredRegister.create(VoltaicRegistries.GAS_REGISTRY_KEY, NuclearScience.ID);
+    public static final DeferredRegister<Gas> GASES = DeferredRegister.create(VoltaicRegistries.GAS_REGISTRY_KEY,
+	    NuclearScience.ID);
 
-	public static final RegistryObject<Gas> URANIUM_HEXAFLUORIDE = GASES.register("uraniumhexafluoride", () -> new Gas(() -> Items.AIR, NuclearTextUtils.gas("uraniumhexafluoride"), 330, Color.WHITE, () -> NuclearScienceFluids.FLUID_URANIUMHEXAFLUORIDE.get()));
+    public static final RegistryObject<Gas> URANIUM_HEXAFLUORIDE = GASES.register("uraniumhexafluoride",
+	    () -> new Gas(() -> Items.AIR, NuclearTextUtils.gas("uraniumhexafluoride"), 330, Color.WHITE,
+		    () -> NuclearScienceFluids.FLUID_URANIUMHEXAFLUORIDE.get()));
 }

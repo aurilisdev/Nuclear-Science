@@ -12,15 +12,14 @@ public class CommandWipeAllFrequencies {
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
 
-        dispatcher.register(Commands.literal(NuclearScience.ID).requires(source -> source.hasPermission(4)).then(Commands.literal("wipeallfrequencies").executes(source -> {
+	dispatcher.register(Commands.literal(NuclearScience.ID).requires(source -> source.hasPermission(4))
+		.then(Commands.literal("wipeallfrequencies").executes(source -> {
 
-            TunnelFrequencyManager.wipeAllFrequencies();
-            source.getSource().sendSuccess(() -> Component.literal("wiped"), true);
-            return 1;
-        })));
-
+		    TunnelFrequencyManager.wipeAllFrequencies();
+		    source.getSource().sendSuccess(() -> Component.literal("wiped"), true);
+		    return 1;
+		})));
 
     }
-
 
 }

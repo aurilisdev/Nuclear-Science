@@ -14,13 +14,15 @@ import nuclearscience.datagen.server.tags.types.NuclearScienceItemTagsProvider;
 
 public class NuclearScienceTagsProvider {
 
-	public static void addTagProviders(DataGenerator generator, PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper helper) {
-		NuclearScienceBlockTagsProvider blockProvider = new NuclearScienceBlockTagsProvider(output, lookupProvider, helper);
-		generator.addProvider(true, blockProvider);
-		generator.addProvider(true, new NuclearScienceItemTagsProvider(output, lookupProvider, blockProvider, helper));
-		generator.addProvider(true, new NuclearScienceFluidTagsProvider(output, lookupProvider, helper));
-		generator.addProvider(true, new NuclearScienceGasTagsProvider(output, lookupProvider, helper));
-		generator.addProvider(true, new NuclearScienceDamageTagsProvider(output, lookupProvider, helper));
-	}
+    public static void addTagProviders(DataGenerator generator, PackOutput output,
+	    CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper helper) {
+	NuclearScienceBlockTagsProvider blockProvider = new NuclearScienceBlockTagsProvider(output, lookupProvider,
+		helper);
+	generator.addProvider(true, blockProvider);
+	generator.addProvider(true, new NuclearScienceItemTagsProvider(output, lookupProvider, blockProvider, helper));
+	generator.addProvider(true, new NuclearScienceFluidTagsProvider(output, lookupProvider, helper));
+	generator.addProvider(true, new NuclearScienceGasTagsProvider(output, lookupProvider, helper));
+	generator.addProvider(true, new NuclearScienceDamageTagsProvider(output, lookupProvider, helper));
+    }
 
 }

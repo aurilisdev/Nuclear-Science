@@ -21,84 +21,89 @@ import voltaic.prefab.utilities.math.MathUtils;
 public class RenderThermometerModule extends AbstractTileRenderer<TileThermometerModule> {
 
     public RenderThermometerModule(BlockEntityRendererProvider.Context context) {
-        super(context);
+	super(context);
     }
 
     @Override
-    public void render(@NotNull TileThermometerModule tile, float partialTicks, PoseStack stack, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
+    public void render(@NotNull TileThermometerModule tile, float partialTicks, PoseStack stack,
+	    MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
 
-        if(!tile.linked.getValue()) {
-            return;
-        }
+	if (!tile.linked.getValue()) {
+	    return;
+	}
 
-        Font font = Minecraft.getInstance().font;
+	Font font = Minecraft.getInstance().font;
 
-        Direction facing = tile.getFacing();
+	Direction facing = tile.getFacing();
 
+	stack.pushPose();
 
-        stack.pushPose();
+	stack.translate(0.5, 0.5, 0.5);
 
+	rotateMatrix(stack, facing);
 
-        stack.translate(0.5, 0.5, 0.5);
+	/* MONITORED TEMPERATURE */
 
-        rotateMatrix(stack, facing);
+	stack.pushPose();
 
-        /* MONITORED TEMPERATURE */
+	stack.translate(0, 0.175, -0.46875);
 
-        stack.pushPose();
+	Component transfer = ChatFormatter.getChatDisplayShort(tile.trackedTemperature.getValue(),
+		DisplayUnits.TEMPERATURE_CELCIUS);
 
-        stack.translate(0, 0.175, -0.46875);
+	int width = font.width(transfer);
 
-        Component transfer = ChatFormatter.getChatDisplayShort(tile.trackedTemperature.getValue(), DisplayUnits.TEMPERATURE_CELCIUS);
+	float scale = 0.0215F / (width / 24.0F);
 
-        int width = font.width(transfer);
+	stack.scale(-scale, -scale, -scale);
 
-        float scale = 0.0215F / (width / 24.0F);
+	Matrix4f matrix4f = stack.last().pose();
 
-        stack.scale(-scale, -scale, -scale);
+	float textX = -width / 2.0f;
 
-        Matrix4f matrix4f = stack.last().pose();
+	font.drawInBatch(transfer, textX, 0, Color.WHITE.color(), false, matrix4f, bufferIn, Font.DisplayMode.NORMAL, 0,
+		combinedLightIn);
 
-        float textX = -width / 2.0f;
+	stack.popPose();
 
-        font.drawInBatch(transfer, textX, 0, Color.WHITE.color(), false, matrix4f, bufferIn, Font.DisplayMode.NORMAL, 0, combinedLightIn);
+	/* TARGET TEMPERATURE */
 
-        stack.popPose();
+	stack.pushPose();
 
-        /* TARGET TEMPERATURE */
+	stack.translate(0, -0.0625, -0.46875);
 
-        stack.pushPose();
+	transfer = ChatFormatter.getChatDisplayShort(tile.targetTemperature.getValue(),
+		DisplayUnits.TEMPERATURE_CELCIUS);
 
-        stack.translate(0, -0.0625, -0.46875);
+	width = font.width(transfer);
 
-        transfer = ChatFormatter.getChatDisplayShort(tile.targetTemperature.getValue(), DisplayUnits.TEMPERATURE_CELCIUS);
+	scale = 0.0215F / (width / 24.0F);
 
-        width = font.width(transfer);
+	stack.scale(-scale, -scale, -scale);
 
-        scale = 0.0215F / (width / 24.0F);
+	matrix4f = stack.last().pose();
 
-        stack.scale(-scale, -scale, -scale);
+	textX = -width / 2.0f;
 
-        matrix4f = stack.last().pose();
+	font.drawInBatch(transfer, textX, 0, Color.WHITE.color(), false, matrix4f, bufferIn, Font.DisplayMode.NORMAL, 0,
+		combinedLightIn);
 
-        textX = -width / 2.0f;
+	stack.popPose();
 
-        font.drawInBatch(transfer, textX, 0, Color.WHITE.color(), false, matrix4f, bufferIn, Font.DisplayMode.NORMAL, 0, combinedLightIn);
-
-        stack.popPose();
-
-
-        stack.popPose();
+	stack.popPose();
 
     }
 
     private static void rotateMatrix(PoseStack stack, Direction dir) {
-        switch (dir) {
-            case EAST -> stack.mulPose(MathUtils.rotQuaternionDeg(0, -90, 0));// stack.mulPose(new Quaternion(0, -90, 0, true));
-            case SOUTH -> stack.mulPose(MathUtils.rotQuaternionDeg(0, 180, 0));// stack.mulPose(new Quaternion(0, 180, 0, true));
-            case WEST -> stack.mulPose(MathUtils.rotQuaternionDeg(0, 90, 0));// stack.mulPose(new Quaternion(0, 90, 0, true));
-            default -> {
-            }
-        }
+	switch (dir) {
+	case EAST -> stack.mulPose(MathUtils.rotQuaternionDeg(0, -90, 0));// stack.mulPose(new Quaternion(0, -90, 0,
+									  // true));
+	case SOUTH -> stack.mulPose(MathUtils.rotQuaternionDeg(0, 180, 0));// stack.mulPose(new Quaternion(0, 180, 0,
+									   // true));
+	case WEST -> stack.mulPose(MathUtils.rotQuaternionDeg(0, 90, 0));// stack.mulPose(new Quaternion(0, 90, 0,
+									 // true));
+	default -> {
+	}
+	}
     }
 }

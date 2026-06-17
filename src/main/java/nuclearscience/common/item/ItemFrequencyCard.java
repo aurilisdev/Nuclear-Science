@@ -23,73 +23,76 @@ import voltaic.prefab.utilities.NBTUtils;
 
 public class ItemFrequencyCard extends ItemVoltaic {
 
-	public ItemFrequencyCard(Properties properties, Supplier<CreativeModeTab> creativeTab) {
-		super(properties.stacksTo(1), creativeTab);
+    public ItemFrequencyCard(Properties properties, Supplier<CreativeModeTab> creativeTab) {
+	super(properties.stacksTo(1), creativeTab);
+    }
+
+    @Override
+    public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
+
+	Level level = context.getLevel();
+
+	if (level.isClientSide) {
+	    return super.onItemUseFirst(stack, context);
 	}
 
-	@Override
-	public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
+	if (context.getLevel().getBlockEntity(context.getClickedPos()) instanceof TileTeleporter teleporter) {
 
-		Level level = context.getLevel();
+	    CompoundTag nbt = stack.getOrCreateTag();
+	    if (nbt.contains(NBTUtils.DIMENSION)) {
 
-		if (level.isClientSide) {
-			return super.onItemUseFirst(stack, context);
-		}
+		BlockPos pos = readBlockPos(stack);
+		ResourceKey<Level> world = readDimension(stack);
 
-		if (context.getLevel().getBlockEntity(context.getClickedPos()) instanceof TileTeleporter teleporter) {
+		teleporter.destination.setValue(pos);
+		teleporter.dimension.setValue(world);
 
-			CompoundTag nbt = stack.getOrCreateTag();
-			if (nbt.contains(NBTUtils.DIMENSION)) {
+		MutableComponent worldKey = ElectroTextUtils.dimensionExists(world) ? ElectroTextUtils.dimension(world)
+			: Component.literal(world.location().getPath());
 
-				BlockPos pos = readBlockPos(stack);
-				ResourceKey<Level> world = readDimension(stack);
+		context.getPlayer().sendSystemMessage(
+			NuclearTextUtils.tooltip("frequencycard.linked", worldKey.append(" " + pos.toShortString())));
 
-				teleporter.destination.setValue(pos);
-				teleporter.dimension.setValue(world);
+	    } else {
+		writeBlockPos(stack, teleporter.getBlockPos());
+		writeDimension(stack, teleporter.getLevel().dimension());
+	    }
 
-				MutableComponent worldKey = ElectroTextUtils.dimensionExists(world) ? ElectroTextUtils.dimension(world) : Component.literal(world.location().getPath());
-
-				context.getPlayer().sendSystemMessage(NuclearTextUtils.tooltip("frequencycard.linked", worldKey.append(" " + pos.toShortString())));
-
-			} else {
-				writeBlockPos(stack, teleporter.getBlockPos());
-				writeDimension(stack, teleporter.getLevel().dimension());
-			}
-
-		}
-
-		return super.onItemUseFirst(stack, context);
 	}
 
-	@Override
-	public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-		super.appendHoverText(stack, worldIn, tooltip, flagIn);
-		if (stack.hasTag()) {
-			BlockPos pos = readBlockPos(stack);
-			ResourceKey<Level> world = readDimension(stack);
+	return super.onItemUseFirst(stack, context);
+    }
 
-			MutableComponent worldKey = ElectroTextUtils.dimensionExists(world) ? ElectroTextUtils.dimension(world) : Component.literal(world.location().getPath());
+    @Override
+    public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+	super.appendHoverText(stack, worldIn, tooltip, flagIn);
+	if (stack.hasTag()) {
+	    BlockPos pos = readBlockPos(stack);
+	    ResourceKey<Level> world = readDimension(stack);
 
-			tooltip.add(NuclearTextUtils.tooltip("frequencycard.linked", worldKey.append(" " + pos.toShortString())));
-		} else {
-			tooltip.add(NuclearTextUtils.tooltip("frequencycard.notag"));
-		}
+	    MutableComponent worldKey = ElectroTextUtils.dimensionExists(world) ? ElectroTextUtils.dimension(world)
+		    : Component.literal(world.location().getPath());
+
+	    tooltip.add(NuclearTextUtils.tooltip("frequencycard.linked", worldKey.append(" " + pos.toShortString())));
+	} else {
+	    tooltip.add(NuclearTextUtils.tooltip("frequencycard.notag"));
 	}
+    }
 
-	public static void writeBlockPos(ItemStack item, BlockPos pos) {
-		item.getOrCreateTag().put(NBTUtils.LOCATION, NbtUtils.writeBlockPos(pos));
-	}
+    public static void writeBlockPos(ItemStack item, BlockPos pos) {
+	item.getOrCreateTag().put(NBTUtils.LOCATION, NbtUtils.writeBlockPos(pos));
+    }
 
-	public static BlockPos readBlockPos(ItemStack item) {
-		return NbtUtils.readBlockPos(item.getOrCreateTag().getCompound(NBTUtils.LOCATION));
-	}
+    public static BlockPos readBlockPos(ItemStack item) {
+	return NbtUtils.readBlockPos(item.getOrCreateTag().getCompound(NBTUtils.LOCATION));
+    }
 
-	public static void writeDimension(ItemStack stack, ResourceKey<Level> dim) {
-		stack.getOrCreateTag().put(NBTUtils.DIMENSION, NBTUtils.writeDimensionToTag(dim));
-	}
+    public static void writeDimension(ItemStack stack, ResourceKey<Level> dim) {
+	stack.getOrCreateTag().put(NBTUtils.DIMENSION, NBTUtils.writeDimensionToTag(dim));
+    }
 
-	public static ResourceKey<Level> readDimension(ItemStack stack) {
-		return NBTUtils.readDimensionFromTag(stack.getOrCreateTag().getCompound(NBTUtils.DIMENSION));
-	}
+    public static ResourceKey<Level> readDimension(ItemStack stack) {
+	return NBTUtils.readDimensionFromTag(stack.getOrCreateTag().getCompound(NBTUtils.DIMENSION));
+    }
 
 }

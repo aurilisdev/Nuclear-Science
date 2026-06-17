@@ -9,13 +9,13 @@ import voltaic.prefab.properties.types.SinglePropertyType;
 public class NuclearPropertyTypes {
 
     public static final SinglePropertyType<TunnelFrequency, ByteBuf> TUNNEL_FREQUENCY = new SinglePropertyType<>(
-            //
-            Objects::equals,
-            //
-            TunnelFrequency.STREAM_CODEC,
-            //
-            TunnelFrequency.CODEC
-            //
+	    //
+	    Objects::equals,
+	    //
+	    TunnelFrequency.STREAM_CODEC,
+	    //
+	    TunnelFrequency.CODEC
+    //
     );
 
 }

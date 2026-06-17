@@ -14,21 +14,21 @@ public abstract class GenericTileLogisticsMember extends GenericTile implements 
     public CachedTileOutput networkCable;
 
     public GenericTileLogisticsMember(BlockEntityType<?> tileEntityTypeIn, BlockPos worldPos, BlockState blockState) {
-        super(tileEntityTypeIn, worldPos, blockState);
+	super(tileEntityTypeIn, worldPos, blockState);
     }
 
     public void tickServer(ComponentTickable tickable) {
 
-        if (networkCable == null) {
-            networkCable = new CachedTileOutput(getLevel(), getBlockPos().relative(getCableLocation()));
-        }
+	if (networkCable == null) {
+	    networkCable = new CachedTileOutput(getLevel(), getBlockPos().relative(getCableLocation()));
+	}
 
-        if (tickable.getTicks() % 20 == 0) {
-            if (!networkCable.valid()) {
-                networkCable.update(getBlockPos().relative(getCableLocation()));
-            }
+	if (tickable.getTicks() % 20 == 0) {
+	    if (!networkCable.valid()) {
+		networkCable.update(getBlockPos().relative(getCableLocation()));
+	    }
 
-        }
+	}
 
     }
 
@@ -36,6 +36,6 @@ public abstract class GenericTileLogisticsMember extends GenericTile implements 
 
     @Override
     public boolean isValidConnection(Direction dir) {
-        return dir == getCableLocation();
+	return dir == getCableLocation();
     }
 }

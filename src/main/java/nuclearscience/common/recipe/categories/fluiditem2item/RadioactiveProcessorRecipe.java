@@ -17,21 +17,24 @@ import voltaic.common.recipe.recipeutils.ProbableItem;
 
 public class RadioactiveProcessorRecipe extends FluidItem2ItemRecipe {
 
-	public static final String RECIPE_GROUP = "radioactive_processor_recipe";
-	public static final ResourceLocation RECIPE_ID = NuclearScience.rl(RECIPE_GROUP);
+    public static final String RECIPE_GROUP = "radioactive_processor_recipe";
+    public static final ResourceLocation RECIPE_ID = NuclearScience.rl(RECIPE_GROUP);
 
-	public RadioactiveProcessorRecipe(ResourceLocation group, List<CountableIngredient> itemInputs, List<FluidIngredient> fluidInputs, ItemStack itemOutput, double experience, int ticks, double usagePerTick, List<ProbableItem> itemBiproducts, List<ProbableFluid> fluidBiproducts, List<ProbableGas> gasBiproducts) {
-		super(group, itemInputs, fluidInputs, itemOutput, experience, ticks, usagePerTick, itemBiproducts, fluidBiproducts, gasBiproducts);
-	}
+    public RadioactiveProcessorRecipe(ResourceLocation group, List<CountableIngredient> itemInputs,
+	    List<FluidIngredient> fluidInputs, ItemStack itemOutput, double experience, int ticks, double usagePerTick,
+	    List<ProbableItem> itemBiproducts, List<ProbableFluid> fluidBiproducts, List<ProbableGas> gasBiproducts) {
+	super(group, itemInputs, fluidInputs, itemOutput, experience, ticks, usagePerTick, itemBiproducts,
+		fluidBiproducts, gasBiproducts);
+    }
 
-	@Override
-	public RecipeSerializer<?> getSerializer() {
-		return NuclearScienceRecipies.RADIOACTIVE_PROCESSOR_SERIALIZER.get();
-	}
+    @Override
+    public RecipeSerializer<?> getSerializer() {
+	return NuclearScienceRecipies.RADIOACTIVE_PROCESSOR_SERIALIZER.get();
+    }
 
-	@Override
-	public RecipeType<?> getType() {
-		return NuclearScienceRecipies.RADIOACTIVE_PROCESSOR_TYPE.get();
-	}
+    @Override
+    public RecipeType<?> getType() {
+	return NuclearScienceRecipies.RADIOACTIVE_PROCESSOR_TYPE.get();
+    }
 
 }

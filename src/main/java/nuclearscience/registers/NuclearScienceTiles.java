@@ -49,45 +49,200 @@ import nuclearscience.common.tile.reactor.moltensalt.TileMoltenSaltPipe;
 import nuclearscience.common.tile.reactor.moltensalt.TileMoltenSaltSupplier;
 
 public class NuclearScienceTiles {
-	public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, NuclearScience.ID);
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister
+	    .create(ForgeRegistries.BLOCK_ENTITY_TYPES, NuclearScience.ID);
 
-	public static final RegistryObject<BlockEntityType<TileGasCentrifuge>> TILE_GASCENTRIFUGE = BLOCK_ENTITY_TYPES.register(SubtypeNuclearMachine.gascentrifuge.tag(), () -> new BlockEntityType<>(TileGasCentrifuge::new, Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.gascentrifuge)), null));
-    public static final RegistryObject<BlockEntityType<TileNuclearBoiler>> TILE_CHEMICALBOILER = BLOCK_ENTITY_TYPES.register(SubtypeNuclearMachine.nuclearboiler.tag(), () -> new BlockEntityType<>(TileNuclearBoiler::new, Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.nuclearboiler)), null));
-    public static final RegistryObject<BlockEntityType<TileChemicalExtractor>> TILE_CHEMICALEXTRACTOR = BLOCK_ENTITY_TYPES.register(SubtypeNuclearMachine.chemicalextractor.tag(), () -> new BlockEntityType<>(TileChemicalExtractor::new, Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.chemicalextractor)), null));
-    public static final RegistryObject<BlockEntityType<TileRadioisotopeGenerator>> TILE_RADIOISOTOPEGENERATOR = BLOCK_ENTITY_TYPES.register(SubtypeNuclearMachine.radioisotopegenerator.tag(), () -> new BlockEntityType<>(TileRadioisotopeGenerator::new, Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.radioisotopegenerator)), null));
-    public static final RegistryObject<BlockEntityType<TileMoltenSaltSupplier>> TILE_MOLTENSALTSUPPLIER = BLOCK_ENTITY_TYPES.register(SubtypeNuclearMachine.moltensaltsupplier.tag(), () -> new BlockEntityType<>(TileMoltenSaltSupplier::new, Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.moltensaltsupplier)), null));
-    public static final RegistryObject<BlockEntityType<TileFreezePlug>> TILE_FREEZEPLUG = BLOCK_ENTITY_TYPES.register(SubtypeNuclearMachine.freezeplug.tag(), () -> new BlockEntityType<>(TileFreezePlug::new, Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.freezeplug)), null));
-    public static final RegistryObject<BlockEntityType<TileTurbine>> TILE_TURBINE = BLOCK_ENTITY_TYPES.register("turbine", () -> new BlockEntityType<>(TileTurbine::new, Sets.newHashSet(NuclearScienceBlocks.BLOCK_TURBINE.get()), null));
-    public static final RegistryObject<BlockEntityType<TileFissionReactorCore>> TILE_REACTORCORE = BLOCK_ENTITY_TYPES.register(SubtypeNuclearMachine.fissionreactorcore.tag(), () -> new BlockEntityType<>(TileFissionReactorCore::new, Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.fissionreactorcore)), null));
-    public static final RegistryObject<BlockEntityType<TileFusionReactorCore>> TILE_FUSIONREACTORCORE = BLOCK_ENTITY_TYPES.register(SubtypeNuclearMachine.fusionreactorcore.tag(), () -> new BlockEntityType<>(TileFusionReactorCore::new, Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.fusionreactorcore)), null));
-    public static final RegistryObject<BlockEntityType<TileParticleInjector>> TILE_PARTICLEINJECTOR = BLOCK_ENTITY_TYPES.register(SubtypeNuclearMachine.particleinjector.tag(), () -> new BlockEntityType<>(TileParticleInjector::new, Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.particleinjector)), null));
-    public static final RegistryObject<BlockEntityType<TileElectromagneticGateway>> TILE_ELECTROMAGNETICGATEWAY = BLOCK_ENTITY_TYPES.register("electromagneticgateway", () -> new BlockEntityType<>(TileElectromagneticGateway::new, Sets.newHashSet(NuclearScienceBlocks.BLOCK_ELECTROMAGNETICGATEWAY.get()), null));
-    public static final RegistryObject<BlockEntityType<TilePlasma>> TILE_PLASMA = BLOCK_ENTITY_TYPES.register("plasma", () -> new BlockEntityType<>(TilePlasma::new, Sets.newHashSet(NuclearScienceBlocks.BLOCK_PLASMA.get()), null));
-    public static final RegistryObject<BlockEntityType<TileMeltedReactor>> TILE_MELTEDREACTOR = BLOCK_ENTITY_TYPES.register("meltedreactor", () -> new BlockEntityType<>(TileMeltedReactor::new, Sets.newHashSet(NuclearScienceBlocks.BLOCK_MELTEDREACTOR.get()), null));
-    public static final RegistryObject<BlockEntityType<TileQuantumTunnel>> TILE_QUANTUMCAPACITOR = BLOCK_ENTITY_TYPES.register(SubtypeNuclearMachine.quantumcapacitor.tag(), () -> new BlockEntityType<>(TileQuantumTunnel::new, Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.quantumcapacitor)), null));
-    public static final RegistryObject<BlockEntityType<TileFuelReprocessor>> TILE_FUELREPROCESSOR = BLOCK_ENTITY_TYPES.register(SubtypeNuclearMachine.fuelreprocessor.tag(), () -> new BlockEntityType<>(TileFuelReprocessor::new, Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.fuelreprocessor)), null));
-    public static final RegistryObject<BlockEntityType<TileRadioactiveProcessor>> TILE_RADIOACTIVEPROCESSOR = BLOCK_ENTITY_TYPES.register(SubtypeNuclearMachine.radioactiveprocessor.tag(), () -> new BlockEntityType<>(TileRadioactiveProcessor::new, Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.radioactiveprocessor)), null));
-    public static final RegistryObject<BlockEntityType<TileMSRFuelPreProcessor>> TILE_MSRFUELPREPROCESSOR = BLOCK_ENTITY_TYPES.register(SubtypeNuclearMachine.msrfuelpreprocessor.tag(), () -> new BlockEntityType<>(TileMSRFuelPreProcessor::new, Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.msrfuelpreprocessor)), null));
-    public static final RegistryObject<BlockEntityType<TileMSReactorCore>> TILE_MSRREACTORCORE = BLOCK_ENTITY_TYPES.register(SubtypeNuclearMachine.msreactorcore.tag(), () -> new BlockEntityType<>(TileMSReactorCore::new, Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.msreactorcore)), null));
-    public static final RegistryObject<BlockEntityType<TileHeatExchanger>> TILE_HEATEXCHANGER = BLOCK_ENTITY_TYPES.register(SubtypeNuclearMachine.heatexchanger.tag(), () -> new BlockEntityType<>(TileHeatExchanger::new, Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.heatexchanger)), null));
-    public static final RegistryObject<BlockEntityType<TileTeleporter>> TILE_TELEPORTER = BLOCK_ENTITY_TYPES.register(SubtypeNuclearMachine.teleporter.tag(), () -> new BlockEntityType<>(TileTeleporter::new, Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.teleporter)), null));
-    public static final RegistryObject<BlockEntityType<TileControlRod.TileFissionControlRod>> TILE_FISSIONCONTROLROD = BLOCK_ENTITY_TYPES.register(SubtypeNuclearMachine.fissioncontrolrod.tag(), () -> new BlockEntityType<>(TileControlRod.TileFissionControlRod::new, Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.fissioncontrolrod)), null));
-    public static final RegistryObject<BlockEntityType<TileControlRod.TileMSControlRod>> TILE_MSCONTROLROD = BLOCK_ENTITY_TYPES.register(SubtypeNuclearMachine.mscontrolrod.tag(), () -> new BlockEntityType<>(TileControlRod.TileMSControlRod::new, Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.mscontrolrod)), null));
-    public static final RegistryObject<BlockEntityType<TileMoltenSaltPipe>> TILE_MOLTENSALTPIPE = BLOCK_ENTITY_TYPES.register("moltensaltpipegenerictile", () -> new BlockEntityType<>(TileMoltenSaltPipe::new, BlockMoltenSaltPipe.PIPESET, null));
-    public static final RegistryObject<BlockEntityType<TileSiren>> TILE_SIREN = BLOCK_ENTITY_TYPES.register(SubtypeNuclearMachine.siren.tag(), () -> new BlockEntityType<>(TileSiren::new, Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.siren)), null));
-    public static final RegistryObject<BlockEntityType<TileAtomicAssembler>> TILE_ATOMICASSEMBLER = BLOCK_ENTITY_TYPES.register(SubtypeNuclearMachine.atomicassembler.tag(), () -> new BlockEntityType<>(TileAtomicAssembler::new, Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.atomicassembler)), null));
-    public static final RegistryObject<BlockEntityType<TileChunkloader>> TILE_CHUNKLOADER = BLOCK_ENTITY_TYPES.register(SubtypeNuclearMachine.chunkloader.tag(), () -> new BlockEntityType<>(TileChunkloader::new, Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.chunkloader)), null));
-    public static final RegistryObject<BlockEntityType<TileCloudChamber>> TILE_CLOUDCHAMBER = BLOCK_ENTITY_TYPES.register(SubtypeNuclearMachine.cloudchamber.tag(), () -> new BlockEntityType<>(TileCloudChamber::new, Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.cloudchamber)), null));
-    public static final RegistryObject<BlockEntityType<TileSteamFunnel>> TILE_STEAMFUNNEL = BLOCK_ENTITY_TYPES.register(SubtypeNuclearMachine.steamfunnel.tag(), () -> new BlockEntityType<>(TileSteamFunnel::new, Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.steamfunnel)), null));
-    public static final RegistryObject<BlockEntityType<TileFalloutScrubber>> TILE_FALLOUTSCRUBBER = BLOCK_ENTITY_TYPES.register(SubtypeNuclearMachine.falloutscrubber.tag(), () -> new BlockEntityType<>(TileFalloutScrubber::new, Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.falloutscrubber)), null));
-    public static final RegistryObject<BlockEntityType<TileReactorLogisticsCable>> TILE_REACTORLOGISTICSCABLE = BLOCK_ENTITY_TYPES.register("reactorlogisticscable", () -> new BlockEntityType<>(TileReactorLogisticsCable::new, BlockReactorLogisticsCable.PIPESET, null));
-    public static final RegistryObject<BlockEntityType<TileController>> TILE_LOGISTICSCONTROLLER = BLOCK_ENTITY_TYPES.register(SubtypeNuclearMachine.logisticscontroller.tag(), () -> new BlockEntityType<>(TileController::new, Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.logisticscontroller)), null));
-    public static final RegistryObject<BlockEntityType<TileFissionInterface>> TILE_FISSIONINTERFACE = BLOCK_ENTITY_TYPES.register(SubtypeNuclearMachine.fissioninterface.tag(), () -> new BlockEntityType<>(TileFissionInterface::new, Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.fissioninterface)), null));
-    public static final RegistryObject<BlockEntityType<TileMSInterface>> TILE_MSINTERFACE = BLOCK_ENTITY_TYPES.register(SubtypeNuclearMachine.msinterface.tag(), () -> new BlockEntityType<>(TileMSInterface::new, Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.msinterface)), null));
-    public static final RegistryObject<BlockEntityType<TileFusionInterface>> TILE_FUSIONINTERFACE = BLOCK_ENTITY_TYPES.register(SubtypeNuclearMachine.fusioninterface.tag(), () -> new BlockEntityType<>(TileFusionInterface::new, Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.fusioninterface)), null));
-    public static final RegistryObject<BlockEntityType<TileControlRodModule>> TILE_CONTROLRODMODULE = BLOCK_ENTITY_TYPES.register(SubtypeNuclearMachine.controlrodmodule.tag(), () -> new BlockEntityType<>(TileControlRodModule::new, Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.controlrodmodule)), null));
-    public static final RegistryObject<BlockEntityType<TileSupplyModule>> TILE_SUPPLYMODULE = BLOCK_ENTITY_TYPES.register(SubtypeNuclearMachine.supplymodule.tag(), () -> new BlockEntityType<>(TileSupplyModule::new, Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.supplymodule)), null));
-    public static final RegistryObject<BlockEntityType<TileMonitorModule>> TILE_MONITORMODULE = BLOCK_ENTITY_TYPES.register(SubtypeNuclearMachine.monitormodule.tag(), () -> new BlockEntityType<>(TileMonitorModule::new, Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.monitormodule)), null));
-    public static final RegistryObject<BlockEntityType<TileThermometerModule>> TILE_THERMOMETERMODULE = BLOCK_ENTITY_TYPES.register(SubtypeNuclearMachine.thermometermodule.tag(), () -> new BlockEntityType<>(TileThermometerModule::new, Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.thermometermodule)), null));
+    public static final RegistryObject<BlockEntityType<TileGasCentrifuge>> TILE_GASCENTRIFUGE = BLOCK_ENTITY_TYPES
+	    .register(SubtypeNuclearMachine.gascentrifuge.tag(),
+		    () -> new BlockEntityType<>(TileGasCentrifuge::new, Sets.newHashSet(
+			    NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.gascentrifuge)),
+			    null));
+    public static final RegistryObject<BlockEntityType<TileNuclearBoiler>> TILE_CHEMICALBOILER = BLOCK_ENTITY_TYPES
+	    .register(SubtypeNuclearMachine.nuclearboiler.tag(),
+		    () -> new BlockEntityType<>(TileNuclearBoiler::new, Sets.newHashSet(
+			    NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.nuclearboiler)),
+			    null));
+    public static final RegistryObject<BlockEntityType<TileChemicalExtractor>> TILE_CHEMICALEXTRACTOR = BLOCK_ENTITY_TYPES
+	    .register(SubtypeNuclearMachine.chemicalextractor.tag(),
+		    () -> new BlockEntityType<>(TileChemicalExtractor::new,
+			    Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE
+				    .getValue(SubtypeNuclearMachine.chemicalextractor)),
+			    null));
+    public static final RegistryObject<BlockEntityType<TileRadioisotopeGenerator>> TILE_RADIOISOTOPEGENERATOR = BLOCK_ENTITY_TYPES
+	    .register(SubtypeNuclearMachine.radioisotopegenerator.tag(),
+		    () -> new BlockEntityType<>(TileRadioisotopeGenerator::new,
+			    Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE
+				    .getValue(SubtypeNuclearMachine.radioisotopegenerator)),
+			    null));
+    public static final RegistryObject<BlockEntityType<TileMoltenSaltSupplier>> TILE_MOLTENSALTSUPPLIER = BLOCK_ENTITY_TYPES
+	    .register(SubtypeNuclearMachine.moltensaltsupplier.tag(),
+		    () -> new BlockEntityType<>(TileMoltenSaltSupplier::new,
+			    Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE
+				    .getValue(SubtypeNuclearMachine.moltensaltsupplier)),
+			    null));
+    public static final RegistryObject<BlockEntityType<TileFreezePlug>> TILE_FREEZEPLUG = BLOCK_ENTITY_TYPES
+	    .register(SubtypeNuclearMachine.freezeplug.tag(),
+		    () -> new BlockEntityType<>(TileFreezePlug::new, Sets.newHashSet(
+			    NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.freezeplug)),
+			    null));
+    public static final RegistryObject<BlockEntityType<TileTurbine>> TILE_TURBINE = BLOCK_ENTITY_TYPES
+	    .register("turbine", () -> new BlockEntityType<>(TileTurbine::new,
+		    Sets.newHashSet(NuclearScienceBlocks.BLOCK_TURBINE.get()), null));
+    public static final RegistryObject<BlockEntityType<TileFissionReactorCore>> TILE_REACTORCORE = BLOCK_ENTITY_TYPES
+	    .register(SubtypeNuclearMachine.fissionreactorcore.tag(),
+		    () -> new BlockEntityType<>(TileFissionReactorCore::new,
+			    Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE
+				    .getValue(SubtypeNuclearMachine.fissionreactorcore)),
+			    null));
+    public static final RegistryObject<BlockEntityType<TileFusionReactorCore>> TILE_FUSIONREACTORCORE = BLOCK_ENTITY_TYPES
+	    .register(SubtypeNuclearMachine.fusionreactorcore.tag(),
+		    () -> new BlockEntityType<>(TileFusionReactorCore::new,
+			    Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE
+				    .getValue(SubtypeNuclearMachine.fusionreactorcore)),
+			    null));
+    public static final RegistryObject<BlockEntityType<TileParticleInjector>> TILE_PARTICLEINJECTOR = BLOCK_ENTITY_TYPES
+	    .register(SubtypeNuclearMachine.particleinjector.tag(),
+		    () -> new BlockEntityType<>(TileParticleInjector::new,
+			    Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE
+				    .getValue(SubtypeNuclearMachine.particleinjector)),
+			    null));
+    public static final RegistryObject<BlockEntityType<TileElectromagneticGateway>> TILE_ELECTROMAGNETICGATEWAY = BLOCK_ENTITY_TYPES
+	    .register("electromagneticgateway", () -> new BlockEntityType<>(TileElectromagneticGateway::new,
+		    Sets.newHashSet(NuclearScienceBlocks.BLOCK_ELECTROMAGNETICGATEWAY.get()), null));
+    public static final RegistryObject<BlockEntityType<TilePlasma>> TILE_PLASMA = BLOCK_ENTITY_TYPES.register("plasma",
+	    () -> new BlockEntityType<>(TilePlasma::new, Sets.newHashSet(NuclearScienceBlocks.BLOCK_PLASMA.get()),
+		    null));
+    public static final RegistryObject<BlockEntityType<TileMeltedReactor>> TILE_MELTEDREACTOR = BLOCK_ENTITY_TYPES
+	    .register("meltedreactor", () -> new BlockEntityType<>(TileMeltedReactor::new,
+		    Sets.newHashSet(NuclearScienceBlocks.BLOCK_MELTEDREACTOR.get()), null));
+    public static final RegistryObject<BlockEntityType<TileQuantumTunnel>> TILE_QUANTUMCAPACITOR = BLOCK_ENTITY_TYPES
+	    .register(SubtypeNuclearMachine.quantumcapacitor.tag(),
+		    () -> new BlockEntityType<>(TileQuantumTunnel::new,
+			    Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE
+				    .getValue(SubtypeNuclearMachine.quantumcapacitor)),
+			    null));
+    public static final RegistryObject<BlockEntityType<TileFuelReprocessor>> TILE_FUELREPROCESSOR = BLOCK_ENTITY_TYPES
+	    .register(SubtypeNuclearMachine.fuelreprocessor.tag(),
+		    () -> new BlockEntityType<>(TileFuelReprocessor::new, Sets.newHashSet(
+			    NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.fuelreprocessor)),
+			    null));
+    public static final RegistryObject<BlockEntityType<TileRadioactiveProcessor>> TILE_RADIOACTIVEPROCESSOR = BLOCK_ENTITY_TYPES
+	    .register(SubtypeNuclearMachine.radioactiveprocessor.tag(),
+		    () -> new BlockEntityType<>(TileRadioactiveProcessor::new,
+			    Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE
+				    .getValue(SubtypeNuclearMachine.radioactiveprocessor)),
+			    null));
+    public static final RegistryObject<BlockEntityType<TileMSRFuelPreProcessor>> TILE_MSRFUELPREPROCESSOR = BLOCK_ENTITY_TYPES
+	    .register(SubtypeNuclearMachine.msrfuelpreprocessor.tag(),
+		    () -> new BlockEntityType<>(TileMSRFuelPreProcessor::new,
+			    Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE
+				    .getValue(SubtypeNuclearMachine.msrfuelpreprocessor)),
+			    null));
+    public static final RegistryObject<BlockEntityType<TileMSReactorCore>> TILE_MSRREACTORCORE = BLOCK_ENTITY_TYPES
+	    .register(SubtypeNuclearMachine.msreactorcore.tag(),
+		    () -> new BlockEntityType<>(TileMSReactorCore::new, Sets.newHashSet(
+			    NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.msreactorcore)),
+			    null));
+    public static final RegistryObject<BlockEntityType<TileHeatExchanger>> TILE_HEATEXCHANGER = BLOCK_ENTITY_TYPES
+	    .register(SubtypeNuclearMachine.heatexchanger.tag(),
+		    () -> new BlockEntityType<>(TileHeatExchanger::new, Sets.newHashSet(
+			    NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.heatexchanger)),
+			    null));
+    public static final RegistryObject<BlockEntityType<TileTeleporter>> TILE_TELEPORTER = BLOCK_ENTITY_TYPES
+	    .register(SubtypeNuclearMachine.teleporter.tag(),
+		    () -> new BlockEntityType<>(TileTeleporter::new, Sets.newHashSet(
+			    NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.teleporter)),
+			    null));
+    public static final RegistryObject<BlockEntityType<TileControlRod.TileFissionControlRod>> TILE_FISSIONCONTROLROD = BLOCK_ENTITY_TYPES
+	    .register(SubtypeNuclearMachine.fissioncontrolrod.tag(),
+		    () -> new BlockEntityType<>(TileControlRod.TileFissionControlRod::new,
+			    Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE
+				    .getValue(SubtypeNuclearMachine.fissioncontrolrod)),
+			    null));
+    public static final RegistryObject<BlockEntityType<TileControlRod.TileMSControlRod>> TILE_MSCONTROLROD = BLOCK_ENTITY_TYPES
+	    .register(SubtypeNuclearMachine.mscontrolrod.tag(),
+		    () -> new BlockEntityType<>(TileControlRod.TileMSControlRod::new, Sets.newHashSet(
+			    NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.mscontrolrod)),
+			    null));
+    public static final RegistryObject<BlockEntityType<TileMoltenSaltPipe>> TILE_MOLTENSALTPIPE = BLOCK_ENTITY_TYPES
+	    .register("moltensaltpipegenerictile",
+		    () -> new BlockEntityType<>(TileMoltenSaltPipe::new, BlockMoltenSaltPipe.PIPESET, null));
+    public static final RegistryObject<BlockEntityType<TileSiren>> TILE_SIREN = BLOCK_ENTITY_TYPES.register(
+	    SubtypeNuclearMachine.siren.tag(),
+	    () -> new BlockEntityType<>(TileSiren::new,
+		    Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.siren)),
+		    null));
+    public static final RegistryObject<BlockEntityType<TileAtomicAssembler>> TILE_ATOMICASSEMBLER = BLOCK_ENTITY_TYPES
+	    .register(SubtypeNuclearMachine.atomicassembler.tag(),
+		    () -> new BlockEntityType<>(TileAtomicAssembler::new, Sets.newHashSet(
+			    NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.atomicassembler)),
+			    null));
+    public static final RegistryObject<BlockEntityType<TileChunkloader>> TILE_CHUNKLOADER = BLOCK_ENTITY_TYPES
+	    .register(SubtypeNuclearMachine.chunkloader.tag(),
+		    () -> new BlockEntityType<>(TileChunkloader::new, Sets.newHashSet(
+			    NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.chunkloader)),
+			    null));
+    public static final RegistryObject<BlockEntityType<TileCloudChamber>> TILE_CLOUDCHAMBER = BLOCK_ENTITY_TYPES
+	    .register(SubtypeNuclearMachine.cloudchamber.tag(),
+		    () -> new BlockEntityType<>(TileCloudChamber::new, Sets.newHashSet(
+			    NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.cloudchamber)),
+			    null));
+    public static final RegistryObject<BlockEntityType<TileSteamFunnel>> TILE_STEAMFUNNEL = BLOCK_ENTITY_TYPES
+	    .register(SubtypeNuclearMachine.steamfunnel.tag(),
+		    () -> new BlockEntityType<>(TileSteamFunnel::new, Sets.newHashSet(
+			    NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.steamfunnel)),
+			    null));
+    public static final RegistryObject<BlockEntityType<TileFalloutScrubber>> TILE_FALLOUTSCRUBBER = BLOCK_ENTITY_TYPES
+	    .register(SubtypeNuclearMachine.falloutscrubber.tag(),
+		    () -> new BlockEntityType<>(TileFalloutScrubber::new, Sets.newHashSet(
+			    NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.falloutscrubber)),
+			    null));
+    public static final RegistryObject<BlockEntityType<TileReactorLogisticsCable>> TILE_REACTORLOGISTICSCABLE = BLOCK_ENTITY_TYPES
+	    .register("reactorlogisticscable", () -> new BlockEntityType<>(TileReactorLogisticsCable::new,
+		    BlockReactorLogisticsCable.PIPESET, null));
+    public static final RegistryObject<BlockEntityType<TileController>> TILE_LOGISTICSCONTROLLER = BLOCK_ENTITY_TYPES
+	    .register(SubtypeNuclearMachine.logisticscontroller.tag(),
+		    () -> new BlockEntityType<>(TileController::new,
+			    Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE
+				    .getValue(SubtypeNuclearMachine.logisticscontroller)),
+			    null));
+    public static final RegistryObject<BlockEntityType<TileFissionInterface>> TILE_FISSIONINTERFACE = BLOCK_ENTITY_TYPES
+	    .register(SubtypeNuclearMachine.fissioninterface.tag(),
+		    () -> new BlockEntityType<>(TileFissionInterface::new,
+			    Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE
+				    .getValue(SubtypeNuclearMachine.fissioninterface)),
+			    null));
+    public static final RegistryObject<BlockEntityType<TileMSInterface>> TILE_MSINTERFACE = BLOCK_ENTITY_TYPES
+	    .register(SubtypeNuclearMachine.msinterface.tag(),
+		    () -> new BlockEntityType<>(TileMSInterface::new, Sets.newHashSet(
+			    NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.msinterface)),
+			    null));
+    public static final RegistryObject<BlockEntityType<TileFusionInterface>> TILE_FUSIONINTERFACE = BLOCK_ENTITY_TYPES
+	    .register(SubtypeNuclearMachine.fusioninterface.tag(),
+		    () -> new BlockEntityType<>(TileFusionInterface::new, Sets.newHashSet(
+			    NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.fusioninterface)),
+			    null));
+    public static final RegistryObject<BlockEntityType<TileControlRodModule>> TILE_CONTROLRODMODULE = BLOCK_ENTITY_TYPES
+	    .register(SubtypeNuclearMachine.controlrodmodule.tag(),
+		    () -> new BlockEntityType<>(TileControlRodModule::new,
+			    Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE
+				    .getValue(SubtypeNuclearMachine.controlrodmodule)),
+			    null));
+    public static final RegistryObject<BlockEntityType<TileSupplyModule>> TILE_SUPPLYMODULE = BLOCK_ENTITY_TYPES
+	    .register(SubtypeNuclearMachine.supplymodule.tag(),
+		    () -> new BlockEntityType<>(TileSupplyModule::new, Sets.newHashSet(
+			    NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.supplymodule)),
+			    null));
+    public static final RegistryObject<BlockEntityType<TileMonitorModule>> TILE_MONITORMODULE = BLOCK_ENTITY_TYPES
+	    .register(SubtypeNuclearMachine.monitormodule.tag(),
+		    () -> new BlockEntityType<>(TileMonitorModule::new, Sets.newHashSet(
+			    NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.monitormodule)),
+			    null));
+    public static final RegistryObject<BlockEntityType<TileThermometerModule>> TILE_THERMOMETERMODULE = BLOCK_ENTITY_TYPES
+	    .register(SubtypeNuclearMachine.thermometermodule.tag(),
+		    () -> new BlockEntityType<>(TileThermometerModule::new,
+			    Sets.newHashSet(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE
+				    .getValue(SubtypeNuclearMachine.thermometermodule)),
+			    null));
 
 }

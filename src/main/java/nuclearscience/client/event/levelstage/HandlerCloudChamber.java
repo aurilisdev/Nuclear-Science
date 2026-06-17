@@ -28,58 +28,57 @@ public class HandlerCloudChamber extends AbstractLevelStageHandler {
 
     @Override
     public boolean shouldRender(RenderLevelStageEvent.Stage stage) {
-        return stage == RenderLevelStageEvent.Stage.AFTER_TRIPWIRE_BLOCKS;
+	return stage == RenderLevelStageEvent.Stage.AFTER_TRIPWIRE_BLOCKS;
     }
 
     @Override
-    public void render(Camera camera, Frustum frustum, LevelRenderer renderer, PoseStack poseStack, Matrix4f projectionMatrix, Minecraft minecraft, int renderTick, float partialTick) {
+    public void render(Camera camera, Frustum frustum, LevelRenderer renderer, PoseStack poseStack,
+	    Matrix4f projectionMatrix, Minecraft minecraft, int renderTick, float partialTick) {
 
-        MultiBufferSource.BufferSource buffer = minecraft.renderBuffers().bufferSource();
-        VertexConsumer builder = buffer.getBuffer(RenderType.LINES);
-        Vec3 camPos = camera.getPosition();
+	MultiBufferSource.BufferSource buffer = minecraft.renderBuffers().bufferSource();
+	VertexConsumer builder = buffer.getBuffer(RenderType.LINES);
+	Vec3 camPos = camera.getPosition();
 
-        Iterator<TileCloudChamber> it = locations.iterator();
+	Iterator<TileCloudChamber> it = locations.iterator();
 
-        while (it.hasNext()) {
+	while (it.hasNext()) {
 
-            TileCloudChamber chamber = it.next();
+	    TileCloudChamber chamber = it.next();
 
-            if(chamber == null || chamber.isRemoved() || !chamber.hasLevel() || !chamber.getLevel().isLoaded(chamber.getBlockPos()) || !chamber.active.getValue()) {
-                it.remove();
-                continue;
-            }
+	    if (chamber == null || chamber.isRemoved() || !chamber.hasLevel()
+		    || !chamber.getLevel().isLoaded(chamber.getBlockPos()) || !chamber.active.getValue()) {
+		it.remove();
+		continue;
+	    }
 
-            chamber.sources.getValue().forEach(source -> {
-                AABB outline = new AABB(source);
+	    chamber.sources.getValue().forEach(source -> {
+		AABB outline = new AABB(source);
 
-                if(!frustum.isVisible(outline)) {
-                    return;
-                }
-                poseStack.pushPose();
-                poseStack.translate(-camPos.x, -camPos.y, -camPos.z);
-                LevelRenderer.renderLineBox(poseStack, builder, outline, 1.0F, 1.0F, 1.0F, 1.0F);
-                poseStack.popPose();
-            });
+		if (!frustum.isVisible(outline)) {
+		    return;
+		}
+		poseStack.pushPose();
+		poseStack.translate(-camPos.x, -camPos.y, -camPos.z);
+		LevelRenderer.renderLineBox(poseStack, builder, outline, 1.0F, 1.0F, 1.0F, 1.0F);
+		poseStack.popPose();
+	    });
 
+	}
 
-
-        }
-
-        buffer.endBatch(RenderType.LINES);
-
+	buffer.endBatch(RenderType.LINES);
 
     }
 
     @Override
     public void clear() {
-        locations.clear();
+	locations.clear();
     }
 
     public static void addSources(TileCloudChamber chamber) {
-        INSTANCE.locations.add(chamber);
+	INSTANCE.locations.add(chamber);
     }
-    
+
     public static void removeSources(TileCloudChamber chamber) {
-        INSTANCE.locations.remove(chamber);
+	INSTANCE.locations.remove(chamber);
     }
 }

@@ -12,10 +12,11 @@ import voltaic.prefab.inventory.container.types.GenericContainerBlockEntity;
 public class ContainerFalloutScrubber extends GenericContainerBlockEntity<TileFalloutScrubber> {
 
     public ContainerFalloutScrubber(int id, Inventory playerinv) {
-        this(id, playerinv, new SimpleContainer(0), new SimpleContainerData(5));
+	this(id, playerinv, new SimpleContainer(0), new SimpleContainerData(5));
     }
+
     public ContainerFalloutScrubber(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
-        super(NuclearScienceMenuTypes.CONTAINER_FALLOUTSCRUBBER.get(), id, playerinv, inventory, inventorydata);
+	super(NuclearScienceMenuTypes.CONTAINER_FALLOUTSCRUBBER.get(), id, playerinv, inventory, inventorydata);
     }
 
     @Override

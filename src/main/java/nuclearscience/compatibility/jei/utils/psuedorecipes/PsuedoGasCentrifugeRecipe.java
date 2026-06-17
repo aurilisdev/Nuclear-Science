@@ -5,16 +5,17 @@ import voltaic.common.recipe.recipeutils.GasIngredient;
 
 public class PsuedoGasCentrifugeRecipe {
 
-	public GasIngredient inputGasStack;
-	public ItemStack output1;
-	public ItemStack output2;
-	public ItemStack biproduct;
+    public GasIngredient inputGasStack;
+    public ItemStack output1;
+    public ItemStack output2;
+    public ItemStack biproduct;
 
-	public PsuedoGasCentrifugeRecipe(GasIngredient inputGas, ItemStack output1, ItemStack output2, ItemStack biproduct) {
-		inputGasStack = inputGas;
-		this.output1 = output1;
-		this.output2 = output2;
-		this.biproduct = biproduct;
-	}
+    public PsuedoGasCentrifugeRecipe(GasIngredient inputGas, ItemStack output1, ItemStack output2,
+	    ItemStack biproduct) {
+	inputGasStack = inputGas;
+	this.output1 = output1;
+	this.output2 = output2;
+	this.biproduct = biproduct;
+    }
 
 }

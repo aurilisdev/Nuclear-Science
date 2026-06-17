@@ -23,42 +23,48 @@ import nuclearscience.registers.NuclearScienceCapabilities;
 @EventBusSubscriber(modid = NuclearScience.ID, bus = EventBusSubscriber.Bus.FORGE)
 public class ServerEventHandler {
 
-	@SubscribeEvent
-	public static void addReloadListeners(AddReloadListenerEvent event) {
-		event.addListener(AtomicAssemblerBlacklistRegister.INSTANCE);
-		event.addListener(AtomicAssemblerWhitelistRegister.INSTANCE);
-	}
+    @SubscribeEvent
+    public static void addReloadListeners(AddReloadListenerEvent event) {
+	event.addListener(AtomicAssemblerBlacklistRegister.INSTANCE);
+	event.addListener(AtomicAssemblerWhitelistRegister.INSTANCE);
+    }
 
-	@SubscribeEvent
-	public static void serverStartedHandler(ServerStartedEvent event) {
-		AtomicAssemblerBlacklistRegister.INSTANCE.generateTagValues();
-		AtomicAssemblerWhitelistRegister.INSTANCE.generateTagValues();
-	}
+    @SubscribeEvent
+    public static void serverStartedHandler(ServerStartedEvent event) {
+	AtomicAssemblerBlacklistRegister.INSTANCE.generateTagValues();
+	AtomicAssemblerWhitelistRegister.INSTANCE.generateTagValues();
+    }
 
-	@SubscribeEvent
-	public static void registerCommands(RegisterCommandsEvent event) {
-		CommandWipeAllFrequencies.register(event.getDispatcher());
-		CommandWipePublicFrequencies.register(event.getDispatcher());
+    @SubscribeEvent
+    public static void registerCommands(RegisterCommandsEvent event) {
+	CommandWipeAllFrequencies.register(event.getDispatcher());
+	CommandWipePublicFrequencies.register(event.getDispatcher());
+    }
+
+    @SubscribeEvent
+    public static void registerLevelCaps(AttachCapabilitiesEvent<Level> event) {
+	Level world = event.getObject();
+	if (world != null && world.dimension().equals(Level.OVERWORLD)
+		&& world.getCapability(NuclearScienceCapabilities.CAPABILITY_TUNNELMAP)
+			.orElse(NuclearCapabilityUtils.EMPTY_TUNNELMAP) == NuclearCapabilityUtils.EMPTY_TUNNELMAP) {
+	    event.addCapability(NuclearScience.rl("tunnelmap"), new CapabilityTunnelMap());
 	}
-	
-	@SubscribeEvent
-	public static void registerLevelCaps(AttachCapabilitiesEvent<Level> event) {
-		Level world = event.getObject();
-		if(world != null && world.dimension().equals(Level.OVERWORLD) && world.getCapability(NuclearScienceCapabilities.CAPABILITY_TUNNELMAP).orElse(NuclearCapabilityUtils.EMPTY_TUNNELMAP) == NuclearCapabilityUtils.EMPTY_TUNNELMAP) {
-			event.addCapability(NuclearScience.rl("tunnelmap"), new CapabilityTunnelMap());
-		}
-		if(world != null && world.dimension().equals(Level.OVERWORLD) && world.getCapability(NuclearScienceCapabilities.CAPABILITY_CHANNELMAP).orElse(NuclearCapabilityUtils.EMPTY_CHANNELMAP) == NuclearCapabilityUtils.EMPTY_CHANNELMAP) {
-			event.addCapability(NuclearScience.rl("channelmap"), new CapabilityChannelMap());
-		}
+	if (world != null && world.dimension().equals(Level.OVERWORLD)
+		&& world.getCapability(NuclearScienceCapabilities.CAPABILITY_CHANNELMAP)
+			.orElse(NuclearCapabilityUtils.EMPTY_CHANNELMAP) == NuclearCapabilityUtils.EMPTY_CHANNELMAP) {
+	    event.addCapability(NuclearScience.rl("channelmap"), new CapabilityChannelMap());
 	}
-	
-	@SubscribeEvent
-	public static void registerEntityCaps(AttachCapabilitiesEvent<Entity> event) {
-		Entity entity = event.getObject();
-		
-		if(entity instanceof ItemEntity item && item.getCapability(NuclearScienceCapabilities.CAPABILITY_ANTIMATTERITEM).orElse(NuclearCapabilityUtils.EMPTY_ANTIMATTERITEM) == NuclearCapabilityUtils.EMPTY_ANTIMATTERITEM) {
-			event.addCapability(NuclearScience.rl("antimatteritem"), new CapabilityAntimatterItem());
-		}
+    }
+
+    @SubscribeEvent
+    public static void registerEntityCaps(AttachCapabilitiesEvent<Entity> event) {
+	Entity entity = event.getObject();
+
+	if (entity instanceof ItemEntity item
+		&& item.getCapability(NuclearScienceCapabilities.CAPABILITY_ANTIMATTERITEM).orElse(
+			NuclearCapabilityUtils.EMPTY_ANTIMATTERITEM) == NuclearCapabilityUtils.EMPTY_ANTIMATTERITEM) {
+	    event.addCapability(NuclearScience.rl("antimatteritem"), new CapabilityAntimatterItem());
 	}
+    }
 
 }

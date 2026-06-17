@@ -15,32 +15,34 @@ import voltaic.common.item.ItemVoltaic;
 
 public class ItemAntimatter extends ItemVoltaic {
     public ItemAntimatter(Properties properties, Supplier<CreativeModeTab> creativeTab) {
-        super(properties, creativeTab);
+	super(properties, creativeTab);
     }
 
     @Override
     public boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity) {
 
-    	ICapabilityAntimatterItem cap = entity.getCapability(NuclearScienceCapabilities.CAPABILITY_ANTIMATTERITEM).orElse(NuclearCapabilityUtils.EMPTY_ANTIMATTERITEM);
-    	
-    	if(cap == NuclearCapabilityUtils.EMPTY_ANTIMATTERITEM) {
-    		return super.onEntityItemUpdate(stack, entity);
-    	}
-    	
-        int time = cap.getTime();
+	ICapabilityAntimatterItem cap = entity.getCapability(NuclearScienceCapabilities.CAPABILITY_ANTIMATTERITEM)
+		.orElse(NuclearCapabilityUtils.EMPTY_ANTIMATTERITEM);
 
-        if(time >= NuclearConstants.ANTIMATTER_TICKS_ON_GROUND) {
+	if (cap == NuclearCapabilityUtils.EMPTY_ANTIMATTERITEM) {
+	    return super.onEntityItemUpdate(stack, entity);
+	}
 
-            if(!entity.level().isClientSide()) {
-                entity.level().explode(entity, entity.getX(), entity.getY(), entity.getZ(), 2F, Level.ExplosionInteraction.BLOCK);
-                entity.remove(Entity.RemovalReason.DISCARDED);
-            }
+	int time = cap.getTime();
 
-            return true;
-        }
+	if (time >= NuclearConstants.ANTIMATTER_TICKS_ON_GROUND) {
 
-        cap.incrementTime();
+	    if (!entity.level().isClientSide()) {
+		entity.level().explode(entity, entity.getX(), entity.getY(), entity.getZ(), 2F,
+			Level.ExplosionInteraction.BLOCK);
+		entity.remove(Entity.RemovalReason.DISCARDED);
+	    }
 
-        return super.onEntityItemUpdate(stack, entity);
+	    return true;
+	}
+
+	cap.incrementTime();
+
+	return super.onEntityItemUpdate(stack, entity);
     }
 }

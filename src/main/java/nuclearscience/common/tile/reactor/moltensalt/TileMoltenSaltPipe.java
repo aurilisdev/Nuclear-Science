@@ -11,47 +11,48 @@ import nuclearscience.common.network.MoltenSaltNetwork;
 import nuclearscience.registers.NuclearScienceTiles;
 import voltaic.prefab.tile.types.GenericRefreshingConnectTile;
 
-public class TileMoltenSaltPipe extends GenericRefreshingConnectTile<SubtypeMoltenSaltPipe, TileMoltenSaltPipe, MoltenSaltNetwork> {
+public class TileMoltenSaltPipe
+	extends GenericRefreshingConnectTile<SubtypeMoltenSaltPipe, TileMoltenSaltPipe, MoltenSaltNetwork> {
 
     public SubtypeMoltenSaltPipe pipe = null;
 
     public TileMoltenSaltPipe(BlockPos pos, BlockState state) {
-        super(NuclearScienceTiles.TILE_MOLTENSALTPIPE.get(), pos, state);
+	super(NuclearScienceTiles.TILE_MOLTENSALTPIPE.get(), pos, state);
     }
 
     @Override
     public SubtypeMoltenSaltPipe getCableType() {
-        if (pipe == null) {
-            pipe = ((BlockMoltenSaltPipe) getBlockState().getBlock()).pipe;
-        }
-        return pipe;
+	if (pipe == null) {
+	    pipe = ((BlockMoltenSaltPipe) getBlockState().getBlock()).pipe;
+	}
+	return pipe;
     }
 
     @Override
     public double getMaxTransfer() {
-        return 0;
+	return 0;
     }
 
     @Override
     protected void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
-        compound.putInt("ord", getCableType().ordinal());
+	super.saveAdditional(compound);
+	compound.putInt("ord", getCableType().ordinal());
     }
 
     @Override
-	public void load(CompoundTag compound) {
-        super.load(compound);
-        pipe = SubtypeMoltenSaltPipe.values()[compound.getInt("ord")];
+    public void load(CompoundTag compound) {
+	super.load(compound);
+	pipe = SubtypeMoltenSaltPipe.values()[compound.getInt("ord")];
     }
 
     @Override
     public MoltenSaltNetwork createInstanceConductor(Set<TileMoltenSaltPipe> set) {
-        return new MoltenSaltNetwork(set);
+	return new MoltenSaltNetwork(set);
     }
 
     @Override
     public MoltenSaltNetwork createInstance(Set<MoltenSaltNetwork> set) {
-        return new MoltenSaltNetwork(set);
+	return new MoltenSaltNetwork(set);
     }
 
     @Override

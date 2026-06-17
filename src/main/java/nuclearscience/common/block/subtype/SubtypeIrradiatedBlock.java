@@ -6,8 +6,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import voltaic.api.ISubtype;
 
 public enum SubtypeIrradiatedBlock implements ISubtype {
-    soil(Properties.copy(Blocks.DIRT).randomTicks()),
-    grass(Properties.copy(Blocks.GRASS_BLOCK).randomTicks()),
+    soil(Properties.copy(Blocks.DIRT).randomTicks()), grass(Properties.copy(Blocks.GRASS_BLOCK).randomTicks()),
     petrifiedwood(Properties.copy(Blocks.OAK_WOOD).randomTicks(), true);
 
     public final BlockBehaviour.Properties properties;
@@ -15,28 +14,30 @@ public enum SubtypeIrradiatedBlock implements ISubtype {
     private boolean burnable = false;
 
     private SubtypeIrradiatedBlock(BlockBehaviour.Properties properties) {
-        this.properties = properties;
+	this.properties = properties;
     }
+
     private SubtypeIrradiatedBlock(BlockBehaviour.Properties properties, boolean burnable) {
 	this(properties);
 	this.burnable = burnable;
-    }    
+    }
+
     public boolean burnable() {
 	return burnable;
     }
 
     @Override
     public String tag() {
-        return "irradiatedblock" + name();
+	return "irradiatedblock" + name();
     }
 
     @Override
     public String forgeTag() {
-        return "irradiatedblock/" + name();
+	return "irradiatedblock/" + name();
     }
 
     @Override
     public boolean isItem() {
-        return false;
+	return false;
     }
 }

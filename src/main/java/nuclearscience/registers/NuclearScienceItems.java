@@ -3,6 +3,7 @@ package nuclearscience.registers;
 import java.util.ArrayList;
 import java.util.List;
 
+import electrodynamics.registers.ElectrodynamicsItems;
 import net.minecraft.world.item.ArmorItem.Type;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -34,99 +35,203 @@ import voltaic.common.item.ItemIodineTablet;
 import voltaic.common.item.ItemVoltaic;
 import voltaic.prefab.item.ElectricItemProperties;
 import voltaic.prefab.utilities.object.TransferPack;
-import electrodynamics.registers.ElectrodynamicsItems;
 
 public class NuclearScienceItems {
-	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, NuclearScience.ID);
-	
-	/* BLOCKS */
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS,
+	    NuclearScience.ID);
 
-	public static final BulkRegistryObject<BlockItemDescriptable, SubtypeRadiationShielding> ITEMS_RADIATION_SHIELDING = new BulkRegistryObject<>(SubtypeRadiationShielding.values(), subtype -> ITEMS.register(subtype.tag(), () -> new BlockItemDescriptable(NuclearScienceBlocks.BLOCKS_RADIATION_SHIELDING.getValue(subtype), new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get())));
+    /* BLOCKS */
 
-	public static final RegistryObject<BlockItemDescriptable> ITEM_TURBINE = ITEMS.register("turbine", () -> new BlockItemDescriptable(NuclearScienceBlocks.BLOCK_TURBINE.get(), new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final BulkRegistryObject<BlockItemDescriptable, SubtypeRadiationShielding> ITEMS_RADIATION_SHIELDING = new BulkRegistryObject<>(
+	    SubtypeRadiationShielding.values(),
+	    subtype -> ITEMS.register(subtype.tag(),
+		    () -> new BlockItemDescriptable(NuclearScienceBlocks.BLOCKS_RADIATION_SHIELDING.getValue(subtype),
+			    new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get())));
 
-	public static final BulkRegistryObject<BlockItemDescriptable, SubtypeNuclearMachine> ITEMS_NUCLEARMACHINE = new BulkRegistryObject<>(SubtypeNuclearMachine.values(), subtype -> ITEMS.register(subtype.tag(), () -> new BlockItemDescriptable(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(subtype), new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get())));
-	public static final BulkRegistryObject<BlockItemDescriptable, SubtypeMoltenSaltPipe> ITEMS_MOLTENSALTPIPTE = new BulkRegistryObject<>(SubtypeMoltenSaltPipe.values(), subtype -> ITEMS.register(subtype.tag(), () -> new BlockItemDescriptable(NuclearScienceBlocks.BLOCKS_MOLTENSALTPIPE.getValue(subtype), new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get())));
-	public static final BulkRegistryObject<BlockItemDescriptable, SubtypeReactorLogisticsCable> ITEMS_REACTORLOGISTICSCABLE = new BulkRegistryObject<>(SubtypeReactorLogisticsCable.values(), subtype -> ITEMS.register(subtype.tag(), () -> new BlockItemDescriptable(NuclearScienceBlocks.BLOCKS_REACTORLOGISTICSCABLE.getValue(subtype), new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get())));
+    public static final RegistryObject<BlockItemDescriptable> ITEM_TURBINE = ITEMS.register("turbine",
+	    () -> new BlockItemDescriptable(NuclearScienceBlocks.BLOCK_TURBINE.get(), new Item.Properties(),
+		    () -> NuclearScienceCreativeTabs.MAIN.get()));
 
-	public static final BulkRegistryObject<BlockItemDescriptable, SubtypeElectromagent> ITEMS_ELECTROMAGNET = new BulkRegistryObject<>(SubtypeElectromagent.values(), subtype -> ITEMS.register(subtype.tag(), () -> new BlockItemDescriptable(NuclearScienceBlocks.BLOCKS_ELECTROMAGENT.getValue(subtype), new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get())));
+    public static final BulkRegistryObject<BlockItemDescriptable, SubtypeNuclearMachine> ITEMS_NUCLEARMACHINE = new BulkRegistryObject<>(
+	    SubtypeNuclearMachine.values(),
+	    subtype -> ITEMS.register(subtype.tag(),
+		    () -> new BlockItemDescriptable(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(subtype),
+			    new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get())));
+    public static final BulkRegistryObject<BlockItemDescriptable, SubtypeMoltenSaltPipe> ITEMS_MOLTENSALTPIPTE = new BulkRegistryObject<>(
+	    SubtypeMoltenSaltPipe.values(),
+	    subtype -> ITEMS.register(subtype.tag(),
+		    () -> new BlockItemDescriptable(NuclearScienceBlocks.BLOCKS_MOLTENSALTPIPE.getValue(subtype),
+			    new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get())));
+    public static final BulkRegistryObject<BlockItemDescriptable, SubtypeReactorLogisticsCable> ITEMS_REACTORLOGISTICSCABLE = new BulkRegistryObject<>(
+	    SubtypeReactorLogisticsCable.values(),
+	    subtype -> ITEMS.register(subtype.tag(),
+		    () -> new BlockItemDescriptable(NuclearScienceBlocks.BLOCKS_REACTORLOGISTICSCABLE.getValue(subtype),
+			    new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get())));
 
-	//public static final RegistryObject<BlockItemDescriptable> ITEM_ELECTROMAGNET = ITEMS.register("electromagnet", () -> new BlockItemDescriptable(NuclearScienceBlocks.BLOCK_ELECTROMAGNET.get(), new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
-	//public static final RegistryObject<BlockItemDescriptable> ITEM_ELECTROMAGNETICGLASS = ITEMS.register("electromagneticglass", () -> new BlockItemDescriptable(NuclearScienceBlocks.BLOCK_ELECTROMAGNETICGLASS.get(), new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<BlockItemDescriptable> ITEM_ELECTROMAGNETICBOOSTER = ITEMS.register("electromagneticbooster", () -> new BlockItemDescriptable(NuclearScienceBlocks.BLOCK_ELECTORMAGNETICBOOSTER.get(), new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<BlockItemDescriptable> ITEM_ELECTROMAGNETICSWITCH = ITEMS.register("electromagneticswitch", () -> new BlockItemDescriptable(NuclearScienceBlocks.BLOCK_ELECTROMAGNETICSWITCH.get(), new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<BlockItemDescriptable> ITEM_ELECTROMAGNETICGATEWAY = ITEMS.register("electromagneticgateway", () -> new BlockItemDescriptable(NuclearScienceBlocks.BLOCK_ELECTROMAGNETICGATEWAY.get(), new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<BlockItemDescriptable> ITEM_ELECTROMAGNETICDIODE = ITEMS.register("electromagneticdiode", () -> new BlockItemDescriptable(NuclearScienceBlocks.BLOCK_ELECTROMAGNETICDIODE.get(), new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final BulkRegistryObject<BlockItemDescriptable, SubtypeElectromagent> ITEMS_ELECTROMAGNET = new BulkRegistryObject<>(
+	    SubtypeElectromagent.values(),
+	    subtype -> ITEMS.register(subtype.tag(),
+		    () -> new BlockItemDescriptable(NuclearScienceBlocks.BLOCKS_ELECTROMAGENT.getValue(subtype),
+			    new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get())));
 
-	public static final RegistryObject<BlockItemDescriptable> ITEM_MELTEDREACTOR = ITEMS.register("meltedreactor", () -> new BlockItemDescriptable(NuclearScienceBlocks.BLOCK_MELTEDREACTOR.get(), new Item.Properties(), null));
-	public static final BulkRegistryObject<BlockItemDescriptable, SubtypeIrradiatedBlock> ITEMS_IRRADIATED = new BulkRegistryObject<>(SubtypeIrradiatedBlock.values(), subtype -> ITEMS.register(subtype.tag(), () -> new BlockItemDescriptable(NuclearScienceBlocks.BLOCKS_IRRADIATED.getValue(subtype), new Item.Properties(), null)));
+    // public static final RegistryObject<BlockItemDescriptable> ITEM_ELECTROMAGNET
+    // = ITEMS.register("electromagnet", () -> new
+    // BlockItemDescriptable(NuclearScienceBlocks.BLOCK_ELECTROMAGNET.get(), new
+    // Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    // public static final RegistryObject<BlockItemDescriptable>
+    // ITEM_ELECTROMAGNETICGLASS = ITEMS.register("electromagneticglass", () -> new
+    // BlockItemDescriptable(NuclearScienceBlocks.BLOCK_ELECTROMAGNETICGLASS.get(),
+    // new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<BlockItemDescriptable> ITEM_ELECTROMAGNETICBOOSTER = ITEMS.register(
+	    "electromagneticbooster",
+	    () -> new BlockItemDescriptable(NuclearScienceBlocks.BLOCK_ELECTORMAGNETICBOOSTER.get(),
+		    new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<BlockItemDescriptable> ITEM_ELECTROMAGNETICSWITCH = ITEMS.register(
+	    "electromagneticswitch",
+	    () -> new BlockItemDescriptable(NuclearScienceBlocks.BLOCK_ELECTROMAGNETICSWITCH.get(),
+		    new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<BlockItemDescriptable> ITEM_ELECTROMAGNETICGATEWAY = ITEMS.register(
+	    "electromagneticgateway",
+	    () -> new BlockItemDescriptable(NuclearScienceBlocks.BLOCK_ELECTROMAGNETICGATEWAY.get(),
+		    new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<BlockItemDescriptable> ITEM_ELECTROMAGNETICDIODE = ITEMS.register(
+	    "electromagneticdiode",
+	    () -> new BlockItemDescriptable(NuclearScienceBlocks.BLOCK_ELECTROMAGNETICDIODE.get(),
+		    new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
 
-	/* ITEMS */
+    public static final RegistryObject<BlockItemDescriptable> ITEM_MELTEDREACTOR = ITEMS.register("meltedreactor",
+	    () -> new BlockItemDescriptable(NuclearScienceBlocks.BLOCK_MELTEDREACTOR.get(), new Item.Properties(),
+		    null));
+    public static final BulkRegistryObject<BlockItemDescriptable, SubtypeIrradiatedBlock> ITEMS_IRRADIATED = new BulkRegistryObject<>(
+	    SubtypeIrradiatedBlock.values(),
+	    subtype -> ITEMS.register(subtype.tag(),
+		    () -> new BlockItemDescriptable(NuclearScienceBlocks.BLOCKS_IRRADIATED.getValue(subtype),
+			    new Item.Properties(), null)));
 
-	public static final RegistryObject<Item> ITEM_URANIUM235 = ITEMS.register("uranium235", () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_URANIUM238 = ITEMS.register("uranium238", () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_PLUTONIUM239 = ITEMS.register("plutonium239", () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_POLONIUM210 = ITEMS.register("polonium210", () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_ACTINIUM225 = ITEMS.register("actinium225", () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_LIFHT4PUF3 = ITEMS.register("lifthf4uf4", () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_FLINAK = ITEMS.register("flinak", () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_YELLOWCAKE = ITEMS.register("yellowcake", () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_FISSILEDUST = ITEMS.register("fissiledust", () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_FISSILE_SALT = ITEMS.register("fissilesalt", () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_PLUTONIUMOXIDE = ITEMS.register("plutoniumoxide", () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_POLONIUM210_CHUNK = ITEMS.register("polonium210chunk", () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_THORIANITEDUST = ITEMS.register("thorianitedust", () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_ACTINIUMOXIDE = ITEMS.register("actiniumoxide", () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    /* ITEMS */
 
-	public static final RegistryObject<Item> ITEM_FUELLEUO2 = ITEMS.register("fuelleuo2", () -> new ItemVoltaic(new Item.Properties().stacksTo(1).durability(26000), () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_FUELHEUO2 = ITEMS.register("fuelheuo2", () -> new ItemVoltaic(new Item.Properties().stacksTo(1).durability(24000), () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_FUELPLUTONIUM = ITEMS.register("fuelplutonium", () -> new ItemVoltaic(new Item.Properties().stacksTo(1).durability(120000), () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_FUELSPENT = ITEMS.register("fuelspent", () -> new ItemVoltaic(new Item.Properties().stacksTo(1), () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_CELLEMPTY = ITEMS.register("cellempty", () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_CELLDEUTERIUM = ITEMS.register("celldeuterium", () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_CELLTRITIUM = ITEMS.register("celltritium", () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_CELLHEAVYWATER = ITEMS.register("cellheavywater", () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_CELLELECTROMAGNETIC = ITEMS.register("cellelectromagnetic", () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_CELLANTIMATTERSMALL = ITEMS.register("cellantimattersmall", () -> new ItemAntimatter(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_CELLANTIMATTERLARGE = ITEMS.register("cellantimatterlarge", () -> new ItemAntimatter(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_CELLANTIMATTERVERYLARGE = ITEMS.register("cellantimatterverylarge", () -> new ItemAntimatter(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_CELLDARKMATTER = ITEMS.register("celldarkmatter", () -> new ItemAntimatter(new Item.Properties().durability(12), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_URANIUM235 = ITEMS.register("uranium235",
+	    () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_URANIUM238 = ITEMS.register("uranium238",
+	    () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_PLUTONIUM239 = ITEMS.register("plutonium239",
+	    () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_POLONIUM210 = ITEMS.register("polonium210",
+	    () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_ACTINIUM225 = ITEMS.register("actinium225",
+	    () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_LIFHT4PUF3 = ITEMS.register("lifthf4uf4",
+	    () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_FLINAK = ITEMS.register("flinak",
+	    () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_YELLOWCAKE = ITEMS.register("yellowcake",
+	    () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_FISSILEDUST = ITEMS.register("fissiledust",
+	    () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_FISSILE_SALT = ITEMS.register("fissilesalt",
+	    () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_PLUTONIUMOXIDE = ITEMS.register("plutoniumoxide",
+	    () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_POLONIUM210_CHUNK = ITEMS.register("polonium210chunk",
+	    () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_THORIANITEDUST = ITEMS.register("thorianitedust",
+	    () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_ACTINIUMOXIDE = ITEMS.register("actiniumoxide",
+	    () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
 
-	public static final RegistryObject<Item> ITEM_GEIGERCOUNTER = ITEMS.register("geigercounter", () -> new ItemGeigerCounter((ElectricItemProperties) new ElectricItemProperties().capacity(1666666.66667).extract(TransferPack.joulesVoltage(694.4444444458333, 120.0)).receive(TransferPack.joulesVoltage(694.4444444458333, 120.0)).setIsEnergyStorageOnly().stacksTo(1), () -> NuclearScienceCreativeTabs.MAIN.get(), item -> ElectrodynamicsItems.ITEM_BATTERY.get()));
-	public static final RegistryObject<Item> ITEM_HAZMATHELMET = ITEMS.register("hazmathelmet", () -> new ItemHazmatArmor(ArmorMaterialHazmat.hazmat, Type.HELMET, new Item.Properties().durability(26000), 1000, 1, () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_HAZMATPLATE = ITEMS.register("hazmatplate", () -> new ItemHazmatArmor(ArmorMaterialHazmat.hazmat, Type.CHESTPLATE, new Item.Properties().durability(26000), 1000, 1, () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_HAZMATLEGS = ITEMS.register("hazmatlegs", () -> new ItemHazmatArmor(ArmorMaterialHazmat.hazmat, Type.LEGGINGS, new Item.Properties().durability(26000), 1000, 1, () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_HAZMATBOOTS = ITEMS.register("hazmatboots", () -> new ItemHazmatArmor(ArmorMaterialHazmat.hazmat, Type.BOOTS, new Item.Properties().durability(26000), 1000, 1, () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_REINFORCEDHAZMATHELMET = ITEMS.register("reinforcedhazmathelmet", () -> new ItemHazmatArmor(ArmorMaterialHazmat.reinforcedhazmat, Type.HELMET, new Item.Properties().stacksTo(1).durability(26000 * 5), 1000, 1, () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_REINFORCEDHAZMATPLATE = ITEMS.register("reinforcedhazmatplate", () -> new ItemHazmatArmor(ArmorMaterialHazmat.reinforcedhazmat, Type.CHESTPLATE, new Item.Properties().stacksTo(1).durability(26000 * 5), 1000, 1, () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_REINFORCEDHAZMATLEGS = ITEMS.register("reinforcedhazmatlegs", () -> new ItemHazmatArmor(ArmorMaterialHazmat.reinforcedhazmat, Type.LEGGINGS, new Item.Properties().stacksTo(1).durability(26000 * 5), 1000, 1, () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_REINFORCEDHAZMATBOOTS = ITEMS.register("reinforcedhazmatboots", () -> new ItemHazmatArmor(ArmorMaterialHazmat.reinforcedhazmat, Type.BOOTS, new Item.Properties().stacksTo(1).durability(26000 * 5), 1000, 1, () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_ANTIDOTE = ITEMS.register("antidote", () -> new ItemAntidote(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_IODINETABLET = ITEMS.register("iodinetablet", () -> new ItemIodineTablet(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_FREQUENCYCARD = ITEMS.register("frequencycard", () -> new ItemFrequencyCard(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
-	public static final RegistryObject<Item> ITEM_CANISTERLEAD = ITEMS.register("canisterlead", () -> new ItemCanisterLead(new Item.Properties().stacksTo(1), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_FUELLEUO2 = ITEMS.register("fuelleuo2",
+	    () -> new ItemVoltaic(new Item.Properties().stacksTo(1).durability(26000),
+		    () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_FUELHEUO2 = ITEMS.register("fuelheuo2",
+	    () -> new ItemVoltaic(new Item.Properties().stacksTo(1).durability(24000),
+		    () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_FUELPLUTONIUM = ITEMS.register("fuelplutonium",
+	    () -> new ItemVoltaic(new Item.Properties().stacksTo(1).durability(120000),
+		    () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_FUELSPENT = ITEMS.register("fuelspent",
+	    () -> new ItemVoltaic(new Item.Properties().stacksTo(1), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_CELLEMPTY = ITEMS.register("cellempty",
+	    () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_CELLDEUTERIUM = ITEMS.register("celldeuterium",
+	    () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_CELLTRITIUM = ITEMS.register("celltritium",
+	    () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_CELLHEAVYWATER = ITEMS.register("cellheavywater",
+	    () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_CELLELECTROMAGNETIC = ITEMS.register("cellelectromagnetic",
+	    () -> new ItemVoltaic(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_CELLANTIMATTERSMALL = ITEMS.register("cellantimattersmall",
+	    () -> new ItemAntimatter(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_CELLANTIMATTERLARGE = ITEMS.register("cellantimatterlarge",
+	    () -> new ItemAntimatter(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_CELLANTIMATTERVERYLARGE = ITEMS.register("cellantimatterverylarge",
+	    () -> new ItemAntimatter(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_CELLDARKMATTER = ITEMS.register("celldarkmatter",
+	    () -> new ItemAntimatter(new Item.Properties().durability(12),
+		    () -> NuclearScienceCreativeTabs.MAIN.get()));
 
+    public static final RegistryObject<Item> ITEM_GEIGERCOUNTER = ITEMS.register("geigercounter",
+	    () -> new ItemGeigerCounter((ElectricItemProperties) new ElectricItemProperties().capacity(1666666.66667)
+		    .extract(TransferPack.joulesVoltage(694.4444444458333, 120.0))
+		    .receive(TransferPack.joulesVoltage(694.4444444458333, 120.0)).setIsEnergyStorageOnly().stacksTo(1),
+		    () -> NuclearScienceCreativeTabs.MAIN.get(), item -> ElectrodynamicsItems.ITEM_BATTERY.get()));
+    public static final RegistryObject<Item> ITEM_HAZMATHELMET = ITEMS.register("hazmathelmet",
+	    () -> new ItemHazmatArmor(ArmorMaterialHazmat.hazmat, Type.HELMET, new Item.Properties().durability(26000),
+		    1000, 1, () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_HAZMATPLATE = ITEMS.register("hazmatplate",
+	    () -> new ItemHazmatArmor(ArmorMaterialHazmat.hazmat, Type.CHESTPLATE,
+		    new Item.Properties().durability(26000), 1000, 1, () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_HAZMATLEGS = ITEMS.register("hazmatlegs",
+	    () -> new ItemHazmatArmor(ArmorMaterialHazmat.hazmat, Type.LEGGINGS,
+		    new Item.Properties().durability(26000), 1000, 1, () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_HAZMATBOOTS = ITEMS.register("hazmatboots",
+	    () -> new ItemHazmatArmor(ArmorMaterialHazmat.hazmat, Type.BOOTS, new Item.Properties().durability(26000),
+		    1000, 1, () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_REINFORCEDHAZMATHELMET = ITEMS.register("reinforcedhazmathelmet",
+	    () -> new ItemHazmatArmor(ArmorMaterialHazmat.reinforcedhazmat, Type.HELMET,
+		    new Item.Properties().stacksTo(1).durability(26000 * 5), 1000, 1,
+		    () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_REINFORCEDHAZMATPLATE = ITEMS.register("reinforcedhazmatplate",
+	    () -> new ItemHazmatArmor(ArmorMaterialHazmat.reinforcedhazmat, Type.CHESTPLATE,
+		    new Item.Properties().stacksTo(1).durability(26000 * 5), 1000, 1,
+		    () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_REINFORCEDHAZMATLEGS = ITEMS.register("reinforcedhazmatlegs",
+	    () -> new ItemHazmatArmor(ArmorMaterialHazmat.reinforcedhazmat, Type.LEGGINGS,
+		    new Item.Properties().stacksTo(1).durability(26000 * 5), 1000, 1,
+		    () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_REINFORCEDHAZMATBOOTS = ITEMS.register("reinforcedhazmatboots",
+	    () -> new ItemHazmatArmor(ArmorMaterialHazmat.reinforcedhazmat, Type.BOOTS,
+		    new Item.Properties().stacksTo(1).durability(26000 * 5), 1000, 1,
+		    () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_ANTIDOTE = ITEMS.register("antidote",
+	    () -> new ItemAntidote(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_IODINETABLET = ITEMS.register("iodinetablet",
+	    () -> new ItemIodineTablet(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_FREQUENCYCARD = ITEMS.register("frequencycard",
+	    () -> new ItemFrequencyCard(new Item.Properties(), () -> NuclearScienceCreativeTabs.MAIN.get()));
+    public static final RegistryObject<Item> ITEM_CANISTERLEAD = ITEMS.register("canisterlead",
+	    () -> new ItemCanisterLead(new Item.Properties().stacksTo(1), () -> NuclearScienceCreativeTabs.MAIN.get()));
 
-	@EventBusSubscriber(value = Dist.CLIENT, modid = NuclearScience.ID, bus = EventBusSubscriber.Bus.MOD)
-	private static class NuclearCreativeRegistry {
+    @EventBusSubscriber(value = Dist.CLIENT, modid = NuclearScience.ID, bus = EventBusSubscriber.Bus.MOD)
+    private static class NuclearCreativeRegistry {
 
-		@SubscribeEvent
-		public static void registerItems(BuildCreativeModeTabContentsEvent event) {
+	@SubscribeEvent
+	public static void registerItems(BuildCreativeModeTabContentsEvent event) {
 
-			ITEMS.getEntries().forEach(reg -> {
+	    ITEMS.getEntries().forEach(reg -> {
 
-				CreativeTabSupplier supplier = (CreativeTabSupplier) reg.get();
+		CreativeTabSupplier supplier = (CreativeTabSupplier) reg.get();
 
-				if (supplier.hasCreativeTab() && supplier.isAllowedInCreativeTab(event.getTab())) {
-					List<ItemStack> toAdd = new ArrayList<>();
-					supplier.addCreativeModeItems(event.getTab(), toAdd);
-					event.acceptAll(toAdd);
-				}
-
-			});
-
+		if (supplier.hasCreativeTab() && supplier.isAllowedInCreativeTab(event.getTab())) {
+		    List<ItemStack> toAdd = new ArrayList<>();
+		    supplier.addCreativeModeItems(event.getTab(), toAdd);
+		    event.acceptAll(toAdd);
 		}
 
+	    });
+
 	}
+
+    }
 
 }
