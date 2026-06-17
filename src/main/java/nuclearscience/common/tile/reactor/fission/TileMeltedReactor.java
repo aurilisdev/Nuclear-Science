@@ -87,7 +87,8 @@ public class TileMeltedReactor extends GenericTile {
 	    double d4 = worldPosition.getY() - y2;
 	    double d5 = worldPosition.getZ() - z2;
 	    double distanceSq = d3 * d3 + d4 * d4 + d5 * d5;
-	    if (distanceSq < RADIATION_RADIUS * RADIATION_RADIUS / 16.0 && level.random.nextDouble() > distanceSq / (RADIATION_RADIUS * RADIATION_RADIUS)) {
+	    if (distanceSq < RADIATION_RADIUS * RADIATION_RADIUS / 16.0
+		    && level.random.nextDouble() > distanceSq / (RADIATION_RADIUS * RADIATION_RADIUS)) {
 		BlockPos pos = new BlockPos((int) Math.floor(x2), (int) Math.floor(y2), (int) Math.floor(z2));
 		BlockState state = level.getBlockState(pos);
 		if (BlockIrradiated.isValidPlacement(state)) {

@@ -20,16 +20,16 @@ public class TunnelFrequency {
 
     public static final Codec<TunnelFrequency> CODEC = RecordCodecBuilder.create(instance -> instance.group(
 
-            //
-            UUIDUtil.CODEC.fieldOf("channelid").forGetter(TunnelFrequency::getId),
-            //
-            UUIDUtil.CODEC.fieldOf("creatorid").forGetter(TunnelFrequency::getCreatorId),
-            //
-            Codec.STRING.fieldOf("channelname").forGetter(TunnelFrequency::getName),
-            //
-            Codec.STRING.fieldOf("creatorfallbackname").forGetter(TunnelFrequency::getCreatorFallbackName),
-            //
-            Codec.INT.fieldOf("channeltype").forGetter(instance0 -> instance0.channelType)
+	    //
+	    UUIDUtil.CODEC.fieldOf("channelid").forGetter(TunnelFrequency::getId),
+	    //
+	    UUIDUtil.CODEC.fieldOf("creatorid").forGetter(TunnelFrequency::getCreatorId),
+	    //
+	    Codec.STRING.fieldOf("channelname").forGetter(TunnelFrequency::getName),
+	    //
+	    Codec.STRING.fieldOf("creatorfallbackname").forGetter(TunnelFrequency::getCreatorFallbackName),
+	    //
+	    Codec.INT.fieldOf("channeltype").forGetter(instance0 -> instance0.channelType)
 
     ).apply(instance, TunnelFrequency::new));
 
@@ -44,56 +44,57 @@ public class TunnelFrequency {
     private final int channelType;
 
     private TunnelFrequency(UUID uuid, UUID creator, String name, String creatorFallbackName, int channelType) {
-        this.uuid = uuid;
-        this.creator = creator;
-        this.name = name;
-        this.creatorFallbackName = creatorFallbackName;
-        this.channelType = channelType;
+	this.uuid = uuid;
+	this.creator = creator;
+	this.name = name;
+	this.creatorFallbackName = creatorFallbackName;
+	this.channelType = channelType;
     }
 
     public UUID getId() {
-        return uuid;
+	return uuid;
     }
 
     public UUID getCreatorId() {
-        return creator;
+	return creator;
     }
 
     public String getName() {
-        return name;
+	return name;
     }
 
     public String getCreatorFallbackName() {
-        return creatorFallbackName;
+	return creatorFallbackName;
     }
 
     public void setName(String name) {
-        this.name = name;
+	this.name = name;
     }
 
     public FrequencyType getChannelType() {
-        return FrequencyType.values()[channelType];
+	return FrequencyType.values()[channelType];
     }
 
     public static TunnelFrequency createPrivate(UUID id, Player creator, String name) {
-        return new TunnelFrequency(id, creator.getUUID(), name, creator.getName().getString(), FrequencyType.PRIVATE.ordinal());
+	return new TunnelFrequency(id, creator.getUUID(), name, creator.getName().getString(),
+		FrequencyType.PRIVATE.ordinal());
     }
 
-
     public static TunnelFrequency createPublic(UUID id, Player creator, String name) {
-        return new TunnelFrequency(id, creator.getUUID(), name, creator.getName().getString(), FrequencyType.PUBLIC.ordinal());
+	return new TunnelFrequency(id, creator.getUUID(), name, creator.getName().getString(),
+		FrequencyType.PUBLIC.ordinal());
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof TunnelFrequency other) {
-            return uuid.equals(other.uuid) && channelType == other.channelType;
-        }
-        return false;
+	if (obj instanceof TunnelFrequency other) {
+	    return uuid.equals(other.uuid) && channelType == other.channelType;
+	}
+	return false;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(uuid, channelType);
+	return Objects.hash(uuid, channelType);
     }
 }

@@ -9,6 +9,7 @@ public class NuclearScienceBlockStates {
 
     }
 
-    public static final FacingDirectionProperty FACINGDIRECTION = FacingDirectionProperty.create("side", FacingDirection.values());
+    public static final FacingDirectionProperty FACINGDIRECTION = FacingDirectionProperty.create("side",
+	    FacingDirection.values());
 
 }

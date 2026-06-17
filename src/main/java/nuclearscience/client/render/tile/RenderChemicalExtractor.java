@@ -17,72 +17,78 @@ import voltaic.prefab.utilities.RenderingUtils;
 
 public class RenderChemicalExtractor extends AbstractTileRenderer<TileChemicalExtractor> {
 
-	private static final float DELTA_Y = 7.0F / 16.0F;
+    private static final float DELTA_Y = 7.0F / 16.0F;
 
-	public RenderChemicalExtractor(BlockEntityRendererProvider.Context context) {
-		super(context);
+    public RenderChemicalExtractor(BlockEntityRendererProvider.Context context) {
+	super(context);
+    }
+
+    @Override
+    public void render(TileChemicalExtractor tile, float partialTicks, PoseStack matrix, MultiBufferSource buffer,
+	    int combinedLight, int overlay) {
+
+	matrix.pushPose();
+
+	Direction facing = tile.getFacing();
+	ComponentFluidHandlerMulti multi = tile.getComponent(IComponentType.FluidHandler);
+	VertexConsumer builder = buffer.getBuffer(Sheets.translucentCullBlockSheet());
+
+	FluidTank input = multi.getInputTanks()[0];
+
+	if (input.isEmpty()) {
+	    matrix.popPose();
+	    return;
 	}
 
-	@Override
-	public void render(TileChemicalExtractor tile, float partialTicks, PoseStack matrix, MultiBufferSource buffer, int combinedLight, int overlay) {
+	AABB box = null;
+	int i = 0;
 
-		matrix.pushPose();
+	float maxY = DELTA_Y * ((float) input.getFluidAmount() / (float) TileChemicalExtractor.MAX_TANK_CAPACITY)
+		+ 5.0F / 16.0F;
 
-		Direction facing = tile.getFacing();
-		ComponentFluidHandlerMulti multi = tile.getComponent(IComponentType.FluidHandler);
-		VertexConsumer builder = buffer.getBuffer(Sheets.translucentCullBlockSheet());
+	if (facing == Direction.NORTH || facing != Direction.EAST && facing == Direction.SOUTH) {
 
-		FluidTank input = multi.getInputTanks()[0];
+	    box = new AABB(2.7 / 16.0, 5 / 16.0, 2.2 / 16.0, 4.3 / 16.0, maxY, 3.8 / 16.0);
 
-		if (input.isEmpty()) {
-			matrix.popPose();
-			return;
-		}
+	    for (i = 0; i < 4; i++) {
+		RenderingUtils.renderFluidBox(matrix, minecraft(), builder, box, input.getFluid(), combinedLight,
+			overlay, RenderingUtils.ALL_FACES);
 
-		AABB box = null;
-		int i = 0;
+		box = box.move(3.0 / 16.0, 0, 0);
+	    }
 
-		float maxY = DELTA_Y * ((float) input.getFluidAmount() / (float) TileChemicalExtractor.MAX_TANK_CAPACITY) + 5.0F / 16.0F;
+	    box = new AABB(2.7 / 16.0, 5 / 16.0, 12.2 / 16.0, 4.3 / 16.0, maxY, 13.8 / 16.0);
 
-		if (facing == Direction.NORTH || facing != Direction.EAST && facing == Direction.SOUTH) {
+	    for (i = 0; i < 4; i++) {
+		RenderingUtils.renderFluidBox(matrix, minecraft(), builder, box, input.getFluid(), combinedLight,
+			overlay, RenderingUtils.ALL_FACES);
 
-			box = new AABB(2.7 / 16.0, 5 / 16.0, 2.2 / 16.0, 4.3 / 16.0, maxY, 3.8 / 16.0);
+		box = box.move(3.0 / 16.0, 0, 0);
+	    }
 
-			for (i = 0; i < 4; i++) {
-				RenderingUtils.renderFluidBox(matrix, minecraft(), builder, box, input.getFluid(), combinedLight, overlay, RenderingUtils.ALL_FACES);
+	} else {
 
-				box = box.move(3.0 / 16.0, 0, 0);
-			}
+	    box = new AABB(2.2 / 16.0, 5 / 16.0, 2.7 / 16.0, 3.8 / 16.0, maxY, 4.3 / 16.0);
 
-			box = new AABB(2.7 / 16.0, 5 / 16.0, 12.2 / 16.0, 4.3 / 16.0, maxY, 13.8 / 16.0);
+	    for (i = 0; i < 4; i++) {
+		RenderingUtils.renderFluidBox(matrix, minecraft(), builder, box, input.getFluid(), combinedLight,
+			overlay, RenderingUtils.ALL_FACES);
 
-			for (i = 0; i < 4; i++) {
-				RenderingUtils.renderFluidBox(matrix, minecraft(), builder, box, input.getFluid(), combinedLight, overlay, RenderingUtils.ALL_FACES);
+		box = box.move(0, 0, 3.0 / 16.0);
+	    }
 
-				box = box.move(3.0 / 16.0, 0, 0);
-			}
+	    box = new AABB(12.2 / 16.0, 5 / 16.0, 2.7 / 16.0, 13.8 / 16.0, maxY, 4.3 / 16.0);
 
-		} else {
+	    for (i = 0; i < 4; i++) {
+		RenderingUtils.renderFluidBox(matrix, minecraft(), builder, box, input.getFluid(), combinedLight,
+			overlay, RenderingUtils.ALL_FACES);
 
-			box = new AABB(2.2 / 16.0, 5 / 16.0, 2.7 / 16.0, 3.8 / 16.0, maxY, 4.3 / 16.0);
+		box = box.move(0, 0, 3.0 / 16.0);
+	    }
 
-			for (i = 0; i < 4; i++) {
-				RenderingUtils.renderFluidBox(matrix, minecraft(), builder, box, input.getFluid(), combinedLight, overlay, RenderingUtils.ALL_FACES);
-
-				box = box.move(0, 0, 3.0 / 16.0);
-			}
-
-			box = new AABB(12.2 / 16.0, 5 / 16.0, 2.7 / 16.0, 13.8 / 16.0, maxY, 4.3 / 16.0);
-
-			for (i = 0; i < 4; i++) {
-				RenderingUtils.renderFluidBox(matrix, minecraft(), builder, box, input.getFluid(), combinedLight, overlay, RenderingUtils.ALL_FACES);
-
-				box = box.move(0, 0, 3.0 / 16.0);
-			}
-
-		}
-
-		matrix.popPose();
 	}
+
+	matrix.popPose();
+    }
 
 }

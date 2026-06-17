@@ -22,71 +22,75 @@ import voltaic.registers.VoltaicDataComponentTypes;
 public class ItemFrequencyCard extends ItemVoltaic {
 
     public ItemFrequencyCard(Properties properties, Holder<CreativeModeTab> creativeTab) {
-        super(properties.stacksTo(1), creativeTab);
+	super(properties.stacksTo(1), creativeTab);
     }
 
     @Override
     public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
 
-        Level level = context.getLevel();
+	Level level = context.getLevel();
 
-        if (level.isClientSide) {
-            return super.onItemUseFirst(stack, context);
-        }
+	if (level.isClientSide) {
+	    return super.onItemUseFirst(stack, context);
+	}
 
-        if(context.getPlayer().isShiftKeyDown()) {
-            stack.remove(VoltaicDataComponentTypes.RESOURCE_LOCATION);
-            stack.remove(VoltaicDataComponentTypes.BLOCK_POS);
-        } else {
-            stack.set(VoltaicDataComponentTypes.BLOCK_POS, context.getClickedPos().above());
-            stack.set(VoltaicDataComponentTypes.RESOURCE_LOCATION, level.dimension().location());
-        }
+	if (context.getPlayer().isShiftKeyDown()) {
+	    stack.remove(VoltaicDataComponentTypes.RESOURCE_LOCATION);
+	    stack.remove(VoltaicDataComponentTypes.BLOCK_POS);
+	} else {
+	    stack.set(VoltaicDataComponentTypes.BLOCK_POS, context.getClickedPos().above());
+	    stack.set(VoltaicDataComponentTypes.RESOURCE_LOCATION, level.dimension().location());
+	}
 
-        return InteractionResult.SUCCESS;
+	return InteractionResult.SUCCESS;
 
-        /*
-        if (context.getLevel().getBlockEntity(context.getClickedPos()) instanceof TileTeleporter teleporter) {
-
-
-
-            CompoundTag nbt = stack.getOrCreateTag();
-            if (nbt.contains(NBTUtils.DIMENSION)) {
-
-                BlockPos pos = readBlockPos(stack);
-                ResourceKey<Level> world = readDimension(stack);
-
-                teleporter.destination.set(pos);
-                teleporter.dimension = world;
-
-                MutableComponent worldKey = ElectroTextUtils.dimensionExists(world) ? ElectroTextUtils.dimension(world) : Component.literal(world.location().getPath());
-
-                context.getPlayer().sendSystemMessage(NuclearTextUtils.tooltip("frequencycard.linked", worldKey.append(" " + pos.toShortString())));
-
-            } else {
-                writeBlockPos(stack, teleporter.getBlockPos());
-                writeDimension(stack, teleporter.getLevel().dimension());
-            }
-
-        }
-
-        return super.onItemUseFirst(stack, context);
-
-         */
+	/*
+	 * if (context.getLevel().getBlockEntity(context.getClickedPos()) instanceof
+	 * TileTeleporter teleporter) {
+	 * 
+	 * 
+	 * 
+	 * CompoundTag nbt = stack.getOrCreateTag(); if
+	 * (nbt.contains(NBTUtils.DIMENSION)) {
+	 * 
+	 * BlockPos pos = readBlockPos(stack); ResourceKey<Level> world =
+	 * readDimension(stack);
+	 * 
+	 * teleporter.destination.set(pos); teleporter.dimension = world;
+	 * 
+	 * MutableComponent worldKey = ElectroTextUtils.dimensionExists(world) ?
+	 * ElectroTextUtils.dimension(world) :
+	 * Component.literal(world.location().getPath());
+	 * 
+	 * context.getPlayer().sendSystemMessage(NuclearTextUtils.tooltip(
+	 * "frequencycard.linked", worldKey.append(" " + pos.toShortString())));
+	 * 
+	 * } else { writeBlockPos(stack, teleporter.getBlockPos());
+	 * writeDimension(stack, teleporter.getLevel().dimension()); }
+	 * 
+	 * }
+	 * 
+	 * return super.onItemUseFirst(stack, context);
+	 * 
+	 */
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltips, TooltipFlag tooltipFlag) {
-        super.appendHoverText(stack, context, tooltips, tooltipFlag);
-        if(stack.has(VoltaicDataComponentTypes.RESOURCE_LOCATION)) {
-            BlockPos pos = stack.get(VoltaicDataComponentTypes.BLOCK_POS);
-            ResourceKey<Level> world = ResourceKey.create(Registries.DIMENSION, stack.get(VoltaicDataComponentTypes.RESOURCE_LOCATION));
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltips,
+	    TooltipFlag tooltipFlag) {
+	super.appendHoverText(stack, context, tooltips, tooltipFlag);
+	if (stack.has(VoltaicDataComponentTypes.RESOURCE_LOCATION)) {
+	    BlockPos pos = stack.get(VoltaicDataComponentTypes.BLOCK_POS);
+	    ResourceKey<Level> world = ResourceKey.create(Registries.DIMENSION,
+		    stack.get(VoltaicDataComponentTypes.RESOURCE_LOCATION));
 
-            MutableComponent worldKey = ElectroTextUtils.dimensionExists(world) ? ElectroTextUtils.dimension(world) : Component.literal(world.location().getPath());
+	    MutableComponent worldKey = ElectroTextUtils.dimensionExists(world) ? ElectroTextUtils.dimension(world)
+		    : Component.literal(world.location().getPath());
 
-            tooltips.add(NuclearTextUtils.tooltip("frequencycard.linked", worldKey.append(pos.toShortString())));
-        } else {
-            tooltips.add(NuclearTextUtils.tooltip("frequencycard.notag"));
-        }
+	    tooltips.add(NuclearTextUtils.tooltip("frequencycard.linked", worldKey.append(pos.toShortString())));
+	} else {
+	    tooltips.add(NuclearTextUtils.tooltip("frequencycard.notag"));
+	}
     }
 
 }

@@ -22,52 +22,53 @@ import voltaic.registers.VoltaicCapabilities;
 
 public class TileFreezePlug extends GenericTile {
 
-	public final SingleProperty<Boolean> isFrozen = property(new SingleProperty<>(PropertyTypes.BOOLEAN, "isfrozen", false));
-	public final SingleProperty<Double> saltBonus = property(new SingleProperty<>(PropertyTypes.DOUBLE, "saltbonus", 1.0));
+    public final SingleProperty<Boolean> isFrozen = property(
+	    new SingleProperty<>(PropertyTypes.BOOLEAN, "isfrozen", false));
+    public final SingleProperty<Double> saltBonus = property(
+	    new SingleProperty<>(PropertyTypes.DOUBLE, "saltbonus", 1.0));
 
-	public TileFreezePlug(BlockPos pos, BlockState state) {
-		super(NuclearScienceTiles.TILE_FREEZEPLUG.get(), pos, state);
-		addComponent(new ComponentTickable(this).tickServer(this::tickServer));
-		addComponent(new ComponentPacketHandler(this));
-		addComponent(new ComponentElectrodynamic(this, false, true).voltage(VoltaicCapabilities.DEFAULT_VOLTAGE).extractPower((x, y) -> TransferPack.EMPTY).setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM).maxJoules(NuclearConfig.INSTANCE.FREEZEPLUG_USAGE_PER_TICK.get() * 20));
-		addComponent(new ComponentInventory(this, ComponentInventory.InventoryBuilder.newInv().inputs(1)).valid((slot, stack, i) -> stack.getItem() == NuclearScienceItems.ITEM_FLINAK.get()));
-		addComponent(new ComponentContainerProvider("freezeplug", this).createMenu((id, player) -> new ContainerFreezePlug(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
+    public TileFreezePlug(BlockPos pos, BlockState state) {
+	super(NuclearScienceTiles.TILE_FREEZEPLUG.get(), pos, state);
+	addComponent(new ComponentTickable(this).tickServer(this::tickServer));
+	addComponent(new ComponentPacketHandler(this));
+	addComponent(new ComponentElectrodynamic(this, false, true).voltage(VoltaicCapabilities.DEFAULT_VOLTAGE)
+		.extractPower((x, y) -> TransferPack.EMPTY).setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM)
+		.maxJoules(NuclearConfig.INSTANCE.FREEZEPLUG_USAGE_PER_TICK.get() * 20));
+	addComponent(new ComponentInventory(this, ComponentInventory.InventoryBuilder.newInv().inputs(1))
+		.valid((slot, stack, i) -> stack.getItem() == NuclearScienceItems.ITEM_FLINAK.get()));
+	addComponent(new ComponentContainerProvider("freezeplug", this)
+		.createMenu((id, player) -> new ContainerFreezePlug(id, player, getComponent(IComponentType.Inventory),
+			getCoordsArray())));
+    }
+
+    public void tickServer(ComponentTickable tickable) {
+	ComponentElectrodynamic electro = getComponent(IComponentType.Electrodynamic);
+	ComponentInventory inv = getComponent(IComponentType.Inventory);
+
+	ItemStack stack = inv.getItem(0);
+
+	if (stack.isEmpty() || (electro.getJoulesStored() < NuclearConfig.INSTANCE.FREEZEPLUG_USAGE_PER_TICK.get())) {
+	    isFrozen.setValue(false);
+	    saltBonus.setValue(0.0);
+	    return;
 	}
 
-	public void tickServer(ComponentTickable tickable) {
-		ComponentElectrodynamic electro = getComponent(IComponentType.Electrodynamic);
-		ComponentInventory inv = getComponent(IComponentType.Inventory);
+	electro.joules(electro.getJoulesStored() - NuclearConfig.INSTANCE.FREEZEPLUG_USAGE_PER_TICK.get());
 
-		ItemStack stack = inv.getItem(0);
+	isFrozen.setValue(true);
 
-		if (stack.isEmpty()) {
-			isFrozen.setValue(false);
-			saltBonus.setValue(0.0);
-			return;
-		}
+	double bonus = 1.0 + (stack.getCount() - 1) / 63.0;
 
-		if (electro.getJoulesStored() < NuclearConfig.INSTANCE.FREEZEPLUG_USAGE_PER_TICK.get()) {
-			isFrozen.setValue(false);
-			saltBonus.setValue(0.0);
-			return;
-		}
+	saltBonus.setValue(bonus);
 
-		electro.joules(electro.getJoulesStored() - NuclearConfig.INSTANCE.FREEZEPLUG_USAGE_PER_TICK.get());
+    }
 
-		isFrozen.setValue(true);
+    public boolean isFrozen() {
+	return isFrozen.getValue();
+    }
 
-		double bonus = 1.0 + ((stack.getCount() - 1) / 63.0);
-
-		saltBonus.setValue(bonus);
-
-	}
-
-	public boolean isFrozen() {
-		return isFrozen.getValue();
-	}
-
-	public double getSaltBonus() {
-		return saltBonus.getValue();
-	}
+    public double getSaltBonus() {
+	return saltBonus.getValue();
+    }
 
 }

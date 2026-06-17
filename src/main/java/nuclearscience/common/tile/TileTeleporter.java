@@ -32,70 +32,80 @@ import voltaic.registers.VoltaicCapabilities;
 
 public class TileTeleporter extends GenericTile {
 
-	public final SingleProperty<BlockPos> destination = property(new SingleProperty<>(PropertyTypes.BLOCK_POS, "location", getBlockPos()));
-	public final SingleProperty<Integer> cooldown = property(new SingleProperty<>(PropertyTypes.INTEGER, "cooldown", 0));
-	public final SingleProperty<ResourceLocation> dimension = property(new SingleProperty<>(PropertyTypes.RESOURCE_LOCATION, "dimension", Level.OVERWORLD.location()));
+    public final SingleProperty<BlockPos> destination = property(
+	    new SingleProperty<>(PropertyTypes.BLOCK_POS, "location", getBlockPos()));
+    public final SingleProperty<Integer> cooldown = property(
+	    new SingleProperty<>(PropertyTypes.INTEGER, "cooldown", 0));
+    public final SingleProperty<ResourceLocation> dimension = property(
+	    new SingleProperty<>(PropertyTypes.RESOURCE_LOCATION, "dimension", Level.OVERWORLD.location()));
 
-	public TileTeleporter(BlockPos pos, BlockState state) {
-		super(NuclearScienceTiles.TILE_TELEPORTER.get(), pos, state);
+    public TileTeleporter(BlockPos pos, BlockState state) {
+	super(NuclearScienceTiles.TILE_TELEPORTER.get(), pos, state);
 
-		addComponent(new ComponentTickable(this).tickServer(this::tickServer));
-		addComponent(new ComponentPacketHandler(this));
-		addComponent(new ComponentElectrodynamic(this, false, true).maxJoules(NuclearConfig.INSTANCE.TELEPORTER_USAGE_PER_TELEPORT.get() * 20).voltage(VoltaicCapabilities.DEFAULT_VOLTAGE * 4).setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM));
-		addComponent(new ComponentInventory(this, ComponentInventory.InventoryBuilder.newInv().inputs(1)));
-		addComponent(new ComponentContainerProvider("teleporter", this).createMenu((id, player) -> new ContainerTeleporter(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
+	addComponent(new ComponentTickable(this).tickServer(this::tickServer));
+	addComponent(new ComponentPacketHandler(this));
+	addComponent(new ComponentElectrodynamic(this, false, true)
+		.maxJoules(NuclearConfig.INSTANCE.TELEPORTER_USAGE_PER_TELEPORT.get() * 20)
+		.voltage(VoltaicCapabilities.DEFAULT_VOLTAGE * 4)
+		.setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM));
+	addComponent(new ComponentInventory(this, ComponentInventory.InventoryBuilder.newInv().inputs(1)));
+	addComponent(new ComponentContainerProvider("teleporter", this)
+		.createMenu((id, player) -> new ContainerTeleporter(id, player, getComponent(IComponentType.Inventory),
+			getCoordsArray())));
 
+    }
+
+    protected void tickServer(ComponentTickable tickable) {
+
+	ComponentElectrodynamic electro = getComponent(IComponentType.Electrodynamic);
+
+	boolean powered = electro.getJoulesStored() > NuclearConfig.INSTANCE.TELEPORTER_USAGE_PER_TELEPORT.get();
+
+	if (BlockEntityUtils.isLit(this) ^ powered) {
+	    BlockEntityUtils.updateLit(this, powered);
 	}
 
-	protected void tickServer(ComponentTickable tickable) {
-
-		ComponentElectrodynamic electro = getComponent(IComponentType.Electrodynamic);
-
-		boolean powered = electro.getJoulesStored() > NuclearConfig.INSTANCE.TELEPORTER_USAGE_PER_TELEPORT.get();
-
-		if (BlockEntityUtils.isLit(this) ^ powered) {
-			BlockEntityUtils.updateLit(this, powered);
-		}
-
-		if (destination.getValue().equals(getBlockPos()) || electro.getJoulesStored() < electro.getMaxJoulesStored()) {
-			return;
-		}
-
-		if (cooldown.getValue() > 0) {
-			cooldown.setValue(cooldown.getValue() - 1);
-			return;
-		}
-
-		AABB entityCheckArea = AABB.encapsulatingFullBlocks(getBlockPos(), getBlockPos().offset(1, 2, 1));
-
-		List<Player> players = getLevel().getEntities(EntityType.PLAYER, entityCheckArea, en -> true);
-
-		if (players.isEmpty()) {
-			cooldown.setValue(5);
-			return;
-		}
-
-		ServerLevel destinationLevel = getDestinationLevel();
-
-		Player player = players.get(0);
-
-		BlockPos destPos = destination.getValue();
-
-		player.changeDimension(new DimensionTransition(destinationLevel, new Vec3(destPos.getX(), destPos.getY(), destPos.getZ()), Vec3.ZERO, player.getXRot(), player.getYRot(), false, DimensionTransition.PLACE_PORTAL_TICKET));
-
-		cooldown.setValue(80);
-
-		electro.joules(electro.getJoulesStored() - NuclearConfig.INSTANCE.TELEPORTER_USAGE_PER_TELEPORT.get());
-
+	if (destination.getValue().equals(getBlockPos()) || electro.getJoulesStored() < electro.getMaxJoulesStored()) {
+	    return;
 	}
 
-	private ServerLevel getDestinationLevel() {
-		ServerLevel level = ServerLifecycleHooks.getCurrentServer().getLevel(ResourceKey.create(Registries.DIMENSION, dimension.getValue()));
-		if (level == null) {
-			return (ServerLevel) getLevel();
-		}
-		return level;
+	if (cooldown.getValue() > 0) {
+	    cooldown.setValue(cooldown.getValue() - 1);
+	    return;
 	}
 
+	AABB entityCheckArea = AABB.encapsulatingFullBlocks(getBlockPos(), getBlockPos().offset(1, 2, 1));
+
+	List<Player> players = getLevel().getEntities(EntityType.PLAYER, entityCheckArea, en -> true);
+
+	if (players.isEmpty()) {
+	    cooldown.setValue(5);
+	    return;
+	}
+
+	ServerLevel destinationLevel = getDestinationLevel();
+
+	Player player = players.get(0);
+
+	BlockPos destPos = destination.getValue();
+
+	player.changeDimension(
+		new DimensionTransition(destinationLevel, new Vec3(destPos.getX(), destPos.getY(), destPos.getZ()),
+			Vec3.ZERO, player.getXRot(), player.getYRot(), false, DimensionTransition.PLACE_PORTAL_TICKET));
+
+	cooldown.setValue(80);
+
+	electro.joules(electro.getJoulesStored() - NuclearConfig.INSTANCE.TELEPORTER_USAGE_PER_TELEPORT.get());
+
+    }
+
+    private ServerLevel getDestinationLevel() {
+	ServerLevel level = ServerLifecycleHooks.getCurrentServer()
+		.getLevel(ResourceKey.create(Registries.DIMENSION, dimension.getValue()));
+	if (level == null) {
+	    return (ServerLevel) getLevel();
+	}
+	return level;
+    }
 
 }

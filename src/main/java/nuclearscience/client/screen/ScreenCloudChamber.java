@@ -19,35 +19,40 @@ import voltaic.prefab.utilities.math.Color;
 
 public class ScreenCloudChamber extends GenericScreen<ContainerCloudChamber> {
     public ScreenCloudChamber(ContainerCloudChamber container, Inventory inv, Component title) {
-        super(container, inv, title);
+	super(container, inv, title);
 
-        addComponent(new ScreenComponentFluidGauge(() -> {
-            TileCloudChamber boiler = container.getSafeHost();
-            if (boiler != null) {
-                return boiler.<ComponentFluidHandlerSimple>getComponent(IComponentType.FluidHandler).getInputTanks()[0];
-            }
-            return null;
-        }, 21, 18));
+	addComponent(new ScreenComponentFluidGauge(() -> {
+	    TileCloudChamber boiler = container.getSafeHost();
+	    if (boiler != null) {
+		return boiler.<ComponentFluidHandlerSimple>getComponent(IComponentType.FluidHandler).getInputTanks()[0];
+	    }
+	    return null;
+	}, 21, 18));
 
-        addComponent(new ScreenComponentSimpleLabel(60, 25, 10, Color.TEXT_GRAY, () -> {
-            TileCloudChamber boiler = container.getSafeHost();
-            if (boiler == null) {
-                return NuclearTextUtils.gui("cloudchamber.status", NuclearTextUtils.gui("cloudchamber.offline").withStyle(ChatFormatting.DARK_RED));
-            }
-            MutableComponent status = boiler.active.getValue() ? NuclearTextUtils.gui("cloudchamber.active").withStyle(ChatFormatting.GREEN) : NuclearTextUtils.gui("cloudchamber.offline").withStyle(ChatFormatting.DARK_RED);
-            return NuclearTextUtils.gui("cloudchamber.status", status);
-        }));
+	addComponent(new ScreenComponentSimpleLabel(60, 25, 10, Color.TEXT_GRAY, () -> {
+	    TileCloudChamber boiler = container.getSafeHost();
+	    if (boiler == null) {
+		return NuclearTextUtils.gui("cloudchamber.status",
+			NuclearTextUtils.gui("cloudchamber.offline").withStyle(ChatFormatting.DARK_RED));
+	    }
+	    MutableComponent status = boiler.active.getValue()
+		    ? NuclearTextUtils.gui("cloudchamber.active").withStyle(ChatFormatting.GREEN)
+		    : NuclearTextUtils.gui("cloudchamber.offline").withStyle(ChatFormatting.DARK_RED);
+	    return NuclearTextUtils.gui("cloudchamber.status", status);
+	}));
 
-        addComponent(new ScreenComponentSimpleLabel(60, 45, 10, Color.TEXT_GRAY, () -> {
-            TileCloudChamber boiler = container.getSafeHost();
-            if (boiler == null) {
-                return NuclearTextUtils.gui("cloudchamber.detected", 0);
-            }
-            int count = boiler.active.getValue() ? boiler.sources.getValue().size() : 0;
-            return NuclearTextUtils.gui("cloudchamber.detected", Component.literal("" + count).withStyle(ChatFormatting.BOLD, ChatFormatting.DARK_GRAY));
-        }));
+	addComponent(new ScreenComponentSimpleLabel(60, 45, 10, Color.TEXT_GRAY, () -> {
+	    TileCloudChamber boiler = container.getSafeHost();
+	    if (boiler == null) {
+		return NuclearTextUtils.gui("cloudchamber.detected", 0);
+	    }
+	    int count = boiler.active.getValue() ? boiler.sources.getValue().size() : 0;
+	    return NuclearTextUtils.gui("cloudchamber.detected",
+		    Component.literal("" + count).withStyle(ChatFormatting.BOLD, ChatFormatting.DARK_GRAY));
+	}));
 
-        addComponent(new ScreenComponentElectricInfo(-AbstractScreenComponentInfo.SIZE + 1, 2).wattage(NuclearConfig.INSTANCE.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK.get() * 20));
+	addComponent(new ScreenComponentElectricInfo(-AbstractScreenComponentInfo.SIZE + 1, 2)
+		.wattage(NuclearConfig.INSTANCE.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK.get() * 20));
 
     }
 }

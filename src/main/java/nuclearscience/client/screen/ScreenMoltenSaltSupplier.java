@@ -18,29 +18,39 @@ import voltaic.prefab.utilities.VoltaicTextUtils;
 
 public class ScreenMoltenSaltSupplier extends GenericScreen<ContainerMoltenSaltSupplier> {
 
-	public ScreenMoltenSaltSupplier(ContainerMoltenSaltSupplier container, Inventory playerInventory, Component title) {
-		super(container, playerInventory, title);
-		addComponent(new ScreenComponentElectricInfo(-AbstractScreenComponentInfo.SIZE + 1, 2).wattage(NuclearConfig.INSTANCE.MOLTENSALTSUPPLIER_USAGE_PER_TICK.get() * 20));
-		addComponent(new ScreenComponentProgress(ScreenComponentProgress.ProgressBars.PROGRESS_ARROW_RIGHT, () -> {
-			TileMoltenSaltSupplier supplier = menu.getSafeHost();
-			if (supplier == null) {
-				return 0;
-			}
-			return supplier.reactorWaste.getValue() / TileMoltenSaltSupplier.AMT_PER_WASTE;
-		}, 77, 35) {
-			@Override
-			public void renderForeground(GuiGraphics graphics, int xAxis, int yAxis, int guiWidth, int guiHeight) {
-				if (!isHoveredOrFocused()) {
-					return;
-				}
-				TileMoltenSaltSupplier supplier = menu.getSafeHost();
-				if (supplier == null) {
-					return;
-				}
-				graphics.renderTooltip(font, NuclearTextUtils.gui("saltsupplier.wastecont", VoltaicTextUtils.ratio(ChatFormatter.formatFluidMilibuckets(supplier.reactorWaste.getValue()), ChatFormatter.formatFluidMilibuckets(TileMoltenSaltSupplier.AMT_PER_WASTE)).withStyle(ChatFormatting.DARK_GRAY)).withStyle(ChatFormatting.GRAY), xAxis, yAxis);
+    public ScreenMoltenSaltSupplier(ContainerMoltenSaltSupplier container, Inventory playerInventory, Component title) {
+	super(container, playerInventory, title);
+	addComponent(new ScreenComponentElectricInfo(-AbstractScreenComponentInfo.SIZE + 1, 2)
+		.wattage(NuclearConfig.INSTANCE.MOLTENSALTSUPPLIER_USAGE_PER_TICK.get() * 20));
+	addComponent(new ScreenComponentProgress(ScreenComponentProgress.ProgressBars.PROGRESS_ARROW_RIGHT, () -> {
+	    TileMoltenSaltSupplier supplier = menu.getSafeHost();
+	    if (supplier == null) {
+		return 0;
+	    }
+	    return supplier.reactorWaste.getValue() / TileMoltenSaltSupplier.AMT_PER_WASTE;
+	}, 77, 35) {
+	    @Override
+	    public void renderForeground(GuiGraphics graphics, int xAxis, int yAxis, int guiWidth, int guiHeight) {
+		if (!isHoveredOrFocused()) {
+		    return;
+		}
+		TileMoltenSaltSupplier supplier = menu.getSafeHost();
+		if (supplier == null) {
+		    return;
+		}
+		graphics.renderTooltip(font,
+			NuclearTextUtils.gui("saltsupplier.wastecont",
+				VoltaicTextUtils
+					.ratio(ChatFormatter.formatFluidMilibuckets(supplier.reactorWaste.getValue()),
+						ChatFormatter
+							.formatFluidMilibuckets(TileMoltenSaltSupplier.AMT_PER_WASTE))
+					.withStyle(ChatFormatting.DARK_GRAY))
+				.withStyle(ChatFormatting.GRAY),
+			xAxis, yAxis);
 
-			}
-		});
-		new WrapperInventoryIO(this, -AbstractScreenComponentInfo.SIZE + 1, AbstractScreenComponentInfo.SIZE + 2, 75, 82, 8, 72);
-	}
+	    }
+	});
+	new WrapperInventoryIO(this, -AbstractScreenComponentInfo.SIZE + 1, AbstractScreenComponentInfo.SIZE + 2, 75,
+		82, 8, 72);
+    }
 }

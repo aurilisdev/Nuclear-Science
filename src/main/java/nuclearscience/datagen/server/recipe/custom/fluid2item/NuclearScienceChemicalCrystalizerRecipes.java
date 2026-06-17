@@ -10,18 +10,18 @@ import nuclearscience.registers.NuclearScienceItems;
 public class NuclearScienceChemicalCrystalizerRecipes extends ElectrodynamicsChemicalCrystallizerRecipes {
 
     public NuclearScienceChemicalCrystalizerRecipes() {
-        super(NuclearScience.ID);
+	super(NuclearScience.ID);
     }
 
     @Override
     public void addRecipes(RecipeOutput output) {
 
-        newRecipe(new ItemStack(NuclearScienceItems.ITEM_IODINETABLET.get()), 0, CHEMICALCRYSTALLIZER_REQUIRED_TICKS, CHEMICALCRYSTALLIZER_USAGE_PER_TICK, "iodine_tablet_from_iodine_solution", modID)
-                //
-                .addFluidTagInput(NuclearScienceTags.Fluids.IODINE_SOLUTION, 500)
-                //
-                .save(output);
-
+	newRecipe(new ItemStack(NuclearScienceItems.ITEM_IODINETABLET.get()), 0, CHEMICALCRYSTALLIZER_REQUIRED_TICKS,
+		CHEMICALCRYSTALLIZER_USAGE_PER_TICK, "iodine_tablet_from_iodine_solution", modID)
+		//
+		.addFluidTagInput(NuclearScienceTags.Fluids.IODINE_SOLUTION, 500)
+		//
+		.save(output);
 
     }
 }

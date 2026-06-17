@@ -7,6 +7,6 @@ import voltaic.prefab.block.GenericMachineBlock;
 public class BlockElectromagneticGateway extends GenericMachineBlock {
 
     public BlockElectromagneticGateway() {
-        super(TileElectromagneticGateway::new, VoxelShapeProvider.DEFAULT);
+	super(TileElectromagneticGateway::new, VoxelShapeProvider.DEFAULT);
     }
 }

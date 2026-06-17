@@ -25,41 +25,43 @@ public class ItemCanisterLead extends ItemCanister {
     public static List<ResourceLocation> TAG_NAMES = new ArrayList<>();
 
     public ItemCanisterLead(Properties oroperties, Holder<CreativeModeTab> creativeTab) {
-        super(oroperties, creativeTab);
-        // The regular canister now emits radiation if it has radioactive fluids in it
-        INVENTORY_TICK_CONSUMERS.add((stack, world, entity, slot, isSelected) -> {
+	super(oroperties, creativeTab);
+	// The regular canister now emits radiation if it has radioactive fluids in it
+	INVENTORY_TICK_CONSUMERS.add((stack, world, entity, slot, isSelected) -> {
 
-            if (ItemUtils.testItems(stack.getItem(), NuclearScienceItems.ITEM_CANISTERLEAD.get())) {
-                return;
-            }
+	    if (ItemUtils.testItems(stack.getItem(), NuclearScienceItems.ITEM_CANISTERLEAD.get())) {
+		return;
+	    }
 
-            IFluidHandlerItem cap = stack.getCapability(Capabilities.FluidHandler.ITEM);
+	    IFluidHandlerItem cap = stack.getCapability(Capabilities.FluidHandler.ITEM);
 
-            if (cap == null) {
-                return;
-            }
+	    if (cap == null) {
+		return;
+	    }
 
-            FluidStack fluidStack = cap.getFluidInTank(0);
+	    FluidStack fluidStack = cap.getFluidInTank(0);
 
-            if (fluidStack.isEmpty()) {
-                return;
-            }
+	    if (fluidStack.isEmpty()) {
+		return;
+	    }
 
-            RadioactiveObject radiation = RadioactiveFluidRegister.getValue(fluidStack.getFluid());
+	    RadioactiveObject radiation = RadioactiveFluidRegister.getValue(fluidStack.getFluid());
 
-            if (radiation.amount() <= 0) {
-                return;
-            }
+	    if (radiation.amount() <= 0) {
+		return;
+	    }
 
-            double radiationMultiplier = (double) fluidStack.getAmount() / (double) cap.getTankCapacity(0);
+	    double radiationMultiplier = (double) fluidStack.getAmount() / (double) cap.getTankCapacity(0);
 
-            RadiationSystem.addRadiationSource(world, new SimpleRadiationSource(radiation.amount() * radiationMultiplier, radiation.strength(), RAD_RANGE, true, 0, entity.getOnPos(), false, false));
+	    RadiationSystem.addRadiationSource(world,
+		    new SimpleRadiationSource(radiation.amount() * radiationMultiplier, radiation.strength(), RAD_RANGE,
+			    true, 0, entity.getOnPos(), false, false));
 
-        });
+	});
     }
 
     @Override
     public void addCreativeModeItems(CreativeModeTab group, List<ItemStack> items) {
-        items.add(new ItemStack(this));
+	items.add(new ItemStack(this));
     }
 }

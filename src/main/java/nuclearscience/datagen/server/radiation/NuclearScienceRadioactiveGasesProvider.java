@@ -10,13 +10,13 @@ import voltaic.datagen.utils.server.radiation.BaseRadioactiveGasesProvider;
 public class NuclearScienceRadioactiveGasesProvider extends BaseRadioactiveGasesProvider {
 
     public NuclearScienceRadioactiveGasesProvider(PackOutput output) {
-        super(output, NuclearScience.ID);
+	super(output, NuclearScience.ID);
     }
 
     @Override
     public void getRadioactiveGases(JsonObject json) {
 
-        addTag(NuclearScienceTags.Gases.URANIUM_HEXAFLUORIDE, 1, 1, json);
+	addTag(NuclearScienceTags.Gases.URANIUM_HEXAFLUORIDE, 1, 1, json);
 
     }
 

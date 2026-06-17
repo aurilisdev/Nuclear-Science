@@ -48,23 +48,27 @@ public class RenderRadioactiveProcessor extends AbstractTileRenderer<TileRadioac
 	case NORTH:
 	    box = new AABB(4 / 16.0, 7 / 16.0, 0.5 / 16.0, 12 / 16.0, maxY, 1 / 16.0);
 
-	    RenderingUtils.renderFluidBox(matrix, minecraft(), builder, box, input.getFluid(), combinedLight, overlay, RenderingUtils.ALL_FACES);
+	    RenderingUtils.renderFluidBox(matrix, minecraft(), builder, box, input.getFluid(), combinedLight, overlay,
+		    RenderingUtils.ALL_FACES);
 
 	    break;
 	case SOUTH:
 	    box = new AABB(4 / 16.0, 7 / 16.0, 15.5 / 16.0, 12 / 16.0, maxY, 15 / 16.0);
 
-	    RenderingUtils.renderFluidBox(matrix, minecraft(), builder, box, input.getFluid(), combinedLight, overlay, RenderingUtils.ALL_FACES);
+	    RenderingUtils.renderFluidBox(matrix, minecraft(), builder, box, input.getFluid(), combinedLight, overlay,
+		    RenderingUtils.ALL_FACES);
 	    break;
 	case EAST:
 	    box = new AABB(15.5 / 16.0, 7 / 16.0, 4 / 16.0, 15 / 16.0, maxY, 12 / 16.0);
 
-	    RenderingUtils.renderFluidBox(matrix, minecraft(), builder, box, input.getFluid(), combinedLight, overlay, RenderingUtils.ALL_FACES);
+	    RenderingUtils.renderFluidBox(matrix, minecraft(), builder, box, input.getFluid(), combinedLight, overlay,
+		    RenderingUtils.ALL_FACES);
 	    break;
 	case WEST:
 	    box = new AABB(0.5 / 16.0, 7 / 16.0, 4 / 16.0, 1 / 16.0, maxY, 12 / 16.0);
 
-	    RenderingUtils.renderFluidBox(matrix, minecraft(), builder, box, input.getFluid(), combinedLight, overlay, RenderingUtils.ALL_FACES);
+	    RenderingUtils.renderFluidBox(matrix, minecraft(), builder, box, input.getFluid(), combinedLight, overlay,
+		    RenderingUtils.ALL_FACES);
 
 	    break;
 	default:

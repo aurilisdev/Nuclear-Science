@@ -20,44 +20,48 @@ public class TileMonitorModule extends GenericTileInterfaceBound {
     private Direction relativeBack;
 
     public TileMonitorModule(BlockPos worldPos, BlockState blockState) {
-        super(NuclearScienceTiles.TILE_MONITORMODULE.get(), worldPos, blockState);
-        addComponent(new ComponentTickable(this).tickServer(this::tickServer));
-        addComponent(new ComponentContainerProvider("monitormodule", this).createMenu((id, player) -> new ContainerMonitorModule(id, player, new SimpleContainer(0), getCoordsArray())));
-        relativeBack = BlockEntityUtils.getRelativeSide(getFacing(), BlockEntityUtils.MachineDirection.BACK.mappedDir);
+	super(NuclearScienceTiles.TILE_MONITORMODULE.get(), worldPos, blockState);
+	addComponent(new ComponentTickable(this).tickServer(this::tickServer));
+	addComponent(new ComponentContainerProvider("monitormodule", this).createMenu(
+		(id, player) -> new ContainerMonitorModule(id, player, new SimpleContainer(0), getCoordsArray())));
+	relativeBack = BlockEntityUtils.getRelativeSide(getFacing(), BlockEntityUtils.MachineDirection.BACK.mappedDir);
     }
 
     @Override
     public Direction getCableLocation() {
-        return relativeBack;
+	return relativeBack;
     }
 
     @Override
     public void onBlockStateUpdate(BlockState oldState, BlockState newState) {
-        super.onBlockStateUpdate(oldState, newState);
-        if (!level.isClientSide() && oldState.hasProperty(VoltaicBlockStates.FACING) && newState.hasProperty(VoltaicBlockStates.FACING) && oldState.getValue(VoltaicBlockStates.FACING) != newState.getValue(VoltaicBlockStates.FACING)) {
-            relativeBack = BlockEntityUtils.getRelativeSide(getFacing(), BlockEntityUtils.MachineDirection.BACK.mappedDir);
-        }
+	super.onBlockStateUpdate(oldState, newState);
+	if (!level.isClientSide() && oldState.hasProperty(VoltaicBlockStates.FACING)
+		&& newState.hasProperty(VoltaicBlockStates.FACING)
+		&& oldState.getValue(VoltaicBlockStates.FACING) != newState.getValue(VoltaicBlockStates.FACING)) {
+	    relativeBack = BlockEntityUtils.getRelativeSide(getFacing(),
+		    BlockEntityUtils.MachineDirection.BACK.mappedDir);
+	}
     }
 
     @Override
     protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.saveAdditional(compound, registries);
-        compound.putInt("relativeback", relativeBack.ordinal());
+	super.saveAdditional(compound, registries);
+	compound.putInt("relativeback", relativeBack.ordinal());
     }
 
     @Override
     protected void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.loadAdditional(compound, registries);
-        relativeBack = Direction.values()[compound.getInt("relativeback")];
+	super.loadAdditional(compound, registries);
+	relativeBack = Direction.values()[compound.getInt("relativeback")];
     }
 
     @Override
     public boolean checkLinkedPosition(GenericTileInterface inter) {
-        return true;
+	return true;
     }
 
     @Override
     public GenericTileInterface.InterfaceType[] getValidInterfaces() {
-        return ALL;
+	return ALL;
     }
 }

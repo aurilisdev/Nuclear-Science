@@ -14,24 +14,26 @@ import voltaic.prefab.tile.components.type.ComponentTickable;
 
 public class TileElectromagneticGateway extends GenericTile {
 
-    public final SingleProperty<Float> targetSpeed = property(new SingleProperty<>(PropertyTypes.FLOAT, "targetspeed", 0.0F));
+    public final SingleProperty<Float> targetSpeed = property(
+	    new SingleProperty<>(PropertyTypes.FLOAT, "targetspeed", 0.0F));
 
     public TileElectromagneticGateway(BlockPos worldPos, BlockState blockState) {
-        super(NuclearScienceTiles.TILE_ELECTROMAGNETICGATEWAY.get(), worldPos, blockState);
-        addComponent(new ComponentTickable(this));
-        addComponent(new ComponentContainerProvider("electromagneticgateway", this).createMenu((id, player) -> new ContainerElectromagneticGateway(id, player, new SimpleContainer(0), getCoordsArray())));
+	super(NuclearScienceTiles.TILE_ELECTROMAGNETICGATEWAY.get(), worldPos, blockState);
+	addComponent(new ComponentTickable(this));
+	addComponent(new ComponentContainerProvider("electromagneticgateway", this).createMenu((id,
+		player) -> new ContainerElectromagneticGateway(id, player, new SimpleContainer(0), getCoordsArray())));
     }
 
     public boolean mayPassThrough(float speed) {
-        return speed >= getActualSpeed(targetSpeed.getValue());
+	return speed >= getActualSpeed(targetSpeed.getValue());
     }
 
     public static float getActualSpeed(float lightSpeedPerc) {
-        return lightSpeedPerc / 100.0F * EntityParticle.MAX_SPEED;
+	return lightSpeedPerc / 100.0F * EntityParticle.MAX_SPEED;
     }
 
     public static float getLightSpeedPerc(float actualSpeed) {
-        return actualSpeed / EntityParticle.MAX_SPEED * 100.0F;
+	return actualSpeed / EntityParticle.MAX_SPEED * 100.0F;
     }
 
 }

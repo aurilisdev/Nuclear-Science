@@ -15,23 +15,24 @@ import voltaic.prefab.utilities.math.Color;
 
 public class ContainerGasCentrifuge extends GenericContainerBlockEntity<TileGasCentrifuge> {
 
-	public static final SubtypeItemUpgrade[] VALID_UPGRADES = new SubtypeItemUpgrade[] { SubtypeItemUpgrade.basicspeed, SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.itemoutput, SubtypeItemUpgrade.experience };
+    public static final SubtypeItemUpgrade[] VALID_UPGRADES = { SubtypeItemUpgrade.basicspeed,
+	    SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.itemoutput, SubtypeItemUpgrade.experience };
 
-	public ContainerGasCentrifuge(int id, Inventory playerinv) {
-		this(id, playerinv, new SimpleContainer(6), new SimpleContainerData(3));
-	}
+    public ContainerGasCentrifuge(int id, Inventory playerinv) {
+	this(id, playerinv, new SimpleContainer(6), new SimpleContainerData(3));
+    }
 
-	public ContainerGasCentrifuge(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
-		super(NuclearScienceMenuTypes.CONTAINER_GASCENTRIFUGE.get(), id, playerinv, inventory, inventorydata);
-	}
+    public ContainerGasCentrifuge(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
+	super(NuclearScienceMenuTypes.CONTAINER_GASCENTRIFUGE.get(), id, playerinv, inventory, inventorydata);
+    }
 
-	@Override
-	public void addInventorySlots(Container inv, Inventory playerinv) {
-		addSlot(new SlotRestricted(inv, nextIndex(), 129, 14).setIOColor(new Color(255, 0, 0, 255)));
-		addSlot(new SlotRestricted(inv, nextIndex(), 129, 34).setIOColor(new Color(255, 0, 0, 255)));
-		addSlot(new SlotRestricted(inv, nextIndex(), 129, 55).setIOColor(new Color(255, 0, 0, 255)));
-		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 14, VALID_UPGRADES));
-		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 34, VALID_UPGRADES));
-		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 55, VALID_UPGRADES));
-	}
+    @Override
+    public void addInventorySlots(Container inv, Inventory playerinv) {
+	addSlot(new SlotRestricted(inv, nextIndex(), 129, 14).setIOColor(new Color(255, 0, 0, 255)));
+	addSlot(new SlotRestricted(inv, nextIndex(), 129, 34).setIOColor(new Color(255, 0, 0, 255)));
+	addSlot(new SlotRestricted(inv, nextIndex(), 129, 55).setIOColor(new Color(255, 0, 0, 255)));
+	addSlot(new SlotUpgrade(inv, nextIndex(), 153, 14, VALID_UPGRADES));
+	addSlot(new SlotUpgrade(inv, nextIndex(), 153, 34, VALID_UPGRADES));
+	addSlot(new SlotUpgrade(inv, nextIndex(), 153, 55, VALID_UPGRADES));
+    }
 }

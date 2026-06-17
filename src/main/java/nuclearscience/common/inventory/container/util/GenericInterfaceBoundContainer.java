@@ -10,25 +10,28 @@ import nuclearscience.common.packet.type.client.PacketSetClientInterfaces;
 import nuclearscience.common.tile.reactor.logisticsnetwork.util.GenericTileInterfaceBound;
 import voltaic.prefab.inventory.container.types.GenericContainerBlockEntity;
 
-public abstract class GenericInterfaceBoundContainer<T extends GenericTileInterfaceBound> extends GenericContainerBlockEntity<T> {
+public abstract class GenericInterfaceBoundContainer<T extends GenericTileInterfaceBound>
+	extends GenericContainerBlockEntity<T> {
 
-    public GenericInterfaceBoundContainer(MenuType<?> type, int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
-        super(type, id, playerinv, inventory, inventorydata);
+    public GenericInterfaceBoundContainer(MenuType<?> type, int id, Inventory playerinv, Container inventory,
+	    ContainerData inventorydata) {
+	super(type, id, playerinv, inventory, inventorydata);
     }
 
     @Override
     public void broadcastChanges() {
-        super.broadcastChanges();
+	super.broadcastChanges();
 
-        if(!getLevel().isClientSide() && getPlayer() != null && getSafeHost() != null) {
+	if (!getLevel().isClientSide() && getPlayer() != null && getSafeHost() != null) {
 
-            GenericTileInterfaceBound bound = getSafeHost();
+	    GenericTileInterfaceBound bound = getSafeHost();
 
-            PacketSetClientInterfaces packet = new PacketSetClientInterfaces(bound.getBlockPos(), bound.getInterfacesForClient());
+	    PacketSetClientInterfaces packet = new PacketSetClientInterfaces(bound.getBlockPos(),
+		    bound.getInterfacesForClient());
 
-            PacketDistributor.sendToPlayer((ServerPlayer) getPlayer(), packet);
+	    PacketDistributor.sendToPlayer((ServerPlayer) getPlayer(), packet);
 
-        }
+	}
 
     }
 }

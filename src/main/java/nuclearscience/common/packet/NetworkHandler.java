@@ -16,27 +16,33 @@ import nuclearscience.common.packet.type.server.PacketEditFrequency;
 
 @EventBusSubscriber(modid = NuclearScience.ID, bus = EventBusSubscriber.Bus.MOD)
 public class NetworkHandler {
-	private static final String PROTOCOL_VERSION = "1";
-	@SubscribeEvent
-	public static void registerPackets(final RegisterPayloadHandlersEvent event) {
-		final PayloadRegistrar registry = event.registrar(NuclearScience.ID).versioned(PROTOCOL_VERSION).optional();
+    private static final String PROTOCOL_VERSION = "1";
 
-		//CLIENT
-		registry.playToClient(PacketSetClientAtomicAssemblerBlacklistVals.TYPE, PacketSetClientAtomicAssemblerBlacklistVals.CODEC, PacketSetClientAtomicAssemblerBlacklistVals::handle);
-		registry.playToClient(PacketSetClientTunnelFrequencies.TYPE, PacketSetClientTunnelFrequencies.CODEC, PacketSetClientTunnelFrequencies::handle);
-		registry.playToClient(PacketSetClientInterfaces.TYPE, PacketSetClientInterfaces.CODEC, PacketSetClientInterfaces::handle);
-		registry.playToClient(PacketSetClientAtomicAssemblerWhitelistVals.TYPE, PacketSetClientAtomicAssemblerWhitelistVals.CODEC, PacketSetClientAtomicAssemblerWhitelistVals::handle);
+    @SubscribeEvent
+    public static void registerPackets(final RegisterPayloadHandlersEvent event) {
+	final PayloadRegistrar registry = event.registrar(NuclearScience.ID).versioned(PROTOCOL_VERSION).optional();
 
-		//SERVER
+	// CLIENT
+	registry.playToClient(PacketSetClientAtomicAssemblerBlacklistVals.TYPE,
+		PacketSetClientAtomicAssemblerBlacklistVals.CODEC, PacketSetClientAtomicAssemblerBlacklistVals::handle);
+	registry.playToClient(PacketSetClientTunnelFrequencies.TYPE, PacketSetClientTunnelFrequencies.CODEC,
+		PacketSetClientTunnelFrequencies::handle);
+	registry.playToClient(PacketSetClientInterfaces.TYPE, PacketSetClientInterfaces.CODEC,
+		PacketSetClientInterfaces::handle);
+	registry.playToClient(PacketSetClientAtomicAssemblerWhitelistVals.TYPE,
+		PacketSetClientAtomicAssemblerWhitelistVals.CODEC, PacketSetClientAtomicAssemblerWhitelistVals::handle);
 
-		registry.playToServer(PacketCreateNewFreqeuency.TYPE, PacketCreateNewFreqeuency.CODEC, PacketCreateNewFreqeuency::handle);
-		registry.playToServer(PacketDeleteFrequency.TYPE, PacketDeleteFrequency.CODEC, PacketDeleteFrequency::handle);
-		registry.playToServer(PacketEditFrequency.TYPE, PacketEditFrequency.CODEC, PacketEditFrequency::handle);
+	// SERVER
 
-	}
+	registry.playToServer(PacketCreateNewFreqeuency.TYPE, PacketCreateNewFreqeuency.CODEC,
+		PacketCreateNewFreqeuency::handle);
+	registry.playToServer(PacketDeleteFrequency.TYPE, PacketDeleteFrequency.CODEC, PacketDeleteFrequency::handle);
+	registry.playToServer(PacketEditFrequency.TYPE, PacketEditFrequency.CODEC, PacketEditFrequency::handle);
 
-	public static ResourceLocation id(String name) {
-		return NuclearScience.rl(name);
-	}
+    }
+
+    public static ResourceLocation id(String name) {
+	return NuclearScience.rl(name);
+    }
 
 }

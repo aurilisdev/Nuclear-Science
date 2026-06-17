@@ -17,23 +17,26 @@ import voltaic.prefab.utilities.math.Color;
 
 public class ContainerRadioactiveProcessor extends GenericContainerBlockEntity<TileRadioactiveProcessor> {
 
-	public static final SubtypeItemUpgrade[] VALID_UPGRADES = new SubtypeItemUpgrade[] { SubtypeItemUpgrade.basicspeed, SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.iteminput, SubtypeItemUpgrade.itemoutput, SubtypeItemUpgrade.experience };
+    public static final SubtypeItemUpgrade[] VALID_UPGRADES = { SubtypeItemUpgrade.basicspeed,
+	    SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.iteminput, SubtypeItemUpgrade.itemoutput,
+	    SubtypeItemUpgrade.experience };
 
-	public ContainerRadioactiveProcessor(int id, Inventory playerinv) {
-		this(id, playerinv, new SimpleContainer(6), new SimpleContainerData(3));
-	}
+    public ContainerRadioactiveProcessor(int id, Inventory playerinv) {
+	this(id, playerinv, new SimpleContainer(6), new SimpleContainerData(3));
+    }
 
-	public ContainerRadioactiveProcessor(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
-		super(NuclearScienceMenuTypes.CONTAINER_RADIOACTIVEPROCESSOR.get(), id, playerinv, inventory, inventorydata);
-	}
+    public ContainerRadioactiveProcessor(int id, Inventory playerinv, Container inventory,
+	    ContainerData inventorydata) {
+	super(NuclearScienceMenuTypes.CONTAINER_RADIOACTIVEPROCESSOR.get(), id, playerinv, inventory, inventorydata);
+    }
 
-	@Override
-	public void addInventorySlots(Container inv, Inventory playerinv) {
-		addSlot(new SlotGeneric(inv, nextIndex(), 74, 31).setIOColor(new Color(0, 240, 255, 255)));
-		addSlot(new SlotRestricted(inv, nextIndex(), 128, 31).setIOColor(new Color(255, 0, 0, 255)));
-		addSlot(new SlotFluid(inv, this.nextIndex(), 38, 51));
-		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 14, VALID_UPGRADES));
-		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 34, VALID_UPGRADES));
-		addSlot(new SlotUpgrade(inv, nextIndex(), 153, 54, VALID_UPGRADES));
-	}
+    @Override
+    public void addInventorySlots(Container inv, Inventory playerinv) {
+	addSlot(new SlotGeneric(inv, nextIndex(), 74, 31).setIOColor(new Color(0, 240, 255, 255)));
+	addSlot(new SlotRestricted(inv, nextIndex(), 128, 31).setIOColor(new Color(255, 0, 0, 255)));
+	addSlot(new SlotFluid(inv, this.nextIndex(), 38, 51));
+	addSlot(new SlotUpgrade(inv, nextIndex(), 153, 14, VALID_UPGRADES));
+	addSlot(new SlotUpgrade(inv, nextIndex(), 153, 34, VALID_UPGRADES));
+	addSlot(new SlotUpgrade(inv, nextIndex(), 153, 54, VALID_UPGRADES));
+    }
 }

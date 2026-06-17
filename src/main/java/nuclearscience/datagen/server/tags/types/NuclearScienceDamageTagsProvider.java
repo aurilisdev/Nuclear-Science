@@ -12,15 +12,16 @@ import nuclearscience.registers.NuclearScienceDamageTypes;
 
 public class NuclearScienceDamageTagsProvider extends DamageTypeTagsProvider {
 
-    public NuclearScienceDamageTagsProvider(PackOutput output, CompletableFuture<Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
-        super(output, lookupProvider, NuclearScience.ID, existingFileHelper);
+    public NuclearScienceDamageTagsProvider(PackOutput output, CompletableFuture<Provider> lookupProvider,
+	    ExistingFileHelper existingFileHelper) {
+	super(output, lookupProvider, NuclearScience.ID, existingFileHelper);
     }
 
     @Override
     protected void addTags(Provider provider) {
-        tag(DamageTypeTags.BYPASSES_ARMOR).add(NuclearScienceDamageTypes.PLASMA);
-        tag(DamageTypeTags.BYPASSES_EFFECTS).add(NuclearScienceDamageTypes.PLASMA); // bypasses magic
-        tag(DamageTypeTags.NO_KNOCKBACK).add(NuclearScienceDamageTypes.PLASMA);
+	tag(DamageTypeTags.BYPASSES_ARMOR).add(NuclearScienceDamageTypes.PLASMA);
+	tag(DamageTypeTags.BYPASSES_EFFECTS).add(NuclearScienceDamageTypes.PLASMA); // bypasses magic
+	tag(DamageTypeTags.NO_KNOCKBACK).add(NuclearScienceDamageTypes.PLASMA);
     }
 
 }

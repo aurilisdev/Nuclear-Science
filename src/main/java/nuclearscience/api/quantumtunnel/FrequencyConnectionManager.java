@@ -15,121 +15,126 @@ import voltaic.prefab.utilities.object.TransferPack;
 public class FrequencyConnectionManager {
 
     public static TransferPack getBufferedEnergy(TunnelFrequency frequency) {
-        ServerLevel level = getOverworld();
-        return level.getData(NuclearScienceAttachmentTypes.TUNNEL_MAP).getOrDefault(frequency, new TunnelFrequencyBuffer()).getBufferedEnergy();
+	ServerLevel level = getOverworld();
+	return level.getData(NuclearScienceAttachmentTypes.TUNNEL_MAP)
+		.getOrDefault(frequency, new TunnelFrequencyBuffer()).getBufferedEnergy();
     }
 
     public static TransferPack recieveEnergy(TunnelFrequency frequency, TransferPack recieve, boolean simulate) {
-        ServerLevel level = getOverworld();
-        HashMap<TunnelFrequency, TunnelFrequencyBuffer> map = level.getData(NuclearScienceAttachmentTypes.TUNNEL_MAP);
-        if (!map.containsKey(frequency)) {
-            map.put(frequency, new TunnelFrequencyBuffer());
-        }
-        TransferPack accepted = map.get(frequency).addEnergy(simulate, recieve);
-        level.setData(NuclearScienceAttachmentTypes.TUNNEL_MAP, map);
-        return accepted;
+	ServerLevel level = getOverworld();
+	HashMap<TunnelFrequency, TunnelFrequencyBuffer> map = level.getData(NuclearScienceAttachmentTypes.TUNNEL_MAP);
+	if (!map.containsKey(frequency)) {
+	    map.put(frequency, new TunnelFrequencyBuffer());
+	}
+	TransferPack accepted = map.get(frequency).addEnergy(simulate, recieve);
+	level.setData(NuclearScienceAttachmentTypes.TUNNEL_MAP, map);
+	return accepted;
     }
 
     public static TransferPack extractEnergy(TunnelFrequency frequency, TransferPack extract, boolean simulate) {
-        ServerLevel level = getOverworld();
-        HashMap<TunnelFrequency, TunnelFrequencyBuffer> map = level.getData(NuclearScienceAttachmentTypes.TUNNEL_MAP);
-        if (!map.containsKey(frequency)) {
-            map.put(frequency, new TunnelFrequencyBuffer());
-        }
-        TransferPack taken = map.get(frequency).extractEnergy(simulate, extract);
-        level.setData(NuclearScienceAttachmentTypes.TUNNEL_MAP, map);
-        return taken;
+	ServerLevel level = getOverworld();
+	HashMap<TunnelFrequency, TunnelFrequencyBuffer> map = level.getData(NuclearScienceAttachmentTypes.TUNNEL_MAP);
+	if (!map.containsKey(frequency)) {
+	    map.put(frequency, new TunnelFrequencyBuffer());
+	}
+	TransferPack taken = map.get(frequency).extractEnergy(simulate, extract);
+	level.setData(NuclearScienceAttachmentTypes.TUNNEL_MAP, map);
+	return taken;
     }
 
     public static FluidStack getBufferedFluid(TunnelFrequency frequency) {
-        ServerLevel level = getOverworld();
-        return level.getData(NuclearScienceAttachmentTypes.TUNNEL_MAP).getOrDefault(frequency, new TunnelFrequencyBuffer()).getBufferedFluid();
+	ServerLevel level = getOverworld();
+	return level.getData(NuclearScienceAttachmentTypes.TUNNEL_MAP)
+		.getOrDefault(frequency, new TunnelFrequencyBuffer()).getBufferedFluid();
     }
 
-    public static FluidStack recieveFluid(TunnelFrequency frequency, FluidStack recieve, IFluidHandler.FluidAction action) {
-        ServerLevel level = getOverworld();
-        HashMap<TunnelFrequency, TunnelFrequencyBuffer> map = level.getData(NuclearScienceAttachmentTypes.TUNNEL_MAP);
-        if (!map.containsKey(frequency)) {
-            map.put(frequency, new TunnelFrequencyBuffer());
-        }
-        FluidStack accepted = map.get(frequency).addFluid(action, recieve);
-        level.setData(NuclearScienceAttachmentTypes.TUNNEL_MAP, map);
-        return accepted;
+    public static FluidStack recieveFluid(TunnelFrequency frequency, FluidStack recieve,
+	    IFluidHandler.FluidAction action) {
+	ServerLevel level = getOverworld();
+	HashMap<TunnelFrequency, TunnelFrequencyBuffer> map = level.getData(NuclearScienceAttachmentTypes.TUNNEL_MAP);
+	if (!map.containsKey(frequency)) {
+	    map.put(frequency, new TunnelFrequencyBuffer());
+	}
+	FluidStack accepted = map.get(frequency).addFluid(action, recieve);
+	level.setData(NuclearScienceAttachmentTypes.TUNNEL_MAP, map);
+	return accepted;
     }
 
-    public static FluidStack extractFluid(TunnelFrequency frequency, FluidStack extract, IFluidHandler.FluidAction action) {
-        ServerLevel level = getOverworld();
-        HashMap<TunnelFrequency, TunnelFrequencyBuffer> map = level.getData(NuclearScienceAttachmentTypes.TUNNEL_MAP);
-        if (!map.containsKey(frequency)) {
-            map.put(frequency, new TunnelFrequencyBuffer());
-        }
-        FluidStack taken = map.get(frequency).extractFluid(action, extract);
-        level.setData(NuclearScienceAttachmentTypes.TUNNEL_MAP, map);
-        return taken;
+    public static FluidStack extractFluid(TunnelFrequency frequency, FluidStack extract,
+	    IFluidHandler.FluidAction action) {
+	ServerLevel level = getOverworld();
+	HashMap<TunnelFrequency, TunnelFrequencyBuffer> map = level.getData(NuclearScienceAttachmentTypes.TUNNEL_MAP);
+	if (!map.containsKey(frequency)) {
+	    map.put(frequency, new TunnelFrequencyBuffer());
+	}
+	FluidStack taken = map.get(frequency).extractFluid(action, extract);
+	level.setData(NuclearScienceAttachmentTypes.TUNNEL_MAP, map);
+	return taken;
     }
 
     public static GasStack getBufferedGas(TunnelFrequency frequency) {
-        ServerLevel level = getOverworld();
-        return level.getData(NuclearScienceAttachmentTypes.TUNNEL_MAP).getOrDefault(frequency, new TunnelFrequencyBuffer()).getBufferedGas();
+	ServerLevel level = getOverworld();
+	return level.getData(NuclearScienceAttachmentTypes.TUNNEL_MAP)
+		.getOrDefault(frequency, new TunnelFrequencyBuffer()).getBufferedGas();
     }
 
     public static GasStack recieveGas(TunnelFrequency frequency, GasStack recieve, GasAction action) {
-        ServerLevel level = getOverworld();
-        HashMap<TunnelFrequency, TunnelFrequencyBuffer> map = level.getData(NuclearScienceAttachmentTypes.TUNNEL_MAP);
-        if (!map.containsKey(frequency)) {
-            map.put(frequency, new TunnelFrequencyBuffer());
-        }
-        GasStack accepted = map.get(frequency).addGas(action, recieve);
-        level.setData(NuclearScienceAttachmentTypes.TUNNEL_MAP, map);
-        return accepted;
+	ServerLevel level = getOverworld();
+	HashMap<TunnelFrequency, TunnelFrequencyBuffer> map = level.getData(NuclearScienceAttachmentTypes.TUNNEL_MAP);
+	if (!map.containsKey(frequency)) {
+	    map.put(frequency, new TunnelFrequencyBuffer());
+	}
+	GasStack accepted = map.get(frequency).addGas(action, recieve);
+	level.setData(NuclearScienceAttachmentTypes.TUNNEL_MAP, map);
+	return accepted;
     }
 
     public static GasStack extractGas(TunnelFrequency frequency, GasStack extract, GasAction action) {
-        ServerLevel level = getOverworld();
-        HashMap<TunnelFrequency, TunnelFrequencyBuffer> map = level.getData(NuclearScienceAttachmentTypes.TUNNEL_MAP);
-        if (!map.containsKey(frequency)) {
-            map.put(frequency, new TunnelFrequencyBuffer());
-        }
-        GasStack taken = map.get(frequency).extractGas(action, extract);
-        level.setData(NuclearScienceAttachmentTypes.TUNNEL_MAP, map);
-        return taken;
+	ServerLevel level = getOverworld();
+	HashMap<TunnelFrequency, TunnelFrequencyBuffer> map = level.getData(NuclearScienceAttachmentTypes.TUNNEL_MAP);
+	if (!map.containsKey(frequency)) {
+	    map.put(frequency, new TunnelFrequencyBuffer());
+	}
+	GasStack taken = map.get(frequency).extractGas(action, extract);
+	level.setData(NuclearScienceAttachmentTypes.TUNNEL_MAP, map);
+	return taken;
     }
 
     public static ItemStack getBufferedItem(TunnelFrequency frequency) {
-        ServerLevel level = getOverworld();
-        return level.getData(NuclearScienceAttachmentTypes.TUNNEL_MAP).getOrDefault(frequency, new TunnelFrequencyBuffer()).getBufferedItem();
+	ServerLevel level = getOverworld();
+	return level.getData(NuclearScienceAttachmentTypes.TUNNEL_MAP)
+		.getOrDefault(frequency, new TunnelFrequencyBuffer()).getBufferedItem();
     }
 
     public static ItemStack recieveItem(TunnelFrequency frequency, ItemStack recieve, boolean simulate) {
-        ServerLevel level = getOverworld();
-        HashMap<TunnelFrequency, TunnelFrequencyBuffer> map = level.getData(NuclearScienceAttachmentTypes.TUNNEL_MAP);
-        if (!map.containsKey(frequency)) {
-            map.put(frequency, new TunnelFrequencyBuffer());
-        }
-        ItemStack accepted = map.get(frequency).addItem(simulate, recieve);
-        level.setData(NuclearScienceAttachmentTypes.TUNNEL_MAP, map);
-        return accepted;
+	ServerLevel level = getOverworld();
+	HashMap<TunnelFrequency, TunnelFrequencyBuffer> map = level.getData(NuclearScienceAttachmentTypes.TUNNEL_MAP);
+	if (!map.containsKey(frequency)) {
+	    map.put(frequency, new TunnelFrequencyBuffer());
+	}
+	ItemStack accepted = map.get(frequency).addItem(simulate, recieve);
+	level.setData(NuclearScienceAttachmentTypes.TUNNEL_MAP, map);
+	return accepted;
     }
 
     public static ItemStack extractItem(TunnelFrequency frequency, ItemStack extract, boolean simulate) {
-        ServerLevel level = getOverworld();
-        HashMap<TunnelFrequency, TunnelFrequencyBuffer> map = level.getData(NuclearScienceAttachmentTypes.TUNNEL_MAP);
-        if (!map.containsKey(frequency)) {
-            map.put(frequency, new TunnelFrequencyBuffer());
-        }
-        ItemStack taken = map.get(frequency).extractItem(simulate, extract);
-        level.setData(NuclearScienceAttachmentTypes.TUNNEL_MAP, map);
-        return taken;
+	ServerLevel level = getOverworld();
+	HashMap<TunnelFrequency, TunnelFrequencyBuffer> map = level.getData(NuclearScienceAttachmentTypes.TUNNEL_MAP);
+	if (!map.containsKey(frequency)) {
+	    map.put(frequency, new TunnelFrequencyBuffer());
+	}
+	ItemStack taken = map.get(frequency).extractItem(simulate, extract);
+	level.setData(NuclearScienceAttachmentTypes.TUNNEL_MAP, map);
+	return taken;
     }
 
     public static TunnelFrequencyBuffer getClientBuffer(TunnelFrequency frequency) {
-        ServerLevel level = getOverworld();
-        HashMap<TunnelFrequency, TunnelFrequencyBuffer> map = level.getData(NuclearScienceAttachmentTypes.TUNNEL_MAP);
-        return map.getOrDefault(frequency, TunnelFrequencyBuffer.EMPTY);
+	ServerLevel level = getOverworld();
+	HashMap<TunnelFrequency, TunnelFrequencyBuffer> map = level.getData(NuclearScienceAttachmentTypes.TUNNEL_MAP);
+	return map.getOrDefault(frequency, TunnelFrequencyBuffer.EMPTY);
     }
 
-
     private static ServerLevel getOverworld() {
-        return ServerLifecycleHooks.getCurrentServer().overworld();
+	return ServerLifecycleHooks.getCurrentServer().overworld();
     }
 }

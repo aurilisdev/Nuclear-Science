@@ -21,45 +21,45 @@ import voltaic.prefab.block.GenericEntityBlock;
 
 public class BlockPlasma extends GenericEntityBlock {
 
-	public BlockPlasma() {
-		super(Properties.ofFullCopy(Blocks.NETHER_PORTAL).noCollission().randomTicks().strength(-1.0F)
-				.sound(SoundType.GLASS));
-	}
+    public BlockPlasma() {
+	super(Properties.ofFullCopy(Blocks.NETHER_PORTAL).noCollission().randomTicks().strength(-1.0F)
+		.sound(SoundType.GLASS));
+    }
 
-	@Override
-	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-		return new TilePlasma(pos, state);
-	}
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+	return new TilePlasma(pos, state);
+    }
 
-	@Override
-	public int getLightEmission(BlockState state, BlockGetter world, BlockPos pos) {
-		return 11;
-	}
+    @Override
+    public int getLightEmission(BlockState state, BlockGetter world, BlockPos pos) {
+	return 11;
+    }
 
-	@Override
-	public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
-		entityIn.hurt(entityIn.damageSources().source(NuclearScienceDamageTypes.PLASMA), 99999);
-	}
+    @Override
+    public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
+	entityIn.hurt(entityIn.damageSources().source(NuclearScienceDamageTypes.PLASMA), 99999);
+    }
 
-	@Override
-	public VoxelShape getVisualShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext context) {
-		return Shapes.empty();
-	}
+    @Override
+    public VoxelShape getVisualShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext context) {
+	return Shapes.empty();
+    }
 
-	@Override
-	public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
-		return adjacentBlockState.is(this) || super.skipRendering(state, adjacentBlockState, side);
-	}
+    @Override
+    public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
+	return adjacentBlockState.is(this) || super.skipRendering(state, adjacentBlockState, side);
+    }
 
-	@Override
-	public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-		if (state.getBlock() != newState.getBlock()) {
-			super.onRemove(state, worldIn, pos, newState, isMoving);
-		}
+    @Override
+    public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+	if (state.getBlock() != newState.getBlock()) {
+	    super.onRemove(state, worldIn, pos, newState, isMoving);
 	}
+    }
 
-	@Override
-	protected MapCodec<? extends BaseEntityBlock> codec() {
-		return null;
-	}
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+	return null;
+    }
 }

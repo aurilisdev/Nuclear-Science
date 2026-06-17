@@ -16,20 +16,21 @@ public class PacketDeleteFrequency implements CustomPacketPayload {
     public static final ResourceLocation PACKET_DELETEFREQUENCY_PACKETID = NetworkHandler.id("packetdeletefrequency");
     public static final Type<PacketDeleteFrequency> TYPE = new Type<>(PACKET_DELETEFREQUENCY_PACKETID);
 
-    public static final StreamCodec<ByteBuf, PacketDeleteFrequency> CODEC = new StreamCodec<ByteBuf, PacketDeleteFrequency>() {
-        @Override
-        public PacketDeleteFrequency decode(ByteBuf buf) {
+    public static final StreamCodec<ByteBuf, PacketDeleteFrequency> CODEC = new StreamCodec<>() {
+	@Override
+	public PacketDeleteFrequency decode(ByteBuf buf) {
 
-            return new PacketDeleteFrequency(UUIDUtil.STREAM_CODEC.decode(buf), TunnelFrequency.STREAM_CODEC.decode(buf));
-        }
+	    return new PacketDeleteFrequency(UUIDUtil.STREAM_CODEC.decode(buf),
+		    TunnelFrequency.STREAM_CODEC.decode(buf));
+	}
 
-        @Override
-        public void encode(ByteBuf buf, PacketDeleteFrequency packet) {
+	@Override
+	public void encode(ByteBuf buf, PacketDeleteFrequency packet) {
 
-            UUIDUtil.STREAM_CODEC.encode(buf, packet.requester);
-            TunnelFrequency.STREAM_CODEC.encode(buf, packet.frequency);
+	    UUIDUtil.STREAM_CODEC.encode(buf, packet.requester);
+	    TunnelFrequency.STREAM_CODEC.encode(buf, packet.frequency);
 
-        }
+	}
 
     };
 
@@ -37,16 +38,16 @@ public class PacketDeleteFrequency implements CustomPacketPayload {
     private final TunnelFrequency frequency;
 
     public PacketDeleteFrequency(UUID requester, TunnelFrequency frequency) {
-        this.requester = requester;
-        this.frequency = frequency;
+	this.requester = requester;
+	this.frequency = frequency;
     }
 
     public static void handle(PacketDeleteFrequency message, IPayloadContext context) {
-        ServerBarrierMethods.deleteFrequency(message.requester, message.frequency);
+	ServerBarrierMethods.deleteFrequency(message.requester, message.frequency);
     }
 
     @Override
     public Type<? extends CustomPacketPayload> type() {
-        return TYPE;
+	return TYPE;
     }
 }

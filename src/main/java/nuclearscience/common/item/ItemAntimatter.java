@@ -11,28 +11,29 @@ import voltaic.common.item.ItemVoltaic;
 
 public class ItemAntimatter extends ItemVoltaic {
     public ItemAntimatter(Properties properties, Holder<CreativeModeTab> creativeTab) {
-        super(properties, creativeTab);
+	super(properties, creativeTab);
     }
 
     @Override
     public boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity) {
 
-        int time = entity.getData(NuclearScienceAttachmentTypes.ANTIMATTER_TIMEONGROUND);
+	int time = entity.getData(NuclearScienceAttachmentTypes.ANTIMATTER_TIMEONGROUND);
 
-        time = time - 1;
+	time = time - 1;
 
-        if(time <= 0) {
+	if (time <= 0) {
 
-            if(!entity.level().isClientSide()) {
-                entity.level().explode(entity, entity.getX(), entity.getY(), entity.getZ(), 2F, Level.ExplosionInteraction.BLOCK);
-                entity.remove(Entity.RemovalReason.DISCARDED);
-            }
+	    if (!entity.level().isClientSide()) {
+		entity.level().explode(entity, entity.getX(), entity.getY(), entity.getZ(), 2F,
+			Level.ExplosionInteraction.BLOCK);
+		entity.remove(Entity.RemovalReason.DISCARDED);
+	    }
 
-            return true;
-        }
+	    return true;
+	}
 
-        entity.setData(NuclearScienceAttachmentTypes.ANTIMATTER_TIMEONGROUND, time);
+	entity.setData(NuclearScienceAttachmentTypes.ANTIMATTER_TIMEONGROUND, time);
 
-        return super.onEntityItemUpdate(stack, entity);
+	return super.onEntityItemUpdate(stack, entity);
     }
 }

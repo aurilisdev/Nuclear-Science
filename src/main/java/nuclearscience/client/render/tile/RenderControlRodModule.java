@@ -27,71 +27,77 @@ public class RenderControlRodModule extends AbstractTileRenderer<TileControlRodM
     private static final double MAX_DELTA = 13.0 / 16.0;
 
     public RenderControlRodModule(BlockEntityRendererProvider.Context context) {
-        super(context);
+	super(context);
     }
 
     @Override
-    public void render(@NotNull TileControlRodModule tile, float partialTicks, PoseStack stack, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
-        stack.pushPose();
+    public void render(@NotNull TileControlRodModule tile, float partialTicks, PoseStack stack,
+	    MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
+	stack.pushPose();
 
-        stack.translate(0.5, 0.5, 0.5);
+	stack.translate(0.5, 0.5, 0.5);
 
-        Direction facing = tile.getFacing();
+	Direction facing = tile.getFacing();
 
-        int sign = 1;
+	int sign = 1;
 
-        if(facing == Direction.WEST || facing == Direction.EAST) {
-            sign = -1;
-        }
+	if (facing == Direction.WEST || facing == Direction.EAST) {
+	    sign = -1;
+	}
 
-        stack.mulPose(MathUtils.rotQuaternionDeg(0, facing.toYRot() - sign * 90, 0));
+	stack.mulPose(MathUtils.rotQuaternionDeg(0, facing.toYRot() - sign * 90, 0));
 
-        double insertion = tile.insertion.getValue() / (double) TileControlRod.MAX_EXTENSION;
+	double insertion = tile.insertion.getValue() / (double) TileControlRod.MAX_EXTENSION;
 
-        stack.translate(0, 0, -MAX_DELTA * insertion);
+	stack.translate(0, 0, -MAX_DELTA * insertion);
 
-        RenderingUtils.renderModel(getModel(NuclearScienceClientRegister.MODEL_CONTROLRODMODULE_ROD), tile, RenderType.solid(), stack, bufferIn, combinedLightIn, combinedOverlayIn);
+	RenderingUtils.renderModel(getModel(NuclearScienceClientRegister.MODEL_CONTROLRODMODULE_ROD), tile,
+		RenderType.solid(), stack, bufferIn, combinedLightIn, combinedOverlayIn);
 
-        stack.popPose();
+	stack.popPose();
 
+	if (!tile.linked.getValue()) {
+	    return;
+	}
 
-        if(!tile.linked.getValue()) {
-            return;
-        }
+	Font font = Minecraft.getInstance().font;
 
+	stack.pushPose();
 
-        Font font = Minecraft.getInstance().font;
+	stack.translate(0.5, 0.5, 0.5);
 
-        stack.pushPose();
+	rotateMatrix(stack, facing);
 
-        stack.translate(0.5, 0.5, 0.5);
+	stack.translate(0, 0.175, 0.1775);
 
-        rotateMatrix(stack, facing);
+	Component transfer = ChatFormatter.getChatDisplayShort(
+		(double) tile.insertion.getValue() / (double) TileControlRod.MAX_EXTENSION * 100.0,
+		DisplayUnits.PERCENTAGE);
 
-        stack.translate(0, 0.175, 0.1775);
+	float scale = 0.0215F / (font.width(transfer) / 16.0F);
 
-        Component transfer = ChatFormatter.getChatDisplayShort((double) tile.insertion.getValue() / (double) TileControlRod.MAX_EXTENSION * 100.0, DisplayUnits.PERCENTAGE);
+	stack.scale(-scale, -scale, -scale);
 
-        float scale = 0.0215F / (font.width(transfer) / 16.0F);
+	Matrix4f matrix4f = stack.last().pose();
 
-        stack.scale(-scale, -scale, -scale);
+	float textX = -font.width(transfer) / 2.0f;
 
-        Matrix4f matrix4f = stack.last().pose();
+	font.drawInBatch(transfer, textX, 0, Color.WHITE.color(), false, matrix4f, bufferIn, Font.DisplayMode.NORMAL, 0,
+		combinedLightIn);
 
-        float textX = -font.width(transfer) / 2.0f;
-
-        font.drawInBatch(transfer, textX, 0, Color.WHITE.color(), false, matrix4f, bufferIn, Font.DisplayMode.NORMAL, 0, combinedLightIn);
-
-        stack.popPose();
+	stack.popPose();
     }
 
     private static void rotateMatrix(PoseStack stack, Direction dir) {
-        switch (dir) {
-            case EAST -> stack.mulPose(MathUtils.rotQuaternionDeg(0, -90, 0));// stack.mulPose(new Quaternion(0, -90, 0, true));
-            case SOUTH -> stack.mulPose(MathUtils.rotQuaternionDeg(0, 180, 0));// stack.mulPose(new Quaternion(0, 180, 0, true));
-            case WEST -> stack.mulPose(MathUtils.rotQuaternionDeg(0, 90, 0));// stack.mulPose(new Quaternion(0, 90, 0, true));
-            default -> {
-            }
-        }
+	switch (dir) {
+	case EAST -> stack.mulPose(MathUtils.rotQuaternionDeg(0, -90, 0));// stack.mulPose(new Quaternion(0, -90, 0,
+									  // true));
+	case SOUTH -> stack.mulPose(MathUtils.rotQuaternionDeg(0, 180, 0));// stack.mulPose(new Quaternion(0, 180, 0,
+									   // true));
+	case WEST -> stack.mulPose(MathUtils.rotQuaternionDeg(0, 90, 0));// stack.mulPose(new Quaternion(0, 90, 0,
+									 // true));
+	default -> {
+	}
+	}
     }
 }

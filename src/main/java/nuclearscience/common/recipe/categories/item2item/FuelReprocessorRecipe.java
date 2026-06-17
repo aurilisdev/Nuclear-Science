@@ -16,21 +16,23 @@ import voltaic.common.recipe.recipeutils.ProbableItem;
 
 public class FuelReprocessorRecipe extends Item2ItemRecipe {
 
-	public static final String RECIPE_GROUP = "fuel_reprocessor_recipe";
-	public static final ResourceLocation RECIPE_ID = NuclearScience.rl(RECIPE_GROUP);
+    public static final String RECIPE_GROUP = "fuel_reprocessor_recipe";
+    public static final ResourceLocation RECIPE_ID = NuclearScience.rl(RECIPE_GROUP);
 
-	public FuelReprocessorRecipe(String group, List<CountableIngredient> inputs, ItemStack output, double experience, int ticks, double usagePerTick, List<ProbableItem> itemBiproducts, List<ProbableFluid> fluidBiproducts, List<ProbableGas> gasBiproducts) {
-		super(group, inputs, output, experience, ticks, usagePerTick, itemBiproducts, fluidBiproducts, gasBiproducts);
-	}
+    public FuelReprocessorRecipe(String group, List<CountableIngredient> inputs, ItemStack output, double experience,
+	    int ticks, double usagePerTick, List<ProbableItem> itemBiproducts, List<ProbableFluid> fluidBiproducts,
+	    List<ProbableGas> gasBiproducts) {
+	super(group, inputs, output, experience, ticks, usagePerTick, itemBiproducts, fluidBiproducts, gasBiproducts);
+    }
 
-	@Override
-	public RecipeSerializer<?> getSerializer() {
-		return NuclearScienceRecipies.FUEL_REPROCESSOR_SERIALIZER.get();
-	}
+    @Override
+    public RecipeSerializer<?> getSerializer() {
+	return NuclearScienceRecipies.FUEL_REPROCESSOR_SERIALIZER.get();
+    }
 
-	@Override
-	public RecipeType<?> getType() {
-		return NuclearScienceRecipies.FUEL_REPROCESSOR_TYPE.get();
-	}
+    @Override
+    public RecipeType<?> getType() {
+	return NuclearScienceRecipies.FUEL_REPROCESSOR_TYPE.get();
+    }
 
 }

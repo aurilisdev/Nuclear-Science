@@ -16,20 +16,20 @@ public class PacketEditFrequency implements CustomPacketPayload {
     public static final ResourceLocation PACKET_EDITFREQUENCY_PACKETID = NetworkHandler.id("packeteditfrequency");
     public static final Type<PacketEditFrequency> TYPE = new Type<>(PACKET_EDITFREQUENCY_PACKETID);
 
-    public static final StreamCodec<ByteBuf, PacketEditFrequency> CODEC = new StreamCodec<ByteBuf, PacketEditFrequency>() {
-        @Override
-        public PacketEditFrequency decode(ByteBuf buf) {
+    public static final StreamCodec<ByteBuf, PacketEditFrequency> CODEC = new StreamCodec<>() {
+	@Override
+	public PacketEditFrequency decode(ByteBuf buf) {
 
-            return new PacketEditFrequency(UUIDUtil.STREAM_CODEC.decode(buf), TunnelFrequency.STREAM_CODEC.decode(buf));
-        }
+	    return new PacketEditFrequency(UUIDUtil.STREAM_CODEC.decode(buf), TunnelFrequency.STREAM_CODEC.decode(buf));
+	}
 
-        @Override
-        public void encode(ByteBuf buf, PacketEditFrequency packet) {
+	@Override
+	public void encode(ByteBuf buf, PacketEditFrequency packet) {
 
-            UUIDUtil.STREAM_CODEC.encode(buf, packet.requester);
-            TunnelFrequency.STREAM_CODEC.encode(buf, packet.frequency);
+	    UUIDUtil.STREAM_CODEC.encode(buf, packet.requester);
+	    TunnelFrequency.STREAM_CODEC.encode(buf, packet.frequency);
 
-        }
+	}
 
     };
 
@@ -37,16 +37,16 @@ public class PacketEditFrequency implements CustomPacketPayload {
     private final TunnelFrequency frequency;
 
     public PacketEditFrequency(UUID requester, TunnelFrequency frequency) {
-        this.requester = requester;
-        this.frequency = frequency;
+	this.requester = requester;
+	this.frequency = frequency;
     }
 
     public static void handle(PacketEditFrequency message, IPayloadContext context) {
-        ServerBarrierMethods.editFrequency(message.requester, message.frequency);
+	ServerBarrierMethods.editFrequency(message.requester, message.frequency);
     }
 
     @Override
     public Type<? extends CustomPacketPayload> type() {
-        return TYPE;
+	return TYPE;
     }
 }

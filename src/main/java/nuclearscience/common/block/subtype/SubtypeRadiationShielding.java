@@ -7,29 +7,32 @@ import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import voltaic.api.ISubtype;
 
 public enum SubtypeRadiationShielding implements ISubtype {
-    base(Properties.ofFullCopy(Blocks.NETHERITE_BLOCK).strength(5.0f, 3.0f).sound(SoundType.METAL).requiresCorrectToolForDrops()),
+    base(Properties.ofFullCopy(Blocks.NETHERITE_BLOCK).strength(5.0f, 3.0f).sound(SoundType.METAL)
+	    .requiresCorrectToolForDrops()),
     glass(Properties.ofFullCopy(Blocks.GRASS_BLOCK).strength(5.0f, 3.0f).requiresCorrectToolForDrops()),
-    door(Properties.ofFullCopy(Blocks.NETHERITE_BLOCK).strength(5.0f, 3.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion()),
-    trapdoor(Properties.ofFullCopy(Blocks.NETHERITE_BLOCK).strength(5.0f, 3.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion());
+    door(Properties.ofFullCopy(Blocks.NETHERITE_BLOCK).strength(5.0f, 3.0f).sound(SoundType.METAL)
+	    .requiresCorrectToolForDrops().noOcclusion()),
+    trapdoor(Properties.ofFullCopy(Blocks.NETHERITE_BLOCK).strength(5.0f, 3.0f).sound(SoundType.METAL)
+	    .requiresCorrectToolForDrops().noOcclusion());
 
     public final BlockBehaviour.Properties properties;
 
     private SubtypeRadiationShielding(BlockBehaviour.Properties properties) {
-        this.properties = properties;
+	this.properties = properties;
     }
 
     @Override
     public String tag() {
-        return "radiationshielding" + name();
+	return "radiationshielding" + name();
     }
 
     @Override
     public String forgeTag() {
-        return "radiationshielding/" + name();
+	return "radiationshielding/" + name();
     }
 
     @Override
     public boolean isItem() {
-        return false;
+	return false;
     }
 }

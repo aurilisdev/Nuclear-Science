@@ -18,34 +18,34 @@ import voltaic.prefab.tile.components.type.ComponentTickable;
 
 public class TileSiren extends GenericTile {
 
-	public TileSiren(BlockPos worldPos, BlockState blockState) {
-		super(NuclearScienceTiles.TILE_SIREN.get(), worldPos, blockState);
-		addComponent(new ComponentTickable(this).tickClient(this::tickClient));
-	}
+    public TileSiren(BlockPos worldPos, BlockState blockState) {
+	super(NuclearScienceTiles.TILE_SIREN.get(), worldPos, blockState);
+	addComponent(new ComponentTickable(this).tickClient(this::tickClient));
+    }
 
-	public void tickClient(ComponentTickable tick) {
-		if (tick.getTicks() % 30 == 0) {
-			if (isPoweredByRedstone()) {
-				int volume = 2;
-				for (Direction dir : Direction.values()) {
-					if (level.getBlockEntity(worldPosition.offset(dir.getNormal())) instanceof TileSiren) {
-						volume += 2;
-					}
-				}
-				SoundAPI.playSound(NuclearScienceSounds.SOUND_SIREN.get(), SoundSource.BLOCKS, volume, 1, worldPosition);
-			}
+    public void tickClient(ComponentTickable tick) {
+	if (tick.getTicks() % 30 == 0) {
+	    if (isPoweredByRedstone()) {
+		int volume = 2;
+		for (Direction dir : Direction.values()) {
+		    if (level.getBlockEntity(worldPosition.offset(dir.getNormal())) instanceof TileSiren) {
+			volume += 2;
+		    }
 		}
+		SoundAPI.playSound(NuclearScienceSounds.SOUND_SIREN.get(), SoundSource.BLOCKS, volume, 1,
+			worldPosition);
+	    }
 	}
+    }
 
-	@Override
-	public InteractionResult useWithoutItem(Player player, BlockHitResult hit) {
-		return InteractionResult.PASS;
-	}
+    @Override
+    public InteractionResult useWithoutItem(Player player, BlockHitResult hit) {
+	return InteractionResult.PASS;
+    }
 
-	@Override
-	public ItemInteractionResult useWithItem(ItemStack used, Player player, InteractionHand hand, BlockHitResult hit) {
-		return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-	}
-
+    @Override
+    public ItemInteractionResult useWithItem(ItemStack used, Player player, InteractionHand hand, BlockHitResult hit) {
+	return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    }
 
 }

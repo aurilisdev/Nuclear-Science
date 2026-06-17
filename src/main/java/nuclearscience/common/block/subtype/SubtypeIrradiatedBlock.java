@@ -14,28 +14,30 @@ public enum SubtypeIrradiatedBlock implements ISubtype {
     private boolean burnable = false;
 
     private SubtypeIrradiatedBlock(BlockBehaviour.Properties properties) {
-        this.properties = properties;
+	this.properties = properties;
     }
+
     private SubtypeIrradiatedBlock(BlockBehaviour.Properties properties, boolean burnable) {
 	this(properties);
 	this.burnable = burnable;
-    }    
+    }
+
     public boolean burnable() {
 	return burnable;
     }
 
     @Override
     public String tag() {
-        return "irradiatedblock" + name();
+	return "irradiatedblock" + name();
     }
 
     @Override
     public String forgeTag() {
-        return "irradiatedblock/" + name();
+	return "irradiatedblock/" + name();
     }
 
     @Override
     public boolean isItem() {
-        return false;
+	return false;
     }
 }

@@ -13,14 +13,15 @@ import nuclearscience.registers.NuclearScienceGases;
 
 public class NuclearScienceGasTagsProvider extends ElectrodynamicsGasTagsProvider {
 
-    public NuclearScienceGasTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
-        super(output, lookupProvider, NuclearScience.ID, existingFileHelper);
+    public NuclearScienceGasTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider,
+	    ExistingFileHelper existingFileHelper) {
+	super(output, lookupProvider, NuclearScience.ID, existingFileHelper);
     }
 
     @Override
     public void addTags(Provider provider) {
 
-        tag(NuclearScienceTags.Gases.URANIUM_HEXAFLUORIDE).add(NuclearScienceGases.URANIUM_HEXAFLUORIDE.get());
+	tag(NuclearScienceTags.Gases.URANIUM_HEXAFLUORIDE).add(NuclearScienceGases.URANIUM_HEXAFLUORIDE.get());
 
     }
 

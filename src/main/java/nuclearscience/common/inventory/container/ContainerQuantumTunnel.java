@@ -16,33 +16,35 @@ import voltaic.prefab.inventory.container.types.GenericContainerBlockEntity;
 
 public class ContainerQuantumTunnel extends GenericContainerBlockEntity<TileQuantumTunnel> {
 
-	public ContainerQuantumTunnel(int id, Inventory playerinv) {
-		this(id, playerinv, new SimpleContainer(0), new SimpleContainerData(3));
+    public ContainerQuantumTunnel(int id, Inventory playerinv) {
+	this(id, playerinv, new SimpleContainer(0), new SimpleContainerData(3));
+    }
+
+    public ContainerQuantumTunnel(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
+	super(NuclearScienceMenuTypes.CONTAINER_QUANTUMTUNNEL.get(), id, playerinv, inventory, inventorydata);
+    }
+
+    @Override
+    public void addInventorySlots(Container inv, Inventory playerinv) {
+	// Filler
+    }
+
+    @Override
+    public void addPlayerInventory(Inventory playerinv) {
+
+    }
+
+    @Override
+    public void broadcastChanges() {
+	super.broadcastChanges();
+
+	if (!getLevel().isClientSide() && getPlayer() != null && getSafeHost() != null) {
+	    PacketSetClientTunnelFrequencies packet = new PacketSetClientTunnelFrequencies(
+		    TunnelFrequencyManager.getFrequenciesForPlayerClient(getPlayer().getUUID()),
+		    FrequencyConnectionManager.getClientBuffer(getSafeHost().frequency.getValue()),
+		    getSafeHost().getBlockPos());
+	    PacketDistributor.sendToPlayer((ServerPlayer) getPlayer(), packet);
 	}
 
-	public ContainerQuantumTunnel(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
-		super(NuclearScienceMenuTypes.CONTAINER_QUANTUMTUNNEL.get(), id, playerinv, inventory, inventorydata);
-	}
-
-	@Override
-	public void addInventorySlots(Container inv, Inventory playerinv) {
-		// Filler
-	}
-
-	@Override
-	public void addPlayerInventory(Inventory playerinv) {
-
-	}
-
-	@Override
-	public void broadcastChanges() {
-		super.broadcastChanges();
-
-		if(!getLevel().isClientSide() && getPlayer() != null && getSafeHost() != null) {
-			PacketSetClientTunnelFrequencies packet = new PacketSetClientTunnelFrequencies(TunnelFrequencyManager.getFrequenciesForPlayerClient(getPlayer().getUUID()), FrequencyConnectionManager.getClientBuffer(getSafeHost().frequency.getValue()), getSafeHost().getBlockPos());
-			PacketDistributor.sendToPlayer((ServerPlayer) getPlayer(), packet);
-		}
-
-
-	}
+    }
 }

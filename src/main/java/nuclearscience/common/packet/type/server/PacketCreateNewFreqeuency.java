@@ -14,24 +14,26 @@ import nuclearscience.common.packet.NetworkHandler;
 
 public class PacketCreateNewFreqeuency implements CustomPacketPayload {
 
-    public static final ResourceLocation PACKET_CREATENEWFREQUENCY_PACKETID = NetworkHandler.id("packetcreatenewfrequency");
+    public static final ResourceLocation PACKET_CREATENEWFREQUENCY_PACKETID = NetworkHandler
+	    .id("packetcreatenewfrequency");
     public static final Type<PacketCreateNewFreqeuency> TYPE = new Type<>(PACKET_CREATENEWFREQUENCY_PACKETID);
 
-    public static final StreamCodec<ByteBuf, PacketCreateNewFreqeuency> CODEC = new StreamCodec<ByteBuf, PacketCreateNewFreqeuency>() {
-        @Override
-        public PacketCreateNewFreqeuency decode(ByteBuf buf) {
+    public static final StreamCodec<ByteBuf, PacketCreateNewFreqeuency> CODEC = new StreamCodec<>() {
+	@Override
+	public PacketCreateNewFreqeuency decode(ByteBuf buf) {
 
-            return new PacketCreateNewFreqeuency(UUIDUtil.STREAM_CODEC.decode(buf), ByteBufCodecs.STRING_UTF8.decode(buf), FrequencyType.values()[ByteBufCodecs.INT.decode(buf)]);
-        }
+	    return new PacketCreateNewFreqeuency(UUIDUtil.STREAM_CODEC.decode(buf),
+		    ByteBufCodecs.STRING_UTF8.decode(buf), FrequencyType.values()[ByteBufCodecs.INT.decode(buf)]);
+	}
 
-        @Override
-        public void encode(ByteBuf buf, PacketCreateNewFreqeuency packet) {
+	@Override
+	public void encode(ByteBuf buf, PacketCreateNewFreqeuency packet) {
 
-            UUIDUtil.STREAM_CODEC.encode(buf, packet.creator);
-            ByteBufCodecs.STRING_UTF8.encode(buf, packet.name);
-            ByteBufCodecs.INT.encode(buf, packet.type.ordinal());
+	    UUIDUtil.STREAM_CODEC.encode(buf, packet.creator);
+	    ByteBufCodecs.STRING_UTF8.encode(buf, packet.name);
+	    ByteBufCodecs.INT.encode(buf, packet.type.ordinal());
 
-        }
+	}
 
     };
 
@@ -40,17 +42,17 @@ public class PacketCreateNewFreqeuency implements CustomPacketPayload {
     private final String name;
 
     public PacketCreateNewFreqeuency(UUID creator, String name, FrequencyType type) {
-        this.creator = creator;
-        this.type = type;
-        this.name = name;
+	this.creator = creator;
+	this.type = type;
+	this.name = name;
     }
 
     public static void handle(PacketCreateNewFreqeuency message, IPayloadContext context) {
-        ServerBarrierMethods.createNewPacket(message.creator, message.type, message.name);
+	ServerBarrierMethods.createNewPacket(message.creator, message.type, message.name);
     }
 
     @Override
     public Type<? extends CustomPacketPayload> type() {
-        return TYPE;
+	return TYPE;
     }
 }

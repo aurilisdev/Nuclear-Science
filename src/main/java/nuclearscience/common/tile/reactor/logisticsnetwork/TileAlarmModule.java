@@ -12,18 +12,18 @@ import voltaic.prefab.utilities.object.CachedTileOutput;
 public abstract class TileAlarmModule extends GenericTile implements ILogisticsMember {
 
     public TileAlarmModule(BlockEntityType<?> tileEntityTypeIn, BlockPos worldPos, BlockState blockState) {
-        super(tileEntityTypeIn, worldPos, blockState);
+	super(tileEntityTypeIn, worldPos, blockState);
     }
 
     public CachedTileOutput networkCable;
 
     @Override
     public boolean isValidConnection(Direction dir) {
-        return false;
+	return false;
     }
 
     @Override
     public boolean canConnect(ReactorLogisticsNetwork network) {
-        return true;
+	return true;
     }
 }

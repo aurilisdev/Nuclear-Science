@@ -10,26 +10,27 @@ import voltaic.client.guidebook.utils.pagedata.text.TextWrapperObject;
 
 public class ChapterMisc extends Chapter {
 
-	private static final ImageWrapperObject LOGO = new ImageWrapperObject(0, 0, 0, 0, 32, 32, 32, 32, NuclearScience.rl("textures/item/cellempty.png"));
+    private static final ImageWrapperObject LOGO = new ImageWrapperObject(0, 0, 0, 0, 32, 32, 32, 32,
+	    NuclearScience.rl("textures/item/cellempty.png"));
 
-	public ChapterMisc(Module module) {
-		super(module);
-	}
+    public ChapterMisc(Module module) {
+	super(module);
+    }
 
-	@Override
-	public ImageWrapperObject getLogo() {
-		return LOGO;
-	}
+    @Override
+    public ImageWrapperObject getLogo() {
+	return LOGO;
+    }
 
-	@Override
-	public MutableComponent getTitle() {
-		return NuclearTextUtils.guidebook("chapter.misc");
-	}
+    @Override
+    public MutableComponent getTitle() {
+	return NuclearTextUtils.guidebook("chapter.misc");
+    }
 
-	@Override
-	public void addData() {
-		pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.misc.l1")));
+    @Override
+    public void addData() {
+	pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.misc.l1")));
 
-	}
+    }
 
 }

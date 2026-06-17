@@ -11,8 +11,13 @@ import nuclearscience.prefab.utils.NuclearTextUtils;
 
 public class NuclearScienceCreativeTabs {
 
-	public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, NuclearScience.ID);
+    public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister
+	    .create(Registries.CREATIVE_MODE_TAB, NuclearScience.ID);
 
-	public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MAIN = CREATIVE_TABS.register("main", () -> CreativeModeTab.builder().title(NuclearTextUtils.creativeTab("main")).icon(() -> new ItemStack(NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.gascentrifuge))).build());
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MAIN = CREATIVE_TABS.register("main",
+	    () -> CreativeModeTab.builder().title(NuclearTextUtils.creativeTab("main"))
+		    .icon(() -> new ItemStack(
+			    NuclearScienceBlocks.BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.gascentrifuge)))
+		    .build());
 
 }

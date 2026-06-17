@@ -27,122 +27,109 @@ public class ButtonIO extends ScreenComponentButton<ButtonIO> {
     private final Direction side;
 
     public ButtonIO(int x, int y, Direction side) {
-        super(ScreenComponentInventoryIO.InventoryIOTextures.DEFAULT, x, y);
-        onTooltip((graphics, component, xAxis, yAxis) -> {
-            List<FormattedCharSequence> tooltips = new ArrayList<>();
-            tooltips.add(getLabelFromDir().getVisualOrderText());
-            tooltips.add(getModeForSide().getVisualOrderText());
-            graphics.renderTooltip(gui.getFontRenderer(), tooltips, xAxis, yAxis);
-        });
-        setOnPress(button -> {
-            GenericScreen<?> screen = (GenericScreen<?>) gui;
+	super(ScreenComponentInventoryIO.InventoryIOTextures.DEFAULT, x, y);
+	onTooltip((graphics, component, xAxis, yAxis) -> {
+	    List<FormattedCharSequence> tooltips = new ArrayList<>();
+	    tooltips.add(getLabelFromDir().getVisualOrderText());
+	    tooltips.add(getModeForSide().getVisualOrderText());
+	    graphics.renderTooltip(gui.getFontRenderer(), tooltips, xAxis, yAxis);
+	});
+	setOnPress(button -> {
+	    GenericScreen<?> screen = (GenericScreen<?>) gui;
 
-            ContainerQuantumTunnel container = (ContainerQuantumTunnel) screen.getMenu();
+	    ContainerQuantumTunnel container = (ContainerQuantumTunnel) screen.getMenu();
 
-            TileQuantumTunnel tile = container.getSafeHost();
+	    TileQuantumTunnel tile = container.getSafeHost();
 
-            if (tile == null) {
-                return;
-            }
+	    if (tile == null) {
+		return;
+	    }
 
-            boolean in = tile.readInputDirections().contains(side);
-            boolean out = tile.readOutputDirections().contains(side);
+	    boolean in = tile.readInputDirections().contains(side);
+	    boolean out = tile.readOutputDirections().contains(side);
 
-            if(in) {
-                tile.removeInputDirection(side);
-                tile.writeOutputDirection(side);
-            } else if (out) {
-                tile.removeInputDirection(side);
-                tile.removeOutputDirection(side);
-            } else {
-                tile.writeInputDirection(side);
-            }
+	    if (in) {
+		tile.removeInputDirection(side);
+		tile.writeOutputDirection(side);
+	    } else if (out) {
+		tile.removeInputDirection(side);
+		tile.removeOutputDirection(side);
+	    } else {
+		tile.writeInputDirection(side);
+	    }
 
-
-        });
-        this.side = side;
+	});
+	this.side = side;
     }
 
     @Override
     public void renderBackground(GuiGraphics graphics, int xAxis, int yAxis, int guiWidth, int guiHeight) {
-        super.renderBackground(graphics, xAxis, yAxis, guiWidth, guiHeight);
+	super.renderBackground(graphics, xAxis, yAxis, guiWidth, guiHeight);
 
-        GenericScreen<?> screen = (GenericScreen<?>) gui;
+	GenericScreen<?> screen = (GenericScreen<?>) gui;
 
-        ContainerQuantumTunnel container = (ContainerQuantumTunnel) screen.getMenu();
+	ContainerQuantumTunnel container = (ContainerQuantumTunnel) screen.getMenu();
 
-        TileQuantumTunnel tile = container.getSafeHost();
+	TileQuantumTunnel tile = container.getSafeHost();
 
-        if (tile == null) {
-            return;
-        }
+	if (tile == null) {
+	    return;
+	}
 
-        Color ioColor;
+	Color ioColor;
 
-        if(tile.readInputDirections().contains(side)) {
-            ioColor = INPUT;
-        } else if (tile.readOutputDirections().contains(side)) {
-            ioColor = OUTPUT;
-        } else {
-            ioColor = SLOT_GRAY;
-        }
+	if (tile.readInputDirections().contains(side)) {
+	    ioColor = INPUT;
+	} else if (tile.readOutputDirections().contains(side)) {
+	    ioColor = OUTPUT;
+	} else {
+	    ioColor = SLOT_GRAY;
+	}
 
-        graphics.fill(xLocation + guiWidth + 1, yLocation + guiHeight + 1, xLocation + guiWidth + 1 + DRAWING_AREA_SIZE, yLocation + guiHeight + 1 + DRAWING_AREA_SIZE, ioColor.color());
+	graphics.fill(xLocation + guiWidth + 1, yLocation + guiHeight + 1, xLocation + guiWidth + 1 + DRAWING_AREA_SIZE,
+		yLocation + guiHeight + 1 + DRAWING_AREA_SIZE, ioColor.color());
 
     }
 
     private MutableComponent getLabelFromDir() {
-        MutableComponent component = null;
-        switch (side) {
-            default:
-            case DOWN:
-                component = ElectroTextUtils.tooltip("inventoryio.bottom");
-                break;
-            case UP:
-                component = ElectroTextUtils.tooltip("inventoryio.top");
-                break;
-            case EAST:
-                component = ElectroTextUtils.tooltip("inventoryio.left");
-                break;
-            case WEST:
-                component = ElectroTextUtils.tooltip("inventoryio.right");
-                break;
-            case NORTH:
-                component = ElectroTextUtils.tooltip("inventoryio.front");
-                break;
-            case SOUTH:
-                component = ElectroTextUtils.tooltip("inventoryio.back");
-                break;
-        }
+	MutableComponent component = null;
+	component = switch (side) {
+	case DOWN -> ElectroTextUtils.tooltip("inventoryio.bottom");
+	default -> ElectroTextUtils.tooltip("inventoryio.bottom");
+	case UP -> ElectroTextUtils.tooltip("inventoryio.top");
+	case EAST -> ElectroTextUtils.tooltip("inventoryio.left");
+	case WEST -> ElectroTextUtils.tooltip("inventoryio.right");
+	case NORTH -> ElectroTextUtils.tooltip("inventoryio.front");
+	case SOUTH -> ElectroTextUtils.tooltip("inventoryio.back");
+	};
 //		return component.append(": " + StringUtils.capitalize(side.name().toLowerCase()));
-        // TODO: Add some dynamic face direction here for the slots.
-        return component;
+	// TODO: Add some dynamic face direction here for the slots.
+	return component;
     }
 
     private MutableComponent getModeForSide() {
 
-        GenericScreen<?> screen = (GenericScreen<?>) gui;
+	GenericScreen<?> screen = (GenericScreen<?>) gui;
 
-        ContainerQuantumTunnel container = (ContainerQuantumTunnel) screen.getMenu();
+	ContainerQuantumTunnel container = (ContainerQuantumTunnel) screen.getMenu();
 
-        TileQuantumTunnel tile = container.getSafeHost();
+	TileQuantumTunnel tile = container.getSafeHost();
 
-        if (tile == null) {
-            return Component.empty();
-        }
+	if (tile == null) {
+	    return Component.empty();
+	}
 
-        boolean in = tile.readInputDirections().contains(side);
-        boolean out = tile.readOutputDirections().contains(side);
+	boolean in = tile.readInputDirections().contains(side);
+	boolean out = tile.readOutputDirections().contains(side);
 
-        if(in) {
-            return NuclearTextUtils.tooltip("quantumtunnel.input");
-        } else if (out) {
-            return NuclearTextUtils.tooltip("quantumtunnel.output");
-        } else {
-            return NuclearTextUtils.tooltip("quantumtunnel.none");
-        }
+	if (in) {
+	    return NuclearTextUtils.tooltip("quantumtunnel.input");
+	} else if (out) {
+	    return NuclearTextUtils.tooltip("quantumtunnel.output");
+	} else {
+	    return NuclearTextUtils.tooltip("quantumtunnel.none");
+	}
 
     }
-
 
 }

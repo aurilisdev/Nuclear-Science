@@ -14,22 +14,22 @@ import voltaic.prefab.utilities.math.Color;
 public class ContainerSupplyModule extends GenericInterfaceBoundContainer<TileSupplyModule> {
 
     public ContainerSupplyModule(int id, Inventory playerinv) {
-        this(id, playerinv, new SimpleContainer(18), new SimpleContainerData(3));
+	this(id, playerinv, new SimpleContainer(18), new SimpleContainerData(3));
     }
 
     public ContainerSupplyModule(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
-        super(NuclearScienceMenuTypes.CONTAINER_SUPPLYMODULE.get(), id, playerinv, inventory, inventorydata);
+	super(NuclearScienceMenuTypes.CONTAINER_SUPPLYMODULE.get(), id, playerinv, inventory, inventorydata);
     }
 
     @Override
     public void addInventorySlots(Container container, Inventory inventory) {
-        int offset = 0;
-        for(int x = 0; x < 9; ++x) {
-            offset++;
-            this.addSlot(new SlotGeneric(container, x, 8 + x * 18, 20).setIOColor(new Color(0, 240, 255, 255)));
-        }
-        for(int x = 0; x < 9; ++x) {
-            this.addSlot(new SlotGeneric(container, x + offset, 8 + x * 18, 50).setIOColor(new Color(255, 0, 0, 255)));
-        }
+	int offset = 0;
+	for (int x = 0; x < 9; ++x) {
+	    offset++;
+	    this.addSlot(new SlotGeneric(container, x, 8 + x * 18, 20).setIOColor(new Color(0, 240, 255, 255)));
+	}
+	for (int x = 0; x < 9; ++x) {
+	    this.addSlot(new SlotGeneric(container, x + offset, 8 + x * 18, 50).setIOColor(new Color(255, 0, 0, 255)));
+	}
     }
 }

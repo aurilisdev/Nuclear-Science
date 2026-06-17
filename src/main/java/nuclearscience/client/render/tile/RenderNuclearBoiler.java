@@ -24,103 +24,110 @@ import voltaic.prefab.utilities.math.Color;
 
 public class RenderNuclearBoiler extends AbstractTileRenderer<TileNuclearBoiler> {
 
-	private static final float DELTA_Y = 3.6F / 16.0F;
+    private static final float DELTA_Y = 3.6F / 16.0F;
 
-	public RenderNuclearBoiler(BlockEntityRendererProvider.Context context) {
-		super(context);
-	}
+    public RenderNuclearBoiler(BlockEntityRendererProvider.Context context) {
+	super(context);
+    }
 
-	@Override
-	public void render(TileNuclearBoiler tile, float partialTicks, PoseStack matrix, MultiBufferSource buffer, int light, int overlay) {
+    @Override
+    public void render(TileNuclearBoiler tile, float partialTicks, PoseStack matrix, MultiBufferSource buffer,
+	    int light, int overlay) {
 
-		matrix.pushPose();
+	matrix.pushPose();
 
-		Direction facing = tile.getFacing();
-		VertexConsumer builder = buffer.getBuffer(Sheets.translucentCullBlockSheet());
+	Direction facing = tile.getFacing();
+	VertexConsumer builder = buffer.getBuffer(Sheets.translucentCullBlockSheet());
 
-		FluidTank input = tile.<ComponentFluidHandlerMulti>getComponent(IComponentType.FluidHandler).getInputTanks()[0];
+	FluidTank input = tile.<ComponentFluidHandlerMulti>getComponent(IComponentType.FluidHandler).getInputTanks()[0];
 
-		if (!input.isEmpty()) {
+	if (!input.isEmpty()) {
 
-			drawFluidInput(matrix, builder, input.getFluid(), facing, (float) input.getFluidAmount() / (float) TileNuclearBoiler.MAX_FLUID_TANK_CAPACITY, light, overlay);
-
-		}
-
-		matrix.popPose();
-
-		matrix.pushPose();
-
-		GasTank output = tile.<ComponentGasHandlerMulti>getComponent(IComponentType.GasHandler).getOutputTanks()[0];
-
-		if (!output.isEmpty()) {
-
-			drawGasOutput(matrix, builder, output.getGas(), facing, (float) output.getGasAmount() / (float) TileNuclearBoiler.MAX_GAS_TANK_CAPACITY, light, overlay);
-
-		}
-
-		matrix.popPose();
+	    drawFluidInput(matrix, builder, input.getFluid(), facing,
+		    (float) input.getFluidAmount() / (float) TileNuclearBoiler.MAX_FLUID_TANK_CAPACITY, light, overlay);
 
 	}
 
-	private void drawFluidInput(PoseStack stack, VertexConsumer builder, FluidStack fluid, Direction facing, float height, int light, int overlay) {
+	matrix.popPose();
 
-		AABB box = null;
+	matrix.pushPose();
 
-		float maxY = DELTA_Y * height + 8.2F / 16.0F;
+	GasTank output = tile.<ComponentGasHandlerMulti>getComponent(IComponentType.GasHandler).getOutputTanks()[0];
 
-		if (facing == Direction.NORTH) {
+	if (!output.isEmpty()) {
 
-			box = new AABB(8.7 / 16.0, 8.2 / 16, 6.2 / 16.0, 11.3 / 16.0, maxY, 9.8 / 16.0);
+	    drawGasOutput(matrix, builder, output.getGas(), facing,
+		    (float) output.getGasAmount() / (float) TileNuclearBoiler.MAX_GAS_TANK_CAPACITY, light, overlay);
 
-		} else if (facing == Direction.EAST) {
-
-			box = new AABB(6.2 / 16.0, 8.2 / 16, 8.7 / 16.0, 9.8 / 16.0, maxY, 11.3 / 16.0);
-
-		} else if (facing == Direction.SOUTH) {
-
-			box = new AABB(4.7 / 16.0, 8.2 / 16, 6.2 / 16.0, 7.3 / 16.0, maxY, 9.8 / 16.0);
-
-		} else {
-
-			box = new AABB(6.2 / 16.0, 8.2 / 16, 4.7 / 16.0, 9.8 / 16.0, maxY, 7.3 / 16.0);
-
-		}
-
-		RenderingUtils.renderFluidBox(stack, minecraft(), builder, box, fluid, light, overlay, RenderingUtils.ALL_FACES);
 	}
 
-	private static void drawGasOutput(PoseStack stack, VertexConsumer builder, GasStack fluid, Direction facing, float height, int light, int overlay) {
+	matrix.popPose();
 
-		AABB box = null;
+    }
 
-		float maxY = DELTA_Y * height + 8.2F / 16.0F;
+    private void drawFluidInput(PoseStack stack, VertexConsumer builder, FluidStack fluid, Direction facing,
+	    float height, int light, int overlay) {
 
-		if (facing == Direction.NORTH) {
+	AABB box = null;
 
-			box = new AABB(4.7 / 16.0, 8.2 / 16, 6.2 / 16.0, 7.3 / 16.0, maxY, 9.8 / 16.0);
+	float maxY = DELTA_Y * height + 8.2F / 16.0F;
 
-		} else if (facing == Direction.EAST) {
+	if (facing == Direction.NORTH) {
 
-			box = new AABB(6.2 / 16.0, 8.2 / 16, 4.7 / 16.0, 9.8 / 16.0, maxY, 7.3 / 16.0);
+	    box = new AABB(8.7 / 16.0, 8.2 / 16, 6.2 / 16.0, 11.3 / 16.0, maxY, 9.8 / 16.0);
 
-		} else if (facing == Direction.SOUTH) {
+	} else if (facing == Direction.EAST) {
 
-			box = new AABB(8.7 / 16.0, 8.2 / 16, 6.2 / 16.0, 11.3 / 16.0, maxY, 9.8 / 16.0);
-		} else {
+	    box = new AABB(6.2 / 16.0, 8.2 / 16, 8.7 / 16.0, 9.8 / 16.0, maxY, 11.3 / 16.0);
 
-			box = new AABB(6.2 / 16.0, 8.2 / 16, 8.7 / 16.0, 9.8 / 16.0, maxY, 11.3 / 16.0);
+	} else if (facing == Direction.SOUTH) {
 
-		}
+	    box = new AABB(4.7 / 16.0, 8.2 / 16, 6.2 / 16.0, 7.3 / 16.0, maxY, 9.8 / 16.0);
 
-		TextureAtlasSprite sprite = VoltaicClientRegister.getSprite(VoltaicClientRegister.TEXTURE_GAS);
+	} else {
 
-		float[] colors = new Color(sprite.getPixelRGBA(0, 10, 10)).colorFloatArr();
+	    box = new AABB(6.2 / 16.0, 8.2 / 16, 4.7 / 16.0, 9.8 / 16.0, maxY, 7.3 / 16.0);
 
-		RenderingUtils.renderFilledBox(stack, builder, box, colors[0], colors[1], colors[2], colors[3], sprite.getU0(), sprite.getV0(), sprite.getU1(), sprite.getV1(), light, overlay, RenderingUtils.ALL_FACES);
 	}
 
-	@Override
-	public AABB getRenderBoundingBox(TileNuclearBoiler blockEntity) {
-		return super.getRenderBoundingBox(blockEntity).inflate(1);
+	RenderingUtils.renderFluidBox(stack, minecraft(), builder, box, fluid, light, overlay,
+		RenderingUtils.ALL_FACES);
+    }
+
+    private static void drawGasOutput(PoseStack stack, VertexConsumer builder, GasStack fluid, Direction facing,
+	    float height, int light, int overlay) {
+
+	AABB box = null;
+
+	float maxY = DELTA_Y * height + 8.2F / 16.0F;
+
+	if (facing == Direction.NORTH) {
+
+	    box = new AABB(4.7 / 16.0, 8.2 / 16, 6.2 / 16.0, 7.3 / 16.0, maxY, 9.8 / 16.0);
+
+	} else if (facing == Direction.EAST) {
+
+	    box = new AABB(6.2 / 16.0, 8.2 / 16, 4.7 / 16.0, 9.8 / 16.0, maxY, 7.3 / 16.0);
+
+	} else if (facing == Direction.SOUTH) {
+
+	    box = new AABB(8.7 / 16.0, 8.2 / 16, 6.2 / 16.0, 11.3 / 16.0, maxY, 9.8 / 16.0);
+	} else {
+
+	    box = new AABB(6.2 / 16.0, 8.2 / 16, 8.7 / 16.0, 9.8 / 16.0, maxY, 11.3 / 16.0);
+
 	}
+
+	TextureAtlasSprite sprite = VoltaicClientRegister.getSprite(VoltaicClientRegister.TEXTURE_GAS);
+
+	float[] colors = new Color(sprite.getPixelRGBA(0, 10, 10)).colorFloatArr();
+
+	RenderingUtils.renderFilledBox(stack, builder, box, colors[0], colors[1], colors[2], colors[3], sprite.getU0(),
+		sprite.getV0(), sprite.getU1(), sprite.getV1(), light, overlay, RenderingUtils.ALL_FACES);
+    }
+
+    @Override
+    public AABB getRenderBoundingBox(TileNuclearBoiler blockEntity) {
+	return super.getRenderBoundingBox(blockEntity).inflate(1);
+    }
 }

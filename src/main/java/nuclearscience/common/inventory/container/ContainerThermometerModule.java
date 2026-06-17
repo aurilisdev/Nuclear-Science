@@ -12,11 +12,11 @@ import nuclearscience.registers.NuclearScienceMenuTypes;
 public class ContainerThermometerModule extends GenericInterfaceBoundContainer<TileThermometerModule> {
 
     public ContainerThermometerModule(int id, Inventory playerinv) {
-        this(id, playerinv, new SimpleContainer(0), new SimpleContainerData(3));
+	this(id, playerinv, new SimpleContainer(0), new SimpleContainerData(3));
     }
 
     public ContainerThermometerModule(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
-        super(NuclearScienceMenuTypes.CONTAINER_THERMOMETERMODULE.get(), id, playerinv, inventory, inventorydata);
+	super(NuclearScienceMenuTypes.CONTAINER_THERMOMETERMODULE.get(), id, playerinv, inventory, inventorydata);
     }
 
     @Override

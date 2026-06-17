@@ -26,82 +26,81 @@ public class WrapperEditFrequency {
 
     public WrapperEditFrequency(ScreenQuantumTunnel screen, int x, int y) {
 
-        screen.addComponent(titleLabel = new ScreenComponentSimpleLabel(x + 15, y + 20, 10, Color.TEXT_GRAY, NuclearTextUtils.gui("quantumtunnel.editfrequency")));
+	screen.addComponent(titleLabel = new ScreenComponentSimpleLabel(x + 15, y + 20, 10, Color.TEXT_GRAY,
+		NuclearTextUtils.gui("quantumtunnel.editfrequency")));
 
-        screen.addComponent(nameLabel = new ScreenComponentSimpleLabel(x + 15, y + 40, 10, Color.TEXT_GRAY, NuclearTextUtils.gui("quantumtunnel.name")));
-        screen.addEditBox(nameEditBox = new ScreenComponentEditBox(x + 15, y + 50, 120, 15, screen.getFontRenderer()).setTextColor(Color.WHITE).setTextColorUneditable(Color.WHITE).setMaxLength(50));
+	screen.addComponent(nameLabel = new ScreenComponentSimpleLabel(x + 15, y + 40, 10, Color.TEXT_GRAY,
+		NuclearTextUtils.gui("quantumtunnel.name")));
+	screen.addEditBox(nameEditBox = new ScreenComponentEditBox(x + 15, y + 50, 120, 15, screen.getFontRenderer())
+		.setTextColor(Color.WHITE).setTextColorUneditable(Color.WHITE).setMaxLength(50));
 
-        screen.addComponent(saveButton = new ScreenComponentButton<>(x + 13, y + 70, 70, 20).setOnPress(button -> {
+	screen.addComponent(saveButton = new ScreenComponentButton<>(x + 13, y + 70, 70, 20).setOnPress(button -> {
 
-            if (nameEditBox.getValue().isEmpty() || nameEditBox.getValue().isBlank() || currFrequency == null) {
-                return;
-            }
+	    if (nameEditBox.getValue().isEmpty() || nameEditBox.getValue().isBlank() || currFrequency == null) {
+		return;
+	    }
 
-            Player player = Minecraft.getInstance().player;
+	    Player player = Minecraft.getInstance().player;
 
-            if (player == null) {
-                return;
-            }
+	    if (player == null) {
+		return;
+	    }
 
-            TileQuantumTunnel tile = screen.getMenu().getSafeHost();
+	    TileQuantumTunnel tile = screen.getMenu().getSafeHost();
 
-            if(tile == null) {
-                return;
-            }
+	    if (tile == null) {
+		return;
+	    }
 
-            String name = nameEditBox.getValue();
+	    String name = nameEditBox.getValue();
 
-            if(!currFrequency.getName().equals(name) && currFrequency.getCreatorId().equals(player.getUUID())) {
+	    if (!currFrequency.getName().equals(name) && currFrequency.getCreatorId().equals(player.getUUID())) {
 
-                currFrequency.setName(name);
+		currFrequency.setName(name);
 
-                if(tile.frequency.getValue().equals(currFrequency)) {
-                    tile.frequency.setValue(currFrequency);
-                    tile.frequency.forceDirtyForManager();
-                }
+		if (tile.frequency.getValue().equals(currFrequency)) {
+		    tile.frequency.setValue(currFrequency);
+		    tile.frequency.forceDirtyForManager();
+		}
 
+		PacketDistributor.sendToServer(new PacketEditFrequency(player.getUUID(), currFrequency));
 
+	    }
 
-                PacketDistributor.sendToServer(new PacketEditFrequency(player.getUUID(), currFrequency));
+	    updateVisibility(false);
 
+	    nameEditBox.setValue("");
 
-            }
+	    screen.frequencyWrapper.updateVisibility(true);
 
-            updateVisibility(false);
+	}).setLabel(NuclearTextUtils.gui("quantumtunnel.save")));
 
-            nameEditBox.setValue("");
+	screen.addComponent(cancelButton = new ScreenComponentButton<>(x + 93, y + 70, 70, 20).setOnPress(button -> {
 
+	    screen.frequencyWrapper.updateVisibility(true);
 
-            screen.frequencyWrapper.updateVisibility(true);
+	    updateVisibility(false);
 
-        }).setLabel(NuclearTextUtils.gui("quantumtunnel.save")));
+	    nameEditBox.setValue("");
 
-        screen.addComponent(cancelButton = new ScreenComponentButton<>(x + 93, y + 70, 70, 20).setOnPress(button -> {
+	    screen.slider.setVisible(true);
 
-            screen.frequencyWrapper.updateVisibility(true);
+	}).setLabel(NuclearTextUtils.gui("quantumtunnel.cancel")));
 
-            updateVisibility(false);
-
-            nameEditBox.setValue("");
-
-            screen.slider.setVisible(true);
-
-        }).setLabel(NuclearTextUtils.gui("quantumtunnel.cancel")));
-
-        updateVisibility(false);
+	updateVisibility(false);
     }
 
     public void updateVisibility(boolean show) {
-        titleLabel.setVisible(show);
-        nameLabel.setVisible(show);
-        nameEditBox.setVisible(show);
-        nameEditBox.setActive(show);
-        saveButton.setVisible(show);
-        cancelButton.setVisible(show);
+	titleLabel.setVisible(show);
+	nameLabel.setVisible(show);
+	nameEditBox.setVisible(show);
+	nameEditBox.setActive(show);
+	saveButton.setVisible(show);
+	cancelButton.setVisible(show);
     }
 
     public void updateFrequency(TunnelFrequency frequency) {
-        this.currFrequency = frequency;
-        nameEditBox.setValue(frequency.getName());
+	this.currFrequency = frequency;
+	nameEditBox.setValue(frequency.getName());
     }
 }

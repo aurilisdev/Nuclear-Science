@@ -60,89 +60,94 @@ public class AtomicAssemblerWhitelistRegister extends SimplePreparableReloadList
 
     @Override
     protected JsonObject prepare(ResourceManager manager, ProfilerFiller profiler) {
-        JsonObject blacklistedItems = new JsonObject();
+	JsonObject blacklistedItems = new JsonObject();
 
-        List<Map.Entry<ResourceLocation, Resource>> resources = new ArrayList<>(manager.listResources(FOLDER, AtomicAssemblerWhitelistRegister::isJson).entrySet());
-        Collections.reverse(resources);
-        JsonArray combinedArray = new JsonArray();
-        for (Map.Entry<ResourceLocation, Resource> entry : resources) {
-            ResourceLocation loc = entry.getKey();
-            final String namespace = loc.getNamespace();
-            final String filePath = loc.getPath();
-            final String dataPath = filePath.substring(FOLDER.length() + 1, filePath.length() - JSON_EXTENSION_LENGTH);
+	List<Map.Entry<ResourceLocation, Resource>> resources = new ArrayList<>(
+		manager.listResources(FOLDER, AtomicAssemblerWhitelistRegister::isJson).entrySet());
+	Collections.reverse(resources);
+	JsonArray combinedArray = new JsonArray();
+	for (Map.Entry<ResourceLocation, Resource> entry : resources) {
+	    ResourceLocation loc = entry.getKey();
+	    final String namespace = loc.getNamespace();
+	    final String filePath = loc.getPath();
+	    final String dataPath = filePath.substring(FOLDER.length() + 1, filePath.length() - JSON_EXTENSION_LENGTH);
 
-            final ResourceLocation jsonFile = ResourceLocation.fromNamespaceAndPath(namespace, dataPath);
+	    final ResourceLocation jsonFile = ResourceLocation.fromNamespaceAndPath(namespace, dataPath);
 
-            Resource resource = entry.getValue();
-            try (final InputStream inputStream = resource.open(); final Reader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));) {
-                final JsonObject json = (JsonObject) GsonHelper.fromJson(GSON, reader, JsonElement.class);
-                combinedArray.addAll(json.get(KEY).getAsJsonArray());
-            } catch (RuntimeException | IOException exception) {
-                logger.error("Data loader for {} could not read data {} from file {} in data pack {}", FOLDER, jsonFile, loc, resource.sourcePackId(), exception);
-            }
+	    Resource resource = entry.getValue();
+	    try (final InputStream inputStream = resource.open();
+		    final Reader reader = new BufferedReader(
+			    new InputStreamReader(inputStream, StandardCharsets.UTF_8));) {
+		final JsonObject json = (JsonObject) GsonHelper.fromJson(GSON, reader, JsonElement.class);
+		combinedArray.addAll(json.get(KEY).getAsJsonArray());
+	    } catch (RuntimeException | IOException exception) {
+		logger.error("Data loader for {} could not read data {} from file {} in data pack {}", FOLDER, jsonFile,
+			loc, resource.sourcePackId(), exception);
+	    }
 
-        }
-        blacklistedItems.add(KEY, combinedArray);
+	}
+	blacklistedItems.add(KEY, combinedArray);
 
-        return blacklistedItems;
+	return blacklistedItems;
     }
 
     @Override
     protected void apply(JsonObject json, ResourceManager manager, ProfilerFiller profiler) {
-        whitelistedItems.clear();
-        tags.clear();
-        ArrayList<String> list = GSON.fromJson(json.get(KEY).getAsJsonArray(), ArrayList.class);
-        list.forEach(key -> {
-            if (key.charAt(0) == '#') {
-                tags.add(ItemTags.create(ResourceLocation.parse(key.substring(1))));
-            } else {
-                whitelistedItems.add(BuiltInRegistries.ITEM.get(ResourceLocation.parse(key)));
-            }
-        });
+	whitelistedItems.clear();
+	tags.clear();
+	ArrayList<String> list = GSON.fromJson(json.get(KEY).getAsJsonArray(), ArrayList.class);
+	list.forEach(key -> {
+	    if (key.charAt(0) == '#') {
+		tags.add(ItemTags.create(ResourceLocation.parse(key.substring(1))));
+	    } else {
+		whitelistedItems.add(BuiltInRegistries.ITEM.get(ResourceLocation.parse(key)));
+	    }
+	});
 
     }
 
     public void generateTagValues() {
-        tags.forEach(tag -> {
-            for (ItemStack item : Ingredient.of(tag).getItems()) {
-                whitelistedItems.add(item.getItem());
-            }
-        });
-        tags.clear();
+	tags.forEach(tag -> {
+	    for (ItemStack item : Ingredient.of(tag).getItems()) {
+		whitelistedItems.add(item.getItem());
+	    }
+	});
+	tags.clear();
     }
 
     public void setClientValues(HashSet<Item> fuels) {
-        this.whitelistedItems.clear();
-        this.whitelistedItems.addAll(fuels);
+	this.whitelistedItems.clear();
+	this.whitelistedItems.addAll(fuels);
     }
 
     public AtomicAssemblerWhitelistRegister subscribeAsSyncable() {
-        NeoForge.EVENT_BUS.addListener(getDatapackSyncListener());
-        return this;
+	NeoForge.EVENT_BUS.addListener(getDatapackSyncListener());
+	return this;
     }
 
     public HashSet<Item> getWhitelist() {
-        return whitelistedItems;
+	return whitelistedItems;
     }
 
     public boolean isWhitelist(Item item) {
-        return whitelistedItems.contains(item);
+	return whitelistedItems.contains(item);
     }
 
     private Consumer<OnDatapackSyncEvent> getDatapackSyncListener() {
-        return event -> {
-            generateTagValues();
-            ServerPlayer player = event.getPlayer();
-            PacketSetClientAtomicAssemblerWhitelistVals packet = new PacketSetClientAtomicAssemblerWhitelistVals(whitelistedItems);
-            if(player == null) {
-                PacketDistributor.sendToAllPlayers(packet);
-            } else {
-                PacketDistributor.sendToPlayer(player, packet);
-            }
-        };
+	return event -> {
+	    generateTagValues();
+	    ServerPlayer player = event.getPlayer();
+	    PacketSetClientAtomicAssemblerWhitelistVals packet = new PacketSetClientAtomicAssemblerWhitelistVals(
+		    whitelistedItems);
+	    if (player == null) {
+		PacketDistributor.sendToAllPlayers(packet);
+	    } else {
+		PacketDistributor.sendToPlayer(player, packet);
+	    }
+	};
     }
 
     private static boolean isJson(final ResourceLocation filename) {
-        return filename.getPath().contains(FILE_NAME + JSON_EXTENSION);
+	return filename.getPath().contains(FILE_NAME + JSON_EXTENSION);
     }
 }

@@ -23,73 +23,79 @@ public class WrapperIOEditor {
 
     private ScreenComponentSimpleLabel label;
 
-    public WrapperIOEditor(ScreenQuantumTunnel screen, int tabX, int tabY, int slotStartX, int slotStartY, int labelX, int labelY) {
-        screen.addComponent(button = (ScreenComponentButton<?>) new ScreenComponentButton<>(ScreenComponentGuiTab.GuiInfoTabTextures.REGULAR, tabX, tabY).setOnPress(but -> {
-            //
-            ScreenComponentButton<?> button = but;
-            button.isPressed = !button.isPressed;
+    public WrapperIOEditor(ScreenQuantumTunnel screen, int tabX, int tabY, int slotStartX, int slotStartY, int labelX,
+	    int labelY) {
+	screen.addComponent(button = (ScreenComponentButton<?>) new ScreenComponentButton<>(
+		ScreenComponentGuiTab.GuiInfoTabTextures.REGULAR, tabX, tabY).setOnPress(but -> {
+		    //
+		    ScreenComponentButton<?> button = but;
+		    button.isPressed = !button.isPressed;
 
-            if (button.isPressed) {
+		    if (button.isPressed) {
 
-                screen.frequencyWrapper.updateVisibility(false);
-                screen.newFrequencyWrapper.updateVisibility(false);
-                screen.newFrequencyWrapper.button.isPressed = false;
-                screen.editFrequencyWrapper.updateVisibility(false);
+			screen.frequencyWrapper.updateVisibility(false);
+			screen.newFrequencyWrapper.updateVisibility(false);
+			screen.newFrequencyWrapper.button.isPressed = false;
+			screen.editFrequencyWrapper.updateVisibility(false);
 
-                updateVisibility(true);
+			updateVisibility(true);
 
-                screen.slider.setVisible(false);
+			screen.slider.setVisible(false);
 
-            } else {
+		    } else {
 
-                screen.frequencyWrapper.updateVisibility(true);
-                screen.newFrequencyWrapper.updateVisibility(false);
-                screen.newFrequencyWrapper.button.isPressed = false;
-                screen.editFrequencyWrapper.updateVisibility(false);
+			screen.frequencyWrapper.updateVisibility(true);
+			screen.newFrequencyWrapper.updateVisibility(false);
+			screen.newFrequencyWrapper.button.isPressed = false;
+			screen.editFrequencyWrapper.updateVisibility(false);
 
-                updateVisibility(false);
+			updateVisibility(false);
 
-                screen.slider.setVisible(true);
+			screen.slider.setVisible(true);
 
-            }
+		    }
 
-        }).onTooltip((graphics, but, xAxis, yAxis) -> {
-            //
-            ScreenComponentButton<?> button = (ScreenComponentButton<?>) but;
-            List<Component> tooltips = new ArrayList<>();
-            tooltips.add(NuclearTextUtils.tooltip("quantumtunnel.ioconfig").withStyle(ChatFormatting.DARK_GRAY));
-            if (!button.isPressed) {
-                tooltips.add(ElectroTextUtils.tooltip("inventoryio.presstoshow").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
-            } else {
-                tooltips.add(ElectroTextUtils.tooltip("inventoryio.presstohide").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
-            }
+		}).onTooltip((graphics, but, xAxis, yAxis) -> {
+		    //
+		    ScreenComponentButton<?> button = (ScreenComponentButton<?>) but;
+		    List<Component> tooltips = new ArrayList<>();
+		    tooltips.add(
+			    NuclearTextUtils.tooltip("quantumtunnel.ioconfig").withStyle(ChatFormatting.DARK_GRAY));
+		    if (!button.isPressed) {
+			tooltips.add(ElectroTextUtils.tooltip("inventoryio.presstoshow")
+				.withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
+		    } else {
+			tooltips.add(ElectroTextUtils.tooltip("inventoryio.presstohide")
+				.withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
+		    }
 
-            graphics.renderComponentTooltip(screen.getFontRenderer(), tooltips, xAxis, yAxis);
+		    graphics.renderComponentTooltip(screen.getFontRenderer(), tooltips, xAxis, yAxis);
 
-        }).setIcon(NuclearIconTypes.IOCONFIG));
+		}).setIcon(NuclearIconTypes.IOCONFIG));
 
-        screen.addComponent(label = new ScreenComponentSimpleLabel(labelX, labelY, 10, Color.TEXT_GRAY, ElectroTextUtils.tooltip("inventoryio.slotmap")));
+	screen.addComponent(label = new ScreenComponentSimpleLabel(labelX, labelY, 10, Color.TEXT_GRAY,
+		ElectroTextUtils.tooltip("inventoryio.slotmap")));
 
-        label.setVisible(false);
+	label.setVisible(false);
 
-        screen.addComponent(ioArr[0] = new ButtonIO(slotStartX, slotStartY + 1, Direction.UP));
-        screen.addComponent(ioArr[1] = new ButtonIO(slotStartX, slotStartY + 26, Direction.NORTH));
-        screen.addComponent(ioArr[2] = new ButtonIO(slotStartX, slotStartY + 26 * 2 - 1, Direction.DOWN));
-        screen.addComponent(ioArr[3] = new ButtonIO(slotStartX - 25, slotStartY + 26, Direction.EAST));
-        screen.addComponent(ioArr[4] = new ButtonIO(slotStartX + 25, slotStartY + 26, Direction.WEST));
-        screen.addComponent(ioArr[5] = new ButtonIO(slotStartX + 25, slotStartY + 26 * 2 - 1, Direction.SOUTH));
+	screen.addComponent(ioArr[0] = new ButtonIO(slotStartX, slotStartY + 1, Direction.UP));
+	screen.addComponent(ioArr[1] = new ButtonIO(slotStartX, slotStartY + 26, Direction.NORTH));
+	screen.addComponent(ioArr[2] = new ButtonIO(slotStartX, slotStartY + 26 * 2 - 1, Direction.DOWN));
+	screen.addComponent(ioArr[3] = new ButtonIO(slotStartX - 25, slotStartY + 26, Direction.EAST));
+	screen.addComponent(ioArr[4] = new ButtonIO(slotStartX + 25, slotStartY + 26, Direction.WEST));
+	screen.addComponent(ioArr[5] = new ButtonIO(slotStartX + 25, slotStartY + 26 * 2 - 1, Direction.SOUTH));
 
-        for (ButtonIO io : ioArr) {
-            io.setVisible(false);
-        }
+	for (ButtonIO io : ioArr) {
+	    io.setVisible(false);
+	}
     }
 
     public void updateVisibility(boolean show) {
-        for (ButtonIO io : ioArr) {
-            io.setVisible(show);
-        }
+	for (ButtonIO io : ioArr) {
+	    io.setVisible(show);
+	}
 
-        label.setVisible(show);
+	label.setVisible(show);
     }
 
 }

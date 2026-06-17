@@ -16,21 +16,23 @@ import voltaic.common.recipe.recipeutils.ProbableItem;
 
 public class FissionReactorRecipe extends Item2ItemRecipe {
 
-	public static final String RECIPE_GROUP = "fission_reactor_recipe";
-	public static final ResourceLocation RECIPE_ID = NuclearScience.rl(RECIPE_GROUP);
+    public static final String RECIPE_GROUP = "fission_reactor_recipe";
+    public static final ResourceLocation RECIPE_ID = NuclearScience.rl(RECIPE_GROUP);
 
-	public FissionReactorRecipe(String group, List<CountableIngredient> inputs, ItemStack output, double experience, int ticks, double usagePerTick, List<ProbableItem> itemBiproducts, List<ProbableFluid> fluidBiproducts, List<ProbableGas> gasBiproducts) {
-		super(group, inputs, output, experience, ticks, usagePerTick, itemBiproducts, fluidBiproducts, gasBiproducts);
-	}
+    public FissionReactorRecipe(String group, List<CountableIngredient> inputs, ItemStack output, double experience,
+	    int ticks, double usagePerTick, List<ProbableItem> itemBiproducts, List<ProbableFluid> fluidBiproducts,
+	    List<ProbableGas> gasBiproducts) {
+	super(group, inputs, output, experience, ticks, usagePerTick, itemBiproducts, fluidBiproducts, gasBiproducts);
+    }
 
-	@Override
-	public RecipeSerializer<?> getSerializer() {
-		return NuclearScienceRecipies.FISSION_REACTOR_SERIALIZER.get();
-	}
+    @Override
+    public RecipeSerializer<?> getSerializer() {
+	return NuclearScienceRecipies.FISSION_REACTOR_SERIALIZER.get();
+    }
 
-	@Override
-	public RecipeType<?> getType() {
-		return NuclearScienceRecipies.FISSION_REACTOR_TYPE.get();
-	}
+    @Override
+    public RecipeType<?> getType() {
+	return NuclearScienceRecipies.FISSION_REACTOR_TYPE.get();
+    }
 
 }

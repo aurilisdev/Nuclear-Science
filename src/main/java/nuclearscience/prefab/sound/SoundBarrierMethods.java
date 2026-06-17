@@ -8,7 +8,8 @@ import nuclearscience.registers.NuclearScienceSounds;
 public class SoundBarrierMethods {
 
     public static void playParticleSound(EntityParticle particle) {
-        Minecraft.getInstance().getSoundManager().play(new TickableSoundParticle(NuclearScienceSounds.SOUND_PARTICLE.get(), SoundSource.NEUTRAL, particle));
+	Minecraft.getInstance().getSoundManager().play(
+		new TickableSoundParticle(NuclearScienceSounds.SOUND_PARTICLE.get(), SoundSource.NEUTRAL, particle));
     }
 
 }

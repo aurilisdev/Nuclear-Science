@@ -40,121 +40,141 @@ public class ScreenQuantumTunnel extends GenericScreen<ContainerQuantumTunnel> {
     public ScreenComponentVerticalSlider slider;
 
     @SuppressWarnings("removal")
-	public ScreenQuantumTunnel(ContainerQuantumTunnel container, Inventory playerInventory, Component title) {
-        super(container, playerInventory, title);
+    public ScreenQuantumTunnel(ContainerQuantumTunnel container, Inventory playerInventory, Component title) {
+	super(container, playerInventory, title);
 
-        imageHeight += 35;
+	imageHeight += 35;
 
-        frequencyWrapper = new WrapperQuantumTunnelFrequencies(this, 0, 0);
+	frequencyWrapper = new WrapperQuantumTunnelFrequencies(this, 0, 0);
 
-        addComponent(slider = new ScreenComponentVerticalSlider(5, 64, 125).setClickConsumer(frequencyWrapper.getSliderClickedConsumer()).setDragConsumer(frequencyWrapper.getSliderDraggedConsumer()));
+	addComponent(slider = new ScreenComponentVerticalSlider(5, 64, 125)
+		.setClickConsumer(frequencyWrapper.getSliderClickedConsumer())
+		.setDragConsumer(frequencyWrapper.getSliderDraggedConsumer()));
 
-        ioWrapper = new WrapperIOEditor(this, -AbstractScreenComponentInfo.SIZE + 1, AbstractScreenComponentInfo.SIZE + 2, 80, 28, 8, 23);
+	ioWrapper = new WrapperIOEditor(this, -AbstractScreenComponentInfo.SIZE + 1,
+		AbstractScreenComponentInfo.SIZE + 2, 80, 28, 8, 23);
 
-        newFrequencyWrapper = new WrapperNewFrequency(this, -AbstractScreenComponentInfo.SIZE + 1, 2, 0, 15);
+	newFrequencyWrapper = new WrapperNewFrequency(this, -AbstractScreenComponentInfo.SIZE + 1, 2, 0, 15);
 
-        editFrequencyWrapper = new WrapperEditFrequency(this, 0, 10);
+	editFrequencyWrapper = new WrapperEditFrequency(this, 0, 10);
 
-        addComponent(new ScreenComponentGuiTab(ScreenComponentGuiTab.GuiInfoTabTextures.REGULAR, NuclearIconTypes.BUFFER, () -> {
+	addComponent(new ScreenComponentGuiTab(ScreenComponentGuiTab.GuiInfoTabTextures.REGULAR,
+		NuclearIconTypes.BUFFER, () -> {
 
-            TileQuantumTunnel tile = getMenu().getSafeHost();
+		    TileQuantumTunnel tile = getMenu().getSafeHost();
 
-            if(tile == null) {
-                return Collections.emptyList();
-            }
+		    if (tile == null) {
+			return Collections.emptyList();
+		    }
 
-            TunnelFrequencyBuffer buffer = tile.clientBuffer;
+		    TunnelFrequencyBuffer buffer = tile.clientBuffer;
 
-            List<FormattedCharSequence> info = new ArrayList<>();
+		    List<FormattedCharSequence> info = new ArrayList<>();
 
-            info.add(NuclearTextUtils.tooltip("quantumtunnel.buffer").withStyle(ChatFormatting.BOLD, ChatFormatting.YELLOW).getVisualOrderText());
+		    info.add(NuclearTextUtils.tooltip("quantumtunnel.buffer")
+			    .withStyle(ChatFormatting.BOLD, ChatFormatting.YELLOW).getVisualOrderText());
 
-            ItemStack item = buffer.getBufferedItem();
+		    ItemStack item = buffer.getBufferedItem();
 
-            info.add(Component.translatable(item.getDescriptionId()).getVisualOrderText());
-            info.add(Component.literal(" " + item.getCount()).withStyle(ChatFormatting.GRAY).getVisualOrderText());
+		    info.add(Component.translatable(item.getDescriptionId()).getVisualOrderText());
+		    info.add(Component.literal(" " + item.getCount()).withStyle(ChatFormatting.GRAY)
+			    .getVisualOrderText());
 
-            FluidStack fluid = buffer.getBufferedFluid();
+		    FluidStack fluid = buffer.getBufferedFluid();
 
-            info.add(Component.translatable(fluid.getTranslationKey()).getVisualOrderText());
-            info.add(Component.literal(" ").append(ChatFormatter.formatFluidMilibuckets(fluid.getAmount()).withStyle(ChatFormatting.GRAY)).getVisualOrderText());
+		    info.add(Component.translatable(fluid.getTranslationKey()).getVisualOrderText());
+		    info.add(Component.literal(" ").append(
+			    ChatFormatter.formatFluidMilibuckets(fluid.getAmount()).withStyle(ChatFormatting.GRAY))
+			    .getVisualOrderText());
 
-            GasStack gas = buffer.getBufferedGas();
+		    GasStack gas = buffer.getBufferedGas();
 
-            info.add(gas.getGas().getDescription().getVisualOrderText());
-            info.add(Component.literal(" ").append(ChatFormatter.formatFluidMilibuckets(gas.getAmount()).withStyle(ChatFormatting.GRAY)).getVisualOrderText());
-            info.add(Component.literal(" ").append(ChatFormatter.getChatDisplayShort(gas.getTemperature(), DisplayUnits.TEMPERATURE_KELVIN).withStyle(ChatFormatting.GRAY)).getVisualOrderText());
-            info.add(Component.literal(" ").append(ChatFormatter.getChatDisplayShort(gas.getPressure(), DisplayUnits.PRESSURE_ATM).withStyle(ChatFormatting.GRAY)).getVisualOrderText());
+		    info.add(gas.getGas().getDescription().getVisualOrderText());
+		    info.add(Component.literal(" ").append(
+			    ChatFormatter.formatFluidMilibuckets(gas.getAmount()).withStyle(ChatFormatting.GRAY))
+			    .getVisualOrderText());
+		    info.add(Component.literal(" ")
+			    .append(ChatFormatter
+				    .getChatDisplayShort(gas.getTemperature(), DisplayUnits.TEMPERATURE_KELVIN)
+				    .withStyle(ChatFormatting.GRAY))
+			    .getVisualOrderText());
+		    info.add(Component.literal(" ")
+			    .append(ChatFormatter.getChatDisplayShort(gas.getPressure(), DisplayUnits.PRESSURE_ATM)
+				    .withStyle(ChatFormatting.GRAY))
+			    .getVisualOrderText());
 
+		    TransferPack energy = buffer.getBufferedEnergy();
 
-            TransferPack energy = buffer.getBufferedEnergy();
+		    info.add(ChatFormatter.getChatDisplayShort(energy.getJoules(), DisplayUnits.JOULES)
+			    .getVisualOrderText());
+		    info.add(Component.literal(" ")
+			    .append(ChatFormatter.getChatDisplayShort(energy.getVoltage(), DisplayUnits.VOLTAGE)
+				    .withStyle(ChatFormatting.GRAY))
+			    .getVisualOrderText());
 
-            info.add(ChatFormatter.getChatDisplayShort(energy.getJoules(), DisplayUnits.JOULES).getVisualOrderText());
-            info.add(Component.literal(" ").append(ChatFormatter.getChatDisplayShort(energy.getVoltage(), DisplayUnits.VOLTAGE).withStyle(ChatFormatting.GRAY)).getVisualOrderText());
+		    return info;
 
-            return info;
-
-        }, -AbstractScreenComponentInfo.SIZE + 1, AbstractScreenComponentInfo.SIZE * 2 + 2));
-
+		}, -AbstractScreenComponentInfo.SIZE + 1, AbstractScreenComponentInfo.SIZE * 2 + 2));
 
     }
 
     @Override
     protected void containerTick() {
-        super.containerTick();
-        frequencyWrapper.tick();
+	super.containerTick();
+	frequencyWrapper.tick();
     }
 
     @Override
     protected void initializeComponents() {
-        super.initializeComponents();
-        playerInvLabel.setVisible(false);
+	super.initializeComponents();
+	playerInvLabel.setVisible(false);
     }
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
-        if (frequencyWrapper != null) {
-            if (scrollY > 0) {
-                // scroll up
-                frequencyWrapper.handleMouseScroll(-1);
-            } else if (scrollY < 0) {
-                // scroll down
-                frequencyWrapper.handleMouseScroll(1);
-            }
-        }
-        return super.mouseScrolled(mouseX, mouseY, scrollX, scrollY);
+	if (frequencyWrapper != null) {
+	    if (scrollY > 0) {
+		// scroll up
+		frequencyWrapper.handleMouseScroll(-1);
+	    } else if (scrollY < 0) {
+		// scroll down
+		frequencyWrapper.handleMouseScroll(1);
+	    }
+	}
+	return super.mouseScrolled(mouseX, mouseY, scrollX, scrollY);
     }
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        if (slider != null && slider.isVisible()) {
-            slider.mouseClicked(mouseX, mouseY, button);
-        }
-        return super.mouseClicked(mouseX, mouseY, button);
+	if (slider != null && slider.isVisible()) {
+	    slider.mouseClicked(mouseX, mouseY, button);
+	}
+	return super.mouseClicked(mouseX, mouseY, button);
     }
 
     @Override
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
-        if (slider != null && slider.isVisible()) {
-            slider.mouseReleased(mouseX, mouseY, button);
-        }
-        return super.mouseReleased(mouseX, mouseY, button);
+	if (slider != null && slider.isVisible()) {
+	    slider.mouseReleased(mouseX, mouseY, button);
+	}
+	return super.mouseReleased(mouseX, mouseY, button);
     }
 
     @Override
     public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) {
-        InputConstants.Key mouseKey = InputConstants.getKey(pKeyCode, pScanCode);
-        if (this.minecraft.options.keyInventory.isActiveAndMatches(mouseKey) && newFrequencyWrapper.nameEditBox.isFocused()) {
-            return false;
-        }
-        return super.keyPressed(pKeyCode, pScanCode, pModifiers);
+	InputConstants.Key mouseKey = InputConstants.getKey(pKeyCode, pScanCode);
+	if (this.minecraft.options.keyInventory.isActiveAndMatches(mouseKey)
+		&& newFrequencyWrapper.nameEditBox.isFocused()) {
+	    return false;
+	}
+	return super.keyPressed(pKeyCode, pScanCode, pModifiers);
     }
 
     @Override
     public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
-        if(slider.isVisible()) {
-            return slider.mouseDragged(mouseX, mouseY, button, dragX, dragY);
-        }
-        return super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
+	if (slider.isVisible()) {
+	    return slider.mouseDragged(mouseX, mouseY, button, dragX, dragY);
+	}
+	return super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
     }
 }

@@ -26,129 +26,138 @@ public class TileSupplyModule extends GenericTileInterfaceBound {
     private Direction relativeBack;
 
     public TileSupplyModule(BlockPos worldPos, BlockState blockState) {
-        super(NuclearScienceTiles.TILE_SUPPLYMODULE.get(), worldPos, blockState);
-        addComponent(new ComponentPacketHandler(this));
-        addComponent(new ComponentTickable(this).tickServer(this::tickServer));
-        addComponent(new ComponentInventory(this, ComponentInventory.InventoryBuilder.newInv().inputs(9).outputs(9))
-                //
-                .setSlotsByDirection(BlockEntityUtils.MachineDirection.TOP, 0, 1, 2, 3, 4, 5, 6, 7, 8)
-                //
-                .setSlotsByDirection(BlockEntityUtils.MachineDirection.FRONT, 0, 1, 2, 3, 4, 5, 6, 7, 8)
-                //
-                .setSlotsByDirection(BlockEntityUtils.MachineDirection.BOTTOM, 9, 10, 11, 12, 13, 14, 15, 16, 17)
-                //
-                .setSlotsByDirection(BlockEntityUtils.MachineDirection.LEFT, 9, 10, 11, 12, 13, 14, 15, 16, 17)
-                //
-                .setSlotsByDirection(BlockEntityUtils.MachineDirection.RIGHT, 9, 10, 11, 12, 13, 14, 15, 16, 17).valid(machineValidator()));
-        addComponent(new ComponentContainerProvider("supplymodule", this).createMenu((id, player) -> new ContainerSupplyModule(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
-        relativeBack = BlockEntityUtils.getRelativeSide(getFacing(), BlockEntityUtils.MachineDirection.BACK.mappedDir);
+	super(NuclearScienceTiles.TILE_SUPPLYMODULE.get(), worldPos, blockState);
+	addComponent(new ComponentPacketHandler(this));
+	addComponent(new ComponentTickable(this).tickServer(this::tickServer));
+	addComponent(new ComponentInventory(this, ComponentInventory.InventoryBuilder.newInv().inputs(9).outputs(9))
+		//
+		.setSlotsByDirection(BlockEntityUtils.MachineDirection.TOP, 0, 1, 2, 3, 4, 5, 6, 7, 8)
+		//
+		.setSlotsByDirection(BlockEntityUtils.MachineDirection.FRONT, 0, 1, 2, 3, 4, 5, 6, 7, 8)
+		//
+		.setSlotsByDirection(BlockEntityUtils.MachineDirection.BOTTOM, 9, 10, 11, 12, 13, 14, 15, 16, 17)
+		//
+		.setSlotsByDirection(BlockEntityUtils.MachineDirection.LEFT, 9, 10, 11, 12, 13, 14, 15, 16, 17)
+		//
+		.setSlotsByDirection(BlockEntityUtils.MachineDirection.RIGHT, 9, 10, 11, 12, 13, 14, 15, 16, 17)
+		.valid(machineValidator()));
+	addComponent(new ComponentContainerProvider("supplymodule", this)
+		.createMenu((id, player) -> new ContainerSupplyModule(id, player,
+			getComponent(IComponentType.Inventory), getCoordsArray())));
+	relativeBack = BlockEntityUtils.getRelativeSide(getFacing(), BlockEntityUtils.MachineDirection.BACK.mappedDir);
     }
 
     @Override
     public void tickServer(ComponentTickable tickable) {
-        super.tickServer(tickable);
-        RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory), NuclearConfig.INSTANCE.RADIOACTIVE_PROCESSOR_RADIATION_RADIUS.get(), true, 30, true, false);
+	super.tickServer(tickable);
+	RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory),
+		NuclearConfig.INSTANCE.RADIOACTIVE_PROCESSOR_RADIATION_RADIUS.get(), true, 30, true, false);
     }
 
     @Override
     public boolean checkLinkedPosition(GenericTileInterface inter) {
-        return inter.supplyModuleLocation.getValue().equals(getBlockPos());
+	return inter.supplyModuleLocation.getValue().equals(getBlockPos());
     }
 
     @Override
     public GenericTileInterface.InterfaceType[] getValidInterfaces() {
-        return SUPPLIES;
+	return SUPPLIES;
     }
 
     @Override
     public Direction getCableLocation() {
-        return relativeBack;
+	return relativeBack;
     }
 
     @Override
     public void onBlockStateUpdate(BlockState oldState, BlockState newState) {
-        super.onBlockStateUpdate(oldState, newState);
-        if (!level.isClientSide() && oldState.hasProperty(VoltaicBlockStates.FACING) && newState.hasProperty(VoltaicBlockStates.FACING) && oldState.getValue(VoltaicBlockStates.FACING) != newState.getValue(VoltaicBlockStates.FACING)) {
-            relativeBack = BlockEntityUtils.getRelativeSide(getFacing(), BlockEntityUtils.MachineDirection.BACK.mappedDir);
-        }
+	super.onBlockStateUpdate(oldState, newState);
+	if (!level.isClientSide() && oldState.hasProperty(VoltaicBlockStates.FACING)
+		&& newState.hasProperty(VoltaicBlockStates.FACING)
+		&& oldState.getValue(VoltaicBlockStates.FACING) != newState.getValue(VoltaicBlockStates.FACING)) {
+	    relativeBack = BlockEntityUtils.getRelativeSide(getFacing(),
+		    BlockEntityUtils.MachineDirection.BACK.mappedDir);
+	}
     }
 
     @Override
     protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.saveAdditional(compound, registries);
-        compound.putInt("relativeback", relativeBack.ordinal());
+	super.saveAdditional(compound, registries);
+	compound.putInt("relativeback", relativeBack.ordinal());
     }
 
     @Override
     protected void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.loadAdditional(compound, registries);
-        relativeBack = Direction.values()[compound.getInt("relativeback")];
+	super.loadAdditional(compound, registries);
+	relativeBack = Direction.values()[compound.getInt("relativeback")];
     }
 
     @Override
     public void onInterfacePropChange(SingleProperty<BlockPos> prop, BlockPos old) {
 
-        super.onInterfacePropChange(prop, old);
+	super.onInterfacePropChange(prop, old);
 
-        boolean oldInval = old.equals(BlockEntityUtils.OUT_OF_REACH);
-        boolean newInval = prop.getValue().equals(BlockEntityUtils.OUT_OF_REACH);
+	boolean oldInval = old.equals(BlockEntityUtils.OUT_OF_REACH);
+	boolean newInval = prop.getValue().equals(BlockEntityUtils.OUT_OF_REACH);
 
-        if(oldInval && newInval) {
-            return;
-        }
+	if (oldInval && newInval) {
+	    return;
+	}
 
-        if (networkCable == null || !networkCable.valid() || !(networkCable.getSafe() instanceof TileReactorLogisticsCable)) {
-            return;
-        }
+	if (networkCable == null || !networkCable.valid()
+		|| !(networkCable.getSafe() instanceof TileReactorLogisticsCable)) {
+	    return;
+	}
 
-        TileReactorLogisticsCable cable = networkCable.getSafe();
+	TileReactorLogisticsCable cable = networkCable.getSafe();
 
-        if (cable.isRemoved()) {
-            return;
-        }
+	if (cable.isRemoved()) {
+	    return;
+	}
 
-        ReactorLogisticsNetwork network = cable.getNetwork();
+	ReactorLogisticsNetwork network = cable.getNetwork();
 
-        if(oldInval && !newInval) {
-            GenericTileInterface inter = network.getInterface(prop.getValue());
+	if (oldInval && !newInval) {
+	    GenericTileInterface inter = network.getInterface(prop.getValue());
 
-            if(inter != null) {
-                inter.supplyModuleLocation.setValue(getBlockPos());
-            }
-        } else if (!oldInval && newInval) {
-            GenericTileInterface inter = network.getInterface(old);
+	    if (inter != null) {
+		inter.supplyModuleLocation.setValue(getBlockPos());
+	    }
+	} else if (!oldInval && newInval) {
+	    GenericTileInterface inter = network.getInterface(old);
 
-            if(inter != null) {
-                inter.supplyModuleLocation.setValue(BlockEntityUtils.OUT_OF_REACH);
-            }
-        }
+	    if (inter != null) {
+		inter.supplyModuleLocation.setValue(BlockEntityUtils.OUT_OF_REACH);
+	    }
+	}
 
     }
 
     @Override
     public void onBlockDestroyed() {
-        super.onBlockDestroyed();
-        if (!level.isClientSide()) {
+	super.onBlockDestroyed();
+	if (!level.isClientSide()) {
 
-            if (networkCable == null || !networkCable.valid() || !(networkCable.getSafe() instanceof TileReactorLogisticsCable)) {
-                return;
-            }
+	    if (networkCable == null || !networkCable.valid()
+		    || !(networkCable.getSafe() instanceof TileReactorLogisticsCable)) {
+		return;
+	    }
 
-            TileReactorLogisticsCable cable = networkCable.getSafe();
+	    TileReactorLogisticsCable cable = networkCable.getSafe();
 
-            if (cable.isRemoved()) {
-                return;
-            }
+	    if (cable.isRemoved()) {
+		return;
+	    }
 
-            ReactorLogisticsNetwork network = cable.getNetwork();
+	    ReactorLogisticsNetwork network = cable.getNetwork();
 
-            GenericTileInterface inter = network.getInterface(interfaceLocation.getValue());
+	    GenericTileInterface inter = network.getInterface(interfaceLocation.getValue());
 
-            if (inter == null) {
-                return;
-            }
+	    if (inter == null) {
+		return;
+	    }
 
-            inter.supplyModuleLocation.setValue(BlockEntityUtils.OUT_OF_REACH);
-        }
+	    inter.supplyModuleLocation.setValue(BlockEntityUtils.OUT_OF_REACH);
+	}
     }
 }

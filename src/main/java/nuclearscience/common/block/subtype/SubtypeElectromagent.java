@@ -8,21 +8,21 @@ public enum SubtypeElectromagent implements ISubtype {
     public final double fusionBonus;
 
     private SubtypeElectromagent(double fusionBonus) {
-        this.fusionBonus = fusionBonus;
+	this.fusionBonus = fusionBonus;
     }
 
     @Override
     public String tag() {
-        return name();
+	return name();
     }
 
     @Override
     public String forgeTag() {
-        return "electromagnet/" + name();
+	return "electromagnet/" + name();
     }
 
     @Override
     public boolean isItem() {
-        return false;
+	return false;
     }
 }

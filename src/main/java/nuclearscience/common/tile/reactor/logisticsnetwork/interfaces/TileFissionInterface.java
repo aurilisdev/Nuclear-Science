@@ -20,267 +20,281 @@ import voltaic.prefab.tile.components.type.ComponentTickable;
 
 public class TileFissionInterface extends GenericTileInterface implements IFissionControlRod {
 
-    public final SingleProperty<Integer> insertion = property(new SingleProperty<>(PropertyTypes.INTEGER, "insertion", 0));
+    public final SingleProperty<Integer> insertion = property(
+	    new SingleProperty<>(PropertyTypes.INTEGER, "insertion", 0));
 
     public TileFissionInterface(BlockPos worldPos, BlockState blockState) {
-        super(NuclearScienceTiles.TILE_FISSIONINTERFACE.get(), worldPos, blockState);
+	super(NuclearScienceTiles.TILE_FISSIONINTERFACE.get(), worldPos, blockState);
     }
 
     @Override
     public void tickServer(ComponentTickable tickable) {
-        super.tickServer(tickable);
+	super.tickServer(tickable);
 
-        if (!networkCable.valid() || !(networkCable.getSafe() instanceof TileReactorLogisticsCable)) {
-            insertion.setValue(0);
-            return;
-        }
+	if (!networkCable.valid() || !(networkCable.getSafe() instanceof TileReactorLogisticsCable)) {
+	    insertion.setValue(0);
+	    return;
+	}
 
-        TileReactorLogisticsCable cable = networkCable.getSafe();
+	TileReactorLogisticsCable cable = networkCable.getSafe();
 
-        if (cable.isRemoved()) {
-            insertion.setValue(0);
-            return;
-        }
+	if (cable.isRemoved()) {
+	    insertion.setValue(0);
+	    return;
+	}
 
-        ReactorLogisticsNetwork network = cable.getNetwork();
+	ReactorLogisticsNetwork network = cable.getNetwork();
 
-        if (!network.isControllerActive()) {
-            insertion.setValue(0);
-            return;
-        }
+	if (!network.isControllerActive()) {
+	    insertion.setValue(0);
+	    return;
+	}
 
-        TileControlRodModule controlRod = network.getControlRod(controlRodLocation.getValue());
+	TileControlRodModule controlRod = network.getControlRod(controlRodLocation.getValue());
 
-        if (controlRod == null) {
-            insertion.setValue(0);
-        } else {
-            insertion.setValue(controlRod.insertion.getValue());
-        }
+	if (controlRod == null) {
+	    insertion.setValue(0);
+	} else {
+	    insertion.setValue(controlRod.insertion.getValue());
+	}
 
-        TileSupplyModule supplyModule = network.getSupplyModule(supplyModuleLocation.getValue());
+	TileSupplyModule supplyModule = network.getSupplyModule(supplyModuleLocation.getValue());
 
-        if (!reactor.valid() || supplyModule == null || !(reactor.getSafe() instanceof TileFissionReactorCore)) {
-            return;
-        }
+	if (!reactor.valid() || supplyModule == null || !(reactor.getSafe() instanceof TileFissionReactorCore)) {
+	    return;
+	}
 
-        TileFissionReactorCore core = reactor.getSafe();
+	TileFissionReactorCore core = reactor.getSafe();
 
-        ComponentInventory coreInv = core.getComponent(IComponentType.Inventory);
-        ComponentInventory supplyInv = supplyModule.getComponent(IComponentType.Inventory);
+	ComponentInventory coreInv = core.getComponent(IComponentType.Inventory);
+	ComponentInventory supplyInv = supplyModule.getComponent(IComponentType.Inventory);
 
-        boolean isExtractingSpentCell = serverAnimations.containsKey(InterfaceAnimation.FISSION_WASTE_1) || serverAnimations.containsKey(InterfaceAnimation.FISSION_WASTE_2) || serverAnimations.containsKey(InterfaceAnimation.FISSION_WASTE_3) || serverAnimations.containsKey(InterfaceAnimation.FISSION_WASTE_4);
-        boolean isInsertingFuelCell = serverAnimations.containsKey(InterfaceAnimation.FISSION_FUEL_1) || serverAnimations.containsKey(InterfaceAnimation.FISSION_FUEL_2) || serverAnimations.containsKey(InterfaceAnimation.FISSION_FUEL_3) || serverAnimations.containsKey(InterfaceAnimation.FISSION_FUEL_4);
-        boolean isExtractingTritium = serverAnimations.containsKey(InterfaceAnimation.FISSION_TRITIUM_EXTRACT);
-        boolean isInsertingDeuterium = serverAnimations.containsKey(InterfaceAnimation.FISSION_DEUTERIUM_INSERT);
+	boolean isExtractingSpentCell = serverAnimations.containsKey(InterfaceAnimation.FISSION_WASTE_1)
+		|| serverAnimations.containsKey(InterfaceAnimation.FISSION_WASTE_2)
+		|| serverAnimations.containsKey(InterfaceAnimation.FISSION_WASTE_3)
+		|| serverAnimations.containsKey(InterfaceAnimation.FISSION_WASTE_4);
+	boolean isInsertingFuelCell = serverAnimations.containsKey(InterfaceAnimation.FISSION_FUEL_1)
+		|| serverAnimations.containsKey(InterfaceAnimation.FISSION_FUEL_2)
+		|| serverAnimations.containsKey(InterfaceAnimation.FISSION_FUEL_3)
+		|| serverAnimations.containsKey(InterfaceAnimation.FISSION_FUEL_4);
+	boolean isExtractingTritium = serverAnimations.containsKey(InterfaceAnimation.FISSION_TRITIUM_EXTRACT);
+	boolean isInsertingDeuterium = serverAnimations.containsKey(InterfaceAnimation.FISSION_DEUTERIUM_INSERT);
 
-        ItemStack deuterium = coreInv.getItem(TileFissionReactorCore.DUETERIUM_SLOT);
+	ItemStack deuterium = coreInv.getItem(TileFissionReactorCore.DUETERIUM_SLOT);
 
-        // Check if there are any spent cells in the fission core
+	// Check if there are any spent cells in the fission core
 
-        if (!isInsertingFuelCell) {
+	if (!isInsertingFuelCell) {
 
-            ItemStack item;
+	    ItemStack item;
 
-            for (int i = 0; i < 4; i++) {
+	    for (int i = 0; i < 4; i++) {
 
-                item = coreInv.getItem(i);
+		item = coreInv.getItem(i);
 
-                if (item.isEmpty()) {
-                } else if (item.is(NuclearScienceTags.Items.FUELROD_SPENT)) {
+		if (item.isEmpty()) {
+		} else if (item.is(NuclearScienceTags.Items.FUELROD_SPENT)) {
 
-                    boolean inserted = false;
+		    boolean inserted = false;
 
-                    for (int j = 9; j < 18; j++) {
+		    for (int j = 9; j < 18; j++) {
 
-                        if (supplyInv.getItem(j).isEmpty()) {
+			if (supplyInv.getItem(j).isEmpty()) {
 
-                            supplyInv.setItem(j, item.copy());
-                            coreInv.setItem(i, ItemStack.EMPTY);
-                            inserted = true;
-                            break;
+			    supplyInv.setItem(j, item.copy());
+			    coreInv.setItem(i, ItemStack.EMPTY);
+			    inserted = true;
+			    break;
 
-                        }
+			}
 
-                    }
+		    }
 
-                    if (inserted) {
-                        switch (i) {
-                            case 0:
-                                queuedAnimations.addValue(InterfaceAnimation.FISSION_WASTE_1.ordinal());
-                                break;
-                            case 1:
-                                queuedAnimations.addValue(InterfaceAnimation.FISSION_WASTE_2.ordinal());
-                                break;
-                            case 2:
-                                queuedAnimations.addValue(InterfaceAnimation.FISSION_WASTE_3.ordinal());
-                                break;
-                            case 3:
-                                queuedAnimations.addValue(InterfaceAnimation.FISSION_WASTE_4.ordinal());
-                                break;
-                        }
+		    if (inserted) {
+			switch (i) {
+			case 0:
+			    queuedAnimations.addValue(InterfaceAnimation.FISSION_WASTE_1.ordinal());
+			    break;
+			case 1:
+			    queuedAnimations.addValue(InterfaceAnimation.FISSION_WASTE_2.ordinal());
+			    break;
+			case 2:
+			    queuedAnimations.addValue(InterfaceAnimation.FISSION_WASTE_3.ordinal());
+			    break;
+			case 3:
+			    queuedAnimations.addValue(InterfaceAnimation.FISSION_WASTE_4.ordinal());
+			    break;
+			}
 
-                        isExtractingSpentCell = true;
+			isExtractingSpentCell = true;
 
-                    }
-                }
-            }
-        }
+		    }
+		}
+	    }
+	}
 
-        // Check if tritium needs to be extracted
+	// Check if tritium needs to be extracted
 
-        if (!isInsertingDeuterium && !coreInv.areOutputsEmpty()) {
+	if (!isInsertingDeuterium && !coreInv.areOutputsEmpty()) {
 
-            ItemStack item = coreInv.getItem(5);
-            ItemStack destItem;
+	    ItemStack item = coreInv.getItem(5);
+	    ItemStack destItem;
 
-            boolean extracted = false;
+	    boolean extracted = false;
 
-            for (int j = 9; j < 18; j++) {
+	    for (int j = 9; j < 18; j++) {
 
-                if (coreInv.areOutputsEmpty() || item.isEmpty()) {
-                    break;
-                }
+		if (coreInv.areOutputsEmpty() || item.isEmpty()) {
+		    break;
+		}
 
-                destItem = supplyInv.getItem(j);
+		destItem = supplyInv.getItem(j);
 
-                if (destItem.isEmpty()) {
+		if (destItem.isEmpty()) {
 
-                    supplyInv.setItem(j, item.copy());
-                    coreInv.setItem(5, ItemStack.EMPTY);
-                    extracted = true;
+		    supplyInv.setItem(j, item.copy());
+		    coreInv.setItem(5, ItemStack.EMPTY);
+		    extracted = true;
 
-                } else if (destItem.is(NuclearScienceTags.Items.CELL_TRITIUM) && destItem.getCount() < destItem.getMaxStackSize()) {
+		} else if (destItem.is(NuclearScienceTags.Items.CELL_TRITIUM)
+			&& destItem.getCount() < destItem.getMaxStackSize()) {
 
-                    int taken = Math.min(destItem.getMaxStackSize() - destItem.getCount(), item.getCount());
-                    destItem.grow(taken);
-                    item.shrink(taken);
-                    extracted = true;
+		    int taken = Math.min(destItem.getMaxStackSize() - destItem.getCount(), item.getCount());
+		    destItem.grow(taken);
+		    item.shrink(taken);
+		    extracted = true;
 
-                }
+		}
 
-            }
-            if (extracted) {
+	    }
+	    if (extracted) {
 
-                queuedAnimations.addValue(InterfaceAnimation.FISSION_TRITIUM_EXTRACT.ordinal());
+		queuedAnimations.addValue(InterfaceAnimation.FISSION_TRITIUM_EXTRACT.ordinal());
 
-                isExtractingTritium = true;
+		isExtractingTritium = true;
 
-            }
-        }
+	    }
+	}
 
-        // Check if fuel cells need to be inserted
+	// Check if fuel cells need to be inserted
 
-        if (!isExtractingSpentCell && !supplyInv.areInputsEmpty()) {
+	if (!isExtractingSpentCell && !supplyInv.areInputsEmpty()) {
 
-            ItemStack item;
-            ItemStack supplyItem;
+	    ItemStack item;
+	    ItemStack supplyItem;
 
-            for (int i = 0; i < 4; i++) {
+	    for (int i = 0; i < 4; i++) {
 
-                item = coreInv.getItem(i);
+		item = coreInv.getItem(i);
 
-                if (item.is(NuclearScienceTags.Items.FUELROD_URANIUM_LOW_EN) || item.is(NuclearScienceTags.Items.FUELROD_URANIUM_HIGH_EN) || item.is(NuclearScienceTags.Items.FUELROD_PLUTONIUM)) {
-                    continue;
-                } else if (item.isEmpty()) {
+		if (item.is(NuclearScienceTags.Items.FUELROD_URANIUM_LOW_EN)
+			|| item.is(NuclearScienceTags.Items.FUELROD_URANIUM_HIGH_EN)
+			|| item.is(NuclearScienceTags.Items.FUELROD_PLUTONIUM)) {
+		    continue;
+		} else if (item.isEmpty()) {
 
-                    boolean inserted = false;
+		    boolean inserted = false;
 
-                    for (int j = 0; j < 9; j++) {
+		    for (int j = 0; j < 9; j++) {
 
-                        supplyItem = supplyInv.getItem(j);
+			supplyItem = supplyInv.getItem(j);
 
-                        if (supplyItem.is(NuclearScienceTags.Items.FUELROD_URANIUM_LOW_EN) || supplyItem.is(NuclearScienceTags.Items.FUELROD_URANIUM_HIGH_EN) || supplyItem.is(NuclearScienceTags.Items.FUELROD_PLUTONIUM)) {
-                            coreInv.setItem(i, supplyItem.copy());
-                            supplyInv.setItem(j, ItemStack.EMPTY);
-                            inserted = true;
-                            break;
-                        }
-                    }
+			if (supplyItem.is(NuclearScienceTags.Items.FUELROD_URANIUM_LOW_EN)
+				|| supplyItem.is(NuclearScienceTags.Items.FUELROD_URANIUM_HIGH_EN)
+				|| supplyItem.is(NuclearScienceTags.Items.FUELROD_PLUTONIUM)) {
+			    coreInv.setItem(i, supplyItem.copy());
+			    supplyInv.setItem(j, ItemStack.EMPTY);
+			    inserted = true;
+			    break;
+			}
+		    }
 
-                    if (inserted) {
-                        switch (i) {
-                            case 0:
-                                queuedAnimations.addValue(InterfaceAnimation.FISSION_FUEL_1.ordinal());
-                                break;
-                            case 1:
-                                queuedAnimations.addValue(InterfaceAnimation.FISSION_FUEL_2.ordinal());
-                                break;
-                            case 2:
-                                queuedAnimations.addValue(InterfaceAnimation.FISSION_FUEL_3.ordinal());
-                                break;
-                            case 3:
-                                queuedAnimations.addValue(InterfaceAnimation.FISSION_FUEL_4.ordinal());
-                                break;
-                        }
+		    if (inserted) {
+			switch (i) {
+			case 0:
+			    queuedAnimations.addValue(InterfaceAnimation.FISSION_FUEL_1.ordinal());
+			    break;
+			case 1:
+			    queuedAnimations.addValue(InterfaceAnimation.FISSION_FUEL_2.ordinal());
+			    break;
+			case 2:
+			    queuedAnimations.addValue(InterfaceAnimation.FISSION_FUEL_3.ordinal());
+			    break;
+			case 3:
+			    queuedAnimations.addValue(InterfaceAnimation.FISSION_FUEL_4.ordinal());
+			    break;
+			}
 
-                    }
+		    }
 
-                }
+		}
 
-            }
-        }
+	    }
+	}
 
-        // Check if Deuterium needs to be inserted
+	// Check if Deuterium needs to be inserted
 
-        if (!isExtractingTritium && (deuterium.isEmpty() || (deuterium.is(NuclearScienceTags.Items.CELL_DEUTERIUM) && deuterium.getCount() < deuterium.getMaxStackSize()))) {
+	if (!isExtractingTritium && (deuterium.isEmpty() || deuterium.is(NuclearScienceTags.Items.CELL_DEUTERIUM)
+		&& deuterium.getCount() < deuterium.getMaxStackSize())) {
 
-            ItemStack item;
+	    ItemStack item;
 
-            boolean taken = false;
+	    boolean taken = false;
 
-            for (int j = 0; j < 9; j++) {
+	    for (int j = 0; j < 9; j++) {
 
-                deuterium = coreInv.getItem(TileFissionReactorCore.DUETERIUM_SLOT);
+		deuterium = coreInv.getItem(TileFissionReactorCore.DUETERIUM_SLOT);
 
-                if (deuterium.is(NuclearScienceTags.Items.CELL_DEUTERIUM) && deuterium.getCount() >= deuterium.getMaxStackSize()) {
-                    break;
-                }
+		if (deuterium.is(NuclearScienceTags.Items.CELL_DEUTERIUM)
+			&& deuterium.getCount() >= deuterium.getMaxStackSize()) {
+		    break;
+		}
 
-                item = supplyInv.getItem(j).copy();
+		item = supplyInv.getItem(j).copy();
 
-                if (!item.is(NuclearScienceTags.Items.CELL_DEUTERIUM)) {
-                    continue;
-                }
+		if (!item.is(NuclearScienceTags.Items.CELL_DEUTERIUM)) {
+		    continue;
+		}
 
-                if (deuterium.isEmpty()) {
-                    coreInv.setItem(TileFissionReactorCore.DUETERIUM_SLOT, item.copy());
-                    supplyInv.setItem(j, ItemStack.EMPTY);
-                    taken = true;
-                } else if (deuterium.getCount() < deuterium.getMaxStackSize()) {
-                    int amt = Math.min(item.getCount(), deuterium.getMaxStackSize() - deuterium.getCount());
-                    supplyInv.removeItem(j, amt);
-                    deuterium.grow(amt);
-                    taken = true;
-                }
-            }
+		if (deuterium.isEmpty()) {
+		    coreInv.setItem(TileFissionReactorCore.DUETERIUM_SLOT, item.copy());
+		    supplyInv.setItem(j, ItemStack.EMPTY);
+		    taken = true;
+		} else if (deuterium.getCount() < deuterium.getMaxStackSize()) {
+		    int amt = Math.min(item.getCount(), deuterium.getMaxStackSize() - deuterium.getCount());
+		    supplyInv.removeItem(j, amt);
+		    deuterium.grow(amt);
+		    taken = true;
+		}
+	    }
 
-            if (taken) {
-                queuedAnimations.addValue(InterfaceAnimation.FISSION_DEUTERIUM_INSERT.ordinal());
-            }
+	    if (taken) {
+		queuedAnimations.addValue(InterfaceAnimation.FISSION_DEUTERIUM_INSERT.ordinal());
+	    }
 
-        }
+	}
 
-        handleServerAnimations(tickable);
+	handleServerAnimations(tickable);
 
     }
 
     @Override
     public int getInsertion() {
-        return insertion.getValue();
+	return insertion.getValue();
     }
 
     @Override
     public Direction getReactorDirection() {
-        return Direction.UP;
+	return Direction.UP;
     }
 
     @Override
     public InterfaceType getInterfaceType() {
-        return InterfaceType.FISSION;
+	return InterfaceType.FISSION;
     }
 
     @Override
     public Direction getCableLocation() {
-        return Direction.DOWN;
+	return Direction.DOWN;
     }
 }

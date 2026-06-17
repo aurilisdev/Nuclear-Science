@@ -14,16 +14,17 @@ import voltaic.prefab.inventory.container.types.GenericContainerBlockEntity;
 public class ContainerTeleporter extends GenericContainerBlockEntity<TileTeleporter> {
 
     public ContainerTeleporter(int id, Inventory playerinv) {
-        this(id, playerinv, new SimpleContainer(1), new SimpleContainerData(3));
+	this(id, playerinv, new SimpleContainer(1), new SimpleContainerData(3));
     }
 
     public ContainerTeleporter(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
-        super(NuclearScienceMenuTypes.CONTAINER_TELEPORTER.get(), id, playerinv, inventory, inventorydata);
+	super(NuclearScienceMenuTypes.CONTAINER_TELEPORTER.get(), id, playerinv, inventory, inventorydata);
     }
 
     @Override
     public void addInventorySlots(Container container, Inventory inventory) {
-        setPlayerInvOffset(50);
-        addSlot(new SlotRestricted(container, nextIndex(), 31, 80).setRestriction(NuclearScienceItems.ITEM_FREQUENCYCARD.get()));
+	setPlayerInvOffset(50);
+	addSlot(new SlotRestricted(container, nextIndex(), 31, 80)
+		.setRestriction(NuclearScienceItems.ITEM_FREQUENCYCARD.get()));
     }
 }

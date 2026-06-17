@@ -8,8 +8,8 @@ import nuclearscience.common.inventory.container.ContainerControlRodModule;
 public class ScreenControlRodModule extends GenericInterfaceBoundScreen<ContainerControlRodModule> {
 
     public ScreenControlRodModule(ContainerControlRodModule container, Inventory inv, Component title) {
-        super(container, inv, title, false, false);
-        binderWrapper.hideSlots();
+	super(container, inv, title, false, false);
+	binderWrapper.hideSlots();
     }
 
     @Override

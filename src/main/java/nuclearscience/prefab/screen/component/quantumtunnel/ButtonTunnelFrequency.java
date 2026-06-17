@@ -18,60 +18,63 @@ public class ButtonTunnelFrequency extends ScreenComponentButton<ButtonTunnelFre
     private boolean isSelected = false;
 
     public ButtonTunnelFrequency(int x, int y, int width, int height) {
-        super(x, y, width, height);
+	super(x, y, width, height);
     }
 
     @Override
     public void renderBackground(GuiGraphics graphics, int xAxis, int yAxis, int guiWidth, int guiHeight) {
-        if (!isVisible()) {
-            return;
-        }
+	if (!isVisible()) {
+	    return;
+	}
 
-        GenericScreen<ContainerQuantumTunnel> screen = (GenericScreen<ContainerQuantumTunnel>) gui;
+	GenericScreen<ContainerQuantumTunnel> screen = (GenericScreen<ContainerQuantumTunnel>) gui;
 
-        TileQuantumTunnel tile = screen.getMenu().getSafeHost();
+	TileQuantumTunnel tile = screen.getMenu().getSafeHost();
 
-        if (tile == null) {
-            return;
-        }
+	if (tile == null) {
+	    return;
+	}
 
-        ITexture texture;
+	ITexture texture;
 
-        if (frequency != null && (tile.frequency.getValue().equals(frequency) || isSelected || isHovered())) {
+	if (frequency != null && (tile.frequency.getValue().equals(frequency) || isSelected || isHovered())) {
 
-            texture = QuantumTunnelTextures.FREQUENCY_SELECTED;
+	    texture = QuantumTunnelTextures.FREQUENCY_SELECTED;
 
-        } else {
+	} else {
 
-            texture = QuantumTunnelTextures.FREQUENCY;
+	    texture = QuantumTunnelTextures.FREQUENCY;
 
-        }
+	}
 
-        ScreenComponentEditBox.drawExpandedBox(graphics, texture.getLocation(), xLocation + guiWidth, yLocation + guiHeight, width, height);
+	ScreenComponentEditBox.drawExpandedBox(graphics, texture.getLocation(), xLocation + guiWidth,
+		yLocation + guiHeight, width, height);
 
-        if (frequency == null) {
-            return;
-        }
+	if (frequency == null) {
+	    return;
+	}
 
-        graphics.drawString(screen.getFontRenderer(), Component.literal(frequency.getName()), guiWidth + xLocation + 5, guiHeight + yLocation + 5, Color.WHITE.color(), false);
+	graphics.drawString(screen.getFontRenderer(), Component.literal(frequency.getName()), guiWidth + xLocation + 5,
+		guiHeight + yLocation + 5, Color.WHITE.color(), false);
 
-        Player player = tile.getLevel().getPlayerByUUID(frequency.getCreatorId());
+	Player player = tile.getLevel().getPlayerByUUID(frequency.getCreatorId());
 
-        graphics.drawString(screen.getFontRenderer(), player != null ? player.getName() : Component.literal(frequency.getCreatorFallbackName()), guiWidth + xLocation + 5, guiHeight + yLocation + 15, Color.TEXT_GRAY.color(), false);
-
+	graphics.drawString(screen.getFontRenderer(),
+		player != null ? player.getName() : Component.literal(frequency.getCreatorFallbackName()),
+		guiWidth + xLocation + 5, guiHeight + yLocation + 15, Color.TEXT_GRAY.color(), false);
 
     }
 
     public void setFrequency(TunnelFrequency frequency) {
-        this.frequency = frequency;
+	this.frequency = frequency;
     }
 
     public TunnelFrequency getFrequency() {
-        return frequency;
+	return frequency;
     }
 
     public void setSelected(boolean selected) {
-        this.isSelected = selected;
+	this.isSelected = selected;
     }
 
 }

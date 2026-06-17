@@ -19,49 +19,52 @@ public class ScreenElectromagneticGateway extends GenericScreen<ContainerElectro
     private ScreenComponentEditBox box;
 
     public ScreenElectromagneticGateway(ContainerElectromagneticGateway container, Inventory inv, Component title) {
-        super(container, inv, title);
+	super(container, inv, title);
 
-        addComponent(new ScreenComponentSimpleLabel(10, 25, 10, Color.TEXT_GRAY, NuclearTextUtils.gui("electromagneticswitch.targetspeed")));
+	addComponent(new ScreenComponentSimpleLabel(10, 25, 10, Color.TEXT_GRAY,
+		NuclearTextUtils.gui("electromagneticswitch.targetspeed")));
 
-        addEditBox(box = new ScreenComponentEditBox(10, 40, 120, 15, getFontRenderer()).setFilter(ScreenComponentEditBox.POSITIVE_DECIMAL).setTextColor(Color.WHITE).setTextColorUneditable(Color.WHITE).setMaxLength(20).setResponder(val -> {
+	addEditBox(box = new ScreenComponentEditBox(10, 40, 120, 15, getFontRenderer())
+		.setFilter(ScreenComponentEditBox.POSITIVE_DECIMAL).setTextColor(Color.WHITE)
+		.setTextColorUneditable(Color.WHITE).setMaxLength(20).setResponder(val -> {
 
-            TileElectromagneticGateway tile = menu.getSafeHost();
+		    TileElectromagneticGateway tile = menu.getSafeHost();
 
-            if(tile == null) {
-                return;
-            }
+		    if (tile == null) {
+			return;
+		    }
 
-            float temp = 0.0F;
+		    float temp = 0.0F;
 
-            try {
-                temp = Float.parseFloat(val);
-            } catch (Exception e) {
+		    try {
+			temp = Float.parseFloat(val);
+		    } catch (Exception e) {
 
-            }
+		    }
 
-            if(temp < 0.0F) {
-                temp = 0.0F;
-            } else if (temp > 100.0F) {
-                temp = 100.0F;
-            }
+		    if (temp < 0.0F) {
+			temp = 0.0F;
+		    } else if (temp > 100.0F) {
+			temp = 100.0F;
+		    }
 
-            tile.targetSpeed.setValue(temp);
+		    tile.targetSpeed.setValue(temp);
 
-        }));
+		}));
 
-        addComponent(new ScreenComponentSimpleLabel(132, 43, 10, Color.TEXT_GRAY, DisplayUnits.PERCENTAGE.getSymbol().copy().append(NuclearDisplayUnits.SPEEDOFLIGHT.getSymbol())));
+	addComponent(new ScreenComponentSimpleLabel(132, 43, 10, Color.TEXT_GRAY,
+		DisplayUnits.PERCENTAGE.getSymbol().copy().append(NuclearDisplayUnits.SPEEDOFLIGHT.getSymbol())));
 
     }
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-        super.render(graphics, mouseX, mouseY, partialTicks);
+	super.render(graphics, mouseX, mouseY, partialTicks);
 
-        if(needsUpdate && getMenu().getSafeHost() instanceof TileElectromagneticGateway gateway) {
-            box.setValue(gateway.targetSpeed.getValue() + "");
-            needsUpdate = false;
-        }
+	if (needsUpdate && getMenu().getSafeHost() instanceof TileElectromagneticGateway gateway) {
+	    box.setValue(gateway.targetSpeed.getValue() + "");
+	    needsUpdate = false;
+	}
     }
-
 
 }

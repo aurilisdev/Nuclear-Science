@@ -15,21 +15,22 @@ import voltaic.prefab.utilities.math.Color;
 
 public class ContainerRadioisotopeGenerator extends GenericContainerBlockEntity<TileRadioisotopeGenerator> {
 
-	public ContainerRadioisotopeGenerator(int id, Inventory playerinv) {
-		this(id, playerinv, new SimpleContainer(1), new SimpleContainerData(3));
-	}
+    public ContainerRadioisotopeGenerator(int id, Inventory playerinv) {
+	this(id, playerinv, new SimpleContainer(1), new SimpleContainerData(3));
+    }
 
-	public ContainerRadioisotopeGenerator(int id, Inventory playerinv, Container inventory, ContainerData inventorydata) {
-		super(NuclearScienceMenuTypes.CONTAINER_RADIOISOTOPEGENERATOR.get(), id, playerinv, inventory, inventorydata);
-	}
+    public ContainerRadioisotopeGenerator(int id, Inventory playerinv, Container inventory,
+	    ContainerData inventorydata) {
+	super(NuclearScienceMenuTypes.CONTAINER_RADIOISOTOPEGENERATOR.get(), id, playerinv, inventory, inventorydata);
+    }
 
-	@Override
-	public void addInventorySlots(Container inv, Inventory playerinv) {
-		addSlot(new SlotRestricted(inv, nextIndex(), 25, 42) {
-			@Override
-			public boolean mayPlace(ItemStack stack) {
-				return RadioactiveItemRegister.getValue(stack.getItem()).amount() > 0;
-			}
-		}.setIOColor(new Color(0, 240, 255, 255)));
-	}
+    @Override
+    public void addInventorySlots(Container inv, Inventory playerinv) {
+	addSlot(new SlotRestricted(inv, nextIndex(), 25, 42) {
+	    @Override
+	    public boolean mayPlace(ItemStack stack) {
+		return RadioactiveItemRegister.getValue(stack.getItem()).amount() > 0;
+	    }
+	}.setIOColor(new Color(0, 240, 255, 255)));
+    }
 }

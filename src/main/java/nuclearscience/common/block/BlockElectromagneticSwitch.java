@@ -13,19 +13,20 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class BlockElectromagneticSwitch extends Block {
-	private static final VoxelShape SHAPE = Shapes.box(0, 0, 0, 1.0, 2.0 / 16.0, 1.0);
+    private static final VoxelShape SHAPE = Shapes.box(0, 0, 0, 1.0, 2.0 / 16.0, 1.0);
 
-	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-		return SHAPE;
-	}
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+	return SHAPE;
+    }
 
-	public BlockElectromagneticSwitch() {
-		super(Properties.ofFullCopy(Blocks.IRON_BLOCK).strength(3.5f, 20).requiresCorrectToolForDrops().noOcclusion().isRedstoneConductor((p1, p2, p3) -> false));
-	}
+    public BlockElectromagneticSwitch() {
+	super(Properties.ofFullCopy(Blocks.IRON_BLOCK).strength(3.5f, 20).requiresCorrectToolForDrops().noOcclusion()
+		.isRedstoneConductor((p1, p2, p3) -> false));
+    }
 
-	@Override
-	protected MapCodec<? extends BaseEntityBlock> codec() {
-		return null;
-	}
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+	return null;
+    }
 }

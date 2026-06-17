@@ -17,21 +17,24 @@ import voltaic.common.recipe.recipeutils.ProbableItem;
 
 public class ChemicalExtractorRecipe extends FluidItem2ItemRecipe {
 
-	public static final String RECIPE_GROUP = "chemical_extractor_recipe";
-	public static final ResourceLocation RECIPE_ID = NuclearScience.rl(RECIPE_GROUP);
+    public static final String RECIPE_GROUP = "chemical_extractor_recipe";
+    public static final ResourceLocation RECIPE_ID = NuclearScience.rl(RECIPE_GROUP);
 
-	public ChemicalExtractorRecipe(String group, List<CountableIngredient> itemInputs, List<FluidIngredient> fluidInputs, ItemStack itemOutput, double experience, int ticks, double usagePerTick, List<ProbableItem> itemBiproducts, List<ProbableFluid> fluidBiproducts, List<ProbableGas> gasBiproducts) {
-		super(group, itemInputs, fluidInputs, itemOutput, experience, ticks, usagePerTick, itemBiproducts, fluidBiproducts, gasBiproducts);
-	}
+    public ChemicalExtractorRecipe(String group, List<CountableIngredient> itemInputs,
+	    List<FluidIngredient> fluidInputs, ItemStack itemOutput, double experience, int ticks, double usagePerTick,
+	    List<ProbableItem> itemBiproducts, List<ProbableFluid> fluidBiproducts, List<ProbableGas> gasBiproducts) {
+	super(group, itemInputs, fluidInputs, itemOutput, experience, ticks, usagePerTick, itemBiproducts,
+		fluidBiproducts, gasBiproducts);
+    }
 
-	@Override
-	public RecipeSerializer<?> getSerializer() {
-		return NuclearScienceRecipies.CHEMICAL_EXTRACTOR_SERIALIZER.get();
-	}
+    @Override
+    public RecipeSerializer<?> getSerializer() {
+	return NuclearScienceRecipies.CHEMICAL_EXTRACTOR_SERIALIZER.get();
+    }
 
-	@Override
-	public RecipeType<?> getType() {
-		return NuclearScienceRecipies.CHEMICAL_EXTRACTOR_TYPE.get();
-	}
+    @Override
+    public RecipeType<?> getType() {
+	return NuclearScienceRecipies.CHEMICAL_EXTRACTOR_TYPE.get();
+    }
 
 }

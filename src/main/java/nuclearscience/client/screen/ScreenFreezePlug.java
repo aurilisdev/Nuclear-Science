@@ -16,22 +16,34 @@ import voltaic.prefab.screen.component.utils.AbstractScreenComponentInfo;
 
 public class ScreenFreezePlug extends GenericScreen<ContainerFreezePlug> {
 
-	public ScreenFreezePlug(ContainerFreezePlug container, Inventory playerInventory, Component title) {
-		super(container, playerInventory, title);
-		addComponent(new ScreenComponentElectricInfo(-AbstractScreenComponentInfo.SIZE + 1, 2).wattage(NuclearConfig.INSTANCE.FREEZEPLUG_USAGE_PER_TICK.get() * 20));
-		addComponent(new ScreenComponentMultiLabel(0, 0, graphics -> {
-			TileFreezePlug plug = menu.getSafeHost();
-			if (plug == null) {
-				return;
-			}
-			if (plug.isFrozen()) {
-				graphics.drawString(font, NuclearTextUtils.gui("freezeplug.status", NuclearTextUtils.gui("freezeplug.frozen").withStyle(ChatFormatting.GREEN)).withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText(), 40, 30, 0, false);
+    public ScreenFreezePlug(ContainerFreezePlug container, Inventory playerInventory, Component title) {
+	super(container, playerInventory, title);
+	addComponent(new ScreenComponentElectricInfo(-AbstractScreenComponentInfo.SIZE + 1, 2)
+		.wattage(NuclearConfig.INSTANCE.FREEZEPLUG_USAGE_PER_TICK.get() * 20));
+	addComponent(new ScreenComponentMultiLabel(0, 0, graphics -> {
+	    TileFreezePlug plug = menu.getSafeHost();
+	    if (plug == null) {
+		return;
+	    }
+	    if (plug.isFrozen()) {
+		graphics.drawString(font,
+			NuclearTextUtils
+				.gui("freezeplug.status",
+					NuclearTextUtils.gui("freezeplug.frozen").withStyle(ChatFormatting.GREEN))
+				.withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText(),
+			40, 30, 0, false);
 
-			} else {
-				graphics.drawString(font, NuclearTextUtils.gui("freezeplug.status", NuclearTextUtils.gui("freezeplug.off").withStyle(ChatFormatting.RED)).withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText(), 40, 30, 0, false);
-			}
-			graphics.drawString(font, NuclearTextUtils.gui("freezeplug.saltbonus", ChatFormatter.getChatDisplayShort(plug.getSaltBonus() * 100.0, DisplayUnits.PERCENTAGE).withStyle(ChatFormatting.BLACK)).withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText(), 40, 50, 0, false);
-		}));
+	    } else {
+		graphics.drawString(font, NuclearTextUtils
+			.gui("freezeplug.status", NuclearTextUtils.gui("freezeplug.off").withStyle(ChatFormatting.RED))
+			.withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText(), 40, 30, 0, false);
+	    }
+	    graphics.drawString(font, NuclearTextUtils
+		    .gui("freezeplug.saltbonus",
+			    ChatFormatter.getChatDisplayShort(plug.getSaltBonus() * 100.0, DisplayUnits.PERCENTAGE)
+				    .withStyle(ChatFormatting.BLACK))
+		    .withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText(), 40, 50, 0, false);
+	}));
 
-	}
+    }
 }
