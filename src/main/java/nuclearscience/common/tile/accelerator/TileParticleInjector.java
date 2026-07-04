@@ -60,7 +60,7 @@ public class TileParticleInjector extends GenericTile {
 			BlockEntityUtils.MachineDirection.BOTTOM, BlockEntityUtils.MachineDirection.LEFT));
 	addComponent(new ComponentElectrodynamic(this, false, true).voltage(VoltaicCapabilities.DEFAULT_VOLTAGE * 8)
 		.setInputDirections(BlockEntityUtils.MachineDirection.BACK)
-		.maxJoules(NuclearConstants.PARTICLEINJECTOR_USAGE_PER_PARTICLE));
+		.maxJoules(NuclearConstants.PARTICLEINJECTOR_USAGE_PER_PARTICLE * 2));
 	addComponent(new ComponentContainerProvider("particleinjector", this)
 		.createMenu((id, player) -> new ContainerParticleInjector(id, player,
 			getComponent(IComponentType.Inventory), getCoordsArray())));
