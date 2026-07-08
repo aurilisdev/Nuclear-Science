@@ -63,7 +63,7 @@ public class TileGasCentrifuge extends GenericTile implements ITickableSound {
 		.setSlotsByDirection(BlockEntityUtils.MachineDirection.RIGHT, 0, 1, 2)
 		.setSlotsByDirection(BlockEntityUtils.MachineDirection.LEFT, 0, 1, 2)
 		//
-		.setSlotsByDirection(BlockEntityUtils.MachineDirection.BACK, 0, 1, 2)
+		.setSlotsByDirection(BlockEntityUtils.MachineDirection.FRONT, 0, 1, 2)
 		.validUpgrades(ContainerGasCentrifuge.VALID_UPGRADES).valid(machineValidator()));
 	addComponent(new ComponentProcessor(this).usage(NuclearConstants.GASCENTRIFUGE_USAGE_PER_TICK, 0)
 		.requiredTicks(NuclearConstants.GASCENTRIFUGE_REQUIRED_TICKS_PER_PROCESSING, 0)

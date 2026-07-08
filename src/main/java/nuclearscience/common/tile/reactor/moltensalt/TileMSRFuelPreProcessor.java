@@ -36,9 +36,9 @@ public class TileMSRFuelPreProcessor extends GenericTile {
 	addComponent(new ComponentInventory(this,
 		ComponentInventory.InventoryBuilder.newInv().processors(1, 3, 1, 0).bucketInputs(1).upgrades(3))
 		.setSlotsByDirection(BlockEntityUtils.MachineDirection.TOP, 0)
-		.setSlotsByDirection(BlockEntityUtils.MachineDirection.LEFT, 1)
+		.setSlotsByDirection(BlockEntityUtils.MachineDirection.RIGHT, 1)
 		.setDirectionsBySlot(2, BlockEntityUtils.MachineDirection.FRONT)
-		.setDirectionsBySlot(3, BlockEntityUtils.MachineDirection.BOTTOM)
+		.setDirectionsBySlot(3, BlockEntityUtils.MachineDirection.LEFT)
 		.validUpgrades(ContainerMSRFuelPreProcessor.VALID_UPGRADES).valid(machineValidator()));
 	addComponent(new ComponentProcessor(this)
 		.canProcess((component, procNumber) -> component.consumeBucket().canProcessFluidItem2ItemRecipe(
