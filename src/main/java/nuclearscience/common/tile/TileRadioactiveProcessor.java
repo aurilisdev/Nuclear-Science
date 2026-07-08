@@ -36,8 +36,8 @@ public class TileRadioactiveProcessor extends GenericTile {
 		ComponentInventory.InventoryBuilder.newInv().processors(1, 1, 1, 0).bucketInputs(1).upgrades(3))
 		.validUpgrades(ContainerRadioactiveProcessor.VALID_UPGRADES).valid(machineValidator())
 		//
-		.setDirectionsBySlot(0, BlockEntityUtils.MachineDirection.LEFT).setDirectionsBySlot(1,
-			BlockEntityUtils.MachineDirection.RIGHT, BlockEntityUtils.MachineDirection.BOTTOM));
+		.setDirectionsBySlot(0, BlockEntityUtils.MachineDirection.RIGHT).setDirectionsBySlot(1,
+			BlockEntityUtils.MachineDirection.LEFT, BlockEntityUtils.MachineDirection.BOTTOM));
 	addComponent(new ComponentProcessor(this).canProcess(this::shouldProcessRecipe)
 		.process(ComponentProcessor::processFluidItem2ItemRecipe));
 	addComponent(new ComponentContainerProvider("radioactiveprocessor", this)
