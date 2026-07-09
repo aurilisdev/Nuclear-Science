@@ -174,7 +174,8 @@ public class EntityParticle extends Entity {
 
 	injector.addParticle(this);
 
-	if (injector.handleCollision() || facingDirection == null || facingDirection == Direction.UP || facingDirection == Direction.DOWN) {
+	if (injector.handleCollision() || facingDirection == null || facingDirection == Direction.UP
+		|| facingDirection == Direction.DOWN) {
 	    return;
 	}
 

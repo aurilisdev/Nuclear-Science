@@ -107,8 +107,8 @@ public class NuclearSciencePlugin implements IModPlugin {
 
 	// Chemical Extractor
 	List<ChemicalExtractorRecipe> chemicalExtractorRecipes = recipeManager
-		.getAllRecipesFor(NuclearScienceRecipies.CHEMICAL_EXTRACTOR_TYPE.get()).stream().map(RecipeHolder::value)
-		.toList();
+		.getAllRecipesFor(NuclearScienceRecipies.CHEMICAL_EXTRACTOR_TYPE.get()).stream()
+		.map(RecipeHolder::value).toList();
 	registration.addRecipes(ChemicalExtractorRecipeCategory.RECIPE_TYPE, chemicalExtractorRecipes);
 
 	// Fission Reactor

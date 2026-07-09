@@ -213,7 +213,8 @@ public class TunnelFrequencyBuffer {
 	    return check;
 	}
 
-	if ((gasBuffer.getAmount() != 0 && !gasBuffer.getGas().equals(addition.getGas())) || gasBuffer.getTemperature() != addition.getTemperature()
+	if ((gasBuffer.getAmount() != 0 && !gasBuffer.getGas().equals(addition.getGas()))
+		|| gasBuffer.getTemperature() != addition.getTemperature()
 		|| gasBuffer.getPressure() != addition.getPressure()) {
 	    return GasStack.EMPTY;
 	}

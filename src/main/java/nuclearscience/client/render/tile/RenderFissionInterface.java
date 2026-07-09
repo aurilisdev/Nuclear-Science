@@ -142,7 +142,7 @@ public class RenderFissionInterface extends AbstractTileRenderer<TileFissionInte
 		    matrix.translate(0, y, 0);
 		}
 		renderBox(matrix, FUEL_ROD_PISTON_1, PISTON_HEAD_GRAY, white, bufferIn, combinedLightIn,
-		    RenderingUtils.ALL_FACES);
+			RenderingUtils.ALL_FACES);
 
 		break;
 
@@ -172,7 +172,7 @@ public class RenderFissionInterface extends AbstractTileRenderer<TileFissionInte
 		    matrix.translate(0, y, 0);
 		}
 		renderBox(matrix, FUEL_ROD_PISTON_2, PISTON_HEAD_GRAY, white, bufferIn, combinedLightIn,
-		    RenderingUtils.ALL_FACES);
+			RenderingUtils.ALL_FACES);
 
 		break;
 
@@ -202,7 +202,7 @@ public class RenderFissionInterface extends AbstractTileRenderer<TileFissionInte
 		    matrix.translate(0, y, 0);
 		}
 		renderBox(matrix, FUEL_ROD_PISTON_3, PISTON_HEAD_GRAY, white, bufferIn, combinedLightIn,
-		    RenderingUtils.ALL_FACES);
+			RenderingUtils.ALL_FACES);
 
 		break;
 
@@ -232,7 +232,7 @@ public class RenderFissionInterface extends AbstractTileRenderer<TileFissionInte
 		    matrix.translate(0, y, 0);
 		}
 		renderBox(matrix, FUEL_ROD_PISTON_4, PISTON_HEAD_GRAY, white, bufferIn, combinedLightIn,
-		    RenderingUtils.ALL_FACES);
+			RenderingUtils.ALL_FACES);
 
 		break;
 
@@ -263,7 +263,7 @@ public class RenderFissionInterface extends AbstractTileRenderer<TileFissionInte
 		    matrix.translate(0, y, 0);
 		}
 		renderBox(matrix, FUEL_ROD_PISTON_1, PISTON_HEAD_GRAY, white, bufferIn, combinedLightIn,
-		    RenderingUtils.ALL_FACES);
+			RenderingUtils.ALL_FACES);
 
 		break;
 
@@ -294,7 +294,7 @@ public class RenderFissionInterface extends AbstractTileRenderer<TileFissionInte
 		    matrix.translate(0, y, 0);
 		}
 		renderBox(matrix, FUEL_ROD_PISTON_2, PISTON_HEAD_GRAY, white, bufferIn, combinedLightIn,
-		    RenderingUtils.ALL_FACES);
+			RenderingUtils.ALL_FACES);
 
 		break;
 
@@ -325,7 +325,7 @@ public class RenderFissionInterface extends AbstractTileRenderer<TileFissionInte
 		    matrix.translate(0, y, 0);
 		}
 		renderBox(matrix, FUEL_ROD_PISTON_3, PISTON_HEAD_GRAY, white, bufferIn, combinedLightIn,
-		    RenderingUtils.ALL_FACES);
+			RenderingUtils.ALL_FACES);
 
 		break;
 
@@ -356,7 +356,7 @@ public class RenderFissionInterface extends AbstractTileRenderer<TileFissionInte
 		    matrix.translate(0, y, 0);
 		}
 		renderBox(matrix, FUEL_ROD_PISTON_4, PISTON_HEAD_GRAY, white, bufferIn, combinedLightIn,
-		    RenderingUtils.ALL_FACES);
+			RenderingUtils.ALL_FACES);
 
 		break;
 	    case FISSION_TRITIUM_EXTRACT:
@@ -385,7 +385,7 @@ public class RenderFissionInterface extends AbstractTileRenderer<TileFissionInte
 		    matrix.translate(0, y, 0);
 		}
 		renderBox(matrix, TRITIUM_CELL_PISTON, PISTON_HEAD_GRAY, white, bufferIn, combinedLightIn,
-		    RenderingUtils.ALL_FACES);
+			RenderingUtils.ALL_FACES);
 
 		break;
 
@@ -415,7 +415,7 @@ public class RenderFissionInterface extends AbstractTileRenderer<TileFissionInte
 		    matrix.translate(0, y, 0);
 		}
 		renderBox(matrix, TRITIUM_CELL_PISTON, PISTON_HEAD_GRAY, white, bufferIn, combinedLightIn,
-		    RenderingUtils.ALL_FACES);
+			RenderingUtils.ALL_FACES);
 
 		break;
 

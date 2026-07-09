@@ -136,8 +136,10 @@ public class TileAtomicAssembler extends GenericTile {
 	    return true;
 	}
 
-	if (AtomicAssemblerBlacklistRegister.INSTANCE.isBlacklisted(stack.getItem()) || stack.has(DataComponents.CONTAINER) || (ItemUtils.testItems(stack.getItem(), NuclearScienceItems.ITEM_CELLDARKMATTER.get())
-		&& stack.getCapability(Capabilities.ItemHandler.ITEM) != null)) {
+	if (AtomicAssemblerBlacklistRegister.INSTANCE.isBlacklisted(stack.getItem())
+		|| stack.has(DataComponents.CONTAINER)
+		|| (ItemUtils.testItems(stack.getItem(), NuclearScienceItems.ITEM_CELLDARKMATTER.get())
+			&& stack.getCapability(Capabilities.ItemHandler.ITEM) != null)) {
 	    return false;
 	}
 
