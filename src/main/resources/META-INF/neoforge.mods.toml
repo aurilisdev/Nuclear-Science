@@ -27,14 +27,14 @@ description='''${mod_description}'''
 [[dependencies.nuclearscience]]
     modId="electrodynamics"
     mandatory=true
-    versionRange="[1.0,)"
+    versionRange="[1.0.11,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.nuclearscience]]
 modId="voltaic"
 mandatory=true
-versionRange="[1.0,)"
+versionRange="[1.0.10,)"
 ordering="NONE"
 side="BOTH"
 
