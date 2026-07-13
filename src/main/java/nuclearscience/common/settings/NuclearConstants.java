@@ -73,5 +73,7 @@ public class NuclearConstants {
     public static int DEFAULT_PARTICLE_COOLDOWN_TICKS = 50;
     @IntValue(def = 800)
     public static int PARTICLE_SURVIVAL_TICKS = 800;
+    @DoubleValue(def = 5.0)
+    public static double FISSION_REACTOR_MELTDOWN_RADIATION_DURATION_REAL_DAYS = 5.0;
 
 }
