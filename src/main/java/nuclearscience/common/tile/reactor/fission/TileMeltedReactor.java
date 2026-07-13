@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.common.Tags;
 import nuclearscience.common.block.BlockIrradiated;
+import nuclearscience.common.settings.NuclearConfig;
 import nuclearscience.registers.NuclearScienceTiles;
 import voltaic.api.radiation.RadiationSystem;
 import voltaic.api.radiation.SimpleRadiationSource;
@@ -25,12 +26,14 @@ import voltaic.prefab.tile.components.type.ComponentTickable;
 
 public class TileMeltedReactor extends GenericTile {
     public static final float RADIATION_RADIUS = 30;
-    public static final float START_RADIATION = 8766000f * 5f;
-    public int radiation = (int) START_RADIATION;
+    private int initialRadiation = (int) (NuclearConfig.INSTANCE.FISSION_REACTOR_MELTDOWN_RADIATION_DURATION_REAL_DAYS
+	    .get() * 24 * 60 * 60 * 20);
+    public int radiation = initialRadiation;
     public int temperature = 6000;
 
     public TileMeltedReactor(BlockPos pos, BlockState state) {
 	super(NuclearScienceTiles.TILE_MELTEDREACTOR.get(), pos, state);
+
 	addComponent(new ComponentTickable(this).tickServer(this::tickServer));
     }
 
@@ -44,6 +47,7 @@ public class TileMeltedReactor extends GenericTile {
 		BlockEntity tile = level.getBlockEntity(worldPosition.below());
 		if (tile instanceof TileMeltedReactor newTile) {
 		    newTile.radiation = radiation;
+		    newTile.initialRadiation = initialRadiation;
 		}
 		return;
 	    }
@@ -79,7 +83,6 @@ public class TileMeltedReactor extends GenericTile {
 	    }
 	}
 	if (radiation > 0) {
-	    radiation--;
 	    double x2 = worldPosition.getX() + 0.5 + (level.random.nextDouble() - 0.5) * RADIATION_RADIUS / 2;
 	    double y2 = worldPosition.getY() + 0.5 + (level.random.nextDouble() - 0.5) * RADIATION_RADIUS / 2;
 	    double z2 = worldPosition.getZ() + 0.5 + (level.random.nextDouble() - 0.5) * RADIATION_RADIUS / 2;
@@ -96,10 +99,19 @@ public class TileMeltedReactor extends GenericTile {
 		}
 	    }
 	}
-	double totstrength = 120000 * (radiation / START_RADIATION);
-	int range = (int) (Math.sqrt(totstrength) / (5 * Math.sqrt(2)) * 2);
-	RadiationSystem.addRadiationSource(getLevel(),
-		new SimpleRadiationSource(totstrength, 1, range, true, 30, getBlockPos(), true, false));
+	if (radiation > 0 && initialRadiation > 0) {
+
+	    double totstrength = 120000.0 * radiation / initialRadiation;
+
+	    int range = (int) (Math.sqrt(totstrength) / (5.0 * Math.sqrt(2.0)) * 2.0);
+
+	    if (totstrength > 0.0 && range > 0) {
+		RadiationSystem.addRadiationSource(getLevel(),
+			new SimpleRadiationSource(totstrength, 1, range, true, 30, getBlockPos(), true, false));
+	    }
+
+	    radiation--;
+	}
     }
 
     @Override
@@ -115,12 +127,15 @@ public class TileMeltedReactor extends GenericTile {
     @Override
     protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
 	compound.putInt("rads", radiation);
+	compound.putInt("initialRads", initialRadiation);
 	compound.putInt("temp", temperature);
+
 	super.saveAdditional(compound, registries);
     }
 
     @Override
     protected void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+	initialRadiation = compound.getInt("initialRads");
 	radiation = compound.getInt("rads");
 	temperature = compound.getInt("temp");
 	super.loadAdditional(compound, registries);

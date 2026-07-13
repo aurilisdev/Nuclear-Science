@@ -42,6 +42,7 @@ public class NuclearConfig {
     public ModConfigSpec.IntValue MOLTEN_SAL_SUPPLIER_RADIATION_RADIUS;
     public ModConfigSpec.IntValue DEFAULT_PARTICLE_COOLDOWN_TICKS;
     public ModConfigSpec.IntValue PARTICLE_SURVIVAL_TICKS;
+    public ModConfigSpec.DoubleValue FISSION_REACTOR_MELTDOWN_RADIATION_DURATION_REAL_DAYS;
 
     public NuclearConfig() {
 	var builder = new ModConfigSpec.Builder();
@@ -104,6 +105,8 @@ public class NuclearConfig {
 		Integer.MAX_VALUE);
 	DEFAULT_PARTICLE_COOLDOWN_TICKS = builder.defineInRange("particle_cooldown_tick", 50, 0, Integer.MAX_VALUE);
 	PARTICLE_SURVIVAL_TICKS = builder.defineInRange("particle_survival_ticks", 800, 0, Integer.MAX_VALUE);
+	FISSION_REACTOR_MELTDOWN_RADIATION_DURATION_REAL_DAYS = builder
+		.defineInRange("fission_reactor_meltdown_radiation_duration_real_days", 5.0, 0, Double.MAX_VALUE);
 	builder.pop();
 	SPEC = builder.build();
     }
