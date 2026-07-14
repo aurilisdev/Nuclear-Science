@@ -1,10 +1,15 @@
 package nuclearscience.registers;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DoorBlock;
+import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -31,16 +36,11 @@ import nuclearscience.common.block.subtype.SubtypeNuclearMachine;
 import nuclearscience.common.block.subtype.SubtypeRadiationShielding;
 import nuclearscience.common.block.subtype.SubtypeReactorLogisticsCable;
 import nuclearscience.common.tile.TileQuantumTunnel;
+import nuclearscience.common.tile.reactor.fission.TileFissionReactorCore;
 import voltaic.api.registration.BulkRegistryObject;
+import voltaic.common.block.BlockCustomGlass;
 import voltaic.common.block.BlockMachine;
 import voltaic.prefab.utilities.math.Color;
-import net.minecraft.world.level.block.DoorBlock;
-import net.minecraft.world.level.block.TrapDoorBlock;
-import voltaic.common.block.BlockCustomGlass;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.core.BlockPos;
-import nuclearscience.common.tile.reactor.fission.TileFissionReactorCore;
 
 public class NuclearScienceBlocks {
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, NuclearScience.ID);
@@ -158,7 +158,6 @@ public class NuclearScienceBlocks {
 		} else if (index == 4) {
 			return Direction.WEST.getCounterClockWise();
 		} else if (index == 5) {
-			return Direction.UP;
 		} else if (index == 6) {
 			return Direction.DOWN;
 		}

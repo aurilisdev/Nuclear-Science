@@ -13,6 +13,7 @@ public class NuclearScienceRadioactiveItemsProvider extends BaseRadioactiveItems
 		super(gen, NuclearScience.ID);
 	}
 
+	@Override
 	public void getRadioactiveItems(JsonObject json) {
 
 		addTag(NuclearScienceTags.Items.PELLET_URANIUM235, 1000, 1, json);

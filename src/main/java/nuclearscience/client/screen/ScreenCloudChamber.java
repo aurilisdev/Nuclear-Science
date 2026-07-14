@@ -3,6 +3,7 @@ package nuclearscience.client.screen;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.player.Inventory;
 import nuclearscience.common.inventory.container.ContainerCloudChamber;
 import nuclearscience.common.settings.NuclearConstants;
@@ -16,7 +17,6 @@ import voltaic.prefab.screen.component.utils.AbstractScreenComponentInfo;
 import voltaic.prefab.tile.components.IComponentType;
 import voltaic.prefab.tile.components.type.ComponentFluidHandlerSimple;
 import voltaic.prefab.utilities.math.Color;
-import net.minecraft.network.chat.TextComponent;
 
 public class ScreenCloudChamber extends GenericScreen<ContainerCloudChamber> {
     public ScreenCloudChamber(ContainerCloudChamber container, Inventory inv, Component title) {

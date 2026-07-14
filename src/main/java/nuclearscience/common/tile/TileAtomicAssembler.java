@@ -14,7 +14,11 @@ import voltaic.prefab.properties.types.PropertyTypes;
 import voltaic.prefab.properties.variant.SingleProperty;
 import voltaic.prefab.tile.GenericTile;
 import voltaic.prefab.tile.components.IComponentType;
-import voltaic.prefab.tile.components.type.*;
+import voltaic.prefab.tile.components.type.ComponentContainerProvider;
+import voltaic.prefab.tile.components.type.ComponentElectrodynamic;
+import voltaic.prefab.tile.components.type.ComponentInventory;
+import voltaic.prefab.tile.components.type.ComponentPacketHandler;
+import voltaic.prefab.tile.components.type.ComponentTickable;
 import voltaic.prefab.utilities.BlockEntityUtils;
 import voltaic.prefab.utilities.CapabilityUtils;
 import voltaic.prefab.utilities.ItemUtils;
@@ -120,15 +124,7 @@ public class TileAtomicAssembler extends GenericTile {
 			return true;
 		}
 
-		if (AtomicAssemblerBlacklistRegister.INSTANCE.isBlacklisted(stack.getItem())) {
-			return false;
-		}
-
-		if (stack.hasTag()) { // this should filter out shulker boxes with items
-			return false;
-		}
-
-		if (ItemUtils.testItems(stack.getItem(), NuclearScienceItems.ITEM_CELLDARKMATTER.get()) && stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(CapabilityUtils.EMPTY_ITEM_HANDLER) != CapabilityUtils.EMPTY_ITEM_HANDLER) {
+		if (AtomicAssemblerBlacklistRegister.INSTANCE.isBlacklisted(stack.getItem()) || stack.hasTag() || (ItemUtils.testItems(stack.getItem(), NuclearScienceItems.ITEM_CELLDARKMATTER.get()) && stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(CapabilityUtils.EMPTY_ITEM_HANDLER) != CapabilityUtils.EMPTY_ITEM_HANDLER)) {
 			return false;
 		}
 

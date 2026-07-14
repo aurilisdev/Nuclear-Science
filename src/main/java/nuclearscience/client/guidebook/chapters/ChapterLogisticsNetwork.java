@@ -3,8 +3,6 @@ package nuclearscience.client.guidebook.chapters;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import electrodynamics.prefab.utilities.ElectroTextUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.MutableComponent;
@@ -22,7 +20,6 @@ import voltaic.client.guidebook.ScreenGuidebook;
 import voltaic.client.guidebook.utils.components.Chapter;
 import voltaic.client.guidebook.utils.components.Module;
 import voltaic.client.guidebook.utils.pagedata.OnKeyPress;
-import voltaic.client.guidebook.utils.pagedata.OnTooltip;
 import voltaic.client.guidebook.utils.pagedata.graphics.AbstractGraphicWrapper;
 import voltaic.client.guidebook.utils.pagedata.graphics.ImageWrapperObject;
 import voltaic.client.guidebook.utils.pagedata.graphics.ItemWrapperObject;
@@ -55,18 +52,14 @@ public class ChapterLogisticsNetwork extends Chapter {
         // Logistics Cable
 
         pageData.add(new TextWrapperObject(NuclearScienceItems.ITEMS_REACTORLOGISTICSCABLE.getValue(SubtypeReactorLogisticsCable.base).getDescription().copy().withStyle(ChatFormatting.BOLD)).setCentered().setNewPage());
-        pageData.add(new ItemWrapperObject(7 + ScreenGuidebook.TEXT_WIDTH / 2 - 16, 5, 32, 30, 30, 2.0F, NuclearScienceItems.ITEMS_REACTORLOGISTICSCABLE.getValue(SubtypeReactorLogisticsCable.base)).onTooltip(new OnTooltip() {
+        pageData.add(new ItemWrapperObject(7 + ScreenGuidebook.TEXT_WIDTH / 2 - 16, 5, 32, 30, 30, 2.0F, NuclearScienceItems.ITEMS_REACTORLOGISTICSCABLE.getValue(SubtypeReactorLogisticsCable.base)).onTooltip((poseStack, xAxis, yAxis, screen) -> {
+	    if (JeiBuffer.isJeiInstalled()) {
+	        List<FormattedCharSequence> tooltips = new ArrayList<>();
+	        tooltips.add(ElectroTextUtils.tooltip("guidebookjeirecipe").withStyle(ChatFormatting.GRAY).getVisualOrderText());
+	        screen.renderTooltip(poseStack, tooltips, xAxis, yAxis);
+	    }
 
-            @Override
-            public void onTooltip(PoseStack poseStack, int xAxis, int yAxis, ScreenGuidebook screen) {
-                if (JeiBuffer.isJeiInstalled()) {
-                    List<FormattedCharSequence> tooltips = new ArrayList<>();
-                    tooltips.add(ElectroTextUtils.tooltip("guidebookjeirecipe").withStyle(ChatFormatting.GRAY).getVisualOrderText());
-                    screen.renderTooltip(poseStack, tooltips, xAxis, yAxis);
-                }
-
-            }
-        }).onKeyPress(new OnKeyPress() {
+	}).onKeyPress(new OnKeyPress() {
 
             @Override
             public void onKeyPress(int keyCode, int scanCode, int modifiers, int x, int y, int xAxis, int yAxis, ScreenGuidebook screen) {
@@ -84,18 +77,14 @@ public class ChapterLogisticsNetwork extends Chapter {
         // RL Controller
 
         pageData.add(new TextWrapperObject(NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.logisticscontroller).getDescription().copy().withStyle(ChatFormatting.BOLD)).setCentered().setNewPage());
-        pageData.add(new ItemWrapperObject(7 + ScreenGuidebook.TEXT_WIDTH / 2 - 16, 5, 32, 30, 30, 2.0F, NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.logisticscontroller)).onTooltip(new OnTooltip() {
+        pageData.add(new ItemWrapperObject(7 + ScreenGuidebook.TEXT_WIDTH / 2 - 16, 5, 32, 30, 30, 2.0F, NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.logisticscontroller)).onTooltip((poseStack, xAxis, yAxis, screen) -> {
+	    if (JeiBuffer.isJeiInstalled()) {
+	        List<FormattedCharSequence> tooltips = new ArrayList<>();
+	        tooltips.add(ElectroTextUtils.tooltip("guidebookjeirecipe").withStyle(ChatFormatting.GRAY).getVisualOrderText());
+	        screen.renderTooltip(poseStack, tooltips, xAxis, yAxis);
+	    }
 
-            @Override
-            public void onTooltip(PoseStack poseStack, int xAxis, int yAxis, ScreenGuidebook screen) {
-                if (JeiBuffer.isJeiInstalled()) {
-                    List<FormattedCharSequence> tooltips = new ArrayList<>();
-                    tooltips.add(ElectroTextUtils.tooltip("guidebookjeirecipe").withStyle(ChatFormatting.GRAY).getVisualOrderText());
-                    screen.renderTooltip(poseStack, tooltips, xAxis, yAxis);
-                }
-
-            }
-        }).onKeyPress(new OnKeyPress() {
+	}).onKeyPress(new OnKeyPress() {
 
             @Override
             public void onKeyPress(int keyCode, int scanCode, int modifiers, int x, int y, int xAxis, int yAxis, ScreenGuidebook screen) {
@@ -113,18 +102,14 @@ public class ChapterLogisticsNetwork extends Chapter {
         // Fission Interface
 
         pageData.add(new TextWrapperObject(NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.fissioninterface).getDescription().copy().withStyle(ChatFormatting.BOLD)).setCentered().setNewPage());
-        pageData.add(new ItemWrapperObject(7 + ScreenGuidebook.TEXT_WIDTH / 2 - 16, 5, 32, 30, 30, 2.0F, NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.fissioninterface)).onTooltip(new OnTooltip() {
+        pageData.add(new ItemWrapperObject(7 + ScreenGuidebook.TEXT_WIDTH / 2 - 16, 5, 32, 30, 30, 2.0F, NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.fissioninterface)).onTooltip((poseStack, xAxis, yAxis, screen) -> {
+	    if (JeiBuffer.isJeiInstalled()) {
+	        List<FormattedCharSequence> tooltips = new ArrayList<>();
+	        tooltips.add(ElectroTextUtils.tooltip("guidebookjeirecipe").withStyle(ChatFormatting.GRAY).getVisualOrderText());
+	        screen.renderTooltip(poseStack, tooltips, xAxis, yAxis);
+	    }
 
-            @Override
-            public void onTooltip(PoseStack poseStack, int xAxis, int yAxis, ScreenGuidebook screen) {
-                if (JeiBuffer.isJeiInstalled()) {
-                    List<FormattedCharSequence> tooltips = new ArrayList<>();
-                    tooltips.add(ElectroTextUtils.tooltip("guidebookjeirecipe").withStyle(ChatFormatting.GRAY).getVisualOrderText());
-                    screen.renderTooltip(poseStack, tooltips, xAxis, yAxis);
-                }
-
-            }
-        }).onKeyPress(new OnKeyPress() {
+	}).onKeyPress(new OnKeyPress() {
 
             @Override
             public void onKeyPress(int keyCode, int scanCode, int modifiers, int x, int y, int xAxis, int yAxis, ScreenGuidebook screen) {
@@ -142,18 +127,14 @@ public class ChapterLogisticsNetwork extends Chapter {
         // MS Interface
 
         pageData.add(new TextWrapperObject(NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.msinterface).getDescription().copy().withStyle(ChatFormatting.BOLD)).setCentered().setNewPage());
-        pageData.add(new ItemWrapperObject(7 + ScreenGuidebook.TEXT_WIDTH / 2 - 16, 5, 32, 30, 30, 2.0F, NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.msinterface)).onTooltip(new OnTooltip() {
+        pageData.add(new ItemWrapperObject(7 + ScreenGuidebook.TEXT_WIDTH / 2 - 16, 5, 32, 30, 30, 2.0F, NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.msinterface)).onTooltip((poseStack, xAxis, yAxis, screen) -> {
+	    if (JeiBuffer.isJeiInstalled()) {
+	        List<FormattedCharSequence> tooltips = new ArrayList<>();
+	        tooltips.add(ElectroTextUtils.tooltip("guidebookjeirecipe").withStyle(ChatFormatting.GRAY).getVisualOrderText());
+	        screen.renderTooltip(poseStack, tooltips, xAxis, yAxis);
+	    }
 
-            @Override
-            public void onTooltip(PoseStack poseStack, int xAxis, int yAxis, ScreenGuidebook screen) {
-                if (JeiBuffer.isJeiInstalled()) {
-                    List<FormattedCharSequence> tooltips = new ArrayList<>();
-                    tooltips.add(ElectroTextUtils.tooltip("guidebookjeirecipe").withStyle(ChatFormatting.GRAY).getVisualOrderText());
-                    screen.renderTooltip(poseStack, tooltips, xAxis, yAxis);
-                }
-
-            }
-        }).onKeyPress(new OnKeyPress() {
+	}).onKeyPress(new OnKeyPress() {
 
             @Override
             public void onKeyPress(int keyCode, int scanCode, int modifiers, int x, int y, int xAxis, int yAxis, ScreenGuidebook screen) {
@@ -171,18 +152,14 @@ public class ChapterLogisticsNetwork extends Chapter {
         // Fusion Interface
 
         pageData.add(new TextWrapperObject(NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.fusioninterface).getDescription().copy().withStyle(ChatFormatting.BOLD)).setCentered().setNewPage());
-        pageData.add(new ItemWrapperObject(7 + ScreenGuidebook.TEXT_WIDTH / 2 - 16, 5, 32, 30, 30, 2.0F, NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.fusioninterface)).onTooltip(new OnTooltip() {
+        pageData.add(new ItemWrapperObject(7 + ScreenGuidebook.TEXT_WIDTH / 2 - 16, 5, 32, 30, 30, 2.0F, NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.fusioninterface)).onTooltip((poseStack, xAxis, yAxis, screen) -> {
+	    if (JeiBuffer.isJeiInstalled()) {
+	        List<FormattedCharSequence> tooltips = new ArrayList<>();
+	        tooltips.add(ElectroTextUtils.tooltip("guidebookjeirecipe").withStyle(ChatFormatting.GRAY).getVisualOrderText());
+	        screen.renderTooltip(poseStack, tooltips, xAxis, yAxis);
+	    }
 
-            @Override
-            public void onTooltip(PoseStack poseStack, int xAxis, int yAxis, ScreenGuidebook screen) {
-                if (JeiBuffer.isJeiInstalled()) {
-                    List<FormattedCharSequence> tooltips = new ArrayList<>();
-                    tooltips.add(ElectroTextUtils.tooltip("guidebookjeirecipe").withStyle(ChatFormatting.GRAY).getVisualOrderText());
-                    screen.renderTooltip(poseStack, tooltips, xAxis, yAxis);
-                }
-
-            }
-        }).onKeyPress(new OnKeyPress() {
+	}).onKeyPress(new OnKeyPress() {
 
             @Override
             public void onKeyPress(int keyCode, int scanCode, int modifiers, int x, int y, int xAxis, int yAxis, ScreenGuidebook screen) {
@@ -212,18 +189,14 @@ public class ChapterLogisticsNetwork extends Chapter {
         // Control Rod Module
 
         pageData.add(new TextWrapperObject(NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.controlrodmodule).getDescription().copy().withStyle(ChatFormatting.BOLD)).setCentered().setNewPage());
-        pageData.add(new ItemWrapperObject(7 + ScreenGuidebook.TEXT_WIDTH / 2 - 16, 5, 32, 30, 30, 2.0F, NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.controlrodmodule)).onTooltip(new OnTooltip() {
+        pageData.add(new ItemWrapperObject(7 + ScreenGuidebook.TEXT_WIDTH / 2 - 16, 5, 32, 30, 30, 2.0F, NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.controlrodmodule)).onTooltip((poseStack, xAxis, yAxis, screen) -> {
+	    if (JeiBuffer.isJeiInstalled()) {
+	        List<FormattedCharSequence> tooltips = new ArrayList<>();
+	        tooltips.add(ElectroTextUtils.tooltip("guidebookjeirecipe").withStyle(ChatFormatting.GRAY).getVisualOrderText());
+	        screen.renderTooltip(poseStack, tooltips, xAxis, yAxis);
+	    }
 
-            @Override
-            public void onTooltip(PoseStack poseStack, int xAxis, int yAxis, ScreenGuidebook screen) {
-                if (JeiBuffer.isJeiInstalled()) {
-                    List<FormattedCharSequence> tooltips = new ArrayList<>();
-                    tooltips.add(ElectroTextUtils.tooltip("guidebookjeirecipe").withStyle(ChatFormatting.GRAY).getVisualOrderText());
-                    screen.renderTooltip(poseStack, tooltips, xAxis, yAxis);
-                }
-
-            }
-        }).onKeyPress(new OnKeyPress() {
+	}).onKeyPress(new OnKeyPress() {
 
             @Override
             public void onKeyPress(int keyCode, int scanCode, int modifiers, int x, int y, int xAxis, int yAxis, ScreenGuidebook screen) {
@@ -241,18 +214,14 @@ public class ChapterLogisticsNetwork extends Chapter {
         // Supply Module
 
         pageData.add(new TextWrapperObject(NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.supplymodule).getDescription().copy().withStyle(ChatFormatting.BOLD)).setCentered().setNewPage());
-        pageData.add(new ItemWrapperObject(7 + ScreenGuidebook.TEXT_WIDTH / 2 - 16, 5, 32, 30, 30, 2.0F, NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.supplymodule)).onTooltip(new OnTooltip() {
+        pageData.add(new ItemWrapperObject(7 + ScreenGuidebook.TEXT_WIDTH / 2 - 16, 5, 32, 30, 30, 2.0F, NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.supplymodule)).onTooltip((poseStack, xAxis, yAxis, screen) -> {
+	    if (JeiBuffer.isJeiInstalled()) {
+	        List<FormattedCharSequence> tooltips = new ArrayList<>();
+	        tooltips.add(ElectroTextUtils.tooltip("guidebookjeirecipe").withStyle(ChatFormatting.GRAY).getVisualOrderText());
+	        screen.renderTooltip(poseStack, tooltips, xAxis, yAxis);
+	    }
 
-            @Override
-            public void onTooltip(PoseStack poseStack, int xAxis, int yAxis, ScreenGuidebook screen) {
-                if (JeiBuffer.isJeiInstalled()) {
-                    List<FormattedCharSequence> tooltips = new ArrayList<>();
-                    tooltips.add(ElectroTextUtils.tooltip("guidebookjeirecipe").withStyle(ChatFormatting.GRAY).getVisualOrderText());
-                    screen.renderTooltip(poseStack, tooltips, xAxis, yAxis);
-                }
-
-            }
-        }).onKeyPress(new OnKeyPress() {
+	}).onKeyPress(new OnKeyPress() {
 
             @Override
             public void onKeyPress(int keyCode, int scanCode, int modifiers, int x, int y, int xAxis, int yAxis, ScreenGuidebook screen) {
@@ -270,18 +239,14 @@ public class ChapterLogisticsNetwork extends Chapter {
         // Monitor Module
 
         pageData.add(new TextWrapperObject(NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.monitormodule).getDescription().copy().withStyle(ChatFormatting.BOLD)).setCentered().setNewPage());
-        pageData.add(new ItemWrapperObject(7 + ScreenGuidebook.TEXT_WIDTH / 2 - 16, 5, 32, 30, 30, 2.0F, NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.monitormodule)).onTooltip(new OnTooltip() {
+        pageData.add(new ItemWrapperObject(7 + ScreenGuidebook.TEXT_WIDTH / 2 - 16, 5, 32, 30, 30, 2.0F, NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.monitormodule)).onTooltip((poseStack, xAxis, yAxis, screen) -> {
+	    if (JeiBuffer.isJeiInstalled()) {
+	        List<FormattedCharSequence> tooltips = new ArrayList<>();
+	        tooltips.add(ElectroTextUtils.tooltip("guidebookjeirecipe").withStyle(ChatFormatting.GRAY).getVisualOrderText());
+	        screen.renderTooltip(poseStack, tooltips, xAxis, yAxis);
+	    }
 
-            @Override
-            public void onTooltip(PoseStack poseStack, int xAxis, int yAxis, ScreenGuidebook screen) {
-                if (JeiBuffer.isJeiInstalled()) {
-                    List<FormattedCharSequence> tooltips = new ArrayList<>();
-                    tooltips.add(ElectroTextUtils.tooltip("guidebookjeirecipe").withStyle(ChatFormatting.GRAY).getVisualOrderText());
-                    screen.renderTooltip(poseStack, tooltips, xAxis, yAxis);
-                }
-
-            }
-        }).onKeyPress(new OnKeyPress() {
+	}).onKeyPress(new OnKeyPress() {
 
             @Override
             public void onKeyPress(int keyCode, int scanCode, int modifiers, int x, int y, int xAxis, int yAxis, ScreenGuidebook screen) {
@@ -299,18 +264,14 @@ public class ChapterLogisticsNetwork extends Chapter {
         // Thermometer Module
 
         pageData.add(new TextWrapperObject(NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.thermometermodule).getDescription().copy().withStyle(ChatFormatting.BOLD)).setCentered().setNewPage());
-        pageData.add(new ItemWrapperObject(7 + ScreenGuidebook.TEXT_WIDTH / 2 - 16, 5, 32, 30, 30, 2.0F, NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.thermometermodule)).onTooltip(new OnTooltip() {
+        pageData.add(new ItemWrapperObject(7 + ScreenGuidebook.TEXT_WIDTH / 2 - 16, 5, 32, 30, 30, 2.0F, NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.thermometermodule)).onTooltip((poseStack, xAxis, yAxis, screen) -> {
+	    if (JeiBuffer.isJeiInstalled()) {
+	        List<FormattedCharSequence> tooltips = new ArrayList<>();
+	        tooltips.add(ElectroTextUtils.tooltip("guidebookjeirecipe").withStyle(ChatFormatting.GRAY).getVisualOrderText());
+	        screen.renderTooltip(poseStack, tooltips, xAxis, yAxis);
+	    }
 
-            @Override
-            public void onTooltip(PoseStack poseStack, int xAxis, int yAxis, ScreenGuidebook screen) {
-                if (JeiBuffer.isJeiInstalled()) {
-                    List<FormattedCharSequence> tooltips = new ArrayList<>();
-                    tooltips.add(ElectroTextUtils.tooltip("guidebookjeirecipe").withStyle(ChatFormatting.GRAY).getVisualOrderText());
-                    screen.renderTooltip(poseStack, tooltips, xAxis, yAxis);
-                }
-
-            }
-        }).onKeyPress(new OnKeyPress() {
+	}).onKeyPress(new OnKeyPress() {
 
             @Override
             public void onKeyPress(int keyCode, int scanCode, int modifiers, int x, int y, int xAxis, int yAxis, ScreenGuidebook screen) {

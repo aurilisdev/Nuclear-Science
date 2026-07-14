@@ -67,7 +67,7 @@ public class NuclearScienceBlockStateProvider extends BaseBlockstateProvider {
                 modLoc("block/irradiatedblockgrassside")
                 //
         ).texture("particle", modLoc("block/irradiatedblocksoil"));
-        getVariantBuilder(block).partialState().setModels(new ConfiguredModel[]{new ConfiguredModel(builder)});
+        getVariantBuilder(block).partialState().setModels(new ConfiguredModel(builder));
         blockItem(block, builder);
 
         simpleBlock(NuclearScienceBlocks.BLOCK_MELTEDREACTOR, existingBlock(NuclearScienceBlocks.BLOCK_MELTEDREACTOR), true);

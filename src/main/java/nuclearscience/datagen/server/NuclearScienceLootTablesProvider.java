@@ -9,9 +9,9 @@ import nuclearscience.common.block.subtype.SubtypeMoltenSaltPipe;
 import nuclearscience.common.block.subtype.SubtypeNuclearMachine;
 import nuclearscience.common.block.subtype.SubtypeRadiationShielding;
 import nuclearscience.common.block.subtype.SubtypeReactorLogisticsCable;
+import nuclearscience.registers.NuclearScienceBlocks;
 import nuclearscience.registers.NuclearScienceTiles;
 import voltaic.datagen.utils.server.loottable.BaseLootTablesProvider;
-import nuclearscience.registers.NuclearScienceBlocks;
 
 public class NuclearScienceLootTablesProvider extends BaseLootTablesProvider {
 

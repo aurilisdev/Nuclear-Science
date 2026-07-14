@@ -1,5 +1,6 @@
 package nuclearscience.registers;
 
+import electrodynamics.registers.ElectrodynamicsItems;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.DeferredRegister;
@@ -25,7 +26,6 @@ import voltaic.common.item.ItemIodineTablet;
 import voltaic.common.item.ItemVoltaic;
 import voltaic.prefab.item.ElectricItemProperties;
 import voltaic.prefab.utilities.object.TransferPack;
-import electrodynamics.registers.ElectrodynamicsItems;
 
 public class NuclearScienceItems {
 public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, NuclearScience.ID);

@@ -11,7 +11,7 @@ import voltaic.api.codec.StreamCodec;
 
 public class PacketCreateNewFreqeuency {
 
-    public static final StreamCodec<ByteBuf, PacketCreateNewFreqeuency> CODEC = new StreamCodec<ByteBuf, PacketCreateNewFreqeuency>() {
+    public static final StreamCodec<ByteBuf, PacketCreateNewFreqeuency> CODEC = new StreamCodec<>() {
         @Override
         public PacketCreateNewFreqeuency decode(ByteBuf buf) {
 

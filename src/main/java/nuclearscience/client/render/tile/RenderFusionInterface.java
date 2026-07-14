@@ -83,7 +83,6 @@ public class RenderFusionInterface extends AbstractTileRenderer<TileFusionInterf
                         matrix.translate(0, y, 0);
 
                         renderBox(matrix, FUEL_CELL, RenderFissionReactorCore.TRITIUM, fuelCell, bufferIn, combinedLightIn, RenderingUtils.ALL_FACES);
-                        renderBox(matrix, FUEL_CELL_PISTON, RenderFissionInterface.PISTON_HEAD_GRAY, white, bufferIn, combinedLightIn, RenderingUtils.ALL_FACES);
                     } else {
 
                         y = DELTA_FLOOR_Y * oneMinusHalfPerc;
@@ -93,8 +92,8 @@ public class RenderFusionInterface extends AbstractTileRenderer<TileFusionInterf
                         renderBox(matrix, pistonRod, RenderFissionInterface.PISTON_ROD_GRAY, white, bufferIn, combinedLightIn, RenderingUtils.ALL_FACES);
 
                         matrix.translate(0, y, 0);
-                        renderBox(matrix, FUEL_CELL_PISTON, RenderFissionInterface.PISTON_HEAD_GRAY, white, bufferIn, combinedLightIn, RenderingUtils.ALL_FACES);
                     }
+		renderBox(matrix, FUEL_CELL_PISTON, RenderFissionInterface.PISTON_HEAD_GRAY, white, bufferIn, combinedLightIn, RenderingUtils.ALL_FACES);
 
                     break;
 
@@ -110,7 +109,6 @@ public class RenderFusionInterface extends AbstractTileRenderer<TileFusionInterf
                         matrix.translate(0, y, 0);
 
                         renderBox(matrix, FUEL_CELL, RenderFissionReactorCore.DEUTERIUM, fuelCell, bufferIn, combinedLightIn, RenderingUtils.ALL_FACES);
-                        renderBox(matrix, FUEL_CELL_PISTON, RenderFissionInterface.PISTON_HEAD_GRAY, white, bufferIn, combinedLightIn, RenderingUtils.ALL_FACES);
                     } else {
 
                         y = DELTA_FLOOR_Y * oneMinusHalfPerc;
@@ -120,8 +118,8 @@ public class RenderFusionInterface extends AbstractTileRenderer<TileFusionInterf
                         renderBox(matrix, pistonRod, RenderFissionInterface.PISTON_ROD_GRAY, white, bufferIn, combinedLightIn, RenderingUtils.ALL_FACES);
 
                         matrix.translate(0, y, 0);
-                        renderBox(matrix, FUEL_CELL_PISTON, RenderFissionInterface.PISTON_HEAD_GRAY, white, bufferIn, combinedLightIn, RenderingUtils.ALL_FACES);
                     }
+		renderBox(matrix, FUEL_CELL_PISTON, RenderFissionInterface.PISTON_HEAD_GRAY, white, bufferIn, combinedLightIn, RenderingUtils.ALL_FACES);
 
                     break;
 

@@ -86,11 +86,7 @@ public class TileMSReactorCore extends GenericTile {
 			controlRodCache.update(getBlockPos().relative(getFacing().getOpposite()));
 		}
 
-		if (!plugCache.valid() || !(plugCache.getSafe() instanceof TileFreezePlug freeze && freeze.isFrozen())) {
-			return;
-		}
-
-		if (currentFuel.getValue() < FUEL_USAGE_RATE) {
+		if (!plugCache.valid() || !(plugCache.getSafe() instanceof TileFreezePlug freeze && freeze.isFrozen()) || (currentFuel.getValue() < FUEL_USAGE_RATE)) {
 			return;
 		}
 
@@ -120,7 +116,7 @@ public class TileMSReactorCore extends GenericTile {
 		currentWaste.setValue(currentWaste.getValue() + wasteProduced);
 
 		currentFuel.setValue(currentFuel.getValue() - fuelUse);
-		temperature.setValue((temperature.getValue() + (MELTDOWN_TEMPERATURE * insertDecimal * (1.2 + level.random.nextDouble() / 5.0) - temperature.getValue()) / 600.0));
+		temperature.setValue(temperature.getValue() + (MELTDOWN_TEMPERATURE * insertDecimal * (1.2 + level.random.nextDouble() / 5.0) - temperature.getValue()) / 600.0);
 		if (outputCache.valid() && outputCache.getSafe() instanceof TileMoltenSaltPipe pipe) {
 
 			MoltenSaltNetwork net = pipe.getNetwork();

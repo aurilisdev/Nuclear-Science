@@ -36,7 +36,7 @@ public class RenderFalloutScrubber extends AbstractTileRenderer<TileFalloutScrub
         float roat = 0;
 
         if(tile.active.getValue()) {
-            roat = (System.currentTimeMillis() % 150) / 150.0F * 90.0F;
+            roat = System.currentTimeMillis() % 150 / 150.0F * 90.0F;
         }
 
         if(facing == Direction.EAST) {

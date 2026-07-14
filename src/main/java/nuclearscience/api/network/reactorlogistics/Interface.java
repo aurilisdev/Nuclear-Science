@@ -6,6 +6,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
 import nuclearscience.common.tile.reactor.logisticsnetwork.interfaces.GenericTileInterface;
+import nuclearscience.common.tile.reactor.logisticsnetwork.interfaces.GenericTileInterface.InterfaceType;
 import voltaic.api.codec.StreamCodec;
 
 public record Interface(BlockPos pos, GenericTileInterface.InterfaceType type) {
@@ -18,11 +19,11 @@ public record Interface(BlockPos pos, GenericTileInterface.InterfaceType type) {
             //
             BlockPos.CODEC.fieldOf("position").forGetter(Interface::pos),
             //
-            Codec.INT.fieldOf("type").xmap(val -> GenericTileInterface.InterfaceType.values()[val], val -> val.ordinal()).forGetter(Interface::type)
+            Codec.INT.fieldOf("type").xmap(val -> GenericTileInterface.InterfaceType.values()[val], InterfaceType::ordinal).forGetter(Interface::type)
             //
     ).apply(instance, Interface::new));
 
-    public static final StreamCodec<ByteBuf, Interface> STREAM_CODEC = new StreamCodec<ByteBuf, Interface>() {
+    public static final StreamCodec<ByteBuf, Interface> STREAM_CODEC = new StreamCodec<>() {
 		
 		@Override
 		public void encode(ByteBuf buffer, Interface value) {

@@ -27,6 +27,7 @@ public class BlockRadioactiveAir extends AirBlock {
         RadiationSystem.removeRadiationSource(level, pos, true);
     }
 
+    @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         if (level.getLevelData().getGameTime() % 10 == 0 && !level.isClientSide && entity instanceof LivingEntity living) {
             IRadiationRecipient cap = living.getCapability(VoltaicCapabilities.CAPABILITY_RADIATIONRECIPIENT).orElse(CapabilityUtils.EMPTY_RADIATION_REPIPIENT);
