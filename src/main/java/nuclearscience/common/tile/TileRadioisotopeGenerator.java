@@ -12,7 +12,11 @@ import voltaic.api.radiation.util.RadioactiveObject;
 import voltaic.common.reloadlistener.RadioactiveItemRegister;
 import voltaic.prefab.tile.GenericTile;
 import voltaic.prefab.tile.components.IComponentType;
-import voltaic.prefab.tile.components.type.*;
+import voltaic.prefab.tile.components.type.ComponentContainerProvider;
+import voltaic.prefab.tile.components.type.ComponentElectrodynamic;
+import voltaic.prefab.tile.components.type.ComponentInventory;
+import voltaic.prefab.tile.components.type.ComponentPacketHandler;
+import voltaic.prefab.tile.components.type.ComponentTickable;
 import voltaic.prefab.utilities.BlockEntityUtils;
 import voltaic.prefab.utilities.RadiationUtils;
 import voltaic.prefab.utilities.object.CachedTileOutput;
@@ -82,7 +86,7 @@ public class TileRadioisotopeGenerator extends GenericTile {
 			return 0;
 		}
 
-		return (int) (((double) stack.getCount() / (double) stack.getMaxStackSize()) * 15.0);
+		return (int) ((double) stack.getCount() / (double) stack.getMaxStackSize() * 15.0);
 	}
 
 }

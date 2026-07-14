@@ -156,7 +156,7 @@ public class EntityParticle extends Entity {
 
         BlockEntity blockEntity = level.getBlockEntity(source);
 
-        if (!(blockEntity instanceof TileParticleInjector)) {
+        if (!(blockEntity instanceof TileParticleInjector injector)) {
             if (isServerside) {
                 remove(RemovalReason.DISCARDED);
                 level.explode(this, getX(), getY(), getZ(), speed, BlockInteraction.BREAK);
@@ -164,15 +164,9 @@ public class EntityParticle extends Entity {
             return;
         }
 
-        TileParticleInjector injector = (TileParticleInjector) blockEntity;
-
         injector.addParticle(this);
 
-        if (injector.handleCollision()) {
-            return;
-        }
-
-        if (facingDirection == null || facingDirection == Direction.UP || facingDirection == Direction.DOWN) {
+        if (injector.handleCollision() || facingDirection == null || facingDirection == Direction.UP || facingDirection == Direction.DOWN) {
             return;
         }
 
@@ -270,13 +264,10 @@ public class EntityParticle extends Entity {
 
                             if (facingDirection != otherSwitchDirection && level.getBlockState(proposedMoveBlockPos.relative(facingDirection)).isAir()) {
                                 switchDirection = facingDirection;
-                                passedThroughSwitch = true;
                             } else if (clockwise != otherSwitchDirection && level.getBlockState(proposedMoveBlockPos.relative(clockwise)).isAir()) {
                                 switchDirection = clockwise;
-                                passedThroughSwitch = true;
                             } else if (counterClockwise != otherSwitchDirection && level.getBlockState(proposedMoveBlockPos.relative(counterClockwise)).isAir()) {
                                 switchDirection = counterClockwise;
-                                passedThroughSwitch = true;
                             } else {
                                 if (isServerside) {
                                     level.explode(this, proposedMove.x(), proposedMove.y(), proposedMove.z(), speed, BlockInteraction.BREAK);
@@ -285,6 +276,7 @@ public class EntityParticle extends Entity {
                                 }
                                 return;
                             }
+			    passedThroughSwitch = true;
 
 
                         } else {
@@ -293,13 +285,10 @@ public class EntityParticle extends Entity {
 
                             if (level.getBlockState(proposedMoveBlockPos.relative(facingDirection)).isAir()) {
                                 switchDirection = facingDirection;
-                                passedThroughSwitch = true;
                             } else if (level.getBlockState(proposedMoveBlockPos.relative(clockwise)).isAir()) {
                                 switchDirection = clockwise;
-                                passedThroughSwitch = true;
                             } else if (level.getBlockState(proposedMoveBlockPos.relative(counterClockwise)).isAir()) {
                                 switchDirection = counterClockwise;
-                                passedThroughSwitch = true;
                             } else {
                                 if (isServerside) {
                                     level.explode(this, proposedMove.x(), proposedMove.y(), proposedMove.z(), speed, BlockInteraction.BREAK);
@@ -308,6 +297,7 @@ public class EntityParticle extends Entity {
                                 }
                                 return;
                             }
+			    passedThroughSwitch = true;
                         }
 
                     } else if (injector.particles[1].getUUID().equals(getUUID())) {
@@ -329,13 +319,10 @@ public class EntityParticle extends Entity {
 
                         if (facingDirection != otherSwitchDirection && level.getBlockState(proposedMoveBlockPos.relative(facingDirection)).isAir()) {
                             switchDirection = facingDirection;
-                            passedThroughSwitch = true;
                         } else if (clockwise != otherSwitchDirection && level.getBlockState(proposedMoveBlockPos.relative(clockwise)).isAir()) {
                             switchDirection = clockwise;
-                            passedThroughSwitch = true;
                         } else if (counterClockwise != otherSwitchDirection && level.getBlockState(proposedMoveBlockPos.relative(counterClockwise)).isAir()) {
                             switchDirection = counterClockwise;
-                            passedThroughSwitch = true;
                         } else {
                             if (isServerside) {
                                 level.explode(this, proposedMove.x(), proposedMove.y(), proposedMove.z(), speed, BlockInteraction.BREAK);
@@ -344,6 +331,7 @@ public class EntityParticle extends Entity {
                             }
                             return;
                         }
+			passedThroughSwitch = true;
 
 
                     } else {
@@ -433,7 +421,7 @@ public class EntityParticle extends Entity {
 
                     // Check if we can go through the block to the right
 
-                    if (inFrontOfUsState.isAir() || (isBooster(inFrontOfUsState) && !passedThroughSwitch) || isSwitch(inFrontOfUsState) || canPassThroughGateway(level.getBlockEntity(relative), inFrontOfUsState) || canPassThroughDiode(inFrontOfUsState, checkRot)) {
+                    if (inFrontOfUsState.isAir() || isBooster(inFrontOfUsState) && !passedThroughSwitch || isSwitch(inFrontOfUsState) || canPassThroughGateway(level.getBlockEntity(relative), inFrontOfUsState) || canPassThroughDiode(inFrontOfUsState, checkRot)) {
 
                         //BlockPos floor = blockPosition();
 
@@ -457,7 +445,7 @@ public class EntityParticle extends Entity {
 
                         // If we can't, explode the particle
 
-                        if (!inFrontOfUsState.isAir() && (!isBooster(inFrontOfUsState) && !passedThroughSwitch) && !isSwitch(inFrontOfUsState) && !canPassThroughGateway(level.getBlockEntity(relative), inFrontOfUsState) && !canPassThroughDiode(inFrontOfUsState, checkRot)) {
+                        if (!inFrontOfUsState.isAir() && !isBooster(inFrontOfUsState) && !passedThroughSwitch && !isSwitch(inFrontOfUsState) && !canPassThroughGateway(level.getBlockEntity(relative), inFrontOfUsState) && !canPassThroughDiode(inFrontOfUsState, checkRot)) {
 
                             if(isServerside) {
 

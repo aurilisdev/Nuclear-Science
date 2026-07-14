@@ -86,7 +86,7 @@ public class ScreenThermometerModule extends GenericInterfaceBoundScreen<Contain
             switch (type) {
                 case FISSION:
 
-                    if(!(blockEntity instanceof TileFissionInterface)) {
+                    if(!(blockEntity instanceof TileFissionInterface fissionInterface)) {
                         font.draw(poseStack, NuclearTextUtils.gui("logisticsnetwork.unlinked"), guiWidth + 20, guiHeight + 20, Color.TEXT_GRAY.color());
                         modeButton.setVisible(false);
                         invertButton.setVisible(false);
@@ -94,9 +94,7 @@ public class ScreenThermometerModule extends GenericInterfaceBoundScreen<Contain
                         return;
                     }
 
-                    TileFissionInterface fissionInterface = (TileFissionInterface) blockEntity;
-
-                    if(fissionInterface.reactor == null || !fissionInterface.reactor.valid() || !(fissionInterface.reactor.getSafe() instanceof TileFissionReactorCore)) {
+		if(fissionInterface.reactor == null || !fissionInterface.reactor.valid() || !(fissionInterface.reactor.getSafe() instanceof TileFissionReactorCore)) {
                         font.draw(poseStack, NuclearTextUtils.gui("logisticsnetwork.unlinked"), guiWidth + 20, guiHeight + 20, Color.TEXT_GRAY.color());
                         modeButton.setVisible(false);
                         invertButton.setVisible(false);
@@ -112,7 +110,7 @@ public class ScreenThermometerModule extends GenericInterfaceBoundScreen<Contain
 
                 case MS:
 
-                    if(!(blockEntity instanceof TileMSInterface)) {
+                    if(!(blockEntity instanceof TileMSInterface msInterface)) {
                         font.draw(poseStack, NuclearTextUtils.gui("logisticsnetwork.unlinked"), guiWidth + 20, guiHeight + 20, Color.TEXT_GRAY.color());
                         modeButton.setVisible(false);
                         invertButton.setVisible(false);
@@ -120,9 +118,7 @@ public class ScreenThermometerModule extends GenericInterfaceBoundScreen<Contain
                         return;
                     }
 
-                    TileMSInterface msInterface = (TileMSInterface) blockEntity;
-
-                    if(msInterface.reactor == null || !msInterface.reactor.valid() || !(msInterface.reactor.getSafe() instanceof TileMSReactorCore)) {
+		if(msInterface.reactor == null || !msInterface.reactor.valid() || !(msInterface.reactor.getSafe() instanceof TileMSReactorCore)) {
                         font.draw(poseStack, NuclearTextUtils.gui("logisticsnetwork.unlinked"), guiWidth + 20, guiHeight + 20, Color.TEXT_GRAY.color());
                         modeButton.setVisible(false);
                         invertButton.setVisible(false);

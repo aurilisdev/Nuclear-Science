@@ -1,6 +1,7 @@
 package nuclearscience.client.screen;
 
 import java.util.List;
+
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -80,14 +81,12 @@ public class ScreenMonitorModule extends GenericInterfaceBoundScreen<ContainerMo
             switch (type) {
                 case FISSION :
 
-                    if(!(blockEntity instanceof TileFissionInterface)) {
+                    if(!(blockEntity instanceof TileFissionInterface fissionInterface)) {
                         font.draw(poseStack, NuclearTextUtils.gui("logisticsnetwork.unlinked"), guiWidth + 20, guiHeight + 20, Color.TEXT_GRAY.color());
                         return;
                     }
 
-                    TileFissionInterface fissionInterface = (TileFissionInterface) blockEntity;
-
-                    if(fissionInterface.reactor == null || !fissionInterface.reactor.valid() || !(fissionInterface.reactor.getSafe() instanceof TileFissionReactorCore)) {
+		if(fissionInterface.reactor == null || !fissionInterface.reactor.valid() || !(fissionInterface.reactor.getSafe() instanceof TileFissionReactorCore)) {
                         font.draw(poseStack, NuclearTextUtils.gui("logisticsnetwork.unlinked"), guiWidth + 20, guiHeight + 20, Color.TEXT_GRAY.color());
                         return;
                     }
@@ -155,14 +154,12 @@ public class ScreenMonitorModule extends GenericInterfaceBoundScreen<ContainerMo
                     break;
                 case MS:
 
-                    if(!(blockEntity instanceof TileMSInterface)) {
+                    if(!(blockEntity instanceof TileMSInterface msInterface)) {
                         font.draw(poseStack, NuclearTextUtils.gui("logisticsnetwork.unlinked"), guiWidth + 20, guiHeight + 20, Color.TEXT_GRAY.color());
                         return;
                     }
 
-                    TileMSInterface msInterface = (TileMSInterface) blockEntity;
-
-                    if(msInterface.reactor == null || !msInterface.reactor.valid() || !(msInterface.reactor.getSafe() instanceof TileMSReactorCore)) {
+		if(msInterface.reactor == null || !msInterface.reactor.valid() || !(msInterface.reactor.getSafe() instanceof TileMSReactorCore)) {
                         font.draw(poseStack, NuclearTextUtils.gui("logisticsnetwork.unlinked"), guiWidth + 20, guiHeight + 20, Color.TEXT_GRAY.color());
                         return;
                     }
@@ -199,14 +196,12 @@ public class ScreenMonitorModule extends GenericInterfaceBoundScreen<ContainerMo
                     break;
                 case FUSION:
 
-                    if(!(blockEntity instanceof TileFusionInterface)) {
+                    if(!(blockEntity instanceof TileFusionInterface fusionInterface)) {
                         font.draw(poseStack, NuclearTextUtils.gui("logisticsnetwork.unlinked"), guiWidth + 20, guiHeight + 20, Color.TEXT_GRAY.color());
                         return;
                     }
 
-                    TileFusionInterface fusionInterface = (TileFusionInterface) blockEntity;
-
-                    if(fusionInterface.reactor == null || !fusionInterface.reactor.valid() || !(fusionInterface.reactor.getSafe() instanceof TileFusionReactorCore)) {
+		if(fusionInterface.reactor == null || !fusionInterface.reactor.valid() || !(fusionInterface.reactor.getSafe() instanceof TileFusionReactorCore)) {
                         font.draw(poseStack, NuclearTextUtils.gui("logisticsnetwork.unlinked"), guiWidth + 20, guiHeight + 20, Color.TEXT_GRAY.color());
                         return;
                     }

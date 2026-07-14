@@ -94,27 +94,15 @@ public class ButtonIO extends ScreenComponentButton<ButtonIO> {
 
     private MutableComponent getLabelFromDir() {
         MutableComponent component = null;
-        switch (side) {
-            default:
-            case DOWN:
-                component = ElectroTextUtils.tooltip("inventoryio.bottom");
-                break;
-            case UP:
-                component = ElectroTextUtils.tooltip("inventoryio.top");
-                break;
-            case EAST:
-                component = ElectroTextUtils.tooltip("inventoryio.left");
-                break;
-            case WEST:
-                component = ElectroTextUtils.tooltip("inventoryio.right");
-                break;
-            case NORTH:
-                component = ElectroTextUtils.tooltip("inventoryio.front");
-                break;
-            case SOUTH:
-                component = ElectroTextUtils.tooltip("inventoryio.back");
-                break;
-        }
+        component = switch (side) {
+	case DOWN -> ElectroTextUtils.tooltip("inventoryio.bottom");
+	default -> ElectroTextUtils.tooltip("inventoryio.bottom");
+	case UP -> ElectroTextUtils.tooltip("inventoryio.top");
+	case EAST -> ElectroTextUtils.tooltip("inventoryio.left");
+	case WEST -> ElectroTextUtils.tooltip("inventoryio.right");
+	case NORTH -> ElectroTextUtils.tooltip("inventoryio.front");
+	case SOUTH -> ElectroTextUtils.tooltip("inventoryio.back");
+	};
 //		return component.append(": " + StringUtils.capitalize(side.name().toLowerCase()));
         // TODO: Add some dynamic face direction here for the slots.
         return component;

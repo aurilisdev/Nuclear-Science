@@ -222,7 +222,7 @@ public class TileFissionInterface extends GenericTileInterface implements IFissi
 
         // Check if Deuterium needs to be inserted
 
-        if (!isExtractingTritium && (deuterium.isEmpty() || (deuterium.is(NuclearScienceTags.Items.CELL_DEUTERIUM) && deuterium.getCount() < deuterium.getMaxStackSize()))) {
+        if (!isExtractingTritium && (deuterium.isEmpty() || deuterium.is(NuclearScienceTags.Items.CELL_DEUTERIUM) && deuterium.getCount() < deuterium.getMaxStackSize())) {
 
             ItemStack item;
 

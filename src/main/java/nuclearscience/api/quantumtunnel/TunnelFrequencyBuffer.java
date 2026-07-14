@@ -22,7 +22,7 @@ public class TunnelFrequencyBuffer {
             //
     ).apply(instance, TunnelFrequencyBuffer::new));
 
-    public static final StreamCodec<FriendlyByteBuf, TunnelFrequencyBuffer> STREAM_CODEC = new StreamCodec<FriendlyByteBuf, TunnelFrequencyBuffer>() {
+    public static final StreamCodec<FriendlyByteBuf, TunnelFrequencyBuffer> STREAM_CODEC = new StreamCodec<>() {
 		
 		@Override
 		public void encode(FriendlyByteBuf buffer, TunnelFrequencyBuffer value) {

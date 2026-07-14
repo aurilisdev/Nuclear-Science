@@ -26,7 +26,7 @@ public class ParticleOptionSmoke extends ParticleType<ParticleOptionSmoke> imple
                     Codec.BOOL.fieldOf("physics").forGetter(instance0 -> instance0.hasPhysics)
             ).apply(instance, (r, g, b, scale, gravity, lifetime, physics) -> new ParticleOptionSmoke().setParameters(r, g, b, scale, gravity, lifetime, physics)));
 
-    public static final StreamCodec<ByteBuf, ParticleOptionSmoke> STREAM_CODEC = new StreamCodec<ByteBuf, ParticleOptionSmoke>() {
+    public static final StreamCodec<ByteBuf, ParticleOptionSmoke> STREAM_CODEC = new StreamCodec<>() {
 		
 		@Override
 		public void encode(ByteBuf buffer, ParticleOptionSmoke particle) {
@@ -45,7 +45,7 @@ public class ParticleOptionSmoke extends ParticleType<ParticleOptionSmoke> imple
 		}
 	};
 	
-	public static final ParticleOptions.Deserializer<ParticleOptionSmoke> DESERIALIZER = new ParticleOptions.Deserializer<ParticleOptionSmoke>() {
+	public static final ParticleOptions.Deserializer<ParticleOptionSmoke> DESERIALIZER = new ParticleOptions.Deserializer<>() {
 
 		@Override
 		public ParticleOptionSmoke fromCommand(ParticleType<ParticleOptionSmoke> pParticleType, StringReader reader) throws CommandSyntaxException {

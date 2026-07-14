@@ -35,7 +35,7 @@ public class ScreenComponentReactorFuel extends AbstractScreenComponentGauge {
 			return 0;
 		}
 
-		return (int) ((GaugeTextures.BACKGROUND_DEFAULT.textureHeight() - 2) * (core.currentFuel.getValue()) / TileMSReactorCore.FUEL_CAPACITY);
+		return (int) ((GaugeTextures.BACKGROUND_DEFAULT.textureHeight() - 2) * core.currentFuel.getValue() / TileMSReactorCore.FUEL_CAPACITY);
 	}
 
 	@Override

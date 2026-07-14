@@ -331,9 +331,10 @@ public class NuclearScienceLangKeyProvider extends BaseLangKeyProvider {
 			addGuidebook("chapter.radiation.l8", "Nuclear Science also offers machines that can help mitigate radiation exposure. The first of these is the %1$s. The Cloud Chamber, if powered and supplied with liquid Methanol, will show all radiation sources around it in a %2$s block radius. Sources will appear as a highlighted outline. The Chamber can be toggled using a redstone " +
 					"signal, and will identify how many sources it has detected via its GUI.");
 
-			addGuidebook("chapter.radiation.l9", "The second machine that is offered is the %1$s. To understand the Fallout Scrubber, you must first understand one of the underlying mechanics for radiation. Nuclear has three types of radiation sources: permanent, temporary, and fading. Permanent sources will never dissipate and are permanent scars on the " +
-					"environment. Temporary sources are similar to permanent sources, however they will eventually dissipate over time. The final source is a fading radiation source. Fading radiation sources will slowly be whittled down by their environment. The default dissipation rate is %2$s Rad/tick, and can be altered in the settings. The Fallout Scrubber will increase the rate" +
-					"of dissipation in a %3$s block radius around it by %4$s Rad/tick. This effect stacks with other scrubbers, but will only affect fading radiation sources. The Scrubber needs Water and Decontamination Foam to work.");
+			addGuidebook("chapter.radiation.l9", """
+				The second machine that is offered is the %1$s. To understand the Fallout Scrubber, you must first understand one of the underlying mechanics for radiation. Nuclear has three types of radiation sources: permanent, temporary, and fading. Permanent sources will never dissipate and are permanent scars on the \
+				environment. Temporary sources are similar to permanent sources, however they will eventually dissipate over time. The final source is a fading radiation source. Fading radiation sources will slowly be whittled down by their environment. The default dissipation rate is %2$s Rad/tick, and can be altered in the settings. The Fallout Scrubber will increase the rate\
+				of dissipation in a %3$s block radius around it by %4$s Rad/tick. This effect stacks with other scrubbers, but will only affect fading radiation sources. The Scrubber needs Water and Decontamination Foam to work.""");
 
 
 			addGuidebook("chapter.turbines", "Steam Turbines");
@@ -349,7 +350,10 @@ public class NuclearScienceLangKeyProvider extends BaseLangKeyProvider {
 
 			addGuidebook("chapter.centrifuge", "Gas Centrifuge");
 			addGuidebook("chapter.centrifuge.l1", "The Gas Centrifuge splits Uranium Hexafluoride into its isotopes of U235 and U238. There is a split of 17.5% to 82.5% respectively for each mB of Hexafluoride processed. The Centrifuge runs continuously as long as it has at least 42 mB of Uranium Hexafluoride in its input tank. 10% of each cycle " + "is also converted into waste. Note this is not subtracted from the aforementioned split, and is added on top of it.");
-			addGuidebook("chapter.centrifuge.l2", "Once the Centrifuge has collected 2500 mB of a material, it will produce an item of the respective material. This corresponds to the percentage counter for a category in the Centrifuge's GUI reaching 100%. While this is not 100% realistic, it is a legacy feature to pay tribute to " + "the respective block from Atomic Science. The waste material generated from each cycle will produce Fissile Dust, which can then be processed into other useful materials. Uranium Hexaflouride can either be piped into the back of the Gas Centrifuge, or the Nuclear Boiler can output " + "directly into it.");
+			addGuidebook("chapter.centrifuge.l2", """
+				Once the Centrifuge has collected 2500 mB of a material, it will produce an item of the respective material. This corresponds to the percentage counter for a category in the Centrifuge's GUI reaching 100%. While this is not 100% realistic, it is a legacy feature to pay tribute to \
+				the respective block from Atomic Science. The waste material generated from each cycle will produce Fissile Dust, which can then be processed into other useful materials. Uranium Hexaflouride can either be piped into the back of the Gas Centrifuge, or the Nuclear Boiler can output \
+				directly into it.""");
 
 			addGuidebook("chapter.fissionreactor", "Fission Reactor");
 			addGuidebook("chapter.fissionreactor.l1.1", "The Fission Reactor is the first atomic power source that you will be able to access as you progress in Nuclear Science. While crude and simple, it is fairly cheap to make. To construct the Fission Reactor, you will first need to craft a %s. The core needs to be surrounded in a 5x5x2 area of water in order to be cooled:");
@@ -389,10 +393,11 @@ public class NuclearScienceLangKeyProvider extends BaseLangKeyProvider {
 			addGuidebook("chapter.msreactor.l6", "Another perk of the MS Reactor is that is cannot melt down, making it significantly safer. However, like its predecessor, the hotter the reactor gets, the faster it burns fuel. To decrease the fuel usage, a %s can be used. To use it, attach it to the side of the MS Reactor Core, and control it as with the Fission Reactor's variant.");
 
 			addGuidebook("chapter.fusionreactor", "Fusion Reactor");
-			addGuidebook("chapter.fusionreactor.l1.1", "The Fusion Reactor is the ultimate source of power that Nuclear Science has to offer, and is able to produce over 6 MW of energy! However, harvesting this energy is very expensive. The Fusion Reactor's ability to produce power is best understood by understanding its principles rather than understanding a rigid design like with the " +
-					"fission-based reactors. The core produces plasma by fusing Deuterium and Tritium together. This fusion process takes energy however, so the reactor must produce more energy than it uses to be beneficial. The plasma that is produced can only be contained by Electromagnets. The plasma on its own will do nothing, however if the plasma is underneath an electromagnet that has a water source block " +
-					"on top of it, the water will be boiled from the immense heat, producing steam that can spin a turbine. There is no one set design on how to achieve the full potential of the reactor, so you will have to play around with designs. The rest of this guide will cover the construction of a fairly efficient Fusion reactor. It should be noted that this design does not achieve the maximum " +
-					"possible energy output!");
+			addGuidebook("chapter.fusionreactor.l1.1", """
+				The Fusion Reactor is the ultimate source of power that Nuclear Science has to offer, and is able to produce over 6 MW of energy! However, harvesting this energy is very expensive. The Fusion Reactor's ability to produce power is best understood by understanding its principles rather than understanding a rigid design like with the \
+				fission-based reactors. The core produces plasma by fusing Deuterium and Tritium together. This fusion process takes energy however, so the reactor must produce more energy than it uses to be beneficial. The plasma that is produced can only be contained by Electromagnets. The plasma on its own will do nothing, however if the plasma is underneath an electromagnet that has a water source block \
+				on top of it, the water will be boiled from the immense heat, producing steam that can spin a turbine. There is no one set design on how to achieve the full potential of the reactor, so you will have to play around with designs. The rest of this guide will cover the construction of a fairly efficient Fusion reactor. It should be noted that this design does not achieve the maximum \
+				possible energy output!""");
 			addGuidebook("chapter.fusionreactor.l1.2", "First, you will to construct 13x13 diamond of Electromagnets. They can be either glass or opaque. We will be using both. Place the Fusion Reactor Core in the center of the diamond and remove the block below it.");
 			addGuidebook("chapter.fusionreactor.l2", "Next, surround the side of the 13x13 diamond with a ring of Electromagnets.");
 			addGuidebook("chapter.fusionreactor.l3", "Next, build another 13x13 diamond to act as the roof. Leave a hole in the middle for the Reactor Core like before.");
@@ -428,10 +433,11 @@ public class NuclearScienceLangKeyProvider extends BaseLangKeyProvider {
 
 			addGuidebook("chapter.reactorlogistics.monitormodule", "The Monitor Module can be used to view information about its linked reactor remotely via its GUI. Multiple can be connected to a network at a time, and multiple can be linked to the same reactor.");
 
-			addGuidebook("chapter.reactorlogistics.thermometermodule", "The Thermometer Module can be used to monitor the temperature of the reactor it is linked to. When read with a Redstone Comparator, it will produce a signal with respect to the target temperature it is programmed with. The Module has two signal modes: Constant and Build-up. " +
-					"In Constant mode, the module will read a redstone signal of 15 once the reactor's temperature has reached or surpasses the target temperature and a signal of 0 otherwise. If inverted, it will do the opposite, and emit a signal of 15 while the reactor's temperature is below the target temperature and a signal of 0 otherwise. In Build-up mode, " +
-					"the module will read a signal that increases linearly from 0 to 15 based upon the ratio of the reactor's temperature to the target temperature, with a maximum of 15 possible once the target temperature has been reached or exceeded. If inverted, The module will read a signal that decreases linearly with the aforementioned ration, with a signal of " +
-					"0 being read once the target temperature has been reached or exceeded. Multiple Thermometer Modules be connected to a network at a time, and multiple can be linked to the same reactor.");
+			addGuidebook("chapter.reactorlogistics.thermometermodule", """
+				The Thermometer Module can be used to monitor the temperature of the reactor it is linked to. When read with a Redstone Comparator, it will produce a signal with respect to the target temperature it is programmed with. The Module has two signal modes: Constant and Build-up. \
+				In Constant mode, the module will read a redstone signal of 15 once the reactor's temperature has reached or surpasses the target temperature and a signal of 0 otherwise. If inverted, it will do the opposite, and emit a signal of 15 while the reactor's temperature is below the target temperature and a signal of 0 otherwise. In Build-up mode, \
+				the module will read a signal that increases linearly from 0 to 15 based upon the ratio of the reactor's temperature to the target temperature, with a maximum of 15 possible once the target temperature has been reached or exceeded. If inverted, The module will read a signal that decreases linearly with the aforementioned ration, with a signal of \
+				0 being read once the target temperature has been reached or exceeded. Multiple Thermometer Modules be connected to a network at a time, and multiple can be linked to the same reactor.""");
 
 
 
@@ -444,9 +450,10 @@ public class NuclearScienceLangKeyProvider extends BaseLangKeyProvider {
 			addGuidebook("chapter.particleaccelerator.l3", "In order to collide particles, you will first need to create them. For this, you will need a %1$s. The Injector uses matter to make a particle, and any block or item can be used to supply the matter. Place the matter in its respective slot in the Injector. While this will create the particle, to actually catch the " +
 					"result of the collision, you will need to craft an %2$s and insert it as well. The Injector uses %3$s per particle at 960 V. This means you will actually need %4$s for each collision. Note the injector can be disabled using redstone.");
 
-			addGuidebook("chapter.particleaccelerator.l4", "While the Injector creates particles, it only spawns them at very low speeds. In order to achieve the speeds needed for a collision, the particle will need to be passed through an %1$s. Particles while passing through boosters follow two simple principles. If the Particle and Booster are facing the same direction, the " +
-					"Booster will increase the Particle's speed by %2$s for every tick the Particle is inside the Booster. If the Booster is a corner causing the particle to turn, the Particle's speed will receive a %3$s penalty for each tick it is inside the corner. This means that corners should be kept to a minimum when creating the accelerator ring. It is worth noting now that moving " +
-					"particles emit radiation.");
+			addGuidebook("chapter.particleaccelerator.l4", """
+				While the Injector creates particles, it only spawns them at very low speeds. In order to achieve the speeds needed for a collision, the particle will need to be passed through an %1$s. Particles while passing through boosters follow two simple principles. If the Particle and Booster are facing the same direction, the \
+				Booster will increase the Particle's speed by %2$s for every tick the Particle is inside the Booster. If the Booster is a corner causing the particle to turn, the Particle's speed will receive a %3$s penalty for each tick it is inside the corner. This means that corners should be kept to a minimum when creating the accelerator ring. It is worth noting now that moving \
+				particles emit radiation.""");
 
 			addGuidebook("chapter.particleaccelerator.l5", "But how do we get two particles to actually collide? This is where regular Electromagnets come in. You will need to construct a ring of Electromagnets to allow the Particles to circle and collide. It is incredibly important to note that particles will expire after %s ticks, so it is desirable to make the Electromagnet " +
 					"ring as small as possible. In this example case, we will be using a 3x3 ring.");
@@ -475,9 +482,10 @@ public class NuclearScienceLangKeyProvider extends BaseLangKeyProvider {
 			addGuidebook("chapter.quantumtunnel.fluids", "Fluids");
 			addGuidebook("chapter.quantumtunnel.gases", "Gases");
 			addGuidebook("chapter.quantumtunnel.electricity", "Electricity");
-			addGuidebook("chapter.quantumtunnel.l2.2", "The block accomplishes this by being bound to a frequency. Each frequency can transfer all quantity types at the same time, meaning a frequency could send both electricity and gas at the same time. However you can only send one subtype at a time. For example, " +
-					"you could not send water and lava at the same time over the same frequency. It is important to note especially in the case of electricity, as electricity is treated as a packet, meaning 100J at 120V could not be sent at the same time as 500J at 960V. It is also important to note that the two conduits on either side of " +
-					"the tunnel frequency will not take into account each other's characteristics. For example, the resistance of the sending wire will not impact the resistance of the receiving wire.");
+			addGuidebook("chapter.quantumtunnel.l2.2", """
+				The block accomplishes this by being bound to a frequency. Each frequency can transfer all quantity types at the same time, meaning a frequency could send both electricity and gas at the same time. However you can only send one subtype at a time. For example, \
+				you could not send water and lava at the same time over the same frequency. It is important to note especially in the case of electricity, as electricity is treated as a packet, meaning 100J at 120V could not be sent at the same time as 500J at 960V. It is also important to note that the two conduits on either side of \
+				the tunnel frequency will not take into account each other's characteristics. For example, the resistance of the sending wire will not impact the resistance of the receiving wire.""");
 			addGuidebook("chapter.quantumtunnel.l3.1", "We now know how the block functions, but what exactly is a frequency? Frequencies are what link quantum tunnels together. Any number of quantum tunnels can be linked to a single frequency. Opening the GUI of the quantum tunnel, you immediately will observe that there are " +
 					"two types of frequencies: Private and Public");
 			addGuidebook("chapter.quantumtunnel.l3.2", "Private frequencies are only visible to you. Public frequencies can be used by all players. However, only the player that created it may edit, add, and remove it. As this may lead to abuse cases, a command is made available to the server owner that wipes all public frequencies. " +

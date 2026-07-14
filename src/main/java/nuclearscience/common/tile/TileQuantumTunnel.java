@@ -217,11 +217,11 @@ public class TileQuantumTunnel extends GenericTile {
     		return handler == null ? LazyOptional.empty() : LazyOptional.of(() -> handler).cast();
     	}
     	if(cap == ForgeCapabilities.FLUID_HANDLER) {
-    		IFluidHandler handler = fluidHandlers[side.ordinal()];;
+    		IFluidHandler handler = fluidHandlers[side.ordinal()];
     		return handler == null ? LazyOptional.empty() : LazyOptional.of(() -> handler).cast();
     	}
     	if(cap == VoltaicCapabilities.CAPABILITY_ELECTRODYNAMIC_BLOCK) {
-    		ICapabilityElectrodynamic electro = electrodynamicHandlers[side.ordinal()];;
+    		ICapabilityElectrodynamic electro = electrodynamicHandlers[side.ordinal()];
     		return electro == null ? LazyOptional.empty() : LazyOptional.of(() -> electro).cast();
     	}
     	return LazyOptional.empty();
@@ -306,33 +306,17 @@ public class TileQuantumTunnel extends GenericTile {
 
     private int writeDirection(int directions, Direction dir, int value) {
 
-        int masked;
+        int masked = switch (dir) {
+	case DOWN -> directions & ~DOWN_MASK;
+	case UP -> directions & ~UP_MASK;
+	case NORTH -> directions & ~NORTH_MASK;
+	case SOUTH -> directions & ~SOUTH_MASK;
+	case WEST -> directions & ~WEST_MASK;
+	case EAST -> directions & ~EAST_MASK;
+	default -> 0;
+	};
 
-        switch (dir) {
-            case DOWN:
-                masked = directions & ~DOWN_MASK;
-                break;
-            case UP:
-                masked = directions & ~UP_MASK;
-                break;
-            case NORTH:
-                masked = directions & ~NORTH_MASK;
-                break;
-            case SOUTH:
-                masked = directions & ~SOUTH_MASK;
-                break;
-            case WEST:
-                masked = directions & ~WEST_MASK;
-                break;
-            case EAST:
-                masked = directions & ~EAST_MASK;
-                break;
-            default:
-                masked = 0;
-                break;
-        }
-
-        return masked | (value << (dir.ordinal() * 4));
+        return masked | value << dir.ordinal() * 4;
 
     }
 

@@ -1,5 +1,14 @@
 package nuclearscience.common.event;
 
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.event.AddReloadListenerEvent;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.event.server.ServerStartedEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import nuclearscience.NuclearScience;
 import nuclearscience.api.capability.CapabilityAntimatterItem;
 import nuclearscience.api.quantumtunnel.CapabilityChannelMap;
@@ -10,15 +19,6 @@ import nuclearscience.common.reloadlistener.AtomicAssemblerBlacklistRegister;
 import nuclearscience.common.reloadlistener.AtomicAssemblerWhitelistRegister;
 import nuclearscience.prefab.utils.NuclearCapabilityUtils;
 import nuclearscience.registers.NuclearScienceCapabilities;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.event.AddReloadListenerEvent;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.event.server.ServerStartedEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 @EventBusSubscriber(modid = NuclearScience.ID, bus = EventBusSubscriber.Bus.FORGE)
 public class ServerEventHandler {

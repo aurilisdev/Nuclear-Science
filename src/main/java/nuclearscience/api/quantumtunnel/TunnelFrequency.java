@@ -32,7 +32,7 @@ public class TunnelFrequency {
 
     ).apply(instance, TunnelFrequency::new));
 
-    public static final StreamCodec<ByteBuf, TunnelFrequency> STREAM_CODEC = new StreamCodec<ByteBuf, TunnelFrequency>() {
+    public static final StreamCodec<ByteBuf, TunnelFrequency> STREAM_CODEC = new StreamCodec<>() {
 		
 		@Override
 		public void encode(ByteBuf buffer, TunnelFrequency value) {

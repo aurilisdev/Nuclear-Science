@@ -229,7 +229,7 @@ public class WrapperBindInterface {
     }
 
     public Consumer<Integer> getSliderClickedConsumer() {
-        return (mouseY) -> {
+        return mouseY -> {
             ScreenComponentVerticalSlider slider = screen.binderSlider;
             if (slider.isSliderActive()) {
                 int sliderY = slider.yLocation;
@@ -253,7 +253,7 @@ public class WrapperBindInterface {
     }
 
     public Consumer<Integer> getSliderDraggedConsumer() {
-        return (mouseY) -> {
+        return mouseY -> {
             ScreenComponentVerticalSlider slider = screen.binderSlider;
             if (slider.isSliderActive()) {
                 int sliderY = slider.yLocation;
