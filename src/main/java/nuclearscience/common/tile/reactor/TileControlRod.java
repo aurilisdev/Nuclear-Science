@@ -28,7 +28,7 @@ public abstract class TileControlRod extends GenericTile {
 
     @Override
     public int getComparatorSignal() {
-        return (int) (((double) insertion.getValue() / (double) MAX_EXTENSION) * 15);
+        return (int) ((double) insertion.getValue() / (double) MAX_EXTENSION * 15);
     }
     
     @Override

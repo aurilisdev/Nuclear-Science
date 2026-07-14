@@ -1,8 +1,15 @@
 package nuclearscience.registers;
 
+import net.minecraft.block.AbstractBlock.Properties;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.DoorBlock;
+import net.minecraft.block.TrapDoorBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -29,18 +36,11 @@ import nuclearscience.common.block.subtype.SubtypeNuclearMachine;
 import nuclearscience.common.block.subtype.SubtypeRadiationShielding;
 import nuclearscience.common.block.subtype.SubtypeReactorLogisticsCable;
 import nuclearscience.common.tile.TileQuantumTunnel;
+import nuclearscience.common.tile.reactor.fission.TileFissionReactorCore;
 import voltaic.api.registration.BulkRegistryObject;
+import voltaic.common.block.BlockCustomGlass;
 import voltaic.common.block.BlockMachine;
 import voltaic.prefab.utilities.math.Color;
-import voltaic.common.block.BlockCustomGlass;
-import nuclearscience.common.tile.reactor.fission.TileFissionReactorCore;
-import net.minecraft.block.DoorBlock;
-import net.minecraft.block.TrapDoorBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.block.AbstractBlock.Properties;
-import net.minecraft.block.Blocks;
 
 public class NuclearScienceBlocks {
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, NuclearScience.ID);
@@ -161,7 +161,6 @@ public class NuclearScienceBlocks {
 		} else if (index == 4) {
 			return Direction.WEST.getCounterClockWise();
 		} else if (index == 5) {
-			return Direction.UP;
 		} else if (index == 6) {
 			return Direction.DOWN;
 		}

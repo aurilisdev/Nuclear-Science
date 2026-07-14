@@ -72,13 +72,13 @@ import nuclearscience.client.screen.ScreenThermometerModule;
 import nuclearscience.common.block.subtype.SubtypeElectromagent;
 import nuclearscience.common.block.subtype.SubtypeNuclearMachine;
 import nuclearscience.common.block.subtype.SubtypeRadiationShielding;
-import nuclearscience.registers.NuclearScienceTiles;
-import voltaic.client.VoltaicClientRegister;
-import voltaic.client.guidebook.ScreenGuidebook;
 import nuclearscience.registers.NuclearScienceBlocks;
 import nuclearscience.registers.NuclearScienceEntities;
 import nuclearscience.registers.NuclearScienceMenuTypes;
 import nuclearscience.registers.NuclearScienceParticles;
+import nuclearscience.registers.NuclearScienceTiles;
+import voltaic.client.VoltaicClientRegister;
+import voltaic.client.guidebook.ScreenGuidebook;
 
 @OnlyIn(Dist.CLIENT)
 @EventBusSubscriber(modid = NuclearScience.ID, bus = Bus.MOD, value = { Dist.CLIENT })

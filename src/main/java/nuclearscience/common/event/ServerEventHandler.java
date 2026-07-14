@@ -1,5 +1,14 @@
 package nuclearscience.common.event;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.world.World;
+import net.minecraftforge.event.AddReloadListenerEvent;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
 import nuclearscience.NuclearScience;
 import nuclearscience.api.capability.CapabilityAntimatterItem;
 import nuclearscience.api.quantumtunnel.CapabilityChannelMap;
@@ -10,15 +19,6 @@ import nuclearscience.common.reloadlistener.AtomicAssemblerBlacklistRegister;
 import nuclearscience.common.reloadlistener.AtomicAssemblerWhitelistRegister;
 import nuclearscience.prefab.utils.NuclearCapabilityUtils;
 import nuclearscience.registers.NuclearScienceCapabilities;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.world.World;
-import net.minecraftforge.event.AddReloadListenerEvent;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
 
 @EventBusSubscriber(modid = NuclearScience.ID, bus = EventBusSubscriber.Bus.FORGE)
 public class ServerEventHandler {
@@ -56,7 +56,7 @@ public class ServerEventHandler {
 	public static void registerEntityCaps(AttachCapabilitiesEvent<Entity> event) {
 		Entity entity = event.getObject();
 		
-		if(entity instanceof ItemEntity && ((ItemEntity) entity).getCapability(NuclearScienceCapabilities.CAPABILITY_ANTIMATTERITEM).orElse(NuclearCapabilityUtils.EMPTY_ANTIMATTERITEM) == NuclearCapabilityUtils.EMPTY_ANTIMATTERITEM) {
+		if(entity instanceof ItemEntity && entity.getCapability(NuclearScienceCapabilities.CAPABILITY_ANTIMATTERITEM).orElse(NuclearCapabilityUtils.EMPTY_ANTIMATTERITEM) == NuclearCapabilityUtils.EMPTY_ANTIMATTERITEM) {
 			event.addCapability(NuclearScience.rl("antimatteritem"), new CapabilityAntimatterItem());
 		}
 	}

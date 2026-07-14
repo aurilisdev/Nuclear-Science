@@ -59,7 +59,7 @@ public class ScreenElectromagneticGateway extends GenericScreen<ContainerElectro
         super.render(poseStack, mouseX, mouseY, partialTicks);
 
         if(needsUpdate && getMenu().getSafeHost() instanceof TileElectromagneticGateway) {
-            box.setValue(((TileElectromagneticGateway) getMenu().getSafeHost()).targetSpeed.getValue() + "");
+            box.setValue(getMenu().getSafeHost().targetSpeed.getValue() + "");
             needsUpdate = false;
         }
     }

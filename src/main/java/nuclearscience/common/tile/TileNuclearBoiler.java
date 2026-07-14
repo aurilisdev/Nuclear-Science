@@ -9,15 +9,21 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import nuclearscience.common.inventory.container.ContainerNuclearBoiler;
-import nuclearscience.registers.NuclearScienceRecipies;
 import nuclearscience.common.settings.NuclearConstants;
+import nuclearscience.registers.NuclearScienceRecipies;
 import nuclearscience.registers.NuclearScienceSounds;
 import nuclearscience.registers.NuclearScienceTiles;
 import voltaic.prefab.sound.ITickableSound;
 import voltaic.prefab.sound.SoundBarrierMethods;
 import voltaic.prefab.tile.GenericTile;
 import voltaic.prefab.tile.components.IComponentType;
-import voltaic.prefab.tile.components.type.*;
+import voltaic.prefab.tile.components.type.ComponentContainerProvider;
+import voltaic.prefab.tile.components.type.ComponentElectrodynamic;
+import voltaic.prefab.tile.components.type.ComponentFluidHandlerMulti;
+import voltaic.prefab.tile.components.type.ComponentInventory;
+import voltaic.prefab.tile.components.type.ComponentPacketHandler;
+import voltaic.prefab.tile.components.type.ComponentProcessor;
+import voltaic.prefab.tile.components.type.ComponentTickable;
 import voltaic.prefab.utilities.BlockEntityUtils;
 import voltaic.prefab.utilities.RadiationUtils;
 import voltaic.registers.VoltaicCapabilities;
@@ -52,7 +58,7 @@ public class TileNuclearBoiler extends GenericTile implements ITickableSound {
 
 		Direction centrifugeDir = getFacing().getCounterClockWise();
 		TileEntity tile = world.getBlockEntity(getBlockPos().relative(centrifugeDir));
-		if (tile != null && tile instanceof TileGasCentrifuge) {
+		if (tile instanceof TileGasCentrifuge) {
 			TileGasCentrifuge centrifuge = (TileGasCentrifuge) tile;
 			ComponentFluidHandlerMulti centrifugeHandler = centrifuge.getComponent(IComponentType.FluidHandler);
 			if (centrifugeHandler != null && centrifuge.getFacing() == centrifugeDir) {

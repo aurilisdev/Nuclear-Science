@@ -217,12 +217,12 @@ public class TileQuantumTunnel extends GenericTile {
 		}
 		if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
 			IFluidHandler handler = fluidHandlers[side.ordinal()];
-			;
+			
 			return handler == null ? LazyOptional.empty() : LazyOptional.of(() -> handler).cast();
 		}
 		if (cap == VoltaicCapabilities.CAPABILITY_ELECTRODYNAMIC_BLOCK) {
 			ICapabilityElectrodynamic electro = electrodynamicHandlers[side.ordinal()];
-			;
+			
 			return electro == null ? LazyOptional.empty() : LazyOptional.of(() -> electro).cast();
 		}
 		return LazyOptional.empty();
@@ -333,7 +333,7 @@ public class TileQuantumTunnel extends GenericTile {
 			break;
 		}
 
-		return masked | (value << (dir.ordinal() * 4));
+		return masked | value << dir.ordinal() * 4;
 
 	}
 

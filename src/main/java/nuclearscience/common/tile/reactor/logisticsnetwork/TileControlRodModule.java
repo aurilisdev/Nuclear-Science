@@ -167,7 +167,7 @@ public class TileControlRodModule extends GenericTileInterfaceBound {
 
     @Override
     public int getComparatorSignal() {
-        return (int) (((double) insertion.getValue() / (double) TileControlRod.MAX_EXTENSION) * 15);
+        return (int) ((double) insertion.getValue() / (double) TileControlRod.MAX_EXTENSION * 15);
     }
 
     @Override

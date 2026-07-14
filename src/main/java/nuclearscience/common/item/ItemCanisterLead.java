@@ -3,6 +3,7 @@ package nuclearscience.common.item;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
+
 import electrodynamics.common.item.gear.tools.ItemCanister;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.ResourceLocation;
@@ -32,7 +33,7 @@ public class ItemCanisterLead extends ItemCanister {
 				return;
 			}
 
-			IFluidHandlerItem cap = (IFluidHandlerItem) stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(CapabilityUtils.EMPTY_FLUID_ITEM);
+			IFluidHandlerItem cap = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(CapabilityUtils.EMPTY_FLUID_ITEM);
 
 			if (cap == CapabilityUtils.EMPTY_FLUID_ITEM) {
 				return;

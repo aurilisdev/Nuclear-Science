@@ -1,7 +1,10 @@
 package nuclearscience.client.screen;
 
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import nuclearscience.common.inventory.container.ContainerCloudChamber;
 import nuclearscience.common.settings.NuclearConstants;
 import nuclearscience.common.tile.TileCloudChamber;
@@ -14,9 +17,6 @@ import voltaic.prefab.screen.component.utils.AbstractScreenComponentInfo;
 import voltaic.prefab.tile.components.IComponentType;
 import voltaic.prefab.tile.components.type.ComponentFluidHandlerSimple;
 import voltaic.prefab.utilities.math.Color;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.StringTextComponent;
 
 public class ScreenCloudChamber extends GenericScreen<ContainerCloudChamber> {
     public ScreenCloudChamber(ContainerCloudChamber container, PlayerInventory inv, ITextComponent title) {

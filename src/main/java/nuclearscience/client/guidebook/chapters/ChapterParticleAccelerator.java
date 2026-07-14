@@ -60,7 +60,7 @@ public class ChapterParticleAccelerator extends Chapter {
                 //
                 ChatFormatter.getChatDisplayShort(TileElectromagneticGateway.getLightSpeedPerc(EntityParticle.STRAIGHT_SPEED_INCREMENT), DisplayUnits.PERCENTAGE).withStyle(TextFormatting.BOLD),
                 //
-                ChatFormatter.getChatDisplayShort(TileElectromagneticGateway.getLightSpeedPerc((1.0F - EntityParticle.TURN_SPEED_PENALTY)), DisplayUnits.PERCENTAGE).withStyle(TextFormatting.BOLD)
+                ChatFormatter.getChatDisplayShort(TileElectromagneticGateway.getLightSpeedPerc(1.0F - EntityParticle.TURN_SPEED_PENALTY), DisplayUnits.PERCENTAGE).withStyle(TextFormatting.BOLD)
                 //
         )).setIndentions(1).setSeparateStart());
         pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.particleaccelerator.l5",

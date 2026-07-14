@@ -59,7 +59,7 @@ public class BlockIrradiated extends Block {
     }
     
     private static int randomInt(int min, int max, Random random) {
-    	return min + (int)(random.nextDouble() * ((max - min) + 1));
+    	return min + (int)(random.nextDouble() * (max - min + 1));
     }
     
 }

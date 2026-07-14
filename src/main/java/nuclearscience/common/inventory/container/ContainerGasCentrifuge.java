@@ -15,7 +15,7 @@ import voltaic.prefab.utilities.math.Color;
 
 public class ContainerGasCentrifuge extends GenericContainerBlockEntity<TileGasCentrifuge> {
 
-	public static final SubtypeItemUpgrade[] VALID_UPGRADES = new SubtypeItemUpgrade[] { SubtypeItemUpgrade.basicspeed, SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.itemoutput, SubtypeItemUpgrade.experience };
+	public static final SubtypeItemUpgrade[] VALID_UPGRADES = { SubtypeItemUpgrade.basicspeed, SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.itemoutput, SubtypeItemUpgrade.experience };
 
 	public ContainerGasCentrifuge(int id, PlayerInventory playerinv) {
 		this(id, playerinv, new Inventory(6), new IntArray(5));

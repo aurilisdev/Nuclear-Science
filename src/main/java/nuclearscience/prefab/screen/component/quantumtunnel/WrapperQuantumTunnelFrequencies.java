@@ -8,6 +8,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import nuclearscience.api.quantumtunnel.TunnelFrequency;
 import nuclearscience.client.screen.ScreenQuantumTunnel;
 import nuclearscience.common.packet.NetworkHandler;
@@ -20,8 +22,6 @@ import voltaic.prefab.screen.component.types.ScreenComponentFillArea;
 import voltaic.prefab.screen.component.types.ScreenComponentSimpleLabel;
 import voltaic.prefab.screen.component.types.ScreenComponentVerticalSlider;
 import voltaic.prefab.utilities.math.Color;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 
 public class WrapperQuantumTunnelFrequencies {
 
@@ -277,7 +277,7 @@ public class WrapperQuantumTunnelFrequencies {
     }
 
     public Consumer<Integer> getSliderClickedConsumer() {
-        return (mouseY) -> {
+        return mouseY -> {
             ScreenComponentVerticalSlider slider = screen.slider;
             if (slider.isSliderActive()) {
                 int sliderY = slider.y;
@@ -301,7 +301,7 @@ public class WrapperQuantumTunnelFrequencies {
     }
 
     public Consumer<Integer> getSliderDraggedConsumer() {
-        return (mouseY) -> {
+        return mouseY -> {
             ScreenComponentVerticalSlider slider = screen.slider;
             if (slider.isSliderActive()) {
                 int sliderY = slider.y;

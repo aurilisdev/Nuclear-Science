@@ -17,7 +17,7 @@ import voltaic.prefab.utilities.math.Color;
 
 public class ContainerChemicalExtractor extends GenericContainerBlockEntity<TileChemicalExtractor> {
 
-	public static final SubtypeItemUpgrade[] VALID_UPGRADES = new SubtypeItemUpgrade[] { SubtypeItemUpgrade.basicspeed, SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.iteminput, SubtypeItemUpgrade.itemoutput, SubtypeItemUpgrade.experience };
+	public static final SubtypeItemUpgrade[] VALID_UPGRADES = { SubtypeItemUpgrade.basicspeed, SubtypeItemUpgrade.advancedspeed, SubtypeItemUpgrade.iteminput, SubtypeItemUpgrade.itemoutput, SubtypeItemUpgrade.experience };
 
 	public ContainerChemicalExtractor(int id, PlayerInventory playerinv) {
 		this(id, playerinv, new Inventory(6), new IntArray(5));

@@ -37,7 +37,7 @@ public class NuclearScienceCapabilities {
 				instance.fromTag((CompoundNBT) nbt);
 			}
 			
-		}, () -> new CapabilityTunnelMap());
+		}, CapabilityTunnelMap::new);
 		
 		CapabilityManager.INSTANCE.register(ICapabilityChannelMap.class, new IStorage<ICapabilityChannelMap>() {
 
@@ -51,7 +51,7 @@ public class NuclearScienceCapabilities {
 				instance.fromTag((CompoundNBT) nbt);
 			}
 			
-		}, () -> new CapabilityChannelMap());
+		}, CapabilityChannelMap::new);
 		
 		
 		CapabilityManager.INSTANCE.register(ICapabilityAntimatterItem.class, new IStorage<ICapabilityAntimatterItem>() {
@@ -66,7 +66,7 @@ public class NuclearScienceCapabilities {
 				instance.fromTag((CompoundNBT) nbt);
 			}
 			
-		}, () -> new CapabilityAntimatterItem());
+		}, CapabilityAntimatterItem::new);
 	}
 
 }

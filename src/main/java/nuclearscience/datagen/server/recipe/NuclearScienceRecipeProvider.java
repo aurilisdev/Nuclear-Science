@@ -18,6 +18,7 @@ public class NuclearScienceRecipeProvider extends BaseRecipeProvider {
 		super(gen);
 	}
 
+	@Override
 	public void addRecipes() {
 		generators.add(new NuclearScienceCraftingTableRecipes());
 		generators.add(new NuclearScienceChemicalMixerRecipes());

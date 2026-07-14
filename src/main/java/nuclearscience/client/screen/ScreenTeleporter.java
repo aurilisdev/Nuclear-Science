@@ -7,7 +7,9 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import nuclearscience.common.inventory.container.ContainerTeleporter;
 import nuclearscience.common.item.ItemFrequencyCard;
@@ -24,8 +26,6 @@ import voltaic.prefab.tile.components.IComponentType;
 import voltaic.prefab.tile.components.type.ComponentInventory;
 import voltaic.prefab.utilities.NBTUtils;
 import voltaic.prefab.utilities.math.Color;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.registry.Registry;
 
 public class ScreenTeleporter extends GenericScreen<ContainerTeleporter> {
 

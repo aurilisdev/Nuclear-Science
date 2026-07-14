@@ -9,7 +9,11 @@ import voltaic.prefab.properties.types.PropertyTypes;
 import voltaic.prefab.properties.variant.SingleProperty;
 import voltaic.prefab.tile.GenericTile;
 import voltaic.prefab.tile.components.IComponentType;
-import voltaic.prefab.tile.components.type.*;
+import voltaic.prefab.tile.components.type.ComponentContainerProvider;
+import voltaic.prefab.tile.components.type.ComponentElectrodynamic;
+import voltaic.prefab.tile.components.type.ComponentInventory;
+import voltaic.prefab.tile.components.type.ComponentPacketHandler;
+import voltaic.prefab.tile.components.type.ComponentTickable;
 import voltaic.prefab.utilities.BlockEntityUtils;
 import voltaic.prefab.utilities.object.TransferPack;
 import voltaic.registers.VoltaicCapabilities;
@@ -34,13 +38,7 @@ public class TileFreezePlug extends GenericTile {
 
 		ItemStack stack = inv.getItem(0);
 
-		if (stack.isEmpty()) {
-			isFrozen.setValue(false);
-			saltBonus.setValue(0.0);
-			return;
-		}
-
-		if (electro.getJoulesStored() < NuclearConstants.FREEZEPLUG_USAGE_PER_TICK) {
+		if (stack.isEmpty() || electro.getJoulesStored() < NuclearConstants.FREEZEPLUG_USAGE_PER_TICK) {
 			isFrozen.setValue(false);
 			saltBonus.setValue(0.0);
 			return;
@@ -50,7 +48,7 @@ public class TileFreezePlug extends GenericTile {
 
 		isFrozen.setValue(true);
 
-		double bonus = 1.0 + ((stack.getCount() - 1) / 63.0);
+		double bonus = 1.0 + (stack.getCount() - 1) / 63.0;
 
 		saltBonus.setValue(bonus);
 

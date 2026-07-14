@@ -47,7 +47,7 @@ public class BlockMoltenSaltPipe extends AbstractRefreshingConnectBlock<TileMolt
         EnumConnectType connection = EnumConnectType.NONE;
         if (otherTile instanceof TileMoltenSaltPipe) {
             connection = EnumConnectType.WIRE;
-        } else if ((otherTile instanceof TileMSReactorCore && dir.getOpposite() == Direction.UP) || (otherTile instanceof TileHeatExchanger && dir.getOpposite() == Direction.DOWN)) {
+        } else if (otherTile instanceof TileMSReactorCore && dir.getOpposite() == Direction.UP || otherTile instanceof TileHeatExchanger && dir.getOpposite() == Direction.DOWN) {
             connection = EnumConnectType.INVENTORY;
         }
         return connection;
