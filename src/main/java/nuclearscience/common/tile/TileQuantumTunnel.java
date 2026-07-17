@@ -651,7 +651,7 @@ public class TileQuantumTunnel extends GenericTile {
 	@Override
 	public int extractEnergy(int toExtract, boolean simulate) {
 	    return isReciever ? 0
-		    : (int) FrequencyConnectionManager.recieveEnergy(frequency.getValue(),
+		    : (int) FrequencyConnectionManager.extractEnergy(frequency.getValue(),
 			    TransferPack.joulesVoltage(toExtract, VoltaicCapabilities.DEFAULT_VOLTAGE), simulate)
 			    .getJoules();
 	}
