@@ -52,7 +52,7 @@ public class TileGasCentrifuge extends GenericTile implements ITickableSound {
 		addComponent(new ComponentElectrodynamic(this, false, true).voltage(VoltaicCapabilities.DEFAULT_VOLTAGE * 2).setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM).maxJoules(NuclearConstants.GASCENTRIFUGE_USAGE_PER_TICK * 10));
 		addComponent(new ComponentInventory(this, ComponentInventory.InventoryBuilder.newInv().outputs(3).upgrades(3)).setSlotsByDirection(BlockEntityUtils.MachineDirection.TOP, 0, 1, 2).setSlotsByDirection(BlockEntityUtils.MachineDirection.RIGHT, 0, 1, 2).setSlotsByDirection(BlockEntityUtils.MachineDirection.LEFT, 0, 1, 2)
 				//
-				.setSlotsByDirection(BlockEntityUtils.MachineDirection.BACK, 0, 1, 2).validUpgrades(ContainerGasCentrifuge.VALID_UPGRADES).valid(machineValidator()));
+				.setSlotsByDirection(BlockEntityUtils.MachineDirection.FRONT, 0, 1, 2).validUpgrades(ContainerGasCentrifuge.VALID_UPGRADES).valid(machineValidator()));
 		addComponent(new ComponentProcessor(this).usage(NuclearConstants.GASCENTRIFUGE_USAGE_PER_TICK, 0).requiredTicks(NuclearConstants.GASCENTRIFUGE_REQUIRED_TICKS_PER_PROCESSING, 0).canProcess(this::canProcess).process(this::process));
 		addComponent(new ComponentContainerProvider("gascentrifuge", this).createMenu((id, player) -> new ContainerGasCentrifuge(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
 	}

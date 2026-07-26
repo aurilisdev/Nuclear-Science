@@ -29,9 +29,12 @@ public class TileRadioactiveProcessor extends GenericTile {
         addComponent(new ComponentPacketHandler(this));
         addComponent(new ComponentElectrodynamic(this, false, true).voltage(VoltaicCapabilities.DEFAULT_VOLTAGE * 4).setInputDirections(BlockEntityUtils.MachineDirection.BACK));
         addComponent(new ComponentFluidHandlerMulti(this).setInputTanks(1, MAX_TANK_CAPACITY).setInputDirections(BlockEntityUtils.MachineDirection.TOP).setRecipeType(NuclearScienceRecipies.RADIOACTIVE_PROCESSOR_TYPE.get()));
-        addComponent(new ComponentInventory(this, ComponentInventory.InventoryBuilder.newInv().processors(1, 1, 1, 0).bucketInputs(1).upgrades(3)).validUpgrades(ContainerRadioactiveProcessor.VALID_UPGRADES).valid(machineValidator())
-                //
-                .setDirectionsBySlot(0, BlockEntityUtils.MachineDirection.LEFT).setDirectionsBySlot(1, BlockEntityUtils.MachineDirection.RIGHT, BlockEntityUtils.MachineDirection.BOTTOM));
+	addComponent(new ComponentInventory(this,
+		ComponentInventory.InventoryBuilder.newInv().processors(1, 1, 1, 0).bucketInputs(1).upgrades(3))
+		.validUpgrades(ContainerRadioactiveProcessor.VALID_UPGRADES).valid(machineValidator())
+		//
+		.setDirectionsBySlot(0, BlockEntityUtils.MachineDirection.RIGHT).setDirectionsBySlot(1,
+			BlockEntityUtils.MachineDirection.LEFT, BlockEntityUtils.MachineDirection.BOTTOM));
         addComponent(new ComponentProcessor(this).canProcess(this::shouldProcessRecipe).process(ComponentProcessor::processFluidItem2ItemRecipe));
         addComponent(new ComponentContainerProvider("radioactiveprocessor", this).createMenu((id, player) -> new ContainerRadioactiveProcessor(id, player, getComponent(IComponentType.Inventory), getCoordsArray())));
     }

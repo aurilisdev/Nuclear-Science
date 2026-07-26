@@ -518,7 +518,7 @@ public class NuclearScienceLangKeyProvider extends BaseLangKeyProvider {
 
 			addGuidebook("chapter.othermachines.atomicassembler1", "The Atomic Assembler makes use of the strange properties of Dark Matter, and is able to duplicate items (we have made sure you can't dupe items with inventories, so no dupe bugs this time (: ). It requires 72 kW at 480 V to run. If it loses power, all progress is lost!");
 			addGuidebook("chapter.othermachines.atomicassembler2", "To use it, take an item of your desire and place it in the Assembler. Surround the item with Dark Matter Cells like shown:");
-			addGuidebook("chapter.othermachines.atomicassembler3", "Each duplication takes 3600 ticks, and will take one use of the Dark Matter Cells. Cells have 64 uses in total.");
+			addGuidebook("chapter.othermachines.atomicassembler3", "Each duplication takes 6000 ticks, and will take one use of the Dark Matter Cells. Cells have 12 uses in total.");
 
 			addGuidebook("chapter.misc", "Misc");
 			addGuidebook("chapter.misc.l1", "Futurum Usui.");
