@@ -26,13 +26,13 @@ import voltaic.prefab.utilities.RadiationUtils;
 
 public class TileAtomicAssembler extends GenericTile {
 
-    public final SingleProperty<Integer> progress = property(
-	    new SingleProperty<>(PropertyTypes.INTEGER, "progress", 0));
+    public final SingleProperty<Integer> progress = property(new SingleProperty<>(PropertyTypes.INTEGER, "progress", 0))
+	    .setNoUpdateServer();
 
     public TileAtomicAssembler(BlockPos pos, BlockState state) {
 	super(NuclearScienceTiles.TILE_ATOMICASSEMBLER.get(), pos, state);
 
-	addComponent(new ComponentTickable(this).tickCommon(this::tickServer));
+	addComponent(new ComponentTickable(this).tickServer(this::tickServer));
 	addComponent(new ComponentPacketHandler(this));
 	addComponent(new ComponentElectrodynamic(this, false, true)
 		.maxJoules(NuclearConstants.ATOMICASSEMBLER_USAGE_PER_TICK * 20)
@@ -136,9 +136,10 @@ public class TileAtomicAssembler extends GenericTile {
 	    return true;
 	}
 
-	if (AtomicAssemblerBlacklistRegister.INSTANCE.isBlacklisted(stack.getItem()) || stack.hasTag() || (ItemUtils.testItems(stack.getItem(), NuclearScienceItems.ITEM_CELLDARKMATTER.get())
-		&& stack.getCapability(ForgeCapabilities.ITEM_HANDLER)
-			.orElse(CapabilityUtils.EMPTY_ITEM_HANDLER) != CapabilityUtils.EMPTY_ITEM_HANDLER)) {
+	if (AtomicAssemblerBlacklistRegister.INSTANCE.isBlacklisted(stack.getItem()) || stack.hasTag()
+		|| (ItemUtils.testItems(stack.getItem(), NuclearScienceItems.ITEM_CELLDARKMATTER.get())
+			&& stack.getCapability(ForgeCapabilities.ITEM_HANDLER)
+				.orElse(CapabilityUtils.EMPTY_ITEM_HANDLER) != CapabilityUtils.EMPTY_ITEM_HANDLER)) {
 	    return false;
 	}
 
