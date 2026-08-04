@@ -64,7 +64,7 @@ public class FrequencyConnectionManager {
 	return map.getOrDefault(frequency, new TunnelFrequencyBuffer()).getBufferedFluid();
     }
 
-    public static FluidStack recieveFluid(TunnelFrequency frequency, FluidStack recieve, FluidAction action) {
+    public static FluidStack receiveFluid(TunnelFrequency frequency, FluidStack recieve, FluidAction action) {
 	ServerLevel level = getOverworld();
 	ICapabilityTunnelMap cap = level.getCapability(NuclearScienceCapabilities.CAPABILITY_TUNNELMAP)
 		.orElse(NuclearCapabilityUtils.EMPTY_TUNNELMAP);
@@ -75,7 +75,7 @@ public class FrequencyConnectionManager {
 	if (!map.containsKey(frequency)) {
 	    map.put(frequency, new TunnelFrequencyBuffer());
 	}
-	return map.get(frequency).addFluid(action, recieve);
+	return map.get(frequency).receiveFluid(action, recieve);
     }
 
     public static FluidStack extractFluid(TunnelFrequency frequency, FluidStack extract, FluidAction action) {
@@ -103,7 +103,7 @@ public class FrequencyConnectionManager {
 	return map.getOrDefault(frequency, new TunnelFrequencyBuffer()).getBufferedGas();
     }
 
-    public static GasStack recieveGas(TunnelFrequency frequency, GasStack recieve, GasAction action) {
+    public static GasStack receiveGas(TunnelFrequency frequency, GasStack recieve, GasAction action) {
 	ServerLevel level = getOverworld();
 	ICapabilityTunnelMap cap = level.getCapability(NuclearScienceCapabilities.CAPABILITY_TUNNELMAP)
 		.orElse(NuclearCapabilityUtils.EMPTY_TUNNELMAP);
@@ -114,7 +114,7 @@ public class FrequencyConnectionManager {
 	if (!map.containsKey(frequency)) {
 	    map.put(frequency, new TunnelFrequencyBuffer());
 	}
-	return map.get(frequency).addGas(action, recieve);
+	return map.get(frequency).receiveGas(action, recieve);
     }
 
     public static GasStack extractGas(TunnelFrequency frequency, GasStack extract, GasAction action) {
@@ -153,7 +153,7 @@ public class FrequencyConnectionManager {
 	if (!map.containsKey(frequency)) {
 	    map.put(frequency, new TunnelFrequencyBuffer());
 	}
-	return map.get(frequency).addItem(simulate, recieve);
+	return map.get(frequency).receiveItem(simulate, recieve);
     }
 
     public static ItemStack extractItem(TunnelFrequency frequency, ItemStack extract, boolean simulate) {

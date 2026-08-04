@@ -140,62 +140,56 @@ public class TunnelFrequencyBuffer {
 
     }
 
-    public FluidStack addFluid(FluidAction action, FluidStack addition) {
+    public FluidStack receiveFluid(FluidAction action, FluidStack addition) {
 
 	if (addition.isEmpty()) {
 	    return FluidStack.EMPTY;
 	}
 
-	if (fluidBuffer.isEmpty()) {
-
-	    FluidStack check = addition;
-
-	    if (check.getAmount() - MAX_FLUID_CAP > 0) {
-		check = new FluidStack(addition.getFluid(), MAX_FLUID_CAP);
-	    }
-
-	    if (action == FluidAction.EXECUTE) {
-
-		fluidBuffer = check.copy();
-	    }
-	    return check;
-	}
-
-	if (fluidBuffer.getAmount() != 0 && !fluidBuffer.getFluid().isSame(addition.getFluid())) {
+	if (!fluidBuffer.isEmpty() && !fluidBuffer.isFluidEqual(addition)) {
 	    return FluidStack.EMPTY;
 	}
 
-	int accepted = Math.min(MAX_FLUID_CAP - fluidBuffer.getAmount(), addition.getAmount());
+	int currentAmount = fluidBuffer.isEmpty() ? 0 : fluidBuffer.getAmount();
+	int accepted = Math.min(MAX_FLUID_CAP - currentAmount, addition.getAmount());
 
-	if (action == FluidAction.EXECUTE) {
-	    fluidBuffer = new FluidStack(fluidBuffer.getFluid(), fluidBuffer.getAmount() + accepted);
+	if (accepted <= 0) {
+	    return FluidStack.EMPTY;
 	}
 
-	return new FluidStack(addition.getFluid(), accepted);
+	if (action.execute()) {
+	    if (fluidBuffer.isEmpty()) {
+		fluidBuffer = new FluidStack(addition, accepted);
+	    } else {
+		fluidBuffer.grow(accepted);
+	    }
+	}
 
+	return new FluidStack(addition, accepted);
     }
 
     public FluidStack extractFluid(FluidAction action, FluidStack extract) {
 
-	if (fluidBuffer.isEmpty() || extract.isEmpty() || !fluidBuffer.getFluid().isSame(extract.getFluid())) {
+	if (fluidBuffer.isEmpty() || extract.isEmpty() || !fluidBuffer.isFluidEqual(extract)) {
 	    return FluidStack.EMPTY;
 	}
 
 	int taken = Math.min(extract.getAmount(), fluidBuffer.getAmount());
 
+	FluidStack returned = new FluidStack(fluidBuffer, taken);
+
 	if (action == FluidAction.EXECUTE) {
 	    if (taken >= fluidBuffer.getAmount()) {
 		fluidBuffer = FluidStack.EMPTY;
 	    } else {
-		fluidBuffer = new FluidStack(fluidBuffer.getFluid(), fluidBuffer.getAmount() - taken);
+		fluidBuffer = new FluidStack(fluidBuffer, fluidBuffer.getAmount() - taken);
 	    }
 	}
 
-	return new FluidStack(extract.getFluid(), taken);
-
+	return returned;
     }
 
-    public GasStack addGas(GasAction action, GasStack addition) {
+    public GasStack receiveGas(GasAction action, GasStack addition) {
 
 	if (addition.isEmpty()) {
 	    return GasStack.EMPTY;
@@ -216,7 +210,8 @@ public class TunnelFrequencyBuffer {
 	    return check;
 	}
 
-	if ((gasBuffer.getAmount() != 0 && !gasBuffer.getGas().equals(addition.getGas())) || gasBuffer.getTemperature() != addition.getTemperature()
+	if ((gasBuffer.getAmount() != 0 && !gasBuffer.getGas().equals(addition.getGas()))
+		|| gasBuffer.getTemperature() != addition.getTemperature()
 		|| gasBuffer.getPressure() != addition.getPressure()) {
 	    return GasStack.EMPTY;
 	}
@@ -255,66 +250,66 @@ public class TunnelFrequencyBuffer {
 
     }
 
-    public ItemStack addItem(boolean simulate, ItemStack addition) {
+    public ItemStack receiveItem(boolean simulate, ItemStack addition) {
 
 	if (addition.isEmpty()) {
 	    return ItemStack.EMPTY;
 	}
 
-	if (itemBuffer.isEmpty()) {
-
-	    ItemStack check = addition;
-
-	    if (check.getCount() - MAX_ITEM_STACK_SIZE > 0) {
-		check = addition.copy();
-		check.setCount(MAX_ITEM_STACK_SIZE);
-	    }
-
-	    if (!simulate) {
-
-		itemBuffer = check.copy();
-	    }
-	    return check;
+	/*
+	 * insertItem must return the unaccepted remainder.
+	 */
+	if (!itemBuffer.isEmpty() && !ItemStack.isSameItemSameTags(itemBuffer, addition)) {
+	    return addition.copy();
 	}
 
-	if (itemBuffer.getCount() > 0 && addition.getItem() != itemBuffer.getItem()) {
+	int currentAmount = itemBuffer.isEmpty() ? 0 : itemBuffer.getCount();
+	int accepted = Math.min(MAX_ITEM_STACK_SIZE - currentAmount, addition.getCount());
+
+	if (accepted <= 0) {
+	    return addition.copy();
+	}
+
+	if (!simulate) {
+	    if (itemBuffer.isEmpty()) {
+		itemBuffer = addition.copy();
+		itemBuffer.setCount(accepted);
+	    } else {
+		itemBuffer.grow(accepted);
+	    }
+	}
+
+	int remaining = addition.getCount() - accepted;
+
+	if (remaining <= 0) {
 	    return ItemStack.EMPTY;
 	}
 
-	int accepted = Math.min(MAX_ITEM_STACK_SIZE - itemBuffer.getCount(), addition.getCount());
-
-	if (!simulate) {
-	    itemBuffer.setCount(accepted + itemBuffer.getCount());
-	}
-
-	ItemStack returned = addition.copy();
-	returned.setCount(accepted);
-
-	return returned;
-
+	ItemStack remainder = addition.copy();
+	remainder.setCount(remaining);
+	return remainder;
     }
 
     public ItemStack extractItem(boolean simulate, ItemStack extract) {
 
-	if (itemBuffer.isEmpty() || extract.isEmpty() || extract.getItem() != itemBuffer.getItem()) {
+	if (itemBuffer.isEmpty() || extract.isEmpty() || !ItemStack.isSameItemSameTags(itemBuffer, extract)) {
 	    return ItemStack.EMPTY;
 	}
 
 	int taken = Math.min(extract.getCount(), itemBuffer.getCount());
 
+	ItemStack returned = itemBuffer.copy();
+	returned.setCount(taken);
+
 	if (!simulate) {
-	    if (taken >= itemBuffer.getCount()) {
+	    itemBuffer.shrink(taken);
+
+	    if (itemBuffer.isEmpty()) {
 		itemBuffer = ItemStack.EMPTY;
-	    } else {
-		itemBuffer.setCount(taken);
 	    }
 	}
 
-	ItemStack returned = extract.copy();
-	returned.setCount(taken);
-
 	return returned;
-
     }
 
 }
