@@ -55,7 +55,7 @@ public class FrequencyConnectionManager {
 	if (!map.containsKey(frequency)) {
 	    map.put(frequency, new TunnelFrequencyBuffer());
 	}
-	FluidStack accepted = map.get(frequency).addFluid(action, recieve);
+	FluidStack accepted = map.get(frequency).receiveFluid(action, recieve);
 	level.setData(NuclearScienceAttachmentTypes.TUNNEL_MAP, map);
 	return accepted;
     }
@@ -78,13 +78,13 @@ public class FrequencyConnectionManager {
 		.getOrDefault(frequency, new TunnelFrequencyBuffer()).getBufferedGas();
     }
 
-    public static GasStack recieveGas(TunnelFrequency frequency, GasStack recieve, GasAction action) {
+    public static GasStack receiveGas(TunnelFrequency frequency, GasStack recieve, GasAction action) {
 	ServerLevel level = getOverworld();
 	HashMap<TunnelFrequency, TunnelFrequencyBuffer> map = level.getData(NuclearScienceAttachmentTypes.TUNNEL_MAP);
 	if (!map.containsKey(frequency)) {
 	    map.put(frequency, new TunnelFrequencyBuffer());
 	}
-	GasStack accepted = map.get(frequency).addGas(action, recieve);
+	GasStack accepted = map.get(frequency).receiveGas(action, recieve);
 	level.setData(NuclearScienceAttachmentTypes.TUNNEL_MAP, map);
 	return accepted;
     }
@@ -112,7 +112,7 @@ public class FrequencyConnectionManager {
 	if (!map.containsKey(frequency)) {
 	    map.put(frequency, new TunnelFrequencyBuffer());
 	}
-	ItemStack accepted = map.get(frequency).addItem(simulate, recieve);
+	ItemStack accepted = map.get(frequency).receiveItem(simulate, recieve);
 	level.setData(NuclearScienceAttachmentTypes.TUNNEL_MAP, map);
 	return accepted;
     }

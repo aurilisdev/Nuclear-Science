@@ -153,8 +153,8 @@ public class TileQuantumTunnel extends GenericTile {
 		if (!bufferedItem.isEmpty()) {
 		    for (int i = 0; i < itemCap.getSlots(); i++) {
 
-			bufferedItem.setCount(
-				bufferedItem.getCount() - itemCap.insertItem(i, bufferedItem, false).getCount());
+			bufferedItem = itemCap.insertItem(i, bufferedItem, false);
+
 			if (bufferedItem.getCount() <= 0) {
 			    break;
 			}
@@ -399,19 +399,24 @@ public class TileQuantumTunnel extends GenericTile {
 
 	@Override
 	public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-	    return isReciever ? FrequencyConnectionManager.recieveItem(frequency.getValue(), stack, simulate)
-		    : ItemStack.EMPTY;
+	    return isReciever ? FrequencyConnectionManager.recieveItem(frequency.getValue(), stack, simulate) : stack;
 	}
 
 	@Override
 	public ItemStack extractItem(int slot, int amount, boolean simulate) {
-	    ItemStack buffered = getStackInSlot(0);
+	    if (isReciever || slot != 0 || amount <= 0) {
+		return ItemStack.EMPTY;
+	    }
+
+	    ItemStack buffered = FrequencyConnectionManager.getBufferedItem(frequency.getValue()).copy();
+
 	    if (buffered.isEmpty()) {
 		return ItemStack.EMPTY;
 	    }
-	    buffered.setCount(amount);
-	    return isReciever ? ItemStack.EMPTY
-		    : FrequencyConnectionManager.extractItem(frequency.getValue(), buffered, simulate);
+
+	    buffered.setCount(Math.min(amount, buffered.getCount()));
+
+	    return FrequencyConnectionManager.extractItem(frequency.getValue(), buffered, simulate);
 	}
 
 	@Override
@@ -472,7 +477,7 @@ public class TileQuantumTunnel extends GenericTile {
 	    if (buffered.isEmpty()) {
 		return FluidStack.EMPTY;
 	    }
-	    return drain(new FluidStack(buffered.getFluid(), maxDrain), action);
+	    return drain(buffered.copyWithAmount(maxDrain), action);
 	}
     }
 
@@ -517,7 +522,7 @@ public class TileQuantumTunnel extends GenericTile {
 	@Override
 	public int fill(GasStack gasStack, GasAction gasAction) {
 	    return isReciever
-		    ? FrequencyConnectionManager.recieveGas(frequency.getValue(), gasStack, gasAction).getAmount()
+		    ? FrequencyConnectionManager.receiveGas(frequency.getValue(), gasStack, gasAction).getAmount()
 		    : 0;
 	}
 
