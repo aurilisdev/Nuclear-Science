@@ -3,6 +3,7 @@ package nuclearscience.common.network;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -71,11 +72,28 @@ public class ReactorLogisticsNetwork extends
 
     @Override
     public void tick() {
-	for (BlockEntity tile : acceptorSet) {
-	    if (tile == null || tile.isRemoved()) {
-		acceptorSet.remove(tile);
+	super.tick();
+
+	boolean receiversChanged = false;
+	Iterator<BlockEntity> iterator = acceptorSet.iterator();
+
+	while (iterator.hasNext()) {
+	    BlockEntity tile = iterator.next();
+	    Set<Direction> inputs = acceptorInputMap.get(tile);
+
+	    if (tile == null || tile.isRemoved() || inputs == null || inputs.isEmpty()) {
+		iterator.remove();
 		acceptorInputMap.remove(tile);
+		receiversChanged = true;
 	    }
+	}
+
+	receiversChanged |= acceptorInputMap.keySet().retainAll(acceptorSet);
+
+	if (receiversChanged) {
+	    resetReceiverStatistics();
+	    acceptorInputMap.forEach(
+		    (receiver, inputs) -> inputs.forEach(input -> updateRecieverStatistics(receiver, input)));
 	}
     }
 
