@@ -48,16 +48,6 @@ public class ReactorLogisticsNetwork extends
     }
 
     @Override
-    public void tick() {
-	for (BlockEntity tile : acceptorSet) {
-	    if (tile == null || tile.isRemoved()) {
-		acceptorSet.remove(tile);
-		acceptorInputMap.remove(tile);
-	    }
-	}
-    }
-
-    @Override
     public void refreshNewNetwork() {
 	controller = null;
 	interfaces.clear();
