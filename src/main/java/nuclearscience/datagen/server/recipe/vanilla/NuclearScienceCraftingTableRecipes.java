@@ -42,7 +42,7 @@ public class NuclearScienceCraftingTableRecipes extends AbstractRecipeGenerator 
 		.complete(NuclearScience.ID, "antidote", consumer);
 
 	CustomShapedCraftingRecipe
-		.start(NuclearScienceItems.ITEMS_RADIATION_SHIELDING.getValue(SubtypeRadiationShielding.base), 2)
+		.start(NuclearScienceItems.ITEMS_RADIATION_SHIELDING.getValue(SubtypeRadiationShielding.base), 4)
 		//
 		.addPattern("LLL")
 		//
