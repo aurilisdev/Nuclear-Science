@@ -1,5 +1,7 @@
 package nuclearscience.common.inventory.container.util;
 
+import java.util.Optional;
+
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
@@ -21,16 +23,10 @@ public abstract class GenericInterfaceBoundContainer<T extends GenericTileInterf
     @Override
     public void broadcastChanges() {
 	super.broadcastChanges();
-
-	if (!getLevel().isClientSide() && getPlayer() != null && getSafeHost() != null) {
-
-	    GenericTileInterfaceBound bound = getSafeHost();
-
-	    PacketSetClientInterfaces packet = new PacketSetClientInterfaces(bound.getBlockPos(),
-		    bound.getInterfacesForClient());
-
-	    PacketDistributor.sendToPlayer((ServerPlayer) getPlayer(), packet);
-
+	if (!getLevel().isClientSide()) {
+	    Optional<PacketSetClientInterfaces> oPacket = getSafeHost()
+		    .map(host -> new PacketSetClientInterfaces(host.getBlockPos(), host.getInterfacesForClient()));
+	    oPacket.ifPresent(packet -> PacketDistributor.sendToPlayer((ServerPlayer) getPlayer(), packet));
 	}
 
     }

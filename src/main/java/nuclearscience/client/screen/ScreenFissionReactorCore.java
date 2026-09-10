@@ -33,14 +33,9 @@ public class ScreenFissionReactorCore extends GenericScreen<ContainerFissionReac
 
 	addComponent(new ScreenComponentGeneric(ScreenComponentProgress.ProgressTextures.ARROW_RIGHT_OFF, 77, 38));
 
-	addComponent(new ScreenComponentTemperature(() -> {
+	addComponent(new ScreenComponentTemperature(() -> menu.getSafeHost().map(core -> {
 
 	    List<FormattedCharSequence> list = new ArrayList<>();
-
-	    TileFissionReactorCore core = menu.getSafeHost();
-	    if (core == null) {
-		return list;
-	    }
 
 	    list.add(
 		    NuclearTextUtils
@@ -74,7 +69,7 @@ public class ScreenFissionReactorCore extends GenericScreen<ContainerFissionReac
 	    }
 
 	    return list;
-	}, -AbstractScreenComponentInfo.SIZE + 1, 2));
+	}).orElseGet(ArrayList::new), -AbstractScreenComponentInfo.SIZE + 1, 2));
 
 	new WrapperInventoryIO(this, -AbstractScreenComponentInfo.SIZE + 1, AbstractScreenComponentInfo.SIZE + 2, 75,
 		82 + 10, 8, 72 + 10);

@@ -1,5 +1,7 @@
 package nuclearscience.prefab.screen.component.logisticsnetwork;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
@@ -16,6 +18,7 @@ import voltaic.prefab.utilities.math.Color;
 
 public class ScreenComponentBoundInterface extends ScreenComponentGeneric {
 
+    @Nullable
     private Interface bound;
 
     public ScreenComponentBoundInterface(int x, int y, int width, int height) {
@@ -24,19 +27,17 @@ public class ScreenComponentBoundInterface extends ScreenComponentGeneric {
 
     @Override
     public void renderBackground(GuiGraphics graphics, int xAxis, int yAxis, int guiWidth, int guiHeight) {
-	if (!isVisible()) {
+	if (!isVisible())
 	    return;
-	}
 
 	Interface inter = bound;
 
-	GenericInterfaceBoundScreen<?> screen = (GenericInterfaceBoundScreen<?>) gui;
+	GenericInterfaceBoundScreen<?> screen = (GenericInterfaceBoundScreen<?>) requireScreen();
 
-	GenericTileInterfaceBound tile = screen.getMenu().getSafeHost();
+	GenericTileInterfaceBound tile = screen.getMenu().getSafeHost().orElse(null);
 
-	if (tile == null) {
+	if (tile == null)
 	    return;
-	}
 
 	ITexture texture = QuantumTunnelTextures.FREQUENCY;
 
@@ -44,9 +45,8 @@ public class ScreenComponentBoundInterface extends ScreenComponentGeneric {
 		yLocation + guiHeight, width, height);
 
 	if (inter == null) {
-	    if (tile.interfaceLocation.getValue().equals(BlockEntityUtils.OUT_OF_REACH)) {
+	    if (tile.interfaceLocation.getValue().equals(BlockEntityUtils.OUT_OF_REACH))
 		return;
-	    }
 	    inter = new Interface(tile.interfaceLocation.getValue(),
 		    GenericTileInterface.InterfaceType.values()[tile.interfaceType.getValue()]);
 	}
@@ -86,10 +86,11 @@ public class ScreenComponentBoundInterface extends ScreenComponentGeneric {
 
     }
 
-    public void setInterface(Interface bound) {
+    public void setInterface(@Nullable Interface bound) {
 	this.bound = bound;
     }
 
+    @Nullable
     public Interface getInterface() {
 	return bound;
     }

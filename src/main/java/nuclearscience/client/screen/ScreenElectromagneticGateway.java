@@ -4,7 +4,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import nuclearscience.common.inventory.container.ContainerElectromagneticGateway;
-import nuclearscience.common.tile.accelerator.TileElectromagneticGateway;
 import nuclearscience.prefab.utils.NuclearDisplayUnits;
 import nuclearscience.prefab.utils.NuclearTextUtils;
 import voltaic.api.electricity.formatting.DisplayUnits;
@@ -28,27 +27,19 @@ public class ScreenElectromagneticGateway extends GenericScreen<ContainerElectro
 		.setFilter(ScreenComponentEditBox.POSITIVE_DECIMAL).setTextColor(Color.WHITE)
 		.setTextColorUneditable(Color.WHITE).setMaxLength(20).setResponder(val -> {
 
-		    TileElectromagneticGateway tile = menu.getSafeHost();
-
-		    if (tile == null) {
-			return;
-		    }
-
-		    float temp = 0.0F;
-
-		    try {
-			temp = Float.parseFloat(val);
-		    } catch (Exception e) {
-
-		    }
-
-		    if (temp < 0.0F) {
-			temp = 0.0F;
-		    } else if (temp > 100.0F) {
-			temp = 100.0F;
-		    }
-
-		    tile.targetSpeed.setValue(temp);
+		    menu.getSafeHost().ifPresent(tile -> {
+			float temp = 0.0F;
+			try {
+			    temp = Float.parseFloat(val);
+			} catch (Exception e) {
+			}
+			if (temp < 0.0F) {
+			    temp = 0.0F;
+			} else if (temp > 100.0F) {
+			    temp = 100.0F;
+			}
+			tile.targetSpeed.setValue(temp);
+		    });
 
 		}));
 
@@ -61,9 +52,9 @@ public class ScreenElectromagneticGateway extends GenericScreen<ContainerElectro
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 	super.render(graphics, mouseX, mouseY, partialTicks);
 
-	if (needsUpdate && getMenu().getSafeHost() instanceof TileElectromagneticGateway gateway) {
-	    box.setValue(gateway.targetSpeed.getValue() + "");
-	    needsUpdate = false;
+	if (needsUpdate) {
+	    getMenu().getSafeHost()
+		    .ifPresent(gateway -> { box.setValue(gateway.targetSpeed.getValue() + ""); needsUpdate = false; });
 	}
     }
 

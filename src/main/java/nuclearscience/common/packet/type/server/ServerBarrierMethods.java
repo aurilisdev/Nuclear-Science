@@ -16,9 +16,8 @@ public class ServerBarrierMethods {
 
 	Player player = world.getPlayerByUUID(creator);
 
-	if (player == null) {
+	if (player == null)
 	    return;
-	}
 
 	UUID frequencyID = UUID.randomUUID();
 

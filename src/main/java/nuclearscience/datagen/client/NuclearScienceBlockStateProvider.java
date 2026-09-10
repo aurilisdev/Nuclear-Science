@@ -1,5 +1,7 @@
 package nuclearscience.datagen.client;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -265,13 +267,13 @@ public class NuclearScienceBlockStateProvider extends BaseBlockstateProvider {
 
     }
 
-    public ItemModelBuilder rotatedLeftRightBlock(Block block, ModelFile none, ModelFile left, ModelFile right,
-	    boolean registerItem) {
+    public @Nullable ItemModelBuilder rotatedLeftRightBlock(Block block, ModelFile none, ModelFile left,
+	    ModelFile right, boolean registerItem) {
 	return rotatedLeftRightBlock(block, none, left, right, 0, registerItem);
     }
 
-    public ItemModelBuilder rotatedLeftRightBlock(Block block, ModelFile none, ModelFile left, ModelFile right,
-	    int rotationOffset, boolean registerItem) {
+    public @Nullable ItemModelBuilder rotatedLeftRightBlock(Block block, ModelFile none, ModelFile left,
+	    ModelFile right, int rotationOffset, boolean registerItem) {
 	getVariantBuilder(block)
 		//
 		.partialState().with(VoltaicBlockStates.FACING, Direction.NORTH)
@@ -322,9 +324,8 @@ public class NuclearScienceBlockStateProvider extends BaseBlockstateProvider {
 		.with(NuclearScienceBlockStates.FACINGDIRECTION, FacingDirection.RIGHT).modelForState().modelFile(right)
 		.rotationY((180 + rotationOffset) % 360).addModel();
 
-	if (registerItem) {
+	if (registerItem)
 	    return blockItem(block, none);
-	}
 	return null;
 
     }

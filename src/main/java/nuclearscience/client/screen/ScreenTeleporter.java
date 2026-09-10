@@ -11,7 +11,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import nuclearscience.common.inventory.container.ContainerTeleporter;
 import nuclearscience.common.settings.NuclearConfig;
-import nuclearscience.common.tile.TileTeleporter;
 import nuclearscience.prefab.utils.NuclearTextUtils;
 import voltaic.prefab.screen.GenericScreen;
 import voltaic.prefab.screen.component.button.ScreenComponentButton;
@@ -37,19 +36,13 @@ public class ScreenTeleporter extends GenericScreen<ContainerTeleporter> {
 	imageHeight += 50;
 	inventoryLabelY += 50;
 
-	addComponent(new ScreenComponentSimpleLabel(30, 20, 10, Color.TEXT_GRAY, () -> {
-	    TileTeleporter tile = getMenu().getSafeHost();
-	    if (tile == null) {
-		return Component.empty();
-	    }
-
-	    ResourceKey<Level> dimension = ResourceKey.create(Registries.DIMENSION, tile.dimension.getValue());
-
-	    if (ElectroTextUtils.dimensionExists(dimension)) {
-		return ElectroTextUtils.dimension(dimension);
-	    }
-	    return Component.literal(dimension.location().getPath());
-	}));
+	addComponent(
+		new ScreenComponentSimpleLabel(30, 20, 10, Color.TEXT_GRAY, () -> container.getSafeHost().map(tile -> {
+		    ResourceKey<Level> dimension = ResourceKey.create(Registries.DIMENSION, tile.dimension.getValue());
+		    if (ElectroTextUtils.dimensionExists(dimension))
+			return ElectroTextUtils.dimension(dimension);
+		    return Component.literal(dimension.location().getPath());
+		}).orElse(Component.empty())));
 
 	addComponent(new ScreenComponentSimpleLabel(30, 33, 10, Color.TEXT_GRAY, NuclearTextUtils.gui("teleporter.x")));
 	addEditBox(xBox = new ScreenComponentEditBox(40, 30, 60, 13, getFontRenderer()).setTextColor(Color.WHITE)
@@ -64,45 +57,28 @@ public class ScreenTeleporter extends GenericScreen<ContainerTeleporter> {
 		.setTextColorUneditable(Color.WHITE).setMaxLength(9).setResponder(this::updateZ)
 		.setFilter(ScreenComponentEditBox.INTEGER));
 
-	addComponent(new ScreenComponentButton<>(50, 78, 100, 20).setOnPress(button -> {
+	addComponent(new ScreenComponentButton<>(50, 78, 100, 20)
+		.setOnPress(button -> container.getSafeHost().ifPresent(tile -> {
+		    ItemStack input = tile.<ComponentInventory>requireComponent(IComponentType.Inventory).getItem(0);
+		    if (input.isEmpty() || !input.has(VoltaicDataComponentTypes.BLOCK_POS))
+			return;
+		    tile.destination.setValue(input.get(VoltaicDataComponentTypes.BLOCK_POS));
+		    if (input.has(VoltaicDataComponentTypes.RESOURCE_LOCATION)) {
+			tile.dimension.setValue(input.get(VoltaicDataComponentTypes.RESOURCE_LOCATION));
+		    }
+		})).setLabel(NuclearTextUtils.gui("teleporter.import")));
 
-	    TileTeleporter tile = container.getSafeHost();
-	    if (tile == null) {
-		return;
-	    }
-
-	    ItemStack input = tile.<ComponentInventory>getComponent(IComponentType.Inventory).getItem(0);
-
-	    if (input.isEmpty() || !input.has(VoltaicDataComponentTypes.BLOCK_POS)) {
-		return;
-	    }
-
-	    tile.destination.setValue(input.get(VoltaicDataComponentTypes.BLOCK_POS));
-
-	    if (input.has(VoltaicDataComponentTypes.RESOURCE_LOCATION)) {
-		tile.dimension.setValue(input.get(VoltaicDataComponentTypes.RESOURCE_LOCATION));
-	    }
-
-	}).setLabel(NuclearTextUtils.gui("teleporter.import")));
-
-	addComponent(new ScreenComponentButton<>(30, 100, 120, 20).setOnPress(button -> {
-
-	    TileTeleporter tile = container.getSafeHost();
-	    if (tile == null) {
-		return;
-	    }
-
-	    tile.destination.setValue(tile.getBlockPos());
-	    tile.dimension.setValue(Level.OVERWORLD.location());
-
-	    xBox.setValue("" + menu.getSafeHost().destination.getValue().getX());
-	    yBox.setValue("" + menu.getSafeHost().destination.getValue().getY());
-	    zBox.setValue("" + menu.getSafeHost().destination.getValue().getZ());
-
-	}).setLabel(NuclearTextUtils.gui("teleporter.reset")));
+	addComponent(new ScreenComponentButton<>(30, 100, 120, 20)
+		.setOnPress(button -> container.getSafeHost().ifPresent(tile -> {
+		    tile.destination.setValue(tile.getBlockPos());
+		    tile.dimension.setValue(Level.OVERWORLD.location());
+		    xBox.setValue("" + tile.destination.getValue().getX());
+		    yBox.setValue("" + tile.destination.getValue().getY());
+		    zBox.setValue("" + tile.destination.getValue().getZ());
+		})).setLabel(NuclearTextUtils.gui("teleporter.reset")));
 
 	addComponent(new ScreenComponentElectricInfo(-AbstractScreenComponentInfo.SIZE + 1, 2)
-		.wattage(NuclearConfig.INSTANCE.TELEPORTER_USAGE_PER_TELEPORT.get() / 20));
+		.wattage(NuclearConfig.getInstance().TELEPORTER_USAGE_PER_TELEPORT.get() / 20));
 
 	xBox.setFocus(false);
 	yBox.setFocus(false);
@@ -132,88 +108,68 @@ public class ScreenTeleporter extends GenericScreen<ContainerTeleporter> {
     }
 
     private void handleX(String freq) {
-	if (freq.isEmpty()) {
+	if (freq.isEmpty())
 	    return;
-	}
 
-	Integer x = 0;
-
-	try {
-	    x = Integer.parseInt(xBox.getValue());
-	} catch (Exception e) {
-	    // Not required
-	}
-
-	TileTeleporter tile = menu.getSafeHost();
-
-	if (tile == null) {
-	    return;
-	}
-
-	BlockPos dest = tile.destination.getValue();
-
-	tile.destination.setValue(new BlockPos(x, dest.getY(), dest.getZ()));
+	menu.getSafeHost().ifPresent(tile -> {
+	    int xVal = 0;
+	    try {
+		xVal = Integer.parseInt(xBox.getValue());
+	    } catch (Exception e) {
+		// Not required
+	    }
+	    BlockPos dest = tile.destination.getValue();
+	    tile.destination.setValue(new BlockPos(xVal, dest.getY(), dest.getZ()));
+	});
 
     }
 
     private void handleY(String out) {
 
-	if (out.isEmpty()) {
+	if (out.isEmpty())
 	    return;
-	}
 
-	Integer y = 0;
-	try {
-	    y = Integer.parseInt(yBox.getValue());
-	} catch (Exception e) {
-	    // Not required
-	}
-
-	TileTeleporter tile = menu.getSafeHost();
-
-	if (tile == null) {
-	    return;
-	}
-
-	BlockPos dest = tile.destination.getValue();
-
-	tile.destination.setValue(new BlockPos(dest.getX(), y, dest.getZ()));
+	menu.getSafeHost().ifPresent(tile -> {
+	    int yVal = 0;
+	    try {
+		yVal = Integer.parseInt(yBox.getValue());
+	    } catch (Exception e) {
+		// Not required
+	    }
+	    BlockPos dest = tile.destination.getValue();
+	    tile.destination.setValue(new BlockPos(dest.getX(), yVal, dest.getZ()));
+	});
 
     }
 
     private void handleZ(String out) {
 
-	if (out.isEmpty()) {
+	if (out.isEmpty())
 	    return;
-	}
 
-	Integer z = 0;
-	try {
-	    z = Integer.parseInt(zBox.getValue());
-	} catch (Exception e) {
-	    // Not required
-	}
-
-	TileTeleporter tile = menu.getSafeHost();
-
-	if (tile == null) {
-	    return;
-	}
-
-	BlockPos dest = tile.destination.getValue();
-
-	tile.destination.setValue(new BlockPos(dest.getX(), dest.getY(), z));
+	menu.getSafeHost().ifPresent(tile -> {
+	    int zVal = 0;
+	    try {
+		zVal = Integer.parseInt(zBox.getValue());
+	    } catch (Exception e) {
+		// Not required
+	    }
+	    BlockPos dest = tile.destination.getValue();
+	    tile.destination.setValue(new BlockPos(dest.getX(), dest.getY(), zVal));
+	});
 
     }
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 	super.render(graphics, mouseX, mouseY, partialTicks);
-	if (needsUpdate && menu.getSafeHost() != null) {
-	    needsUpdate = false;
-	    xBox.setValue("" + menu.getSafeHost().destination.getValue().getX());
-	    yBox.setValue("" + menu.getSafeHost().destination.getValue().getY());
-	    zBox.setValue("" + menu.getSafeHost().destination.getValue().getZ());
+	if (needsUpdate) {
+	    menu.getSafeHost().ifPresent(safeHost -> {
+		needsUpdate = false;
+		xBox.setValue("" + safeHost.destination.getValue().getX());
+		yBox.setValue("" + safeHost.destination.getValue().getY());
+		zBox.setValue("" + safeHost.destination.getValue().getZ());
+	    });
 	}
     }
 }

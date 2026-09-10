@@ -109,15 +109,13 @@ public class WrapperNewFrequency {
 
 	screen.addComponent(createButton = new ScreenComponentButton<>(x + 13, y + 120, 70, 20).setOnPress(button -> {
 
-	    if (nameEditBox.getValue().isEmpty() || nameEditBox.getValue().isBlank()) {
+	    if (nameEditBox.getValue().isEmpty() || nameEditBox.getValue().isBlank())
 		return;
-	    }
 
 	    Player player = Minecraft.getInstance().player;
 
-	    if (player == null) {
+	    if (player == null)
 		return;
-	    }
 
 	    FrequencyType type;
 
@@ -125,9 +123,8 @@ public class WrapperNewFrequency {
 		type = FrequencyType.PRIVATE;
 	    } else if (publicButton.isPressed) {
 		type = FrequencyType.PUBLIC;
-	    } else {
+	    } else
 		return;
-	    }
 
 	    PacketDistributor
 		    .sendToServer(new PacketCreateNewFreqeuency(player.getUUID(), nameEditBox.getValue(), type));

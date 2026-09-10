@@ -30,9 +30,8 @@ public class BlockIrradiated extends Block {
     protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
 	RadiationManager manager = level.getData(VoltaicAttachmentTypes.RADIATION_MANAGER);
 	int radius = manager.getReachOfSource(level, pos);
-	if (radius <= 0) {
+	if (radius <= 0)
 	    return;
-	}
 	BlockState other = level.getBlockState(pos);
 	pos = pos.offset(level.random.nextIntBetweenInclusive(-radius, radius),
 		level.random.nextIntBetweenInclusive(-radius, radius),
@@ -48,14 +47,13 @@ public class BlockIrradiated extends Block {
     }
 
     public static BlockState getIrradiatedBlockstate(BlockState state) {
-	if (state.is(BlockTags.DIRT)) {
+	if (state.is(BlockTags.DIRT))
 	    return NuclearScienceBlocks.BLOCKS_IRRADIATED.getValue(SubtypeIrradiatedBlock.soil).defaultBlockState();
-	} else if (state.is(Blocks.GRASS_BLOCK)) {
+	else if (state.is(Blocks.GRASS_BLOCK))
 	    return NuclearScienceBlocks.BLOCKS_IRRADIATED.getValue(SubtypeIrradiatedBlock.grass).defaultBlockState();
-	} else if (state.is(BlockTags.LOGS)) {
+	else if (state.is(BlockTags.LOGS))
 	    return NuclearScienceBlocks.BLOCKS_IRRADIATED.getValue(SubtypeIrradiatedBlock.petrifiedwood)
 		    .defaultBlockState();
-	}
 
 	return state;
     }

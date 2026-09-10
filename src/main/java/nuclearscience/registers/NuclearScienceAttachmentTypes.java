@@ -14,6 +14,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.Tag;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.attachment.IAttachmentHolder;
 import net.neoforged.neoforge.attachment.IAttachmentSerializer;
@@ -27,32 +28,36 @@ import nuclearscience.common.settings.NuclearConfig;
 
 public class NuclearScienceAttachmentTypes {
 
+    private static final String SIZE = "size";
+    private static final String ID = "id";
+    private static final String SET_SIZE = "setsize";
+    private static final String BUFFER = "buffer";
+
     public static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES = DeferredRegister
 	    .create(NeoForgeRegistries.ATTACHMENT_TYPES, NuclearScience.ID);
 
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<HashMap<UUID, HashSet<TunnelFrequency>>>> CHANNEL_MAP = ATTACHMENT_TYPES
-	    .register("channelmap", () -> AttachmentType.builder(() -> new HashMap<UUID, HashSet<TunnelFrequency>>())
+	    .register("channelmap", () -> AttachmentType
+		    .<HashMap<UUID, HashSet<TunnelFrequency>>>builder(NuclearScienceAttachmentTypes::newHashMap)
 		    .serialize(new IAttachmentSerializer<CompoundTag, HashMap<UUID, HashSet<TunnelFrequency>>>() {
 			@Override
 			public HashMap<UUID, HashSet<TunnelFrequency>> read(IAttachmentHolder holder, CompoundTag tag,
 				HolderLookup.Provider provider) {
-			    HashMap<UUID, HashSet<TunnelFrequency>> data = new HashMap<>();
+			    HashMap<UUID, HashSet<TunnelFrequency>> data = newHashMap();
+			    int size = tag.getInt(SIZE);
 
-			    int size = tag.getInt("size");
 			    for (int i = 0; i < size; i++) {
+				CompoundTag stored = tag.getCompound(Integer.toString(i));
+				UUID id = decode(UUIDUtil.CODEC, getRequired(stored, ID));
+				HashSet<TunnelFrequency> frequencies = new HashSet<>();
+				int setSize = stored.getInt(SET_SIZE);
 
-				CompoundTag stored = tag.getCompound("" + i);
-
-				UUID id = UUIDUtil.CODEC.parse(new Dynamic<>(NbtOps.INSTANCE, stored.get("id")))
-					.result().get();
-				HashSet<TunnelFrequency> set = new HashSet<>();
-
-				for (int j = 0; j < stored.getInt("setsize"); j++) {
-				    set.add(TunnelFrequency.CODEC
-					    .parse(new Dynamic<>(NbtOps.INSTANCE, stored.get("" + j))).result().get());
+				for (int j = 0; j < setSize; j++) {
+				    frequencies.add(
+					    decode(TunnelFrequency.CODEC, getRequired(stored, Integer.toString(j))));
 				}
 
-				data.put(id, set);
+				data.put(id, frequencies);
 			    }
 
 			    return data;
@@ -62,77 +67,93 @@ public class NuclearScienceAttachmentTypes {
 			public @Nullable CompoundTag write(HashMap<UUID, HashSet<TunnelFrequency>> attachment,
 				HolderLookup.Provider provider) {
 			    CompoundTag data = new CompoundTag();
-			    int size = attachment.size();
-			    data.putInt("size", size);
+			    data.putInt(SIZE, attachment.size());
+
 			    int i = 0;
 			    for (Map.Entry<UUID, HashSet<TunnelFrequency>> entry : attachment.entrySet()) {
-				CompoundTag store = new CompoundTag();
-				UUIDUtil.CODEC.encodeStart(NbtOps.INSTANCE, entry.getKey())
-					.ifSuccess(tag -> store.put("id", tag));
-				store.putInt("setsize", entry.getValue().size());
+				CompoundTag stored = new CompoundTag();
+				stored.put(ID, encode(UUIDUtil.CODEC, entry.getKey()));
+				stored.putInt(SET_SIZE, entry.getValue().size());
+
 				int j = 0;
-				for (TunnelFrequency freq : entry.getValue()) {
-				    int finalJ = j;
-				    TunnelFrequency.CODEC.encodeStart(NbtOps.INSTANCE, freq)
-					    .ifSuccess(tag -> store.put("" + finalJ, tag));
-				    j++;
+				for (TunnelFrequency frequency : entry.getValue()) {
+				    stored.put(Integer.toString(j++), encode(TunnelFrequency.CODEC, frequency));
 				}
-				data.put(i + "", store);
-				i++;
+
+				data.put(Integer.toString(i++), stored);
 			    }
+
 			    return data;
 			}
 		    }).build());
 
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<HashMap<TunnelFrequency, TunnelFrequencyBuffer>>> TUNNEL_MAP = ATTACHMENT_TYPES
-	    .register("tunnelmap",
-		    () -> AttachmentType.builder(() -> new HashMap<TunnelFrequency, TunnelFrequencyBuffer>()).serialize(
+	    .register("tunnelmap", () -> AttachmentType
+		    .<HashMap<TunnelFrequency, TunnelFrequencyBuffer>>builder(NuclearScienceAttachmentTypes::newHashMap)
+		    .serialize(
 			    new IAttachmentSerializer<CompoundTag, HashMap<TunnelFrequency, TunnelFrequencyBuffer>>() {
 				@Override
 				public HashMap<TunnelFrequency, TunnelFrequencyBuffer> read(IAttachmentHolder holder,
 					CompoundTag tag, HolderLookup.Provider provider) {
-				    HashMap<TunnelFrequency, TunnelFrequencyBuffer> data = new HashMap<>();
+				    HashMap<TunnelFrequency, TunnelFrequencyBuffer> data = newHashMap();
+				    int size = tag.getInt(SIZE);
 
-				    int size = tag.getInt("size");
 				    for (int i = 0; i < size; i++) {
+					CompoundTag stored = tag.getCompound(Integer.toString(i));
+					TunnelFrequency frequency = decode(TunnelFrequency.CODEC,
+						getRequired(stored, ID));
+					TunnelFrequencyBuffer buffer = decode(TunnelFrequencyBuffer.CODEC,
+						getRequired(stored, BUFFER));
 
-					CompoundTag stored = tag.getCompound("" + i);
-
-					data.put(TunnelFrequency.CODEC
-						.parse(new Dynamic<>(NbtOps.INSTANCE, stored.get("id"))).result().get(),
-						TunnelFrequencyBuffer.CODEC
-							.parse(new Dynamic<>(NbtOps.INSTANCE, stored.get("buffer")))
-							.result().get());
+					data.put(frequency, buffer);
 				    }
 
 				    return data;
 				}
 
 				@Override
-				public @Nullable CompoundTag write(
-					HashMap<TunnelFrequency, TunnelFrequencyBuffer> attachment,
+				public CompoundTag write(HashMap<TunnelFrequency, TunnelFrequencyBuffer> attachment,
 					HolderLookup.Provider provider) {
 				    CompoundTag data = new CompoundTag();
-				    int size = attachment.size();
-				    data.putInt("size", size);
+				    data.putInt(SIZE, attachment.size());
+
 				    int i = 0;
 				    for (Map.Entry<TunnelFrequency, TunnelFrequencyBuffer> entry : attachment
 					    .entrySet()) {
-					CompoundTag store = new CompoundTag();
-					TunnelFrequency.CODEC.encodeStart(NbtOps.INSTANCE, entry.getKey())
-						.ifSuccess(tag -> store.put("id", tag));
-					TunnelFrequencyBuffer.CODEC.encodeStart(NbtOps.INSTANCE, entry.getValue())
-						.ifSuccess(tag -> store.put("buffer", tag));
-					data.put(i + "", store);
-					i++;
+					CompoundTag stored = new CompoundTag();
+					stored.put(ID, encode(TunnelFrequency.CODEC, entry.getKey()));
+					stored.put(BUFFER, encode(TunnelFrequencyBuffer.CODEC, entry.getValue()));
+					data.put(Integer.toString(i++), stored);
 				    }
+
 				    return data;
 				}
-			    }).build());
+			    })
+		    .build());
 
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> ANTIMATTER_TIMEONGROUND = ATTACHMENT_TYPES
 	    .register("timeonground",
-		    () -> AttachmentType.builder(() -> NuclearConfig.INSTANCE.ANTIMATTER_TICKS_ON_GROUND.get())
+		    () -> AttachmentType.builder(() -> NuclearConfig.getInstance().ANTIMATTER_TICKS_ON_GROUND.get())
 			    .serialize(Codec.INT).build());
 
+    private static <K, V> HashMap<K, V> newHashMap() {
+	return new HashMap<>();
+    }
+
+    private static Tag getRequired(CompoundTag tag, String key) {
+	Tag value = tag.get(key);
+
+	if (value == null)
+	    throw new IllegalStateException("Missing attachment field: " + key);
+
+	return value;
+    }
+
+    private static <T> T decode(Codec<T> codec, Tag tag) {
+	return codec.parse(new Dynamic<>(NbtOps.INSTANCE, tag)).getOrThrow();
+    }
+
+    private static <T> Tag encode(Codec<T> codec, T value) {
+	return codec.encodeStart(NbtOps.INSTANCE, value).getOrThrow();
+    }
 }

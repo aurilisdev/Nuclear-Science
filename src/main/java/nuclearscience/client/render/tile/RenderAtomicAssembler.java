@@ -23,7 +23,7 @@ public class RenderAtomicAssembler extends AbstractTileRenderer<TileAtomicAssemb
     @Override
     public void render(TileAtomicAssembler tile, float partialTicks, PoseStack poseStack, MultiBufferSource bufferIn,
 	    int combinedLightIn, int combinedOverlayIn) {
-	ComponentInventory inv = tile.getComponent(IComponentType.Inventory);
+	ComponentInventory inv = tile.requireComponent(IComponentType.Inventory);
 	ItemStack stack = inv.getItem(6);
 	if (!stack.isEmpty()) {
 	    poseStack.pushPose();

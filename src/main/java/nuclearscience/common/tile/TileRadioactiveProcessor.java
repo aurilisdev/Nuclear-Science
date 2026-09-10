@@ -1,6 +1,7 @@
 package nuclearscience.common.tile;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.common.inventory.container.ContainerRadioactiveProcessor;
 import nuclearscience.common.settings.NuclearConfig;
@@ -12,7 +13,6 @@ import voltaic.prefab.tile.components.type.ComponentContainerProvider;
 import voltaic.prefab.tile.components.type.ComponentElectrodynamic;
 import voltaic.prefab.tile.components.type.ComponentFluidHandlerMulti;
 import voltaic.prefab.tile.components.type.ComponentInventory;
-import voltaic.prefab.tile.components.type.ComponentPacketHandler;
 import voltaic.prefab.tile.components.type.ComponentProcessor;
 import voltaic.prefab.tile.components.type.ComponentTickable;
 import voltaic.prefab.utilities.BlockEntityUtils;
@@ -26,7 +26,6 @@ public class TileRadioactiveProcessor extends GenericTile {
     public TileRadioactiveProcessor(BlockPos pos, BlockState state) {
 	super(NuclearScienceTiles.TILE_RADIOACTIVEPROCESSOR.get(), pos, state);
 	addComponent(new ComponentTickable(this));
-	addComponent(new ComponentPacketHandler(this));
 	addComponent(new ComponentElectrodynamic(this, false, true).voltage(VoltaicCapabilities.DEFAULT_VOLTAGE * 4)
 		.setInputDirections(BlockEntityUtils.MachineDirection.BACK));
 	addComponent(new ComponentFluidHandlerMulti(this).setInputTanks(1, MAX_TANK_CAPACITY)
@@ -42,30 +41,31 @@ public class TileRadioactiveProcessor extends GenericTile {
 		.process(ComponentProcessor::processFluidItem2ItemRecipe));
 	addComponent(new ComponentContainerProvider("radioactiveprocessor", this)
 		.createMenu((id, player) -> new ContainerRadioactiveProcessor(id, player,
-			getComponent(IComponentType.Inventory), getCoordsArray())));
+			requireComponent(IComponentType.Inventory), getCoordsArray())));
     }
 
-    private boolean shouldProcessRecipe(ComponentProcessor component, int procNumber) {
+    private boolean shouldProcessRecipe(ComponentProcessor component, Level level, int procNumber) {
 	component.consumeBucket();
 
-	boolean canProcess = component.canProcessFluidItem2ItemRecipe(procNumber,
+	boolean canProcess = component.canProcessFluidItem2ItemRecipe(level, procNumber,
 		NuclearScienceRecipies.RADIOACTIVE_PROCESSOR_TYPE.get());
 	if (BlockEntityUtils.isLit(this) ^ canProcess) {
 	    BlockEntityUtils.updateLit(this, canProcess);
 	}
 
-	RadiationUtils.handleRadioactiveFluids(this,
-		(ComponentFluidHandlerMulti) getComponent(IComponentType.FluidHandler),
-		NuclearConfig.INSTANCE.RADIOACTIVE_PROCESSOR_RADIATION_RADIUS.get(), true, 30, true, false);
-	RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory),
-		NuclearConfig.INSTANCE.RADIOACTIVE_PROCESSOR_RADIATION_RADIUS.get(), true, 30, true, false);
+	RadiationUtils.handleRadioactiveFluids(level, this,
+		(ComponentFluidHandlerMulti) requireComponent(IComponentType.FluidHandler),
+		NuclearConfig.getInstance().RADIOACTIVE_PROCESSOR_RADIATION_RADIUS.get(), true, 30, true, false);
+	RadiationUtils.handleRadioactiveItems(level, this,
+		(ComponentInventory) requireComponent(IComponentType.Inventory),
+		NuclearConfig.getInstance().RADIOACTIVE_PROCESSOR_RADIATION_RADIUS.get(), true, 30, true, false);
 
 	return canProcess;
     }
 
     @Override
-    public int getComparatorSignal() {
-	return this.<ComponentProcessor>getComponent(IComponentType.Processor).isActive(0) ? 15 : 0;
+    public int getComparatorSignal(Level level) {
+	return this.<ComponentProcessor>requireComponent(IComponentType.Processor).isActive(0) ? 15 : 0;
     }
 
 }

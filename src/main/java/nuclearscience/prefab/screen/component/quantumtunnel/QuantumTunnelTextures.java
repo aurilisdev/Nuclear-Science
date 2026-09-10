@@ -30,37 +30,37 @@ public enum QuantumTunnelTextures implements ITexture {
 
     @Override
     public ResourceLocation getLocation() {
-	return this.loc;
+	return loc;
     }
 
     @Override
     public int imageHeight() {
-	return this.imageHeight;
+	return imageHeight;
     }
 
     @Override
     public int imageWidth() {
-	return this.imageWidth;
+	return imageWidth;
     }
 
     @Override
     public int textureHeight() {
-	return this.textureHeight;
+	return textureHeight;
     }
 
     @Override
     public int textureU() {
-	return this.textureU;
+	return textureU;
     }
 
     @Override
     public int textureV() {
-	return this.textureV;
+	return textureV;
     }
 
     @Override
     public int textureWidth() {
-	return this.textureWidth;
+	return textureWidth;
     }
 
 }

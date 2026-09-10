@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.common.network.ReactorLogisticsNetwork;
 import nuclearscience.common.tile.reactor.logisticsnetwork.util.GenericTileLogisticsMember;
@@ -25,7 +26,7 @@ public class TileController extends GenericTileLogisticsMember implements ITicka
     public static final double USAGE = 100;
 
     public final SingleProperty<Boolean> active = property(
-	    new SingleProperty<>(PropertyTypes.BOOLEAN, "active", false));
+	    new SingleProperty<>(getPropertyManager(), PropertyTypes.BOOLEAN, "active", false));
     private Direction relativeBack;
 
     private boolean isSoundPlaying = false;
@@ -40,10 +41,10 @@ public class TileController extends GenericTileLogisticsMember implements ITicka
     }
 
     @Override
-    public void tickServer(ComponentTickable tickable) {
-	super.tickServer(tickable);
+    public void tickServer(Level level, ComponentTickable tickable) {
+	super.tickServer(level, tickable);
 
-	ComponentElectrodynamic electro = getComponent(IComponentType.Electrodynamic);
+	ComponentElectrodynamic electro = requireComponent(IComponentType.Electrodynamic);
 
 	boolean canRun = electro.getJoulesStored() >= USAGE;
 
@@ -58,7 +59,7 @@ public class TileController extends GenericTileLogisticsMember implements ITicka
 
     }
 
-    public void tickClient(ComponentTickable tickable) {
+    public void tickClient(Level level, ComponentTickable tickable) {
 	if (!isSoundPlaying && shouldPlaySound()) {
 	    isSoundPlaying = true;
 	    SoundBarrierMethods.playTileSound(NuclearScienceSounds.SOUND_LOGISTICSCONTROLLER.get(), this, true);
@@ -72,12 +73,13 @@ public class TileController extends GenericTileLogisticsMember implements ITicka
 
     @Override
     public boolean canConnect(ReactorLogisticsNetwork network) {
-	return network.getController() == null || network.getController().getBlockPos().equals(getBlockPos());
+	TileController controller = network.getController();
+	return controller == null || controller.getBlockPos().equals(getBlockPos());
     }
 
     @Override
-    public void onBlockStateUpdate(BlockState oldState, BlockState newState) {
-	super.onBlockStateUpdate(oldState, newState);
+    public void onBlockStateUpdate(Level level, BlockState oldState, BlockState newState) {
+	super.onBlockStateUpdate(level, oldState, newState);
 	if (!level.isClientSide() && oldState.hasProperty(VoltaicBlockStates.FACING)
 		&& newState.hasProperty(VoltaicBlockStates.FACING)
 		&& oldState.getValue(VoltaicBlockStates.FACING) != newState.getValue(VoltaicBlockStates.FACING)) {

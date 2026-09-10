@@ -24,27 +24,16 @@ public class RenderParticle extends EntityRenderer<EntityParticle> {
     public void render(EntityParticle entityIn, float entityYaw, float partialTicks, PoseStack matrixStackIn,
 	    MultiBufferSource bufferIn, int packedLightIn) {
 	matrixStackIn.pushPose();
-
 	float perc = (500 - System.currentTimeMillis() % 1000) / 500.0F;
-
 	float scale;
-
 	if (perc < 0) {
-
 	    perc *= -1.0F;
-
 	    // perc = 1.0F - perc;
-
 	    scale = MAX_SCALE - DELTA_SCALE * perc;
-
 	} else {
-
 	    perc = 1.0F - perc;
-
 	    scale = MIN_SCALE + DELTA_SCALE * perc;
-
 	}
-
 	matrixStackIn.scale(scale, scale, scale);
 	RenderingUtils.renderStar(matrixStackIn, bufferIn, entityIn.tickCount + partialTicks, 60, 1, 1, 1, 0.3f, true);
 	matrixStackIn.popPose();

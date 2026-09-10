@@ -52,7 +52,7 @@ public class ParticleOptionSmoke extends ParticleType<ParticleOptionSmoke> imple
 	this.scale = scale;
 	this.gravity = gravity;
 	this.lifetime = lifetime;
-	this.hasPhysics = physics;
+	hasPhysics = physics;
 	return this;
     }
 

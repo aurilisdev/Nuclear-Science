@@ -5,6 +5,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.common.inventory.container.ContainerMonitorModule;
 import nuclearscience.common.tile.reactor.logisticsnetwork.interfaces.GenericTileInterface;
@@ -33,8 +34,8 @@ public class TileMonitorModule extends GenericTileInterfaceBound {
     }
 
     @Override
-    public void onBlockStateUpdate(BlockState oldState, BlockState newState) {
-	super.onBlockStateUpdate(oldState, newState);
+    public void onBlockStateUpdate(Level level, BlockState oldState, BlockState newState) {
+	super.onBlockStateUpdate(level, oldState, newState);
 	if (!level.isClientSide() && oldState.hasProperty(VoltaicBlockStates.FACING)
 		&& newState.hasProperty(VoltaicBlockStates.FACING)
 		&& oldState.getValue(VoltaicBlockStates.FACING) != newState.getValue(VoltaicBlockStates.FACING)) {

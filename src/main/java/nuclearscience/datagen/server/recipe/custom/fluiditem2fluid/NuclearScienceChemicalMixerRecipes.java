@@ -20,7 +20,7 @@ public class NuclearScienceChemicalMixerRecipes extends ElectrodynamicsChemicalM
     public void addRecipes(RecipeOutput output) {
 
 	newRecipe(new FluidStack(ElectrodynamicsFluids.FLUIDS_SULFATE.getValue(SubtypeSulfateFluid.iron), 1000), 0,
-		CHEMICALMIXER_REQUIRED_TICKS, CHEMICALMIXER_USAGE_PER_TICK, "ironsulfate_from_ironblock", this.modID)
+		CHEMICALMIXER_REQUIRED_TICKS, CHEMICALMIXER_USAGE_PER_TICK, "ironsulfate_from_ironblock", modID)
 		//
 		.addFluidTagInput(VoltaicTags.Fluids.SULFURIC_ACID, 1000)
 		//
@@ -29,7 +29,7 @@ public class NuclearScienceChemicalMixerRecipes extends ElectrodynamicsChemicalM
 		.save(output);
 
 	newRecipe(new FluidStack(NuclearScienceFluids.FLUID_IODINESOLUTION.get(), 100), 0, CHEMICALMIXER_REQUIRED_TICKS,
-		CHEMICALMIXER_USAGE_PER_TICK, "iodine_solution_from_eggs", this.modID)
+		CHEMICALMIXER_USAGE_PER_TICK, "iodine_solution_from_eggs", modID)
 		//
 		.addFluidTagInput(VoltaicTags.Fluids.SULFURIC_ACID, 200)
 		//
@@ -38,7 +38,7 @@ public class NuclearScienceChemicalMixerRecipes extends ElectrodynamicsChemicalM
 		.save(output);
 
 	newRecipe(new FluidStack(NuclearScienceFluids.FLUID_IODINESOLUTION.get(), 100), 0, CHEMICALMIXER_REQUIRED_TICKS,
-		CHEMICALMIXER_USAGE_PER_TICK, "iodine_solution_from_kelp", this.modID)
+		CHEMICALMIXER_USAGE_PER_TICK, "iodine_solution_from_kelp", modID)
 		//
 		.addFluidTagInput(VoltaicTags.Fluids.SULFURIC_ACID, 200)
 		//

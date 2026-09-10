@@ -5,6 +5,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.common.inventory.container.ContainerThermometerModule;
 import nuclearscience.common.network.ReactorLogisticsNetwork;
@@ -24,16 +25,17 @@ public class TileThermometerModule extends GenericTileInterfaceBound {
 
     private Direction relativeBack;
 
-    public final SingleProperty<Integer> mode = property(
-	    new SingleProperty<>(PropertyTypes.INTEGER, "comparitormode", Mode.CONSTANT.ordinal()));
+    public final SingleProperty<Integer> mode = property(new SingleProperty<>(getPropertyManager(),
+	    PropertyTypes.INTEGER, "comparitormode", Mode.CONSTANT.ordinal())).setUpdateServer();
     public final SingleProperty<Boolean> inverted = property(
-	    new SingleProperty<>(PropertyTypes.BOOLEAN, "inverted", false));
+	    new SingleProperty<>(getPropertyManager(), PropertyTypes.BOOLEAN, "inverted", false)).setUpdateServer();
     public final SingleProperty<Double> targetTemperature = property(
-	    new SingleProperty<>(PropertyTypes.DOUBLE, "targettemperature", 0.0));
+	    new SingleProperty<>(getPropertyManager(), PropertyTypes.DOUBLE, "targettemperature", 0.0))
+	    .setUpdateServer();
     public final SingleProperty<Double> trackedTemperature = property(
-	    new SingleProperty<>(PropertyTypes.DOUBLE, "trackedtemperature", 0.0));
+	    new SingleProperty<>(getPropertyManager(), PropertyTypes.DOUBLE, "trackedtemperature", 0.0));
     public final SingleProperty<Integer> redstoneSignal = property(
-	    new SingleProperty<>(PropertyTypes.INTEGER, "redstonesignal", 0));
+	    new SingleProperty<>(getPropertyManager(), PropertyTypes.INTEGER, "redstonesignal", 0));
 
     public static final int MAX_REDSTONE = 15;
 
@@ -46,60 +48,31 @@ public class TileThermometerModule extends GenericTileInterfaceBound {
     }
 
     @Override
-    public void tickServer(ComponentTickable tickable) {
-	super.tickServer(tickable);
+    public void tickServer(Level level, ComponentTickable tickable) {
+	super.tickServer(level, tickable);
 
 	GenericTileInterface.InterfaceType type = GenericTileInterface.InterfaceType.values()[interfaceType.getValue()];
 
 	if (type == GenericTileInterface.InterfaceType.NONE
-		|| interfaceLocation.getValue().equals(BlockEntityUtils.OUT_OF_REACH) || !networkCable.valid()
-		|| !(networkCable.getSafe() instanceof TileReactorLogisticsCable)) {
+		|| interfaceLocation.getValue().equals(BlockEntityUtils.OUT_OF_REACH)) {
 	    redstoneSignal.setValue(0);
 	    trackedTemperature.setValue(0.0);
 	    return;
 	}
 
-	TileReactorLogisticsCable cable = networkCable.getSafe();
-
-	if (cable.isRemoved()) {
-	    redstoneSignal.setValue(0);
-	    trackedTemperature.setValue(0.0);
-	    return;
-	}
-
-	ReactorLogisticsNetwork network = cable.getNetwork();
-
-	if (!network.isControllerActive()) {
-	    redstoneSignal.setValue(0);
-	    trackedTemperature.setValue(0.0);
-	    return;
-	}
-
-	GenericTileInterface genericInterface = network.getInterface(interfaceLocation.getValue());
-
-	if (genericInterface == null || genericInterface.getInterfaceType() != type) {
-	    redstoneSignal.setValue(0);
-	    trackedTemperature.setValue(0.0);
-	    return;
-	}
-
-	if (genericInterface.reactor == null || !genericInterface.reactor.valid()) {
-	    redstoneSignal.setValue(0);
-	    trackedTemperature.setValue(0.0);
-	    return;
-	}
-
-	double temp = -1;
-
-	if (genericInterface.reactor.getSafe() instanceof TileFissionReactorCore core) {
-
-	    temp = TileFissionReactorCore.getActualTemp(core.temperature.getValue());
-
-	} else if (genericInterface.reactor.getSafe() instanceof TileMSReactorCore core) {
-
-	    temp = core.temperature.getValue();
-
-	}
+	double temp = getNetworkCable(TileReactorLogisticsCable.class).map(TileReactorLogisticsCable::getNetwork)
+		.filter(ReactorLogisticsNetwork::isControllerActive)
+		.map(network -> network.getInterface(interfaceLocation.getValue()))
+		.filter(inter -> inter.getInterfaceType() == type).flatMap(GenericTileInterface::getReactor)
+		.map(reactor -> {
+		    if (reactor instanceof TileFissionReactorCore core) {
+			return TileFissionReactorCore.getActualTemp(core.temperature.getValue());
+		    }
+		    if (reactor instanceof TileMSReactorCore core) {
+			return core.temperature.getValue();
+		    }
+		    return -1.0;
+		}).orElse(-1.0);
 
 	if (temp < 0) {
 	    redstoneSignal.setValue(0);
@@ -107,53 +80,23 @@ public class TileThermometerModule extends GenericTileInterfaceBound {
 	    return;
 	}
 
-	double perc = 0;
-
 	trackedTemperature.setValue(temp);
 
-	switch (Mode.values()[mode.getValue()]) {
-	case CONSTANT:
-	    if (inverted.getValue()) {
-		if (temp <= targetTemperature.getValue()) {
-		    perc = 1;
-		} else {
-		    perc = 0;
-		}
-	    } else {
-		if (temp >= targetTemperature.getValue()) {
-		    perc = 1;
-		} else {
-		    perc = 0;
-		}
-	    }
+	double target = targetTemperature.getValue();
 
-	    break;
-	case BUILD_UP:
+	double perc = switch (Mode.values()[mode.getValue()]) {
+	case CONSTANT -> (inverted.getValue() ? temp <= target : temp >= target) ? 1.0 : 0.0;
 
-	    if (inverted.getValue()) {
-		if (temp == 0 || targetTemperature.getValue() == 0) {
-		    perc = 1;
-		} else {
+	case BUILD_UP -> {
+	    double progress = temp == 0 || target == 0 ? 0.0 : Math.min(1.0, temp / target);
 
-		    perc = 1.0 - Math.min(1, temp / targetTemperature.getValue());
-
-		}
-	    } else {
-		if (temp == 0 || targetTemperature.getValue() == 0) {
-		    perc = 0;
-		} else {
-
-		    perc = Math.min(1, temp / targetTemperature.getValue());
-
-		}
-
-	    }
-
-	    break;
+	    yield inverted.getValue() ? 1.0 - progress : progress;
 	}
 
-	redstoneSignal.setValue((int) (MAX_REDSTONE * perc));
+	default -> 0.0;
+	};
 
+	redstoneSignal.setValue((int) (MAX_REDSTONE * perc));
     }
 
     @Override
@@ -167,8 +110,8 @@ public class TileThermometerModule extends GenericTileInterfaceBound {
     }
 
     @Override
-    public void onBlockStateUpdate(BlockState oldState, BlockState newState) {
-	super.onBlockStateUpdate(oldState, newState);
+    public void onBlockStateUpdate(Level level, BlockState oldState, BlockState newState) {
+	super.onBlockStateUpdate(level, oldState, newState);
 	if (!level.isClientSide() && oldState.hasProperty(VoltaicBlockStates.FACING)
 		&& newState.hasProperty(VoltaicBlockStates.FACING)
 		&& oldState.getValue(VoltaicBlockStates.FACING) != newState.getValue(VoltaicBlockStates.FACING)) {
@@ -195,13 +138,14 @@ public class TileThermometerModule extends GenericTileInterfaceBound {
     }
 
     @Override
-    public int getComparatorSignal() {
+    public int getComparatorSignal(Level level) {
 	return redstoneSignal.getValue();
     }
 
     public static enum Mode {
 
-	BUILD_UP, CONSTANT;
+	BUILD_UP,
+	CONSTANT;
 
     }
 

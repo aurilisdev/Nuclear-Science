@@ -1,10 +1,7 @@
 package nuclearscience.common.block;
 
-import com.mojang.serialization.MapCodec;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -23,10 +20,5 @@ public class BlockElectromagneticSwitch extends Block {
     public BlockElectromagneticSwitch() {
 	super(Properties.ofFullCopy(Blocks.IRON_BLOCK).strength(3.5f, 20).requiresCorrectToolForDrops().noOcclusion()
 		.isRedstoneConductor((p1, p2, p3) -> false));
-    }
-
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-	return null;
     }
 }

@@ -2,6 +2,8 @@ package nuclearscience.common.tile.reactor.moltensalt;
 
 import java.util.Set;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -15,7 +17,7 @@ import voltaic.prefab.tile.types.GenericRefreshingConnectTile;
 public class TileMoltenSaltPipe
 	extends GenericRefreshingConnectTile<SubtypeMoltenSaltPipe, TileMoltenSaltPipe, MoltenSaltNetwork> {
 
-    public SubtypeMoltenSaltPipe pipe = null;
+    private @Nullable SubtypeMoltenSaltPipe pipe = null;
 
     public TileMoltenSaltPipe(BlockPos pos, BlockState state) {
 	super(NuclearScienceTiles.TILE_MOLTENSALTPIPE.get(), pos, state);
@@ -23,8 +25,9 @@ public class TileMoltenSaltPipe
 
     @Override
     public SubtypeMoltenSaltPipe getCableType() {
+	SubtypeMoltenSaltPipe pipe = this.pipe;
 	if (pipe == null) {
-	    pipe = ((BlockMoltenSaltPipe) getBlockState().getBlock()).pipe;
+	    pipe = this.pipe = ((BlockMoltenSaltPipe) getBlockState().getBlock()).pipe;
 	}
 	return pipe;
     }
@@ -47,12 +50,12 @@ public class TileMoltenSaltPipe
     }
 
     @Override
-    public MoltenSaltNetwork createInstanceConductor(Set<TileMoltenSaltPipe> set) {
+    public MoltenSaltNetwork createNetworkFromConductors(Set<TileMoltenSaltPipe> set) {
 	return new MoltenSaltNetwork(set);
     }
 
     @Override
-    public MoltenSaltNetwork createInstance(Set<MoltenSaltNetwork> set) {
+    public MoltenSaltNetwork createNetworkFromNetworks(Set<MoltenSaltNetwork> set) {
 	return new MoltenSaltNetwork(set);
     }
 

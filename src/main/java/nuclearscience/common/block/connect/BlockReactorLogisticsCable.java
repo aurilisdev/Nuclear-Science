@@ -2,7 +2,7 @@ package nuclearscience.common.block.connect;
 
 import java.util.HashSet;
 
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 import com.mojang.serialization.MapCodec;
 
@@ -33,13 +33,13 @@ public class BlockReactorLogisticsCable extends AbstractRefreshingConnectBlock<T
     }
 
     @Override
-    public EnumConnectType getConnection(BlockState otherState, BlockEntity otherTile,
+    public EnumConnectType getConnection(BlockState otherState, @Nullable BlockEntity otherTile,
 	    TileReactorLogisticsCable thisCable, Direction dir) {
 	EnumConnectType connection = EnumConnectType.NONE;
 	if (otherTile instanceof TileReactorLogisticsCable) {
 	    connection = EnumConnectType.WIRE;
-	} else if (otherTile instanceof ILogisticsMember member && thisCable.getNetwork() != null
-		&& member.isValidConnection(dir.getOpposite()) && member.canConnect(thisCable.getNetwork())) {
+	} else if (otherTile instanceof ILogisticsMember member && member.isValidConnection(dir.getOpposite())
+		&& member.canConnect(thisCable.getNetwork())) {
 	    connection = EnumConnectType.INVENTORY;
 	}
 	return connection;
@@ -48,19 +48,18 @@ public class BlockReactorLogisticsCable extends AbstractRefreshingConnectBlock<T
     @Nullable
     @Override
     public TileReactorLogisticsCable getCableIfValid(BlockEntity tile) {
-	if (tile instanceof TileReactorLogisticsCable cable) {
+	if (tile instanceof TileReactorLogisticsCable cable)
 	    return cable;
-	}
 	return null;
     }
 
     @Override
-    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+    public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
 	return new TileReactorLogisticsCable(blockPos, blockState);
     }
 
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {
-	return null;
+	throw new UnsupportedOperationException("Need to implement CODEC");
     }
 }

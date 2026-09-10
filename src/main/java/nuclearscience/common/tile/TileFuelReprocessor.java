@@ -3,6 +3,7 @@ package nuclearscience.common.tile;
 import electrodynamics.registers.ElectrodynamicsSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.common.settings.NuclearConfig;
 import nuclearscience.registers.NuclearScienceRecipies;
@@ -15,7 +16,6 @@ import voltaic.prefab.tile.components.IComponentType;
 import voltaic.prefab.tile.components.type.ComponentContainerProvider;
 import voltaic.prefab.tile.components.type.ComponentElectrodynamic;
 import voltaic.prefab.tile.components.type.ComponentInventory;
-import voltaic.prefab.tile.components.type.ComponentPacketHandler;
 import voltaic.prefab.tile.components.type.ComponentProcessor;
 import voltaic.prefab.tile.components.type.ComponentTickable;
 import voltaic.prefab.utilities.BlockEntityUtils;
@@ -29,7 +29,6 @@ public class TileFuelReprocessor extends GenericTile implements ITickableSound {
     public TileFuelReprocessor(BlockPos pos, BlockState state) {
 	super(NuclearScienceTiles.TILE_FUELREPROCESSOR.get(), pos, state);
 
-	addComponent(new ComponentPacketHandler(this));
 	addComponent(new ComponentTickable(this).tickClient(this::tickClient));
 	addComponent(new ComponentElectrodynamic(this, false, true).voltage(VoltaicCapabilities.DEFAULT_VOLTAGE * 4)
 		.setInputDirections(BlockEntityUtils.MachineDirection.BACK));
@@ -44,32 +43,33 @@ public class TileFuelReprocessor extends GenericTile implements ITickableSound {
 		.process(ComponentProcessor::processItem2ItemRecipe));
 	addComponent(new ComponentContainerProvider("fuelreprocessor", this)
 		.createMenu((id, player) -> new ContainerO2OProcessor(id, player,
-			getComponent(IComponentType.Inventory), getCoordsArray())));
+			requireComponent(IComponentType.Inventory), getCoordsArray())));
     }
 
-    private boolean shouldProcessRecipe(ComponentProcessor component, int procNumber) {
-	boolean canProcess = component.canProcessItem2ItemRecipe(procNumber,
+    private boolean shouldProcessRecipe(ComponentProcessor component, Level level, int procNumber) {
+	boolean canProcess = component.canProcessItem2ItemRecipe(level, procNumber,
 		NuclearScienceRecipies.FUEL_REPROCESSOR_TYPE.get());
 	if (BlockEntityUtils.isLit(this) ^ canProcess) {
 	    BlockEntityUtils.updateLit(this, canProcess);
 	}
 
-	RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory),
-		NuclearConfig.INSTANCE.FUEL_REPROCESSOR_RADIATION_RADIUS.get(), true, 30, true, false);
+	RadiationUtils.handleRadioactiveItems(level, this,
+		(ComponentInventory) requireComponent(IComponentType.Inventory),
+		NuclearConfig.getInstance().FUEL_REPROCESSOR_RADIATION_RADIUS.get(), true, 30, true, false);
 
 	return canProcess;
     }
 
-    public void tickClient(ComponentTickable tickable) {
+    public void tickClient(Level level, ComponentTickable tickable) {
 	if (!isSoundPlaying && shouldPlaySound()) {
 	    isSoundPlaying = true;
 	    SoundBarrierMethods.playTileSound(ElectrodynamicsSounds.SOUND_HUM.get(), this, true);
 	}
-	if (this.<ComponentProcessor>getComponent(IComponentType.Processor).isActive(0)
-		&& getLevel().getRandom().nextFloat() < 0.3) {
-	    this.level.addParticle(ParticleTypes.SMOKE, this.worldPosition.getX() + level.random.nextFloat(),
-		    this.worldPosition.getY() + level.random.nextFloat(),
-		    this.worldPosition.getZ() + level.random.nextFloat(), 0.0, 0.0, 0.0);
+	if (this.<ComponentProcessor>requireComponent(IComponentType.Processor).isActive(0)
+		&& level.getRandom().nextFloat() < 0.3) {
+	    level.addParticle(ParticleTypes.SMOKE, worldPosition.getX() + level.random.nextFloat(),
+		    worldPosition.getY() + level.random.nextFloat(), worldPosition.getZ() + level.random.nextFloat(),
+		    0.0, 0.0, 0.0);
 	}
     }
 
@@ -80,11 +80,11 @@ public class TileFuelReprocessor extends GenericTile implements ITickableSound {
 
     @Override
     public boolean shouldPlaySound() {
-	return this.<ComponentProcessor>getComponent(IComponentType.Processor).isActive(0);
+	return this.<ComponentProcessor>requireComponent(IComponentType.Processor).isActive(0);
     }
 
     @Override
-    public int getComparatorSignal() {
-	return this.<ComponentProcessor>getComponent(IComponentType.Processor).isActive(0) ? 15 : 0;
+    public int getComparatorSignal(Level level) {
+	return this.<ComponentProcessor>requireComponent(IComponentType.Processor).isActive(0) ? 15 : 0;
     }
 }

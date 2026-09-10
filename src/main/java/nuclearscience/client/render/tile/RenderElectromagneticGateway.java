@@ -1,7 +1,5 @@
 package nuclearscience.client.render.tile;
 
-import org.jetbrains.annotations.NotNull;
-
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -31,7 +29,7 @@ public class RenderElectromagneticGateway extends AbstractTileRenderer<TileElect
     }
 
     @Override
-    public void render(@NotNull TileElectromagneticGateway tile, float partialTicks, PoseStack matrix,
+    public void render(TileElectromagneticGateway tile, float partialTicks, PoseStack matrix,
 	    MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
 
 	matrix.pushPose();

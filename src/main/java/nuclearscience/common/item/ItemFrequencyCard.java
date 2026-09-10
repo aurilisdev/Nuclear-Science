@@ -10,6 +10,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -29,12 +30,12 @@ public class ItemFrequencyCard extends ItemVoltaic {
     public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
 
 	Level level = context.getLevel();
+	Player player = context.getPlayer();
 
-	if (level.isClientSide) {
+	if (level.isClientSide || player == null)
 	    return super.onItemUseFirst(stack, context);
-	}
 
-	if (context.getPlayer().isShiftKeyDown()) {
+	if (player.isShiftKeyDown()) {
 	    stack.remove(VoltaicDataComponentTypes.RESOURCE_LOCATION);
 	    stack.remove(VoltaicDataComponentTypes.BLOCK_POS);
 	} else {
@@ -44,35 +45,6 @@ public class ItemFrequencyCard extends ItemVoltaic {
 
 	return InteractionResult.SUCCESS;
 
-	/*
-	 * if (context.getLevel().getBlockEntity(context.getClickedPos()) instanceof
-	 * TileTeleporter teleporter) {
-	 * 
-	 * 
-	 * 
-	 * CompoundTag nbt = stack.getOrCreateTag(); if
-	 * (nbt.contains(NBTUtils.DIMENSION)) {
-	 * 
-	 * BlockPos pos = readBlockPos(stack); ResourceKey<Level> world =
-	 * readDimension(stack);
-	 * 
-	 * teleporter.destination.set(pos); teleporter.dimension = world;
-	 * 
-	 * MutableComponent worldKey = ElectroTextUtils.dimensionExists(world) ?
-	 * ElectroTextUtils.dimension(world) :
-	 * Component.literal(world.location().getPath());
-	 * 
-	 * context.getPlayer().sendSystemMessage(NuclearTextUtils.tooltip(
-	 * "frequencycard.linked", worldKey.append(" " + pos.toShortString())));
-	 * 
-	 * } else { writeBlockPos(stack, teleporter.getBlockPos());
-	 * writeDimension(stack, teleporter.getLevel().dimension()); }
-	 * 
-	 * }
-	 * 
-	 * return super.onItemUseFirst(stack, context);
-	 * 
-	 */
     }
 
     @Override

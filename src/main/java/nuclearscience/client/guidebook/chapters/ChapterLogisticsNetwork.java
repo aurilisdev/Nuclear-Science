@@ -3,6 +3,8 @@ package nuclearscience.client.guidebook.chapters;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import electrodynamics.prefab.utilities.ElectroTextUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.MutableComponent;
@@ -76,7 +78,7 @@ public class ChapterLogisticsNetwork extends Chapter {
 		    }
 
 		    @Override
-		    public Object getJeiLookup() {
+		    public @Nullable Object getJeiLookup() {
 			return new ItemStack(NuclearScienceItems.ITEMS_REACTORLOGISTICSCABLE
 				.getValue(SubtypeReactorLogisticsCable.base));
 		    }
@@ -110,7 +112,7 @@ public class ChapterLogisticsNetwork extends Chapter {
 		    }
 
 		    @Override
-		    public Object getJeiLookup() {
+		    public @Nullable Object getJeiLookup() {
 			return new ItemStack(NuclearScienceItems.ITEMS_NUCLEARMACHINE
 				.getValue(SubtypeNuclearMachine.logisticscontroller));
 		    }
@@ -146,7 +148,7 @@ public class ChapterLogisticsNetwork extends Chapter {
 		    }
 
 		    @Override
-		    public Object getJeiLookup() {
+		    public @Nullable Object getJeiLookup() {
 			return new ItemStack(NuclearScienceItems.ITEMS_NUCLEARMACHINE
 				.getValue(SubtypeNuclearMachine.fissioninterface));
 		    }
@@ -179,7 +181,7 @@ public class ChapterLogisticsNetwork extends Chapter {
 		    }
 
 		    @Override
-		    public Object getJeiLookup() {
+		    public @Nullable Object getJeiLookup() {
 			return new ItemStack(
 				NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.msinterface));
 		    }
@@ -212,7 +214,7 @@ public class ChapterLogisticsNetwork extends Chapter {
 		    }
 
 		    @Override
-		    public Object getJeiLookup() {
+		    public @Nullable Object getJeiLookup() {
 			return new ItemStack(NuclearScienceItems.ITEMS_NUCLEARMACHINE
 				.getValue(SubtypeNuclearMachine.fusioninterface));
 		    }
@@ -268,7 +270,7 @@ public class ChapterLogisticsNetwork extends Chapter {
 		    }
 
 		    @Override
-		    public Object getJeiLookup() {
+		    public @Nullable Object getJeiLookup() {
 			return new ItemStack(NuclearScienceItems.ITEMS_NUCLEARMACHINE
 				.getValue(SubtypeNuclearMachine.controlrodmodule));
 		    }
@@ -301,7 +303,7 @@ public class ChapterLogisticsNetwork extends Chapter {
 		    }
 
 		    @Override
-		    public Object getJeiLookup() {
+		    public @Nullable Object getJeiLookup() {
 			return new ItemStack(
 				NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.supplymodule));
 		    }
@@ -334,7 +336,7 @@ public class ChapterLogisticsNetwork extends Chapter {
 		    }
 
 		    @Override
-		    public Object getJeiLookup() {
+		    public @Nullable Object getJeiLookup() {
 			return new ItemStack(
 				NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.monitormodule));
 		    }
@@ -368,7 +370,7 @@ public class ChapterLogisticsNetwork extends Chapter {
 		    }
 
 		    @Override
-		    public Object getJeiLookup() {
+		    public @Nullable Object getJeiLookup() {
 			return new ItemStack(NuclearScienceItems.ITEMS_NUCLEARMACHINE
 				.getValue(SubtypeNuclearMachine.thermometermodule));
 		    }

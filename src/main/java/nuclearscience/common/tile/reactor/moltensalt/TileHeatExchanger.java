@@ -11,6 +11,7 @@ import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -25,54 +26,53 @@ import nuclearscience.registers.NuclearScienceTiles;
 import voltaic.prefab.properties.types.PropertyTypes;
 import voltaic.prefab.properties.variant.SingleProperty;
 import voltaic.prefab.tile.GenericTile;
-import voltaic.prefab.tile.components.type.ComponentPacketHandler;
 import voltaic.prefab.tile.components.type.ComponentTickable;
 import voltaic.prefab.utilities.object.Location;
 
 public class TileHeatExchanger extends GenericTile {
     public static final int STEAM_GEN_DIAMETER = 5;
     public static final int STEAM_GEN_HEIGHT = 2;
-    private ISteamReceiver[][][] cachedReceivers = new ISteamReceiver[STEAM_GEN_DIAMETER][STEAM_GEN_HEIGHT][STEAM_GEN_DIAMETER];
+    private final ISteamReceiver[][][] cachedReceivers = new ISteamReceiver[STEAM_GEN_DIAMETER][STEAM_GEN_HEIGHT][STEAM_GEN_DIAMETER];
     public SingleProperty<Double> temperature = property(
-	    new SingleProperty<>(PropertyTypes.DOUBLE, "temperature", 0.0));
+	    new SingleProperty<>(getPropertyManager(), PropertyTypes.DOUBLE, "temperature", 0.0));
 
     public TileHeatExchanger(BlockPos pos, BlockState state) {
 	super(NuclearScienceTiles.TILE_HEATEXCHANGER.get(), pos, state);
 
 	addComponent(new ComponentTickable(this).tickCommon(this::tickCommon).tickServer(this::tickServer));
-	addComponent(new ComponentPacketHandler(this));
     }
 
-    private void tickServer(ComponentTickable componentTickable) {
-
+    private void tickServer(Level level, ComponentTickable componentTickable) {
 	temperature.setValue(temperature.getValue() * 0.9);
-
 	if (temperature.getValue() > 100) {
-	    Location source = new Location(worldPosition.getX() + 0.5f, worldPosition.getY() + 0.5f,
-		    worldPosition.getZ() + 0.5f);
-	    AABB bb = AABB.ofSize(new Vec3(source.x(), source.y(), source.z()), 4, 4, 4);
-	    List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, bb);
-	    for (LivingEntity living : list) {
-		if (!level.getBlockState(living.getOnPos()).getFluidState().is(FluidTags.WATER)) {
-		    continue;
-		}
-		living.hurt(living.damageSources().drown(), 3);
-	    }
+	    boilEntities(level);
 	}
     }
 
-    protected void tickCommon(ComponentTickable tickable) {
-	if (temperature.getValue() > 100) {
-	    produceSteam();
+    private void boilEntities(Level level) {
+	Location source = new Location(worldPosition.getX() + 0.5f, worldPosition.getY() + 0.5f,
+		worldPosition.getZ() + 0.5f);
+	AABB bb = AABB.ofSize(new Vec3(source.x(), source.y(), source.z()), 4, 4, 4);
+	List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, bb);
+	for (LivingEntity living : list) {
+	    if (!level.getBlockState(living.getOnPos()).getFluidState().is(FluidTags.WATER)) {
+		continue;
+	    }
+	    living.hurt(living.damageSources().drown(), 3);
 	}
+    }
 
+    protected void tickCommon(Level level, ComponentTickable tickable) {
+	if (temperature.getValue() > 100) {
+	    produceSteam(level);
+	}
     }
 
     /**
      * Mostly copied from {@link TileFissionReactorCore#produceSteam()} with some
      * changes to fit the exchanger
      */
-    protected void produceSteam() {
+    protected void produceSteam(Level level) {
 
 	for (int i = 0; i < STEAM_GEN_DIAMETER; i++) {
 	    for (int j = 0; j < STEAM_GEN_HEIGHT; j++) {
@@ -94,13 +94,13 @@ public class TileHeatExchanger extends GenericTile {
 		    int offsetZ = worldPosition.getZ() + k - STEAM_GEN_DIAMETER / 2;
 		    BlockPos offpos = new BlockPos(offsetX, offsetY, offsetZ);
 
-		    if (!TileFissionReactorCore.isStillWater(getLevel(), offpos)) {
+		    if (!TileFissionReactorCore.isStillWater(level, offpos)) {
 			continue;
 		    }
 
-		    boolean isFaceWater = TileFissionReactorCore.isStillWater(getLevel(),
+		    boolean isFaceWater = TileFissionReactorCore.isStillWater(level,
 			    new BlockPos(offsetX, worldPosition.getY(), worldPosition.getZ()))
-			    || TileFissionReactorCore.isStillWater(getLevel(),
+			    || TileFissionReactorCore.isStillWater(level,
 				    new BlockPos(worldPosition.getX(), worldPosition.getY(), offsetZ))
 			    || isReactor2d;
 
@@ -115,9 +115,10 @@ public class TileHeatExchanger extends GenericTile {
 				cachedReceivers[i][j][k] = null;
 			    }
 			    turbine.receiveSteam(
-				    (int) (NuclearConfig.INSTANCE.MSRREACTOR_MAXENERGYTARGET.get() / (STEAM_GEN_DIAMETER
-					    * STEAM_GEN_DIAMETER * 20.0
-					    * (TileMSReactorCore.MELTDOWN_TEMPERATURE / temperature.getValue()))),
+				    (int) (NuclearConfig.getInstance().MSRREACTOR_MAXENERGYTARGET.get()
+					    / (STEAM_GEN_DIAMETER * STEAM_GEN_DIAMETER * 20.0
+						    * (TileMSReactorCore.MELTDOWN_TEMPERATURE
+							    / temperature.getValue()))),
 				    temperature.getValue().intValue());
 			}
 			if (level.random.nextFloat() < temperature.getValue() / (TileMSReactorCore.MELTDOWN_TEMPERATURE
@@ -161,12 +162,13 @@ public class TileHeatExchanger extends GenericTile {
     }
 
     @Override
-    public InteractionResult useWithoutItem(Player player, BlockHitResult hit) {
+    public InteractionResult useWithoutItem(Level level, Player player, BlockHitResult hit) {
 	return InteractionResult.PASS;
     }
 
     @Override
-    public ItemInteractionResult useWithItem(ItemStack used, Player player, InteractionHand hand, BlockHitResult hit) {
+    public ItemInteractionResult useWithItem(Level level, ItemStack used, Player player, InteractionHand hand,
+	    BlockHitResult hit) {
 	return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 }

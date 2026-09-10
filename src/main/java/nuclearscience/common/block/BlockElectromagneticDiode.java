@@ -1,6 +1,6 @@
 package nuclearscience.common.block;
 
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -41,11 +41,14 @@ public class BlockElectromagneticDiode extends Block implements IWrenchable {
 	return state.rotate(mirrorIn.getRotation(state.getValue(VoltaicBlockStates.FACING)));
     }
 
-    @Nullable
     @Override
+    @Nullable
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-	return super.getStateForPlacement(context).setValue(VoltaicBlockStates.FACING,
-		context.getHorizontalDirection().getOpposite());
+	BlockState state = super.getStateForPlacement(context);
+	if (state == null)
+	    return null;
+
+	return state.setValue(VoltaicBlockStates.FACING, context.getHorizontalDirection().getOpposite());
     }
 
     @Override

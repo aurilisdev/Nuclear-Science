@@ -30,7 +30,7 @@ public class RenderChemicalExtractor extends AbstractTileRenderer<TileChemicalEx
 	matrix.pushPose();
 
 	Direction facing = tile.getFacing();
-	ComponentFluidHandlerMulti multi = tile.getComponent(IComponentType.FluidHandler);
+	ComponentFluidHandlerMulti multi = tile.requireComponent(IComponentType.FluidHandler);
 	VertexConsumer builder = buffer.getBuffer(Sheets.translucentCullBlockSheet());
 
 	FluidTank input = multi.getInputTanks()[0];

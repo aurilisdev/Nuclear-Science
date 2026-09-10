@@ -2,6 +2,8 @@ package nuclearscience.common.tile.reactor.logisticsnetwork;
 
 import java.util.Set;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -15,7 +17,7 @@ import voltaic.prefab.tile.types.GenericRefreshingConnectTile;
 public class TileReactorLogisticsCable extends
 	GenericRefreshingConnectTile<SubtypeReactorLogisticsCable, TileReactorLogisticsCable, ReactorLogisticsNetwork> {
 
-    public SubtypeReactorLogisticsCable cable;
+    private @Nullable SubtypeReactorLogisticsCable cable;
 
     public TileReactorLogisticsCable(BlockPos pos, BlockState state) {
 	super(NuclearScienceTiles.TILE_REACTORLOGISTICSCABLE.get(), pos, state);
@@ -27,10 +29,11 @@ public class TileReactorLogisticsCable extends
 
     @Override
     public SubtypeReactorLogisticsCable getCableType() {
-	if (cable == null) {
-	    cable = ((BlockReactorLogisticsCable) getBlockState().getBlock()).cable;
+	SubtypeReactorLogisticsCable pCable = cable;
+	if (pCable == null) {
+	    pCable = cable = ((BlockReactorLogisticsCable) getBlockState().getBlock()).cable;
 	}
-	return cable;
+	return pCable;
     }
 
     @Override
@@ -51,12 +54,12 @@ public class TileReactorLogisticsCable extends
     }
 
     @Override
-    public ReactorLogisticsNetwork createInstanceConductor(Set<TileReactorLogisticsCable> set) {
+    public ReactorLogisticsNetwork createNetworkFromConductors(Set<TileReactorLogisticsCable> set) {
 	return new ReactorLogisticsNetwork(set);
     }
 
     @Override
-    public ReactorLogisticsNetwork createInstance(Set<ReactorLogisticsNetwork> set) {
+    public ReactorLogisticsNetwork createNetworkFromNetworks(Set<ReactorLogisticsNetwork> set) {
 	return new ReactorLogisticsNetwork(set);
     }
 }

@@ -31,7 +31,7 @@ public class NuclearScienceChemicalExtractorRecipes extends AbstractRecipeGenera
     public void addRecipes(RecipeOutput output) {
 
 	newRecipe(new ItemStack(NuclearScienceItems.ITEM_CELLDEUTERIUM.get()), 0.0F, CHEMICALEXTRACTOR_REQUIRED_TICKS,
-		CHEMICALEXTRACTOR_USAGE_PER_TICK, "cell_deuterium", this.modID)
+		CHEMICALEXTRACTOR_USAGE_PER_TICK, "cell_deuterium", modID)
 		//
 		.addItemTagInput(NuclearScienceTags.Items.CELL_HEAVYWATER, 1)
 		//
@@ -40,7 +40,7 @@ public class NuclearScienceChemicalExtractorRecipes extends AbstractRecipeGenera
 		.save(output);
 
 	newRecipe(new ItemStack(NuclearScienceItems.ITEM_CELLHEAVYWATER.get()), 0.0F, CHEMICALEXTRACTOR_REQUIRED_TICKS,
-		CHEMICALEXTRACTOR_USAGE_PER_TICK, "cell_heavywater", this.modID)
+		CHEMICALEXTRACTOR_USAGE_PER_TICK, "cell_heavywater", modID)
 		//
 		.addItemTagInput(NuclearScienceTags.Items.CELL_EMPTY, 1)
 		//
@@ -49,7 +49,7 @@ public class NuclearScienceChemicalExtractorRecipes extends AbstractRecipeGenera
 		.save(output);
 
 	newRecipe(new ItemStack(NuclearScienceItems.ITEM_YELLOWCAKE.get()), 0.0F, CHEMICALEXTRACTOR_REQUIRED_TICKS,
-		CHEMICALEXTRACTOR_USAGE_PER_TICK, "yellowcake_from_rawuranium", this.modID)
+		CHEMICALEXTRACTOR_USAGE_PER_TICK, "yellowcake_from_rawuranium", modID)
 		//
 		.addItemTagInput(VoltaicTags.Items.RAW_ORE_URANIUM, 1)
 		//

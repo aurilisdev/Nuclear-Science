@@ -15,7 +15,7 @@ import voltaic.prefab.tile.components.type.ComponentTickable;
 public class TileElectromagneticGateway extends GenericTile {
 
     public final SingleProperty<Float> targetSpeed = property(
-	    new SingleProperty<>(PropertyTypes.FLOAT, "targetspeed", 0.0F));
+	    new SingleProperty<>(getPropertyManager(), PropertyTypes.FLOAT, "targetspeed", 0.0F)).setUpdateServer();
 
     public TileElectromagneticGateway(BlockPos worldPos, BlockState blockState) {
 	super(NuclearScienceTiles.TILE_ELECTROMAGNETICGATEWAY.get(), worldPos, blockState);

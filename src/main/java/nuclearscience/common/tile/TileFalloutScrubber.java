@@ -1,8 +1,11 @@
 package nuclearscience.common.tile;
 
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -19,7 +22,6 @@ import voltaic.prefab.tile.components.IComponentType;
 import voltaic.prefab.tile.components.type.ComponentContainerProvider;
 import voltaic.prefab.tile.components.type.ComponentElectrodynamic;
 import voltaic.prefab.tile.components.type.ComponentFluidHandlerMulti;
-import voltaic.prefab.tile.components.type.ComponentPacketHandler;
 import voltaic.prefab.tile.components.type.ComponentTickable;
 import voltaic.prefab.utilities.BlockEntityUtils;
 import voltaic.registers.VoltaicCapabilities;
@@ -32,9 +34,9 @@ public class TileFalloutScrubber extends GenericTile {
     public static final double DISIPATION = 1.0;
 
     public final SingleProperty<Boolean> active = property(
-	    new SingleProperty<>(PropertyTypes.BOOLEAN, "active", false));
+	    new SingleProperty<>(getPropertyManager(), PropertyTypes.BOOLEAN, "active", false));
     private final SingleProperty<Boolean> hasRedstoneSignal = property(
-	    new SingleProperty(PropertyTypes.BOOLEAN, "redstonesignal", false));
+	    new SingleProperty(getPropertyManager(), PropertyTypes.BOOLEAN, "redstonesignal", false));
 
     private final AABB area;
 
@@ -44,10 +46,9 @@ public class TileFalloutScrubber extends GenericTile {
 	area = AABB.encapsulatingFullBlocks(worldPos.offset(-RANGE, -RANGE, -RANGE),
 		worldPos.offset(RANGE, RANGE, RANGE));
 
-	addComponent(new ComponentPacketHandler(this));
 	addComponent(new ComponentTickable(this).tickServer(this::tickServer));
 	addComponent(new ComponentElectrodynamic(this, false, true)
-		.maxJoules(NuclearConfig.INSTANCE.FALLOUT_SCRUBBER_USAGE_PER_TICK.get() * 20)
+		.maxJoules(NuclearConfig.getInstance().FALLOUT_SCRUBBER_USAGE_PER_TICK.get() * 20)
 		.voltage(VoltaicCapabilities.DEFAULT_VOLTAGE)
 		.setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM));
 	addComponent(new ComponentFluidHandlerMulti(this).setInputTanks(2, 100, 100)
@@ -57,30 +58,29 @@ public class TileFalloutScrubber extends GenericTile {
 		(id, player) -> new ContainerFalloutScrubber(id, player, new SimpleContainer(), getCoordsArray())));
     }
 
-    private void tickServer(ComponentTickable tickable) {
-
+    private void tickServer(Level level, ComponentTickable tickable) {
 	if (hasRedstoneSignal.getValue()) {
 	    active.setValue(false);
-	    RadiationSystem.removeDisipation(getLevel(), area);
+	    RadiationSystem.removeDisipation(level, area);
 	    return;
 	}
 
-	ComponentElectrodynamic electro = getComponent(IComponentType.Electrodynamic);
+	ComponentElectrodynamic electro = requireComponent(IComponentType.Electrodynamic);
 
-	if (electro.getJoulesStored() < NuclearConfig.INSTANCE.FALLOUT_SCRUBBER_USAGE_PER_TICK.get()) {
+	if (electro.getJoulesStored() < NuclearConfig.getInstance().FALLOUT_SCRUBBER_USAGE_PER_TICK.get()) {
 	    active.setValue(false);
-	    RadiationSystem.removeDisipation(getLevel(), area);
+	    RadiationSystem.removeDisipation(level, area);
 	    return;
 	}
 
-	ComponentFluidHandlerMulti multi = getComponent(IComponentType.FluidHandler);
+	ComponentFluidHandlerMulti multi = requireComponent(IComponentType.FluidHandler);
 
 	FluidTank[] tanks = multi.getInputTanks();
 
 	if (tanks[0].isEmpty() || tanks[0].getFluidAmount() < FLUID_USAGE_PER_TICK || tanks[1].isEmpty()
 		|| tanks[1].getFluidAmount() < FLUID_USAGE_PER_TICK) {
 	    active.setValue(false);
-	    RadiationSystem.removeDisipation(getLevel(), area);
+	    RadiationSystem.removeDisipation(level, area);
 	    return;
 	}
 
@@ -88,16 +88,16 @@ public class TileFalloutScrubber extends GenericTile {
 	tanks[0].drain(FLUID_USAGE_PER_TICK, IFluidHandler.FluidAction.EXECUTE);
 	tanks[1].drain(FLUID_USAGE_PER_TICK, IFluidHandler.FluidAction.EXECUTE);
 	electro.setJoulesStored(
-		electro.getJoulesStored() - NuclearConfig.INSTANCE.FALLOUT_SCRUBBER_USAGE_PER_TICK.get());
+		electro.getJoulesStored() - NuclearConfig.getInstance().FALLOUT_SCRUBBER_USAGE_PER_TICK.get());
 
-	RadiationSystem.addDisipation(getLevel(), DISIPATION, area);
+	RadiationSystem.addDisipation(level, DISIPATION, area);
 
     }
 
     @Override
-    public void onNeightborChanged(BlockPos neighbor, boolean blockStateTrigger) {
-	if (!level.isClientSide) {
-	    hasRedstoneSignal.setValue(this.level.hasNeighborSignal(this.getBlockPos()));
+    public void onNeighbourChanged(LevelReader reader, BlockPos neighbor, boolean blockStateTrigger) {
+	if (!(reader instanceof ClientLevel)) {
+	    hasRedstoneSignal.setValue(reader.hasNeighborSignal(getBlockPos()));
 	}
     }
 }

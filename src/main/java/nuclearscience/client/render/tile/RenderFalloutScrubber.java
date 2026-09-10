@@ -2,8 +2,6 @@ package nuclearscience.client.render.tile;
 
 import java.util.Random;
 
-import org.jetbrains.annotations.NotNull;
-
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -25,8 +23,8 @@ public class RenderFalloutScrubber extends AbstractTileRenderer<TileFalloutScrub
     }
 
     @Override
-    public void render(@NotNull TileFalloutScrubber tile, float partialTicks, PoseStack stack,
-	    MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
+    public void render(TileFalloutScrubber tile, float partialTicks, PoseStack stack, MultiBufferSource bufferIn,
+	    int combinedLightIn, int combinedOverlayIn) {
 
 	stack.pushPose();
 
@@ -55,14 +53,13 @@ public class RenderFalloutScrubber extends AbstractTileRenderer<TileFalloutScrub
 	BlockPos pos = tile.getBlockPos();
 	Random random = Voltaic.RANDOM;
 
-	RenderingUtils.renderModel(getModel(NuclearScienceClientRegister.MODEL_FALLOUTSCRUBBER_FAN), tile,
-		RenderType.solid(), stack, bufferIn, combinedLightIn, combinedOverlayIn);
+	RenderingUtils.renderModel(getModel(NuclearScienceClientRegister.MODEL_FALLOUTSCRUBBER_FAN), RenderType.solid(),
+		stack, bufferIn, combinedLightIn, combinedOverlayIn);
 
 	stack.popPose();
 
-	if (!tile.active.getValue() || random.nextFloat() > 0.4F) {
+	if (!tile.active.getValue() || random.nextFloat() > 0.4F)
 	    return;
-	}
 
 	double offset = 1 + random.nextDouble(0.5);
 

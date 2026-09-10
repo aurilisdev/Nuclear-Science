@@ -144,7 +144,7 @@ public class NuclearScienceBlocks {
 	    Block block = BLOCKS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.quantumcapacitor);
 
 	    event.register((state, level, pos, tintIndex) -> {
-		if (tintIndex >= 1) {
+		if (tintIndex >= 1 && level != null && pos != null) {
 
 		    BlockEntity tile = level.getBlockEntity(pos);
 

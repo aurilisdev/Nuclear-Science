@@ -9,6 +9,7 @@ import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.Font.DisplayMode;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
@@ -29,8 +30,11 @@ public class RenderFusionReactorCore extends AbstractTileRenderer<TileFusionReac
     public void render(TileFusionReactorCore tileEntityIn, float partialTicks, PoseStack matrixStackIn,
 	    MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
 	BlockPos pos = tileEntityIn.getBlockPos();
-	if (Minecraft.getInstance().player.distanceToSqr(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) <= 32) {
+	LocalPlayer player = Minecraft.getInstance().player;
+	if (player == null)
+	    return;
 
+	if (player.distanceToSqr(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) <= 32) {
 	    renderFloatingText(matrixStackIn, bufferIn,
 		    NuclearTextUtils.tooltip("deuteriumlevel", tileEntityIn.deuterium.getValue()), 0.5f, 0.7f + 1, 0.5f,
 		    Color.WHITE.color(), combinedLightIn);
@@ -49,7 +53,6 @@ public class RenderFusionReactorCore extends AbstractTileRenderer<TileFusionReac
 
     public void renderFloatingText(PoseStack matrixStackIn, MultiBufferSource bufferIn, Component text, float x,
 	    float y, float z, int color, int combinedLightIn) {
-
 	matrixStackIn.pushPose();
 
 	matrixStackIn.translate(x, y, z);

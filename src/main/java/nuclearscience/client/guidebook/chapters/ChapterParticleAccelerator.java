@@ -53,13 +53,12 @@ public class ChapterParticleAccelerator extends Chapter {
 		NuclearScienceItems.ITEM_CELLELECTROMAGNETIC.get().getDescription().copy()
 			.withStyle(ChatFormatting.BOLD),
 		//
-		ChatFormatter.getChatDisplayShort(NuclearConfig.INSTANCE.PARTICLEINJECTOR_USAGE_PER_PARTICLE.get(),
+		ChatFormatter.getChatDisplayShort(NuclearConfig.getInstance().PARTICLEINJECTOR_USAGE_PER_PARTICLE.get(),
 			DisplayUnits.JOULES).withStyle(ChatFormatting.BOLD),
 		//
-		ChatFormatter
-			.getChatDisplayShort(NuclearConfig.INSTANCE.PARTICLEINJECTOR_USAGE_PER_PARTICLE.get() * 2.0,
-				DisplayUnits.JOULES)
-			.withStyle(ChatFormatting.BOLD)
+		ChatFormatter.getChatDisplayShort(
+			NuclearConfig.getInstance().PARTICLEINJECTOR_USAGE_PER_PARTICLE.get() * 2.0,
+			DisplayUnits.JOULES).withStyle(ChatFormatting.BOLD)
 	//
 	)).setIndentions(1).setSeparateStart());
 	pageData.add(new ImageWrapperObject(0, 0, 0, 0, 150, 75, 150, 75,
@@ -82,7 +81,7 @@ public class ChapterParticleAccelerator extends Chapter {
 	)).setIndentions(1).setSeparateStart());
 	pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.particleaccelerator.l5",
 		//
-		Component.literal(NuclearConfig.INSTANCE.PARTICLE_SURVIVAL_TICKS.get() + "")
+		Component.literal(NuclearConfig.getInstance().PARTICLE_SURVIVAL_TICKS.get() + "")
 			.withStyle(ChatFormatting.BOLD)
 	//
 	)).setIndentions(1).setSeparateStart());

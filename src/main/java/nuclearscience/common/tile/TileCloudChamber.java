@@ -3,8 +3,11 @@ package nuclearscience.common.tile;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import nuclearscience.client.render.event.levelstage.HandlerCloudChamber;
@@ -30,14 +33,14 @@ public class TileCloudChamber extends GenericTile {
     public static final int HORR_RADIUS = 30;
     private static final int VERT_RADIUS = 30;
 
-    public final ListProperty<BlockPos> sources = property(
-	    new ListProperty<>(PropertyTypes.BLOCK_POS_LIST, "sources", new ArrayList<BlockPos>()));
+    public final ListProperty<BlockPos> sources = property(new ListProperty<>(getPropertyManager(),
+	    PropertyTypes.BLOCK_POS_LIST, "sources", new ArrayList<BlockPos>()));
     public final SingleProperty<Boolean> active = property(
-	    new SingleProperty<>(PropertyTypes.BOOLEAN, "active", false));
+	    new SingleProperty<>(getPropertyManager(), PropertyTypes.BOOLEAN, "active", false));
     public final SingleProperty<Boolean> sourcesDetected = property(
-	    new SingleProperty<>(PropertyTypes.BOOLEAN, "detectedsources", false));
+	    new SingleProperty<>(getPropertyManager(), PropertyTypes.BOOLEAN, "detectedsources", false));
     private final SingleProperty<Boolean> hasRedstoneSignal = property(
-	    new SingleProperty(PropertyTypes.BOOLEAN, "redstonesignal", false));
+	    new SingleProperty(getPropertyManager(), PropertyTypes.BOOLEAN, "redstonesignal", false));
 
     public TileCloudChamber(BlockPos worldPos, BlockState blockState) {
 	super(NuclearScienceTiles.TILE_CLOUDCHAMBER.get(), worldPos, blockState);
@@ -46,7 +49,7 @@ public class TileCloudChamber extends GenericTile {
 	addComponent(new ComponentElectrodynamic(this, false, true)
 		.setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM)
 		.voltage(VoltaicCapabilities.DEFAULT_VOLTAGE)
-		.maxJoules(NuclearConfig.INSTANCE.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK.get() * 20));
+		.maxJoules(NuclearConfig.getInstance().CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK.get() * 20));
 	addComponent(new ComponentFluidHandlerSimple(100,
 		fluidStack -> fluidStack.getFluid().is(NuclearScienceTags.Fluids.METHANOL), this, "methanolstorage")
 		.setInputDirections(BlockEntityUtils.MachineDirection.BACK));
@@ -55,7 +58,7 @@ public class TileCloudChamber extends GenericTile {
 
     }
 
-    private void tickClient(ComponentTickable tickable) {
+    private void tickClient(Level level, ComponentTickable tickable) {
 	if (sourcesDetected.getValue()) {
 	    HandlerCloudChamber.addSources(this);
 	} else {
@@ -63,9 +66,8 @@ public class TileCloudChamber extends GenericTile {
 	}
     }
 
-    private void tickServer(ComponentTickable tickable) {
-
-	this.sources.wipeList();
+    private void tickServer(Level level, ComponentTickable tickable) {
+	sources.wipeList();
 
 	if (hasRedstoneSignal.getValue()) {
 	    active.setValue(false);
@@ -73,18 +75,18 @@ public class TileCloudChamber extends GenericTile {
 	    return;
 	}
 
-	ComponentElectrodynamic electro = getComponent(IComponentType.Electrodynamic);
+	ComponentElectrodynamic electro = requireComponent(IComponentType.Electrodynamic);
 
-	if (electro.getJoulesStored() < NuclearConfig.INSTANCE.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK.get()) {
+	if (electro.getJoulesStored() < NuclearConfig.getInstance().CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK.get()) {
 	    active.setValue(false);
 	    sourcesDetected.setValue(false);
 	    return;
 	}
 
-	ComponentFluidHandlerSimple fluid = getComponent(IComponentType.FluidHandler);
+	ComponentFluidHandlerSimple fluid = requireComponent(IComponentType.FluidHandler);
 
 	if (fluid.isEmpty()
-		|| fluid.getFluidAmount() < NuclearConfig.INSTANCE.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK.get()) {
+		|| fluid.getFluidAmount() < NuclearConfig.getInstance().CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK.get()) {
 	    active.setValue(false);
 	    sourcesDetected.setValue(false);
 	    return;
@@ -93,10 +95,11 @@ public class TileCloudChamber extends GenericTile {
 	active.setValue(true);
 
 	electro.setJoulesStored(
-		electro.getJoulesStored() - NuclearConfig.INSTANCE.CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK.get());
-	fluid.drain(NuclearConfig.INSTANCE.CLOUD_CHAMBER_FLUID_USAGE_PER_TICK.get(), IFluidHandler.FluidAction.EXECUTE);
+		electro.getJoulesStored() - NuclearConfig.getInstance().CLOUD_CHAMBER_ENERGY_USAGE_PER_TICK.get());
+	fluid.drain(NuclearConfig.getInstance().CLOUD_CHAMBER_FLUID_USAGE_PER_TICK.get(),
+		IFluidHandler.FluidAction.EXECUTE);
 
-	List<BlockPos> sources = RadiationSystem.getRadiationSources(getLevel());
+	List<BlockPos> sources = RadiationSystem.getRadiationSources(level);
 
 	List<BlockPos> accepted = new ArrayList<>();
 
@@ -108,9 +111,8 @@ public class TileCloudChamber extends GenericTile {
 	    int deltaY = source.getY() - pos.getY();
 	    int deltaZ = source.getZ() - pos.getZ();
 
-	    if (Math.abs(deltaY) > VERT_RADIUS || Math.abs(deltaX) > HORR_RADIUS || Math.abs(deltaZ) > HORR_RADIUS) {
+	    if (Math.abs(deltaY) > VERT_RADIUS || Math.abs(deltaX) > HORR_RADIUS || Math.abs(deltaZ) > HORR_RADIUS)
 		return;
-	    }
 
 	    accepted.add(source);
 
@@ -118,10 +120,9 @@ public class TileCloudChamber extends GenericTile {
 
 	sourcesDetected.setValue(!accepted.isEmpty());
 
-	if (accepted.isEmpty()) {
+	if (accepted.isEmpty())
 	    // active.setValue(false);
 	    return;
-	}
 
 	// active.setValue(true);
 
@@ -131,9 +132,9 @@ public class TileCloudChamber extends GenericTile {
     }
 
     @Override
-    public void onNeightborChanged(BlockPos neighbor, boolean blockStateTrigger) {
-	if (!level.isClientSide) {
-	    hasRedstoneSignal.setValue(this.level.hasNeighborSignal(this.getBlockPos()));
+    public void onNeighbourChanged(LevelReader reader, BlockPos neighbor, boolean blockStateTrigger) {
+	if (!(reader instanceof ClientLevel)) {
+	    hasRedstoneSignal.setValue(reader.hasNeighborSignal(getBlockPos()));
 	}
     }
 

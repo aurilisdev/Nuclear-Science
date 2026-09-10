@@ -3,6 +3,8 @@ package nuclearscience.api.quantumtunnel;
 import java.util.Objects;
 import java.util.UUID;
 
+import javax.annotation.Nullable;
+
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
@@ -86,10 +88,9 @@ public class TunnelFrequency {
     }
 
     @Override
-    public boolean equals(Object obj) {
-	if (obj instanceof TunnelFrequency other) {
+    public boolean equals(@Nullable Object obj) {
+	if (obj instanceof TunnelFrequency other)
 	    return uuid.equals(other.uuid) && channelType == other.channelType;
-	}
 	return false;
     }
 

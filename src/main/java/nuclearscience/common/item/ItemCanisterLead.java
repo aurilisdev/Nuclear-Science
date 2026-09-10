@@ -29,27 +29,23 @@ public class ItemCanisterLead extends ItemCanister {
 	// The regular canister now emits radiation if it has radioactive fluids in it
 	INVENTORY_TICK_CONSUMERS.add((stack, world, entity, slot, isSelected) -> {
 
-	    if (ItemUtils.testItems(stack.getItem(), NuclearScienceItems.ITEM_CANISTERLEAD.get())) {
+	    if (ItemUtils.testItems(stack.getItem(), NuclearScienceItems.ITEM_CANISTERLEAD.get()))
 		return;
-	    }
 
 	    IFluidHandlerItem cap = stack.getCapability(Capabilities.FluidHandler.ITEM);
 
-	    if (cap == null) {
+	    if (cap == null)
 		return;
-	    }
 
 	    FluidStack fluidStack = cap.getFluidInTank(0);
 
-	    if (fluidStack.isEmpty()) {
+	    if (fluidStack.isEmpty())
 		return;
-	    }
 
 	    RadioactiveObject radiation = RadioactiveFluidRegister.getValue(fluidStack.getFluid());
 
-	    if (radiation.amount() <= 0) {
+	    if (radiation.amount() <= 0)
 		return;
-	    }
 
 	    double radiationMultiplier = (double) fluidStack.getAmount() / (double) cap.getTankCapacity(0);
 

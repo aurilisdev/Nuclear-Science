@@ -41,7 +41,7 @@ import voltaic.Voltaic;
 
 public class AtomicAssemblerBlacklistRegister extends SimplePreparableReloadListener<JsonObject> {
 
-    public static AtomicAssemblerBlacklistRegister INSTANCE = null;
+    public static AtomicAssemblerBlacklistRegister INSTANCE = new AtomicAssemblerBlacklistRegister();
 
     public static final String KEY = "values";
     public static final String FOLDER = "machines";
@@ -116,8 +116,8 @@ public class AtomicAssemblerBlacklistRegister extends SimplePreparableReloadList
     }
 
     public void setClientValues(HashSet<Item> fuels) {
-	this.blacklistedItems.clear();
-	this.blacklistedItems.addAll(fuels);
+	blacklistedItems.clear();
+	blacklistedItems.addAll(fuels);
     }
 
     public AtomicAssemblerBlacklistRegister subscribeAsSyncable() {

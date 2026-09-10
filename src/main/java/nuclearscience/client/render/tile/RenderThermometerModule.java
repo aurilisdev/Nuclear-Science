@@ -1,6 +1,5 @@
 package nuclearscience.client.render.tile;
 
-import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -25,12 +24,11 @@ public class RenderThermometerModule extends AbstractTileRenderer<TileThermomete
     }
 
     @Override
-    public void render(@NotNull TileThermometerModule tile, float partialTicks, PoseStack stack,
-	    MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
+    public void render(TileThermometerModule tile, float partialTicks, PoseStack stack, MultiBufferSource bufferIn,
+	    int combinedLightIn, int combinedOverlayIn) {
 
-	if (!tile.linked.getValue()) {
+	if (!tile.linked.getValue())
 	    return;
-	}
 
 	Font font = Minecraft.getInstance().font;
 

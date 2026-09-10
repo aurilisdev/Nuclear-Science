@@ -1,7 +1,5 @@
 package nuclearscience.client.render.tile;
 
-import org.jetbrains.annotations.NotNull;
-
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -23,11 +21,9 @@ public class RenderMSControlRod extends AbstractTileRenderer<TileControlRod.Tile
     }
 
     @Override
-    public void render(TileControlRod.@NotNull TileMSControlRod tile, float partialTicks, PoseStack stack,
+    public void render(TileControlRod.TileMSControlRod tile, float partialTicks, PoseStack stack,
 	    MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
-
 	stack.pushPose();
-
 	stack.translate(0.5, 0.5, 0.5);
 
 	Direction facing = tile.getFacing();
@@ -44,9 +40,8 @@ public class RenderMSControlRod extends AbstractTileRenderer<TileControlRod.Tile
 
 	stack.translate(MAX_DELTA * insertion, 0, 0);
 
-	RenderingUtils.renderModel(getModel(NuclearScienceClientRegister.MODEL_MSCONTROLROD_ROD), tile,
-		RenderType.solid(), stack, bufferIn, combinedLightIn, combinedOverlayIn);
-
+	RenderingUtils.renderModel(getModel(NuclearScienceClientRegister.MODEL_MSCONTROLROD_ROD), RenderType.solid(),
+		stack, bufferIn, combinedLightIn, combinedOverlayIn);
 	stack.popPose();
 
     }

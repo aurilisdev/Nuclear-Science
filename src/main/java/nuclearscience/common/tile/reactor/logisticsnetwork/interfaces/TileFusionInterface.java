@@ -3,6 +3,7 @@ package nuclearscience.common.tile.reactor.logisticsnetwork.interfaces;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.common.network.ReactorLogisticsNetwork;
 import nuclearscience.common.tags.NuclearScienceTags;
@@ -21,34 +22,20 @@ public class TileFusionInterface extends GenericTileInterface {
     }
 
     @Override
-    public void tickServer(ComponentTickable tickable) {
-	super.tickServer(tickable);
-
-	if (!networkCable.valid() || !(networkCable.getSafe() instanceof TileReactorLogisticsCable)) {
+    public void tickServer(Level level, ComponentTickable tickable) {
+	super.tickServer(level, tickable);
+	ReactorLogisticsNetwork network = getNetworkCable(TileReactorLogisticsCable.class)
+		.map(TileReactorLogisticsCable::getNetwork).filter(ReactorLogisticsNetwork::isControllerActive)
+		.orElse(null);
+	if (network == null)
 	    return;
-	}
-
-	TileReactorLogisticsCable cable = networkCable.getSafe();
-
-	if (cable.isRemoved()) {
-	    return;
-	}
-
-	ReactorLogisticsNetwork network = cable.getNetwork();
-
-	if (!network.isControllerActive()) {
-	    return;
-	}
 
 	TileSupplyModule supplyModule = network.getSupplyModule(supplyModuleLocation.getValue());
-
-	if (!reactor.valid() || supplyModule == null || !(reactor.getSafe() instanceof TileFusionReactorCore)) {
+	TileFusionReactorCore core = getReactor(TileFusionReactorCore.class).orElse(null);
+	if (supplyModule == null || core == null)
 	    return;
-	}
 
-	TileFusionReactorCore core = reactor.getSafe();
-
-	ComponentInventory supplyInv = supplyModule.getComponent(IComponentType.Inventory);
+	ComponentInventory supplyInv = supplyModule.requireComponent(IComponentType.Inventory);
 
 	boolean isInsertingTritium = serverAnimations.containsKey(InterfaceAnimation.FUSION_TRITIUM_INSERT);
 	boolean isInsertingDeuterium = serverAnimations.containsKey(InterfaceAnimation.FUSION_DEUTERIUM_INSERT);

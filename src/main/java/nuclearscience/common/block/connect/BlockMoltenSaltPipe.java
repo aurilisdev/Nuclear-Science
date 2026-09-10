@@ -2,6 +2,8 @@ package nuclearscience.common.block.connect;
 
 import java.util.HashSet;
 
+import javax.annotation.Nullable;
+
 import com.mojang.serialization.MapCodec;
 
 import net.minecraft.core.BlockPos;
@@ -32,21 +34,20 @@ public class BlockMoltenSaltPipe extends AbstractRefreshingConnectBlock<TileMolt
     }
 
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
 	return new TileMoltenSaltPipe(pos, state);
     }
 
     @Override
-    public TileMoltenSaltPipe getCableIfValid(BlockEntity tile) {
-	if (tile instanceof TileMoltenSaltPipe pipe) {
+    public @Nullable TileMoltenSaltPipe getCableIfValid(BlockEntity tile) {
+	if (tile instanceof TileMoltenSaltPipe pipe)
 	    return pipe;
-	}
 	return null;
     }
 
     @Override
-    public EnumConnectType getConnection(BlockState otherState, BlockEntity otherTile, TileMoltenSaltPipe thisCable,
-	    Direction dir) {
+    public EnumConnectType getConnection(BlockState otherState, @Nullable BlockEntity otherTile,
+	    TileMoltenSaltPipe thisCable, Direction dir) {
 	EnumConnectType connection = EnumConnectType.NONE;
 	if (otherTile instanceof TileMoltenSaltPipe) {
 	    connection = EnumConnectType.WIRE;
@@ -59,6 +60,6 @@ public class BlockMoltenSaltPipe extends AbstractRefreshingConnectBlock<TileMolt
 
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {
-	return null;
+	throw new UnsupportedOperationException("Need to implement CODEC");
     }
 }

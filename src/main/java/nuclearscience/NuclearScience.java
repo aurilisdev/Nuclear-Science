@@ -31,8 +31,7 @@ public final class NuclearScience {
     public static final String NAME = "Nuclear Science";
 
     public NuclearScience(IEventBus bus, ModContainer container) {
-	NuclearConfig.INSTANCE = new NuclearConfig();
-	container.registerConfig(ModConfig.Type.COMMON, NuclearConfig.INSTANCE.SPEC);
+	container.registerConfig(ModConfig.Type.COMMON, NuclearConfig.getInstance().SPEC);
 	if (FMLEnvironment.dist == Dist.CLIENT) {
 	    container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
 	}
@@ -44,9 +43,7 @@ public final class NuclearScience {
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     public static void onClientSetup(FMLClientSetupEvent event) {
-	event.enqueueWork(() -> {
-	    NuclearScienceClientRegister.setup();
-	});
+	event.enqueueWork(() -> { NuclearScienceClientRegister.setup(); });
     }
 
     @SubscribeEvent

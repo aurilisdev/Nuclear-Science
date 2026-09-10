@@ -2,6 +2,7 @@ package nuclearscience.common.tile;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.common.inventory.container.ContainerGasCentrifuge;
 import nuclearscience.common.settings.NuclearConfig;
@@ -21,7 +22,6 @@ import voltaic.prefab.tile.components.type.ComponentContainerProvider;
 import voltaic.prefab.tile.components.type.ComponentElectrodynamic;
 import voltaic.prefab.tile.components.type.ComponentGasHandlerMulti;
 import voltaic.prefab.tile.components.type.ComponentInventory;
-import voltaic.prefab.tile.components.type.ComponentPacketHandler;
 import voltaic.prefab.tile.components.type.ComponentProcessor;
 import voltaic.prefab.tile.components.type.ComponentTickable;
 import voltaic.prefab.utilities.BlockEntityUtils;
@@ -36,13 +36,16 @@ public class TileGasCentrifuge extends GenericTile implements ITickableSound {
     public static final double PERCENT_U235 = 0.172;
     public static final int MAX_TEMPERATURE = 350;
     public static final double WASTE_MULTIPLIER = 0.1;
-    public SingleProperty<Integer> spinSpeed = property(new SingleProperty<>(PropertyTypes.INTEGER, "spinSpeed", 0));
-    public SingleProperty<Double> stored235 = property(new SingleProperty<>(PropertyTypes.DOUBLE, "stored235", 0.0));
-    public SingleProperty<Double> stored238 = property(new SingleProperty<>(PropertyTypes.DOUBLE, "stored238", 0.0));
+    public SingleProperty<Integer> spinSpeed = property(
+	    new SingleProperty<>(getPropertyManager(), PropertyTypes.INTEGER, "spinSpeed", 0));
+    public SingleProperty<Double> stored235 = property(
+	    new SingleProperty<>(getPropertyManager(), PropertyTypes.DOUBLE, "stored235", 0.0));
+    public SingleProperty<Double> stored238 = property(
+	    new SingleProperty<>(getPropertyManager(), PropertyTypes.DOUBLE, "stored238", 0.0));
     public SingleProperty<Double> storedWaste = property(
-	    new SingleProperty<>(PropertyTypes.DOUBLE, "storedWaste", 0.0));
+	    new SingleProperty<>(getPropertyManager(), PropertyTypes.DOUBLE, "storedWaste", 0.0));
     public SingleProperty<Boolean> isRunning = property(
-	    new SingleProperty<>(PropertyTypes.BOOLEAN, "isRunning", false));
+	    new SingleProperty<>(getPropertyManager(), PropertyTypes.BOOLEAN, "isRunning", false));
 
     private boolean isSoundPlaying = false;
 
@@ -50,14 +53,13 @@ public class TileGasCentrifuge extends GenericTile implements ITickableSound {
 	super(NuclearScienceTiles.TILE_GASCENTRIFUGE.get(), pos, state);
 	addComponent(new ComponentTickable(this).tickClient(this::tickClient));
 
-	addComponent(new ComponentPacketHandler(this));
 	addComponent(
 		new ComponentGasHandlerMulti(this).setInputTanks(1, arr(TANKCAPACITY), arr(MAX_TEMPERATURE), arr(1))
 			.setInputGasTags(NuclearScienceTags.Gases.URANIUM_HEXAFLUORIDE)
 			.setInputDirections(BlockEntityUtils.MachineDirection.BACK));
 	addComponent(new ComponentElectrodynamic(this, false, true).voltage(VoltaicCapabilities.DEFAULT_VOLTAGE * 2)
 		.setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM)
-		.maxJoules(NuclearConfig.INSTANCE.GASCENTRIFUGE_USAGE_PER_TICK.get() * 10));
+		.maxJoules(NuclearConfig.getInstance().GASCENTRIFUGE_USAGE_PER_TICK.get() * 10));
 	addComponent(new ComponentInventory(this, ComponentInventory.InventoryBuilder.newInv().outputs(3).upgrades(3))
 		.setSlotsByDirection(BlockEntityUtils.MachineDirection.TOP, 0, 1, 2)
 		.setSlotsByDirection(BlockEntityUtils.MachineDirection.RIGHT, 0, 1, 2)
@@ -65,23 +67,24 @@ public class TileGasCentrifuge extends GenericTile implements ITickableSound {
 		//
 		.setSlotsByDirection(BlockEntityUtils.MachineDirection.FRONT, 0, 1, 2)
 		.validUpgrades(ContainerGasCentrifuge.VALID_UPGRADES).valid(machineValidator()));
-	addComponent(new ComponentProcessor(this).usage(NuclearConfig.INSTANCE.GASCENTRIFUGE_USAGE_PER_TICK.get(), 0)
-		.requiredTicks(NuclearConfig.INSTANCE.GASCENTRIFUGE_REQUIRED_TICKS_PER_PROCESSING.get(), 0)
-		.canProcess(this::canProcess).process(this::process));
+	addComponent(
+		new ComponentProcessor(this).usage(NuclearConfig.getInstance().GASCENTRIFUGE_USAGE_PER_TICK.get(), 0)
+			.requiredTicks(NuclearConfig.getInstance().GASCENTRIFUGE_REQUIRED_TICKS_PER_PROCESSING.get(), 0)
+			.canProcess(this::canProcess).process(this::process));
 	addComponent(new ComponentContainerProvider("gascentrifuge", this)
 		.createMenu((id, player) -> new ContainerGasCentrifuge(id, player,
-			getComponent(IComponentType.Inventory), getCoordsArray())));
+			requireComponent(IComponentType.Inventory), getCoordsArray())));
     }
 
-    public boolean canProcess(ComponentProcessor processor, int procNumber) {
-	ComponentElectrodynamic electro = getComponent(IComponentType.Electrodynamic);
-	ComponentInventory inv = getComponent(IComponentType.Inventory);
-	ComponentGasHandlerMulti gasHandler = getComponent(IComponentType.GasHandler);
+    public boolean canProcess(ComponentProcessor processor, Level level, int procNumber) {
+	ComponentElectrodynamic electro = requireComponent(IComponentType.Electrodynamic);
+	ComponentInventory inv = requireComponent(IComponentType.Inventory);
+	ComponentGasHandlerMulti gasHandler = requireComponent(IComponentType.GasHandler);
 
-	RadiationUtils.handleRadioactiveGases(this, gasHandler,
-		NuclearConfig.INSTANCE.GAS_CENTRIFUGE_RADIATION_RADIUS.get(), true, 30, true, false);
-	RadiationUtils.handleRadioactiveItems(this, inv, NuclearConfig.INSTANCE.GAS_CENTRIFUGE_RADIATION_RADIUS.get(),
-		true, 30, true, false);
+	RadiationUtils.handleRadioactiveGases(level, this, gasHandler,
+		NuclearConfig.getInstance().GAS_CENTRIFUGE_RADIATION_RADIUS.get(), true, 30, true, false);
+	RadiationUtils.handleRadioactiveItems(level, this, inv,
+		NuclearConfig.getInstance().GAS_CENTRIFUGE_RADIATION_RADIUS.get(), true, 30, true, false);
 
 	boolean hasGas = gasHandler.getInputTanks()[0].getGasAmount() >= REQUIRED / 60.0;
 	boolean val = electro.getJoulesStored() >= processor.getUsage(0) && hasGas
@@ -97,9 +100,9 @@ public class TileGasCentrifuge extends GenericTile implements ITickableSound {
 	return val;
     }
 
-    public void process(ComponentProcessor processor, int procNumber) {
-	ComponentInventory inv = getComponent(IComponentType.Inventory);
-	ComponentGasHandlerMulti multi = getComponent(IComponentType.GasHandler);
+    public void process(ComponentProcessor processor, Level level, int procNumber) {
+	ComponentInventory inv = requireComponent(IComponentType.Inventory);
+	ComponentGasHandlerMulti multi = requireComponent(IComponentType.GasHandler);
 	spinSpeed.setValue(processor.operatingSpeed.getValue().intValue());
 	int processed = (int) (REQUIRED / 60.0);
 	GasTank tank = multi.getInputTanks()[0];
@@ -141,7 +144,7 @@ public class TileGasCentrifuge extends GenericTile implements ITickableSound {
 	}
     }
 
-    protected void tickClient(ComponentTickable tickable) {
+    protected void tickClient(Level level, ComponentTickable tickable) {
 	if (!isSoundPlaying && shouldPlaySound()) {
 	    isSoundPlaying = true;
 	    SoundBarrierMethods.playTileSound(NuclearScienceSounds.SOUND_GASCENTRIFUGE.get(), this, true);
@@ -159,7 +162,7 @@ public class TileGasCentrifuge extends GenericTile implements ITickableSound {
     }
 
     @Override
-    public int getComparatorSignal() {
+    public int getComparatorSignal(Level level) {
 	return isRunning.getValue() ? 15 : 0;
     }
 }

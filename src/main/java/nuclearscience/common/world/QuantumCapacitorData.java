@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.UUID;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -60,7 +62,7 @@ public class QuantumCapacitorData extends SavedData {
 	return data;
     }
 
-    public static QuantumCapacitorData get(Level world) {
+    public static @Nullable QuantumCapacitorData get(Level world) {
 	if (world instanceof ServerLevel sl) {
 	    DimensionDataStorage storage = sl.getDataStorage();
 	    QuantumCapacitorData instance = storage
@@ -82,9 +84,8 @@ public class QuantumCapacitorData extends SavedData {
     public double getJoules(UUID uuid, int frequency) {
 	if (powermapping.containsKey(uuid)) {
 	    HashMap<Integer, Double> value = powermapping.get(uuid);
-	    if (value.containsKey(frequency)) {
+	    if (value.containsKey(frequency))
 		return value.get(frequency);
-	    }
 	    value.put(frequency, (double) 0);
 	    return 0;
 	}

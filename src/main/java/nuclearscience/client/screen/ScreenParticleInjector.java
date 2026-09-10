@@ -12,7 +12,6 @@ import nuclearscience.common.entity.EntityParticle;
 import nuclearscience.common.inventory.container.ContainerParticleInjector;
 import nuclearscience.common.settings.NuclearConfig;
 import nuclearscience.common.tile.accelerator.TileElectromagneticGateway;
-import nuclearscience.common.tile.accelerator.TileParticleInjector;
 import nuclearscience.compatibility.jei.utils.NuclearJeiTextures;
 import nuclearscience.prefab.screen.component.NuclearArrows;
 import nuclearscience.prefab.screen.component.NuclearIconTypes;
@@ -47,35 +46,26 @@ public class ScreenParticleInjector extends GenericScreen<ContainerParticleInjec
 		NuclearTextUtils.gui("particleinjector.cells")));
 	addComponent(
 		new ScreenComponentElectricInfo(this::getElectricInformation, -AbstractScreenComponentInfo.SIZE + 1, 2)
-			.wattage(NuclearConfig.INSTANCE.PARTICLEINJECTOR_USAGE_PER_PARTICLE.get()));
+			.wattage(NuclearConfig.getInstance().PARTICLEINJECTOR_USAGE_PER_PARTICLE.get()));
+
 	addComponent(new ScreenComponentButton<>(ScreenComponentGuiTab.GuiInfoTabTextures.REGULAR,
-		-AbstractScreenComponentInfo.SIZE + 1, 2 * AbstractScreenComponentInfo.SIZE + 2).setOnPress(button -> {
-		    TileParticleInjector injector = menu.getSafeHost();
-		    if (injector == null) {
-			return;
-		    }
-		    injector.usingGateway.setValue(!injector.usingGateway.getValue());
-		}).setIcon(NuclearIconTypes.GATEWAY).onTooltip((graphics, button, x, y) -> {
-
-		    ArrayList<FormattedCharSequence> list = new ArrayList<>();
-
-		    TileParticleInjector injector = menu.getSafeHost();
-		    if (injector == null) {
-			return;
-		    }
-
-		    list.add(NuclearTextUtils.tooltip("particleinjector.gatewaymode")
-			    .withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
-		    if (injector.usingGateway.getValue()) {
-			list.add(NuclearTextUtils.tooltip("particleinjector.gatewayenabled")
-				.withStyle(ChatFormatting.GREEN).getVisualOrderText());
-		    } else {
-			list.add(NuclearTextUtils.tooltip("particleinjector.gatewaydisabled")
-				.withStyle(ChatFormatting.RED).getVisualOrderText());
-		    }
-
-		    graphics.renderTooltip(getFontRenderer(), list, x, y);
-
+		-AbstractScreenComponentInfo.SIZE + 1, 2 * AbstractScreenComponentInfo.SIZE + 2)
+		.setOnPress(button -> menu.getSafeHost()
+			.ifPresent(injector -> injector.usingGateway.setValue(!injector.usingGateway.getValue())))
+		.setIcon(NuclearIconTypes.GATEWAY).onTooltip((graphics, button, x, y) -> {
+		    menu.getSafeHost().ifPresent(injector -> {
+			ArrayList<FormattedCharSequence> list = new ArrayList<>();
+			list.add(NuclearTextUtils.tooltip("particleinjector.gatewaymode")
+				.withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
+			if (injector.usingGateway.getValue()) {
+			    list.add(NuclearTextUtils.tooltip("particleinjector.gatewayenabled")
+				    .withStyle(ChatFormatting.GREEN).getVisualOrderText());
+			} else {
+			    list.add(NuclearTextUtils.tooltip("particleinjector.gatewaydisabled")
+				    .withStyle(ChatFormatting.RED).getVisualOrderText());
+			}
+			graphics.renderTooltip(getFontRenderer(), list, x, y);
+		    });
 		}));
 
 	new WrapperInventoryIO(this, -AbstractScreenComponentInfo.SIZE + 1, AbstractScreenComponentInfo.SIZE + 2, 75,
@@ -88,73 +78,64 @@ public class ScreenParticleInjector extends GenericScreen<ContainerParticleInjec
 
 			    ArrayList<FormattedCharSequence> list = new ArrayList<>();
 
-			    TileParticleInjector injector = menu.getSafeHost();
-			    if (injector == null) {
-				return;
-			    }
+			    menu.getSafeHost().ifPresent(injector -> {
+				EntityParticle one = injector.particles[0];
+				float oneSpeed = 0.0F;
+				if (one != null && one.isAlive() && !one.isRemoved()) {
+				    oneSpeed = one.speed;
+				}
+				list.add(NuclearTextUtils
+					.tooltip("particleinjector.particle1speed",
+						ChatFormatter
+							.getChatDisplayShort(
+								TileElectromagneticGateway.getLightSpeedPerc(oneSpeed),
+								DisplayUnits.PERCENTAGE)
+							.append(" ")
+							.append(NuclearDisplayUnits.SPEEDOFLIGHT.getSymbol())
+							.withStyle(ChatFormatting.GRAY))
+					.withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
 
-			    EntityParticle one = injector.particles[0];
+				EntityParticle two = injector.particles[1];
+				float twoSpeed = 0.0F;
+				if (two != null && two.isAlive() && !two.isRemoved()) {
+				    twoSpeed = two.speed;
+				}
+				list.add(NuclearTextUtils
+					.tooltip("particleinjector.particle2speed",
+						ChatFormatter
+							.getChatDisplayShort(
+								TileElectromagneticGateway.getLightSpeedPerc(twoSpeed),
+								DisplayUnits.PERCENTAGE)
+							.append(" ")
+							.append(NuclearDisplayUnits.SPEEDOFLIGHT.getSymbol())
+							.withStyle(ChatFormatting.GRAY))
+					.withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
 
-			    float oneSpeed = 0.0F;
-
-			    if (one != null && one.isAlive() && !one.isRemoved()) {
-				oneSpeed = one.speed;
-			    }
-
-			    list.add(NuclearTextUtils
-				    .tooltip("particleinjector.particle1speed", ChatFormatter
-					    .getChatDisplayShort(TileElectromagneticGateway.getLightSpeedPerc(oneSpeed),
-						    DisplayUnits.PERCENTAGE)
-					    .append(" ").append(NuclearDisplayUnits.SPEEDOFLIGHT.getSymbol())
-					    .withStyle(ChatFormatting.GRAY))
-				    .withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
-
-			    EntityParticle two = injector.particles[1];
-
-			    float twoSpeed = 0.0F;
-
-			    if (two != null && two.isAlive() && !two.isRemoved()) {
-				twoSpeed = two.speed;
-			    }
-
-			    list.add(NuclearTextUtils
-				    .tooltip("particleinjector.particle2speed", ChatFormatter
-					    .getChatDisplayShort(TileElectromagneticGateway.getLightSpeedPerc(twoSpeed),
-						    DisplayUnits.PERCENTAGE)
-					    .append(" ").append(NuclearDisplayUnits.SPEEDOFLIGHT.getSymbol())
-					    .withStyle(ChatFormatting.GRAY))
-				    .withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
-
-			    graphics.renderTooltip(getFontRenderer(), list, x, y);
+				graphics.renderTooltip(getFontRenderer(), list, x, y);
+			    });
 
 			}));
     }
 
     private List<? extends FormattedCharSequence> getElectricInformation() {
-	ArrayList<FormattedCharSequence> list = new ArrayList<>();
-
-	TileParticleInjector injector = menu.getSafeHost();
-	if (injector == null) {
+	return menu.getSafeHost().map(injector -> {
+	    ArrayList<FormattedCharSequence> list = new ArrayList<>();
+	    ComponentElectrodynamic el = injector.requireComponent(IComponentType.Electrodynamic);
+	    list.add(NuclearTextUtils
+		    .tooltip("particleinjector.charge", ChatFormatter
+			    .getChatDisplayShort(el.getJoulesStored(), DisplayUnits.JOULES)
+			    .withStyle(ChatFormatting.GRAY),
+			    ChatFormatter.getChatDisplayShort(
+				    NuclearConfig.getInstance().PARTICLEINJECTOR_USAGE_PER_PARTICLE.get(),
+				    DisplayUnits.JOULES).withStyle(ChatFormatting.GRAY))
+		    .withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
+	    list.add(ElectroTextUtils
+		    .gui("machine.voltage",
+			    ChatFormatter.getChatDisplayShort(el.getVoltage(), DisplayUnits.VOLTAGE)
+				    .withStyle(ChatFormatting.GRAY))
+		    .withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
 	    return list;
-	}
-
-	ComponentElectrodynamic el = injector.getComponent(IComponentType.Electrodynamic);
-	list.add(NuclearTextUtils
-		.tooltip("particleinjector.charge",
-			ChatFormatter.getChatDisplayShort(el.getJoulesStored(), DisplayUnits.JOULES)
-				.withStyle(ChatFormatting.GRAY),
-			ChatFormatter
-				.getChatDisplayShort(NuclearConfig.INSTANCE.PARTICLEINJECTOR_USAGE_PER_PARTICLE.get(),
-					DisplayUnits.JOULES)
-				.withStyle(ChatFormatting.GRAY))
-		.withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
-	list.add(ElectroTextUtils
-		.gui("machine.voltage",
-			ChatFormatter.getChatDisplayShort(el.getVoltage(), DisplayUnits.VOLTAGE)
-				.withStyle(ChatFormatting.GRAY))
-		.withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());
-
-	return list;
+	}).orElseGet(ArrayList::new);
     }
 
 }

@@ -21,32 +21,24 @@ public class ScreenMoltenSaltSupplier extends GenericScreen<ContainerMoltenSaltS
     public ScreenMoltenSaltSupplier(ContainerMoltenSaltSupplier container, Inventory playerInventory, Component title) {
 	super(container, playerInventory, title);
 	addComponent(new ScreenComponentElectricInfo(-AbstractScreenComponentInfo.SIZE + 1, 2)
-		.wattage(NuclearConfig.INSTANCE.MOLTENSALTSUPPLIER_USAGE_PER_TICK.get() * 20));
-	addComponent(new ScreenComponentProgress(ScreenComponentProgress.ProgressBars.PROGRESS_ARROW_RIGHT, () -> {
-	    TileMoltenSaltSupplier supplier = menu.getSafeHost();
-	    if (supplier == null) {
-		return 0;
-	    }
-	    return supplier.reactorWaste.getValue() / TileMoltenSaltSupplier.AMT_PER_WASTE;
-	}, 77, 35) {
+		.wattage(NuclearConfig.getInstance().MOLTENSALTSUPPLIER_USAGE_PER_TICK.get() * 20));
+	addComponent(new ScreenComponentProgress(ScreenComponentProgress.ProgressBars.PROGRESS_ARROW_RIGHT,
+		() -> menu.getSafeHost()
+			.map(supplier -> supplier.reactorWaste.getValue() / TileMoltenSaltSupplier.AMT_PER_WASTE)
+			.orElse(0.0),
+		77, 35) {
 	    @Override
 	    public void renderForeground(GuiGraphics graphics, int xAxis, int yAxis, int guiWidth, int guiHeight) {
-		if (!isHoveredOrFocused()) {
+		if (!isHoveredOrFocused())
 		    return;
-		}
-		TileMoltenSaltSupplier supplier = menu.getSafeHost();
-		if (supplier == null) {
-		    return;
-		}
-		graphics.renderTooltip(font,
-			NuclearTextUtils.gui("saltsupplier.wastecont",
-				VoltaicTextUtils
+		menu.getSafeHost()
+			.ifPresent(supplier -> graphics.renderTooltip(font,
+				NuclearTextUtils.gui("saltsupplier.wastecont", VoltaicTextUtils
 					.ratio(ChatFormatter.formatFluidMilibuckets(supplier.reactorWaste.getValue()),
 						ChatFormatter
 							.formatFluidMilibuckets(TileMoltenSaltSupplier.AMT_PER_WASTE))
-					.withStyle(ChatFormatting.DARK_GRAY))
-				.withStyle(ChatFormatting.GRAY),
-			xAxis, yAxis);
+					.withStyle(ChatFormatting.DARK_GRAY)).withStyle(ChatFormatting.GRAY),
+				xAxis, yAxis));
 
 	    }
 	});

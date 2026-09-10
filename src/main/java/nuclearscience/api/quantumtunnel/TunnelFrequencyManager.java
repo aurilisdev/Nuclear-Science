@@ -27,14 +27,12 @@ public class TunnelFrequencyManager {
     }
 
     public static void removePlayerFrequency(UUID player, UUID requester, TunnelFrequency frequency) {
-	if (!frequency.getCreatorId().equals(requester)) {
+	if (!frequency.getCreatorId().equals(requester))
 	    return;
-	}
 	ServerLevel level = getOverworld();
 	HashMap<UUID, HashSet<TunnelFrequency>> map = level.getData(NuclearScienceAttachmentTypes.CHANNEL_MAP);
-	if (!map.containsKey(player)) {
+	if (!map.containsKey(player))
 	    return;
-	}
 	map.get(player).remove(frequency);
 	level.setData(NuclearScienceAttachmentTypes.CHANNEL_MAP, map);
     }
@@ -47,13 +45,11 @@ public class TunnelFrequencyManager {
 	ServerLevel level = getOverworld();
 	HashMap<UUID, HashSet<TunnelFrequency>> map = level.getData(NuclearScienceAttachmentTypes.CHANNEL_MAP);
 	for (Map.Entry<UUID, HashSet<TunnelFrequency>> entry : map.entrySet()) {
-	    if (entry.getValue().size() > NuclearConfig.INSTANCE.QUANTUM_TUNNEL_FREQUENCY_CAP_PER_PLAYER.get()) {
+	    if (entry.getValue().size() > NuclearConfig.getInstance().QUANTUM_TUNNEL_FREQUENCY_CAP_PER_PLAYER.get())
 		return false;
-	    }
 	    for (TunnelFrequency id : entry.getValue()) {
-		if (id.getId().equals(proposedFrequencyID)) {
+		if (id.getId().equals(proposedFrequencyID))
 		    return false;
-		}
 	    }
 	}
 	return true;
@@ -64,18 +60,16 @@ public class TunnelFrequencyManager {
 	HashMap<UUID, HashSet<TunnelFrequency>> map = level.getData(NuclearScienceAttachmentTypes.CHANNEL_MAP);
 	for (Map.Entry<UUID, HashSet<TunnelFrequency>> entry : map.entrySet()) {
 	    for (TunnelFrequency id : entry.getValue()) {
-		if (id.equals(tunnelFrequency)) {
+		if (id.equals(tunnelFrequency))
 		    return true;
-		}
 	    }
 	}
 	return false;
     }
 
     public static void updatePlayerFrequencyName(UUID player, UUID requester, TunnelFrequency frequency) {
-	if (!frequency.getCreatorId().equals(requester)) {
+	if (!frequency.getCreatorId().equals(requester))
 	    return;
-	}
 	ServerLevel level = getOverworld();
 	HashMap<UUID, HashSet<TunnelFrequency>> map = level.getData(NuclearScienceAttachmentTypes.CHANNEL_MAP);
 	if (!map.containsKey(player)) {
@@ -129,9 +123,8 @@ public class TunnelFrequencyManager {
 
 	HashSet<TunnelFrequency> publicFrequencies = map.getOrDefault(TunnelFrequency.PUBLIC_ID, new HashSet<>());
 
-	if (publicFrequencies.isEmpty()) {
+	if (publicFrequencies.isEmpty())
 	    return;
-	}
 
 	for (TunnelFrequency frequency : publicFrequencies) {
 	    connectionMap.remove(frequency);

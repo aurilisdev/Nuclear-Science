@@ -1,5 +1,7 @@
 package nuclearscience.common.block;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Player;
@@ -41,9 +43,13 @@ public class BlockElectromagneticBooster extends Block implements IWrenchable {
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext context) {
+    public @Nullable BlockState getStateForPlacement(BlockPlaceContext context) {
 	Direction movingdirection = context.getHorizontalDirection();
-	BlockState state = super.getStateForPlacement(context).setValue(VoltaicBlockStates.FACING,
+	BlockState stateForPlacement = super.getStateForPlacement(context);
+	if (stateForPlacement == null)
+	    return null;
+
+	BlockState state = stateForPlacement.setValue(VoltaicBlockStates.FACING,
 		context.getHorizontalDirection().getOpposite());
 	// left check first in front
 	BlockState check = context.getLevel()

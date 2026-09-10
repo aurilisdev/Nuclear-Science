@@ -83,9 +83,8 @@ public class TunnelFrequencyBuffer {
 
     public TransferPack addEnergy(boolean simulate, TransferPack addition) {
 
-	if (addition.getJoules() <= 0) {
+	if (addition.getJoules() <= 0)
 	    return TransferPack.EMPTY;
-	}
 
 	if (energyBuffer.getVoltage() <= 0 && energyBuffer.getJoules() <= 0) {
 
@@ -102,9 +101,8 @@ public class TunnelFrequencyBuffer {
 	    return check;
 	}
 
-	if (energyBuffer.getVoltage() != 0 && energyBuffer.getVoltage() != addition.getVoltage()) {
+	if (energyBuffer.getVoltage() != 0 && energyBuffer.getVoltage() != addition.getVoltage())
 	    return TransferPack.EMPTY;
-	}
 
 	double accepted = Math.min(MAX_JOULES_CAP - energyBuffer.getJoules(), addition.getJoules());
 
@@ -119,9 +117,8 @@ public class TunnelFrequencyBuffer {
     public TransferPack extractEnergy(boolean simulate, TransferPack extract) {
 
 	if (energyBuffer.getJoules() <= 0 || energyBuffer.getVoltage() <= 0 || extract.getVoltage() <= 0
-		|| extract.getJoules() <= 0 || energyBuffer.getVoltage() != extract.getVoltage()) {
+		|| extract.getJoules() <= 0 || energyBuffer.getVoltage() != extract.getVoltage())
 	    return TransferPack.EMPTY;
-	}
 
 	double taken = Math.min(extract.getJoules(), energyBuffer.getJoules());
 
@@ -139,9 +136,8 @@ public class TunnelFrequencyBuffer {
 
     public FluidStack receiveFluid(IFluidHandler.FluidAction action, FluidStack addition) {
 
-	if (addition.isEmpty()) {
+	if (addition.isEmpty())
 	    return FluidStack.EMPTY;
-	}
 
 	if (fluidBuffer.isEmpty()) {
 
@@ -158,9 +154,8 @@ public class TunnelFrequencyBuffer {
 	    return check;
 	}
 
-	if (fluidBuffer.getAmount() != 0 && !FluidStack.isSameFluidSameComponents(fluidBuffer, addition)) {
+	if (fluidBuffer.getAmount() != 0 && !FluidStack.isSameFluidSameComponents(fluidBuffer, addition))
 	    return FluidStack.EMPTY;
-	}
 
 	int accepted = Math.min(MAX_FLUID_CAP - fluidBuffer.getAmount(), addition.getAmount());
 
@@ -173,9 +168,8 @@ public class TunnelFrequencyBuffer {
 
     public FluidStack extractFluid(IFluidHandler.FluidAction action, FluidStack extract) {
 
-	if (fluidBuffer.isEmpty() || extract.isEmpty() || !FluidStack.isSameFluidSameComponents(fluidBuffer, extract)) {
+	if (fluidBuffer.isEmpty() || extract.isEmpty() || !FluidStack.isSameFluidSameComponents(fluidBuffer, extract))
 	    return FluidStack.EMPTY;
-	}
 
 	int taken = Math.min(extract.getAmount(), fluidBuffer.getAmount());
 	FluidStack returned = fluidBuffer.copyWithAmount(taken);
@@ -192,9 +186,8 @@ public class TunnelFrequencyBuffer {
 
     public GasStack receiveGas(GasAction action, GasStack addition) {
 
-	if (addition.isEmpty()) {
+	if (addition.isEmpty())
 	    return GasStack.EMPTY;
-	}
 
 	if (gasBuffer.isEmpty()) {
 
@@ -211,11 +204,10 @@ public class TunnelFrequencyBuffer {
 	    return check;
 	}
 
-	if ((gasBuffer.getAmount() != 0 && !gasBuffer.getGas().equals(addition.getGas()))
+	if (gasBuffer.getAmount() != 0 && !gasBuffer.getGas().equals(addition.getGas())
 		|| gasBuffer.getTemperature() != addition.getTemperature()
-		|| gasBuffer.getPressure() != addition.getPressure()) {
+		|| gasBuffer.getPressure() != addition.getPressure())
 	    return GasStack.EMPTY;
-	}
 
 	int accepted = Math.min(MAX_GAS_CAP - gasBuffer.getAmount(), addition.getAmount());
 
@@ -232,9 +224,8 @@ public class TunnelFrequencyBuffer {
 
 	if (gasBuffer.isEmpty() || extract.isEmpty() || !gasBuffer.getGas().equals(extract.getGas())
 		|| gasBuffer.getTemperature() != extract.getTemperature()
-		|| gasBuffer.getPressure() != extract.getPressure()) {
+		|| gasBuffer.getPressure() != extract.getPressure())
 	    return GasStack.EMPTY;
-	}
 
 	int taken = Math.min(extract.getAmount(), gasBuffer.getAmount());
 
@@ -253,23 +244,20 @@ public class TunnelFrequencyBuffer {
 
     public ItemStack receiveItem(boolean simulate, ItemStack addition) {
 
-	if (addition.isEmpty()) {
+	if (addition.isEmpty())
 	    return ItemStack.EMPTY;
-	}
 
 	/*
 	 * insertItem must return the unaccepted remainder.
 	 */
-	if (!itemBuffer.isEmpty() && !ItemStack.isSameItemSameComponents(itemBuffer, addition)) {
+	if (!itemBuffer.isEmpty() && !ItemStack.isSameItemSameComponents(itemBuffer, addition))
 	    return addition.copy();
-	}
 
 	int currentAmount = itemBuffer.isEmpty() ? 0 : itemBuffer.getCount();
 	int accepted = Math.min(MAX_ITEM_STACK_SIZE - currentAmount, addition.getCount());
 
-	if (accepted <= 0) {
+	if (accepted <= 0)
 	    return addition.copy();
-	}
 
 	if (!simulate) {
 	    if (itemBuffer.isEmpty()) {
@@ -282,9 +270,8 @@ public class TunnelFrequencyBuffer {
 
 	int remaining = addition.getCount() - accepted;
 
-	if (remaining <= 0) {
+	if (remaining <= 0)
 	    return ItemStack.EMPTY;
-	}
 
 	ItemStack remainder = addition.copy();
 	remainder.setCount(remaining);
@@ -293,9 +280,8 @@ public class TunnelFrequencyBuffer {
 
     public ItemStack extractItem(boolean simulate, ItemStack extract) {
 
-	if (itemBuffer.isEmpty() || extract.isEmpty() || !ItemStack.isSameItemSameComponents(itemBuffer, extract)) {
+	if (itemBuffer.isEmpty() || extract.isEmpty() || !ItemStack.isSameItemSameComponents(itemBuffer, extract))
 	    return ItemStack.EMPTY;
-	}
 
 	int taken = Math.min(extract.getCount(), itemBuffer.getCount());
 

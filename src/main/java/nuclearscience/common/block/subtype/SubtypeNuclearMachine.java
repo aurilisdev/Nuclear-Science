@@ -60,7 +60,8 @@ public enum SubtypeNuclearMachine implements ISubtype, IMachine {
 	    MachineProperties.builder().setShapeProvider(NuclearScienceVoxelShapes.RADIOISOTROPIC_GENERATOR)),
     fissionreactorcore(true, TileFissionReactorCore::new,
 	    MachineProperties.builder().setShapeProvider(NuclearScienceVoxelShapes.FISSION_REACTOR_CORE)),
-    fissioncontrolrod(true, TileControlRod.TileFissionControlRod::new), siren(true, TileSiren::new),
+    fissioncontrolrod(true, TileControlRod.TileFissionControlRod::new),
+    siren(true, TileSiren::new),
     steamfunnel(true, TileSteamFunnel::new),
     msrfuelpreprocessor(true, TileMSRFuelPreProcessor::new,
 	    MachineProperties.builder().setShapeProvider(NuclearScienceVoxelShapes.MSR_FUEL_PREPROCESSOR)),
@@ -92,7 +93,8 @@ public enum SubtypeNuclearMachine implements ISubtype, IMachine {
 
     teleporter(true, TileTeleporter::new,
 	    MachineProperties.builder().setShapeProvider(NuclearScienceVoxelShapes.TELEPORTER).setLitBrightness(15)),
-    chunkloader(true, TileChunkloader::new), atomicassembler(true, TileAtomicAssembler::new),
+    chunkloader(true, TileChunkloader::new),
+    atomicassembler(true, TileAtomicAssembler::new),
     quantumcapacitor(true, TileQuantumTunnel::new);
 
     private final BlockEntityType.BlockEntitySupplier<BlockEntity> blockEntitySupplier;
@@ -113,37 +115,37 @@ public enum SubtypeNuclearMachine implements ISubtype, IMachine {
 
     @Override
     public BlockEntityType.BlockEntitySupplier<BlockEntity> getBlockEntitySupplier() {
-	return this.blockEntitySupplier;
+	return blockEntitySupplier;
     }
 
     @Override
     public int getLitBrightness() {
-	return this.properties.litBrightness;
+	return properties.litBrightness;
     }
 
     @Override
     public RenderShape getRenderShape() {
-	return this.properties.renderShape;
+	return properties.renderShape;
     }
 
     @Override
     public boolean isMultiblock() {
-	return this.properties.isMultiblock;
+	return properties.isMultiblock;
     }
 
     @Override
     public boolean propegatesLightDown() {
-	return this.properties.propegatesLightDown;
+	return properties.propegatesLightDown;
     }
 
     @Override
     public String tag() {
-	return this.name();
+	return name();
     }
 
     @Override
     public String forgeTag() {
-	return this.tag();
+	return tag();
     }
 
     @Override
@@ -158,12 +160,12 @@ public enum SubtypeNuclearMachine implements ISubtype, IMachine {
 
     @Override
     public IMultiblockParentBlock.SubnodeWrapper getSubnodes() {
-	return this.properties.wrapper;
+	return properties.wrapper;
     }
 
     @Override
     public VoxelShapeProvider getVoxelShapeProvider() {
-	return this.properties.provider;
+	return properties.provider;
     }
 
     @Override
@@ -172,6 +174,6 @@ public enum SubtypeNuclearMachine implements ISubtype, IMachine {
     }
 
     public boolean showInItemGroup() {
-	return this.showInItemGroup;
+	return showInItemGroup;
     }
 }

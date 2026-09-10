@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -32,9 +34,9 @@ public class WrapperQuantumTunnelFrequencies {
     private ScreenComponentButton<?> enable;
     private ScreenComponentButton<?> disable;
 
-    private ButtonTunnelFrequency[] frequencyButtons = new ButtonTunnelFrequency[5];
-    private ScreenComponentButton[] editButtons = new ScreenComponentButton[5];
-    private ScreenComponentButton[] deleteButtons = new ScreenComponentButton[5];
+    private final ButtonTunnelFrequency[] frequencyButtons = new ButtonTunnelFrequency[5];
+    private final ScreenComponentButton[] editButtons = new ScreenComponentButton[5];
+    private final ScreenComponentButton[] deleteButtons = new ScreenComponentButton[5];
 
     private ScreenComponentButton<?> publicSelector;
     private ScreenComponentButton<?> privateSelector;
@@ -44,6 +46,7 @@ public class WrapperQuantumTunnelFrequencies {
 
     private boolean isPrivate = true;
 
+    @Nullable
     private TunnelFrequency selectedFrequency = null;
 
     private static final int BUTTON_COUNT = 5;
@@ -55,7 +58,7 @@ public class WrapperQuantumTunnelFrequencies {
 		new Color(28, 28, 28, 255));
 
 	frequencyLabel = new ScreenComponentSimpleLabel(x + 6, y + 25, 10, Color.WHITE, () -> {
-	    TileQuantumTunnel tile = screen.getMenu().getSafeHost();
+	    TileQuantumTunnel tile = screen.getMenu().getSafeHost().orElse(null);
 	    Component frequencyName;
 	    if (selectedFrequency != null) {
 		frequencyName = Component.literal(selectedFrequency.getName());
@@ -70,20 +73,19 @@ public class WrapperQuantumTunnelFrequencies {
 	});
 
 	enable = (ScreenComponentButton<?>) new ScreenComponentButton<>(x + 127, y + 19, 20, 20).setOnPress(but -> {
-	    TileQuantumTunnel tile = screen.getMenu().getSafeHost();
-	    if (tile == null || selectedFrequency == null || tile.frequency.getValue().equals(selectedFrequency)) {
+	    TileQuantumTunnel tile = screen.getMenu().getSafeHost().orElse(null);
+	    TunnelFrequency pSelectedFrequency = selectedFrequency;
+	    if (tile == null || pSelectedFrequency == null || tile.frequency.getValue().equals(pSelectedFrequency))
 		return;
-	    }
-	    tile.frequency.setValue(selectedFrequency);
+	    tile.frequency.setValue(pSelectedFrequency);
 
 	}).onTooltip((graphics, button, xAxis, yAxis) -> graphics.renderTooltip(screen.getFontRenderer(),
 		NuclearTextUtils.gui("quantumtunnel.enable"), xAxis, yAxis)).setIcon(NuclearIconTypes.ENABLE);
 
 	disable = (ScreenComponentButton<?>) new ScreenComponentButton<>(x + 150, y + 19, 20, 20).setOnPress(but -> {
-	    TileQuantumTunnel tile = screen.getMenu().getSafeHost();
-	    if (tile == null) {
+	    TileQuantumTunnel tile = screen.getMenu().getSafeHost().orElse(null);
+	    if (tile == null)
 		return;
-	    }
 	    tile.frequency.setValue(TunnelFrequency.NO_FREQUENCY);
 
 	}).onTooltip((graphics, button, xAxis, yAxis) -> graphics.renderTooltip(screen.getFontRenderer(),
@@ -111,7 +113,7 @@ public class WrapperQuantumTunnelFrequencies {
 		    .setOnPress(but -> {
 			ButtonTunnelFrequency button = (ButtonTunnelFrequency) but;
 
-			TileQuantumTunnel tile = screen.getMenu().getSafeHost();
+			TileQuantumTunnel tile = screen.getMenu().getSafeHost().orElse(null);
 			if (tile == null || button.getFrequency() == null) {
 			    selectedFrequency = null;
 			    return;
@@ -128,20 +130,18 @@ public class WrapperQuantumTunnelFrequencies {
 
 	    editButtons[i] = (ScreenComponentButton) new ScreenComponentButton<>(x + butOffX + 111,
 		    y + 2 + butOffY + 25 * i, 20, 20).setOnPress(but -> {
-
 			ButtonTunnelFrequency tunnel = frequencyButtons[index];
 
-			if (tunnel.getFrequency() == null) {
+			TunnelFrequency frequency = tunnel.getFrequency();
+			if (frequency == null)
 			    return;
-			}
 
 			Player player = Minecraft.getInstance().player;
 
-			if (player == null || !tunnel.getFrequency().getCreatorId().equals(player.getUUID())) {
+			if (player == null || !frequency.getCreatorId().equals(player.getUUID()))
 			    return;
-			}
 
-			screen.editFrequencyWrapper.updateFrequency(tunnel.getFrequency());
+			screen.editFrequencyWrapper.updateFrequency(frequency);
 			screen.editFrequencyWrapper.updateVisibility(true);
 			screen.slider.setVisible(false);
 			updateVisibility(false);
@@ -159,28 +159,22 @@ public class WrapperQuantumTunnelFrequencies {
 		    y + 2 + butOffY + 25 * i, 20, 20).setOnPress(but -> {
 
 			ButtonTunnelFrequency tunnel = frequencyButtons[index];
-
-			TileQuantumTunnel tile = screen.getMenu().getSafeHost();
-
+			TileQuantumTunnel tile = screen.getMenu().getSafeHost().orElse(null);
 			Player player = Minecraft.getInstance().player;
-
-			if (player == null || tunnel.getFrequency() == null || tile == null) {
-			    return;
-			}
-
 			TunnelFrequency frequency = tunnel.getFrequency();
+			if (player == null || frequency == null || tile == null)
+			    return;
 
-			if (selectedFrequency != null && selectedFrequency.equals(frequency)
-				&& selectedFrequency.getCreatorId().equals(player.getUUID())) {
-			    selectedFrequency = null;
+			TunnelFrequency pSelectedFrequency = selectedFrequency;
+			if (pSelectedFrequency != null && pSelectedFrequency.equals(frequency)
+				&& pSelectedFrequency.getCreatorId().equals(player.getUUID())) {
+			    pSelectedFrequency = selectedFrequency = null;
 			}
 
 			if (tile.frequency.getValue().equals(frequency)) {
 			    tile.frequency.setValue(TunnelFrequency.NO_FREQUENCY);
 			}
-
 			PacketDistributor.sendToServer(new PacketDeleteFrequency(player.getUUID(), frequency));
-
 		    })
 		    .onTooltip((graphics, button, xAxis, yAxis) -> graphics.renderTooltip(screen.getFontRenderer(),
 			    NuclearTextUtils.gui("quantumtunnel.delete"), xAxis, yAxis))
@@ -211,16 +205,14 @@ public class WrapperQuantumTunnelFrequencies {
     }
 
     public void tick() {
-	TileQuantumTunnel tile = screen.getMenu().getSafeHost();
-	if (tile == null) {
+	TileQuantumTunnel tile = screen.getMenu().getSafeHost().orElse(null);
+	if (tile == null)
 	    return;
-	}
 
 	Player player = Minecraft.getInstance().player;
 
-	if (player == null) {
+	if (player == null)
 	    return;
-	}
 
 	List<TunnelFrequency> frequencies = new ArrayList<>();
 

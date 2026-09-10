@@ -43,8 +43,8 @@ public class RenderMSInterface extends AbstractTileRenderer<TileMSInterface> {
 
 	stack.translate(MAX_DELTA * insertion, 0, 0);
 
-	RenderingUtils.renderModel(getModel(NuclearScienceClientRegister.MODEL_MSCONTROLROD_ROD), tile,
-		RenderType.solid(), stack, bufferIn, combinedLightIn, combinedOverlayIn);
+	RenderingUtils.renderModel(getModel(NuclearScienceClientRegister.MODEL_MSCONTROLROD_ROD), RenderType.solid(),
+		stack, bufferIn, combinedLightIn, combinedOverlayIn);
 
 	stack.popPose();
 

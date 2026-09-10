@@ -59,8 +59,9 @@ public class GasCentrifugeRecipeCategory extends AbstractRecipeCategory<PsuedoGa
 	    ChatFormatter.getChatDisplayShort(TileGasCentrifuge.WASTE_MULTIPLIER * 100, DisplayUnits.PERCENTAGE));
 
     public static final LabelWrapperGeneric POWER_LABEL = new LabelWrapperGeneric(LABEL_COLOR, 58, 2, false,
-	    ChatFormatter.getChatDisplayShort(960, DisplayUnits.VOLTAGE).append(" ").append(
-		    ChatFormatter.getChatDisplayShort(NuclearConfig.INSTANCE.PARTICLEINJECTOR_USAGE_PER_PARTICLE.get(),
+	    ChatFormatter.getChatDisplayShort(960, DisplayUnits.VOLTAGE).append(" ")
+		    .append(ChatFormatter.getChatDisplayShort(
+			    NuclearConfig.getInstance().PARTICLEINJECTOR_USAGE_PER_PARTICLE.get(),
 			    DisplayUnits.JOULES)));
 
     public static final int ANIM_TIME = 100;

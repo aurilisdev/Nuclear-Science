@@ -58,13 +58,14 @@ public class RenderFissionInterface extends AbstractTileRenderer<TileFissionInte
 
 	matrix.translate(0, START_Y + MAX_Y * insertion, 0);
 
-	RenderingUtils.renderModel(getModel(NuclearScienceClientRegister.MODEL_FISSIONINTERFACE_ROD), tile,
+	RenderingUtils.renderModel(getModel(NuclearScienceClientRegister.MODEL_FISSIONINTERFACE_ROD),
 		RenderType.solid(), matrix, bufferIn, combinedLightIn, combinedOverlayIn);
 
 	matrix.popPose();
 
-	if (tile.clientAnimations.isEmpty() || tile.reactor == null || !tile.reactor.valid()
-		|| !(tile.reactor.getSafe() instanceof TileFissionReactorCore)) {
+	var coreOpt = tile.getReactor(TileFissionReactorCore.class);
+
+	if (tile.clientAnimations.isEmpty() || coreOpt.isEmpty()) {
 
 	    if (insertion > 0) {
 
@@ -89,11 +90,11 @@ public class RenderFissionInterface extends AbstractTileRenderer<TileFissionInte
 	    return;
 	}
 
-	TileFissionReactorCore core = tile.reactor.getSafe();
+	TileFissionReactorCore core = coreOpt.orElse(null);
 
-	ComponentInventory coreInv = core.getComponent(IComponentType.Inventory);
+	ComponentInventory coreInv = core.requireComponent(IComponentType.Inventory);
 
-	Long currTime = tile.<ComponentTickable>getComponent(IComponentType.Tickable).getTicks();
+	Long currTime = tile.<ComponentTickable>requireComponent(IComponentType.Tickable).getTicks();
 
 	TextureAtlasSprite fuelCell = NuclearScienceClientRegister
 		.getSprite(NuclearScienceClientRegister.TEXTURE_FUELCELL);

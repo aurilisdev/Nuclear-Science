@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import javax.annotation.Nullable;
+
 import electrodynamics.prefab.utilities.ElectroTextUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -11,6 +13,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
+import nuclearscience.api.network.reactorlogistics.Interface;
 import nuclearscience.client.screen.util.GenericInterfaceBoundScreen;
 import nuclearscience.common.tile.reactor.logisticsnetwork.interfaces.GenericTileInterface;
 import nuclearscience.common.tile.reactor.logisticsnetwork.util.GenericTileInterfaceBound;
@@ -27,6 +30,7 @@ import voltaic.prefab.utilities.math.Color;
 public class WrapperBindInterface {
 
     private final GenericInterfaceBoundScreen<?> screen;
+    @Nullable
     public ScreenComponentButton<?> button;
 
     private ScreenComponentBoundInterface boundInterface;
@@ -36,7 +40,7 @@ public class WrapperBindInterface {
     private ScreenComponentButton<?> enable;
     private ScreenComponentButton<?> disable;
 
-    private ButtonInterfaceType[] interfaceButtons = new ButtonInterfaceType[BUTTON_COUNT];
+    private final ButtonInterfaceType[] interfaceButtons = new ButtonInterfaceType[BUTTON_COUNT];
 
     private int topRowIndex = 0;
     private int lastRowCount = 0;
@@ -53,6 +57,7 @@ public class WrapperBindInterface {
 			//
 			ScreenComponentButton<?> button = but;
 			button.isPressed = !button.isPressed;
+			ScreenComponentSimpleLabel playerInvLabel = screen.playerInvLabel;
 
 			if (button.isPressed) {
 
@@ -62,7 +67,8 @@ public class WrapperBindInterface {
 
 			    if (updateSlots) {
 				hideSlots();
-				screen.playerInvLabel.setVisible(false);
+				if (playerInvLabel != null)
+				    playerInvLabel.setVisible(false);
 			    }
 
 			    screen.binderSlider.setVisible(true);
@@ -75,7 +81,8 @@ public class WrapperBindInterface {
 
 			    if (updateSlots) {
 				showSlots();
-				screen.playerInvLabel.setVisible(true);
+				if (playerInvLabel != null)
+				    playerInvLabel.setVisible(true);
 			    }
 
 			    screen.binderSlider.setVisible(false);
@@ -107,22 +114,20 @@ public class WrapperBindInterface {
 		NuclearTextUtils.gui("logisticsnetwork.network"));
 
 	enable = (ScreenComponentButton<?>) new ScreenComponentButton<>(x + 127, y + 19, 20, 20).setOnPress(but -> {
-	    GenericTileInterfaceBound tile = screen.getMenu().getSafeHost();
-	    if (tile == null || boundInterface.getInterface() == null
-		    || tile.interfaceLocation.getValue().equals(boundInterface.getInterface().pos())) {
+	    GenericTileInterfaceBound tile = screen.getMenu().getSafeHost().orElse(null);
+	    Interface gInterface = boundInterface.getInterface();
+	    if (tile == null || gInterface == null || tile.interfaceLocation.getValue().equals(gInterface.pos()))
 		return;
-	    }
-	    tile.interfaceLocation.setValue(boundInterface.getInterface().pos());
-	    tile.interfaceType.setValue(boundInterface.getInterface().type().ordinal());
+	    tile.interfaceLocation.setValue(gInterface.pos());
+	    tile.interfaceType.setValue(gInterface.type().ordinal());
 
 	}).onTooltip((graphics, button, xAxis, yAxis) -> graphics.renderTooltip(screen.getFontRenderer(),
 		NuclearTextUtils.gui("quantumtunnel.enable"), xAxis, yAxis)).setIcon(NuclearIconTypes.ENABLE);
 
 	disable = (ScreenComponentButton<?>) new ScreenComponentButton<>(x + 150, y + 19, 20, 20).setOnPress(but -> {
-	    GenericTileInterfaceBound tile = screen.getMenu().getSafeHost();
-	    if (tile == null) {
+	    GenericTileInterfaceBound tile = screen.getMenu().getSafeHost().orElse(null);
+	    if (tile == null)
 		return;
-	    }
 	    tile.interfaceLocation.setValue(BlockEntityUtils.OUT_OF_REACH);
 	    tile.interfaceType.setValue(GenericTileInterface.InterfaceType.NONE.ordinal());
 
@@ -137,7 +142,7 @@ public class WrapperBindInterface {
 		    .setOnPress(but -> {
 			ButtonInterfaceType button = (ButtonInterfaceType) but;
 
-			GenericTileInterfaceBound tile = screen.getMenu().getSafeHost();
+			GenericTileInterfaceBound tile = screen.getMenu().getSafeHost().orElse(null);
 			if (tile == null || button.getInterface() == null) {
 			    boundInterface.setInterface(null);
 			    return;
@@ -167,20 +172,17 @@ public class WrapperBindInterface {
 
     public void tick() {
 
-	if (!screen.binderSlider.isVisible()) {
+	if (!screen.binderSlider.isVisible())
 	    return;
-	}
 
-	GenericTileInterfaceBound tile = screen.getMenu().getSafeHost();
-	if (tile == null) {
+	GenericTileInterfaceBound tile = screen.getMenu().getSafeHost().orElse(null);
+	if (tile == null)
 	    return;
-	}
 
 	Player player = Minecraft.getInstance().player;
 
-	if (player == null) {
+	if (player == null)
 	    return;
-	}
 
 	lastRowCount = tile.clientInterfaces.size();
 
@@ -291,18 +293,18 @@ public class WrapperBindInterface {
     }
 
     public void hideSlots() {
-	for (int i = 0; i < this.screen.getMenu().slots.size(); i++) {
+	for (int i = 0; i < screen.getMenu().slots.size(); i++) {
 
-	    ((SlotGeneric) this.screen.getMenu().slots.get(i)).setActive(false);
+	    ((SlotGeneric) screen.getMenu().slots.get(i)).setActive(false);
 
 	}
 
     }
 
     public void showSlots() {
-	for (int i = 0; i < this.screen.getMenu().slots.size(); i++) {
+	for (int i = 0; i < screen.getMenu().slots.size(); i++) {
 
-	    ((SlotGeneric) this.screen.getMenu().slots.get(i)).setActive(true);
+	    ((SlotGeneric) screen.getMenu().slots.get(i)).setActive(true);
 
 	}
     }

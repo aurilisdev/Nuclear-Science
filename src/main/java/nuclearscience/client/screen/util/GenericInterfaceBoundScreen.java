@@ -41,26 +41,25 @@ public abstract class GenericInterfaceBoundScreen<T extends GenericInterfaceBoun
     @Override
     protected void initializeComponents() {
 	super.initializeComponents();
-	playerInvLabel.setVisible(false);
+	if (playerInvLabel != null)
+	    playerInvLabel.setVisible(false);
     }
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
-	if (binderWrapper != null) {
-	    if (scrollY > 0) {
-		// scroll up
-		binderWrapper.handleMouseScroll(-1);
-	    } else if (scrollY < 0) {
-		// scroll down
-		binderWrapper.handleMouseScroll(1);
-	    }
+	if (scrollY > 0) {
+	    // scroll up
+	    binderWrapper.handleMouseScroll(-1);
+	} else if (scrollY < 0) {
+	    // scroll down
+	    binderWrapper.handleMouseScroll(1);
 	}
 	return super.mouseScrolled(mouseX, mouseY, scrollX, scrollY);
     }
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-	if (binderSlider != null && binderSlider.isVisible()) {
+	if (binderSlider.isVisible()) {
 	    binderSlider.mouseClicked(mouseX, mouseY, button);
 	}
 	return super.mouseClicked(mouseX, mouseY, button);
@@ -68,7 +67,7 @@ public abstract class GenericInterfaceBoundScreen<T extends GenericInterfaceBoun
 
     @Override
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
-	if (binderSlider != null && binderSlider.isVisible()) {
+	if (binderSlider.isVisible()) {
 	    binderSlider.mouseReleased(mouseX, mouseY, button);
 	}
 	return super.mouseReleased(mouseX, mouseY, button);
@@ -76,9 +75,8 @@ public abstract class GenericInterfaceBoundScreen<T extends GenericInterfaceBoun
 
     @Override
     public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
-	if (binderSlider.isVisible()) {
+	if (binderSlider.isVisible())
 	    return binderSlider.mouseDragged(mouseX, mouseY, button, dragX, dragY);
-	}
 	return super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
     }
 

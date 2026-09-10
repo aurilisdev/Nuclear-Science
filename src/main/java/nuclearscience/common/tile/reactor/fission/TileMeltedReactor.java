@@ -10,6 +10,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -26,8 +27,8 @@ import voltaic.prefab.tile.components.type.ComponentTickable;
 
 public class TileMeltedReactor extends GenericTile {
     public static final float RADIATION_RADIUS = 30;
-    private int initialRadiation = (int) (NuclearConfig.INSTANCE.FISSION_REACTOR_MELTDOWN_RADIATION_DURATION_REAL_DAYS
-	    .get() * 24 * 60 * 60 * 20);
+    private int initialRadiation = (int) (NuclearConfig
+	    .getInstance().FISSION_REACTOR_MELTDOWN_RADIATION_DURATION_REAL_DAYS.get() * 24 * 60 * 60 * 20);
     public int radiation = initialRadiation;
     public int temperature = 6000;
 
@@ -37,7 +38,7 @@ public class TileMeltedReactor extends GenericTile {
 	addComponent(new ComponentTickable(this).tickServer(this::tickServer));
     }
 
-    protected void tickServer(ComponentTickable tickable) {
+    protected void tickServer(Level level, ComponentTickable tickable) {
 	long ticks = tickable.getTicks();
 	if (ticks % 3 == 0) {
 	    BlockState state = level.getBlockState(worldPosition.below());
@@ -106,7 +107,7 @@ public class TileMeltedReactor extends GenericTile {
 	    int range = (int) (Math.sqrt(totstrength) / (5.0 * Math.sqrt(2.0)) * 2.0);
 
 	    if (totstrength > 0.0 && range > 0) {
-		RadiationSystem.addRadiationSource(getLevel(),
+		RadiationSystem.addRadiationSource(level,
 			new SimpleRadiationSource(totstrength, 1, range, true, 30, getBlockPos(), true, false));
 	    }
 
@@ -115,12 +116,13 @@ public class TileMeltedReactor extends GenericTile {
     }
 
     @Override
-    public ItemInteractionResult useWithItem(ItemStack used, Player player, InteractionHand hand, BlockHitResult hit) {
+    public ItemInteractionResult useWithItem(Level level, ItemStack used, Player player, InteractionHand hand,
+	    BlockHitResult hit) {
 	return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     @Override
-    public InteractionResult useWithoutItem(Player player, BlockHitResult hit) {
+    public InteractionResult useWithoutItem(Level level, Player player, BlockHitResult hit) {
 	return InteractionResult.PASS;
     }
 

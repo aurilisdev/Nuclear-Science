@@ -32,11 +32,10 @@ public class ScreenRadioisotopeGenerator extends GenericScreen<ContainerRadioiso
 	addComponent(new ScreenComponentProgress(ScreenComponentProgress.ProgressBars.COUNTDOWN_FLAME, () -> {
 	    ItemStack in = container.getSlot(0).getItem();
 	    RadioactiveObject rad = RadioactiveItemRegister.getValue(in.getItem());
-	    double currentOutput = in.getCount() * NuclearConfig.INSTANCE.RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER.get()
-		    * rad.amount();
-	    if (currentOutput > 0) {
+	    double currentOutput = in.getCount()
+		    * NuclearConfig.getInstance().RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER.get() * rad.amount();
+	    if (currentOutput > 0)
 		return 1;
-	    }
 	    return 0;
 	}, 25, 24));
 	addComponent(
@@ -45,11 +44,11 @@ public class ScreenRadioisotopeGenerator extends GenericScreen<ContainerRadioiso
 	addComponent(new ScreenComponentMultiLabel(0, 0, graphics -> {
 	    ItemStack in = menu.getSlot(0).getItem();
 	    RadioactiveObject rad = RadioactiveItemRegister.getValue(in.getItem());
-	    double currentOutput = in.getCount() * NuclearConfig.INSTANCE.RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER.get()
-		    * rad.amount();
+	    double currentOutput = in.getCount()
+		    * NuclearConfig.getInstance().RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER.get() * rad.amount();
 	    TransferPack transfer = TransferPack.ampsVoltage(
-		    currentOutput / NuclearConfig.INSTANCE.RADIOISOTOPEGENERATOR_VOLTAGE.get(),
-		    NuclearConfig.INSTANCE.RADIOISOTOPEGENERATOR_VOLTAGE.get());
+		    currentOutput / NuclearConfig.getInstance().RADIOISOTOPEGENERATOR_VOLTAGE.get(),
+		    NuclearConfig.getInstance().RADIOISOTOPEGENERATOR_VOLTAGE.get());
 	    graphics.drawString(font,
 		    NuclearTextUtils.gui("machine.current",
 			    ChatFormatter.getChatDisplayShort(transfer.getAmps(), DisplayUnits.AMPERE)),
@@ -72,11 +71,11 @@ public class ScreenRadioisotopeGenerator extends GenericScreen<ContainerRadioiso
 	ArrayList<FormattedCharSequence> list = new ArrayList<>();
 	ItemStack in = menu.getSlot(0).getItem();
 	RadioactiveObject rad = RadioactiveItemRegister.getValue(in.getItem());
-	double currentOutput = in.getCount() * NuclearConfig.INSTANCE.RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER.get()
+	double currentOutput = in.getCount() * NuclearConfig.getInstance().RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER.get()
 		* rad.amount();
 	TransferPack transfer = TransferPack.ampsVoltage(
-		currentOutput / NuclearConfig.INSTANCE.RADIOISOTOPEGENERATOR_VOLTAGE.get(),
-		NuclearConfig.INSTANCE.RADIOISOTOPEGENERATOR_VOLTAGE.get());
+		currentOutput / NuclearConfig.getInstance().RADIOISOTOPEGENERATOR_VOLTAGE.get(),
+		NuclearConfig.getInstance().RADIOISOTOPEGENERATOR_VOLTAGE.get());
 	list.add(NuclearTextUtils
 		.gui("machine.current", ChatFormatter.getChatDisplayShort(transfer.getAmps(), DisplayUnits.AMPERE))
 		.withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText());

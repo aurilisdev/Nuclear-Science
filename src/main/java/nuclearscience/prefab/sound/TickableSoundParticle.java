@@ -21,12 +21,12 @@ public class TickableSoundParticle extends AbstractTickableSoundInstance {
     public TickableSoundParticle(SoundEvent event, SoundSource source, EntityParticle particle) {
 	super(event, source, SoundInstance.createUnseededRandom());
 	this.particle = particle;
-	this.x = particle.getX();
-	this.y = particle.getY();
-	this.z = particle.getZ();
+	x = particle.getX();
+	y = particle.getY();
+	z = particle.getZ();
 	initialVolume = 1.0F;
-	this.volume = 1.0F;
-	this.pitch = MIN_PITCH;
+	volume = 1.0F;
+	pitch = MIN_PITCH;
 	looping = true;
 	delay = 0;
 	relative = true;
@@ -34,15 +34,16 @@ public class TickableSoundParticle extends AbstractTickableSoundInstance {
 
     @Override
     public void tick() {
+	Player player = Minecraft.getInstance().player;
+	if (player == null)
+	    return;
 	float ratio = Math.abs(particle.speed / EntityParticle.MAX_SPEED) / EntityParticle.MAX_SPEED;
 
 	pitch = MIN_PITCH + MIN_PITCH * ratio;
 
-	this.x = particle.getX();
-	this.y = particle.getY();
-	this.z = particle.getZ();
-
-	Player player = Minecraft.getInstance().player;
+	x = particle.getX();
+	y = particle.getY();
+	z = particle.getZ();
 
 	float distance = (float) WorldUtils.distanceBetweenPositions(player.blockPosition(),
 		new BlockPos((int) x, (int) y, (int) z));
@@ -67,6 +68,6 @@ public class TickableSoundParticle extends AbstractTickableSoundInstance {
 
     @Override
     public boolean isStopped() {
-	return particle == null || !particle.isAlive() || particle.isRemoved();
+	return !particle.isAlive() || particle.isRemoved();
     }
 }

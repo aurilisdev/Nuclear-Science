@@ -2,6 +2,7 @@ package nuclearscience.common.tile.reactor.moltensalt;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.common.inventory.container.ContainerFreezePlug;
 import nuclearscience.common.settings.NuclearConfig;
@@ -14,7 +15,6 @@ import voltaic.prefab.tile.components.IComponentType;
 import voltaic.prefab.tile.components.type.ComponentContainerProvider;
 import voltaic.prefab.tile.components.type.ComponentElectrodynamic;
 import voltaic.prefab.tile.components.type.ComponentInventory;
-import voltaic.prefab.tile.components.type.ComponentPacketHandler;
 import voltaic.prefab.tile.components.type.ComponentTickable;
 import voltaic.prefab.utilities.BlockEntityUtils;
 import voltaic.prefab.utilities.object.TransferPack;
@@ -23,44 +23,43 @@ import voltaic.registers.VoltaicCapabilities;
 public class TileFreezePlug extends GenericTile {
 
     public final SingleProperty<Boolean> isFrozen = property(
-	    new SingleProperty<>(PropertyTypes.BOOLEAN, "isfrozen", false));
+	    new SingleProperty<>(getPropertyManager(), PropertyTypes.BOOLEAN, "isfrozen", false));
     public final SingleProperty<Double> saltBonus = property(
-	    new SingleProperty<>(PropertyTypes.DOUBLE, "saltbonus", 1.0));
+	    new SingleProperty<>(getPropertyManager(), PropertyTypes.DOUBLE, "saltbonus", 1.0));
 
     public TileFreezePlug(BlockPos pos, BlockState state) {
 	super(NuclearScienceTiles.TILE_FREEZEPLUG.get(), pos, state);
 	addComponent(new ComponentTickable(this).tickServer(this::tickServer));
-	addComponent(new ComponentPacketHandler(this));
 	addComponent(new ComponentElectrodynamic(this, false, true).voltage(VoltaicCapabilities.DEFAULT_VOLTAGE)
 		.extractPower((x, y) -> TransferPack.EMPTY).setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM)
-		.maxJoules(NuclearConfig.INSTANCE.FREEZEPLUG_USAGE_PER_TICK.get() * 20));
+		.maxJoules(NuclearConfig.getInstance().FREEZEPLUG_USAGE_PER_TICK.get() * 20));
 	addComponent(new ComponentInventory(this, ComponentInventory.InventoryBuilder.newInv().inputs(1))
 		.valid((slot, stack, i) -> stack.getItem() == NuclearScienceItems.ITEM_FLINAK.get()));
 	addComponent(new ComponentContainerProvider("freezeplug", this)
-		.createMenu((id, player) -> new ContainerFreezePlug(id, player, getComponent(IComponentType.Inventory),
-			getCoordsArray())));
+		.createMenu((id, player) -> new ContainerFreezePlug(id, player,
+			requireComponent(IComponentType.Inventory), getCoordsArray())));
     }
 
-    public void tickServer(ComponentTickable tickable) {
-	ComponentElectrodynamic electro = getComponent(IComponentType.Electrodynamic);
-	ComponentInventory inv = getComponent(IComponentType.Inventory);
+    public void tickServer(Level level, ComponentTickable tickable) {
+	ComponentElectrodynamic electro = requireComponent(IComponentType.Electrodynamic);
+	ComponentInventory inv = requireComponent(IComponentType.Inventory);
 
 	ItemStack stack = inv.getItem(0);
 
-	if (stack.isEmpty() || (electro.getJoulesStored() < NuclearConfig.INSTANCE.FREEZEPLUG_USAGE_PER_TICK.get())) {
+	if (stack.isEmpty()
+		|| electro.getJoulesStored() < NuclearConfig.getInstance().FREEZEPLUG_USAGE_PER_TICK.get()) {
 	    isFrozen.setValue(false);
 	    saltBonus.setValue(0.0);
 	    return;
 	}
 
-	electro.joules(electro.getJoulesStored() - NuclearConfig.INSTANCE.FREEZEPLUG_USAGE_PER_TICK.get());
+	electro.joules(electro.getJoulesStored() - NuclearConfig.getInstance().FREEZEPLUG_USAGE_PER_TICK.get());
 
 	isFrozen.setValue(true);
 
 	double bonus = 1.0 + (stack.getCount() - 1) / 63.0;
 
 	saltBonus.setValue(bonus);
-
     }
 
     public boolean isFrozen() {

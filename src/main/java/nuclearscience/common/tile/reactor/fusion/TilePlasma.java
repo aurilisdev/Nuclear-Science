@@ -3,6 +3,7 @@ package nuclearscience.common.tile.reactor.fusion;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -16,24 +17,23 @@ import voltaic.prefab.properties.types.PropertyTypes;
 import voltaic.prefab.properties.variant.SingleProperty;
 import voltaic.prefab.tile.GenericTile;
 import voltaic.prefab.tile.components.type.ComponentTickable;
-import voltaic.prefab.utilities.object.CachedTileOutput;
+// ...existing imports...
 
 public class TilePlasma extends GenericTile {
 
     public final SingleProperty<Integer> ticksExisted = property(
-	    new SingleProperty<>(PropertyTypes.INTEGER, "existed", 0).setNoUpdateClient());
+	    new SingleProperty<>(getPropertyManager(), PropertyTypes.INTEGER, "existed", 0).setNoUpdateClient());
     public final SingleProperty<Integer> spread = property(
-	    new SingleProperty<>(PropertyTypes.INTEGER, "spread", 6).setNoUpdateClient());
+	    new SingleProperty<>(getPropertyManager(), PropertyTypes.INTEGER, "spread", 6).setNoUpdateClient());
 
-    private CachedTileOutput output;
+    // cached output removed; we'll directly query for a steam receiver above
 
     public TilePlasma(BlockPos pos, BlockState state) {
 	super(NuclearScienceTiles.TILE_PLASMA.get(), pos, state);
 	addComponent(new ComponentTickable(this).tickServer(this::tickServer));
     }
 
-    public void tickServer(ComponentTickable tickable) {
-
+    public void tickServer(Level level, ComponentTickable tickable) {
 	ticksExisted.setValue(ticksExisted.getValue() + 1);
 
 	if (ticksExisted.getValue() > 80) {
@@ -70,12 +70,10 @@ public class TilePlasma extends GenericTile {
 		&& level.getBlockState(getBlockPos().relative(Direction.UP))
 			.is(NuclearScienceTags.Blocks.FUSION_CONTAINMENT)
 		&& level.getFluidState(getBlockPos().relative(Direction.UP, 2)).is(FluidTags.WATER)) {
-	    if (output == null) {
-		output = new CachedTileOutput(level, getBlockPos().relative(Direction.UP, 3));
-	    } else if (output.getSafe() instanceof ISteamReceiver) {
-		ISteamReceiver turbine = output.getSafe();
+	    BlockEntity te = level.getBlockEntity(getBlockPos().relative(Direction.UP, 3));
+	    if (te instanceof ISteamReceiver turbine) {
 		turbine.receiveSteam(Integer.MAX_VALUE,
-			(int) (NuclearConfig.INSTANCE.FUSIONREACTOR_MAXENERGYTARGET.get() / (113.0 * 20.0)));
+			(int) (NuclearConfig.getInstance().FUSIONREACTOR_MAXENERGYTARGET.get() / (113.0 * 20.0)));
 	    }
 	}
     }

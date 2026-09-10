@@ -31,18 +31,16 @@ public class MoltenSaltNetwork
 
     @Override
     public Double emit(Double transfer, ArrayList<BlockEntity> ignored, boolean debug) {
-	if (transfer <= 0) {
+	if (transfer <= 0)
 	    return 0.0;
-	}
 	Set<BlockEntity> availableAcceptors = Sets.newHashSet(acceptorSet);
 
 	double heat = 0.0;
 
 	availableAcceptors.removeAll(ignored);
 
-	if (availableAcceptors.isEmpty()) {
+	if (availableAcceptors.isEmpty())
 	    return 0.0;
-	}
 
 	double perReceiver = transfer / availableAcceptors.size();
 	for (BlockEntity receiver : availableAcceptors) {

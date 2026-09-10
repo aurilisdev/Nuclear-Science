@@ -1,5 +1,7 @@
 package nuclearscience.common.block;
 
+import javax.annotation.Nullable;
+
 import com.mojang.serialization.MapCodec;
 
 import net.minecraft.core.BlockPos;
@@ -27,7 +29,7 @@ public class BlockPlasma extends GenericEntityBlock {
     }
 
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
 	return new TilePlasma(pos, state);
     }
 
@@ -60,6 +62,6 @@ public class BlockPlasma extends GenericEntityBlock {
 
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {
-	return null;
+	throw new UnsupportedOperationException("Need to implement CODEC");
     }
 }

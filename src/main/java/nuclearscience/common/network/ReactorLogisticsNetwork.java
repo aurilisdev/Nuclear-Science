@@ -24,7 +24,7 @@ import voltaic.prefab.network.AbstractNetwork;
 
 public class ReactorLogisticsNetwork extends
 	AbstractNetwork<TileReactorLogisticsCable, SubtypeReactorLogisticsCable, Void, ReactorLogisticsNetwork> {
-
+    @Nullable
     private TileController controller;
     private final HashMap<BlockPos, TileControlRodModule> controlRods = new HashMap<>();
     private final HashMap<BlockPos, TileSupplyModule> supplyModules = new HashMap<>();
@@ -71,8 +71,8 @@ public class ReactorLogisticsNetwork extends
 
     @Override
     public void updateRecieverStatistics(BlockEntity reciever, Direction dir) {
-	if (reciever instanceof TileController controller) {
-	    this.controller = controller;
+	if (reciever instanceof TileController tileController) {
+	    controller = tileController;
 	} else if (reciever instanceof GenericTileInterface reactorInterface) {
 	    interfaces.put(reactorInterface.getBlockPos(), reactorInterface);
 	} else if (reciever instanceof TileControlRodModule controlRod) {
@@ -106,18 +106,15 @@ public class ReactorLogisticsNetwork extends
 	return controller;
     }
 
-    @Nullable
-    public TileControlRodModule getControlRod(BlockPos pos) {
+    public @Nullable TileControlRodModule getControlRod(BlockPos pos) {
 	return controlRods.getOrDefault(pos, null);
     }
 
-    @Nullable
-    public TileSupplyModule getSupplyModule(BlockPos pos) {
+    public @Nullable TileSupplyModule getSupplyModule(BlockPos pos) {
 	return supplyModules.getOrDefault(pos, null);
     }
 
-    @Nullable
-    public GenericTileInterface getInterface(BlockPos pos) {
+    public @Nullable GenericTileInterface getInterface(BlockPos pos) {
 	return interfaces.getOrDefault(pos, null);
     }
 

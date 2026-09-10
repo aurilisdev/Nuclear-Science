@@ -19,7 +19,7 @@ public class WrapperIOEditor {
 
     public ScreenComponentButton<?> button;
 
-    private ButtonIO[] ioArr = new ButtonIO[6];
+    private final ButtonIO[] ioArr = new ButtonIO[6];
 
     private ScreenComponentSimpleLabel label;
 

@@ -4,9 +4,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.common.inventory.container.ContainerSupplyModule;
-import nuclearscience.common.network.ReactorLogisticsNetwork;
 import nuclearscience.common.settings.NuclearConfig;
 import nuclearscience.common.tile.reactor.logisticsnetwork.interfaces.GenericTileInterface;
 import nuclearscience.common.tile.reactor.logisticsnetwork.util.GenericTileInterfaceBound;
@@ -16,7 +16,6 @@ import voltaic.prefab.properties.variant.SingleProperty;
 import voltaic.prefab.tile.components.IComponentType;
 import voltaic.prefab.tile.components.type.ComponentContainerProvider;
 import voltaic.prefab.tile.components.type.ComponentInventory;
-import voltaic.prefab.tile.components.type.ComponentPacketHandler;
 import voltaic.prefab.tile.components.type.ComponentTickable;
 import voltaic.prefab.utilities.BlockEntityUtils;
 import voltaic.prefab.utilities.RadiationUtils;
@@ -27,7 +26,6 @@ public class TileSupplyModule extends GenericTileInterfaceBound {
 
     public TileSupplyModule(BlockPos worldPos, BlockState blockState) {
 	super(NuclearScienceTiles.TILE_SUPPLYMODULE.get(), worldPos, blockState);
-	addComponent(new ComponentPacketHandler(this));
 	addComponent(new ComponentTickable(this).tickServer(this::tickServer));
 	addComponent(new ComponentInventory(this, ComponentInventory.InventoryBuilder.newInv().inputs(9).outputs(9))
 		//
@@ -43,15 +41,16 @@ public class TileSupplyModule extends GenericTileInterfaceBound {
 		.valid(machineValidator()));
 	addComponent(new ComponentContainerProvider("supplymodule", this)
 		.createMenu((id, player) -> new ContainerSupplyModule(id, player,
-			getComponent(IComponentType.Inventory), getCoordsArray())));
+			requireComponent(IComponentType.Inventory), getCoordsArray())));
 	relativeBack = BlockEntityUtils.getRelativeSide(getFacing(), BlockEntityUtils.MachineDirection.BACK.mappedDir);
     }
 
     @Override
-    public void tickServer(ComponentTickable tickable) {
-	super.tickServer(tickable);
-	RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory),
-		NuclearConfig.INSTANCE.RADIOACTIVE_PROCESSOR_RADIATION_RADIUS.get(), true, 30, true, false);
+    public void tickServer(Level level, ComponentTickable tickable) {
+	super.tickServer(level, tickable);
+	RadiationUtils.handleRadioactiveItems(level, this,
+		(ComponentInventory) requireComponent(IComponentType.Inventory),
+		NuclearConfig.getInstance().RADIOACTIVE_PROCESSOR_RADIATION_RADIUS.get(), true, 30, true, false);
     }
 
     @Override
@@ -70,8 +69,8 @@ public class TileSupplyModule extends GenericTileInterfaceBound {
     }
 
     @Override
-    public void onBlockStateUpdate(BlockState oldState, BlockState newState) {
-	super.onBlockStateUpdate(oldState, newState);
+    public void onBlockStateUpdate(Level level, BlockState oldState, BlockState newState) {
+	super.onBlockStateUpdate(level, oldState, newState);
 	if (!level.isClientSide() && oldState.hasProperty(VoltaicBlockStates.FACING)
 		&& newState.hasProperty(VoltaicBlockStates.FACING)
 		&& oldState.getValue(VoltaicBlockStates.FACING) != newState.getValue(VoltaicBlockStates.FACING)) {
@@ -94,70 +93,30 @@ public class TileSupplyModule extends GenericTileInterfaceBound {
 
     @Override
     public void onInterfacePropChange(SingleProperty<BlockPos> prop, BlockPos old) {
-
 	super.onInterfacePropChange(prop, old);
 
-	boolean oldInval = old.equals(BlockEntityUtils.OUT_OF_REACH);
-	boolean newInval = prop.getValue().equals(BlockEntityUtils.OUT_OF_REACH);
-
-	if (oldInval && newInval) {
+	BlockPos current = prop.getValue();
+	boolean oldInvalid = old.equals(BlockEntityUtils.OUT_OF_REACH);
+	boolean newInvalid = current.equals(BlockEntityUtils.OUT_OF_REACH);
+	if (oldInvalid == newInvalid)
 	    return;
-	}
 
-	if (networkCable == null || !networkCable.valid()
-		|| !(networkCable.getSafe() instanceof TileReactorLogisticsCable)) {
-	    return;
-	}
+	BlockPos interfacePos = newInvalid ? old : current;
+	BlockPos supplyPos = newInvalid ? BlockEntityUtils.OUT_OF_REACH : getBlockPos();
 
-	TileReactorLogisticsCable cable = networkCable.getSafe();
-
-	if (cable.isRemoved()) {
-	    return;
-	}
-
-	ReactorLogisticsNetwork network = cable.getNetwork();
-
-	if (oldInval && !newInval) {
-	    GenericTileInterface inter = network.getInterface(prop.getValue());
-
-	    if (inter != null) {
-		inter.supplyModuleLocation.setValue(getBlockPos());
-	    }
-	} else if (!oldInval && newInval) {
-	    GenericTileInterface inter = network.getInterface(old);
-
-	    if (inter != null) {
-		inter.supplyModuleLocation.setValue(BlockEntityUtils.OUT_OF_REACH);
-	    }
-	}
-
+	getNetworkCable(TileReactorLogisticsCable.class).map(TileReactorLogisticsCable::getNetwork)
+		.map(network -> network.getInterface(interfacePos))
+		.ifPresent(inter -> inter.supplyModuleLocation.setValue(supplyPos));
     }
 
     @Override
-    public void onBlockDestroyed() {
-	super.onBlockDestroyed();
-	if (!level.isClientSide()) {
+    public void onBlockDestroyed(Level level) {
+	super.onBlockDestroyed(level);
+	if (level.isClientSide())
+	    return;
 
-	    if (networkCable == null || !networkCable.valid()
-		    || !(networkCable.getSafe() instanceof TileReactorLogisticsCable)) {
-		return;
-	    }
-
-	    TileReactorLogisticsCable cable = networkCable.getSafe();
-
-	    if (cable.isRemoved()) {
-		return;
-	    }
-
-	    ReactorLogisticsNetwork network = cable.getNetwork();
-
-	    GenericTileInterface inter = network.getInterface(interfaceLocation.getValue());
-
-	    if (inter == null) {
-		return;
-	    }
-
-	    inter.supplyModuleLocation.setValue(BlockEntityUtils.OUT_OF_REACH);
-	}
+	getNetworkCable(TileReactorLogisticsCable.class).map(TileReactorLogisticsCable::getNetwork)
+		.map(network -> network.getInterface(interfaceLocation.getValue()))
+		.ifPresent(inter -> inter.supplyModuleLocation.setValue(BlockEntityUtils.OUT_OF_REACH));
     }
 }

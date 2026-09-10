@@ -3,6 +3,7 @@ package nuclearscience.common.tile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import nuclearscience.common.inventory.container.ContainerAtomicAssembler;
@@ -18,7 +19,6 @@ import voltaic.prefab.tile.components.IComponentType;
 import voltaic.prefab.tile.components.type.ComponentContainerProvider;
 import voltaic.prefab.tile.components.type.ComponentElectrodynamic;
 import voltaic.prefab.tile.components.type.ComponentInventory;
-import voltaic.prefab.tile.components.type.ComponentPacketHandler;
 import voltaic.prefab.tile.components.type.ComponentTickable;
 import voltaic.prefab.utilities.BlockEntityUtils;
 import voltaic.prefab.utilities.ItemUtils;
@@ -26,16 +26,15 @@ import voltaic.prefab.utilities.RadiationUtils;
 
 public class TileAtomicAssembler extends GenericTile {
 
-    public final SingleProperty<Integer> progress = property(new SingleProperty<>(PropertyTypes.INTEGER, "progress", 0))
-	    .setNoUpdateServer();
+    public final SingleProperty<Integer> progress = property(
+	    new SingleProperty<>(getPropertyManager(), PropertyTypes.INTEGER, "progress", 0));
 
     public TileAtomicAssembler(BlockPos pos, BlockState state) {
 	super(NuclearScienceTiles.TILE_ATOMICASSEMBLER.get(), pos, state);
 	addComponent(new ComponentTickable(this).tickServer(this::tickServer));
-	addComponent(new ComponentPacketHandler(this));
 	addComponent(new ComponentElectrodynamic(this, false, true)
-		.maxJoules(NuclearConfig.INSTANCE.ATOMICASSEMBLER_USAGE_PER_TICK.get() * 20)
-		.voltage(NuclearConfig.INSTANCE.ATOMICASSEMBLER_VOLTAGE.get())
+		.maxJoules(NuclearConfig.getInstance().ATOMICASSEMBLER_USAGE_PER_TICK.get() * 20)
+		.voltage(NuclearConfig.getInstance().ATOMICASSEMBLER_VOLTAGE.get())
 		.setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM));
 	// The slot == 6 has to be there to allow items into the input slot.
 	addComponent(new ComponentInventory(this, ComponentInventory.InventoryBuilder.newInv().inputs(7).outputs(1))
@@ -47,15 +46,14 @@ public class TileAtomicAssembler extends GenericTile {
 			|| slot < 6 && stack.is(NuclearScienceItems.ITEM_CELLDARKMATTER.get())));
 	addComponent(new ComponentContainerProvider("atomicassembler", this)
 		.createMenu((id, player) -> new ContainerAtomicAssembler(id, player,
-			getComponent(IComponentType.Inventory), getCoordsArray())));
+			requireComponent(IComponentType.Inventory), getCoordsArray())));
     }
 
-    private void tickServer(ComponentTickable tickable) {
+    private void tickServer(Level level, ComponentTickable tickable) {
+	ComponentInventory inv = requireComponent(IComponentType.Inventory);
 
-	ComponentInventory inv = getComponent(IComponentType.Inventory);
-
-	RadiationUtils.handleRadioactiveItems(this, inv, NuclearConfig.INSTANCE.ATOMIC_ASSEMBLER_RADIATION_RADIUS.get(),
-		true, 30, true, false);
+	RadiationUtils.handleRadioactiveItems(level, this, inv,
+		NuclearConfig.getInstance().ATOMIC_ASSEMBLER_RADIATION_RADIUS.get(), true, 30, true, false);
 
 	ItemStack input = inv.getItem(6);
 
@@ -91,19 +89,17 @@ public class TileAtomicAssembler extends GenericTile {
 
 	}
 
-	ComponentElectrodynamic electro = getComponent(IComponentType.Electrodynamic);
+	ComponentElectrodynamic electro = requireComponent(IComponentType.Electrodynamic);
 
-	if (electro.getJoulesStored() < NuclearConfig.INSTANCE.ATOMICASSEMBLER_USAGE_PER_TICK.get()) {
+	if (electro.getJoulesStored() < NuclearConfig.getInstance().ATOMICASSEMBLER_USAGE_PER_TICK.get())
 	    return;
-	}
 
 	progress.setValue(progress.getValue() + 1);
 
-	electro.joules(electro.getJoulesStored() - NuclearConfig.INSTANCE.ATOMICASSEMBLER_USAGE_PER_TICK.get());
+	electro.joules(electro.getJoulesStored() - NuclearConfig.getInstance().ATOMICASSEMBLER_USAGE_PER_TICK.get());
 
-	if (progress.getValue() < NuclearConfig.INSTANCE.ATOMICASSEMBLER_REQUIRED_TICKS.get()) {
+	if (progress.getValue() < NuclearConfig.getInstance().ATOMICASSEMBLER_REQUIRED_TICKS.get())
 	    return;
-	}
 
 	progress.setValue(0);
 
@@ -131,16 +127,14 @@ public class TileAtomicAssembler extends GenericTile {
 
     private static boolean validateDupeItem(ItemStack stack) {
 
-	if (AtomicAssemblerWhitelistRegister.INSTANCE.isWhitelist(stack.getItem())) {
+	if (AtomicAssemblerWhitelistRegister.INSTANCE.isWhitelist(stack.getItem()))
 	    return true;
-	}
 
 	if (AtomicAssemblerBlacklistRegister.INSTANCE.isBlacklisted(stack.getItem())
 		|| stack.has(DataComponents.CONTAINER)
-		|| (ItemUtils.testItems(stack.getItem(), NuclearScienceItems.ITEM_CELLDARKMATTER.get())
-			&& stack.getCapability(Capabilities.ItemHandler.ITEM) != null)) {
+		|| ItemUtils.testItems(stack.getItem(), NuclearScienceItems.ITEM_CELLDARKMATTER.get())
+			&& stack.getCapability(Capabilities.ItemHandler.ITEM) != null)
 	    return false;
-	}
 
 	return true;
 

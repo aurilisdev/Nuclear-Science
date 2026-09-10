@@ -1,10 +1,10 @@
 package nuclearscience.client.render.tile;
 
-import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
@@ -22,18 +22,16 @@ public class RenderCloudChamber extends AbstractTileRenderer<TileCloudChamber> {
     }
 
     @Override
-    public void render(@NotNull TileCloudChamber tile, float partialTicks, PoseStack stack, MultiBufferSource bufferIn,
+    public void render(TileCloudChamber tile, float partialTicks, PoseStack stack, MultiBufferSource bufferIn,
 	    int combinedLightIn, int combinedOverlayIn) {
-
-	if (!tile.active.getValue()) {
+	ClientLevel level = level();
+	if ((level == null) || !tile.active.getValue())
 	    return;
-	}
 
 	double countPerc = Math.min(1.0, tile.sources.getValue().size() / MAX_COUNT);
 
-	if (level().getRandom().nextFloat() > countPerc * 0.2) {
+	if (level.getRandom().nextFloat() > countPerc * 0.2)
 	    return;
-	}
 
 	BlockPos pos = tile.getBlockPos();
 

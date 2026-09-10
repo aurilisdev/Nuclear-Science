@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.api.network.reactorlogistics.Interface;
@@ -28,11 +29,11 @@ public abstract class GenericTileInterfaceBound extends GenericTileLogisticsMemb
 	    GenericTileInterface.InterfaceType.MS, GenericTileInterface.InterfaceType.FUSION };
 
     public final SingleProperty<Boolean> linked = property(
-	    new SingleProperty<>(PropertyTypes.BOOLEAN, "islinked", false)).onChange((prop, old) -> {
-
-		if (level == null || level.isClientSide) {
+	    new SingleProperty<>(getPropertyManager(), PropertyTypes.BOOLEAN, "islinked", false))
+	    .onChange((prop, old) -> {
+		Level level = this.level;
+		if (level == null || level.isClientSide)
 		    return;
-		}
 
 		if (BlockEntityUtils.isLit(this) ^ prop.getValue()) {
 		    BlockEntityUtils.updateLit(this, prop.getValue());
@@ -40,19 +41,18 @@ public abstract class GenericTileInterfaceBound extends GenericTileLogisticsMemb
 
 	    });
 
-    public final SingleProperty<BlockPos> interfaceLocation = property(
-	    new SingleProperty<>(PropertyTypes.BLOCK_POS, "interfacelocation", BlockEntityUtils.OUT_OF_REACH))
-	    .onChange((prop, old) -> {
-
-		if (level == null || level.isClientSide) {
+    public final SingleProperty<BlockPos> interfaceLocation = property(new SingleProperty<>(getPropertyManager(),
+	    PropertyTypes.BLOCK_POS, "interfacelocation", BlockEntityUtils.OUT_OF_REACH)).onChange((prop, old) -> {
+		Level level = this.level;
+		if (level == null || level.isClientSide)
 		    return;
-		}
 
 		onInterfacePropChange(prop, old);
 
-	    });
-    public final SingleProperty<Integer> interfaceType = property(new SingleProperty<>(PropertyTypes.INTEGER,
-	    "interfacetype", GenericTileInterface.InterfaceType.NONE.ordinal()));
+	    }).setUpdateServer();
+    public final SingleProperty<Integer> interfaceType = property(new SingleProperty<>(getPropertyManager(),
+	    PropertyTypes.INTEGER, "interfacetype", GenericTileInterface.InterfaceType.NONE.ordinal()))
+	    .setUpdateServer();
 
     public final List<Interface> clientInterfaces = new ArrayList<>();
 
@@ -61,39 +61,28 @@ public abstract class GenericTileInterfaceBound extends GenericTileLogisticsMemb
     }
 
     @Override
-    public void tickServer(ComponentTickable tickable) {
-	super.tickServer(tickable);
+    public void tickServer(Level level, ComponentTickable tickable) {
+	super.tickServer(level, tickable);
 
-	if (!networkCable.valid() || !(networkCable.getSafe() instanceof TileReactorLogisticsCable)) {
-	    linked.setValue(false);
-	    return;
-	}
+	getNetworkCable(TileReactorLogisticsCable.class).ifPresentOrElse(cable -> {
 
-	TileReactorLogisticsCable cable = networkCable.getSafe();
+	    ReactorLogisticsNetwork network = cable.getNetwork();
+	    GenericTileInterface inter = network.getInterface(interfaceLocation.getValue());
 
-	if (cable.isRemoved()) {
-	    linked.setValue(false);
-	    return;
-	}
+	    if (!network.isControllerActive() || inter == null) {
+		linked.setValue(false);
+		return;
+	    }
 
-	ReactorLogisticsNetwork network = cable.getNetwork();
+	    if (inter.getInterfaceType().ordinal() != interfaceType.getValue() || !checkLinkedPosition(inter)) {
+		interfaceLocation.setValue(BlockEntityUtils.OUT_OF_REACH);
+		interfaceType.setValue(GenericTileInterface.InterfaceType.NONE.ordinal());
+		linked.setValue(false);
+		return;
+	    }
 
-	GenericTileInterface inter = network.getInterface(interfaceLocation.getValue());
-
-	if (!network.isControllerActive() || inter == null) {
-	    linked.setValue(false);
-	    return;
-	}
-
-	if (inter.getInterfaceType() != GenericTileInterface.InterfaceType.values()[interfaceType.getValue()]
-		|| !checkLinkedPosition(inter)) {
-	    interfaceLocation.setValue(BlockEntityUtils.OUT_OF_REACH);
-	    interfaceType.setValue(GenericTileInterface.InterfaceType.NONE.ordinal());
-	    linked.setValue(false);
-	}
-
-	linked.setValue(true);
-
+	    linked.setValue(true);
+	}, () -> linked.setValue(false));
     }
 
     public abstract boolean checkLinkedPosition(GenericTileInterface inter);
@@ -101,28 +90,17 @@ public abstract class GenericTileInterfaceBound extends GenericTileLogisticsMemb
     public abstract GenericTileInterface.InterfaceType[] getValidInterfaces();
 
     public List<Interface> getInterfacesForClient() {
-	if (networkCable == null || !networkCable.valid()
-		|| !(networkCable.getSafe() instanceof TileReactorLogisticsCable)) {
-	    return Collections.emptyList();
-	}
+	return getNetworkCable(TileReactorLogisticsCable.class).map(cable -> {
+	    List<GenericTileInterface> interfaces = cable.getNetwork().getInterfacesForType(getValidInterfaces());
 
-	TileReactorLogisticsCable cable = networkCable.getSafe();
+	    List<Interface> list = new ArrayList<>();
 
-	if (cable.isRemoved()) {
-	    return Collections.emptyList();
-	}
+	    for (GenericTileInterface tile : interfaces) {
+		list.add(new Interface(tile.getBlockPos(), tile.getInterfaceType()));
+	    }
 
-	ReactorLogisticsNetwork network = cable.getNetwork();
-
-	List<GenericTileInterface> interfaces = network.getInterfacesForType(getValidInterfaces());
-
-	List<Interface> list = new ArrayList<>();
-
-	interfaces.forEach(tile -> {
-	    list.add(new Interface(tile.getBlockPos(), tile.getInterfaceType()));
-	});
-
-	return list;
+	    return list;
+	}).orElseGet(Collections::emptyList);
     }
 
     public void onInterfacePropChange(SingleProperty<BlockPos> prop, BlockPos old) {

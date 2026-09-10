@@ -1,6 +1,5 @@
 package nuclearscience.client.render.tile;
 
-import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -23,18 +22,16 @@ public class RenderMonitorModule extends AbstractTileRenderer<TileMonitorModule>
     }
 
     @Override
-    public void render(@NotNull TileMonitorModule tile, float partialTicks, PoseStack stack, MultiBufferSource bufferIn,
+    public void render(TileMonitorModule tile, float partialTicks, PoseStack stack, MultiBufferSource bufferIn,
 	    int combinedLightIn, int combinedOverlayIn) {
 
-	if (!tile.linked.getValue()) {
+	if (!tile.linked.getValue())
 	    return;
-	}
 
 	long time = System.currentTimeMillis() % 1500 - 750;
 
-	if (time < 0) {
+	if (time < 0)
 	    return;
-	}
 
 	Font font = Minecraft.getInstance().font;
 

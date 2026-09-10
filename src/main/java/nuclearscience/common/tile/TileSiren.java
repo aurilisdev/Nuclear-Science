@@ -8,6 +8,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import nuclearscience.registers.NuclearScienceSounds;
@@ -23,7 +24,7 @@ public class TileSiren extends GenericTile {
 	addComponent(new ComponentTickable(this).tickClient(this::tickClient));
     }
 
-    public void tickClient(ComponentTickable tick) {
+    public void tickClient(Level level, ComponentTickable tick) {
 	if (tick.getTicks() % 30 == 0) {
 	    if (isPoweredByRedstone()) {
 		int volume = 2;
@@ -39,12 +40,13 @@ public class TileSiren extends GenericTile {
     }
 
     @Override
-    public InteractionResult useWithoutItem(Player player, BlockHitResult hit) {
+    public InteractionResult useWithoutItem(Level level, Player player, BlockHitResult hit) {
 	return InteractionResult.PASS;
     }
 
     @Override
-    public ItemInteractionResult useWithItem(ItemStack used, Player player, InteractionHand hand, BlockHitResult hit) {
+    public ItemInteractionResult useWithItem(Level level, ItemStack used, Player player, InteractionHand hand,
+	    BlockHitResult hit) {
 	return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 

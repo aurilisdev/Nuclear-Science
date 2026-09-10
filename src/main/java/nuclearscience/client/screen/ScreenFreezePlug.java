@@ -5,7 +5,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import nuclearscience.common.inventory.container.ContainerFreezePlug;
 import nuclearscience.common.settings.NuclearConfig;
-import nuclearscience.common.tile.reactor.moltensalt.TileFreezePlug;
 import nuclearscience.prefab.utils.NuclearTextUtils;
 import voltaic.api.electricity.formatting.ChatFormatter;
 import voltaic.api.electricity.formatting.DisplayUnits;
@@ -19,12 +18,8 @@ public class ScreenFreezePlug extends GenericScreen<ContainerFreezePlug> {
     public ScreenFreezePlug(ContainerFreezePlug container, Inventory playerInventory, Component title) {
 	super(container, playerInventory, title);
 	addComponent(new ScreenComponentElectricInfo(-AbstractScreenComponentInfo.SIZE + 1, 2)
-		.wattage(NuclearConfig.INSTANCE.FREEZEPLUG_USAGE_PER_TICK.get() * 20));
-	addComponent(new ScreenComponentMultiLabel(0, 0, graphics -> {
-	    TileFreezePlug plug = menu.getSafeHost();
-	    if (plug == null) {
-		return;
-	    }
+		.wattage(NuclearConfig.getInstance().FREEZEPLUG_USAGE_PER_TICK.get() * 20));
+	addComponent(new ScreenComponentMultiLabel(0, 0, graphics -> menu.getSafeHost().ifPresent(plug -> {
 	    if (plug.isFrozen()) {
 		graphics.drawString(font,
 			NuclearTextUtils
@@ -43,7 +38,7 @@ public class ScreenFreezePlug extends GenericScreen<ContainerFreezePlug> {
 			    ChatFormatter.getChatDisplayShort(plug.getSaltBonus() * 100.0, DisplayUnits.PERCENTAGE)
 				    .withStyle(ChatFormatting.BLACK))
 		    .withStyle(ChatFormatting.DARK_GRAY).getVisualOrderText(), 40, 50, 0, false);
-	}));
+	})));
 
     }
 }

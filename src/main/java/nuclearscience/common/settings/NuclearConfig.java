@@ -1,13 +1,12 @@
 package nuclearscience.common.settings;
 
 import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec.Builder;
 
 public class NuclearConfig {
-    public static NuclearConfig INSTANCE;
+    private static NuclearConfig INSTANCE = new NuclearConfig();
 
     public ModConfigSpec SPEC;
-
-    public ModConfigSpec.DoubleValue TRANSFORMER_EFFICIENCY;
 
     public ModConfigSpec.DoubleValue TELEPORTER_USAGE_PER_TELEPORT;
     public ModConfigSpec.DoubleValue RADIOISOTOPEGENERATOR_VOLTAGE;
@@ -44,8 +43,8 @@ public class NuclearConfig {
     public ModConfigSpec.IntValue PARTICLE_SURVIVAL_TICKS;
     public ModConfigSpec.DoubleValue FISSION_REACTOR_MELTDOWN_RADIATION_DURATION_REAL_DAYS;
 
-    public NuclearConfig() {
-	var builder = new ModConfigSpec.Builder();
+    private NuclearConfig() {
+	Builder builder = new Builder();
 	builder.push("common");
 	TELEPORTER_USAGE_PER_TELEPORT = builder.defineInRange("teleporter_usage", 1000000.0, 0, Double.MAX_VALUE);
 	RADIOISOTOPEGENERATOR_VOLTAGE = builder.defineInRange("radioisotopegenerator_voltage", 120.0, 0,
@@ -109,5 +108,9 @@ public class NuclearConfig {
 		.defineInRange("fission_reactor_meltdown_radiation_duration_real_days", 5.0, 0, Double.MAX_VALUE);
 	builder.pop();
 	SPEC = builder.build();
+    }
+
+    public static NuclearConfig getInstance() {
+	return INSTANCE;
     }
 }

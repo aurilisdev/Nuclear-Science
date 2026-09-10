@@ -2,6 +2,8 @@ package nuclearscience.common.entity;
 
 import java.util.Optional;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -78,7 +80,7 @@ public class EntityParticle extends Entity {
 
 	setPos(new Vec3(startPos.x(), startPos.y(), startPos.z()));
 
-	this.facingDirection = direction;
+	facingDirection = direction;
 
 	noCulling = true;
 
@@ -94,15 +96,6 @@ public class EntityParticle extends Entity {
 
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
-	if (facingDirection == null) {
-	    facingDirection = Direction.UP;
-	}
-	if (source == null) {
-	    source = BlockEntityUtils.OUT_OF_REACH;
-	}
-	if (switchDirection == null) {
-	    switchDirection = Direction.UP;
-	}
 	builder.define(DIRECTION, facingDirection);
 	builder.define(SPEED, speed);
 	builder.define(TICKS_ALIVE, ticksAlive);
@@ -114,16 +107,11 @@ public class EntityParticle extends Entity {
 
     @Override
     public void tick() {
-
 	Level level = level();
 	boolean isClientside = level.isClientSide();
 	boolean isServerside = !isClientside;
 
 	if (isServerside) {
-
-	    if (facingDirection == null) {
-		facingDirection = Direction.UP;
-	    }
 	    entityData.set(DIRECTION, facingDirection);
 	    entityData.set(SPEED, speed);
 	    entityData.set(TICKS_ALIVE, ticksAlive);
@@ -150,7 +138,7 @@ public class EntityParticle extends Entity {
 	    ticksAlive++;
 	}
 
-	if (ticksAlive > NuclearConfig.INSTANCE.PARTICLE_SURVIVAL_TICKS.get()) {
+	if (ticksAlive > NuclearConfig.getInstance().PARTICLE_SURVIVAL_TICKS.get()) {
 	    if (isServerside) {
 		removeAfterChangingDimensions();
 		level.explode(this, getX(), getY(), getZ(), speed, ExplosionInteraction.BLOCK);
@@ -158,9 +146,8 @@ public class EntityParticle extends Entity {
 	    return;
 	}
 
-	if (facingDirection == null || facingDirection == Direction.UP) {
+	if (facingDirection == Direction.UP)
 	    return;
-	}
 
 	BlockEntity blockEntity = level.getBlockEntity(source);
 
@@ -174,10 +161,8 @@ public class EntityParticle extends Entity {
 
 	injector.addParticle(this);
 
-	if (injector.handleCollision() || facingDirection == null || facingDirection == Direction.UP
-		|| facingDirection == Direction.DOWN) {
+	if (injector.handleCollision(level) || facingDirection == Direction.UP || facingDirection == Direction.DOWN)
 	    return;
-	}
 
 	if (firstTick && isClientside) {
 	    firstTick = false;
@@ -289,7 +274,6 @@ public class EntityParticle extends Entity {
 				}
 				return;
 			    }
-			    passedThroughSwitch = true;
 
 			} else {
 			    Direction clockwise = facingDirection.getClockWise();
@@ -310,7 +294,6 @@ public class EntityParticle extends Entity {
 				}
 				return;
 			    }
-			    passedThroughSwitch = true;
 			}
 
 		    } else if (injector.particles[1].getUUID().equals(getUUID())) {
@@ -349,7 +332,6 @@ public class EntityParticle extends Entity {
 			    }
 			    return;
 			}
-			passedThroughSwitch = true;
 
 		    } else {
 
@@ -363,6 +345,7 @@ public class EntityParticle extends Entity {
 			return;
 
 		    }
+		    passedThroughSwitch = true;
 
 		    if (switchDirection != facingDirection) {
 
@@ -675,7 +658,7 @@ public class EntityParticle extends Entity {
 	return state.is(NuclearScienceBlocks.BLOCK_ELECTROMAGNETICDIODE);
     }
 
-    public boolean canPassThroughGateway(BlockEntity entity, BlockState state) {
+    public boolean canPassThroughGateway(@Nullable BlockEntity entity, BlockState state) {
 	return isGateway(state) && entity instanceof TileElectromagneticGateway gateway
 		&& gateway.mayPassThrough(speed);
     }

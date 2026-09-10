@@ -5,6 +5,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import nuclearscience.client.screen.util.GenericInterfaceBoundScreen;
 import nuclearscience.common.inventory.container.ContainerThermometerModule;
@@ -44,230 +45,134 @@ public class ScreenThermometerModule extends GenericInterfaceBoundScreen<Contain
 	}
 
 	addComponent(new ScreenComponentCustomRender(0, 0, graphics -> {
-	    if (hidden) {
+	    if (hidden)
 		return;
-	    }
 
-	    TileThermometerModule tile = menu.getSafeHost();
+	    modeButton.setVisible(false);
+	    invertButton.setVisible(false);
+	    targetTempBox.setVisible(false);
 
-	    if (tile == null) {
-		modeButton.setVisible(false);
-		invertButton.setVisible(false);
-		targetTempBox.setVisible(false);
-		return;
-	    }
+	    menu.getSafeHost().ifPresent(tile -> {
+		Level level = tile.getLevel();
+		if (level == null)
+		    return;
 
-	    GenericTileInterface.InterfaceType type = GenericTileInterface.InterfaceType.values()[tile.interfaceType
-		    .getValue()];
+		GenericTileInterface.InterfaceType type = GenericTileInterface.InterfaceType.values()[tile.interfaceType
+			.getValue()];
 
-	    Font font = getFontRenderer();
+		Font font = getFontRenderer();
+		int guiWidth = (int) getGuiWidth();
+		int guiHeight = (int) getGuiHeight();
 
-	    int guiWidth = (int) getGuiWidth();
-	    int guiHeight = (int) getGuiHeight();
+		graphics.fill(guiWidth + 17, guiHeight + 17, guiWidth + 159, guiHeight + 149,
+			new Color(112, 112, 112, 255).color());
 
-	    graphics.fill(guiWidth + 17, guiHeight + 17, guiWidth + 159, guiHeight + 149,
-		    new Color(112, 112, 112, 255).color());
-
-	    if (!tile.linked.getValue() || type == GenericTileInterface.InterfaceType.NONE
-		    || tile.interfaceLocation.getValue().equals(BlockEntityUtils.OUT_OF_REACH)) {
-		graphics.drawString(font, NuclearTextUtils.gui("logisticsnetwork.unlinked"), guiWidth + 20,
-			guiHeight + 20, Color.TEXT_GRAY.color(), false);
-		modeButton.setVisible(false);
-		invertButton.setVisible(false);
-		targetTempBox.setVisible(false);
-		return;
-	    }
-
-	    BlockEntity blockEntity = tile.getLevel().getBlockEntity(tile.interfaceLocation.getValue());
-
-	    double currTemp = 0;
-
-	    switch (type) {
-	    case FISSION:
-
-		if (!(blockEntity instanceof TileFissionInterface fissionInterface)) {
+		if (!tile.linked.getValue() || type == GenericTileInterface.InterfaceType.NONE
+			|| tile.interfaceLocation.getValue().equals(BlockEntityUtils.OUT_OF_REACH)) {
 		    graphics.drawString(font, NuclearTextUtils.gui("logisticsnetwork.unlinked"), guiWidth + 20,
 			    guiHeight + 20, Color.TEXT_GRAY.color(), false);
-		    modeButton.setVisible(false);
-		    invertButton.setVisible(false);
-		    targetTempBox.setVisible(false);
 		    return;
 		}
 
-		if (fissionInterface.reactor == null || !fissionInterface.reactor.valid()
-			|| !(fissionInterface.reactor.getSafe() instanceof TileFissionReactorCore)) {
+		BlockEntity blockEntity = level.getBlockEntity(tile.interfaceLocation.getValue());
+		Double currTemp = switch (type) {
+		case FISSION -> {
+		    if (!(blockEntity instanceof TileFissionInterface fissionInterface)) {
+			yield null;
+		    }
+		    yield fissionInterface.getReactor(TileFissionReactorCore.class)
+			    .map(core -> TileFissionReactorCore.getActualTemp(core.temperature.getValue()))
+			    .orElse(null);
+		}
+		case MS -> {
+		    if (!(blockEntity instanceof TileMSInterface msInterface)) {
+			yield null;
+		    }
+		    yield msInterface.getReactor(TileMSReactorCore.class).map(core -> core.temperature.getValue())
+			    .orElse(null);
+		}
+		default -> null;
+		};
+
+		if (currTemp == null) {
 		    graphics.drawString(font, NuclearTextUtils.gui("logisticsnetwork.unlinked"), guiWidth + 20,
 			    guiHeight + 20, Color.TEXT_GRAY.color(), false);
-		    modeButton.setVisible(false);
-		    invertButton.setVisible(false);
-		    targetTempBox.setVisible(false);
 		    return;
 		}
 
-		TileFissionReactorCore fissionCore = fissionInterface.reactor.getSafe();
+		modeButton.setVisible(true);
+		invertButton.setVisible(true);
+		targetTempBox.setVisible(true);
 
-		currTemp = TileFissionReactorCore.getActualTemp(fissionCore.temperature.getValue());
+		graphics.renderItem(GenericTileInterface.getItemFromType(type), guiWidth + 80, guiHeight + 20);
 
-		break;
+		graphics.drawString(font,
+			NuclearTextUtils.gui("logisticsnetwork.temperature",
+				ChatFormatter.getChatDisplayShort(currTemp, DisplayUnits.TEMPERATURE_CELCIUS)
+					.withStyle(ChatFormatting.GOLD)),
+			guiWidth + 20, guiHeight + 45, Color.TEXT_GRAY.color(), false);
 
-	    case MS:
+		Component text = NuclearTextUtils.gui("logisticsnetwork.outputmode");
+		int width = font.width(text);
+		int maxWidth = 68;
+		int offset = (maxWidth - width) / 2;
 
-		if (!(blockEntity instanceof TileMSInterface msInterface)) {
-		    graphics.drawString(font, NuclearTextUtils.gui("logisticsnetwork.unlinked"), guiWidth + 20,
-			    guiHeight + 20, Color.TEXT_GRAY.color(), false);
-		    modeButton.setVisible(false);
-		    invertButton.setVisible(false);
-		    targetTempBox.setVisible(false);
-		    return;
-		}
+		graphics.drawString(font, text, guiWidth + 20 + offset, guiHeight + 60, Color.TEXT_GRAY.color(), false);
 
-		if (msInterface.reactor == null || !msInterface.reactor.valid()
-			|| !(msInterface.reactor.getSafe() instanceof TileMSReactorCore)) {
-		    graphics.drawString(font, NuclearTextUtils.gui("logisticsnetwork.unlinked"), guiWidth + 20,
-			    guiHeight + 20, Color.TEXT_GRAY.color(), false);
-		    modeButton.setVisible(false);
-		    invertButton.setVisible(false);
-		    targetTempBox.setVisible(false);
-		    return;
-		}
+		text = NuclearTextUtils.gui("logisticsnetwork.signalmode");
+		width = font.width(text);
+		offset = (maxWidth - width) / 2;
 
-		TileMSReactorCore msCore = msInterface.reactor.getSafe();
+		graphics.drawString(font, text, guiWidth + 20 + offset + maxWidth, guiHeight + 60,
+			Color.TEXT_GRAY.color(), false);
 
-		currTemp = msCore.temperature.getValue();
+		graphics.drawString(font, NuclearTextUtils.gui("logisticsnetwork.targettemp"), guiWidth + 20,
+			guiHeight + 100, Color.TEXT_GRAY.color(), false);
 
-		break;
+		graphics.drawString(font,
+			DisplayUnits.TEMPERATURE_CELCIUS.getSymbol().copy().withStyle(ChatFormatting.WHITE),
+			guiWidth + 20 + 120 + 2, guiHeight + 113, Color.TEXT_GRAY.color(), false);
 
-	    default:
-		graphics.drawString(font, NuclearTextUtils.gui("logisticsnetwork.unlinked"), guiWidth + 20,
-			guiHeight + 20, Color.TEXT_GRAY.color(), false);
-		modeButton.setVisible(false);
-		invertButton.setVisible(false);
-		targetTempBox.setVisible(false);
-		return;
-	    }
-
-	    modeButton.setVisible(true);
-	    invertButton.setVisible(true);
-	    targetTempBox.setVisible(true);
-
-	    graphics.renderItem(GenericTileInterface.getItemFromType(type), guiWidth + 80, guiHeight + 20);
-
-	    graphics.drawString(font,
-		    NuclearTextUtils.gui("logisticsnetwork.temperature",
-			    ChatFormatter.getChatDisplayShort(currTemp, DisplayUnits.TEMPERATURE_CELCIUS)
-				    .withStyle(ChatFormatting.GOLD)),
-		    guiWidth + 20, guiHeight + 45, Color.TEXT_GRAY.color(), false);
-
-	    Component text = NuclearTextUtils.gui("logisticsnetwork.outputmode");
-
-	    int width = font.width(text);
-	    int maxWidth = 68;
-
-	    int offset = (maxWidth - width) / 2;
-
-	    graphics.drawString(font, text, guiWidth + 20 + offset, guiHeight + 60, Color.TEXT_GRAY.color(), false);
-
-	    text = NuclearTextUtils.gui("logisticsnetwork.signalmode");
-
-	    width = font.width(text);
-
-	    offset = (maxWidth - width) / 2;
-
-	    graphics.drawString(font, text, guiWidth + 20 + offset + maxWidth, guiHeight + 60, Color.TEXT_GRAY.color(),
-		    false);
-
-	    graphics.drawString(font, NuclearTextUtils.gui("logisticsnetwork.targettemp"), guiWidth + 20,
-		    guiHeight + 100, Color.TEXT_GRAY.color(), false);
-
-	    graphics.drawString(font,
-		    DisplayUnits.TEMPERATURE_CELCIUS.getSymbol().copy().withStyle(ChatFormatting.WHITE),
-		    guiWidth + 20 + 120 + 2, guiHeight + 113, Color.TEXT_GRAY.color(), false);
-
-	    graphics.drawString(font,
-		    NuclearTextUtils.gui("logisticsnetwork.signalstrength",
-			    Component.literal("" + tile.redstoneSignal.getValue()).withStyle(ChatFormatting.WHITE)),
-		    guiWidth + 20, guiHeight + 135, Color.TEXT_GRAY.color(), false);
-
+		graphics.drawString(font,
+			NuclearTextUtils.gui("logisticsnetwork.signalstrength",
+				Component.literal("" + tile.redstoneSignal.getValue()).withStyle(ChatFormatting.WHITE)),
+			guiWidth + 20, guiHeight + 135, Color.TEXT_GRAY.color(), false);
+	    });
 	}));
+	addComponent(modeButton = new ScreenComponentButton<>(20, 70, 68, 20).setLabel(() -> menu.getSafeHost()
+		.<Component>map(tile -> switch (TileThermometerModule.Mode.values()[tile.mode.getValue()]) {
+		case BUILD_UP -> NuclearTextUtils.gui("logisticsnetwork.modebuildup");
+		case CONSTANT -> NuclearTextUtils.gui("logisticsnetwork.modeconstant");
+		default -> Component.empty();
+		}).orElseGet(Component::empty)).setOnPress(button -> menu.getSafeHost().ifPresent(tile -> {
+		    int currMode = tile.mode.getValue();
+		    tile.mode.setValue(currMode >= TileThermometerModule.Mode.values().length - 1 ? 0 : currMode + 1);
+		})));
 
-	addComponent(modeButton = new ScreenComponentButton<>(20, 70, 68, 20).setLabel(() -> {
-	    TileThermometerModule tile = menu.getSafeHost();
-
-	    if (tile == null) {
-		return Component.empty();
-	    }
-
-	    return switch (TileThermometerModule.Mode.values()[tile.mode.getValue()]) {
-	    case BUILD_UP -> NuclearTextUtils.gui("logisticsnetwork.modebuildup");
-	    case CONSTANT -> NuclearTextUtils.gui("logisticsnetwork.modeconstant");
-	    default -> Component.empty();
-	    };
-	}).setOnPress(button -> {
-
-	    TileThermometerModule tile = menu.getSafeHost();
-
-	    if (tile == null) {
-		return;
-	    }
-
-	    int currMode = tile.mode.getValue();
-
-	    if (currMode >= TileThermometerModule.Mode.values().length - 1) {
-		currMode = 0;
-	    } else {
-		currMode++;
-	    }
-
-	    tile.mode.setValue(currMode);
-
-	}));
-
-	addComponent(invertButton = new ScreenComponentButton<>(88, 70, 68, 20).setLabel(() -> {
-	    TileThermometerModule tile = menu.getSafeHost();
-
-	    if (tile == null) {
-		return Component.empty();
-	    }
-
-	    return tile.inverted.getValue() ? NuclearTextUtils.gui("logisticsnetwork.signalinverted")
-		    : NuclearTextUtils.gui("logisticsnetwork.signalnormal");
-	}).setOnPress(button -> {
-
-	    TileThermometerModule tile = menu.getSafeHost();
-
-	    if (tile == null) {
-		return;
-	    }
-
-	    tile.inverted.setValue(!tile.inverted.getValue());
-
-	}));
+	addComponent(invertButton = new ScreenComponentButton<>(88, 70, 68, 20)
+		.setLabel(() -> menu.getSafeHost()
+			.<Component>map(tile -> tile.inverted.getValue()
+				? NuclearTextUtils.gui("logisticsnetwork.signalinverted")
+				: NuclearTextUtils.gui("logisticsnetwork.signalnormal"))
+			.orElseGet(Component::empty))
+		.setOnPress(button -> menu.getSafeHost()
+			.ifPresent(tile -> tile.inverted.setValue(!tile.inverted.getValue()))));
 
 	addEditBox(targetTempBox = new ScreenComponentEditBox(20, 110, 120, 15, getFontRenderer())
 		.setFilter(ScreenComponentEditBox.POSITIVE_DECIMAL).setTextColor(Color.WHITE)
-		.setTextColorUneditable(Color.WHITE).setMaxLength(20).setResponder(val -> {
-
-		    TileThermometerModule tile = menu.getSafeHost();
-
-		    if (tile == null) {
-			return;
-		    }
-
-		    double temp = 0;
-
+		.setTextColorUneditable(Color.WHITE).setMaxLength(20)
+		.setResponder(val -> menu.getSafeHost().ifPresent(tile -> {
+		    double temp;
 		    try {
 			temp = Double.parseDouble(val);
 		    } catch (Exception e) {
-
+			temp = 0.0;
 		    }
-
 		    if (temp < 0) {
-			temp = 0;
+			temp = 0.0;
 		    }
-
 		    tile.targetTemperature.setValue(temp);
-
-		}));
+		})));
 
     }
 
@@ -283,9 +188,11 @@ public class ScreenThermometerModule extends GenericInterfaceBoundScreen<Contain
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 	super.render(graphics, mouseX, mouseY, partialTicks);
 
-	if (needsUpdate && getMenu().getSafeHost() instanceof TileThermometerModule module) {
-	    targetTempBox.setValue(module.targetTemperature.getValue() + "");
-	    needsUpdate = false;
+	if (needsUpdate) {
+	    getMenu().getSafeHost().ifPresent(module -> {
+		targetTempBox.setValue(module.targetTemperature.getValue() + "");
+		needsUpdate = false;
+	    });
 	}
     }
 

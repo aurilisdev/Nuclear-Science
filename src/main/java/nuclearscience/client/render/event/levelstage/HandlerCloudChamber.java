@@ -15,6 +15,7 @@ import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.culling.Frustum;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
@@ -25,7 +26,7 @@ public class HandlerCloudChamber extends AbstractLevelStageHandler {
 
     public static final HandlerCloudChamber INSTANCE = new HandlerCloudChamber();
 
-    private HashSet<TileCloudChamber> locations = new HashSet<>();
+    private final HashSet<TileCloudChamber> locations = new HashSet<>();
 
     @Override
     public boolean shouldRender(RenderLevelStageEvent.Stage stage) {
@@ -35,39 +36,31 @@ public class HandlerCloudChamber extends AbstractLevelStageHandler {
     @Override
     public void render(Camera camera, Frustum frustum, LevelRenderer levelRenderer, PoseStack poseStack,
 	    Matrix4f matrix4f, Minecraft minecraft, int renderTick, DeltaTracker deltaTracker) {
-
 	MultiBufferSource.BufferSource buffer = minecraft.renderBuffers().bufferSource();
 	VertexConsumer builder = buffer.getBuffer(RenderType.LINES);
 	Vec3 camPos = camera.getPosition();
-
 	Iterator<TileCloudChamber> it = locations.iterator();
-
 	while (it.hasNext()) {
-
 	    TileCloudChamber chamber = it.next();
-
-	    if (chamber == null || chamber.isRemoved() || !chamber.hasLevel()
-		    || !chamber.getLevel().isLoaded(chamber.getBlockPos()) || !chamber.active.getValue()) {
+	    if (chamber == null || chamber.isRemoved()) {
 		it.remove();
 		continue;
 	    }
-
+	    Level level = chamber.getLevel();
+	    if (level == null || !level.isLoaded(chamber.getBlockPos()) || !chamber.active.getValue()) {
+		it.remove();
+		continue;
+	    }
 	    chamber.sources.getValue().forEach(source -> {
 		AABB outline = new AABB(source);
-
-		if (!frustum.isVisible(outline)) {
+		if (!frustum.isVisible(outline))
 		    return;
-		}
 		poseStack.pushPose();
 		poseStack.translate(-camPos.x, -camPos.y, -camPos.z);
 		LevelRenderer.renderLineBox(poseStack, builder, outline, 1.0F, 1.0F, 1.0F, 1.0F);
 		poseStack.popPose();
 	    });
-
 	}
-
-	buffer.endBatch(RenderType.LINES);
-
     }
 
     @Override

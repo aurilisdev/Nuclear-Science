@@ -45,8 +45,9 @@ public class ParticleAcceleratorAntiMatterRecipeCategory extends AbstractRecipeC
 	    6, StartDirection.LEFT);
 
     public static final LabelWrapperGeneric POWER_LABEL = new LabelWrapperGeneric(Color.JEI_TEXT_GRAY, 58, 2, false,
-	    ChatFormatter.getChatDisplayShort(960, DisplayUnits.VOLTAGE).append(" ").append(
-		    ChatFormatter.getChatDisplayShort(NuclearConfig.INSTANCE.PARTICLEINJECTOR_USAGE_PER_PARTICLE.get(),
+	    ChatFormatter.getChatDisplayShort(960, DisplayUnits.VOLTAGE).append(" ")
+		    .append(ChatFormatter.getChatDisplayShort(
+			    NuclearConfig.getInstance().PARTICLEINJECTOR_USAGE_PER_PARTICLE.get(),
 			    DisplayUnits.JOULES)));
     // public static final LabelWrapperGeneric COLLISION_LABEL = new
     // LabelWrapperGeneric(0xFF808080, 58, 132, true,

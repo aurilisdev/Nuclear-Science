@@ -1,5 +1,7 @@
 package nuclearscience.common.inventory.container;
 
+import java.util.Optional;
+
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -38,12 +40,13 @@ public class ContainerQuantumTunnel extends GenericContainerBlockEntity<TileQuan
     public void broadcastChanges() {
 	super.broadcastChanges();
 
-	if (!getLevel().isClientSide() && getPlayer() != null && getSafeHost() != null) {
-	    PacketSetClientTunnelFrequencies packet = new PacketSetClientTunnelFrequencies(
-		    TunnelFrequencyManager.getFrequenciesForPlayerClient(getPlayer().getUUID()),
-		    FrequencyConnectionManager.getClientBuffer(getSafeHost().frequency.getValue()),
-		    getSafeHost().getBlockPos());
-	    PacketDistributor.sendToPlayer((ServerPlayer) getPlayer(), packet);
+	if (getPlayer() instanceof ServerPlayer player) {
+	    Optional<PacketSetClientTunnelFrequencies> oPacket = getSafeHost()
+		    .map(host -> new PacketSetClientTunnelFrequencies(
+			    TunnelFrequencyManager.getFrequenciesForPlayerClient(player.getUUID()),
+			    FrequencyConnectionManager.getClientBuffer(host.frequency.getValue()), host.getBlockPos()));
+
+	    oPacket.ifPresent(packet -> PacketDistributor.sendToPlayer(player, packet));
 	}
 
     }

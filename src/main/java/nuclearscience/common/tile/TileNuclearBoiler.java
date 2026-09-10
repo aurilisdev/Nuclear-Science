@@ -23,7 +23,6 @@ import voltaic.prefab.tile.components.type.ComponentElectrodynamic;
 import voltaic.prefab.tile.components.type.ComponentFluidHandlerMulti;
 import voltaic.prefab.tile.components.type.ComponentGasHandlerMulti;
 import voltaic.prefab.tile.components.type.ComponentInventory;
-import voltaic.prefab.tile.components.type.ComponentPacketHandler;
 import voltaic.prefab.tile.components.type.ComponentProcessor;
 import voltaic.prefab.tile.components.type.ComponentTickable;
 import voltaic.prefab.utilities.BlockEntityUtils;
@@ -43,7 +42,6 @@ public class TileNuclearBoiler extends GenericTile implements ITickableSound {
     public TileNuclearBoiler(BlockPos pos, BlockState state) {
 	super(NuclearScienceTiles.TILE_CHEMICALBOILER.get(), pos, state);
 	addComponent(new ComponentTickable(this).tickServer(this::tickServer).tickClient(this::tickClient));
-	addComponent(new ComponentPacketHandler(this));
 	addComponent(new ComponentElectrodynamic(this, false, true)
 		.setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM)
 		.voltage(VoltaicCapabilities.DEFAULT_VOLTAGE * 2));
@@ -60,31 +58,32 @@ public class TileNuclearBoiler extends GenericTile implements ITickableSound {
 		.setDirectionsBySlot(0, BlockEntityUtils.MachineDirection.FRONT, BlockEntityUtils.MachineDirection.TOP)
 		.validUpgrades(ContainerNuclearBoiler.VALID_UPGRADES).valid(machineValidator()));
 	addComponent(new ComponentProcessor(this)
-		.canProcess((component, procNumber) -> component.outputToGasPipe().consumeBucket().dispenseGasCylinder()
-			.canProcessFluidItem2GasRecipe(procNumber, NuclearScienceRecipies.NUCLEAR_BOILER_TYPE.get()))
+		.canProcess((component, level, procNumber) -> component.outputToGasPipe().consumeBucket()
+			.dispenseGasCylinder().canProcessFluidItem2GasRecipe(level, procNumber,
+				NuclearScienceRecipies.NUCLEAR_BOILER_TYPE.get()))
 		.process(ComponentProcessor::processFluidItem2GasRecipe));
 	addComponent(new ComponentContainerProvider("nuclearboiler", this)
 		.createMenu((id, player) -> new ContainerNuclearBoiler(id, player,
-			getComponent(IComponentType.Inventory), getCoordsArray())));
+			requireComponent(IComponentType.Inventory), getCoordsArray())));
     }
 
-    protected void tickServer(ComponentTickable tickable) {
-	Level world = getLevel();
-
-	RadiationUtils.handleRadioactiveGases(this, (ComponentGasHandlerMulti) getComponent(IComponentType.GasHandler),
-		NuclearConfig.INSTANCE.NUCLEAR_BOILER_RADIATION_RADIUS.get(), true, 30, true, false);
-	RadiationUtils.handleRadioactiveFluids(this,
-		(ComponentFluidHandlerMulti) getComponent(IComponentType.FluidHandler),
-		NuclearConfig.INSTANCE.NUCLEAR_BOILER_RADIATION_RADIUS.get(), true, 30, true, false);
-	RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory),
-		NuclearConfig.INSTANCE.NUCLEAR_BOILER_RADIATION_RADIUS.get(), true, 30, true, false);
+    protected void tickServer(Level level, ComponentTickable tickable) {
+	RadiationUtils.handleRadioactiveGases(level, this,
+		(ComponentGasHandlerMulti) requireComponent(IComponentType.GasHandler),
+		NuclearConfig.getInstance().NUCLEAR_BOILER_RADIATION_RADIUS.get(), true, 30, true, false);
+	RadiationUtils.handleRadioactiveFluids(level, this,
+		(ComponentFluidHandlerMulti) requireComponent(IComponentType.FluidHandler),
+		NuclearConfig.getInstance().NUCLEAR_BOILER_RADIATION_RADIUS.get(), true, 30, true, false);
+	RadiationUtils.handleRadioactiveItems(level, this,
+		(ComponentInventory) requireComponent(IComponentType.Inventory),
+		NuclearConfig.getInstance().NUCLEAR_BOILER_RADIATION_RADIUS.get(), true, 30, true, false);
 
 	Direction centrifugeDir = getFacing().getCounterClockWise();
-	BlockEntity tile = world.getBlockEntity(getBlockPos().relative(centrifugeDir));
+	BlockEntity tile = level.getBlockEntity(getBlockPos().relative(centrifugeDir));
 	if (tile != null && tile instanceof TileGasCentrifuge centrifuge) {
-	    ComponentGasHandlerMulti centrifugeHandler = centrifuge.getComponent(IComponentType.GasHandler);
-	    if (centrifugeHandler != null && centrifuge.getFacing() == centrifugeDir) {
-		ComponentGasHandlerMulti boilerHandler = getComponent(IComponentType.GasHandler);
+	    ComponentGasHandlerMulti centrifugeHandler = centrifuge.requireComponent(IComponentType.GasHandler);
+	    if (centrifuge.getFacing() == centrifugeDir) {
+		ComponentGasHandlerMulti boilerHandler = requireComponent(IComponentType.GasHandler);
 		GasTank boilerTank = boilerHandler.getOutputTanks()[0];
 		GasTank centrifugeTank = centrifugeHandler.getInputTanks()[0];
 		int accepted = centrifugeTank.fill(boilerTank.getGas(), GasAction.SIMULATE);
@@ -96,8 +95,8 @@ public class TileNuclearBoiler extends GenericTile implements ITickableSound {
 	}
     }
 
-    protected void tickClient(ComponentTickable tickable) {
-	boolean running = this.<ComponentProcessor>getComponent(IComponentType.Processor).isActive(0);
+    protected void tickClient(Level level, ComponentTickable tickable) {
+	boolean running = this.<ComponentProcessor>requireComponent(IComponentType.Processor).isActive(0);
 	if (running && level.random.nextDouble() < 0.15) {
 	    level.addParticle(ParticleTypes.SMOKE, worldPosition.getX() + level.random.nextDouble(),
 		    worldPosition.getY() + level.random.nextDouble() * 0.4 + 0.5,
@@ -116,7 +115,7 @@ public class TileNuclearBoiler extends GenericTile implements ITickableSound {
 
     @Override
     public boolean shouldPlaySound() {
-	return this.<ComponentProcessor>getComponent(IComponentType.Processor).isActive(0);
+	return this.<ComponentProcessor>requireComponent(IComponentType.Processor).isActive(0);
     }
 
 }

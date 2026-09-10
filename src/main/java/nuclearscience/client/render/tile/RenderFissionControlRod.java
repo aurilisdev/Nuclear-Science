@@ -22,18 +22,12 @@ public class RenderFissionControlRod extends AbstractTileRenderer<TileControlRod
     @Override
     public void render(TileControlRod.TileFissionControlRod tileEntityIn, float partialTicks, PoseStack stack,
 	    MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
-
 	stack.pushPose();
-
 	stack.translate(0.5, 0.5, 0.5);
-
 	double insertion = tileEntityIn.insertion.getValue() / (double) TileControlRod.MAX_EXTENSION;
-
 	stack.translate(0, START_Y + MAX_Y * insertion, 0);
-
-	RenderingUtils.renderModel(getModel(NuclearScienceClientRegister.MODEL_FISSIONCONTROLROD_ROD), tileEntityIn,
+	RenderingUtils.renderModel(getModel(NuclearScienceClientRegister.MODEL_FISSIONCONTROLROD_ROD),
 		RenderType.solid(), stack, bufferIn, combinedLightIn, combinedOverlayIn);
-
 	stack.popPose();
     }
 }

@@ -53,7 +53,7 @@ public class RenderFissionReactorCore extends AbstractTileRenderer<TileFissionRe
 
 	matrix.pushPose();
 
-	ComponentInventory inv = tile.getComponent(IComponentType.Inventory);
+	ComponentInventory inv = tile.requireComponent(IComponentType.Inventory);
 
 	if (!inv.areInputsEmpty()) {
 
@@ -136,7 +136,6 @@ public class RenderFissionReactorCore extends AbstractTileRenderer<TileFissionRe
     }
 
     public static Color getColorFromFuel(ItemStack stack) {
-
 	if (stack.is(NuclearScienceTags.Items.FUELROD_URANIUM_LOW_EN)) {
 	    return LOW_ENRICH;
 	} else if (stack.is(NuclearScienceTags.Items.FUELROD_URANIUM_HIGH_EN)) {
@@ -148,7 +147,6 @@ public class RenderFissionReactorCore extends AbstractTileRenderer<TileFissionRe
 	} else {
 	    return Color.WHITE;
 	}
-
     }
 
 }

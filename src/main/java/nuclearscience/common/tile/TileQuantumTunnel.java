@@ -6,12 +6,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -36,10 +36,9 @@ import voltaic.prefab.tile.GenericTile;
 import voltaic.prefab.tile.components.IComponentType;
 import voltaic.prefab.tile.components.type.ComponentContainerProvider;
 import voltaic.prefab.tile.components.type.ComponentInventory;
-import voltaic.prefab.tile.components.type.ComponentPacketHandler;
 import voltaic.prefab.tile.components.type.ComponentTickable;
 import voltaic.prefab.utilities.BlockEntityUtils;
-import voltaic.prefab.utilities.object.CachedTileOutput;
+// ...existing code...
 import voltaic.prefab.utilities.object.TransferPack;
 import voltaic.registers.VoltaicCapabilities;
 
@@ -54,32 +53,37 @@ public class TileQuantumTunnel extends GenericTile {
     public static final int WEST_MASK = 0b00000000000011110000000000000000;
     public static final int EAST_MASK = 0b00000000111100000000000000000000;
 
-    public SingleProperty<TunnelFrequency> frequency = property(
-	    new SingleProperty<>(NuclearPropertyTypes.TUNNEL_FREQUENCY, "frequency", TunnelFrequency.NO_FREQUENCY));
+    public SingleProperty<TunnelFrequency> frequency = property(new SingleProperty<>(getPropertyManager(),
+	    NuclearPropertyTypes.TUNNEL_FREQUENCY, "frequency", TunnelFrequency.NO_FREQUENCY)).setUpdateServer();
     public SingleProperty<Integer> inputDirections = property(
-	    new SingleProperty<>(PropertyTypes.INTEGER, "inputdirections", 0)).onChange((prop, val) -> {
-		if (level == null) {
+	    new SingleProperty<>(getPropertyManager(), PropertyTypes.INTEGER, "inputdirections", 0))
+	    .onChange((prop, val) -> {
+		Level level = this.level;
+		if (level == null)
 		    return;
-		}
-		if (level.isClientSide()) {
-		    level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 8); //
-		} else {
-		    refreshCapabilities();
-		}
-	    });
-    public SingleProperty<Integer> outputDirections = property(
-	    new SingleProperty<>(PropertyTypes.INTEGER, "outputdirections", 0)).onChange((prop, val) -> {
-		if (level == null) {
-		    return;
-		}
-		if (level.isClientSide()) {
-		    level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 8); //
-		} else {
-		    refreshCapabilities();
-		}
-	    });
 
-    private CachedTileOutput[] outputCache = new CachedTileOutput[6];
+		if (level.isClientSide()) {
+		    level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 8); //
+		} else {
+		    refreshCapabilities();
+		}
+	    }).setUpdateServer();
+    public SingleProperty<Integer> outputDirections = property(
+	    new SingleProperty<>(getPropertyManager(), PropertyTypes.INTEGER, "outputdirections", 0))
+	    .onChange((prop, val) -> {
+		Level level = this.level;
+		if (level == null)
+		    return;
+
+		if (level.isClientSide()) {
+		    level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 8); //
+		} else {
+		    refreshCapabilities();
+		}
+	    }).setUpdateServer();
+
+    // cached output removed; we will directly query the level for block entities
+    // when needed
 
     private ItemHandler[] itemHandlers = new ItemHandler[6];
     private FluidHandler[] fluidHandlers = new FluidHandler[6];
@@ -93,55 +97,35 @@ public class TileQuantumTunnel extends GenericTile {
     public TileQuantumTunnel(BlockPos pos, BlockState state) {
 	super(NuclearScienceTiles.TILE_QUANTUMCAPACITOR.get(), pos, state);
 	addComponent(new ComponentTickable(this).tickServer(this::tickServer));
-	addComponent(new ComponentPacketHandler(this));
 	addComponent(new ComponentInventory(this));
 	addComponent(new ComponentContainerProvider("quantumcapacitor", this)
 		.createMenu((id, player) -> new ContainerQuantumTunnel(id, player,
-			getComponent(IComponentType.Inventory), getCoordsArray())));
+			requireComponent(IComponentType.Inventory), getCoordsArray())));
 
     }
 
-    public void tickServer(ComponentTickable tickable) {
-
+    public void tickServer(Level level, ComponentTickable tickable) {
 	if (!TunnelFrequencyManager.doesFrequencyExist(frequency.getValue())) {
 	    frequency.setValue(TunnelFrequency.NO_FREQUENCY);
 	}
 
-	if (frequency.getValue().equals(TunnelFrequency.NO_FREQUENCY)) {
+	
+
+	// No caching: directly operate on the neighboring block entities when
+	// processing outputs
+
+	if (frequency.getValue().equals(TunnelFrequency.NO_FREQUENCY) || frequency.getValue().equals(TunnelFrequency.NO_FREQUENCY))
 	    return;
-	}
-
-	for (Direction direction : Direction.values()) {
-	    Direction dir = BlockEntityUtils.getRelativeSide(getFacing(), direction);
-	    if (outputCache[dir.ordinal()] == null) {
-		outputCache[dir.ordinal()] = new CachedTileOutput(level, new BlockPos(worldPosition).relative(dir));
-	    }
-	}
-
-	for (Direction direction : Direction.values()) {
-	    Direction dir = BlockEntityUtils.getRelativeSide(getFacing(), direction);
-	    if (!outputCache[dir.ordinal()].valid()) {
-		outputCache[dir.ordinal()].update(new BlockPos(worldPosition).relative(dir));
-	    }
-	}
-
-	if (frequency.getValue().equals(TunnelFrequency.NO_FREQUENCY)) {
-	    return;
-	}
 
 	for (Direction direction : readOutputDirections()) {
 
 	    Direction relative = BlockEntityUtils.getRelativeSide(getFacing(), direction);
 
-	    CachedTileOutput output = outputCache[relative.ordinal()];
-	    if (!output.valid()) {
-		continue;
-	    }
-	    BlockEntity tile = output.getSafe();
+	    BlockPos targetPos = new BlockPos(worldPosition).relative(relative);
+	    BlockEntity tile = level.getBlockEntity(targetPos);
 
-	    if (tile == null) {
+	    if (tile == null)
 		return;
-	    }
 
 	    IItemHandler itemCap = level.getCapability(Capabilities.ItemHandler.BLOCK, tile.getBlockPos(),
 		    tile.getBlockState(), tile, relative.getOpposite());
@@ -234,41 +218,40 @@ public class TileQuantumTunnel extends GenericTile {
 
     @Nullable
     public IEnergyStorage getFECapability(@Nullable Direction side) {
-	if (side == null || frequency.getValue().equals(TunnelFrequency.NO_FREQUENCY)) {
+	if (side == null || frequency.getValue().equals(TunnelFrequency.NO_FREQUENCY))
 	    return null;
-	}
 	return feHandlers[side.ordinal()];
     }
 
     @Override
-    public @Nullable IItemHandler getItemHandlerCapability(@Nullable Direction side) {
-	if (side == null || frequency.getValue().equals(TunnelFrequency.NO_FREQUENCY)) {
+    @Nullable
+    public IItemHandler getItemHandlerCapability(@Nullable Direction side) {
+	if (side == null || frequency.getValue().equals(TunnelFrequency.NO_FREQUENCY))
 	    return null;
-	}
 	return itemHandlers[side.ordinal()];
     }
 
     @Override
-    public @Nullable IFluidHandler getFluidHandlerCapability(@Nullable Direction side) {
-	if (side == null || frequency.getValue().equals(TunnelFrequency.NO_FREQUENCY)) {
+    @Nullable
+    public IFluidHandler getFluidHandlerCapability(@Nullable Direction side) {
+	if (side == null || frequency.getValue().equals(TunnelFrequency.NO_FREQUENCY))
 	    return null;
-	}
 	return fluidHandlers[side.ordinal()];
     }
 
     @Override
-    public @Nullable ICapabilityElectrodynamic getElectrodynamicCapability(@Nullable Direction side) {
-	if (side == null || frequency.getValue().equals(TunnelFrequency.NO_FREQUENCY)) {
+    @Nullable
+    public ICapabilityElectrodynamic getElectrodynamicCapability(@Nullable Direction side) {
+	if (side == null || frequency.getValue().equals(TunnelFrequency.NO_FREQUENCY))
 	    return null;
-	}
 	return electrodynamicHandlers[side.ordinal()];
     }
 
     @Override
-    public @Nullable IGasHandler getGasHandlerCapability(@Nullable Direction side) {
-	if (side == null || frequency.getValue().equals(TunnelFrequency.NO_FREQUENCY)) {
+    @Nullable
+    public IGasHandler getGasHandlerCapability(@Nullable Direction side) {
+	if (side == null || frequency.getValue().equals(TunnelFrequency.NO_FREQUENCY))
 	    return null;
-	}
 	return gasHandlers[side.ordinal()];
     }
 
@@ -404,15 +387,13 @@ public class TileQuantumTunnel extends GenericTile {
 
 	@Override
 	public ItemStack extractItem(int slot, int amount, boolean simulate) {
-	    if (isReciever || slot != 0 || amount <= 0) {
+	    if (isReciever || slot != 0 || amount <= 0)
 		return ItemStack.EMPTY;
-	    }
 
 	    ItemStack buffered = FrequencyConnectionManager.getBufferedItem(frequency.getValue()).copy();
 
-	    if (buffered.isEmpty()) {
+	    if (buffered.isEmpty())
 		return ItemStack.EMPTY;
-	    }
 
 	    buffered.setCount(Math.min(amount, buffered.getCount()));
 
@@ -425,7 +406,7 @@ public class TileQuantumTunnel extends GenericTile {
 	}
 
 	@Override
-	public boolean isItemValid(int slot, ItemStack stack) {
+	public boolean isItemValid(int slot, @Nullable ItemStack stack) {
 	    return true;
 	}
     }
@@ -474,9 +455,8 @@ public class TileQuantumTunnel extends GenericTile {
 	@Override
 	public FluidStack drain(int maxDrain, FluidAction action) {
 	    FluidStack buffered = FrequencyConnectionManager.getBufferedFluid(frequency.getValue());
-	    if (buffered.isEmpty()) {
+	    if (buffered.isEmpty())
 		return FluidStack.EMPTY;
-	    }
 	    return drain(buffered.copyWithAmount(maxDrain), action);
 	}
     }
@@ -515,7 +495,7 @@ public class TileQuantumTunnel extends GenericTile {
 	}
 
 	@Override
-	public boolean isGasValid(int i, @NotNull GasStack gasStack) {
+	public boolean isGasValid(int i, GasStack gasStack) {
 	    return true;
 	}
 
@@ -535,9 +515,8 @@ public class TileQuantumTunnel extends GenericTile {
 	@Override
 	public GasStack drain(int i, GasAction gasAction) {
 	    GasStack buffered = FrequencyConnectionManager.getBufferedGas(frequency.getValue());
-	    if (buffered.isEmpty()) {
+	    if (buffered.isEmpty())
 		return GasStack.EMPTY;
-	    }
 	    return drain(new GasStack(buffered.getGas(), i, buffered.getTemperature(), buffered.getPressure()),
 		    gasAction);
 	}

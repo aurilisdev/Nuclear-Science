@@ -1,5 +1,7 @@
 package nuclearscience.client.particle.smoke;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleEngine;
@@ -15,20 +17,20 @@ public class ParticleSmoke extends TextureSheetParticle {
     public ParticleSmoke(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed,
 	    ParticleOptionSmoke options, SpriteSet set) {
 	super(level, x, y, z, 0.0, 0.0, 0.0);
-	this.friction = 0.96F;
-	this.gravity = options.gravity;
-	this.speedUpWhenYMotionIsBlocked = true;
-	this.sprites = set;
-	this.xd = xSpeed;
-	this.yd = ySpeed;
-	this.zd = zSpeed;
-	this.rCol = options.r;
-	this.gCol = options.g;
-	this.bCol = options.b;
-	this.quadSize = options.scale;
-	this.lifetime = options.lifetime;
-	this.setSpriteFromAge(sprites);
-	this.hasPhysics = options.hasPhysics;
+	friction = 0.96F;
+	gravity = options.gravity;
+	speedUpWhenYMotionIsBlocked = true;
+	sprites = set;
+	xd = xSpeed;
+	yd = ySpeed;
+	zd = zSpeed;
+	rCol = options.r;
+	gCol = options.g;
+	bCol = options.b;
+	quadSize = options.scale;
+	lifetime = options.lifetime;
+	setSpriteFromAge(sprites);
+	hasPhysics = options.hasPhysics;
     }
 
     @Override
@@ -38,7 +40,7 @@ public class ParticleSmoke extends TextureSheetParticle {
 
     @Override
     public float getQuadSize(float scaleFactor) {
-	return this.quadSize * Mth.clamp((this.age + scaleFactor) / this.lifetime * 32.0F, 0.0F, 1.0F);
+	return quadSize * Mth.clamp((age + scaleFactor) / lifetime * 32.0F, 0.0F, 1.0F);
     }
 
     @Override
@@ -57,8 +59,8 @@ public class ParticleSmoke extends TextureSheetParticle {
 	}
 
 	@Override
-	public Particle createParticle(ParticleOptionSmoke type, ClientLevel level, double x, double y, double z,
-		double xSpeed, double ySpeed, double zSpeed) {
+	public @Nullable Particle createParticle(ParticleOptionSmoke type, ClientLevel level, double x, double y,
+		double z, double xSpeed, double ySpeed, double zSpeed) {
 	    return new ParticleSmoke(level, x, y, z, xSpeed, ySpeed, zSpeed, type, sprites);
 	}
 

@@ -32,14 +32,14 @@ public class ButtonIO extends ScreenComponentButton<ButtonIO> {
 	    List<FormattedCharSequence> tooltips = new ArrayList<>();
 	    tooltips.add(getLabelFromDir().getVisualOrderText());
 	    tooltips.add(getModeForSide().getVisualOrderText());
-	    graphics.renderTooltip(gui.getFontRenderer(), tooltips, xAxis, yAxis);
+	    graphics.renderTooltip(requireScreen().getFontRenderer(), tooltips, xAxis, yAxis);
 	});
 	setOnPress(button -> {
-	    GenericScreen<?> screen = (GenericScreen<?>) gui;
+	    GenericScreen<?> screen = (GenericScreen<?>) requireScreen();
 
 	    ContainerQuantumTunnel container = (ContainerQuantumTunnel) screen.getMenu();
 
-	    TileQuantumTunnel tile = container.getSafeHost();
+	    TileQuantumTunnel tile = container.getSafeHost().orElse(null);
 
 	    if (tile == null) {
 		return;
@@ -66,11 +66,11 @@ public class ButtonIO extends ScreenComponentButton<ButtonIO> {
     public void renderBackground(GuiGraphics graphics, int xAxis, int yAxis, int guiWidth, int guiHeight) {
 	super.renderBackground(graphics, xAxis, yAxis, guiWidth, guiHeight);
 
-	GenericScreen<?> screen = (GenericScreen<?>) gui;
+	GenericScreen<?> screen = (GenericScreen<?>) requireScreen();
 
 	ContainerQuantumTunnel container = (ContainerQuantumTunnel) screen.getMenu();
 
-	TileQuantumTunnel tile = container.getSafeHost();
+	TileQuantumTunnel tile = container.getSafeHost().orElse(null);
 
 	if (tile == null) {
 	    return;
@@ -109,11 +109,11 @@ public class ButtonIO extends ScreenComponentButton<ButtonIO> {
 
     private MutableComponent getModeForSide() {
 
-	GenericScreen<?> screen = (GenericScreen<?>) gui;
+	GenericScreen<?> screen = (GenericScreen<?>) requireScreen();
 
 	ContainerQuantumTunnel container = (ContainerQuantumTunnel) screen.getMenu();
 
-	TileQuantumTunnel tile = container.getSafeHost();
+	TileQuantumTunnel tile = container.getSafeHost().orElse(null);
 
 	if (tile == null) {
 	    return Component.empty();

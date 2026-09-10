@@ -21,39 +21,19 @@ public class ScreenGasCentrifuge extends GenericMaterialScreen<ContainerGasCentr
     public ScreenGasCentrifuge(ContainerGasCentrifuge container, Inventory playerInventory, Component title) {
 	super(container, playerInventory, title);
 
-	addComponent(new ScreenComponentGasGauge(() -> {
-	    TileGasCentrifuge boiler = container.getSafeHost();
-	    if (boiler != null) {
-		return boiler.<ComponentGasHandlerMulti>getComponent(IComponentType.GasHandler).getInputTanks()[0];
-	    }
-	    return null;
-	}, 18, 19));
-	addComponent(new ScreenComponentGasCentrifuge(() -> {
-	    TileGasCentrifuge box = menu.getSafeHost();
-	    if (box != null && box.isRunning.getValue()) {
-		// return (box.ticks % 100) / 100.0;
-		return 13;
-	    }
-	    return 0;
-	}, () -> {
-	    TileGasCentrifuge boiler = container.getSafeHost();
-	    if (boiler != null) {
-		return boiler.stored235.getValue() / TileGasCentrifuge.REQUIRED;
-	    }
-	    return 0;
-	}, () -> {
-	    TileGasCentrifuge boiler = container.getSafeHost();
-	    if (boiler != null) {
-		return boiler.stored238.getValue() / TileGasCentrifuge.REQUIRED;
-	    }
-	    return 0;
-	}, () -> {
-	    TileGasCentrifuge boiler = container.getSafeHost();
-	    if (boiler != null) {
-		return boiler.storedWaste.getValue() / TileGasCentrifuge.REQUIRED;
-	    }
-	    return 0;
-	}, 34, 14));
+	addComponent(new ScreenComponentGasGauge(() -> container
+		.getSafeHost().map(boiler -> boiler
+			.<ComponentGasHandlerMulti>requireComponent(IComponentType.GasHandler).getInputTanks()[0])
+		.orElse(null), 18, 19));
+	addComponent(new ScreenComponentGasCentrifuge(
+		() -> menu.getSafeHost().map(box -> box.isRunning.getValue() ? 13 : 0).orElse(0),
+		() -> container.getSafeHost().map(boiler -> boiler.stored235.getValue() / TileGasCentrifuge.REQUIRED)
+			.orElse(0.0),
+		() -> container.getSafeHost().map(boiler -> boiler.stored238.getValue() / TileGasCentrifuge.REQUIRED)
+			.orElse(0.0),
+		() -> container.getSafeHost().map(boiler -> boiler.storedWaste.getValue() / TileGasCentrifuge.REQUIRED)
+			.orElse(0.0),
+		34, 14));
 
 	addComponent(new ScreenComponentGasPressure(-AbstractScreenComponentInfo.SIZE + 1,
 		2 + 3 * AbstractScreenComponentInfo.SIZE));
@@ -63,11 +43,7 @@ public class ScreenGasCentrifuge extends GenericMaterialScreen<ContainerGasCentr
 		82, 8, 72);
 	addComponent(new ScreenComponentElectricInfo(-AbstractScreenComponentInfo.SIZE + 1, 2));
 
-	addComponent(new ScreenComponentMultiLabel(0, 0, graphics -> {
-	    TileGasCentrifuge centrifuge = menu.getSafeHost();
-	    if (centrifuge == null) {
-		return;
-	    }
+	addComponent(new ScreenComponentMultiLabel(0, 0, graphics -> menu.getSafeHost().ifPresent(centrifuge -> {
 	    graphics.drawString(font, Component.literal("U235 " + getIntString(centrifuge.stored235.getValue()) + "%"),
 		    54, 17, 4210752, false);
 	    graphics.drawString(font, Component.literal("U238 " + getIntString(centrifuge.stored238.getValue()) + "%"),
@@ -75,14 +51,13 @@ public class ScreenGasCentrifuge extends GenericMaterialScreen<ContainerGasCentr
 	    graphics.drawString(font,
 		    Component.literal("DUST " + getIntString(centrifuge.storedWaste.getValue()) + "%"), 54, 58, 4210752,
 		    false);
-	}));
+	})));
     }
 
     private static String getIntString(double value) {
 	int perc = (int) (value / (float) TileGasCentrifuge.REQUIRED * 100);
-	if (perc < 10) {
+	if (perc < 10)
 	    return "0" + perc;
-	}
 	return "" + perc;
     }
 

@@ -7,6 +7,7 @@ import java.util.List;
 import com.mojang.blaze3d.platform.InputConstants;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.player.Inventory;
@@ -14,7 +15,6 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.fluids.FluidStack;
 import nuclearscience.api.quantumtunnel.TunnelFrequencyBuffer;
 import nuclearscience.common.inventory.container.ContainerQuantumTunnel;
-import nuclearscience.common.tile.TileQuantumTunnel;
 import nuclearscience.prefab.screen.component.NuclearIconTypes;
 import nuclearscience.prefab.screen.component.quantumtunnel.WrapperEditFrequency;
 import nuclearscience.prefab.screen.component.quantumtunnel.WrapperIOEditor;
@@ -59,13 +59,7 @@ public class ScreenQuantumTunnel extends GenericScreen<ContainerQuantumTunnel> {
 	editFrequencyWrapper = new WrapperEditFrequency(this, 0, 10);
 
 	addComponent(new ScreenComponentGuiTab(ScreenComponentGuiTab.GuiInfoTabTextures.REGULAR,
-		NuclearIconTypes.BUFFER, () -> {
-
-		    TileQuantumTunnel tile = getMenu().getSafeHost();
-
-		    if (tile == null) {
-			return Collections.emptyList();
-		    }
+		NuclearIconTypes.BUFFER, () -> container.getSafeHost().map(tile -> {
 
 		    TunnelFrequencyBuffer buffer = tile.clientBuffer;
 
@@ -114,7 +108,8 @@ public class ScreenQuantumTunnel extends GenericScreen<ContainerQuantumTunnel> {
 
 		    return info;
 
-		}, -AbstractScreenComponentInfo.SIZE + 1, AbstractScreenComponentInfo.SIZE * 2 + 2));
+		}).orElse(Collections.emptyList()), -AbstractScreenComponentInfo.SIZE + 1,
+		AbstractScreenComponentInfo.SIZE * 2 + 2));
 
     }
 
@@ -127,26 +122,26 @@ public class ScreenQuantumTunnel extends GenericScreen<ContainerQuantumTunnel> {
     @Override
     protected void initializeComponents() {
 	super.initializeComponents();
-	playerInvLabel.setVisible(false);
+	if (playerInvLabel != null) {
+	    playerInvLabel.setVisible(false);
+	}
     }
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
-	if (frequencyWrapper != null) {
-	    if (scrollY > 0) {
-		// scroll up
-		frequencyWrapper.handleMouseScroll(-1);
-	    } else if (scrollY < 0) {
-		// scroll down
-		frequencyWrapper.handleMouseScroll(1);
-	    }
+	if (scrollY > 0) {
+	    // scroll up
+	    frequencyWrapper.handleMouseScroll(-1);
+	} else if (scrollY < 0) {
+	    // scroll down
+	    frequencyWrapper.handleMouseScroll(1);
 	}
 	return super.mouseScrolled(mouseX, mouseY, scrollX, scrollY);
     }
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-	if (slider != null && slider.isVisible()) {
+	if (slider.isVisible()) {
 	    slider.mouseClicked(mouseX, mouseY, button);
 	}
 	return super.mouseClicked(mouseX, mouseY, button);
@@ -154,7 +149,7 @@ public class ScreenQuantumTunnel extends GenericScreen<ContainerQuantumTunnel> {
 
     @Override
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
-	if (slider != null && slider.isVisible()) {
+	if (slider.isVisible()) {
 	    slider.mouseReleased(mouseX, mouseY, button);
 	}
 	return super.mouseReleased(mouseX, mouseY, button);
@@ -163,18 +158,17 @@ public class ScreenQuantumTunnel extends GenericScreen<ContainerQuantumTunnel> {
     @Override
     public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) {
 	InputConstants.Key mouseKey = InputConstants.getKey(pKeyCode, pScanCode);
-	if (this.minecraft.options.keyInventory.isActiveAndMatches(mouseKey)
-		&& newFrequencyWrapper.nameEditBox.isFocused()) {
+	Minecraft minecraft = this.minecraft;
+	if (minecraft != null && minecraft.options.keyInventory.isActiveAndMatches(mouseKey)
+		&& newFrequencyWrapper.nameEditBox.isFocused())
 	    return false;
-	}
 	return super.keyPressed(pKeyCode, pScanCode, pModifiers);
     }
 
     @Override
     public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
-	if (slider.isVisible()) {
+	if (slider.isVisible())
 	    return slider.mouseDragged(mouseX, mouseY, button, dragX, dragY);
-	}
 	return super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
     }
 }

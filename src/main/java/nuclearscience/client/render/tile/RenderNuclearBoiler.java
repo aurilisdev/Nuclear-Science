@@ -39,7 +39,8 @@ public class RenderNuclearBoiler extends AbstractTileRenderer<TileNuclearBoiler>
 	Direction facing = tile.getFacing();
 	VertexConsumer builder = buffer.getBuffer(Sheets.translucentCullBlockSheet());
 
-	FluidTank input = tile.<ComponentFluidHandlerMulti>getComponent(IComponentType.FluidHandler).getInputTanks()[0];
+	FluidTank input = tile.<ComponentFluidHandlerMulti>requireComponent(IComponentType.FluidHandler)
+		.getInputTanks()[0];
 
 	if (!input.isEmpty()) {
 
@@ -52,7 +53,7 @@ public class RenderNuclearBoiler extends AbstractTileRenderer<TileNuclearBoiler>
 
 	matrix.pushPose();
 
-	GasTank output = tile.<ComponentGasHandlerMulti>getComponent(IComponentType.GasHandler).getOutputTanks()[0];
+	GasTank output = tile.<ComponentGasHandlerMulti>requireComponent(IComponentType.GasHandler).getOutputTanks()[0];
 
 	if (!output.isEmpty()) {
 

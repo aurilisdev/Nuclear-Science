@@ -44,9 +44,11 @@ public class ChapterOtherMachines extends Chapter {
 		.setCentered());
 	pageData.add(new ItemWrapperObject(7 + ScreenGuidebook.TEXT_WIDTH / 2 - 16, 5, 32, 32, 32, 2.0F,
 		NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.teleporter)));
-	pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.othermachines.teleporter1", ChatFormatter
-		.getChatDisplayShort(NuclearConfig.INSTANCE.TELEPORTER_USAGE_PER_TELEPORT.get(), DisplayUnits.JOULES)))
-		.setIndentions(1).setSeparateStart());
+	pageData.add(
+		new TextWrapperObject(NuclearTextUtils.guidebook("chapter.othermachines.teleporter1",
+			ChatFormatter.getChatDisplayShort(
+				NuclearConfig.getInstance().TELEPORTER_USAGE_PER_TELEPORT.get(), DisplayUnits.JOULES)))
+			.setIndentions(1).setSeparateStart());
 	pageData.add(new ImageWrapperObject(0, 0, 0, 0, 150, 150, 150, 150,
 		NuclearScience.rl("textures/screen/guidebook/teleporter1.png")));
 	pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.othermachines.teleporter2",

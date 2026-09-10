@@ -32,9 +32,7 @@ public class PacketSetClientAtomicAssemblerBlacklistVals implements CustomPacket
 	@Override
 	public void encode(RegistryFriendlyByteBuf buf, PacketSetClientAtomicAssemblerBlacklistVals packet) {
 	    buf.writeInt(packet.items.size());
-	    packet.items.forEach(item -> {
-		ItemStack.OPTIONAL_STREAM_CODEC.encode(buf, new ItemStack(item));
-	    });
+	    packet.items.forEach(item -> { ItemStack.OPTIONAL_STREAM_CODEC.encode(buf, new ItemStack(item)); });
 
 	}
 

@@ -30,9 +30,8 @@ public class BlockRadioactiveAir extends AirBlock {
 	if (level.getLevelData().getGameTime() % 10 == 0 && !level.isClientSide
 		&& entity instanceof LivingEntity living) {
 	    IRadiationRecipient cap = living.getCapability(VoltaicCapabilities.CAPABILITY_RADIATIONRECIPIENT);
-	    if (cap == null) {
+	    if (cap == null)
 		return;
-	    }
 
 	    cap.recieveRadiation(living, 20, 1);
 	}

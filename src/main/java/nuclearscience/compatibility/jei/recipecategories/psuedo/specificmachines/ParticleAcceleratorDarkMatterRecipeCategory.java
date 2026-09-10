@@ -56,8 +56,9 @@ public class ParticleAcceleratorDarkMatterRecipeCategory extends AbstractRecipeC
 	    NuclearJeiTextures.PARTICLEACCELERATOR_DMARROWON_RIGHT, 72, 39, StartDirection.BOTTOM);
 
     public static final LabelWrapperGeneric POWER_LABEL = new LabelWrapperGeneric(Color.JEI_TEXT_GRAY, 124, 2, false,
-	    ChatFormatter.getChatDisplayShort(960, DisplayUnits.VOLTAGE).append(" ").append(
-		    ChatFormatter.getChatDisplayShort(NuclearConfig.INSTANCE.PARTICLEINJECTOR_USAGE_PER_PARTICLE.get(),
+	    ChatFormatter.getChatDisplayShort(960, DisplayUnits.VOLTAGE).append(" ")
+		    .append(ChatFormatter.getChatDisplayShort(
+			    NuclearConfig.getInstance().PARTICLEINJECTOR_USAGE_PER_PARTICLE.get(),
 			    DisplayUnits.JOULES)));
 
     public static final int ANIM_TIME = 50;

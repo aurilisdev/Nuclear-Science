@@ -48,6 +48,7 @@ import nuclearscience.common.tile.reactor.moltensalt.TileMSReactorCore;
 import nuclearscience.common.tile.reactor.moltensalt.TileMoltenSaltPipe;
 import nuclearscience.common.tile.reactor.moltensalt.TileMoltenSaltSupplier;
 
+@SuppressWarnings("null")
 public class NuclearScienceTiles {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister
 	    .create(Registries.BLOCK_ENTITY_TYPE, NuclearScience.ID);

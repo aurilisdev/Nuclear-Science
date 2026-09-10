@@ -2,6 +2,7 @@ package nuclearscience.prefab.screen.component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
@@ -30,14 +31,10 @@ public class ScreenComponentReactorFuel extends AbstractScreenComponentGauge {
 
     @Override
     protected int getScaledLevel() {
-	TileMSReactorCore core = ((GenericContainerBlockEntity<TileMSReactorCore>) ((GenericScreen<?>) gui).getMenu())
-		.getSafeHost();
-	if (core == null) {
-	    return 0;
-	}
-
-	return (int) ((GaugeTextures.BACKGROUND_DEFAULT.textureHeight() - 2) * core.currentFuel.getValue()
-		/ TileMSReactorCore.FUEL_CAPACITY);
+	Optional<TileMSReactorCore> oCore = ((GenericContainerBlockEntity<TileMSReactorCore>) ((GenericScreen<?>) requireScreen())
+		.getMenu()).getSafeHost();
+	return oCore.map(core -> (int) ((GaugeTextures.BACKGROUND_DEFAULT.textureHeight() - 2)
+		* core.currentFuel.getValue() / TileMSReactorCore.FUEL_CAPACITY)).orElseGet(() -> 0);
     }
 
     @Override
@@ -48,11 +45,10 @@ public class ScreenComponentReactorFuel extends AbstractScreenComponentGauge {
     @Override
     protected List<? extends FormattedCharSequence> getTooltips() {
 	List<FormattedCharSequence> list = new ArrayList<>();
-	TileMSReactorCore core = ((GenericContainerBlockEntity<TileMSReactorCore>) ((GenericScreen<?>) gui).getMenu())
-		.getSafeHost();
-	if (core == null) {
+	TileMSReactorCore core = ((GenericContainerBlockEntity<TileMSReactorCore>) ((GenericScreen<?>) requireScreen())
+		.getMenu()).getSafeHost().orElse(null);
+	if (core == null)
 	    return list;
-	}
 	list.add(VoltaicTextUtils
 		.ratio(ChatFormatter.formatFluidMilibuckets(core.currentFuel.getValue()),
 			ChatFormatter.formatFluidMilibuckets(TileMSReactorCore.FUEL_CAPACITY))

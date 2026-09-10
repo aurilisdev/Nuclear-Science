@@ -2,7 +2,7 @@ package nuclearscience.common.item;
 
 import java.util.EnumMap;
 
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
@@ -45,7 +45,7 @@ public class ItemHazmatArmor extends ItemVoltaicArmor implements IHazmatSuit {
 	    String armorTexture) {
 	super(materialIn, slot, properties, creativeTab);
 	this.radiationProtection = radiationProtection;
-	this.radiationStrengthProtection = radiationStrengthRating;
+	radiationStrengthProtection = radiationStrengthRating;
 	this.armorTexture = NuclearScience.rl("textures/models/armor/" + armorTexture + ".png");
     }
 

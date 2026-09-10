@@ -35,15 +35,10 @@ public class RenderFusionInterface extends AbstractTileRenderer<TileFusionInterf
     @Override
     public void render(TileFusionInterface tile, float partialTicks, PoseStack matrix, MultiBufferSource bufferIn,
 	    int combinedLightIn, int combinedOverlayIn) {
-
-	if (tile.reactor == null || !tile.reactor.valid()
-		|| !(tile.reactor.getSafe() instanceof TileFusionReactorCore)) {
+	if (tile.getReactor(TileFusionReactorCore.class).isEmpty())
 	    return;
-	}
 
-	tile.reactor.getSafe();
-
-	Long currTime = tile.<ComponentTickable>getComponent(IComponentType.Tickable).getTicks();
+	Long currTime = tile.<ComponentTickable>requireComponent(IComponentType.Tickable).getTicks();
 
 	TextureAtlasSprite fuelCell = NuclearScienceClientRegister
 		.getSprite(NuclearScienceClientRegister.TEXTURE_FUELCELL);

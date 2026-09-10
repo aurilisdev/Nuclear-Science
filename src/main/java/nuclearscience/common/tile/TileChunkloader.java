@@ -13,17 +13,15 @@ import nuclearscience.NuclearScience;
 import nuclearscience.registers.NuclearScienceTiles;
 import voltaic.Voltaic;
 import voltaic.prefab.tile.GenericTile;
-import voltaic.prefab.tile.components.type.ComponentPacketHandler;
 import voltaic.prefab.tile.components.type.ComponentTickable;
 
 public class TileChunkloader extends GenericTile {
     public TileChunkloader(BlockPos worldPos, BlockState blockState) {
 	super(NuclearScienceTiles.TILE_CHUNKLOADER.get(), worldPos, blockState);
-	addComponent(new ComponentPacketHandler(this));
 	addComponent(new ComponentTickable(this).tickServer(this::tickServer));
     }
 
-    public void tickServer(ComponentTickable tickable) {
+    public void tickServer(Level level, ComponentTickable tickable) {
 	// TODO if we want to make it use power or something
     }
 
@@ -58,18 +56,18 @@ public class TileChunkloader extends GenericTile {
     }
 
     @Override
-    public void onBlockDestroyed() {
-	super.onBlockDestroyed();
+    public void onBlockDestroyed(Level level) {
+	super.onBlockDestroyed(level);
 	if (!level.isClientSide()) {
-	    updateChunks(false, getLevel(), getBlockPos());
+	    updateChunks(false, level, getBlockPos());
 	}
     }
 
     @Override
-    public void onPlace(BlockState oldState, boolean isMoving) {
-	super.onPlace(oldState, isMoving);
+    public void onPlace(Level level, BlockState oldState, boolean isMoving) {
+	super.onPlace(level, oldState, isMoving);
 	if (!level.isClientSide()) {
-	    updateChunks(true, getLevel(), getBlockPos());
+	    updateChunks(true, level, getBlockPos());
 	}
     }
 

@@ -37,18 +37,16 @@ public class ItemGeigerCounter extends ItemElectric {
     public void inventoryTick(ItemStack stack, Level worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 	super.inventoryTick(stack, worldIn, entityIn, itemSlot, isSelected);
 
-	if (worldIn.isClientSide) {
+	if (worldIn.isClientSide)
 	    return;
-	}
 
 	if (entityIn instanceof Player player) {
 
 	    boolean noPower = getJoulesStored(stack) < POWER_USAGE;
 
 	    IRadiationRecipient capability = player.getCapability(VoltaicCapabilities.CAPABILITY_RADIATIONRECIPIENT);
-	    if (capability == null) {
+	    if (capability == null)
 		return;
-	    }
 
 	    RadioactiveObject recievedRads = capability.getRecievedRadiation(player);
 
@@ -75,7 +73,7 @@ public class ItemGeigerCounter extends ItemElectric {
 		};
 
 		worldIn.playSound(null, player.blockPosition(), sound, SoundSource.BLOCKS, 1.0F, 1.0F);
-		IItemElectric.setEnergyStored(stack, this.getJoulesStored(stack)
+		IItemElectric.setEnergyStored(stack, getJoulesStored(stack)
 			- stack.getOrDefault(VoltaicDataComponentTypes.POWER_USAGE, POWER_USAGE));
 		player.getInventory().setChanged();
 

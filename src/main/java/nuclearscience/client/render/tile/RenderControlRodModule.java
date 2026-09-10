@@ -1,6 +1,5 @@
 package nuclearscience.client.render.tile;
 
-import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -31,8 +30,8 @@ public class RenderControlRodModule extends AbstractTileRenderer<TileControlRodM
     }
 
     @Override
-    public void render(@NotNull TileControlRodModule tile, float partialTicks, PoseStack stack,
-	    MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
+    public void render(TileControlRodModule tile, float partialTicks, PoseStack stack, MultiBufferSource bufferIn,
+	    int combinedLightIn, int combinedOverlayIn) {
 	stack.pushPose();
 
 	stack.translate(0.5, 0.5, 0.5);
@@ -51,14 +50,13 @@ public class RenderControlRodModule extends AbstractTileRenderer<TileControlRodM
 
 	stack.translate(0, 0, -MAX_DELTA * insertion);
 
-	RenderingUtils.renderModel(getModel(NuclearScienceClientRegister.MODEL_CONTROLRODMODULE_ROD), tile,
+	RenderingUtils.renderModel(getModel(NuclearScienceClientRegister.MODEL_CONTROLRODMODULE_ROD),
 		RenderType.solid(), stack, bufferIn, combinedLightIn, combinedOverlayIn);
 
 	stack.popPose();
 
-	if (!tile.linked.getValue()) {
+	if (!tile.linked.getValue())
 	    return;
-	}
 
 	Font font = Minecraft.getInstance().font;
 

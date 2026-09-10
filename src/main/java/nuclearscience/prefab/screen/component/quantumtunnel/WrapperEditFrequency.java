@@ -1,5 +1,7 @@
 package nuclearscience.prefab.screen.component.quantumtunnel;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -22,7 +24,7 @@ public class WrapperEditFrequency {
     private ScreenComponentButton<?> saveButton;
     private ScreenComponentButton<?> cancelButton;
 
-    private TunnelFrequency currFrequency;
+    private @Nullable TunnelFrequency currFrequency;
 
     public WrapperEditFrequency(ScreenQuantumTunnel screen, int x, int y) {
 
@@ -36,34 +38,32 @@ public class WrapperEditFrequency {
 
 	screen.addComponent(saveButton = new ScreenComponentButton<>(x + 13, y + 70, 70, 20).setOnPress(button -> {
 
-	    if (nameEditBox.getValue().isEmpty() || nameEditBox.getValue().isBlank() || currFrequency == null) {
+	    TunnelFrequency pCurrFrequency = currFrequency;
+	    if (nameEditBox.getValue().isEmpty() || nameEditBox.getValue().isBlank() || pCurrFrequency == null)
 		return;
-	    }
 
 	    Player player = Minecraft.getInstance().player;
 
-	    if (player == null) {
+	    if (player == null)
 		return;
-	    }
 
-	    TileQuantumTunnel tile = screen.getMenu().getSafeHost();
+	    TileQuantumTunnel tile = screen.getMenu().getSafeHost().orElse(null);
 
-	    if (tile == null) {
+	    if (tile == null)
 		return;
-	    }
 
 	    String name = nameEditBox.getValue();
 
-	    if (!currFrequency.getName().equals(name) && currFrequency.getCreatorId().equals(player.getUUID())) {
+	    if (!pCurrFrequency.getName().equals(name) && pCurrFrequency.getCreatorId().equals(player.getUUID())) {
 
-		currFrequency.setName(name);
+		pCurrFrequency.setName(name);
 
-		if (tile.frequency.getValue().equals(currFrequency)) {
-		    tile.frequency.setValue(currFrequency);
+		if (tile.frequency.getValue().equals(pCurrFrequency)) {
+		    tile.frequency.setValue(pCurrFrequency);
 		    tile.frequency.forceDirtyForManager();
 		}
 
-		PacketDistributor.sendToServer(new PacketEditFrequency(player.getUUID(), currFrequency));
+		PacketDistributor.sendToServer(new PacketEditFrequency(player.getUUID(), pCurrFrequency));
 
 	    }
 
@@ -100,7 +100,7 @@ public class WrapperEditFrequency {
     }
 
     public void updateFrequency(TunnelFrequency frequency) {
-	this.currFrequency = frequency;
+	currFrequency = frequency;
 	nameEditBox.setValue(frequency.getName());
     }
 }

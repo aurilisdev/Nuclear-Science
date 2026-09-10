@@ -2,6 +2,7 @@ package nuclearscience.common.tile.reactor.moltensalt;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.common.inventory.container.ContainerMSRFuelPreProcessor;
 import nuclearscience.registers.NuclearScienceRecipies;
@@ -12,7 +13,6 @@ import voltaic.prefab.tile.components.type.ComponentContainerProvider;
 import voltaic.prefab.tile.components.type.ComponentElectrodynamic;
 import voltaic.prefab.tile.components.type.ComponentFluidHandlerMulti;
 import voltaic.prefab.tile.components.type.ComponentInventory;
-import voltaic.prefab.tile.components.type.ComponentPacketHandler;
 import voltaic.prefab.tile.components.type.ComponentProcessor;
 import voltaic.prefab.tile.components.type.ComponentTickable;
 import voltaic.prefab.utilities.BlockEntityUtils;
@@ -25,7 +25,6 @@ public class TileMSRFuelPreProcessor extends GenericTile {
     public TileMSRFuelPreProcessor(BlockPos pos, BlockState state) {
 	super(NuclearScienceTiles.TILE_MSRFUELPREPROCESSOR.get(), pos, state);
 	addComponent(new ComponentTickable(this).tickClient(this::tickClient));
-	addComponent(new ComponentPacketHandler(this));
 	addComponent(new ComponentElectrodynamic(this, false, true)
 		.setInputDirections(BlockEntityUtils.MachineDirection.BACK)
 		.voltage(VoltaicCapabilities.DEFAULT_VOLTAGE * 2));
@@ -41,17 +40,17 @@ public class TileMSRFuelPreProcessor extends GenericTile {
 		.setDirectionsBySlot(3, BlockEntityUtils.MachineDirection.LEFT)
 		.validUpgrades(ContainerMSRFuelPreProcessor.VALID_UPGRADES).valid(machineValidator()));
 	addComponent(new ComponentProcessor(this)
-		.canProcess((component, procNumber) -> component.consumeBucket().canProcessFluidItem2ItemRecipe(
-			procNumber, NuclearScienceRecipies.MSR_FUEL_PREPROCESSOR_TYPE.get()))
+		.canProcess((component, level, procNumber) -> component.consumeBucket().canProcessFluidItem2ItemRecipe(
+			level, procNumber, NuclearScienceRecipies.MSR_FUEL_PREPROCESSOR_TYPE.get()))
 		.process(ComponentProcessor::processFluidItem2ItemRecipe));
 	addComponent(new ComponentContainerProvider("msrfuelpreprocessor", this)
 		.createMenu((id, player) -> new ContainerMSRFuelPreProcessor(id, player,
-			getComponent(IComponentType.Inventory), getCoordsArray())));
+			requireComponent(IComponentType.Inventory), getCoordsArray())));
 
     }
 
-    protected void tickClient(ComponentTickable tickable) {
-	boolean running = this.<ComponentProcessor>getComponent(IComponentType.Processor).isActive(0);
+    protected void tickClient(Level level, ComponentTickable tickable) {
+	boolean running = this.<ComponentProcessor>requireComponent(IComponentType.Processor).isActive(0);
 	if (running) {
 	    if (level.random.nextDouble() < 0.15) {
 		level.addParticle(ParticleTypes.SMOKE, worldPosition.getX() + level.random.nextDouble(),
@@ -63,7 +62,7 @@ public class TileMSRFuelPreProcessor extends GenericTile {
     }
 
     @Override
-    public int getComparatorSignal() {
-	return this.<ComponentProcessor>getComponent(IComponentType.Processor).isActive(0) ? 15 : 0;
+    public int getComparatorSignal(Level level) {
+	return this.<ComponentProcessor>requireComponent(IComponentType.Processor).isActive(0) ? 15 : 0;
     }
 }

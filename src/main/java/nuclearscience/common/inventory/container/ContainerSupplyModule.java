@@ -26,10 +26,10 @@ public class ContainerSupplyModule extends GenericInterfaceBoundContainer<TileSu
 	int offset = 0;
 	for (int x = 0; x < 9; ++x) {
 	    offset++;
-	    this.addSlot(new SlotGeneric(container, x, 8 + x * 18, 20).setIOColor(new Color(0, 240, 255, 255)));
+	    addSlot(new SlotGeneric(container, x, 8 + x * 18, 20).setIOColor(new Color(0, 240, 255, 255)));
 	}
 	for (int x = 0; x < 9; ++x) {
-	    this.addSlot(new SlotGeneric(container, x + offset, 8 + x * 18, 50).setIOColor(new Color(255, 0, 0, 255)));
+	    addSlot(new SlotGeneric(container, x + offset, 8 + x * 18, 50).setIOColor(new Color(255, 0, 0, 255)));
 	}
     }
 }

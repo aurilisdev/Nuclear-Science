@@ -2,6 +2,7 @@ package nuclearscience.common.tile.accelerator;
 
 import java.util.Random;
 
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -12,6 +13,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity.RemovalReason;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.common.entity.EntityParticle;
 import nuclearscience.common.inventory.container.ContainerParticleInjector;
@@ -27,7 +30,6 @@ import voltaic.prefab.tile.components.IComponentType;
 import voltaic.prefab.tile.components.type.ComponentContainerProvider;
 import voltaic.prefab.tile.components.type.ComponentElectrodynamic;
 import voltaic.prefab.tile.components.type.ComponentInventory;
-import voltaic.prefab.tile.components.type.ComponentPacketHandler;
 import voltaic.prefab.tile.components.type.ComponentTickable;
 import voltaic.prefab.utilities.BlockEntityUtils;
 import voltaic.prefab.utilities.RadiationUtils;
@@ -44,14 +46,13 @@ public class TileParticleInjector extends GenericTile {
     public int timeSinceSpawn = 0;
 
     public final SingleProperty<Boolean> usingGateway = property(
-	    new SingleProperty<>(PropertyTypes.BOOLEAN, "usinggateway", false));
+	    new SingleProperty<>(getPropertyManager(), PropertyTypes.BOOLEAN, "usinggateway", false)).setUpdateServer();
     public final SingleProperty<Boolean> hasRedstoneSignal = property(
-	    new SingleProperty<>(PropertyTypes.BOOLEAN, "hasredstonesignal", false));
+	    new SingleProperty<>(getPropertyManager(), PropertyTypes.BOOLEAN, "hasredstonesignal", false));
 
     public TileParticleInjector(BlockPos pos, BlockState state) {
 	super(NuclearScienceTiles.TILE_PARTICLEINJECTOR.get(), pos, state);
 	addComponent(new ComponentTickable(this).tickServer(this::tickServer).tickCommon(this::tickCommon));
-	addComponent(new ComponentPacketHandler(this));
 	addComponent(new ComponentInventory(this, ComponentInventory.InventoryBuilder.newInv().inputs(2).outputs(1))
 		.valid((index, stack, i) -> index != 1
 			|| stack.getItem() == NuclearScienceItems.ITEM_CELLELECTROMAGNETIC.get())
@@ -61,14 +62,13 @@ public class TileParticleInjector extends GenericTile {
 			BlockEntityUtils.MachineDirection.BOTTOM, BlockEntityUtils.MachineDirection.LEFT));
 	addComponent(new ComponentElectrodynamic(this, false, true).voltage(VoltaicCapabilities.DEFAULT_VOLTAGE * 8)
 		.setInputDirections(BlockEntityUtils.MachineDirection.BACK)
-		.maxJoules(NuclearConfig.INSTANCE.PARTICLEINJECTOR_USAGE_PER_PARTICLE.get() * 2));
+		.maxJoules(NuclearConfig.getInstance().PARTICLEINJECTOR_USAGE_PER_PARTICLE.get() * 2));
 	addComponent(new ComponentContainerProvider("particleinjector", this)
 		.createMenu((id, player) -> new ContainerParticleInjector(id, player,
-			getComponent(IComponentType.Inventory), getCoordsArray())));
+			requireComponent(IComponentType.Inventory), getCoordsArray())));
     }
 
-    private void tickCommon(ComponentTickable tickable) {
-
+    private void tickCommon(Level level, ComponentTickable tickable) {
 	if (particles[0] != null && !particles[0].isAlive()) {
 	    particles[0] = null;
 	}
@@ -83,48 +83,43 @@ public class TileParticleInjector extends GenericTile {
 
     }
 
-    private void tickServer(ComponentTickable componentTickable) {
+    private void tickServer(Level level, ComponentTickable componentTickable) {
+	RadiationUtils.handleRadioactiveItems(level, this,
+		(ComponentInventory) requireComponent(IComponentType.Inventory),
+		NuclearConfig.getInstance().PARTICLE_INJECTOR_RADIATION_RADIUS.get(), true, 30, true, false);
 
-	RadiationUtils.handleRadioactiveItems(this, (ComponentInventory) getComponent(IComponentType.Inventory),
-		NuclearConfig.INSTANCE.PARTICLE_INJECTOR_RADIATION_RADIUS.get(), true, 30, true, false);
-
-	if (hasRedstoneSignal.getValue()) {
+	if (hasRedstoneSignal.getValue())
 	    return;
-	}
 
-	ComponentElectrodynamic electro = getComponent(IComponentType.Electrodynamic);
-	ComponentInventory inv = getComponent(IComponentType.Inventory);
+	ComponentElectrodynamic electro = requireComponent(IComponentType.Electrodynamic);
+	ComponentInventory inv = requireComponent(IComponentType.Inventory);
 
 	ItemStack input = inv.getItem(INPUT_SLOT);
 
-	if (electro.getJoulesStored() < NuclearConfig.INSTANCE.PARTICLEINJECTOR_USAGE_PER_PARTICLE.get()
-		|| input.isEmpty()) {
+	if (electro.getJoulesStored() < NuclearConfig.getInstance().PARTICLEINJECTOR_USAGE_PER_PARTICLE.get()
+		|| input.isEmpty())
 	    return;
-	}
 
 	if (timeSinceSpawn > 0) {
 	    timeSinceSpawn--;
 	    return;
 	}
 
-	if (usingGateway.getValue() && particles[0] != null && !particles[0].passedThroughGate) {
+	if (usingGateway.getValue() && particles[0] != null && !particles[0].passedThroughGate)
 	    return;
-	} else if (!usingGateway.getValue() && !level.getBlockState(worldPosition.relative(getFacing()))
-		.is(NuclearScienceBlocks.BLOCK_ELECTORMAGNETICBOOSTER.get())) {
+	else if (!usingGateway.getValue() && !level.getBlockState(worldPosition.relative(getFacing()))
+		.is(NuclearScienceBlocks.BLOCK_ELECTORMAGNETICBOOSTER.get()))
 	    return;
-	}
 
-	if (particles[0] != null && particles[1] != null) {
+	if (particles[0] != null && particles[1] != null)
 	    return;
-	}
 
 	ItemStack resultStack = inv.getItem(OUTPUT_SLOT);
 
-	if (resultStack.getCount() >= resultStack.getMaxStackSize()) {
+	if (resultStack.getCount() >= resultStack.getMaxStackSize())
 	    return;
-	}
 
-	timeSinceSpawn = NuclearConfig.INSTANCE.DEFAULT_PARTICLE_COOLDOWN_TICKS.get();
+	timeSinceSpawn = NuclearConfig.getInstance().DEFAULT_PARTICLE_COOLDOWN_TICKS.get();
 
 	input.shrink(1);
 
@@ -140,7 +135,7 @@ public class TileParticleInjector extends GenericTile {
 	level.addFreshEntity(particle);
 
 	electro.setJoulesStored(
-		electro.getJoulesStored() - NuclearConfig.INSTANCE.PARTICLEINJECTOR_USAGE_PER_PARTICLE.get());
+		electro.getJoulesStored() - NuclearConfig.getInstance().PARTICLEINJECTOR_USAGE_PER_PARTICLE.get());
 
     }
 
@@ -148,23 +143,20 @@ public class TileParticleInjector extends GenericTile {
     // We can track particles on the client too to monitor things like speed and
     // what not
     // in a GUI
-    public boolean handleCollision() {
-
-	ComponentInventory inv = getComponent(IComponentType.Inventory);
+    public boolean handleCollision(Level level) {
+	ComponentInventory inv = requireComponent(IComponentType.Inventory);
 
 	ItemStack resultStack = inv.getItem(OUTPUT_SLOT);
 	ItemStack cellStack = inv.getItem(ELECTRO_CELL_SLOT);
 
-	if (particles[0] == null || particles[1] == null) {
+	if (particles[0] == null || particles[1] == null)
 	    return false;
-	}
 
 	EntityParticle one = particles[0];
 	EntityParticle two = particles[1];
 
-	if (one.distanceTo(two) >= 1) {
+	if (one.distanceTo(two) >= 1)
 	    return false;
-	}
 
 	BlockPos pos = one.blockPosition();
 
@@ -227,17 +219,17 @@ public class TileParticleInjector extends GenericTile {
 	}
 
 	if (particles[0] != null) {
-	    if (particles[0].getUUID().equals(particle.getUUID())) {
+	    if (particles[0].getUUID().equals(particle.getUUID()))
 		return;
-	    } else if (particles[1] == null) {
+	    else if (particles[1] == null) {
 		particles[1] = particle;
 	    }
 	}
 
 	if (particles[1] != null) {
-	    if (particles[1].getUUID().equals(particle.getUUID())) {
+	    if (particles[1].getUUID().equals(particle.getUUID()))
 		return;
-	    } else if (particles[0] == null) {
+	    else if (particles[0] == null) {
 		particles[0] = particle;
 	    }
 	}
@@ -257,9 +249,9 @@ public class TileParticleInjector extends GenericTile {
     }
 
     @Override
-    public void onNeightborChanged(BlockPos neighbor, boolean blockStateTrigger) {
-	if (!level.isClientSide()) {
-	    hasRedstoneSignal.setValue(level.hasNeighborSignal(getBlockPos()));
+    public void onNeighbourChanged(LevelReader reader, BlockPos neighbor, boolean blockStateTrigger) {
+	if (!(reader instanceof ClientLevel)) {
+	    hasRedstoneSignal.setValue(reader.hasNeighborSignal(getBlockPos()));
 	}
     }
 }

@@ -4,12 +4,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import nuclearscience.client.screen.util.GenericInterfaceBoundScreen;
 import nuclearscience.common.inventory.container.ContainerSupplyModule;
+import voltaic.prefab.screen.component.button.ScreenComponentButton;
 import voltaic.prefab.screen.component.types.wrapper.WrapperInventoryIO;
 import voltaic.prefab.screen.component.utils.AbstractScreenComponentInfo;
 
 public class ScreenSupplyModule extends GenericInterfaceBoundScreen<ContainerSupplyModule> {
 
-    private WrapperInventoryIO wrapper;
+    private final WrapperInventoryIO wrapper;
 
     public ScreenSupplyModule(ContainerSupplyModule container, Inventory inv, Component title) {
 	super(container, inv, title, true, true);
@@ -21,7 +22,9 @@ public class ScreenSupplyModule extends GenericInterfaceBoundScreen<ContainerSup
 		    if (!show) {
 			binderWrapper.updateVisibility(false);
 			binderSlider.setVisible(false);
-			binderWrapper.button.isPressed = false;
+			ScreenComponentButton<?> button = binderWrapper.button;
+			if (button != null)
+			    button.isPressed = false;
 			binderWrapper.showSlots();
 		    }
 		});

@@ -2,12 +2,14 @@ package nuclearscience.common.tile.reactor.logisticsnetwork.interfaces;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
+import java.util.Optional;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.common.block.subtype.SubtypeNuclearMachine;
@@ -18,23 +20,21 @@ import voltaic.prefab.properties.variant.SetProperty;
 import voltaic.prefab.properties.variant.SingleProperty;
 import voltaic.prefab.tile.components.type.ComponentTickable;
 import voltaic.prefab.utilities.BlockEntityUtils;
-import voltaic.prefab.utilities.object.CachedTileOutput;
 
 public abstract class GenericTileInterface extends GenericTileLogisticsMember {
 
-    public CachedTileOutput reactor;
-
     public final SetProperty<Integer> queuedAnimations = property(
-	    new SetProperty<>(PropertyTypes.INTEGER_SET, "queuedanimations", new HashSet<>()));
+	    new SetProperty<>(getPropertyManager(), PropertyTypes.INTEGER_SET, "queuedanimations", new HashSet<>()));
 
-    public final SingleProperty<BlockPos> controlRodLocation = property(
-	    new SingleProperty<>(PropertyTypes.BLOCK_POS, "controlrodlocation", BlockEntityUtils.OUT_OF_REACH));
-    public final SingleProperty<BlockPos> supplyModuleLocation = property(
-	    new SingleProperty<>(PropertyTypes.BLOCK_POS, "supplymodulelocation", BlockEntityUtils.OUT_OF_REACH));
+    public final SingleProperty<BlockPos> controlRodLocation = property(new SingleProperty<>(getPropertyManager(),
+	    PropertyTypes.BLOCK_POS, "controlrodlocation", BlockEntityUtils.OUT_OF_REACH));
+
+    public final SingleProperty<BlockPos> supplyModuleLocation = property(new SingleProperty<>(getPropertyManager(),
+	    PropertyTypes.BLOCK_POS, "supplymodulelocation", BlockEntityUtils.OUT_OF_REACH));
 
     public final HashMap<InterfaceAnimation, Long> clientAnimations = new HashMap<>();
-    // Nothing is rendered with this map; it is used to keep track of what the
-    // interface is doing only
+
+    // Tracks server activity without rendering.
     protected final HashMap<InterfaceAnimation, Long> serverAnimations = new HashMap<>();
 
     public GenericTileInterface(BlockEntityType<?> tileEntityTypeIn, BlockPos worldPos, BlockState blockState) {
@@ -43,60 +43,28 @@ public abstract class GenericTileInterface extends GenericTileLogisticsMember {
     }
 
     @Override
-    public void tickServer(ComponentTickable tickable) {
-
-	super.tickServer(tickable);
-
+    public void tickServer(Level level, ComponentTickable tickable) {
+	super.tickServer(level, tickable);
 	queuedAnimations.wipeSet();
-
-	if (reactor == null) {
-	    reactor = new CachedTileOutput(getLevel(), getBlockPos().relative(getReactorDirection()));
-	}
-
-	if (tickable.getTicks() % 20 == 0 && !reactor.valid()) {
-
-	    reactor.update(getBlockPos().relative(getReactorDirection()));
-
-	}
     }
 
-    private void tickClient(ComponentTickable tickable) {
+    private void tickClient(Level level, ComponentTickable tickable) {
+	updateAnimations(clientAnimations, tickable.getTicks());
+    }
 
-	if (reactor == null) {
-	    reactor = new CachedTileOutput(getLevel(), getBlockPos().relative(getReactorDirection()));
+    public Optional<BlockEntity> getReactor() {
+	Level level = getLevel();
+	if (level == null) {
+	    return Optional.empty();
 	}
 
-	if (tickable.getTicks() % 20 == 0 && !reactor.valid()) {
+	BlockPos reactorPos = getBlockPos().relative(getReactorDirection());
 
-	    reactor.update(getBlockPos().relative(getReactorDirection()));
+	return Optional.ofNullable(level.getBlockEntity(reactorPos)).filter(reactor -> !reactor.isRemoved());
+    }
 
-	}
-
-	long currTime = tickable.getTicks();
-
-	queuedAnimations.getValue().forEach(val -> {
-
-	    InterfaceAnimation animation = InterfaceAnimation.values()[val];
-
-	    if (!clientAnimations.containsKey(animation)) {
-		clientAnimations.put(animation, currTime);
-	    }
-
-	});
-
-	Iterator<Map.Entry<InterfaceAnimation, Long>> it = clientAnimations.entrySet().iterator();
-
-	Map.Entry<InterfaceAnimation, Long> entry;
-
-	while (it.hasNext()) {
-	    entry = it.next();
-
-	    if (currTime - entry.getValue() > entry.getKey().animationTime) {
-		it.remove();
-	    }
-
-	}
-
+    public <T extends BlockEntity> Optional<T> getReactor(Class<T> reactorClass) {
+	return getReactor().filter(reactorClass::isInstance).map(reactorClass::cast);
     }
 
     public abstract Direction getReactorDirection();
@@ -104,58 +72,45 @@ public abstract class GenericTileInterface extends GenericTileLogisticsMember {
     public abstract InterfaceType getInterfaceType();
 
     protected void handleServerAnimations(ComponentTickable tickable) {
-	long currTime = tickable.getTicks();
+	updateAnimations(serverAnimations, tickable.getTicks());
+    }
 
-	queuedAnimations.getValue().forEach(val -> {
+    private void updateAnimations(Map<InterfaceAnimation, Long> animations, long currTime) {
+	InterfaceAnimation[] values = InterfaceAnimation.values();
 
-	    InterfaceAnimation animation = InterfaceAnimation.values()[val];
-
-	    if (!serverAnimations.containsKey(animation)) {
-		serverAnimations.put(animation, currTime);
-	    }
-
-	});
-
-	Iterator<Map.Entry<InterfaceAnimation, Long>> it = serverAnimations.entrySet().iterator();
-
-	Map.Entry<InterfaceAnimation, Long> entry;
-
-	while (it.hasNext()) {
-	    entry = it.next();
-
-	    if (currTime - entry.getValue() > entry.getKey().animationTime) {
-		it.remove();
-	    }
-
+	for (int index : queuedAnimations.getValue()) {
+	    animations.putIfAbsent(values[index], currTime);
 	}
+
+	animations.entrySet().removeIf(entry -> currTime - entry.getValue() > entry.getKey().animationTime);
     }
 
-    public static enum InterfaceType {
-	NONE, FISSION, MS, FUSION;
+    public enum InterfaceType {
+	NONE,
+	FISSION,
+	MS,
+	FUSION;
     }
 
-    public static enum InterfaceAnimation {
-
-	FISSION_WASTE_1(80), //
-	FISSION_WASTE_2(80), //
-	FISSION_WASTE_3(80), //
-	FISSION_WASTE_4(80), //
-	FISSION_TRITIUM_EXTRACT(80), //
-	FISSION_FUEL_1(80), //
-	FISSION_FUEL_2(80), //
-	FISSION_FUEL_3(80), //
-	FISSION_FUEL_4(80), //
-	FISSION_DEUTERIUM_INSERT(80), //
-	FUSION_DEUTERIUM_INSERT(80), //
-	FUSION_TRITIUM_INSERT(80)//
-	;
+    public enum InterfaceAnimation {
+	FISSION_WASTE_1(80),
+	FISSION_WASTE_2(80),
+	FISSION_WASTE_3(80),
+	FISSION_WASTE_4(80),
+	FISSION_TRITIUM_EXTRACT(80),
+	FISSION_FUEL_1(80),
+	FISSION_FUEL_2(80),
+	FISSION_FUEL_3(80),
+	FISSION_FUEL_4(80),
+	FISSION_DEUTERIUM_INSERT(80),
+	FUSION_DEUTERIUM_INSERT(80),
+	FUSION_TRITIUM_INSERT(80);
 
 	public final int animationTime;
 
 	private InterfaceAnimation(int timeTicks) {
 	    animationTime = timeTicks;
 	}
-
     }
 
     public static ItemStack getItemFromType(InterfaceType type) {
@@ -169,5 +124,4 @@ public abstract class GenericTileInterface extends GenericTileLogisticsMember {
 	    new ItemStack(NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.fusionreactorcore));
 	};
     }
-
 }

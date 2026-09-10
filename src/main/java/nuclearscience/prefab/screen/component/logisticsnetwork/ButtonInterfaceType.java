@@ -1,5 +1,7 @@
 package nuclearscience.prefab.screen.component.logisticsnetwork;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
@@ -15,6 +17,7 @@ import voltaic.prefab.utilities.math.Color;
 
 public class ButtonInterfaceType extends ScreenComponentButton<ButtonInterfaceType> {
 
+    @Nullable
     private Interface bound;
 
     private boolean isSelected = false;
@@ -25,21 +28,21 @@ public class ButtonInterfaceType extends ScreenComponentButton<ButtonInterfaceTy
 
     @Override
     public void renderBackground(GuiGraphics graphics, int xAxis, int yAxis, int guiWidth, int guiHeight) {
-	if (!isVisible()) {
+	if (!isVisible())
 	    return;
-	}
 
-	GenericInterfaceBoundScreen<?> screen = (GenericInterfaceBoundScreen<?>) gui;
+	GenericInterfaceBoundScreen<?> screen = (GenericInterfaceBoundScreen<?>) requireScreen();
 
-	GenericTileInterfaceBound tile = screen.getMenu().getSafeHost();
+	GenericTileInterfaceBound tile = screen.getMenu().getSafeHost().orElse(null);
 
-	if (tile == null) {
+	if (tile == null)
 	    return;
-	}
 
 	ITexture texture;
 
-	if (bound != null && (tile.interfaceLocation.getValue().equals(bound.pos()) || isSelected || isHovered())) {
+	Interface parBound = bound;
+	if (parBound != null
+		&& (tile.interfaceLocation.getValue().equals(parBound.pos()) || isSelected || isHovered())) {
 
 	    texture = QuantumTunnelTextures.FREQUENCY_SELECTED;
 
@@ -52,16 +55,15 @@ public class ButtonInterfaceType extends ScreenComponentButton<ButtonInterfaceTy
 	ScreenComponentEditBox.drawExpandedBox(graphics, texture.getLocation(), xLocation + guiWidth,
 		yLocation + guiHeight, width, height);
 
-	if (bound == null) {
+	if (parBound == null)
 	    return;
-	}
 
-	graphics.renderItem(GenericTileInterface.getItemFromType(bound.type()), guiWidth + xLocation + 2,
+	graphics.renderItem(GenericTileInterface.getItemFromType(parBound.type()), guiWidth + xLocation + 2,
 		guiHeight + yLocation + 2);
 
 	Font font = screen.getFontRenderer();
 
-	Component text = Component.literal(bound.pos().toShortString());
+	Component text = Component.literal(parBound.pos().toShortString());
 
 	int xOffset = 20;
 
@@ -91,16 +93,16 @@ public class ButtonInterfaceType extends ScreenComponentButton<ButtonInterfaceTy
 
     }
 
-    public void setInterface(Interface bound) {
+    public void setInterface(@Nullable Interface bound) {
 	this.bound = bound;
     }
 
-    public Interface getInterface() {
+    public @Nullable Interface getInterface() {
 	return bound;
     }
 
     public void setSelected(boolean selected) {
-	this.isSelected = selected;
+	isSelected = selected;
     }
 
 }

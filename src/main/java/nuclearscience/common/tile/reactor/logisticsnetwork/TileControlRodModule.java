@@ -1,5 +1,6 @@
 package nuclearscience.common.tile.reactor.logisticsnetwork;
 
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -11,6 +12,8 @@ import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import nuclearscience.common.inventory.container.ContainerControlRodModule;
@@ -33,12 +36,13 @@ public class TileControlRodModule extends GenericTileInterfaceBound {
     private Direction relativeBack;
 
     public final SingleProperty<Integer> insertion = property(
-	    new SingleProperty<>(PropertyTypes.INTEGER, "insertion", 0));
+	    new SingleProperty<>(getPropertyManager(), PropertyTypes.INTEGER, "insertion", 0));
     public final SingleProperty<Integer> redstoneSignal = property(
-	    new SingleProperty<>(PropertyTypes.INTEGER, "redstonesignal", 0)).onChange((prop, oldVal) -> {
-		if (level == null || level.isClientSide || prop.getValue() == oldVal) {
+	    new SingleProperty<>(getPropertyManager(), PropertyTypes.INTEGER, "redstonesignal", 0))
+	    .onChange((prop, oldVal) -> {
+		Level level = this.level;
+		if (level == null || level.isClientSide || prop.getValue() == oldVal)
 		    return;
-		}
 
 		double perc = (double) prop.getValue() / 15.0;
 
@@ -68,8 +72,8 @@ public class TileControlRodModule extends GenericTileInterfaceBound {
     }
 
     @Override
-    public void onBlockStateUpdate(BlockState oldState, BlockState newState) {
-	super.onBlockStateUpdate(oldState, newState);
+    public void onBlockStateUpdate(Level level, BlockState oldState, BlockState newState) {
+	super.onBlockStateUpdate(level, oldState, newState);
 	if (!level.isClientSide() && oldState.hasProperty(VoltaicBlockStates.FACING)
 		&& newState.hasProperty(VoltaicBlockStates.FACING)
 		&& oldState.getValue(VoltaicBlockStates.FACING) != newState.getValue(VoltaicBlockStates.FACING)) {
@@ -91,37 +95,31 @@ public class TileControlRodModule extends GenericTileInterfaceBound {
     }
 
     @Override
-    public void onNeightborChanged(BlockPos neighbor, boolean blockStateTrigger) {
-	super.onNeightborChanged(neighbor, blockStateTrigger);
-	if (!level.isClientSide) {
-	    redstoneSignal.setValue(getLevel().getBestNeighborSignal(getBlockPos()));
+    public void onNeighbourChanged(LevelReader reader, BlockPos neighbor, boolean blockStateTrigger) {
+	super.onNeighbourChanged(reader, neighbor, blockStateTrigger);
+	if (!(reader instanceof ClientLevel)) {
+	    redstoneSignal.setValue(reader.getBestNeighborSignal(getBlockPos()));
 	}
     }
 
     @Override
-    public void onBlockDestroyed() {
-	super.onBlockDestroyed();
+    public void onBlockDestroyed(Level level) {
+	super.onBlockDestroyed(level);
 	if (!level.isClientSide()) {
 
-	    if (!networkCable.valid() || !(networkCable.getSafe() instanceof TileReactorLogisticsCable)) {
-		return;
-	    }
+	    getNetworkCable(TileReactorLogisticsCable.class).ifPresent(cable -> {
+		if (cable.isRemoved())
+		    return;
 
-	    TileReactorLogisticsCable cable = networkCable.getSafe();
+		ReactorLogisticsNetwork network = cable.getNetwork();
 
-	    if (cable.isRemoved()) {
-		return;
-	    }
+		GenericTileInterface inter = network.getInterface(interfaceLocation.getValue());
 
-	    ReactorLogisticsNetwork network = cable.getNetwork();
+		if (inter == null)
+		    return;
 
-	    GenericTileInterface inter = network.getInterface(interfaceLocation.getValue());
-
-	    if (inter == null) {
-		return;
-	    }
-
-	    inter.controlRodLocation.setValue(BlockEntityUtils.OUT_OF_REACH);
+		inter.controlRodLocation.setValue(BlockEntityUtils.OUT_OF_REACH);
+	    });
 	}
     }
 
@@ -131,11 +129,12 @@ public class TileControlRodModule extends GenericTileInterfaceBound {
     }
 
     @Override
-    public ItemInteractionResult useWithItem(ItemStack used, Player player, InteractionHand hand, BlockHitResult hit) {
+    public ItemInteractionResult useWithItem(Level level, ItemStack used, Player player, InteractionHand hand,
+	    BlockHitResult hit) {
 	if (player.getItemInHand(hand).is(VoltaicItems.ITEM_WRENCH)) {
-	    if (this.hasComponent(IComponentType.ContainerProvider)) {
-		if (!this.level.isClientSide) {
-		    player.openMenu(this.getComponent(IComponentType.ContainerProvider));
+	    if (hasComponent(IComponentType.ContainerProvider)) {
+		if (!level.isClientSide) {
+		    player.openMenu(this.requireComponent(IComponentType.ContainerProvider));
 		    player.awardStat(Stats.INTERACT_WITH_FURNACE);
 		}
 
@@ -143,19 +142,18 @@ public class TileControlRodModule extends GenericTileInterfaceBound {
 	    }
 	    return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 	}
-	return super.useWithItem(used, player, hand, hit);
+	return super.useWithItem(level, used, player, hand, hit);
     }
 
     @Override
-    public int getComparatorSignal() {
+    public int getComparatorSignal(Level level) {
 	return (int) ((double) insertion.getValue() / (double) TileControlRod.MAX_EXTENSION * 15);
     }
 
     @Override
-    public InteractionResult useWithoutItem(Player player, BlockHitResult hit) {
-	if (level.isClientSide()) {
+    public InteractionResult useWithoutItem(Level level, Player player, BlockHitResult hit) {
+	if (level.isClientSide())
 	    return InteractionResult.CONSUME;
-	}
 
 	if (player.isShiftKeyDown()) {
 	    insertion.setValue(insertion.getValue() - TileControlRod.TileFissionControlRod.EXTENSION_PER_CLICK);
@@ -180,36 +178,31 @@ public class TileControlRodModule extends GenericTileInterfaceBound {
 	boolean oldInval = old.equals(BlockEntityUtils.OUT_OF_REACH);
 	boolean newInval = prop.getValue().equals(BlockEntityUtils.OUT_OF_REACH);
 
-	if (oldInval && newInval) {
+	if (oldInval && newInval)
 	    return;
-	}
 
-	if (networkCable == null || !networkCable.valid()
-		|| !(networkCable.getSafe() instanceof TileReactorLogisticsCable)) {
-	    return;
-	}
+	getNetworkCable(TileReactorLogisticsCable.class).ifPresent(cable -> {
 
-	TileReactorLogisticsCable cable = networkCable.getSafe();
+	    if (cable.isRemoved())
+		return;
 
-	if (cable.isRemoved()) {
-	    return;
-	}
+	    ReactorLogisticsNetwork network = cable.getNetwork();
 
-	ReactorLogisticsNetwork network = cable.getNetwork();
+	    if (oldInval && !newInval) {
+		GenericTileInterface inter = network.getInterface(prop.getValue());
 
-	if (oldInval && !newInval) {
-	    GenericTileInterface inter = network.getInterface(prop.getValue());
+		if (inter != null) {
+		    inter.controlRodLocation.setValue(getBlockPos());
+		}
+	    } else if (!oldInval && newInval) {
+		GenericTileInterface inter = network.getInterface(old);
 
-	    if (inter != null) {
-		inter.controlRodLocation.setValue(getBlockPos());
+		if (inter != null) {
+		    inter.controlRodLocation.setValue(BlockEntityUtils.OUT_OF_REACH);
+		}
 	    }
-	} else if (!oldInval && newInval) {
-	    GenericTileInterface inter = network.getInterface(old);
 
-	    if (inter != null) {
-		inter.controlRodLocation.setValue(BlockEntityUtils.OUT_OF_REACH);
-	    }
-	}
+	});
 
     }
 }

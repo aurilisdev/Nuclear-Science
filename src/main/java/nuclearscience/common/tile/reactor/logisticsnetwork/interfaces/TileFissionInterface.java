@@ -3,6 +3,7 @@ package nuclearscience.common.tile.reactor.logisticsnetwork.interfaces;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import nuclearscience.common.network.ReactorLogisticsNetwork;
 import nuclearscience.common.tags.NuclearScienceTags;
@@ -21,53 +22,34 @@ import voltaic.prefab.tile.components.type.ComponentTickable;
 public class TileFissionInterface extends GenericTileInterface implements IFissionControlRod {
 
     public final SingleProperty<Integer> insertion = property(
-	    new SingleProperty<>(PropertyTypes.INTEGER, "insertion", 0));
+	    new SingleProperty<>(getPropertyManager(), PropertyTypes.INTEGER, "insertion", 0));
 
     public TileFissionInterface(BlockPos worldPos, BlockState blockState) {
 	super(NuclearScienceTiles.TILE_FISSIONINTERFACE.get(), worldPos, blockState);
     }
 
     @Override
-    public void tickServer(ComponentTickable tickable) {
-	super.tickServer(tickable);
+    public void tickServer(Level level, ComponentTickable tickable) {
+	super.tickServer(level, tickable);
+	ReactorLogisticsNetwork network = getNetworkCable(TileReactorLogisticsCable.class)
+		.map(TileReactorLogisticsCable::getNetwork).filter(ReactorLogisticsNetwork::isControllerActive)
+		.orElse(null);
 
-	if (!networkCable.valid() || !(networkCable.getSafe() instanceof TileReactorLogisticsCable)) {
-	    insertion.setValue(0);
-	    return;
-	}
-
-	TileReactorLogisticsCable cable = networkCable.getSafe();
-
-	if (cable.isRemoved()) {
-	    insertion.setValue(0);
-	    return;
-	}
-
-	ReactorLogisticsNetwork network = cable.getNetwork();
-
-	if (!network.isControllerActive()) {
+	if (network == null) {
 	    insertion.setValue(0);
 	    return;
 	}
 
 	TileControlRodModule controlRod = network.getControlRod(controlRodLocation.getValue());
-
-	if (controlRod == null) {
-	    insertion.setValue(0);
-	} else {
-	    insertion.setValue(controlRod.insertion.getValue());
-	}
+	insertion.setValue(controlRod == null ? 0 : controlRod.insertion.getValue());
 
 	TileSupplyModule supplyModule = network.getSupplyModule(supplyModuleLocation.getValue());
-
-	if (!reactor.valid() || supplyModule == null || !(reactor.getSafe() instanceof TileFissionReactorCore)) {
+	TileFissionReactorCore core = getReactor(TileFissionReactorCore.class).orElse(null);
+	if (supplyModule == null || core == null)
 	    return;
-	}
 
-	TileFissionReactorCore core = reactor.getSafe();
-
-	ComponentInventory coreInv = core.getComponent(IComponentType.Inventory);
-	ComponentInventory supplyInv = supplyModule.getComponent(IComponentType.Inventory);
+	ComponentInventory coreInv = core.requireComponent(IComponentType.Inventory);
+	ComponentInventory supplyInv = supplyModule.requireComponent(IComponentType.Inventory);
 
 	boolean isExtractingSpentCell = serverAnimations.containsKey(InterfaceAnimation.FISSION_WASTE_1)
 		|| serverAnimations.containsKey(InterfaceAnimation.FISSION_WASTE_2)
