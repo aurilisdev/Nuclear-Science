@@ -50,7 +50,7 @@ public class NuclearConfig {
 	RADIOISOTOPEGENERATOR_VOLTAGE = builder.defineInRange("radioisotopegenerator_voltage", 120.0, 0,
 		Double.MAX_VALUE);
 	RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER = builder.defineInRange("radioisotopegenerator_output_multiplier",
-		0.35f, 0, Double.MAX_VALUE);
+		0.06f, 0, Double.MAX_VALUE);
 	FISSIONREACTOR_MAXENERGYTARGET = builder.defineInRange("fissionreactor_max_energy_target", 350000.0, 0,
 		Double.MAX_VALUE);
 	MSRREACTOR_MAXENERGYTARGET = builder.defineInRange("msrreactor_max_energy_target", 850000.0, 0,
