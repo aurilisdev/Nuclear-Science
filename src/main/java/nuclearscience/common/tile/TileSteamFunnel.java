@@ -39,7 +39,7 @@ public class TileSteamFunnel extends GenericTile implements ISteamReceiver {
 		new ComponentGasHandlerSimple(this, "storedsteam", INTERNAL_CAPACITY, MAX_TEMPERATURE, MAX_PRESSURE)
 			.setInputDirections(BlockEntityUtils.MachineDirection.BOTTOM)
 			.setOutputDirections(BlockEntityUtils.MachineDirection.TOP)
-			.setValidFluidTags(VoltaicTags.Gases.STEAM));
+			.setValidGasTags(VoltaicTags.Gases.STEAM));
     }
 
     private void tickServer(Level level, ComponentTickable tickable) {
