@@ -170,12 +170,17 @@ public class NuclearSciencePlugin implements IModPlugin {
 	// registry.addRecipeClickArea(ScreenO2OProcessor.class, 48, 35, 22, 15,
 	// ElectrodynamicsJEIPlugin.O2O_CLICK_AREAS.toArray(new
 	// RecipeType<?>[ElectrodynamicsJEIPlugin.O2O_CLICK_AREAS.size()]));
-	registry.addRecipeClickArea(ScreenNuclearBoiler.class, 97, 31, 22, 15, NuclearBoilerRecipeCategory.RECIPE_TYPE);
-	registry.addRecipeClickArea(ScreenRadioactiveProcessor.class, 97, 31, 22, 15,
+	registry.addRecipeClickArea(ScreenNuclearBoiler.class, 42, 31, 22, 15, NuclearBoilerRecipeCategory.RECIPE_TYPE);
+	registry.addRecipeClickArea(ScreenNuclearBoiler.class, 98, 31, 22, 15, NuclearBoilerRecipeCategory.RECIPE_TYPE);
+	registry.addRecipeClickArea(ScreenRadioactiveProcessor.class, 42, 31, 22, 15,
 		RadioactiveProcessorRecipeCategory.RECIPE_TYPE);
-	registry.addRecipeClickArea(ScreenChemicalExtractor.class, 97, 31, 22, 15,
+	registry.addRecipeClickArea(ScreenRadioactiveProcessor.class, 98, 31, 22, 15,
+		RadioactiveProcessorRecipeCategory.RECIPE_TYPE);
+	registry.addRecipeClickArea(ScreenChemicalExtractor.class, 42, 31, 22, 15,
 		ChemicalExtractorRecipeCategory.RECIPE_TYPE);
-	registry.addRecipeClickArea(ScreenGasCentrifuge.class, 105, 13, 20, 54,
+	registry.addRecipeClickArea(ScreenChemicalExtractor.class, 98, 31, 22, 15,
+		ChemicalExtractorRecipeCategory.RECIPE_TYPE);
+	registry.addRecipeClickArea(ScreenGasCentrifuge.class, 106, 14, 20, 54,
 		GasCentrifugeRecipeCategory.RECIPE_TYPE);
 	registry.addRecipeClickArea(ScreenFissionReactorCore.class, 77, 38, 22, 15,
 		FissionReactorRecipeCategory.RECIPE_TYPE);
