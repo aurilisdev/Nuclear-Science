@@ -11,7 +11,7 @@ import nuclearscience.common.command.CommandWipePublicFrequencies;
 import nuclearscience.common.reloadlistener.AtomicAssemblerBlacklistRegister;
 import nuclearscience.common.reloadlistener.AtomicAssemblerWhitelistRegister;
 
-@EventBusSubscriber(modid = NuclearScience.ID, bus = EventBusSubscriber.Bus.GAME)
+@EventBusSubscriber(modid = NuclearScience.ID)
 public class ServerEventHandler {
 
     @SubscribeEvent

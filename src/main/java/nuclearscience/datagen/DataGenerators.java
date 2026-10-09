@@ -33,7 +33,7 @@ import nuclearscience.datagen.server.tags.NuclearScienceTagsProvider;
 import nuclearscience.registers.NuclearScienceDamageTypes;
 import voltaic.datagen.utils.client.BaseLangKeyProvider;
 
-@EventBusSubscriber(modid = NuclearScience.ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = NuclearScience.ID)
 public class DataGenerators {
 
     @SubscribeEvent

@@ -211,7 +211,7 @@ public class NuclearScienceItems {
     public static final DeferredHolder<Item, Item> ITEM_CANISTERLEAD = ITEMS.register("canisterlead",
 	    () -> new ItemCanisterLead(new Item.Properties().stacksTo(1), NuclearScienceCreativeTabs.MAIN));
 
-    @EventBusSubscriber(value = Dist.CLIENT, modid = NuclearScience.ID, bus = EventBusSubscriber.Bus.MOD)
+    @EventBusSubscriber(value = Dist.CLIENT, modid = NuclearScience.ID)
     private static class NuclearCreativeRegistry {
 
 	@SubscribeEvent

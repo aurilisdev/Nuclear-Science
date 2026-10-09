@@ -71,7 +71,7 @@ public class TileChunkloader extends GenericTile {
 	}
     }
 
-    @EventBusSubscriber(modid = NuclearScience.ID, bus = EventBusSubscriber.Bus.MOD)
+    @EventBusSubscriber(modid = NuclearScience.ID)
     private static final class ChunkloaderManager {
 
 	private static final TicketController TICKET_CONTROLLER = new TicketController(

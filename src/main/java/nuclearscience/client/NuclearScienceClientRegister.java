@@ -72,7 +72,7 @@ import voltaic.client.guidebook.ScreenGuidebook;
 import voltaic.client.misc.SWBFClientExtensions;
 import voltaic.common.fluid.SimpleWaterBasedFluidType;
 
-@EventBusSubscriber(modid = NuclearScience.ID, bus = EventBusSubscriber.Bus.MOD, value = { Dist.CLIENT })
+@EventBusSubscriber(modid = NuclearScience.ID, value = { Dist.CLIENT })
 public class NuclearScienceClientRegister {
 
     public static final ModelResourceLocation MODEL_GASCENTRIFUGECENTER = ModelResourceLocation

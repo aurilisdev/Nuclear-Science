@@ -24,7 +24,7 @@ import nuclearscience.common.tags.NuclearScienceTags;
 import nuclearscience.registers.UnifiedNuclearScienceRegister;
 
 @Mod(NuclearScience.ID)
-@EventBusSubscriber(modid = NuclearScience.ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = NuclearScience.ID)
 public final class NuclearScience {
 
     public static final String ID = "nuclearscience";

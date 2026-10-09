@@ -11,7 +11,7 @@ import voltaic.api.fluid.RestrictedFluidHandlerItemStack;
 import voltaic.prefab.tile.GenericTile;
 import voltaic.registers.VoltaicCapabilities;
 
-@EventBusSubscriber(modid = NuclearScience.ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = NuclearScience.ID)
 public class NuclearScienceCapabilities {
 
     @SubscribeEvent

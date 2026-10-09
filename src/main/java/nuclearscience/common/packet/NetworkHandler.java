@@ -14,7 +14,7 @@ import nuclearscience.common.packet.type.server.PacketCreateNewFreqeuency;
 import nuclearscience.common.packet.type.server.PacketDeleteFrequency;
 import nuclearscience.common.packet.type.server.PacketEditFrequency;
 
-@EventBusSubscriber(modid = NuclearScience.ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = NuclearScience.ID)
 public class NetworkHandler {
     private static final String PROTOCOL_VERSION = "1";
 

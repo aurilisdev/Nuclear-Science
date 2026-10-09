@@ -132,7 +132,7 @@ public class NuclearScienceBlocks {
 	    SubtypeIrradiatedBlock.values(),
 	    subtype -> BLOCKS.register(subtype.tag(), () -> new BlockIrradiated(subtype)));
 
-    @EventBusSubscriber(value = Dist.CLIENT, modid = NuclearScience.ID, bus = EventBusSubscriber.Bus.MOD)
+    @EventBusSubscriber(value = Dist.CLIENT, modid = NuclearScience.ID)
     private static class ColorHandlerInternal {
 
 	private static final Color NONE = new Color(114, 114, 114, 255);
