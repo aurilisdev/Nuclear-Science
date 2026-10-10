@@ -119,34 +119,37 @@ public class TileFissionInterface extends GenericTileInterface implements IFissi
 
 	if (!isInsertingDeuterium && !coreInv.areOutputsEmpty()) {
 
-	    ItemStack item = coreInv.getItem(5);
-	    ItemStack destItem;
+	    ItemStack item = coreInv.getItem(TileFissionReactorCore.OUTPUT_SLOT);
 
 	    boolean extracted = false;
 
-	    for (int j = 9; j < 18; j++) {
+	    for (int j = 9; j < 18 && !item.isEmpty(); j++) {
 
-		if (coreInv.areOutputsEmpty() || item.isEmpty()) {
-		    break;
-		}
-
-		destItem = supplyInv.getItem(j);
+		ItemStack destItem = supplyInv.getItem(j);
+		int space;
 
 		if (destItem.isEmpty()) {
-
-		    supplyInv.setItem(j, item.copy());
-		    coreInv.setItem(5, ItemStack.EMPTY);
-		    extracted = true;
-
-		} else if (destItem.is(NuclearScienceTags.Items.CELL_TRITIUM)
-			&& destItem.getCount() < destItem.getMaxStackSize()) {
-
-		    int taken = Math.min(destItem.getMaxStackSize() - destItem.getCount(), item.getCount());
-		    destItem.grow(taken);
-		    item.shrink(taken);
-		    extracted = true;
-
+		    space = Math.min(supplyInv.getMaxStackSize(), item.getMaxStackSize());
+		} else if (ItemStack.isSameItemSameComponents(destItem, item)) {
+		    space = Math.min(supplyInv.getMaxStackSize(), destItem.getMaxStackSize()) - destItem.getCount();
+		} else {
+		    continue;
 		}
+
+		int taken = Math.min(space, item.getCount());
+		if (taken <= 0) {
+		    continue;
+		}
+
+		ItemStack updated = item.copyWithCount(taken);
+		if (!destItem.isEmpty()) {
+		    updated = destItem.copy();
+		    updated.grow(taken);
+		}
+		supplyInv.setItem(j, updated);
+		coreInv.removeItem(TileFissionReactorCore.OUTPUT_SLOT, taken);
+		item = coreInv.getItem(TileFissionReactorCore.OUTPUT_SLOT);
+		extracted = true;
 
 	    }
 	    if (extracted) {

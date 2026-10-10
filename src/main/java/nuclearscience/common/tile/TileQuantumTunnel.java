@@ -109,12 +109,11 @@ public class TileQuantumTunnel extends GenericTile {
 	    frequency.setValue(TunnelFrequency.NO_FREQUENCY);
 	}
 
-	
-
 	// No caching: directly operate on the neighboring block entities when
 	// processing outputs
 
-	if (frequency.getValue().equals(TunnelFrequency.NO_FREQUENCY) || frequency.getValue().equals(TunnelFrequency.NO_FREQUENCY))
+	if (frequency.getValue().equals(TunnelFrequency.NO_FREQUENCY)
+		|| frequency.getValue().equals(TunnelFrequency.NO_FREQUENCY))
 	    return;
 
 	for (Direction direction : readOutputDirections()) {

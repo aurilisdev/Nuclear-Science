@@ -29,6 +29,7 @@ import net.minecraft.world.phys.Vec3;
 import nuclearscience.api.turbine.ISteamReceiver;
 import nuclearscience.common.inventory.container.ContainerFissionReactorCore;
 import nuclearscience.common.settings.NuclearConfig;
+import nuclearscience.common.tags.NuclearScienceTags;
 import nuclearscience.common.tile.reactor.TileControlRod;
 import nuclearscience.registers.NuclearScienceBlocks;
 import nuclearscience.registers.NuclearScienceItems;
@@ -84,7 +85,9 @@ public class TileFissionReactorCore extends GenericTile {
 	addComponent(new ComponentTickable(this).tickCommon(this::tickCommon).tickServer(this::tickServer));
 	addComponent(new ComponentInventory(this, ComponentInventory.InventoryBuilder.newInv().inputs(5).outputs(1))
 		.setSlotsByDirection(BlockEntityUtils.MachineDirection.TOP, 0, 1, 2, 3, 4)
-		.setSlotsByDirection(BlockEntityUtils.MachineDirection.BOTTOM, 5));
+		.setSlotsByDirection(BlockEntityUtils.MachineDirection.BOTTOM, 5)
+		.valid((slot, stack, inv) -> slot < FUEL_ROD_COUNT ? isFuelRod(stack)
+			: slot == DUETERIUM_SLOT && stack.is(NuclearScienceTags.Items.CELL_DEUTERIUM)));
 	addComponent(new ComponentContainerProvider("reactorcore", this)
 		.createMenu((id, player) -> new ContainerFissionReactorCore(id, player,
 			requireComponent(IComponentType.Inventory), getCoordsArray())));
@@ -103,10 +106,15 @@ public class TileFissionReactorCore extends GenericTile {
 	    ticksOverheating = 0;
 	}
 	temperature.setValue(Math.max(AIR_TEMPERATURE, temperature.getValue()));
-	if (hasDeuterium.getValue() && fuelCount.getValue() > 0
+	if (hasDeuterium.getValue() && fuelCount.getValue() > 0 && getControlRodInsertion(level) > 0
 		&& level.random.nextFloat() < 1 / (1200.0 * MELTDOWN_TEMPERATURE_CALC / temperature.getValue())) {
 	    processFissReact(inv);
 	}
+    }
+
+    private static boolean isFuelRod(ItemStack stack) {
+	return stack.is(NuclearScienceItems.ITEM_FUELLEUO2.get()) || stack.is(NuclearScienceItems.ITEM_FUELHEUO2.get())
+		|| stack.is(NuclearScienceItems.ITEM_FUELPLUTONIUM.get());
     }
 
     private void addRadiationSource(Level level) {
@@ -350,18 +358,34 @@ public class TileFissionReactorCore extends GenericTile {
 
 	for (RecipeHolder<VoltaicRecipe> iRecipe : pCachedRecipes) {
 	    Item2ItemRecipe recipe = (Item2ItemRecipe) iRecipe.value();
-	    for (CountableIngredient ing : recipe.getCountedIngredients()) {
-		if (ing.test(input)) {
-		    if (output.isEmpty()) {
-			inv.setItem(OUTPUT_SLOT, recipe.getItemRecipeOutput().copy());
-			input.shrink(recipe.getCountedIngredients().get(0).getStackSize());
-		    } else if (output.getCount() <= output.getMaxStackSize()
-			    + recipe.getItemRecipeOutput().getCount()) {
-			output.grow(recipe.getItemRecipeOutput().getCount());
-			input.shrink(recipe.getCountedIngredients().get(0).getStackSize());
-		    }
-		}
+	    List<CountableIngredient> ingredients = recipe.getCountedIngredients();
+	    if (ingredients.size() != 1) {
+		continue;
 	    }
+	    CountableIngredient ing = ingredients.get(0);
+	    int required = ing.getStackSize();
+	    if (!ing.test(input) || input.getCount() < required) {
+		continue;
+	    }
+	    ItemStack result = recipe.getItemRecipeOutput();
+	    if (result.isEmpty()) {
+		continue;
+	    }
+	    int limit = Math.min(inv.getMaxStackSize(), result.getMaxStackSize());
+	    if (!output.isEmpty() && (!ItemStack.isSameItemSameComponents(output, result)
+		    || output.getCount() + result.getCount() > limit)) {
+		continue;
+	    }
+	    if (output.isEmpty() && result.getCount() > limit) {
+		continue;
+	    }
+	    ItemStack updated = output.isEmpty() ? result.copy() : output.copy();
+	    if (!output.isEmpty()) {
+		updated.grow(result.getCount());
+	    }
+	    inv.setItem(OUTPUT_SLOT, updated);
+	    inv.removeItem(DUETERIUM_SLOT, required);
+	    return;
 	}
     }
 

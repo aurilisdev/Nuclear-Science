@@ -17,24 +17,27 @@ public class ScreenMSRFuelPreProcessor extends GenericMaterialScreen<ContainerMS
     public ScreenMSRFuelPreProcessor(ContainerMSRFuelPreProcessor container, Inventory playerInventory,
 	    Component title) {
 	super(container, playerInventory, title);
-	addComponent(new ScreenComponentProgress(ScreenComponentProgress.ProgressBars.PROGRESS_ARROW_RIGHT, () -> container.getSafeHost().map(furnace -> {
-	ComponentProcessor processor = furnace.requireComponent(IComponentType.Processor);
-	if (processor.operatingTicks.getValue()[0] > 0)
-	    return Math.min(1.0,
-		    processor.operatingTicks.getValue()[0] / (processor.requiredTicks.getValue()[0] / 2.0));
-	return 0.0;
-	}).orElse(0.0), 42, 30));
-	addComponent(new ScreenComponentProgress(ScreenComponentProgress.ProgressBars.PROGRESS_ARROW_RIGHT, () -> container.getSafeHost().map(furnace -> {
-	ComponentProcessor processor = furnace.requireComponent(IComponentType.Processor);
-	if (processor.operatingTicks.getValue()[0] > processor.requiredTicks.getValue()[0] / 2.0)
-	    return Math.min(1.0,
-		    (processor.operatingTicks.getValue()[0] - processor.requiredTicks.getValue()[0] / 2.0)
-			    / (processor.requiredTicks.getValue()[0] / 2.0));
-	return 0.0;
-	}).orElse(0.0), 98, 40));
-	addComponent(new ScreenComponentFluidGauge(() -> container.getSafeHost().map(boiler -> boiler
-	    .<ComponentFluidHandlerMulti>requireComponent(IComponentType.FluidHandler).getInputTanks()[0])
-	    .orElse(null), 21, 18));
+	addComponent(new ScreenComponentProgress(ScreenComponentProgress.ProgressBars.PROGRESS_ARROW_RIGHT,
+		() -> container.getSafeHost().map(furnace -> {
+		    ComponentProcessor processor = furnace.requireComponent(IComponentType.Processor);
+		    if (processor.operatingTicks.getValue()[0] > 0)
+			return Math.min(1.0,
+				processor.operatingTicks.getValue()[0] / (processor.requiredTicks.getValue()[0] / 2.0));
+		    return 0.0;
+		}).orElse(0.0), 42, 30));
+	addComponent(new ScreenComponentProgress(ScreenComponentProgress.ProgressBars.PROGRESS_ARROW_RIGHT,
+		() -> container.getSafeHost().map(furnace -> {
+		    ComponentProcessor processor = furnace.requireComponent(IComponentType.Processor);
+		    if (processor.operatingTicks.getValue()[0] > processor.requiredTicks.getValue()[0] / 2.0)
+			return Math.min(1.0,
+				(processor.operatingTicks.getValue()[0] - processor.requiredTicks.getValue()[0] / 2.0)
+					/ (processor.requiredTicks.getValue()[0] / 2.0));
+		    return 0.0;
+		}).orElse(0.0), 98, 40));
+	addComponent(new ScreenComponentFluidGauge(() -> container
+		.getSafeHost().map(boiler -> boiler
+			.<ComponentFluidHandlerMulti>requireComponent(IComponentType.FluidHandler).getInputTanks()[0])
+		.orElse(null), 21, 18));
 	addComponent(new ScreenComponentElectricInfo(-AbstractScreenComponentInfo.SIZE + 1, 2));
 	new WrapperInventoryIO(this, -AbstractScreenComponentInfo.SIZE + 1, AbstractScreenComponentInfo.SIZE + 2, 75,
 		82, 8, 72);

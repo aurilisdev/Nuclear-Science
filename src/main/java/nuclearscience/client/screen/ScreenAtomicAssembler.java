@@ -18,8 +18,12 @@ public class ScreenAtomicAssembler extends GenericScreen<ContainerAtomicAssemble
 		.wattage(NuclearConfig.getInstance().ATOMICASSEMBLER_USAGE_PER_TICK.get() * 20));
 	imageHeight += 64;
 	inventoryLabelY += 64;
-	addComponent(new ScreenComponentProgress(ScreenComponentProgress.ProgressBars.PROGRESS_ARROW_RIGHT, () -> container.getSafeHost().map(assembler -> assembler.progress.getValue()
-	    / (double) NuclearConfig.getInstance().ATOMICASSEMBLER_REQUIRED_TICKS.get()).orElse(0.0), 84, 71));
+	addComponent(new ScreenComponentProgress(ScreenComponentProgress.ProgressBars.PROGRESS_ARROW_RIGHT,
+		() -> container.getSafeHost()
+			.map(assembler -> assembler.progress.getValue()
+				/ (double) NuclearConfig.getInstance().ATOMICASSEMBLER_REQUIRED_TICKS.get())
+			.orElse(0.0),
+		84, 71));
 
 	new WrapperInventoryIO(this, -AbstractScreenComponentInfo.SIZE + 1, AbstractScreenComponentInfo.SIZE + 2, 75,
 		82 + 64, 8, 72 + 64);
