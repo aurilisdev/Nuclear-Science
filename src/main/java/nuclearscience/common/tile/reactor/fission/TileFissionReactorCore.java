@@ -107,7 +107,7 @@ public class TileFissionReactorCore extends GenericTile {
 	}
 	temperature.setValue(Math.max(AIR_TEMPERATURE, temperature.getValue()));
 	if (hasDeuterium.getValue() && fuelCount.getValue() > 0 && getControlRodInsertion(level) > 0
-		&& level.random.nextFloat() < 1 / (1200.0 * MELTDOWN_TEMPERATURE_CALC / temperature.getValue())) {
+		&& level.random.nextFloat() < 1 / (500.0 * MELTDOWN_TEMPERATURE_CALC / temperature.getValue())) {
 	    processFissReact(inv);
 	}
     }
