@@ -250,7 +250,7 @@ public class TileParticleInjector extends GenericTile {
 
     @Override
     public void onNeighbourChanged(LevelReader reader, BlockPos neighbor, boolean blockStateTrigger) {
-	if (!(reader instanceof ClientLevel)) {
+	if (!(reader instanceof Level l && l.isClientSide())) {
 	    hasRedstoneSignal.setValue(reader.hasNeighborSignal(getBlockPos()));
 	}
     }

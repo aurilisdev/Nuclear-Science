@@ -97,7 +97,7 @@ public class TileControlRodModule extends GenericTileInterfaceBound {
     @Override
     public void onNeighbourChanged(LevelReader reader, BlockPos neighbor, boolean blockStateTrigger) {
 	super.onNeighbourChanged(reader, neighbor, blockStateTrigger);
-	if (!(reader instanceof ClientLevel)) {
+	if (!(reader instanceof Level l && l.isClientSide())) {
 	    redstoneSignal.setValue(reader.getBestNeighborSignal(getBlockPos()));
 	}
     }
