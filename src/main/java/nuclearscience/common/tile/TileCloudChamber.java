@@ -3,7 +3,6 @@ package nuclearscience.common.tile;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.level.Level;

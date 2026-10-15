@@ -1,6 +1,5 @@
 package nuclearscience.common.tile;
 
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.SimpleContainer;
