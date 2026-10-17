@@ -51,7 +51,11 @@ public class AtomicAssemblerBlacklistProvider implements DataProvider {
 	addItem(NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.teleporter), json);
 	addItem(NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.quantumcapacitor), json);
 	addItem(NuclearScienceItems.ITEMS_NUCLEARMACHINE.getValue(SubtypeNuclearMachine.chunkloader), json);
-
+	addItem(NuclearScienceItems.ITEM_CELLDARKMATTER.get(), json);
+	addItem(NuclearScienceItems.ITEM_CELLANTIMATTERSMALL.get(), json);
+	addItem(NuclearScienceItems.ITEM_CELLANTIMATTERLARGE.get(), json);
+	addItem(NuclearScienceItems.ITEM_CELLANTIMATTERVERYLARGE.get(), json);
+	
 	object.add(AtomicAssemblerBlacklistRegister.KEY, json);
     }
 

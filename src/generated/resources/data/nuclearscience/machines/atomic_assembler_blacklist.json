@@ -4,6 +4,10 @@
     "#c:air",
     "nuclearscience:teleporter",
     "nuclearscience:quantumcapacitor",
-    "nuclearscience:chunkloader"
+    "nuclearscience:chunkloader",
+    "nuclearscience:celldarkmatter",
+    "nuclearscience:cellantimattersmall",
+    "nuclearscience:cellantimatterlarge",
+    "nuclearscience:cellantimatterverylarge"
   ]
 }
