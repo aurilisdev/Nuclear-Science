@@ -94,15 +94,18 @@ public class EntityParticle extends Entity {
 
     }
 
+    // This is called from the Entity constructor. Hence, we cannot use the fields
+    // defined in this method as they havent been initalised in the Entity
+    // constructor yet.
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
-	builder.define(DIRECTION, facingDirection);
-	builder.define(SPEED, speed);
-	builder.define(TICKS_ALIVE, ticksAlive);
-	builder.define(SOURCE, source);
-	builder.define(PASSED_THROUGH_GATEWAY, passedThroughGate);
-	builder.define(PASSED_THROUGH_SWITCH, passedThroughSwitch);
-	builder.define(SWITCH_DIRECTION, switchDirection);
+	builder.define(DIRECTION, Direction.UP);
+	builder.define(SPEED, STARTING_SPEED);
+	builder.define(TICKS_ALIVE, 0);
+	builder.define(SOURCE, BlockEntityUtils.OUT_OF_REACH);
+	builder.define(PASSED_THROUGH_GATEWAY, false);
+	builder.define(PASSED_THROUGH_SWITCH, false);
+	builder.define(SWITCH_DIRECTION, Direction.UP);
     }
 
     @Override
