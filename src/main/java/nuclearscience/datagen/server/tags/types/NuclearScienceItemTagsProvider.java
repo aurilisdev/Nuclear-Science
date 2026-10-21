@@ -6,6 +6,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.tags.ItemTags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import nuclearscience.NuclearScience;
@@ -21,6 +22,15 @@ public class NuclearScienceItemTagsProvider extends ItemTagsProvider {
 
     @Override
     protected void addTags(Provider provider) {
+
+	tag(ItemTags.HEAD_ARMOR).add(NuclearScienceItems.ITEM_HAZMATHELMET.get(),
+		NuclearScienceItems.ITEM_REINFORCEDHAZMATHELMET.get());
+	tag(ItemTags.CHEST_ARMOR).add(NuclearScienceItems.ITEM_HAZMATPLATE.get(),
+		NuclearScienceItems.ITEM_REINFORCEDHAZMATPLATE.get());
+	tag(ItemTags.LEG_ARMOR).add(NuclearScienceItems.ITEM_HAZMATLEGS.get(),
+		NuclearScienceItems.ITEM_REINFORCEDHAZMATLEGS.get());
+	tag(ItemTags.FOOT_ARMOR).add(NuclearScienceItems.ITEM_HAZMATBOOTS.get(),
+		NuclearScienceItems.ITEM_REINFORCEDHAZMATBOOTS.get());
 
 	tag(NuclearScienceTags.Items.CELL_EMPTY).add(NuclearScienceItems.ITEM_CELLEMPTY.get());
 	tag(NuclearScienceTags.Items.CELL_HEAVYWATER).add(NuclearScienceItems.ITEM_CELLHEAVYWATER.get());
