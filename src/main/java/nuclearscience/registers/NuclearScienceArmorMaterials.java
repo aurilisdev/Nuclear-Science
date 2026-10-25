@@ -25,10 +25,10 @@ public class NuclearScienceArmorMaterials {
 	    .create(Registries.ARMOR_MATERIAL, NuclearScience.ID);
 
     public static final DeferredHolder<ArmorMaterial, ArmorMaterial> HAZMAT_BASE = register("hazmat_base",
-	    ItemHazmatArmor.DEFENSE_MAP_BASE, 0, 0, 0, SoundEvents.ARMOR_EQUIP_LEATHER,
+	    ItemHazmatArmor.DEFENSE_MAP_BASE, 15, 0, 0, SoundEvents.ARMOR_EQUIP_LEATHER,
 	    () -> Ingredient.of(Tags.Items.LEATHERS), NuclearScience.rl("hazmatarmor"));
     public static final DeferredHolder<ArmorMaterial, ArmorMaterial> HAZMAT_REINFORCED = register("hazmat_reinforced",
-	    ItemHazmatArmor.DEFENSE_MAP_REINFORCED, 0, 0, 0, SoundEvents.ARMOR_EQUIP_LEATHER,
+	    ItemHazmatArmor.DEFENSE_MAP_REINFORCED, 15, 0, 0, SoundEvents.ARMOR_EQUIP_LEATHER,
 	    () -> Ingredient.of(VoltaicTags.Items.PLATE_LEAD), NuclearScience.rl("reinforcedhazmatarmor"));
 
     private static DeferredHolder<ArmorMaterial, ArmorMaterial> register(String name,
