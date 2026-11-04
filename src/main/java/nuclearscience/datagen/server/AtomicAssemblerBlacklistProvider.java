@@ -17,6 +17,7 @@ import net.minecraft.world.item.Items;
 import net.minecraftforge.registries.ForgeRegistries;
 import nuclearscience.NuclearScience;
 import nuclearscience.common.reloadlistener.AtomicAssemblerBlacklistRegister;
+import nuclearscience.registers.NuclearScienceItems;
 
 public class AtomicAssemblerBlacklistProvider implements DataProvider {
 
@@ -44,6 +45,10 @@ public class AtomicAssemblerBlacklistProvider implements DataProvider {
 
 	addItem(Items.AIR, json);
 	addTag(ItemTags.create(new ResourceLocation("forge", "air")), json); // dummy tag for demonstration purposes
+	addItem(NuclearScienceItems.ITEM_CELLDARKMATTER.get(), json);
+	addItem(NuclearScienceItems.ITEM_CELLANTIMATTERSMALL.get(), json);
+	addItem(NuclearScienceItems.ITEM_CELLANTIMATTERLARGE.get(), json);
+	addItem(NuclearScienceItems.ITEM_CELLANTIMATTERVERYLARGE.get(), json);
 
 	object.add(AtomicAssemblerBlacklistRegister.KEY, json);
     }

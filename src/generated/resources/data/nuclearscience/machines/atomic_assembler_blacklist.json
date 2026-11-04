@@ -1,6 +1,10 @@
 {
   "values": [
     "minecraft:air",
-    "#forge:air"
+    "#forge:air",
+    "nuclearscience:celldarkmatter",
+    "nuclearscience:cellantimattersmall",
+    "nuclearscience:cellantimatterlarge",
+    "nuclearscience:cellantimatterverylarge"
   ]
 }
