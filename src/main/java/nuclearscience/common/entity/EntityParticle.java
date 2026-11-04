@@ -90,24 +90,18 @@ public class EntityParticle extends Entity {
 
     }
 
+    // This is called from the Entity constructor. Hence, we cannot use the fields
+    // defined in this class as they havent been initalised in the Entity
+    // constructor yet.
     @Override
     protected void defineSynchedData() {
-	if (facingDirection == null) {
-	    facingDirection = Direction.UP;
-	}
-	if (source == null) {
-	    source = BlockEntityUtils.OUT_OF_REACH;
-	}
-	if (switchDirection == null) {
-	    switchDirection = Direction.UP;
-	}
-	entityData.define(DIRECTION, facingDirection);
-	entityData.define(SPEED, speed);
-	entityData.define(TICKS_ALIVE, ticksAlive);
-	entityData.define(SOURCE, source);
-	entityData.define(PASSED_THROUGH_GATEWAY, passedThroughGate);
-	entityData.define(PASSED_THROUGH_SWITCH, passedThroughSwitch);
-	entityData.define(SWITCH_DIRECTION, switchDirection);
+	entityData.define(DIRECTION, Direction.UP);
+	entityData.define(SPEED, STARTING_SPEED);
+	entityData.define(TICKS_ALIVE, 0);
+	entityData.define(SOURCE, BlockEntityUtils.OUT_OF_REACH);
+	entityData.define(PASSED_THROUGH_GATEWAY, false);
+	entityData.define(PASSED_THROUGH_SWITCH, false);
+	entityData.define(SWITCH_DIRECTION, Direction.UP);
     }
 
     @Override
