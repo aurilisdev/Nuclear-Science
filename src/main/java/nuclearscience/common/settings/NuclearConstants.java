@@ -11,8 +11,8 @@ public class NuclearConstants {
     public static double TELEPORTER_USAGE_PER_TELEPORT = 1000000.0;
     @DoubleValue(def = 120.0)
     public static double RADIOISOTOPEGENERATOR_VOLTAGE = 120.0;
-    @DoubleValue(def = 0.35)
-    public static double RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER = 0.35f;
+    @DoubleValue(def = 0.06)
+    public static double RADIOISOTOPEGENERATOR_OUTPUT_MULTIPLIER = 0.06f;
     @DoubleValue(def = 350000.0)
     public static double FISSIONREACTOR_MAXENERGYTARGET = 350000.0;
     @DoubleValue(def = 850000.0)
