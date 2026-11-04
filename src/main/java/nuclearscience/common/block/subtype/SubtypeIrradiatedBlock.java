@@ -6,7 +6,8 @@ import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import voltaic.api.ISubtype;
 
 public enum SubtypeIrradiatedBlock implements ISubtype {
-    soil(Properties.copy(Blocks.DIRT).randomTicks()), grass(Properties.copy(Blocks.GRASS_BLOCK).randomTicks()),
+    soil(Properties.copy(Blocks.DIRT).randomTicks()),
+    grass(Properties.copy(Blocks.GRASS_BLOCK).randomTicks()),
     petrifiedwood(Properties.copy(Blocks.OAK_WOOD).randomTicks(), true);
 
     public final BlockBehaviour.Properties properties;

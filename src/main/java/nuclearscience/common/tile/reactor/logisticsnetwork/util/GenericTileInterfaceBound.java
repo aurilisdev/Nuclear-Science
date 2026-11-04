@@ -118,9 +118,7 @@ public abstract class GenericTileInterfaceBound extends GenericTileLogisticsMemb
 
 	List<Interface> list = new ArrayList<>();
 
-	interfaces.forEach(tile -> {
-	    list.add(new Interface(tile.getBlockPos(), tile.getInterfaceType()));
-	});
+	interfaces.forEach(tile -> { list.add(new Interface(tile.getBlockPos(), tile.getInterfaceType())); });
 
 	return list;
     }

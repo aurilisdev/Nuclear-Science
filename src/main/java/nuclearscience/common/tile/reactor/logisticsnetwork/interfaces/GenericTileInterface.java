@@ -131,7 +131,10 @@ public abstract class GenericTileInterface extends GenericTileLogisticsMember {
     }
 
     public static enum InterfaceType {
-	NONE, FISSION, MS, FUSION;
+	NONE,
+	FISSION,
+	MS,
+	FUSION;
     }
 
     public static enum InterfaceAnimation {

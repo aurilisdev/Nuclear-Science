@@ -56,7 +56,9 @@ public class ScreenComponentGasCentrifuge extends ScreenComponentGeneric {
     }
 
     public enum GasCentrifugeTextures implements ITexture {
-	OFF(92, 54, 0, 0, 256, 256), BULB(13, 48, 0, 57, 256, 256), ARROW(20, 13, 0, 105, 256, 256);
+	OFF(92, 54, 0, 0, 256, 256),
+	BULB(13, 48, 0, 57, 256, 256),
+	ARROW(20, 13, 0, 105, 256, 256);
 
 	private final int textureWidth;
 	private final int textureHeight;

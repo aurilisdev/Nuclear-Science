@@ -74,10 +74,9 @@ public class ChapterParticleAccelerator extends Chapter {
 			TileElectromagneticGateway.getLightSpeedPerc(EntityParticle.STRAIGHT_SPEED_INCREMENT),
 			DisplayUnits.PERCENTAGE).withStyle(ChatFormatting.BOLD),
 		//
-		ChatFormatter
-			.getChatDisplayShort(TileElectromagneticGateway
-				.getLightSpeedPerc(1.0F - EntityParticle.TURN_SPEED_PENALTY), DisplayUnits.PERCENTAGE)
-			.withStyle(ChatFormatting.BOLD)
+		ChatFormatter.getChatDisplayShort(
+			TileElectromagneticGateway.getLightSpeedPerc(1.0F - EntityParticle.TURN_SPEED_PENALTY),
+			DisplayUnits.PERCENTAGE).withStyle(ChatFormatting.BOLD)
 	//
 	)).setIndentions(1).setSeparateStart());
 	pageData.add(new TextWrapperObject(NuclearTextUtils.guidebook("chapter.particleaccelerator.l5",

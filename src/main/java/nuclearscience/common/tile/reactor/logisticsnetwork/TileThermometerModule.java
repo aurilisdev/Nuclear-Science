@@ -51,7 +51,8 @@ public class TileThermometerModule extends GenericTileInterfaceBound {
 	GenericTileInterface.InterfaceType type = GenericTileInterface.InterfaceType.values()[interfaceType.getValue()];
 
 	if (type == GenericTileInterface.InterfaceType.NONE
-		|| interfaceLocation.getValue().equals(BlockEntityUtils.OUT_OF_REACH) || !networkCable.valid() || !(networkCable.getSafe() instanceof TileReactorLogisticsCable)) {
+		|| interfaceLocation.getValue().equals(BlockEntityUtils.OUT_OF_REACH) || !networkCable.valid()
+		|| !(networkCable.getSafe() instanceof TileReactorLogisticsCable)) {
 	    redstoneSignal.setValue(0);
 	    trackedTemperature.setValue(0.0);
 	    return;
@@ -199,7 +200,8 @@ public class TileThermometerModule extends GenericTileInterfaceBound {
 
     public static enum Mode {
 
-	BUILD_UP, CONSTANT;
+	BUILD_UP,
+	CONSTANT;
 
     }
 

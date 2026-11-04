@@ -41,7 +41,8 @@ public class ItemHazmatArmor extends ItemVoltaicArmor implements IHazmatSuit {
     }
 
     public enum ArmorMaterialHazmat implements ArmorMaterial {
-	hazmat, reinforcedhazmat;
+	hazmat,
+	reinforcedhazmat;
 
 	@Override
 	public int getDurabilityForType(Type type) {
@@ -55,7 +56,7 @@ public class ItemHazmatArmor extends ItemVoltaicArmor implements IHazmatSuit {
 
 	@Override
 	public int getEnchantmentValue() {
-	    return 0;
+	    return 15;
 	}
 
 	@Override

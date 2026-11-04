@@ -103,7 +103,7 @@ public class RenderFusionInterface extends AbstractTileRenderer<TileFusionInterf
 		    matrix.translate(0, y, 0);
 		}
 		renderBox(matrix, FUEL_CELL_PISTON, RenderFissionInterface.PISTON_HEAD_GRAY, white, bufferIn,
-		    combinedLightIn, RenderingUtils.ALL_FACES);
+			combinedLightIn, RenderingUtils.ALL_FACES);
 
 		break;
 
@@ -133,7 +133,7 @@ public class RenderFusionInterface extends AbstractTileRenderer<TileFusionInterf
 		    matrix.translate(0, y, 0);
 		}
 		renderBox(matrix, FUEL_CELL_PISTON, RenderFissionInterface.PISTON_HEAD_GRAY, white, bufferIn,
-		    combinedLightIn, RenderingUtils.ALL_FACES);
+			combinedLightIn, RenderingUtils.ALL_FACES);
 
 		break;
 

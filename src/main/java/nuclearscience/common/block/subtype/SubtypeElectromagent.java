@@ -3,7 +3,8 @@ package nuclearscience.common.block.subtype;
 import voltaic.api.ISubtype;
 
 public enum SubtypeElectromagent implements ISubtype {
-    electromagnet(1.0), electromagneticglass(1.0);
+    electromagnet(1.0),
+    electromagneticglass(1.0);
 
     public final double fusionBonus;
 

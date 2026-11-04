@@ -21,9 +21,8 @@ public class PacketSetClientAtomicAssemblerWhitelistVals {
 	Context ctx = context.get();
 	ctx.enqueueWork(() -> {
 
-	    message.items.forEach(item -> {
-		AtomicAssemblerWhitelistRegister.INSTANCE.setClientValues(message.items);
-	    });
+	    message.items
+		    .forEach(item -> { AtomicAssemblerWhitelistRegister.INSTANCE.setClientValues(message.items); });
 
 	});
 	ctx.setPacketHandled(true);
@@ -31,9 +30,7 @@ public class PacketSetClientAtomicAssemblerWhitelistVals {
 
     public static void encode(PacketSetClientAtomicAssemblerWhitelistVals pkt, FriendlyByteBuf buf) {
 	buf.writeInt(pkt.items.size());
-	pkt.items.forEach(item -> {
-	    buf.writeItem(new ItemStack(item));
-	});
+	pkt.items.forEach(item -> { buf.writeItem(new ItemStack(item)); });
     }
 
     public static PacketSetClientAtomicAssemblerWhitelistVals decode(FriendlyByteBuf buf) {
